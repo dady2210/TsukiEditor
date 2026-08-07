@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tsuki's Odyssey Save Editor</title>
+    <meta name="description" content="Editor web completo para archivos .csave de Tsuki's Odyssey. Modifica inventario, amistad de personajes, mapa 3D, eventos y más.">
+    <link rel="stylesheet" href="styles.css?v=20260806">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=Nunito+Sans:wght@400;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ── Drop Zone ── -->
+    <div id="drop-zone" class="rustic-panel active">
+        <div class="drop-content">
+            <span class="material-symbols-outlined bounce-icon" style="font-size:72px;margin-bottom:1rem;color:var(--accent);">save</span>
+            <h2>Arrastra tu archivo <code>.csave</code> aquí</h2>
+            <p>o haz clic para seleccionar</p>
+            <input type="file" id="file-input" accept=".csave" hidden>
+        </div>
+    </div>
+
+    <!-- ── App ── -->
+    <div id="app-container" class="hidden">
+
+        <!-- Header -->
+        <header class="rustic-panel top-header">
+            <h1>🌙 Tsuki's Odyssey Editor</h1>
+            <div class="header-actions">
+                <span id="file-name-display">save.csave</span>
+                <button id="btn-load-another" class="btn-secondary" title="Cargar un nuevo archivo .csave sin recargar la página" style="margin-right: 8px;">
+                    <span class="material-symbols-outlined" style="font-size:18px;margin-right:6px;vertical-align:text-bottom;">folder_open</span>
+                    Cargar otro
+                </button>
+                <button id="btn-save-items" class="btn-secondary hidden" style="margin-right: 8px; border-color: var(--accent); color: var(--accent);">
+                    <span class="material-symbols-outlined" style="font-size:18px;margin-right:6px;vertical-align:text-bottom;">data_object</span>
+                    Nuevos Items Detectados
+                </button>
+                <button id="btn-save" class="btn-primary">
+                    <span class="material-symbols-outlined" style="font-size:18px;margin-right:6px;vertical-align:text-bottom;">download</span>
+                    Descargar Save
+                </button>
+            </div>
+        </header>
+
+        <div class="main-layout">
+
+            <!-- Sidebar -->
+            <aside class="sidebar rustic-panel">
+                <nav>
+                    <button class="nav-item active" data-target="tab-vars">
+                        <span class="material-symbols-outlined">tune</span>Variables
+                    </button>
+                    <button class="nav-item" data-target="tab-inv">
+                        <span class="material-symbols-outlined">inventory_2</span>Inventario
+                    </button>
+                    <button class="nav-item" data-target="tab-npc">
+                        <span class="material-symbols-outlined">group</span>Personajes
+                    </button>
+                    <button class="nav-item" data-target="tab-events">
+                        <span class="material-symbols-outlined">celebration</span>Eventos
+                    </button>
+                    <button class="nav-item" data-target="tab-train">
+                        <span class="material-symbols-outlined">train</span>Tren / Viaje
+                    </button>
+                    <button class="nav-item" data-target="tab-map">
+                        <span class="material-symbols-outlined">map</span>Mapa 3D
+                    </button>
+                </nav>
+            </aside>
+
+            <main class="content-area rustic-panel">
+
+                <!-- ─── TAB: Variables Generales ─── -->
+                <div id="tab-vars" class="tab-content active">
+                    <h2>Variables Generales</h2>
+                    <p class="subtitle">Administra tu pequeña vida en la aldea hongo.</p>
+
+                    <div class="section-card">
+                        <h3>💰 Economía</h3>
+                        <div class="grid-3col">
+                            <div class="input-group">
+                                <label>🥕 Zanahorias</label>
+                                <input type="number" id="input-carrots" value="0" min="0">
+                            </div>
+                            <div class="input-group">
+                                <label>🎟️ Boletos Gacha</label>
+                                <input type="number" id="input-gacha-tickets" value="0" min="0">
+                            </div>
+                            <div class="input-group">
+                                <label title="Contador de días en los artículos del tren (Odyssey Articles).">🗓️ Día (OA)</label>
+                                <input type="number" id="input-day" value="0">
+                            </div>
+                        </div>
+                        <div class="grid-3col">
+                            <div class="input-group">
+                                <label>🗓️ Mes</label>
+                                <input type="number" id="input-month" value="0" min="1" max="12">
+                            </div>
+                            <div class="input-group">
+                                <label>🕐 Hora del día</label>
+                                <input type="number" id="input-hour" value="0" min="0" max="23">
+                            </div>
+                            <div class="input-group">
+                                <label>🍃 Temporada</label>
+                                <div class="select-wrapper">
+                                    <select id="select-season">
+                                        <option value="0">🌸 Primavera</option>
+                                        <option value="1">☀️ Verano</option>
+                                        <option value="2">🍂 Otoño</option>
+                                        <option value="3">❄️ Invierno</option>
+                                    </select>
+                                    <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label title="Nivel de progreso de la historia en la ciudad principal (Moca, Chi, etc.).">🐦 Capítulo Raven</label>
+                                <input type="number" id="input-raven" value="0" min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card" style="margin-top:1.5rem;">
+                        <h3>📊 Estadísticas</h3>
+                        <div class="grid-3col">
+                            <div class="input-group">
+                                <label>🎰 Gacha rodado</label>
+                                <input type="number" id="input-gacha" value="0" min="0">
+                            </div>
+                            <div class="input-group">
+                                <label>🐟 Peces atrapados</label>
+                                <input type="number" id="input-fish-caught" value="0" min="0">
+                            </div>
+                            <div class="input-group">
+                                <label>📦 Pedidos hechos</label>
+                                <input type="number" id="input-orders" value="0" min="0">
+                            </div>
+                            <div class="input-group">
+                                <label>☘️ Tréboles criados</label>
+                                <input type="number" id="input-clover" value="0" min="0">
+                            </div>
+                            <div class="input-group">
+                                <label>🪨 Nodos rotos</label>
+                                <input type="number" id="input-nodes" value="0" min="0">
+                            </div>
+                            <div class="input-group">
+                                <label>🎲 Unluckiness (0–250)</label>
+                                <input type="number" id="input-unluckiness" value="0" min="0" max="250" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card" style="margin-top:1.5rem;">
+                        <h3>😴 Rutina de Sueño</h3>
+                        <div class="grid-3col">
+                            <div class="input-group">
+                                <label>🌙 Hora de dormir inicio</label>
+                                <input type="number" id="input-bedtime-start" value="22" min="0" max="24" step="0.1">
+                            </div>
+                            <div class="input-group">
+                                <label>☀️ Hora de dormir fin</label>
+                                <input type="number" id="input-bedtime-end" value="8" min="0" max="24" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card" style="margin-top:1.5rem;">
+                        <h3>🏡 Homecoming</h3>
+                        <div class="grid-2col">
+                            <label class="check-container card-element">
+                                <input type="checkbox" id="chk-homecoming-android">
+                                <span>Activar Homecoming (Android)</span>
+                            </label>
+                            <label class="check-container card-element">
+                                <input type="checkbox" id="chk-homecoming-ios">
+                                <span>Activar Homecoming (iOS)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:2rem;">
+                        <button id="btn-apply-vars" class="btn-primary" style="padding:0.9rem 2.5rem;font-size:1.1rem;">
+                            <span class="material-symbols-outlined" style="font-size:20px;vertical-align:text-bottom;margin-right:8px;">save</span>
+                            Aplicar Variables
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ─── TAB: Inventario ─── -->
+                <div id="tab-inv" class="tab-content hidden">
+                    <div class="inv-header">
+                        <div>
+                            <h2>Inventario</h2>
+                            <p class="subtitle">Administra objetos, muebles, cultivos y peces.</p>
+                        </div>
+                        <div class="inv-actions">
+                            <div class="search-wrapper">
+                                <span class="material-symbols-outlined search-icon">search</span>
+                                <input type="text" id="inv-search" placeholder="Buscar por ID o nombre..." class="search-input">
+                            </div>
+                            <button id="btn-apply-all" class="btn-secondary" style="margin-left:10px;">
+                                <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">done_all</span>
+                                Aplicar Todo
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="inventory-add-panel rustic-panel-light">
+                        <div class="input-group">
+                            <label>Tipo</label>
+                            <div class="select-wrapper">
+                                <select id="add-inv-type">
+                                    <option value="0">Objeto</option>
+                                    <option value="1" selected>Mueble</option>
+                                    <option value="2">Cultivo</option>
+                                    <option value="3">Pez</option>
+                                </select>
+                                <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>ID del Item</label>
+                            <input type="number" id="add-inv-id" min="0" placeholder="Ej: 221">
+                        </div>
+                        <div class="input-group">
+                            <label>Cantidad</label>
+                            <input type="number" id="add-inv-qty" min="1" value="1">
+                        </div>
+                        <button id="btn-add-inv-item" class="btn-primary">
+                            <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">add</span>
+                            Agregar
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:60px;">Ícono</th>
+                                    <th>ID / Nombre</th>
+                                    <th style="width:100px;">Cantidad</th>
+                                    <th style="width:140px;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inv-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ─── TAB: Personajes / NPC ─── -->
+                <div id="tab-npc" class="tab-content hidden">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+                        <div>
+                            <h2>Personajes</h2>
+                            <p class="subtitle">Modifica la amistad y el estado de cada personaje.</p>
+                        </div>
+                        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                            <div class="search-wrapper">
+                                <span class="material-symbols-outlined search-icon">search</span>
+                                <input type="text" id="npc-search" placeholder="Buscar personaje..." class="search-input" oninput="window.app.renderNPCTab()">
+                            </div>
+                            <button id="btn-max-friendship" class="btn-primary" title="Establece la amistad al máximo para todos los NPCs conocidos.">💛 Max Amistad (Todos)</button>
+                            <button id="btn-reset-pester" class="btn-secondary" title="Reinicia el estado de 'molestia' de todos los personajes.">😊 Reset Pester (Todos)</button>
+                            <button id="btn-apply-npc" class="btn-secondary">✔ Aplicar Todos</button>
+                        </div>
+                    </div>
+
+                    <div class="info-banner">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">info</span>
+                        <strong>Amistad:</strong> Cada NPC tiene un contador. Valores altos desbloquean diálogos especiales y eventos.
+                        <strong>Pester:</strong> Si es alto, el personaje se niega a hablar. Poner en 0 para resetear.
+                        <strong>lastFriendshipDay</strong> se resetea automáticamente al cambiar la amistad.
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:50px;">ID</th>
+                                    <th>Nombre</th>
+                                    <th>Amistad</th>
+                                    <th style="width:120px;">Pester</th>
+                                    <th style="width:200px;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="npc-table-body">
+                                <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted);">Carga un archivo .csave para ver los personajes</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ─── TAB: Eventos ─── -->
+                <div id="tab-events" class="tab-content hidden">
+                    <h2>Eventos de la Aldea</h2>
+                    <p class="subtitle">Visualiza y modifica el estado de los eventos activos.</p>
+
+                    <div class="info-banner" style="margin-bottom:1.5rem;">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">warning</span>
+                        Los eventos aparecen aquí solo si ya existen en tu save. Modificar el <strong>año</strong> permite
+                        "re-activar" un evento ya pasado. Los campos internos (tasksCompleted, rewardsClaimed) son de solo lectura en esta versión.
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:60px;">ID</th>
+                                    <th>Nombre del Evento</th>
+                                    <th style="width:100px;">Año</th>
+                                    <th style="width:140px;">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="events-table-body">
+                                <tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--text-muted);">Carga un archivo .csave para ver los eventos</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ─── TAB: Tren / Viaje ─── -->
+                <div id="tab-train" class="tab-content hidden">
+                    <h2>🚂 Sistema de Viaje — TrainSave</h2>
+                    <p class="subtitle">Controla el estado del tren y los viajes entre ciudades.</p>
+
+                    <div class="info-banner" style="margin-bottom:1.5rem;">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">info</span>
+                        <strong>Locations:</strong> MV=0 (Mushroom Village), Train=1, GC=2 (nueva ciudad). 
+                        <strong>trainDay</strong> es el día OA en que iniciaste el viaje.
+                        <strong>trainNumber</strong> es el número del boleto/tren. Valores >0 activan el viaje.
+                    </div>
+
+                    <div id="train-status" class="train-status-badge">🏘️ Sin viaje activo</div>
+
+                    <div class="section-card" style="margin-top:1.5rem;">
+                        <h3>⚙️ Configuración del Tren</h3>
+                        <div class="grid-3col">
+                            <div class="input-group">
+                                <label title="Contador de días en los artículos del tren (Odyssey Articles).">🚂 Train Day (día OA)</label>
+                                <input type="number" id="input-train-day" value="0" min="0">
+                                <small style="color:var(--text-muted);">Día actual: ~46200 aprox.</small>
+                            </div>
+                            <div class="input-group">
+                                <label>🎫 Train Number</label>
+                                <input type="number" id="input-train-number" value="0" min="0">
+                                <small style="color:var(--text-muted);">84 = número visto en save5</small>
+                            </div>
+                        </div>
+
+                        <div class="info-banner" style="margin-top:1rem;">
+                            <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">warning</span>
+                            <strong>Experimental:</strong> Modificar trainDay/trainNumber puede activar secuencias de viaje.
+                            Se recomienda hacer backup antes. Los NPCs en el tren (npcsOnTrain) son de solo lectura por ahora.
+                        </div>
+
+                        <div class="npc-aboard-section" style="margin-top:1rem;">
+                            <strong>NPCs a bordo en save analizado:</strong>
+                            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;">
+                                <span class="npc-badge">Rian (68)</span>
+                                <span class="npc-badge">Tucker (65)</span>
+                                <span class="npc-badge">Brentley (42)</span>
+                                <span class="npc-badge">George (44)</span>
+                                <span class="npc-badge">Rylene (58)</span>
+                            </div>
+                        </div>
+
+                        <button id="btn-apply-train" class="btn-primary" style="margin-top:1.5rem;">
+                            <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">train</span>
+                            Aplicar Train Save
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ─── TAB: Mapa 3D ─── -->
+                <div id="tab-map" class="tab-content hidden">
+                    <div class="map-controls rustic-panel-light">
+                        <div class="control-group">
+                            <label>Ubicación:</label>
+                            <div class="select-wrapper">
+                                <select id="select-location"></select>
+                                <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+                            </div>
+                            <span id="location-label" class="location-label-badge"></span>
+                        </div>
+                        <div class="control-group">
+                            <label>Piso:</label>
+                            <div class="select-wrapper">
+                                <select id="select-floor">
+                                    <option value="0">Planta Baja (0)</option>
+                                    <option value="1">Primer Piso (1)</option>
+                                    <option value="2">Segundo Piso (2)</option>
+                                    <option value="None">Sin Piso</option>
+                                </select>
+                                <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+                            </div>
+                        </div>
+
+                        <button id="btn-open-add-furniture" class="btn-primary w-full" style="margin-bottom: 1rem;">
+                            <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 18px;">add_circle</span> 
+                            Agregar Mueble
+                        </button>
+
+                        <!-- Farm Actions -->
+                        <div class="control-group farm-actions">
+                            <span style="font-family:'Quicksand',sans-serif;font-weight:600;color:var(--text-muted);font-size:0.85rem;">🌾 Granja:</span>
+                            <button id="btn-add-plot" class="btn-farm" title="Agregar parcela de tierra (FURN_306) en slot vacío del inventario">
+                                <span class="material-symbols-outlined" style="font-size:16px;">add_box</span> Parcela
+                            </button>
+                            <button id="btn-add-seeds" class="btn-farm" title="Agregar semillas de zanahoria (FURN_342)">
+                                🥕 Semillas
+                            </button>
+                            <button id="btn-auto-harvest" class="btn-farm btn-farm-green" title="Maximizar zanahorias del CropBox y agregar item cosecha al inventario">
+                                <span class="material-symbols-outlined" style="font-size:16px;">agriculture</span> Auto-Cosecha
+                            </button>
+                            <button id="btn-collect-carrots" class="btn-farm btn-farm-orange" title="Agregar 9999 zanahorias al inventario directamente">
+                                🥕 +9999 Zanahorias
+                            </button>
+                            <button id="btn-clean-seeds" class="btn-farm" style="background-color: #e74c3c;" title="Eliminar semillas bugeadas caídas en el mapa">
+                                🧹 Limpiar Semillas Bugeadas
+                            </button>
+                        </div>
+
+                        <div class="control-tips">
+                            <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;">mouse</span> Rueda=Zoom
+                            <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;margin-left:6px;">drag_pan</span> Arrastrar=Mover
+                            <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;margin-left:6px;">flip_camera_android</span> Shift+Rueda / Flechas ↔️ = Rotar mueble seleccionado
+                        </div>
+                    </div>
+
+                    <div class="canvas-container wood-texture" style="position:relative; overflow:hidden;">
+                        <canvas id="map-canvas"></canvas>
+
+                        <!-- Floating rotation buttons -->
+                        <div id="floating-rotation-ui" class="hidden" style="position:absolute; display:flex; gap:0.5rem; transform:translate(-50%, -100%); pointer-events:auto; z-index:9999;">
+                            <button id="btn-float-rot-left" class="btn-secondary" style="padding:0.4rem; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 6px rgba(0,0,0,0.3);">
+                                <span class="material-symbols-outlined" style="font-size:20px;">rotate_left</span>
+                            </button>
+                            <button id="btn-float-rot-right" class="btn-secondary" style="padding:0.4rem; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 6px rgba(0,0,0,0.3);">
+                                <span class="material-symbols-outlined" style="font-size:20px;">rotate_right</span>
+                            </button>
+                        </div>
+
+                        <div id="add-item-editor" class="rustic-panel hidden">
+                            <h4>➕ Agregar Mueble</h4>
+                            <div class="input-group" style="margin-bottom:1rem;">
+                                <label>Seleccionar Mueble:</label>
+                                <div class="select-wrapper w-full" style="display:flex; gap:10px; align-items:center;">
+                                    <img id="add-item-preview" src="" style="width:40px; height:40px; object-fit:contain; border:1px solid rgba(0,0,0,0.1); border-radius:5px; background:rgba(255,255,255,0.5); display:none;">
+                                    <select id="add-item-select" style="flex:1;">
+                                        <option value="">Cargando muebles...</option>
+                                    </select>
+                                    <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+                                </div>
+                            </div>
+                            <div class="grid-2col">
+                                <div class="input-group"><label>X:</label><input type="number" id="add-item-x" value="10"></div>
+                                <div class="input-group"><label>Y:</label><input type="number" id="add-item-y" value="10"></div>
+                            </div>
+                            <button id="btn-confirm-add-item" class="btn-primary w-full" style="margin-bottom:0.5rem;">Insertar Mueble</button>
+                            <button id="btn-close-add-editor" class="btn-text w-full">Cancelar</button>
+                        </div>
+
+                        <div id="item-editor" class="rustic-panel hidden">
+                            <h4>✏️ Editar Mueble</h4>
+                            <div class="item-editor-header" style="display:flex;align-items:center;gap:15px;margin-bottom:15px;">
+                                <div class="icon-frame">
+                                    <img id="edit-item-icon" src="" onerror="this.style.display='none'" alt="Icon">
+                                </div>
+                                <div class="input-group" style="flex:1;margin-bottom:0;">
+                                    <label>ID del Mueble:</label>
+                                    <input type="number" id="edit-item-id">
+                                </div>
+                            </div>
+                            <div class="grid-2col">
+                                <div class="input-group"><label>X:</label><input type="number" id="edit-item-x"></div>
+                                <div class="input-group"><label>Y:</label><input type="number" id="edit-item-y"></div>
+                            </div>
+                            <div class="input-group" style="margin-bottom:1.5rem;">
+                                <label>Rotación:</label>
+                                <div class="select-wrapper w-full">
+                                    <select id="edit-item-ori" style="width:100%;">
+                                        <option value="0">Frente Der. (0)</option>
+                                        <option value="1">Frente Izq. (1)</option>
+                                        <option value="2">Atrás Izq. (2)</option>
+                                        <option value="3">Atrás Der. (3)</option>
+                                    </select>
+                                    <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Magic Seed Planting UI (Only visible for plot 306) -->
+                            <div id="seed-planting-ui" class="hidden" style="margin-bottom:1.5rem; padding-top:1rem; border-top:1px solid rgba(0,0,0,0.1);">
+                                <label style="display:block; margin-bottom:5px; font-weight:bold; color:#27ae60;">🌱 Plantar Semilla Mágica:</label>
+                                <div style="display:flex; gap:10px;">
+                                    <div class="select-wrapper" style="flex:1;">
+                                        <select id="edit-seed-select" style="width:100%;">
+                                            <option value="342">Zanahoria (342)</option>
+                                            <option value="345">Sandía (345)</option>
+                                            <option value="1208">Calabaza (1208)</option>
+                                            <option value="1301">Fresa (1301)</option>
+                                        </select>
+                                        <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+                                    </div>
+                                    <button id="btn-plant-seed" class="btn-primary" style="background-color:#27ae60;">Plantar</button>
+                                </div>
+                            </div>
+
+                            <button id="btn-apply-item" class="btn-primary w-full" style="margin-bottom:0.5rem;">Aplicar</button>
+                            <button id="btn-close-editor" class="btn-text w-full">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <!-- Data bundles — loaded as scripts to work with file:// without a server -->
+    <script src="extracted_items_v3.js?v=2"></script>
+    <script src="sizes.js?v=7"></script>
+    <script src="pivots.js?v=2"></script>
+    <script src="rotation_map.js?v=2"></script>
+    <script src="odin_browser.js?v=3"></script>
+    <!-- App logic -->
+    <script src="parser.js?v=20260811"></script>
+    <script src="map.js?v=11"></script>
+    <script src="app.js?v=5"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			const bgMusic = new Audio("https://files.catbox.moe/gkji45.mp3");
+			bgMusic.volume = 0.3; // Volumen al 30% para que no asuste al usuario (ajustable)
+			bgMusic.loop = true;  // Para que la canción se repita infinitamente
+
+			// Función que inicia el audio
+			const startAudio = () => {
+				bgMusic.play().then(() => {
+					// Si el audio arranca con éxito, quitamos los 'escuchadores' para no ejecutar esto en cada clic
+					document.removeEventListener("click", startAudio);
+					document.removeEventListener("keydown", startAudio);
+				}).catch(error => {
+					console.log("El navegador bloqueó el autoplay. Esperando interacción del usuario.");
+				});
+			};
+
+			// Intentar reproducir apenas cargue (solo funcionará si el navegador lo permite por el historial del usuario)
+			startAudio();
+
+			// Si falló el primer intento, arrancará en el momento que el usuario haga cualquier clic o presione una tecla
+			document.addEventListener("click", startAudio);
+			document.addEventListener("keydown", startAudio);
+		});
+</script>
+</body>
+</html>
