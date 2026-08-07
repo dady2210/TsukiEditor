@@ -1,0 +1,17 @@
+# Ignore everything
+*
+
+# But not these files...
+!app.js
+!map.js
+!parser.js
+!odin_browser.js
+!index.html
+!styles.css
+!sizes.js
+!pivots.js
+!rotation_map.js
+!extracted_items_v3.js
+!images/
+!images/**
+!.gitignore
