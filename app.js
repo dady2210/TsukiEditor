@@ -1011,6 +1011,8 @@ class App {
         if (this.parser.ast) {
             const carrotNodes = this.parser._findNodesInAST('carrots');
             for (const node of carrotNodes) {
+                // EXCLUDE the global carrots node (which is a direct child of the root AST)
+                if (this.parser.ast.children && this.parser.ast.children.includes(node)) continue;
                 if (typeof node.value === 'number' && node.value >= 0 && node.value < 1_000_000) {
                     node.value = 999999;
                     patchedCount++;
