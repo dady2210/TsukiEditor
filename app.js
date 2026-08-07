@@ -1006,9 +1006,20 @@ class App {
     farmAutoHarvest() {
         if (!this.parser) { this.showToast('Carga un save primero.'); return; }
         let patchedCount = 0;
-        // Pattern for NamedInt field "carrots" (UTF-16LE) inside CropBoxSave
-        const carrotsTag = [0x17,0x01,0x07,0x00,0x00,0x00,
-            99,0,97,0,114,0,114,0,111,0,116,0,115,0];
+        
+        // AST approach
+        if (this.parser.ast) {
+            const carrotNodes = this.parser._findNodesInAST('carrots');
+            for (const node of carrotNodes) {
+                if (typeof node.value === 'number' && node.value >= 0 && node.value < 1_000_000) {
+                    node.value = 999999;
+                    patchedCount++;
+                }
+            }
+        }
+        
+        // Buffer fallback (for sync)
+        const carrotsTag = [0x17,0x01,0x07,0x00,0x00,0x00, 99,0,97,0,114,0,114,0,111,0,116,0,115,0];
         let idx = 0;
         while (true) {
             idx = this.parser.findPattern(carrotsTag, idx);
@@ -1017,14 +1028,15 @@ class App {
             const current = this.parser.view.getInt32(valOff, true);
             if (current >= 0 && current < 1_000_000) {
                 this.parser.view.setInt32(valOff, 999999, true);
-                patchedCount++;
+                if (!this.parser.ast) patchedCount++; // only count buffer if no ast
             }
             idx += carrotsTag.length;
         }
+
         try { this.parser.injectInventoryItem(900, 1, 1); this.renderInventory(); } catch (_) {}
-        this.showToast(patchedCount > 0
-            ? `🌾 Auto-Cosecha: ${patchedCount} CropBox(s) → 999,999 zanahorias`
-            : '⚠️ No se encontraron CropBoxes. Coloca una Crop Box primero.');
+        this.showToast(patchedCount > 0 
+            ? `dYO_ Auto-Cosecha: ${patchedCount} CropBox(s) → 999,999 zanahorias`
+            : 'dYO_ No se hallaron parcelas para cosechar.');
     }
 
     farmCollectCarrots(amount) {

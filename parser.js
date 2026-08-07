@@ -30,34 +30,33 @@ function calcVerificationId(itemId) {
 
 class SaveParser {
 
-    _findNodeInAST(name) {
-        if (!this.ast) return null;
-        
-        // Fast top-level check
-        if (this.ast.children) {
-            const direct = this.ast.children.find(c => c.name === name);
-            if (direct) return direct;
-        }
+    
+    _findNodesInAST(name) {
+        if (!this.ast) return [];
+        const results = [];
+        const target = name.toLowerCase();
 
-        const search = (n, target) => {
-            if (!n) return null;
-            if (n.name === target) return n;
+        const search = (n) => {
+            if (!n) return;
+            if (n.name && n.name.toLowerCase() === target) {
+                results.push(n);
+            }
             if (n.children) {
                 for (const child of n.children) {
-                    const res = search(child, target);
-                    if (res) return res;
+                    search(child);
                 }
             }
             if (n.elements) {
                 for (const el of n.elements) {
-                    if (el.key) { const res = search(el.key, target); if (res) return res; }
-                    if (el.value) { const res = search(el.value, target); if (res) return res; }
+                    if (el.key) search(el.key);
+                    if (el.value) search(el.value);
                 }
             }
-            return null;
         };
-        return search(this.ast, name);
+        search(this.ast);
+        return results;
     }
+
 
     constructor(buffer) {
         this.buffer = new Uint8Array(buffer);
@@ -331,107 +330,167 @@ class SaveParser {
         return 50;
     }
 
+    
     parseInventory() {
         this.inventory = [];
-        const itemInvTag = [0x49,0x00,0x74,0x00,0x65,0x00,0x6d,0x00,0x49,0x00,0x6e,0x00,0x76,0x00,0x65,0x00,0x6e,0x00,0x74,0x00,0x6f,0x00,0x72,0x00,0x79,0x00];
-        const idTag = [0x17,0x01,0x02,0x00,0x00,0x00,73,0,68,0];
-        const qtyTag = [0x17,0x01,0x08,0x00,0x00,0x00,113,0,117,0,97,0,110,0,116,0,105,0,116,0,121,0];
-        const vTag = [0x17,0x01,0x06,0x00,0x00,0x00,118,0,101,0,114,0,105,0,102,0,121,0];
-        const typeTag = [0x1d,0x01,0x07,0x00,0x00,0x00,105,0,110,0,118,0,84,0,121,0,112,0,101,0];
-        const modifiedTag = [0x21,0x01,0x0c,0x00,0x00,0x00,108,0,97,0,115,0,116,0,77,0,111,0,100,0,105,0,102,0,105,0,101,0,100,0];
-
-        let startIdx = this.findPattern(itemInvTag, 0);
-        if (startIdx === -1) return;
-
-        const slotCount = this.readInventorySlotCount(startIdx);
-        let idx = startIdx;
-
-        const findOff = (tag, start, maxSearch = 200) => {
-            for (let i = start; i < start + maxSearch; i++) {
-                let m = true;
-                for (let j = 0; j < tag.length; j++) {
-                    if (this.buffer[i+j] !== tag[j]) { m = false; break; }
+        this.hiddenInventory = [];
+        
+        if (!this.ast) return;
+        
+        const itemsNode = this.ast.children.find(c => c.name === 'items');
+        if (!itemsNode || !itemsNode.children) return;
+        
+        const processList = (parentName, targetArray) => {
+            const wrap = itemsNode.children.find(c => c.name === parentName);
+            if (!wrap || !wrap.children) return;
+            const listNode = wrap.children.find(c => c.constructor.name === 'OdinList');
+            if (!listNode || !listNode.elements) return;
+            
+            listNode.elements.forEach(el => {
+                const val = el.value || el;
+                if (!val || !val.children) return;
+                
+                const idNode = val.children.find(c => c.name === 'ID');
+                const qtyNode = val.children.find(c => c.name === 'quantity');
+                const typeNode = val.children.find(c => c.name === 'invType');
+                
+                if (idNode && qtyNode) {
+                    targetArray.push({
+                        item_id: idNode.value,
+                        qty: qtyNode.value,
+                        invType: typeNode ? typeNode.value : (parentName === 'slots' ? 1 : 0),
+                        slotNode: val,
+                        // Dummy offsets for backward compatibility (in case anything else reads them)
+                        i_off: -1, q_off: -1, v_off: -1, t_off: -1, m_off: -1, verify: 0
+                    });
                 }
-                if (m) return i + tag.length;
-            }
-            return -1;
+            });
         };
-
-        for (let count = 0; count < slotCount; count++) {
-            idx = this.findPattern(idTag, idx);
-            if (idx === -1) break;
-
-            const i_off = idx + idTag.length;
-            const item_id = this.readInt32(i_off);
-            const q_off = findOff(qtyTag, idx, 100);
-            const v_off = findOff(vTag, idx, 100);
-            const t_off = findOff(typeTag, idx, 150);
-            const m_off = findOff(modifiedTag, idx, 150);
-
-            if (q_off !== -1) {
-                const qty = this.readInt32(q_off);
-                let verify = v_off !== -1 ? this.readInt32(v_off) : 0;
-
-                this.inventory.push({ item_id, qty, invType: t_off !== -1 ? this.readInt32(t_off) : 0,
-                    i_off, q_off, v_off, t_off, m_off, verify });
-            }
-            idx += 10;
-        }
+        
+        processList('slots', this.inventory);
+        processList('hiddenItems', this.hiddenInventory);
     }
 
+    
     updateInventoryItem(index, newId, newQty, newInvType) {
-        if (index < 0 || index >= this.inventory.length) return;
-        const item = this.inventory[index];
-        if (item.i_off !== undefined) { this.writeInt32(item.i_off, newId); item.item_id = newId; }
-        this.writeInt32(item.q_off, newQty); item.qty = newQty;
-        if (item.t_off !== -1 && newInvType !== undefined) { this.writeInt32(item.t_off, newInvType); item.invType = newInvType; }
-        if (item.v_off !== -1) {
-            const v = calcVerificationId(newId);
-            this.writeInt32(item.v_off, v);
-            item.verify = v;
+        let item = null;
+        if (newInvType === undefined) newInvType = 1; // Default
+        if (newInvType === 1 && this.inventory[index]) item = this.inventory[index];
+        else if (newInvType === 0 && this.hiddenInventory[index]) item = this.hiddenInventory[index];
+        
+        if (!item) return;
+        
+        item.item_id = newId;
+        item.qty = newQty;
+        item.invType = newInvType;
+        
+        if (item.slotNode && item.slotNode.children) {
+            const idNode = item.slotNode.children.find(c => c.name === 'ID');
+            const qtyNode = item.slotNode.children.find(c => c.name === 'quantity');
+            const typeNode = item.slotNode.children.find(c => c.name === 'invType');
+            const vNode = item.slotNode.children.find(c => c.name === 'verify' || c.name === 'verificationID');
+            
+            if (idNode) idNode.value = newId;
+            if (qtyNode) qtyNode.value = newQty;
+            if (typeNode) typeNode.value = newInvType;
+            if (vNode) vNode.value = calcVerificationId(newId);
+        } else {
+            console.error("AST slotNode missing for inventory update!", item);
         }
     }
 
-    clearInventoryItem(index) {
-        if (index < 0 || index >= this.inventory.length) throw new Error("Slot de inventario invalido.");
-        const item = this.inventory[index];
-        const emptyVerify = calcVerificationId(-1); // = 0x1FD45F46
-        this.writeInt32(item.i_off, -1);
-        this.writeInt32(item.q_off, 0);
-        if (item.v_off !== -1) this.writeInt32(item.v_off, emptyVerify);
-        if (item.t_off !== -1) this.writeInt32(item.t_off, 0);
-        if (item.m_off !== -1) this.writeFloat64(item.m_off, 0);
-        item.item_id = -1; item.qty = 0; item.invType = 0; item.verify = emptyVerify;
+    
+    clearInventoryItem(index, invType = 1) {
+        let item = null;
+        if (invType === 1 && this.inventory[index]) item = this.inventory[index];
+        else if (invType === 0 && this.hiddenInventory[index]) item = this.hiddenInventory[index];
+        
+        if (!item) throw new Error("Slot de inventario invalido.");
+        
+        const emptyVerify = calcVerificationId(-1);
+        item.item_id = -1; 
+        item.qty = 0; 
+        item.invType = 0; 
+        item.verify = emptyVerify;
+        
+        if (item.slotNode && item.slotNode.children) {
+            const idNode = item.slotNode.children.find(c => c.name === 'ID');
+            const qtyNode = item.slotNode.children.find(c => c.name === 'quantity');
+            const typeNode = item.slotNode.children.find(c => c.name === 'invType');
+            const vNode = item.slotNode.children.find(c => c.name === 'verify' || c.name === 'verificationID');
+            const mNode = item.slotNode.children.find(c => c.name === 'lastModified');
+            
+            if (idNode) idNode.value = -1;
+            if (qtyNode) qtyNode.value = 0;
+            if (typeNode) typeNode.value = 0;
+            if (vNode) vNode.value = emptyVerify;
+            if (mNode) mNode.value = 0;
+        } else {
+            console.error("AST slotNode missing for inventory clear!", item);
+        }
         return item;
     }
 
     injectInventoryItem(newId, quantity = 1, newInvType = 1) {
-        if (!this.inventory.length) this.parseInventory();
+        if (!this.inventory || !this.inventory.length) this.parseInventory();
         if (!Number.isInteger(newId) || !Number.isInteger(quantity) || !Number.isInteger(newInvType))
             throw new Error("ID, cantidad y tipo deben ser enteros.");
         if (quantity <= 0) throw new Error("La cantidad debe ser mayor que cero.");
-
-        const verify = calcVerificationId(newId);
-
-        const existing = this.inventory.find(it => it.item_id === newId && it.invType === newInvType);
-        if (existing) {
-            const newQty = existing.qty + quantity;
-            this.writeInt32(existing.q_off, newQty);
-            if (existing.v_off !== -1) this.writeInt32(existing.v_off, verify);
-            existing.qty = newQty; existing.verify = verify;
-            return { mode: "stacked", slot: this.inventory.indexOf(existing), item: existing };
+        
+        const invArray = newInvType === 1 ? this.inventory : this.hiddenInventory;
+        if (!invArray) throw new Error("El arreglo de inventario no esta inicializado.");
+        const stackItem = invArray.find(i => i.item_id === newId);
+        
+        if (stackItem) {
+            const idx = invArray.indexOf(stackItem);
+            this.updateInventoryItem(idx, newId, stackItem.qty + quantity, newInvType);
+            return { mode: 'stacked', slot: idx, item: stackItem };
         }
-
-        const empty = this.inventory.find(it => it.item_id === -1 || it.qty <= 0);
-        if (!empty) throw new Error("No hay slots vacios; no se modifica la longitud del archivo.");
-
-        this.writeInt32(empty.i_off, newId);
-        this.writeInt32(empty.q_off, quantity);
-        if (empty.v_off !== -1) this.writeInt32(empty.v_off, verify);
-        if (empty.t_off !== -1) this.writeInt32(empty.t_off, newInvType);
-        if (empty.m_off !== -1) this.writeFloat64(empty.m_off, Date.now() / 86400000 + 25569);
-        empty.item_id = newId; empty.qty = quantity; empty.invType = newInvType; empty.verify = verify;
-        return { mode: "inserted", slot: this.inventory.indexOf(empty), item: empty };
+        
+        const emptySlotIdx = invArray.findIndex(i => i.item_id === -1 || i.qty <= 0);
+        if (emptySlotIdx !== -1) {
+            this.updateInventoryItem(emptySlotIdx, newId, quantity, newInvType);
+            return { mode: "inserted", slot: emptySlotIdx, item: invArray[emptySlotIdx] };
+        }
+        
+        // If there are no empty slots, we must create a new one in the AST
+        if (this.ast) {
+            const parentName = newInvType === 1 ? 'slots' : 'hiddenItems';
+            const itemsNodes = this._findNodesInAST('items');
+            const itemsNode = itemsNodes.length > 0 ? itemsNodes[0] : null;
+            if (itemsNode) {
+                const typeNode = itemsNode.children.find(c => c.name === parentName);
+                if (typeNode) {
+                    const listNode = typeNode.children.find(c => c.constructor.name === 'OdinList');
+                    if (listNode && listNode.elements) {
+                        const verify = calcVerificationId(newId);
+                        const newNode = new OdinNode(0x02, null, 14, 'ItemInventorySlot, Odyssey', -1);
+                        newNode.children = [
+                            new OdinPrimitive(0x17, 'ID', newId),
+                            new OdinPrimitive(0x17, 'quantity', quantity),
+                            new OdinPrimitive(0x17, 'verify', verify),
+                            new OdinPrimitive(0x1D, 'invType', BigInt(newInvType)),
+                            new OdinPrimitive(0x21, 'lastModified', Date.now() / 86400000 + 25569),
+                            new OdinNull(0x2D, 'slotSave')
+                        ];
+                        listNode.elements.push({ key: null, value: newNode }); // OdinList elements wrapper // In OdinList, elements often have {value: OdinNode}
+                        
+                        const newInvObj = {
+                            item_id: newId,
+                            qty: quantity,
+                            invType: newInvType,
+                            slotNode: newNode,
+                            i_off: -1, q_off: -1, v_off: -1, t_off: -1, m_off: -1, verify: verify
+                        };
+                        invArray.push(newInvObj);
+                        
+                        return { mode: "inserted_new", slot: invArray.length - 1, item: newInvObj };
+                    }
+                }
+            }
+        }
+        
+        throw new Error("No hay slots vacios y no se pudo inyectar en el AST.");
     }
 
     // ─── NPC Friendship (liminalSaves) ───────────────────────────────────
@@ -496,7 +555,8 @@ class SaveParser {
         
         // AST approach
         if (this.ast) {
-            const npcSavesNode = this._findNodeInAST('npcSaves');
+            const npcSavesNodes = this._findNodesInAST('npcSaves');
+            const npcSavesNode = npcSavesNodes.length > 0 ? npcSavesNodes[0] : null;
             if (npcSavesNode) {
                 const listNode = npcSavesNode.children[0];
                 if (listNode && listNode.elements) {
@@ -529,7 +589,8 @@ class SaveParser {
 
         // AST approach
         if (this.ast) {
-            const npcSavesNode = this._findNodeInAST('npcSaves');
+            const npcSavesNodes = this._findNodesInAST('npcSaves');
+            const npcSavesNode = npcSavesNodes.length > 0 ? npcSavesNodes[0] : null;
             if (npcSavesNode) {
                 const listNode = npcSavesNode.children[0];
                 if (listNode && listNode.elements) {
@@ -538,7 +599,7 @@ class SaveParser {
                         if (val && val.children) {
                             const charNode = val.children.find(c => c.name === 'character');
                             if (charNode && charNode.value === npc.charId) {
-                                const pNode = val.children.find(c => c.name === 'Pester');
+                                const pNode = val.children.find(c => c.name && c.name.toLowerCase() === 'pester');
                                 if (pNode) pNode.value = pesterValue;
                                 break;
                             }
@@ -645,8 +706,9 @@ class SaveParser {
         if (!entry) return false;
         
         // AST approach
-        const node = this._findNodeInAST(name);
-        if (node) {
+        const nodes = this._findNodesInAST(name);
+        if (nodes.length > 0) {
+            const node = nodes[0]; // ONLY update the first (global) one!
             if (entry.type === 'int32') node.value = value | 0;
             else if (entry.type === 'float') node.value = value;
             else if (entry.type === 'bool') node.value = !!value;
@@ -682,7 +744,8 @@ class SaveParser {
         if (!this.trainSave || this.trainSave.trainDayOff === -1) return false;
         
         if (this.ast) {
-            const trainNode = this._findNodeInAST('trainSave');
+            const trainNodes = this._findNodesInAST('trainSave');
+            const trainNode = trainNodes.length > 0 ? trainNodes[0] : null;
             if (trainNode && trainNode.children) {
                 const dayNode = trainNode.children.find(c => c.name === 'trainDay');
                 if (dayNode) dayNode.value = day;
@@ -698,7 +761,8 @@ class SaveParser {
         if (!this.trainSave || this.trainSave.trainNumberOff === -1) return false;
         
         if (this.ast) {
-            const trainNode = this._findNodeInAST('trainSave');
+            const trainNodes = this._findNodesInAST('trainSave');
+            const trainNode = trainNodes.length > 0 ? trainNodes[0] : null;
             if (trainNode && trainNode.children) {
                 const numNode = trainNode.children.find(c => c.name === 'trainNumber');
                 if (numNode) numNode.value = num;
