@@ -106,156 +106,165 @@ class SaveParser {
     parseMap() {
         this.placements = [];
         this.clusters = new Set();
-        this.astPlacements = [];
+        this.astPlacements = []; // Deprecated, keeping just for legacy compatibility if any
 
-        // Build mapping of every furniture piece from AST to its true subloc_id
-        if (this.ast) {
-            const sublocsWrapper = this.ast.children.find(c => c.name === 'sublocations');
-            if (sublocsWrapper) {
-                const sublocsList = sublocsWrapper.children ? sublocsWrapper.children.find(c => c.constructor.name === 'OdinList') : null;
-                if (sublocsList) {
-                    for (const entry of sublocsList.elements) {
-                    const sublocId = entry.key.value;
-                    const furnListWrap = entry.value.children.find(c => c.name === 'furniture');
-                    if (furnListWrap) {
-                        const furnList = furnListWrap.children.find(c => c.constructor.name === 'OdinList');
-                        if (furnList) {
-                            for (const furnEntry of furnList.elements) {
-                                const furnNode = furnEntry.value;
-                                let itemId = -1, x = -1, y = -1, floor = 0;
-                                
-                                const refNode = furnNode.children.find(c => c.name === 'reference');
-                                if (refNode) {
-                                    const idNode = refNode.children.find(c => c.name === 'id');
-                                    if (idNode) itemId = idNode.value;
-                                }
-                                
-                                const posNode = furnNode.children.find(c => c.name === 'position');
-                                if (posNode) {
-                                    const grid = posNode.children.find(c => c.name === 'grid');
-                                    if (grid) {
-                                        const xNode = grid.children.find(c => c.name === 'x');
-                                        const yNode = grid.children.find(c => c.name === 'y');
-                                        const floorNode = grid.children.find(c => c.name === 'gridLevel');
-                                        if (xNode) x = xNode.value;
-                                        if (yNode) y = yNode.value;
-                                        if (floorNode) floor = floorNode.value;
-                                    }
-                                }
-                                
-                                // Since we mutate the AST but haven't re-saved it, we match exact data
-                                this.astPlacements.push({ subloc_id: sublocId, item_id: itemId, x: x, y: y, floor: floor, furnNode: furnNode });
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        }
+        if (!this.ast) return;
+        
+        const sublocsWrapper = this.ast.children.find(c => c.name === 'sublocations');
+        if (!sublocsWrapper) return;
+        const sublocsList = sublocsWrapper.children ? sublocsWrapper.children.find(c => c.constructor.name === 'OdinList') : null;
+        if (!sublocsList) return;
 
-        const placTag  = [0x17,0x01,0x0B,0x00,0x00,0x00,112,0,108,0,97,0,99,0,101,0,109,0,101,0,110,0,116,0,73,0,68,0];
-        const idTag    = [0x17,0x01,0x02,0x00,0x00,0x00,105,0,100,0];
-        const xTag     = [0x17,0x01,0x01,0x00,0x00,0x00,120,0];
-        const yTag     = [0x17,0x01,0x01,0x00,0x00,0x00,121,0];
-        const gnumTag  = [0x17,0x01,0x08,0x00,0x00,0x00,103,0,114,0,111,0,117,0,112,0,78,0,117,0,109,0];
-        const vTag     = [0x17,0x01,0x06,0x00,0x00,0x00,118,0,101,0,114,0,105,0,102,0,121,0];
-        const oriTag   = [0x1d,0x01,0x0b,0x00,0x00,0x00,111,0,114,0,105,0,101,0,110,0,116,0,97,0,116,0,105,0,111,0,110,0];
-        const plantedIdTag = [0x17,0x01,0x06,0x00,0x00,0x00,105,0,116,0,101,0,109,0,73,0,68,0]; // "itemID"
-
-        let idx = 0; let prevIdx = -1; let clusterId = 1;
-
-        const findOff = (tag, from, range = 350) => {
-            const end = Math.min(from + range, this.buffer.length);
-            for (let i = from; i < end - tag.length; i++) {
-                let m = true;
-                for (let j = 0; j < tag.length; j++) {
-                    if (this.buffer[i+j] !== tag[j]) { m = false; break; }
-                }
-                if (m) return i + tag.length;
-            }
-            return -1;
-        };
-
-        while (true) {
-            idx = this.findPattern(placTag, idx);
-            if (idx === -1) break;
-            if (prevIdx !== -1 && (idx - prevIdx) > 1000) clusterId++;
-            prevIdx = idx;
-
-            const i_off = findOff(idTag, idx);
-            const x_off = findOff(xTag, idx);
-            const y_off = findOff(yTag, idx);
-            const g_off = findOff(gnumTag, idx);
-            const v_off = findOff(vTag, idx);
-            const o_off = findOff(oriTag, idx);
+        for (const entry of sublocsList.elements) {
+            const sublocId = entry.key.value;
+            this.clusters.add(sublocId);
             
-            // Look for itemID (the planted seed or displayed item) slightly further ahead
-            const p_off = findOff(plantedIdTag, idx, 600);
+            // 1. Furniture
+            const furnWrap = entry.value.children.find(c => c.name === 'furniture');
+            if (furnWrap) {
+                const furnList = furnWrap.children.find(c => c.constructor.name === 'OdinList');
+                if (furnList) {
+                    for (const furnEntry of furnList.elements) {
+                        const furnNode = furnEntry.value;
+                        let itemId = -1, x = -1, y = -1, floor = 0, orientation = 0, verify = 0, placementID = -1;
+                        let planted_id = -1; // We can parse cropBox if needed later
 
-            if (i_off !== -1 && x_off !== -1 && y_off !== -1) {
-                let floorStr = "None";
-                let floorNum = 0;
-                if (g_off !== -1) {
-                    const val = this.readInt32(g_off);
-                    if (val >= 0 && val <= 3) {
-                        floorStr = val.toString();
-                        floorNum = val;
+                        const pIdNode = furnNode.children.find(c => c.name === 'placementID');
+                        if (pIdNode) placementID = pIdNode.value;
+
+                        const vIdNode = furnNode.children.find(c => c.name === 'verificationID');
+                        if (vIdNode) verify = vIdNode.value;
+
+                        const refNode = furnNode.children.find(c => c.name === 'reference');
+                        if (refNode) {
+                            const idNode = refNode.children.find(c => c.name === 'id');
+                            if (idNode) itemId = idNode.value;
+                            const oriNode = refNode.children.find(c => c.name === 'orientation');
+                            if (oriNode) orientation = oriNode.value;
+                        }
+
+                        const groupPosNode = furnNode.children.find(c => c.name === 'groupPosition');
+                        if (groupPosNode) {
+                            const grid = groupPosNode.children.find(c => c.name === 'grid');
+                            if (grid) {
+                                const xNode = grid.children.find(c => c.name === 'x');
+                                const yNode = grid.children.find(c => c.name === 'y');
+                                if (xNode) x = xNode.value;
+                                if (yNode) y = yNode.value;
+                            }
+                            const gNumNode = groupPosNode.children.find(c => c.name === 'groupNum');
+                            if (gNumNode) floor = gNumNode.value;
+                        }
+
+                        this.placements.push({
+                            placementID,
+                            subloc_id: sublocId,
+                            item_id: itemId,
+                            x, y,
+                            floor: floor.toString(),
+                            cluster: sublocId,
+                            orientation,
+                            verify,
+                            planted_id,
+                            furnNode,
+                            isWall: false
+                        });
                     }
                 }
-                const item_id = this.readInt32(i_off);
-                const x = this.readInt32(x_off);
-                const y = this.readInt32(y_off);
-                let verify = v_off !== -1 ? this.readInt32(v_off) : 0;
-                const orientation = o_off !== -1 ? this.readInt32(o_off) : 0;
-
-                // Auto-calc verify using the correct algorithm
-                const correctVerify = calcVerificationId(item_id);
-                if (v_off !== -1 && verify !== correctVerify && item_id > 0) {
-                    this.writeInt32(v_off, correctVerify);
-                    verify = correctVerify;
-                }
-                
-                let planted_id = p_off !== -1 ? this.readInt32(p_off) : -1;
-
-                // Match with AST to get real subloc_id by index
-                let realLocId = 1;
-                const idxMatch = this.placements.length;
-                if (this.astPlacements && idxMatch < this.astPlacements.length) {
-                    const astMatch = this.astPlacements[idxMatch];
-                    if (astMatch && astMatch.item_id === item_id) {
-                        realLocId = astMatch.subloc_id;
-                    } else {
-                        // Fallback to searching by ID if sequential order breaks
-                        const fallback = this.astPlacements.find(p => p.item_id === item_id);
-                        if (fallback) realLocId = fallback.subloc_id;
-                    }
-                } else {
-                    const fallback = this.astPlacements.find(p => p.item_id === item_id);
-                    if (fallback) realLocId = fallback.subloc_id;
-                }
-                
-                this.placements.push({ item_id, x, y,
-                    floor: floorStr, cluster: realLocId, orientation, i_off, x_off, y_off, o_off, v_off, verify, planted_id, p_off });
-                this.clusters.add(realLocId);
             }
-            idx += placTag.length;
+
+            // 2. WallFurniture
+            const wallWrap = entry.value.children.find(c => c.name === 'wallFurniture');
+            if (wallWrap) {
+                const wallList = wallWrap.children.find(c => c.constructor.name === 'OdinList');
+                if (wallList) {
+                    for (const wallEntry of wallList.elements) {
+                        const wallNode = wallEntry.value;
+                        let itemId = -1, x = -1, y = -1, floor = 0, orientation = 0, verify = 0, placementID = -1;
+
+                        const pIdNode = wallNode.children.find(c => c.name === 'placementID');
+                        if (pIdNode) placementID = pIdNode.value;
+
+                        const fIdNode = wallNode.children.find(c => c.name === 'furnitureID');
+                        if (fIdNode) itemId = fIdNode.value;
+
+                        const vIdNode = wallNode.children.find(c => c.name === 'verificationID');
+                        if (vIdNode) verify = vIdNode.value;
+
+                        // Wall furniture also has groupPosition
+                        const groupPosNode = wallNode.children.find(c => c.name === 'groupPosition');
+                        if (groupPosNode) {
+                            const grid = groupPosNode.children.find(c => c.name === 'grid');
+                            if (grid) {
+                                const xNode = grid.children.find(c => c.name === 'x');
+                                const yNode = grid.children.find(c => c.name === 'y');
+                                if (xNode) x = xNode.value;
+                                if (yNode) y = yNode.value;
+                            }
+                            const gNumNode = groupPosNode.children.find(c => c.name === 'groupNum');
+                            if (gNumNode) floor = gNumNode.value;
+                        }
+
+                        this.placements.push({
+                            placementID,
+                            subloc_id: sublocId,
+                            item_id: itemId,
+                            x, y,
+                            floor: floor.toString(),
+                            cluster: sublocId,
+                            orientation,
+                            verify,
+                            planted_id: -1,
+                            furnNode: wallNode,
+                            isWall: true
+                        });
+                    }
+                }
+            }
         }
+        this.astPlacements = [...this.placements]; // keeping for compatibility
     }
 
     applyMapChange(placement, newId, newX, newY, newOrientation) {
-        if (placement.i_off !== -1) this.writeInt32(placement.i_off, newId);
-        if (placement.x_off !== -1) this.writeInt32(placement.x_off, newX);
-        if (placement.y_off !== -1) this.writeInt32(placement.y_off, newY);
-        if (placement.o_off !== -1 && newOrientation !== undefined) {
-            this.writeInt32(placement.o_off, newOrientation);
-            placement.orientation = newOrientation;
-        }
+        if (!placement.furnNode) return;
+        
         placement.item_id = newId;
         placement.x = newX;
         placement.y = newY;
-        if (placement.v_off !== -1) {
+        if (newOrientation !== undefined) placement.orientation = newOrientation;
+        
+        const node = placement.furnNode;
+
+        if (placement.isWall) {
+            const fIdNode = node.children.find(c => c.name === 'furnitureID');
+            if (fIdNode) fIdNode.value = newId;
+        } else {
+            const refNode = node.children.find(c => c.name === 'reference');
+            if (refNode) {
+                const idNode = refNode.children.find(c => c.name === 'id');
+                if (idNode) idNode.value = newId;
+                if (newOrientation !== undefined) {
+                    const oriNode = refNode.children.find(c => c.name === 'orientation');
+                    if (oriNode) oriNode.value = newOrientation;
+                }
+            }
+        }
+
+        const groupPosNode = node.children.find(c => c.name === 'groupPosition');
+        if (groupPosNode) {
+            const grid = groupPosNode.children.find(c => c.name === 'grid');
+            if (grid) {
+                const xNode = grid.children.find(c => c.name === 'x');
+                const yNode = grid.children.find(c => c.name === 'y');
+                if (xNode) xNode.value = newX;
+                if (yNode) yNode.value = newY;
+            }
+        }
+        
+        const vIdNode = node.children.find(c => c.name === 'verificationID');
+        if (vIdNode) {
             const v = calcVerificationId(newId);
-            this.writeInt32(placement.v_off, v);
+            vIdNode.value = v;
             placement.verify = v;
         }
     }
@@ -267,11 +276,8 @@ class SaveParser {
             // If it's a seed item placed on the map (especially at 0,0)
             if ([342, 345, 1208, 1230, 1231, 1232, 1233, 1237, 1238, 1301].includes(p.item_id)) {
                 // Erase it from the map by setting ID to -1
-                if (p.i_off !== -1) {
-                    this.writeInt32(p.i_off, -1);
-                    p.item_id = -1;
-                    count++;
-                }
+                this.applyMapChange(p, -1, p.x, p.y, p.orientation);
+                count++;
             }
         }
         return count;
@@ -335,13 +341,6 @@ class SaveParser {
             if (q_off !== -1) {
                 const qty = this.readInt32(q_off);
                 let verify = v_off !== -1 ? this.readInt32(v_off) : 0;
-
-                // Auto-fix verify using the correct algorithm
-                const correctVerify = calcVerificationId(item_id);
-                if (v_off !== -1 && verify !== correctVerify) {
-                    this.writeInt32(v_off, correctVerify);
-                    verify = correctVerify;
-                }
 
                 this.inventory.push({ item_id, qty, invType: t_off !== -1 ? this.readInt32(t_off) : 0,
                     i_off, q_off, v_off, t_off, m_off, verify });
@@ -534,6 +533,7 @@ class SaveParser {
             { name: 'nodesBroken',       marker: 0x17, read: 'int32', write: 'int32' },
             { name: 'ordersMade',        marker: 0x17, read: 'int32', write: 'int32' },
             { name: 'gachaRolled',       marker: 0x17, read: 'int32', write: 'int32' },
+            { name: 'unluckiness',       marker: 0x1f, read: 'float', write: 'float' },
             { name: 'fishCaught',        marker: 0x17, read: 'int32', write: 'int32' },
             { name: 'cloversBred',       marker: 0x17, read: 'int32', write: 'int32' },
             { name: 'junkerUsed',        marker: 0x17, read: 'int32', write: 'int32' },
@@ -608,5 +608,12 @@ class SaveParser {
         return true;
     }
 
-    getBuffer() { return this.buffer.buffer; }
+    getBuffer() {
+        if (this.ast) {
+            const writer = new OdinWriter();
+            const outBuf = writer.write([this.ast]);
+            return outBuf.buffer || outBuf;
+        }
+        return this.buffer.buffer;
+    }
 }

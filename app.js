@@ -415,6 +415,7 @@ class App {
         setVal('input-hour', 'hour');
         setVal('input-raven', 'ravenChapter');
         setVal('input-gacha', 'gachaRolled');
+        setVal('input-unluckiness', 'unluckiness');
         setVal('input-fish-caught', 'fishCaught');
         setVal('input-orders', 'ordersMade');
         setVal('input-clover', 'cloversBred');
@@ -463,6 +464,7 @@ class App {
         applyField('input-hour', 'hour');
         applyField('input-raven', 'ravenChapter');
         applyField('input-gacha', 'gachaRolled');
+        applyField('input-unluckiness', 'unluckiness');
         applyField('input-fish-caught', 'fishCaught');
         applyField('input-orders', 'ordersMade');
         applyField('input-clover', 'cloversBred');
@@ -822,7 +824,7 @@ class App {
             this.showToast('Selecciona un mueble válido', 'error');
             return;
         }
-        if (!this.parser || !this.parser.buffer) {
+        if (!this.parser || !this.parser.ast) {
             this.showToast('Carga un archivo save primero', 'error');
             return;
         }
@@ -834,10 +836,7 @@ class App {
         }
 
         try {
-            // 1. Parse AST
-            const reader = new OdinReader(this.parser.buffer.buffer);
-            const ast = reader.parse();
-            const root = ast[0];
+            const root = this.parser.ast;
             const sublocations = root.children.find(c => c.name === 'sublocations');
             
             if (!sublocations) throw new Error('No se encontró sublocations en el AST');
@@ -850,7 +849,7 @@ class App {
             if (!furnitureListWrapper) throw new Error('No se encontró lista de furniture');
             const listNode = furnitureListWrapper.children.find(c => c.constructor.name === 'OdinList');
             
-            // 2. Find a clone template from ANY sublocation
+            // Find a clone template from ANY sublocation
             let template = null;
             for (const sub of sublocationsList.elements) {
                 const subLocData = sub.value;
@@ -863,62 +862,39 @@ class App {
                     }
                 }
             }
-            if (!template) {
-                throw new Error('No se encontró ningún mueble en todo el mapa para usar como molde de clonación.');
-            }
+            if (!template) throw new Error('No se encontró ningún mueble en todo el mapa para usar como molde.');
 
-            // 3. Clone and Modify
+            // Clone and Modify
             const clone = this.deepCloneNode(template);
             
-            const maxIdObj = { max: this.getMaxNodeId(ast) };
+            const maxIdObj = { max: this.getMaxNodeId([root]) };
             this.assignNewNodeIds(clone, maxIdObj);
             
             const furnNode = clone.value;
-            // Set ID
-            const refNode = furnNode.children.find(c => c.name === 'reference');
-            if (refNode) {
-                const idNode = refNode.children.find(c => c.name === 'id');
-                if (idNode) idNode.value = furnId;
-            }
-            // Set X, Y and gridLevel (floor)
-            const posNode = furnNode.children.find(c => c.name === 'position');
-            if (posNode) {
-                const grid = posNode.children.find(c => c.name === 'grid');
-                if (grid) {
-                    grid.children.find(c => c.name === 'x').value = x;
-                    grid.children.find(c => c.name === 'y').value = y;
-                    const floorNode = grid.children.find(c => c.name === 'gridLevel');
-                    if (floorNode) {
-                        floorNode.value = parseInt(this.selectFloor.value) || 0;
-                    }
-                }
-            }
+            
+            // Generate unique placementID
+            let maxPlacementID = 0;
+            this.parser.placements.forEach(p => {
+                if (p.placementID > maxPlacementID) maxPlacementID = p.placementID;
+            });
+            const newPlacementID = maxPlacementID + 1;
+            const pIdNode = furnNode.children.find(c => c.name === 'placementID');
+            if (pIdNode) pIdNode.value = newPlacementID;
+            
+            // Apply map change logic directly to node
+            const dummyPlacement = { furnNode: furnNode, isWall: false };
+            this.parser.applyMapChange(dummyPlacement, furnId, x, y, 0);
+            
+            const gNumNode = furnNode.children.find(c => c.name === 'groupPosition')?.children.find(c => c.name === 'groupNum');
+            if (gNumNode) gNumNode.value = parseInt(this.selectFloor.value) || 0;
             
             listNode.elements.push(clone);
-            
-            // 3. Serialize and Reload
-            const writer = new OdinWriter();
-            const newBuffer = writer.write(ast);
-            
-            // Update parser working buffer and reload visual map
-            this.parser = new SaveParser(newBuffer.buffer);
-            
-            // Re-parse AST for the new buffer so parseMap works
-            try {
-                const newReader = new OdinReader(this.parser.buffer.buffer);
-                let newAst = newReader.parse();
-                if (Array.isArray(newAst)) newAst = newAst[0];
-                this.parser.ast = newAst;
-            } catch (err) {
-                console.error('Error parsing AST after add:', err);
-            }
-
-            this.parseData();
+            this.parser.parseMap();
             this.map.selectedPlacement = null;
             this.map.draw();
             this.addItemEditor.classList.add('hidden');
             
-            this.showToast('✅ Mueble inyectado y mapa recargado con éxito!');
+            this.showToast('✅ Mueble inyectado con éxito!');
             
         } catch (err) {
             console.error(err);
@@ -926,7 +902,7 @@ class App {
         }
     }
 
-    // ─── Map Editor ───────────────────────────────────────────────────
+    // ─── Map Editor ───────────────────────────────────────────────────────────
 
     openItemEditor(placement) {
         this.editItemId.value  = placement.item_id;
@@ -959,14 +935,8 @@ class App {
         if (isNaN(seedId)) return;
 
         try {
-            // Find the exact AST node using the exact index match
-            const pIndex = this.parser.placements.indexOf(p);
-            const astPlac = this.parser.astPlacements[pIndex];
-            
-            if (!astPlac || !astPlac.furnNode) throw new Error("No se encontró el nodo de la parcela en el AST.");
-            if (astPlac.item_id !== p.item_id) throw new Error("Desajuste entre el AST y el mapa binario para este ítem.");
-
-            const furnNode = astPlac.furnNode;
+            const furnNode = p.furnNode;
+            if (!furnNode) throw new Error("No se encontró el nodo de la parcela en el AST.");
             
             // Check if itemID exists, if not, create it
             let itemIDNode = furnNode.children.find(c => c.name === 'itemID');
@@ -983,26 +953,10 @@ class App {
                 itemIDNode.value = seedId;
             }
 
-            // Serialize and Reload (Same logic as addFurniture)
-            const writer = new OdinWriter();
-            const newBuffer = writer.write(this.parser.ast);
-            
-            this.parser = new SaveParser(newBuffer.buffer);
-            try {
-                const newReader = new OdinReader(this.parser.buffer.buffer);
-                let newAst = newReader.parse();
-                if (Array.isArray(newAst)) newAst = newAst[0];
-                this.parser.ast = newAst;
-            } catch (err) {
-                console.error('Error parsing AST after seed planting:', err);
-            }
-
-            this.parseData();
+            this.parser.parseMap();
             
             // Try to re-select the plot
-            const rePlac = this.parser.placements.find(np => 
-                np.subloc_id === p.subloc_id && np.item_id === 306 && np.x === p.x && np.y === p.y
-            );
+            const rePlac = this.parser.placements.find(np => np.placementID === p.placementID);
             if (rePlac) {
                 this.map.selectedPlacement = rePlac;
             }
@@ -1015,7 +969,7 @@ class App {
         }
     }
 
-    // ─── Save & Download ──────────────────────────────────────────────
+    // ─── Save & Download ───────────────────────────────────────────────────
 
     saveAndDownload() {
         if (!this.parser) return;

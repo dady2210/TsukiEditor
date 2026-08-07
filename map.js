@@ -81,36 +81,56 @@ class IsometricMap {
     }
 
     getImage(item_id, orientation) {
-        // Only top-left (1) and top-right (2) show the back of the object
-        const isBack = orientation === 1 || orientation === 2;
-        const baseKey = isBack ? `${item_id}_B` : `${item_id}`;
+        // 0: SE (Front Right)
+        // 1: SW (Front Left)
+        // 2: NW (Back Left)
+        // 3: NE (Back Right)
+        const isBack = orientation === 2 || orientation === 3;
+        const frontKey = `${item_id}`;
+        const backKey = `${item_id}_BACK`;
         
-        // Orientation controls flipping, but image cache is based on item_id and whether it's back/front
-        const key = `${baseKey}`;
+        const cacheKey = isBack ? backKey : frontKey;
         
-        if (this._imgCache[key] !== undefined) {
-            return this._imgCache[key];
+        if (this._imgCache[cacheKey] !== undefined) {
+            return this._imgCache[cacheKey];
         }
 
-        // Initialize as loading to prevent duplicate requests
-        this._imgCache[key] = false;
+        this._imgCache[cacheKey] = false;
         
-        const img = new Image();
-        img.onload  = () => { this._imgCache[key] = img; this.draw(); };
-        
-        img.src = `images/items/FURN_${baseKey}_0.png?v=5`;
-        img.onerror = () => {
-            // If composited _0 doesn't exist, try plain
-            let imgTemp = new Image();
-            imgTemp.onload = () => { this._imgCache[key] = imgTemp; this.draw(); };
-            imgTemp.onerror = () => { this._imgCache[key] = null; this.draw(); };
-            imgTemp.src = `images/items/FURN_${baseKey}.png?v=5`;
+        const loadImg = (keyToLoad, fallbackCb) => {
+            const img = new Image();
+            img.onload = () => { this._imgCache[cacheKey] = img; this.draw(); };
+            img.onerror = () => {
+                const img2 = new Image();
+                img2.onload = () => { this._imgCache[cacheKey] = img2; this.draw(); };
+                img2.onerror = fallbackCb;
+                img2.src = `images/items/FURN_${keyToLoad}.png?v=5`;
+            };
+            img.src = `images/items/FURN_${keyToLoad}_0.png?v=5`;
         };
+
+        if (isBack) {
+            // Try loading back image, if it fails, load front image instead
+            loadImg(backKey, () => {
+                // Back image failed completely, fallback to front image
+                // The draw logic will apply the darken filter for orientation 2/3
+                loadImg(frontKey, () => {
+                    this._imgCache[cacheKey] = null;
+                    this.draw();
+                });
+            });
+        } else {
+            // Normal front load
+            loadImg(frontKey, () => {
+                this._imgCache[cacheKey] = null;
+                this.draw();
+            });
+        }
         
         return false;
     }
 
-    // ── Coordinate transforms ─────────────────────────────────────────────
+    // ─── Coordinate transforms ───────────────────────────────────────────────
     getIsoCoords(x, y) {
         const isoX = (x - y) * (this.CELL_W / 2);
         const isoY = (x + y) * (this.CELL_H / 2); // Positive so it goes down the screen
