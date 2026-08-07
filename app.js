@@ -959,14 +959,12 @@ class App {
         if (isNaN(seedId)) return;
 
         try {
-            // Find the exact AST node using parser.astPlacements
-            const astPlac = this.parser.astPlacements.find(ap => 
-                ap.subloc_id === p.subloc_id && 
-                ap.item_id === p.item_id && 
-                ap.x === p.x && 
-                ap.y === p.y
-            );
+            // Find the exact AST node using the exact index match
+            const pIndex = this.parser.placements.indexOf(p);
+            const astPlac = this.parser.astPlacements[pIndex];
+            
             if (!astPlac || !astPlac.furnNode) throw new Error("No se encontró el nodo de la parcela en el AST.");
+            if (astPlac.item_id !== p.item_id) throw new Error("Desajuste entre el AST y el mapa binario para este ítem.");
 
             const furnNode = astPlac.furnNode;
             
