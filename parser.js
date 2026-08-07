@@ -29,6 +29,36 @@ function calcVerificationId(itemId) {
 }
 
 class SaveParser {
+
+    _findNodeInAST(name) {
+        if (!this.ast) return null;
+        
+        // Fast top-level check
+        if (this.ast.children) {
+            const direct = this.ast.children.find(c => c.name === name);
+            if (direct) return direct;
+        }
+
+        const search = (n, target) => {
+            if (!n) return null;
+            if (n.name === target) return n;
+            if (n.children) {
+                for (const child of n.children) {
+                    const res = search(child, target);
+                    if (res) return res;
+                }
+            }
+            if (n.elements) {
+                for (const el of n.elements) {
+                    if (el.key) { const res = search(el.key, target); if (res) return res; }
+                    if (el.value) { const res = search(el.value, target); if (res) return res; }
+                }
+            }
+            return null;
+        };
+        return search(this.ast, name);
+    }
+
     constructor(buffer) {
         this.buffer = new Uint8Array(buffer);
         this.view = new DataView(buffer);
@@ -463,9 +493,32 @@ class SaveParser {
     setNPCFriendship(npcIndex, newFriendship) {
         const npc = this.npcSaves[npcIndex];
         if (!npc || npc.fOff === -1) return false;
+        
+        // AST approach
+        if (this.ast) {
+            const npcSavesNode = this._findNodeInAST('npcSaves');
+            if (npcSavesNode) {
+                const listNode = npcSavesNode.children[0];
+                if (listNode && listNode.elements) {
+                    for (const el of listNode.elements) {
+                        const val = el.value || el;
+                        if (val && val.children) {
+                            const charNode = val.children.find(c => c.name === 'character');
+                            if (charNode && charNode.value === npc.charId) {
+                                const fNode = val.children.find(c => c.name === 'friendship');
+                                if (fNode) fNode.value = newFriendship;
+                                const ldNode = val.children.find(c => c.name === 'lastFriendshipDay');
+                                if (ldNode) ldNode.value = 0;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         this.writeInt32(npc.fOff, newFriendship);
         npc.friendship = newFriendship;
-        // Also reset lastFriendshipDay to 0 so the game doesn't think it was already updated today
         if (npc.ldOff !== -1) { this.writeInt32(npc.ldOff, 0); npc.lastFriendshipDay = 0; }
         return true;
     }
@@ -473,6 +526,28 @@ class SaveParser {
     setNPCPester(npcIndex, pesterValue) {
         const npc = this.npcSaves[npcIndex];
         if (!npc || npc.pOff === -1) return false;
+
+        // AST approach
+        if (this.ast) {
+            const npcSavesNode = this._findNodeInAST('npcSaves');
+            if (npcSavesNode) {
+                const listNode = npcSavesNode.children[0];
+                if (listNode && listNode.elements) {
+                    for (const el of listNode.elements) {
+                        const val = el.value || el;
+                        if (val && val.children) {
+                            const charNode = val.children.find(c => c.name === 'character');
+                            if (charNode && charNode.value === npc.charId) {
+                                const pNode = val.children.find(c => c.name === 'Pester');
+                                if (pNode) pNode.value = pesterValue;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         this.writeInt32(npc.pOff, pesterValue);
         npc.pester = pesterValue;
         return true;
@@ -568,6 +643,15 @@ class SaveParser {
     writeGeneralVar(name, value) {
         const entry = this.generalVars[name];
         if (!entry) return false;
+        
+        // AST approach
+        const node = this._findNodeInAST(name);
+        if (node) {
+            if (entry.type === 'int32') node.value = value | 0;
+            else if (entry.type === 'float') node.value = value;
+            else if (entry.type === 'bool') node.value = !!value;
+        }
+
         if (entry.type === 'int32') { this.writeInt32(entry.offset, value | 0); entry.value = value | 0; }
         else if (entry.type === 'float') { this.writeFloat32(entry.offset, value); entry.value = value; }
         else if (entry.type === 'bool') { this.writeBool(entry.offset, !!value); entry.value = !!value; }
@@ -596,6 +680,15 @@ class SaveParser {
 
     setTrainDay(day) {
         if (!this.trainSave || this.trainSave.trainDayOff === -1) return false;
+        
+        if (this.ast) {
+            const trainNode = this._findNodeInAST('trainSave');
+            if (trainNode && trainNode.children) {
+                const dayNode = trainNode.children.find(c => c.name === 'trainDay');
+                if (dayNode) dayNode.value = day;
+            }
+        }
+
         this.writeInt32(this.trainSave.trainDayOff, day);
         this.trainSave.trainDay = day;
         return true;
@@ -603,6 +696,15 @@ class SaveParser {
 
     setTrainNumber(num) {
         if (!this.trainSave || this.trainSave.trainNumberOff === -1) return false;
+        
+        if (this.ast) {
+            const trainNode = this._findNodeInAST('trainSave');
+            if (trainNode && trainNode.children) {
+                const numNode = trainNode.children.find(c => c.name === 'trainNumber');
+                if (numNode) numNode.value = num;
+            }
+        }
+
         this.writeInt32(this.trainSave.trainNumberOff, num);
         this.trainSave.trainNumber = num;
         return true;
