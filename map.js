@@ -205,7 +205,7 @@ class IsometricMap {
         );
 
         const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
-        const seeds   = all.filter(p => SEED_IDS.has(p.item_id));
+        const seeds   = all.filter(p => SEED_IDS.has(p.item_id) && p.x !== -1 && p.y !== -1);
         const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id));
 
         // Z-sort regular furniture by x+y (painter's algorithm)
@@ -375,7 +375,6 @@ class IsometricMap {
         ctx.lineWidth   = 1;
         const step = 10 * this.scale;
         const cx = (top.x + bot.x) / 2;
-        const cy = (top.y + bot.y) / 2;
         const cy = (top.y + bot.y) / 2;
         const r  = Math.hypot(right.x - left.x, right.y - left.y) * 0.8;
         for (let i = -r; i < r; i += step) {

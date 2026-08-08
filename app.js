@@ -167,6 +167,17 @@ class App {
                 }
             }
         }
+        
+        if (this.editSeedSelect && typeof SEED_IDS !== 'undefined') {
+            this.editSeedSelect.innerHTML = '';
+            for (const id of SEED_IDS) {
+                const opt = document.createElement('option');
+                opt.value = id;
+                const name = window.KNOWN_ITEMS['FURN_' + id] || 'Semilla ' + id;
+                opt.textContent = `[${id}] ${name}`;
+                this.editSeedSelect.appendChild(opt);
+            }
+        }
     }
 
     // ─── Events ────────────────────────────────────────────────────────
@@ -248,6 +259,11 @@ class App {
         
         if (this.btnPlantSeed) {
             this.btnPlantSeed.addEventListener('click', () => this.executePlantSeed());
+        }
+        
+        const btnMature = document.getElementById('btn-mature-crop');
+        if (btnMature) {
+            btnMature.addEventListener('click', () => this.executeMatureCrop());
         }
 
         document.getElementById('btn-float-rot-left').addEventListener('click', () => {
@@ -914,8 +930,19 @@ class App {
         this.editItemId.oninput = e => { if (icon) icon.src = `images/items/FURN_${e.target.value}.png`; };
         
         if (this.seedPlantingUI) {
-            if (placement.item_id === 306) {
+            if (placement.item_id === 306 || placement.item_id === 411) {
                 this.seedPlantingUI.classList.remove('hidden');
+                const cropInfo = document.getElementById('current-crop-info');
+                const matureBtn = document.getElementById('btn-mature-crop');
+                
+                if (placement.planted_id) {
+                    const name = window.KNOWN_ITEMS['FURN_' + placement.planted_id] || 'Semilla ' + placement.planted_id;
+                    if (cropInfo) cropInfo.innerHTML = `<img src=\"images/items/FURN_${placement.planted_id}.png\" style=\"width:24px; vertical-align:middle; margin-right:5px;\" onerror=\"this.style.display='none'\"> <strong>${name}</strong>`;
+                    if (matureBtn) matureBtn.style.display = 'block';
+                } else {
+                    if (cropInfo) cropInfo.textContent = 'Ningún cultivo plantado.';
+                    if (matureBtn) matureBtn.style.display = 'none';
+                }
             } else {
                 this.seedPlantingUI.classList.add('hidden');
             }
@@ -926,40 +953,163 @@ class App {
 
     closeItemEditor() { this.itemEditor.classList.add('hidden'); }
 
+    _findNodeByName(node, names) {
+        if (!node) return null;
+        if (node.name && names.includes(node.name)) return node;
+        if (node.children) {
+            for (const c of node.children) {
+                const r = this._findNodeByName(c, names);
+                if (r) return r;
+            }
+        }
+        if (node.elements) {
+            for (const el of node.elements) {
+                const r = this._findNodeByName(el.value, names);
+                if (r) return r;
+            }
+        }
+        if (node.value && typeof node.value === 'object') {
+            return this._findNodeByName(node.value, names);
+        }
+        return null;
+    }
+
+    _resetCropTime(seedObj) {
+        const nowOADate = (Date.now() / 86400000) + 25569;
+        const durationDays = (2 / 24); // 2 hours default
+        
+        let hNode = seedObj.harvestTimeNode || this._findNodeByName(seedObj.furnNode, ['harvestTime', 'HarvestTime']);
+        if (hNode) hNode.value = nowOADate + durationDays;
+
+        let pNode = seedObj.placedNode || this._findNodeByName(seedObj.furnNode, ['Placed', 'placed']);
+        if (pNode) pNode.value = nowOADate;
+    }
+
+    executeMatureCrop() {
+        if (!this.map.selectedPlacement) return;
+        const p = this.map.selectedPlacement;
+        if (!p.linkedSeed) return;
+
+        try {
+            const seed = p.linkedSeed;
+            if (seed.harvestTimeNode) {
+                const nowOADate = (Date.now() / 86400000) + 25569;
+                seed.harvestTimeNode.value = nowOADate;
+                
+                this.parser.parseMap();
+                this.showToast('☀️ ¡Cultivo madurado con éxito!');
+            } else {
+                console.warn('No se encontró el nodo harvestTime en la semilla.');
+                alert('No se pudo encontrar el tiempo de cosecha en el AST.');
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     executePlantSeed() {
         if (!this.map.selectedPlacement) return;
         const p = this.map.selectedPlacement;
-        if (p.item_id !== 306) return;
+        if (p.item_id !== 306 && p.item_id !== 411) return;
 
         const seedId = parseInt(this.editSeedSelect.value);
         if (isNaN(seedId)) return;
 
         try {
-            const furnNode = p.furnNode;
-            if (!furnNode) throw new Error("No se encontró el nodo de la parcela en el AST.");
-            
-            // Check if itemID exists, if not, create it
-            let itemIDNode = furnNode.children.find(c => c.name === 'itemID');
-            if (!itemIDNode) {
-                itemIDNode = new OdinPrimitive(0x17, 'itemID', seedId);
-                furnNode.children.push(itemIDNode);
-            } else {
-                itemIDNode.value = seedId;
+            if (p.planted_id && p.linkedSeed) {
+                const seedNode = p.linkedSeed.furnNode;
+                const idNode = this._findNodeByName(seedNode, ['itemID', 'item_id', 'itemId']);
+                if (idNode) idNode.value = seedId;
+                
+                this._resetCropTime(p.linkedSeed);
+                this.parser.parseMap();
+                this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === p.placementID);
+                this.map.draw();
+                this.updateItemEditorUI(this.map.selectedPlacement);
+                this.showToast('🌱 ¡Semilla cambiada con éxito!');
+                return;
+            }
+
+            const templateSeed = this.parser.placements.find(pl => typeof SEED_IDS !== 'undefined' && SEED_IDS.has(pl.item_id) && pl.linkedPlot);
+            if (!templateSeed || !templateSeed.linkedPlot) {
+                alert('No se puede plantar: se necesita al menos un cultivo ya plantado en el juego para usar como plantilla. Planta uno en el juego original, guarda y vuelve a cargar.');
+                return;
+            }
+
+            const cloneNode = (node) => {
+                if (!node) return null;
+                if (node.constructor.name === 'OdinPrimitive') return new OdinPrimitive(node.typeId, node.name, node.value);
+                if (node.constructor.name === 'OdinNode') {
+                    const n = new OdinNode(node.typeId, node.name, node.className, node.ns, node.asm);
+                    n.children = node.children.map(c => cloneNode(c));
+                    return n;
+                }
+                if (node.constructor.name === 'OdinList') {
+                    const l = new OdinList(node.typeId, node.name);
+                    l.elements = node.elements.map(e => ({ key: cloneNode(e.key), value: cloneNode(e.value) }));
+                    return l;
+                }
+                if (node.constructor.name === 'OdinType') return new OdinType(node.className, node.ns, node.asm);
+                return node;
+            };
+
+            const newSeedNode = cloneNode(templateSeed.furnNode);
+            const maxPlacementId = Math.max(...this.parser.placements.map(pl => pl.placementID || 0));
+            const newPlacementId = maxPlacementId + 1;
+
+            const idNode = this._findNodeByName(newSeedNode, ['itemID', 'item_id', 'itemId']);
+            if (idNode) idNode.value = seedId;
+
+            const pIdNode = this._findNodeByName(newSeedNode, ['placementID']);
+            if (pIdNode) pIdNode.value = newPlacementId;
+
+            this._resetCropTime({ furnNode: newSeedNode });
+
+            const findAndReplaceInPlot = (templatePlotNode, targetPlotNode, targetValue, newValue) => {
+                if (!templatePlotNode || !targetPlotNode) return false;
+                if (templatePlotNode.value === targetValue) {
+                    targetPlotNode.value = newValue;
+                    return true;
+                }
+                if (templatePlotNode.children && targetPlotNode.children) {
+                    for (let i = 0; i < templatePlotNode.children.length; i++) {
+                        if (findAndReplaceInPlot(templatePlotNode.children[i], targetPlotNode.children[i], targetValue, newValue)) return true;
+                    }
+                }
+                if (templatePlotNode.elements && targetPlotNode.elements) {
+                    for (let i = 0; i < templatePlotNode.elements.length; i++) {
+                        if (findAndReplaceInPlot(templatePlotNode.elements[i].value, targetPlotNode.elements[i].value, targetValue, newValue)) return true;
+                    }
+                }
+                return false;
+            };
+
+            const linked = findAndReplaceInPlot(templateSeed.linkedPlot.furnNode, p.furnNode, templateSeed.placementID, newPlacementId);
+            if (!linked) {
+                console.warn('No se pudo encontrar dónde inyectar el placementID en el plot destino. El juego podría no reconocerlo.');
+            }
+
+            const sublocsWrapper = this.parser.ast.children.find(c => c.name === 'sublocations');
+            const sublocsList = sublocsWrapper.children.find(c => c.constructor.name === 'OdinList');
+            const farmEntry = sublocsList.elements.find(e => e.key.value === p.cluster);
+            if (farmEntry) {
+                const furnWrap = farmEntry.value.children.find(c => c.name === 'furniture');
+                const furnList = furnWrap.children.find(c => c.constructor.name === 'OdinList');
+                furnList.elements.push({
+                    key: new OdinPrimitive(0x08, '', newPlacementId),
+                    value: newSeedNode
+                });
             }
 
             this.parser.parseMap();
-            
-            // Try to re-select the plot
-            const rePlac = this.parser.placements.find(np => np.placementID === p.placementID);
-            if (rePlac) {
-                this.map.selectedPlacement = rePlac;
-            }
+            this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === p.placementID);
             this.map.draw();
-            
-            this.showToast('🌱 ¡Semilla Mágica plantada con éxito!');
-        } catch (err) {
-            console.error(err);
-            this.showToast('Error al plantar: ' + err.message, 'error');
+            this.updateItemEditorUI(this.map.selectedPlacement);
+            this.showToast('🌱 ¡Semilla plantada con éxito!');
+
+        } catch (e) {
+            console.error(e);
+            alert('Error al plantar la semilla: ' + e.message);
         }
     }
 

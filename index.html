@@ -495,18 +495,23 @@
                             
                             <!-- Magic Seed Planting UI (Only visible for plot 306) -->
                             <div id="seed-planting-ui" class="hidden" style="margin-bottom:1.5rem; padding-top:1rem; border-top:1px solid rgba(0,0,0,0.1);">
-                                <label style="display:block; margin-bottom:5px; font-weight:bold; color:#27ae60;">🌱 Plantar Semilla Mágica:</label>
+                                <label style="display:block; margin-bottom:5px; font-weight:bold; color:#27ae60;">🌱 Cultivo en Parcela:</label>
+                                <div id="current-crop-info" style="margin-bottom: 10px; font-size: 0.9em; color: #555;">
+                                    Ningún cultivo plantado.
+                                </div>
+                                
+                                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                                    <button id="btn-mature-crop" class="btn-primary" style="background-color:#f39c12; flex:1; display:none;">☀️ Madurar Ahora</button>
+                                </div>
+
                                 <div style="display:flex; gap:10px;">
                                     <div class="select-wrapper" style="flex:1;">
                                         <select id="edit-seed-select" style="width:100%;">
-                                            <option value="342">Zanahoria (342)</option>
-                                            <option value="345">Sandía (345)</option>
-                                            <option value="1208">Calabaza (1208)</option>
-                                            <option value="1301">Fresa (1301)</option>
+                                            <!-- Populated dynamically from app.js -->
                                         </select>
                                         <span class="material-symbols-outlined dropdown-icon">expand_more</span>
                                     </div>
-                                    <button id="btn-plant-seed" class="btn-primary" style="background-color:#27ae60;">Plantar</button>
+                                    <button id="btn-plant-seed" class="btn-primary" style="background-color:#27ae60;">Plantar / Cambiar</button>
                                 </div>
                             </div>
 

@@ -251,7 +251,7 @@ class SaveParser {
                 }
             }
         }
-        // --- Fix Seed Coordinates ---
+        // --- Fix Seed Coordinates & Extract Times ---
         // Seeds often don't have a groupPosition and default to x=-1, y=-1.
         // They are linked to their FarmingPlot (306) via a component (like CropBox) that references their placementID.
         const seeds = this.placements.filter(p => p.x === -1 && p.y === -1 && p.placementID !== -1);
@@ -264,16 +264,43 @@ class SaveParser {
                 for (const c of node.children) if (findVal(c, val)) return true;
             }
             if (node.elements) {
-                for (const el of node.elements) if (findVal(el, val)) return true;
+                for (const el of node.elements) if (findVal(el.value, val)) return true;
             }
             return false;
         };
 
+        const findNodeByName = (node, names) => {
+            if (!node) return null;
+            if (node.name && names.includes(node.name)) return node;
+            if (node.children) {
+                for (const c of node.children) {
+                    const r = findNodeByName(c, names);
+                    if (r) return r;
+                }
+            }
+            if (node.elements) {
+                for (const el of node.elements) {
+                    const r = findNodeByName(el.value, names);
+                    if (r) return r;
+                }
+            }
+            if (node.value && typeof node.value === 'object') {
+                return findNodeByName(node.value, names);
+            }
+            return null;
+        };
+
         for (const seed of seeds) {
+            seed.harvestTimeNode = findNodeByName(seed.furnNode, ['harvestTime', 'HarvestTime']);
+            seed.placedNode = findNodeByName(seed.furnNode, ['Placed', 'placed']);
+            
             for (const plot of plots) {
                 if (findVal(plot.furnNode, seed.placementID)) {
                     seed.x = plot.x;
                     seed.y = plot.y;
+                    seed.linkedPlot = plot;
+                    plot.planted_id = seed.item_id;
+                    plot.linkedSeed = seed;
                     break;
                 }
             }
