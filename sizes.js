@@ -1385,7 +1385,7 @@ window.furnitureSizes = {
     "1824": { width: 2, length: 2 },
     "2056": { width: 2, length: 2 },
     "2076": { width: 2, length: 2 },
-    "53": { width: 4, length: 3 },
+    "53": { width: 4, length: 4 },
     "2512": { width: 1, length: 1 },
     "650": { width: 3, length: 3 },
     "108": { width: 1, length: 1 },
