@@ -420,7 +420,7 @@ class App {
         setVal('input-orders', 'ordersMade');
         setVal('input-clover', 'cloversBred');
         setVal('input-nodes', 'nodesBroken');
-        setVal('input-unluckiness', 'Unluckiness');
+        setVal('input-unluckiness', 'unluckiness');
         setVal('input-bedtime-start', 'startBedtime');
         setVal('input-bedtime-end', 'endBedtime');
 
@@ -469,7 +469,7 @@ class App {
         applyField('input-orders', 'ordersMade');
         applyField('input-clover', 'cloversBred');
         applyField('input-nodes', 'nodesBroken');
-        applyField('input-unluckiness', 'Unluckiness');
+        applyField('input-unluckiness', 'unluckiness');
         applyField('input-bedtime-start', 'startBedtime');
         applyField('input-bedtime-end', 'endBedtime');
 
@@ -941,13 +941,7 @@ class App {
             // Check if itemID exists, if not, create it
             let itemIDNode = furnNode.children.find(c => c.name === 'itemID');
             if (!itemIDNode) {
-                itemIDNode = {
-                    constructor: { name: 'OdinNode' },
-                    name: 'itemID',
-                    type: 0x17, // INT32
-                    value: seedId,
-                    children: null
-                };
+                itemIDNode = new OdinPrimitive(0x17, 'itemID', seedId);
                 furnNode.children.push(itemIDNode);
             } else {
                 itemIDNode.value = seedId;

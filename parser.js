@@ -274,7 +274,7 @@ class SaveParser {
                 if (idNode) idNode.value = newId;
                 if (newOrientation !== undefined) {
                     const oriNode = refNode.children.find(c => c.name === 'orientation');
-                    if (oriNode) oriNode.value = newOrientation;
+                    if (oriNode) oriNode.value = typeof oriNode.value === 'bigint' ? BigInt(newOrientation) : newOrientation;
                 }
             }
         }

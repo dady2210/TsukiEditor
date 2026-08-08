@@ -789,7 +789,7 @@ class IsometricMap {
     rotateSelected(direction) {
         if (!this.selectedPlacement) return;
         const p = this.selectedPlacement;
-        let newOri = (p.orientation + direction) % 4;
+        let newOri = (Number(p.orientation) + direction) % 4;
         if (newOri < 0) newOri += 4;
         
         p.orientation = newOri;
