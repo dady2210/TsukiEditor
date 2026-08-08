@@ -321,7 +321,7 @@ class IsometricMap {
             } else {
                 // Attempt to force a load
                 let imgTemp = new Image();
-                imgTemp.onload = () => { this.drawMap(); }; // trigger redraw when loaded
+                imgTemp.onload = () => { this.draw(); }; // trigger redraw when loaded
                 imgTemp.src = 'images/items/FURN_' + p.planted_id + '_0.png?v=5';
                 // Try ITEM_ if FURN_ fails
                 imgTemp.onerror = () => {
