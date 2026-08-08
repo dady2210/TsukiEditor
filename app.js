@@ -978,10 +978,10 @@ class App {
         const nowOADate = (Date.now() / 86400000) + 25569;
         const durationDays = (2 / 24); // 2 hours default
         
-        let hNode = seedObj.harvestTimeNode || this._findNodeByName(seedObj.furnNode, ['harvestTime', 'HarvestTime']);
+        let hNode = seedObj.harvestTimeNode || this._findNodeByName(seedObj.furnNode, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
         if (hNode) hNode.value = nowOADate + durationDays;
 
-        let pNode = seedObj.placedNode || this._findNodeByName(seedObj.furnNode, ['Placed', 'placed']);
+        let pNode = seedObj.placedNode || this._findNodeByName(seedObj.furnNode, ['placedOA', 'Placed', 'placed']);
         if (pNode) pNode.value = nowOADate;
     }
 
@@ -1021,6 +1021,17 @@ class App {
                 const idNode = this._findNodeByName(seedNode, ['itemID', 'item_id', 'itemId']);
                 if (idNode) idNode.value = seedId;
                 
+                const refNode = this._findNodeByName(seedNode, ['reference']);
+                if (refNode) {
+                    const rIdNode = this._findNodeByName(refNode, ['id']);
+                    if (rIdNode) rIdNode.value = seedId;
+                }
+                
+                if (typeof calcVerificationId !== 'undefined') {
+                    const vNode = this._findNodeByName(seedNode, ['verificationID', 'verify']);
+                    if (vNode) vNode.value = calcVerificationId(seedId);
+                }
+                
                 this._resetCropTime(p.linkedSeed);
                 this.parser.parseMap();
                 this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === p.placementID);
@@ -1030,8 +1041,12 @@ class App {
                 return;
             }
 
-            const templateSeed = this.parser.placements.find(pl => typeof SEED_IDS !== 'undefined' && SEED_IDS.has(pl.item_id) && pl.linkedPlot);
-            if (!templateSeed || !templateSeed.linkedPlot) {
+            const templateSeed = this.parser.placements.find(pl => {
+                const tn = pl.furnNode && (pl.furnNode.typeName || pl.furnNode.className);
+                return (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(pl.item_id)) || (tn && /CropSave/i.test(tn));
+            });
+            
+            if (!templateSeed || !templateSeed.furnNode) {
                 alert('No se puede plantar: se necesita al menos un cultivo ya plantado en el juego para usar como plantilla. Planta uno en el juego original, guarda y vuelve a cargar.');
                 return;
             }
@@ -1059,35 +1074,25 @@ class App {
 
             const idNode = this._findNodeByName(newSeedNode, ['itemID', 'item_id', 'itemId']);
             if (idNode) idNode.value = seedId;
+            
+            const refNode = this._findNodeByName(newSeedNode, ['reference']);
+            if (refNode) {
+                const rIdNode = this._findNodeByName(refNode, ['id']);
+                if (rIdNode) rIdNode.value = seedId;
+            }
 
             const pIdNode = this._findNodeByName(newSeedNode, ['placementID']);
             if (pIdNode) pIdNode.value = newPlacementId;
+            
+            const parentIdNode = this._findNodeByName(newSeedNode, ['parentPlacementID', 'ParentPlacementID']);
+            if (parentIdNode) parentIdNode.value = p.placementID;
+            
+            if (typeof calcVerificationId !== 'undefined') {
+                const vNode = this._findNodeByName(newSeedNode, ['verificationID', 'verify']);
+                if (vNode) vNode.value = calcVerificationId(seedId);
+            }
 
             this._resetCropTime({ furnNode: newSeedNode });
-
-            const findAndReplaceInPlot = (templatePlotNode, targetPlotNode, targetValue, newValue) => {
-                if (!templatePlotNode || !targetPlotNode) return false;
-                if (templatePlotNode.value === targetValue) {
-                    targetPlotNode.value = newValue;
-                    return true;
-                }
-                if (templatePlotNode.children && targetPlotNode.children) {
-                    for (let i = 0; i < templatePlotNode.children.length; i++) {
-                        if (findAndReplaceInPlot(templatePlotNode.children[i], targetPlotNode.children[i], targetValue, newValue)) return true;
-                    }
-                }
-                if (templatePlotNode.elements && targetPlotNode.elements) {
-                    for (let i = 0; i < templatePlotNode.elements.length; i++) {
-                        if (findAndReplaceInPlot(templatePlotNode.elements[i].value, targetPlotNode.elements[i].value, targetValue, newValue)) return true;
-                    }
-                }
-                return false;
-            };
-
-            const linked = findAndReplaceInPlot(templateSeed.linkedPlot.furnNode, p.furnNode, templateSeed.placementID, newPlacementId);
-            if (!linked) {
-                console.warn('No se pudo encontrar dónde inyectar el placementID en el plot destino. El juego podría no reconocerlo.');
-            }
 
             const sublocsWrapper = this.parser.ast.children.find(c => c.name === 'sublocations');
             const sublocsList = sublocsWrapper.children.find(c => c.constructor.name === 'OdinList');
