@@ -132,8 +132,8 @@ class IsometricMap {
 
     // ─── Coordinate transforms ───────────────────────────────────────────────
     getIsoCoords(x, y) {
-        const isoX = (y - x) * (this.CELL_W / 2);
-        const isoY = (x + y) * (this.CELL_H / 2); // Positive so it goes down the screen
+        const isoX = (x - y) * (this.CELL_W / 2);
+        const isoY = -(x + y) * (this.CELL_H / 2); // Negative so it goes UP the screen
         return {
             x: isoX * this.scale + this.offsetX,
             y: isoY * this.scale + this.offsetY,
@@ -144,8 +144,8 @@ class IsometricMap {
         const isoX = (screenX - this.offsetX) / this.scale;
         const isoY = (screenY - this.offsetY) / this.scale;
         const u = isoX / (this.CELL_W / 2);
-        const v = isoY / (this.CELL_H / 2); // Removed negative to match getIsoCoords
-        return { x: (v - u) / 2, y: (u + v) / 2 };
+        const v = -isoY / (this.CELL_H / 2); // Added negative for bottom origin
+        return { x: (u + v) / 2, y: (v - u) / 2 };
     }
 
     // ── Resize ────────────────────────────────────────────────────────────
@@ -209,7 +209,7 @@ class IsometricMap {
         const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id));
 
         // Z-sort regular furniture by x+y (painter's algorithm)
-        regular.sort((a, b) => (a.x + a.y) - (b.x + b.y));
+        regular.sort((a, b) => (b.x + b.y) - (a.x + a.y)); // DESCENDING for bottom origin
 
         // Draw layers
         for (const p of ground)  this._drawPlacement(p, 'ground');
