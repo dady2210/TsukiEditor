@@ -376,6 +376,7 @@ class IsometricMap {
         const step = 10 * this.scale;
         const cx = (top.x + bot.x) / 2;
         const cy = (top.y + bot.y) / 2;
+        const cy = (top.y + bot.y) / 2;
         const r  = Math.hypot(right.x - left.x, right.y - left.y) * 0.8;
         for (let i = -r; i < r; i += step) {
             ctx.beginPath();
