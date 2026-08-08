@@ -426,7 +426,7 @@ class IsometricMap {
         // Anchor at bot.y (the lowest vertex of the diamond) because in Isometric 2D,
         // the sprite's pivot is usually its lowest physical point touching the floor.
         // Anchor at bot.y (the front-most vertex of the diamond)
-        const anchorY = bot.y;
+        const anchorY = cy;
         
         let pivotX = 0.5;
         let pivotY = 0.15; // default fallback
