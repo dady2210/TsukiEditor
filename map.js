@@ -132,7 +132,7 @@ class IsometricMap {
 
     // ─── Coordinate transforms ───────────────────────────────────────────────
     getIsoCoords(x, y) {
-        const isoX = (x - y) * (this.CELL_W / 2);
+        const isoX = (y - x) * (this.CELL_W / 2);
         const isoY = (x + y) * (this.CELL_H / 2); // Positive so it goes down the screen
         return {
             x: isoX * this.scale + this.offsetX,
@@ -145,7 +145,7 @@ class IsometricMap {
         const isoY = (screenY - this.offsetY) / this.scale;
         const u = isoX / (this.CELL_W / 2);
         const v = isoY / (this.CELL_H / 2); // Removed negative to match getIsoCoords
-        return { x: (u + v) / 2, y: (v - u) / 2 };
+        return { x: (v - u) / 2, y: (u + v) / 2 };
     }
 
     // ── Resize ────────────────────────────────────────────────────────────
