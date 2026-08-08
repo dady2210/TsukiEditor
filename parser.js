@@ -489,8 +489,7 @@ class SaveParser {
                         if (tNode) tNode.value = BigInt(newInvType);
                         if (mNode) mNode.value = Date.now() / 86400000 + 25569;
 
-                        const wrapper = listNode.elements[0].value !== undefined ? { key: null, value: newNode } : newNode;
-                        listNode.elements.push(wrapper);
+                        listNode.elements.push(newNode);
                         listNode.length = listNode.elements.length;
                         
                         const newInvObj = {
