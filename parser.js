@@ -812,9 +812,15 @@ class SaveParser {
 
     getBuffer() {
         if (this.ast) {
-            const writer = new OdinWriter();
-            const outBuf = writer.write([this.ast]);
-            return outBuf.buffer || outBuf;
+            try {
+                const writer = new OdinWriter();
+                const outBuf = writer.write([this.ast]);
+                return outBuf.buffer || outBuf;
+            } catch (e) {
+                alert('ERROR CRÍTICO AL GUARDAR:\n' + e.message);
+                console.error(e);
+                throw e;
+            }
         }
         return this.buffer.buffer;
     }

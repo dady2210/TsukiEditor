@@ -367,7 +367,7 @@ class OdinWriter {
             return;
         }
 
-        this.writeByte(node.marker);
+        if (node.marker === undefined) { console.error("INVALID NODE IN AST:", node); throw new Error(`Writer: Node is missing marker. Constructor: ${node.constructor ? node.constructor.name : "none"}, keys: ${Object.keys(node).join(", ")}, name: ${node.name || "none"}`); } this.writeByte(node.marker);
         
         switch (node.marker) {
             case 0x01: // NamedStartOfReferenceNode

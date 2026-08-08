@@ -415,10 +415,12 @@ class App {
         setVal('input-hour', 'hour');
         setVal('input-raven', 'ravenChapter');
         setVal('input-gacha', 'gachaRolled');
+        setVal('input-unluckiness', 'unluckiness');
         setVal('input-fish-caught', 'fishCaught');
         setVal('input-orders', 'ordersMade');
         setVal('input-clover', 'cloversBred');
         setVal('input-nodes', 'nodesBroken');
+        setVal('input-unluckiness', 'Unluckiness');
         setVal('input-bedtime-start', 'startBedtime');
         setVal('input-bedtime-end', 'endBedtime');
 
@@ -462,10 +464,12 @@ class App {
         applyField('input-hour', 'hour');
         applyField('input-raven', 'ravenChapter');
         applyField('input-gacha', 'gachaRolled');
+        applyField('input-unluckiness', 'unluckiness');
         applyField('input-fish-caught', 'fishCaught');
         applyField('input-orders', 'ordersMade');
         applyField('input-clover', 'cloversBred');
         applyField('input-nodes', 'nodesBroken');
+        applyField('input-unluckiness', 'Unluckiness');
         applyField('input-bedtime-start', 'startBedtime');
         applyField('input-bedtime-end', 'endBedtime');
 
