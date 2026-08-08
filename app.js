@@ -1036,7 +1036,9 @@ class App {
                 this.parser.parseMap();
                 this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === p.placementID);
                 this.map.draw();
-                this.updateItemEditorUI(this.map.selectedPlacement);
+                if (this.map.selectedPlacement) {
+					this.openItemEditor(this.map.selectedPlacement);
+				}
                 this.showToast('🌱 ¡Semilla cambiada con éxito!');
                 return;
             }
@@ -1101,7 +1103,9 @@ class App {
             this.parser.parseMap();
             this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === p.placementID);
             this.map.draw();
-            this.updateItemEditorUI(this.map.selectedPlacement);
+            if (this.map.selectedPlacement) {
+				this.openItemEditor(this.map.selectedPlacement);
+			}
             this.showToast('🌱 ¡Semilla plantada con éxito!');
 
         } catch (e) {
