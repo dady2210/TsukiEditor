@@ -1053,19 +1053,11 @@ class App {
 
             const cloneNode = (node) => {
                 if (!node) return null;
-                if (node.constructor.name === 'OdinPrimitive') return new OdinPrimitive(node.typeId, node.name, node.value);
-                if (node.constructor.name === 'OdinNode') {
-                    const n = new OdinNode(node.typeId, node.name, node.className, node.ns, node.asm);
-                    n.children = node.children.map(c => cloneNode(c));
-                    return n;
-                }
-                if (node.constructor.name === 'OdinList') {
-                    const l = new OdinList(node.typeId, node.name);
-                    l.elements = node.elements.map(e => ({ key: cloneNode(e.key), value: cloneNode(e.value) }));
-                    return l;
-                }
-                if (node.constructor.name === 'OdinType') return new OdinType(node.className, node.ns, node.asm);
-                return node;
+                const clone = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
+                if (node.children) clone.children = node.children.map(cloneNode);
+                if (node.elements) clone.elements = node.elements.map(e => ({ key: cloneNode(e.key), value: cloneNode(e.value) }));
+                if (clone.value && typeof clone.value === 'object' && clone.value.constructor) clone.value = cloneNode(clone.value);
+                return clone;
             };
 
             const newSeedNode = cloneNode(templateSeed.furnNode);
