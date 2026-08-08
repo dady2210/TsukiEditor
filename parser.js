@@ -405,26 +405,27 @@ class SaveParser {
         if (invType === 1 && this.inventory[index]) item = this.inventory[index];
         else if (invType === 0 && this.hiddenInventory[index]) item = this.hiddenInventory[index];
         
-        if (!item) throw new Error("Slot de inventario invalido.");
+        if (!item) {
+            console.error("Slot de inventario invalido.");
+            return null;
+        }
         
         const emptyVerify = calcVerificationId(-1);
         item.item_id = -1; 
         item.qty = 0; 
-        item.invType = 0; 
         item.verify = emptyVerify;
         
         if (item.slotNode && item.slotNode.children) {
             const idNode = item.slotNode.children.find(c => c.name === 'ID');
             const qtyNode = item.slotNode.children.find(c => c.name === 'quantity');
-            const typeNode = item.slotNode.children.find(c => c.name === 'invType');
             const vNode = item.slotNode.children.find(c => c.name === 'verify' || c.name === 'verificationID');
             const mNode = item.slotNode.children.find(c => c.name === 'lastModified');
             
             if (idNode) idNode.value = -1;
             if (qtyNode) qtyNode.value = 0;
-            if (typeNode) typeNode.value = 0;
             if (vNode) vNode.value = emptyVerify;
-            if (mNode) mNode.value = 0;
+            // No tocamos invType (para que mantenga 0 o 1)
+            if (mNode) mNode.value = Date.now() / 86400000 + 25569;
         } else {
             console.error("AST slotNode missing for inventory clear!", item);
         }
@@ -462,18 +463,35 @@ class SaveParser {
                 const typeNode = itemsNode.children.find(c => c.name === parentName);
                 if (typeNode) {
                     const listNode = typeNode.children.find(c => c.constructor.name === 'OdinList');
-                    if (listNode && listNode.elements) {
+                    if (listNode && listNode.elements && listNode.elements.length > 0) {
+                        const template = listNode.elements[0].value || listNode.elements[0];
+                        
+                        // Deep clone helper for AST nodes
+                        const cloneNode = (node) => {
+                            if (!node) return null;
+                            const clone = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
+                            if (node.children) clone.children = node.children.map(cloneNode);
+                            return clone;
+                        };
+                        
                         const verify = calcVerificationId(newId);
-                        const newNode = new OdinNode(0x02, null, 14, 'ItemInventorySlot, Odyssey', -1);
-                        newNode.children = [
-                            new OdinPrimitive(0x17, 'ID', newId),
-                            new OdinPrimitive(0x17, 'quantity', quantity),
-                            new OdinPrimitive(0x17, 'verify', verify),
-                            new OdinPrimitive(0x1D, 'invType', BigInt(newInvType)),
-                            new OdinPrimitive(0x21, 'lastModified', Date.now() / 86400000 + 25569),
-                            new OdinNull(0x2D, 'slotSave')
-                        ];
-                        listNode.elements.push({ key: null, value: newNode }); // OdinList elements wrapper // In OdinList, elements often have {value: OdinNode}
+                        const newNode = cloneNode(template);
+                        
+                        const idNode = newNode.children.find(c => c.name === 'ID');
+                        const qtyNode = newNode.children.find(c => c.name === 'quantity');
+                        const vNode = newNode.children.find(c => c.name === 'verify' || c.name === 'verificationID');
+                        const tNode = newNode.children.find(c => c.name === 'invType');
+                        const mNode = newNode.children.find(c => c.name === 'lastModified');
+                        
+                        if (idNode) idNode.value = newId;
+                        if (qtyNode) qtyNode.value = quantity;
+                        if (vNode) vNode.value = verify;
+                        if (tNode) tNode.value = BigInt(newInvType);
+                        if (mNode) mNode.value = Date.now() / 86400000 + 25569;
+
+                        const wrapper = listNode.elements[0].value !== undefined ? { key: null, value: newNode } : newNode;
+                        listNode.elements.push(wrapper);
+                        listNode.length = listNode.elements.length;
                         
                         const newInvObj = {
                             item_id: newId,
@@ -675,7 +693,6 @@ class SaveParser {
             { name: 'junkerUsed',        marker: 0x17, read: 'int32', write: 'int32' },
             { name: 'startBedtime',      marker: 0x1f, read: 'float', write: 'float' },
             { name: 'endBedtime',        marker: 0x1f, read: 'float', write: 'float' },
-            { name: 'Unluckiness',       marker: 0x1f, read: 'float', write: 'float' },
         ];
 
         for (const f of fields) {
@@ -690,33 +707,53 @@ class SaveParser {
             }
         }
 
-        // Homecoming booleans (use byte pattern search)
-        const hcIOSTag = [0x68,0x00,0x6f,0x00,0x6d,0x00,0x65,0x00,0x63,0x00,0x6f,0x00,0x6d,0x00,0x69,0x00,0x6e,0x00,0x67,0x00,0x49,0x00,0x4f,0x00,0x53,0x00];
-        const hcAndTag = [0x68,0x00,0x6f,0x00,0x6d,0x00,0x65,0x00,0x63,0x00,0x6f,0x00,0x6d,0x00,0x69,0x00,0x6e,0x00,0x67,0x00,0x41,0x00,0x6e,0x00,0x64,0x00,0x72,0x00,0x6f,0x00,0x69,0x00,0x64,0x00];
+        // Add AST nodes
+        for (const key of Object.keys(this.generalVars)) {
+            const nodes = this._findNodesInAST(key);
+            if (nodes.length > 0) {
+                this.generalVars[key].astNode = nodes[0];
+            }
+        }
 
-        let off;
-        off = this.findPattern(hcIOSTag, 0);
-        if (off !== -1) this.generalVars['homecomingiOS'] = { value: this.buffer[off + hcIOSTag.length] !== 0, offset: off + hcIOSTag.length, type: 'bool' };
-        off = this.findPattern(hcAndTag, 0);
-        if (off !== -1) this.generalVars['homecomingAndroid'] = { value: this.buffer[off + hcAndTag.length] !== 0, offset: off + hcAndTag.length, type: 'bool' };
+        // Homecoming booleans (AST first, fallback to buffer)
+        const parseHC = (key) => {
+            const nodes = this._findNodesInAST(key);
+            if (nodes.length > 0) {
+                this.generalVars[key] = { value: nodes[0].value, type: 'bool', astNode: nodes[0], offset: -1 };
+            } else {
+                const hcTag = [0x68,0x00,0x6f,0x00,0x6d,0x00,0x65,0x00,0x63,0x00,0x6f,0x00,0x6d,0x00,0x69,0x00,0x6e,0x00,0x67,0x00];
+                const tail = key.endsWith('iOS') ? [0x49,0x00,0x4f,0x00,0x53,0x00] : [0x41,0x00,0x6e,0x00,0x64,0x00,0x72,0x00,0x6f,0x00,0x69,0x00,0x64,0x00];
+                const fullTag = hcTag.concat(tail);
+                const off = this.findPattern(fullTag, 0);
+                if (off !== -1) {
+                    this.generalVars[key] = { value: this.buffer[off + fullTag.length] !== 0, offset: off + fullTag.length, type: 'bool' };
+                }
+            }
+        };
+
+        parseHC('homecomingiOS');
+        parseHC('homecomingAndroid');
     }
 
     writeGeneralVar(name, value) {
         const entry = this.generalVars[name];
-        if (!entry) return false;
+        if (!entry) {
+            console.warn(`writeGeneralVar: No entry found for ${name}`);
+            return false;
+        }
         
         // AST approach
-        const nodes = this._findNodesInAST(name);
-        if (nodes.length > 0) {
-            const node = nodes[0]; // ONLY update the first (global) one!
-            if (entry.type === 'int32') node.value = value | 0;
-            else if (entry.type === 'float') node.value = value;
-            else if (entry.type === 'bool') node.value = !!value;
+        if (entry.astNode) {
+            if (entry.type === 'int32') entry.astNode.value = value | 0;
+            else if (entry.type === 'float') entry.astNode.value = value;
+            else if (entry.type === 'bool') entry.astNode.value = !!value;
         }
 
-        if (entry.type === 'int32') { this.writeInt32(entry.offset, value | 0); entry.value = value | 0; }
-        else if (entry.type === 'float') { this.writeFloat32(entry.offset, value); entry.value = value; }
-        else if (entry.type === 'bool') { this.writeBool(entry.offset, !!value); entry.value = !!value; }
+        if (entry.offset !== -1) {
+            if (entry.type === 'int32') { this.writeInt32(entry.offset, value | 0); entry.value = value | 0; }
+            else if (entry.type === 'float') { this.writeFloat32(entry.offset, value); entry.value = value; }
+            else if (entry.type === 'bool') { this.writeBool(entry.offset, !!value); entry.value = !!value; }
+        }
         return true;
     }
 
