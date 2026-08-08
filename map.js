@@ -395,6 +395,7 @@ class IsometricMap {
         const left  = this.getIsoCoords(gx,   gy+l);
 
         const cx = (top.x + bot.x) / 2;
+        const cy = (top.y + bot.y) / 2;
         
         // Fixed scale factor to map Unity sprite pixels to Canvas pixels.
         // Mathematically 0.8533, but reducing to 0.75 so items fit better visually within the grid bounds.
