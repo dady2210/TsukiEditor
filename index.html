@@ -538,30 +538,96 @@
     <script src="parser.js?v=20260813"></script>
     <script src="map.js?v=18"></script>
     <script src="app.js?v=6"></script>
-	<script>
-		document.addEventListener("DOMContentLoaded", () => {
-			const bgMusic = new Audio("https://files.catbox.moe/gkji45.mp3");
-			bgMusic.volume = 0.3; // Volumen al 30% para que no asuste al usuario (ajustable)
-			bgMusic.loop = true;  // Para que la canción se repita infinitamente
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		// Lista con todos los enlaces mp3 proporcionados
+		const playlist = [
+			"https://files.catbox.moe/zw0vjk.mp3", // Momo's Tea Shop (Night)
+			"https://files.catbox.moe/oskzl3.mp3", // Moca's Home (Night)
+			"https://files.catbox.moe/ce0snq.mp3", // Rosemary's Shop (Night)
+			"https://files.catbox.moe/qyqljb.mp3", // Dawn's Shack (Night)
+			"https://files.catbox.moe/ai1q40.mp3", // Coast (Night)
+			"https://files.catbox.moe/metb8b.mp3", // Town Hall (Night)
+			"https://files.catbox.moe/4lmsaa.mp3", // Chi's Home (Night)
+			"https://files.catbox.moe/ac64lb.mp3", // Elfie's Shop (Night)
+			"https://files.catbox.moe/xkjl0a.mp3", // Tsuki's Home (Night)
+			"https://files.catbox.moe/hflaib.mp3", // Dawn's Shack (Day)
+			"https://files.catbox.moe/c2yo4t.mp3", // Momo's Tea Shop (Day)
+			"https://files.catbox.moe/tmw03s.mp3", // Rosemary's Shop (Day)
+			"https://files.catbox.moe/9tf1pf.mp3", // Chi's Home (Day)
+			"https://files.catbox.moe/4mhre0.mp3", // Moca's Home (Day)
+			"https://files.catbox.moe/9qlsly.mp3", // Coast (Day)
+			"https://files.catbox.moe/m1nczi.mp3", // Town Hall (Day)
+			"https://files.catbox.moe/0sax2o.mp3", // Yori's Shop (Day)
+			"https://files.catbox.moe/7vspze.mp3", // Tsuki's Home (Day)
+			"https://files.catbox.moe/dwc4w8.mp3", // Arriving Mushroom Village (Opening)
+			"https://files.catbox.moe/kcvfxr.mp3", // Burglary!
+			"https://files.catbox.moe/q11r2e.mp3", // Loading Screen (Night)
+			"https://files.catbox.moe/bxki6u.mp3", // Night on the Train (Opening)
+			"https://files.catbox.moe/so1yqj.mp3"  // Loading Screen (Day)
+		];
 
-			// Función que inicia el audio
-			const startAudio = () => {
-				bgMusic.play().then(() => {
-					// Si el audio arranca con éxito, quitamos los 'escuchadores' para no ejecutar esto en cada clic
-					document.removeEventListener("click", startAudio);
-					document.removeEventListener("keydown", startAudio);
-				}).catch(error => {
-					console.log("El navegador bloqueó el autoplay. Esperando interacción del usuario.");
-				});
-			};
+		let shuffledPlaylist = [];
+		let currentIndex = 0;
 
-			// Intentar reproducir apenas cargue (solo funcionará si el navegador lo permite por el historial del usuario)
-			startAudio();
+		const bgMusic = new Audio();
+		bgMusic.volume = 0.3; // Volumen al 30%
 
-			// Si falló el primer intento, arrancará en el momento que el usuario haga cualquier clic o presione una tecla
-			document.addEventListener("click", startAudio);
-			document.addEventListener("keydown", startAudio);
-		});
+		// Algoritmo Fisher-Yates para mezclar la lista aleatoriamente
+		const shuffle = (array) => {
+			const arr = [...array];
+			for (let i = arr.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[arr[i], arr[j]] = [arr[j], arr[i]];
+			}
+			return arr;
+		};
+
+		// Función para reproducir la siguiente pista
+		const playNextTrack = () => {
+			// Si ya sonaron todas, se vuelve a mezclar la lista entera
+			if (currentIndex >= shuffledPlaylist.length) {
+				shuffledPlaylist = shuffle(playlist);
+				currentIndex = 0;
+			}
+
+			bgMusic.src = shuffledPlaylist[currentIndex];
+			currentIndex++;
+
+			bgMusic.play().catch(error => {
+				console.log("El navegador bloqueó la reproducción automática. Esperando interacción.");
+			});
+		};
+
+		// Pasa a la siguiente canción al finalizar la actual
+		bgMusic.addEventListener("ended", playNextTrack);
+
+		// Mezcla la lista por primera vez al cargar
+		shuffledPlaylist = shuffle(playlist);
+
+		// Función de inicio (inicia con el primer tema de la lista aleatoria)
+		const startAudio = () => {
+			if (!bgMusic.src) {
+				bgMusic.src = shuffledPlaylist[currentIndex];
+				currentIndex++;
+			}
+
+			bgMusic.play().then(() => {
+				// Remover listeners al iniciar la reproducción
+				document.removeEventListener("click", startAudio);
+				document.removeEventListener("keydown", startAudio);
+			}).catch(error => {
+				console.log("El navegador bloqueó el autoplay. Esperando interacción del usuario.");
+			});
+		};
+
+		// Intentar reproducir al cargar
+		startAudio();
+
+		// Respaldo por restricciones del navegador (clic o tecla)
+		document.addEventListener("click", startAudio);
+		document.addEventListener("keydown", startAudio);
+	});
 </script>
 </body>
 </html>
