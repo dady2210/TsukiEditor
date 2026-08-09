@@ -2076,8 +2076,7 @@ const ITEM_NAMES = {
   "FURN_603": "Objeto Desconocido / Unknown Item 603",
   "FURN_1324": "Objeto Desconocido / Unknown Item 1324",
   "FURN_1318": "Objeto Desconocido / Unknown Item 1318",
-  "FURN_638": "Objeto Desconocido / Unknown Item 638"
-
+  "FURN_638": "Objeto Desconocido / Unknown Item 638",
   "FURN_2392": "Wyrmcraft Shield B",
   "FURN_2388": "Wyrmcraft Knight's Armour B",
   "FURN_1016": "Bowing Willow B",
@@ -2135,4 +2134,5 @@ const ITEM_NAMES = {
   "FURN_2218": "Forluxe Terrarium B",
   "FURN_1015": "Infernal Wormweed B",
   "FURN_2332": "Lovestruck Single Rose B",
+  "FURN_740": "Metal Box Planter B",
 };
