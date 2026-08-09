@@ -146,6 +146,28 @@ class App {
         this.bindEvents();
     }
 
+    updateInvDatalist() {
+        const datalist = document.getElementById('add-inv-datalist');
+        if (!datalist || !this.addInvType) return;
+        
+        datalist.innerHTML = '';
+        if (!window.KNOWN_ITEMS) return;
+        
+        const typeMap = { 0:"ITEM", 1:"FURN", 2:"CROP", 3:"FISH" };
+        const typ = parseInt(this.addInvType.value);
+        const prefix = typeMap[typ] || "ITEM";
+        
+        for (const key in window.KNOWN_ITEMS) {
+            if (key.startsWith(prefix + '_')) {
+                const id = key.split('_')[1];
+                const opt = document.createElement('option');
+                opt.value = id;
+                opt.textContent = `[${id}] ${window.KNOWN_ITEMS[key]}`;
+                datalist.appendChild(opt);
+            }
+        }
+    }
+
     loadDictionaries() {
         // Data is injected via <script> tags (extracted_items_v3.js / sizes.js)
         // so no fetch() needed - works with file:// protocol without a server.
@@ -178,6 +200,8 @@ class App {
                 this.editSeedSelect.appendChild(opt);
             }
         }
+
+        this.updateInvDatalist();
     }
 
     // ─── Events ────────────────────────────────────────────────────────
@@ -279,6 +303,7 @@ class App {
 
         // Inventory
         this.invSearch.addEventListener('input', () => this.renderInventory());
+        if (this.addInvType) this.addInvType.addEventListener('change', () => this.updateInvDatalist());
         document.getElementById('btn-apply-all').addEventListener('click', () => this.saveAllInvItems());
         const addBtn = document.getElementById('btn-add-inv-item');
         if (addBtn) addBtn.addEventListener('click', () => this.addInventoryItem());
