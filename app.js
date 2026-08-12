@@ -1041,6 +1041,7 @@ class App {
         if (isNaN(seedId)) return;
 
         try {
+            // ─── Rama 1: cambiar semilla en parcela ya plantada ───
             if (p.planted_id && p.linkedSeed) {
                 const seedNode = p.linkedSeed.furnNode;
                 const idNode = this._findNodeByName(seedNode, ['itemID', 'item_id', 'itemId']);
@@ -1058,39 +1059,123 @@ class App {
                 }
                 
                 this._resetCropTime(p.linkedSeed);
+                
+                // B6: Verificar post-change
+                const savedPlotId = p.placementID;
                 this.parser.parseMap();
-                this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === p.placementID);
+                this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === savedPlotId);
                 this.map.draw();
                 if (this.map.selectedPlacement) {
-					this.openItemEditor(this.map.selectedPlacement);
-				}
-                this.showToast('🌱 ¡Semilla cambiada con éxito!');
+                    this.openItemEditor(this.map.selectedPlacement);
+                    if (this.map.selectedPlacement.linkedSeed && this.map.selectedPlacement.planted_id === seedId) {
+                        this.showToast('🌱 ¡Semilla cambiada con éxito!');
+                    } else {
+                        alert('⚠️ La semilla se cambió pero el link no se verificó correctamente.');
+                    }
+                }
                 return;
             }
 
+            // ─── Rama 2: plantar en parcela vacía ───
+            let newSeedNode;
+
+            // Buscar template existente en el save
             const templateSeed = this.parser.placements.find(pl => {
                 const tn = pl.furnNode && (pl.furnNode.typeName || pl.furnNode.className);
                 return (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(pl.item_id)) || (tn && /CropSave/i.test(tn));
             });
-            
-            if (!templateSeed || !templateSeed.furnNode) {
-                alert('No se puede plantar: se necesita al menos un cultivo ya plantado en el juego para usar como plantilla. Planta uno en el juego original, guarda y vuelve a cargar.');
-                return;
+
+            if (templateSeed && templateSeed.furnNode) {
+                // Clonar template existente (deep clone preservando prototipos Odin)
+                const cloneNode = (node) => {
+                    if (!node) return null;
+                    if (node instanceof OdinDictionaryEntry) {
+                        return new OdinDictionaryEntry(cloneNode(node.key), cloneNode(node.value));
+                    }
+                    const clone = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
+                    if (node.children) clone.children = node.children.map(cloneNode);
+                    if (node.elements) clone.elements = node.elements.map(cloneNode);
+                    if (clone.value && typeof clone.value === 'object' && clone.value.constructor &&
+                        !(clone.value instanceof Uint8Array)) {
+                        clone.value = cloneNode(clone.value);
+                    }
+                    return clone;
+                };
+                newSeedNode = cloneNode(templateSeed.furnNode);
+            } else {
+                // B3: Plantilla mínima embebida — marcadores reales del save:
+                //   FurniturePlacement (0x01, typeId=28, "FurniturePlacement, Odyssey")
+                //   ├── placementID (0x17)
+                //   ├── verificationID (0x17)
+                //   ├── reference (0x03, typeId=29, "FurnitureRef, Odyssey")
+                //   │   ├── id (0x17), orientation (0x1d BigInt)
+                //   ├── groupPosition (0x01, typeId=33, "SubGroupPosition, Odyssey")
+                //   │   ├── grid (0x03, typeId=8, "SimpleGrid, Odyssey") {x, y}
+                //   │   └── parentPlacementID (0x17)
+                //   ├── position (0x03, typeId=30, "GridPointer, Odyssey")
+                //   │   ├── pointerType (0x1d), grid{x,y}, groupPointer (0x17)
+                //   └── furnSave (0x01, typeId=56, "CropSave, Odyssey")
+                //       ├── placedOA (0x21), harvestTimeOA (0x21)
+                //       ├── blessings (null), ripe, strange, consumed
+                const baseNodeId = Date.now() & 0x7FFFFFFF; // nodeId único
+                const nowOA = (Date.now() / 86400000) + 25569;
+
+                newSeedNode = new OdinNode(0x01, '$v', 28, 'FurniturePlacement, Odyssey', baseNodeId);
+                newSeedNode.children = [
+                    new OdinPrimitive(0x17, 'placementID', 0), // se asigna abajo
+                    new OdinPrimitive(0x17, 'verificationID', 0), // se asigna abajo
+                    (() => {
+                        const ref = new OdinNode(0x03, 'reference', 29, 'FurnitureRef, Odyssey', null);
+                        ref.children = [
+                            new OdinPrimitive(0x17, 'id', seedId),
+                            new OdinPrimitive(0x1d, 'orientation', 0n)
+                        ];
+                        return ref;
+                    })(),
+                    (() => {
+                        const gp = new OdinNode(0x01, 'groupPosition', 33, 'SubGroupPosition, Odyssey', baseNodeId + 1);
+                        const grid = new OdinNode(0x03, 'grid', 8, 'SimpleGrid, Odyssey', null);
+                        grid.children = [
+                            new OdinPrimitive(0x17, 'x', 0),
+                            new OdinPrimitive(0x17, 'y', 0)
+                        ];
+                        gp.children = [grid, new OdinPrimitive(0x17, 'parentPlacementID', 0)]; // se asigna abajo
+                        return gp;
+                    })(),
+                    (() => {
+                        const pos = new OdinNode(0x03, 'position', 30, 'GridPointer, Odyssey', null);
+                        const grid = new OdinNode(0x03, 'grid', 8, 'SimpleGrid, Odyssey', null);
+                        grid.children = [
+                            new OdinPrimitive(0x17, 'x', 0),
+                            new OdinPrimitive(0x17, 'y', 0)
+                        ];
+                        pos.children = [
+                            new OdinPrimitive(0x1d, 'pointerType', 0n),
+                            grid,
+                            new OdinPrimitive(0x17, 'groupPointer', 0)
+                        ];
+                        return pos;
+                    })(),
+                    (() => {
+                        const fs = new OdinNode(0x01, 'furnSave', 56, 'CropSave, Odyssey', baseNodeId + 2);
+                        fs.children = [
+                            new OdinPrimitive(0x21, 'placedOA', nowOA),
+                            new OdinPrimitive(0x21, 'harvestTimeOA', nowOA + (2/24)),
+                            new OdinNull(0x2d, 'blessings'),
+                            new OdinPrimitive(0x2b, 'ripe', false),
+                            new OdinPrimitive(0x2b, 'strange', false),
+                            new OdinPrimitive(0x2b, 'consumed', false)
+                        ];
+                        return fs;
+                    })()
+                ];
             }
 
-            const cloneNode = (node) => {
-                if (!node) return null;
-                const clone = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
-                if (node.children) clone.children = node.children.map(cloneNode);
-                if (node.elements) clone.elements = node.elements.map(e => ({ key: cloneNode(e.key), value: cloneNode(e.value) }));
-                if (clone.value && typeof clone.value === 'object' && clone.value.constructor) clone.value = cloneNode(clone.value);
-                return clone;
-            };
-
-            const newSeedNode = cloneNode(templateSeed.furnNode);
+            // Generar nuevo placementID único
             const maxPlacementId = Math.max(...this.parser.placements.map(pl => pl.placementID || 0));
             const newPlacementId = maxPlacementId + 1;
 
+            // Asignar IDs en el nodo
             const idNode = this._findNodeByName(newSeedNode, ['itemID', 'item_id', 'itemId']);
             if (idNode) idNode.value = seedId;
             
@@ -1103,6 +1188,7 @@ class App {
             const pIdNode = this._findNodeByName(newSeedNode, ['placementID']);
             if (pIdNode) pIdNode.value = newPlacementId;
             
+            // B2: parentPlacementID = placementID de la parcela (está dentro de groupPosition)
             const parentIdNode = this._findNodeByName(newSeedNode, ['parentPlacementID', 'ParentPlacementID']);
             if (parentIdNode) parentIdNode.value = p.placementID;
             
@@ -1113,25 +1199,55 @@ class App {
 
             this._resetCropTime({ furnNode: newSeedNode });
 
+            // B5: Insertar en furniture de la sublocalización correcta
             const sublocsWrapper = this.parser.ast.children.find(c => c.name === 'sublocations');
-            const sublocsList = sublocsWrapper.children.find(c => c.constructor.name === 'OdinList');
-            const farmEntry = sublocsList.elements.find(e => e.key.value === p.cluster);
-            if (farmEntry) {
-                const furnWrap = farmEntry.value.children.find(c => c.name === 'furniture');
-                const furnList = furnWrap.children.find(c => c.constructor.name === 'OdinList');
-                furnList.elements.push({
-                    key: new OdinPrimitive(0x08, '', newPlacementId),
-                    value: newSeedNode
-                });
+            if (!sublocsWrapper) { alert('Error: no se encontró "sublocations" en el AST.'); return; }
+            const sublocsList = sublocsWrapper.children
+                ? sublocsWrapper.children.find(c => c.constructor.name === 'OdinList')
+                : null;
+            if (!sublocsList) { alert('Error: no se encontró la lista de sublocaciones.'); return; }
+
+            // Coerción numérica por si hay mismatch number/bigint
+            const farmEntry = sublocsList.elements.find(e => {
+                if (e instanceof OdinDictionaryEntry) return Number(e.key.value) === Number(p.cluster);
+                if (e.key) return Number(e.key.value) === Number(p.cluster);
+                return false;
+            });
+
+            if (!farmEntry) {
+                alert('Error: no se encontró la sublocalización ' + p.cluster + ' en el AST.');
+                return;
             }
 
+            const sublocNode = (farmEntry instanceof OdinDictionaryEntry) ? farmEntry.value : farmEntry.value;
+            const furnWrap = sublocNode.children.find(c => c.name === 'furniture');
+            if (!furnWrap) { alert('Error: no se encontró "furniture" en la sublocalización.'); return; }
+            const furnList = furnWrap.children
+                ? furnWrap.children.find(c => c.constructor.name === 'OdinList')
+                : null;
+            if (!furnList) { alert('Error: no se encontró la lista de furniture.'); return; }
+
+            // Insertar como OdinDictionaryEntry con el formato real del save ($k/$v)
+            const dictKey = new OdinPrimitive(0x17, '$k', newPlacementId);
+            furnList.elements.push(new OdinDictionaryEntry(dictKey, newSeedNode));
+
+            // B6: Verificar que el link quedó bien
+            const savedPlotId = p.placementID;
             this.parser.parseMap();
-            this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === p.placementID);
+            this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === savedPlotId);
             this.map.draw();
+
             if (this.map.selectedPlacement) {
-				this.openItemEditor(this.map.selectedPlacement);
-			}
-            this.showToast('🌱 ¡Semilla plantada con éxito!');
+                this.openItemEditor(this.map.selectedPlacement);
+                if (this.map.selectedPlacement.linkedSeed && this.map.selectedPlacement.planted_id === seedId) {
+                    this.showToast('🌱 ¡Semilla plantada con éxito!');
+                } else {
+                    alert('⚠️ El nodo se insertó pero el link parcela↔semilla no se verificó. ' +
+                          'Posible causa: parentPlacementID no coincide con la parcela.');
+                }
+            } else {
+                alert('⚠️ No se encontró la parcela tras re-parsear.');
+            }
 
         } catch (e) {
             console.error(e);

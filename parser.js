@@ -334,6 +334,14 @@ class SaveParser {
             }
         }
 
+        // B1: Seeds sin link válido → forzar x/y = -1 para que map.js las filtre
+        for (const seed of seeds) {
+            if (!seed.linkedPlot) {
+                seed.x = -1;
+                seed.y = -1;
+            }
+        }
+
         this.astPlacements = [...this.placements]; // keeping for compatibility
     }
 
@@ -383,15 +391,20 @@ class SaveParser {
 
     cleanBuggySeeds() {
         if (!this.placements) return 0;
+        // B4: Re-parsear para tener links actualizados
+        this.parseMap();
         let count = 0;
+        const seedIds = [342, 345, 1208, 1230, 1231, 1232, 1233, 1237, 1238, 1301];
         for (const p of this.placements) {
-            // If it's a seed item placed on the map (especially at 0,0)
-            if ([342, 345, 1208, 1230, 1231, 1232, 1233, 1237, 1238, 1301].includes(p.item_id)) {
-                // Erase it from the map by setting ID to -1
+            // Solo borrar seeds SIN link válido a una parcela
+            const isSeed = seedIds.includes(p.item_id)
+                || (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id));
+            if (isSeed && !p.linkedPlot) {
                 this.applyMapChange(p, -1, p.x, p.y, p.orientation);
                 count++;
             }
         }
+        if (count > 0) this.parseMap();
         return count;
     }
 
