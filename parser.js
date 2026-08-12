@@ -28,6 +28,101 @@ function calcVerificationId(itemId) {
     return retVal >>> 0;
 }
 
+function findChildNode(node, names) {
+    if (!node || !node.children) return null;
+    return node.children.find(c => names.includes(c.name));
+}
+
+function findChildRecursive(node, names) {
+    if (!node) return null;
+    if (node.name && names.includes(node.name)) return node;
+    if (node.children) {
+        for (const c of node.children) {
+            const r = findChildRecursive(c, names);
+            if (r) return r;
+        }
+    }
+    return null;
+}
+
+function readGroupXY(groupPosNode, positionNodeFallback) {
+    let x = -1, y = -1;
+    
+    if (groupPosNode) {
+        // 1) groupPosition.grid.x/y
+        const grid = findChildNode(groupPosNode, ['grid']);
+        if (grid) {
+            const xNode = findChildNode(grid, ['x']);
+            const yNode = findChildNode(grid, ['y']);
+            if (xNode && yNode) return { x: Number(xNode.value), y: Number(yNode.value) };
+        }
+        
+        // 2) groupPosition.x/y directos
+        const xNodeDirect = findChildNode(groupPosNode, ['x']);
+        const yNodeDirect = findChildNode(groupPosNode, ['y']);
+        if (xNodeDirect && yNodeDirect) return { x: Number(xNodeDirect.value), y: Number(yNodeDirect.value) };
+    }
+    
+    // 3) position.grid.x/y (GridPointer)
+    if (positionNodeFallback) {
+        const grid = findChildNode(positionNodeFallback, ['grid']);
+        if (grid) {
+            const xNode = findChildNode(grid, ['x']);
+            const yNode = findChildNode(grid, ['y']);
+            if (xNode && yNode) return { x: Number(xNode.value), y: Number(yNode.value) };
+        }
+    }
+    
+    // 4) buscar recursivo hijos llamados 'x'/'y' bajo groupPosition
+    if (groupPosNode) {
+        const xNode = findChildRecursive(groupPosNode, ['x']);
+        const yNode = findChildRecursive(groupPosNode, ['y']);
+        if (xNode && yNode) return { x: Number(xNode.value), y: Number(yNode.value) };
+    }
+    
+    return { x, y };
+}
+
+function writeGroupXY(groupPosNode, newX, newY, positionNodeFallback) {
+    let written = false;
+    
+    if (groupPosNode) {
+        // 1) groupPosition.grid.x/y
+        const grid = findChildNode(groupPosNode, ['grid']);
+        if (grid) {
+            const xNode = findChildNode(grid, ['x']);
+            const yNode = findChildNode(grid, ['y']);
+            if (xNode) { xNode.value = newX; written = true; }
+            if (yNode) { yNode.value = newY; written = true; }
+        }
+        
+        // 2) groupPosition.x/y directos
+        const xNodeDirect = findChildNode(groupPosNode, ['x']);
+        const yNodeDirect = findChildNode(groupPosNode, ['y']);
+        if (xNodeDirect) { xNodeDirect.value = newX; written = true; }
+        if (yNodeDirect) { yNodeDirect.value = newY; written = true; }
+    }
+    
+    // 3) position.grid.x/y (GridPointer)
+    if (positionNodeFallback) {
+        const grid = findChildNode(positionNodeFallback, ['grid']);
+        if (grid) {
+            const xNode = findChildNode(grid, ['x']);
+            const yNode = findChildNode(grid, ['y']);
+            if (xNode) { xNode.value = newX; written = true; }
+            if (yNode) { yNode.value = newY; written = true; }
+        }
+    }
+    
+    // 4) Recursivo (solo si no se escribió en los lugares comunes)
+    if (!written && groupPosNode) {
+        const xNode = findChildRecursive(groupPosNode, ['x']);
+        const yNode = findChildRecursive(groupPosNode, ['y']);
+        if (xNode) xNode.value = newX;
+        if (yNode) yNode.value = newY;
+    }
+}
+
 class SaveParser {
 
     
