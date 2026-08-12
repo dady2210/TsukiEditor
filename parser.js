@@ -173,16 +173,22 @@ class SaveParser {
                         }
 
                         const groupPosNode = furnNode.children.find(c => c.name === 'groupPosition');
+                        const posNode = furnNode.children.find(c => c.name === 'position');
+                        const coords = readGroupXY(groupPosNode, posNode);
+                        x = coords.x;
+                        y = coords.y;
                         if (groupPosNode) {
-                            const grid = groupPosNode.children.find(c => c.name === 'grid');
-                            if (grid) {
-                                const xNode = grid.children.find(c => c.name === 'x');
-                                const yNode = grid.children.find(c => c.name === 'y');
-                                if (xNode) x = xNode.value;
-                                if (yNode) y = yNode.value;
-                            }
-                            const gNumNode = groupPosNode.children.find(c => c.name === 'groupNum');
+                            const gNumNode = findChildRecursive(groupPosNode, ['groupNum']);
                             if (gNumNode) floor = gNumNode.value;
+                        }
+                        
+                        // Debug log if valid coords were forced to 0,0 (as requested)
+                        if (placementID !== -1 && x === 0 && y === 0) {
+                            // Check if it's not a SubGroupPosition (which is naturally 0,0)
+                            const tn = groupPosNode && groupPosNode.typeName;
+                            if (tn && !tn.includes('SubGroupPosition')) {
+                                console.log(`[Debug] Item ${itemId} (pId ${placementID}) at 0,0. gpType: ${tn}`);
+                            }
                         }
 
                         this.placements.push({
@@ -220,17 +226,13 @@ class SaveParser {
                         const vIdNode = wallNode.children.find(c => c.name === 'verificationID');
                         if (vIdNode) verify = vIdNode.value;
 
-                        // Wall furniture also has groupPosition
                         const groupPosNode = wallNode.children.find(c => c.name === 'groupPosition');
+                        const posNode = wallNode.children.find(c => c.name === 'position');
+                        const coords = readGroupXY(groupPosNode, posNode);
+                        x = coords.x;
+                        y = coords.y;
                         if (groupPosNode) {
-                            const grid = groupPosNode.children.find(c => c.name === 'grid');
-                            if (grid) {
-                                const xNode = grid.children.find(c => c.name === 'x');
-                                const yNode = grid.children.find(c => c.name === 'y');
-                                if (xNode) x = xNode.value;
-                                if (yNode) y = yNode.value;
-                            }
-                            const gNumNode = groupPosNode.children.find(c => c.name === 'groupNum');
+                            const gNumNode = findChildRecursive(groupPosNode, ['groupNum']);
                             if (gNumNode) floor = gNumNode.value;
                         }
 
@@ -296,27 +298,36 @@ class SaveParser {
             return false;
         };
 
+        // --- Resolve Parent Links & Crop Specifics ---
         const seeds = this.placements.filter(p => isCropPlacement(p) && p.placementID !== -1);
         const plots = this.placements.filter(p => p.item_id === 306 || p.item_id === 411 || (typeof GROUND_IDS !== 'undefined' && GROUND_IDS.has(p.item_id)));
 
-        for (const seed of seeds) {
-            seed.harvestTimeNode = findNodeByName(seed.furnNode, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
-            seed.placedNode = findNodeByName(seed.furnNode, ['placedOA', 'Placed', 'placed']);
-            
-            // Link via parentPlacementID
-            const parentIdNode = findNodeByName(seed.furnNode, ['parentPlacementID', 'ParentPlacementID']);
-            let linked = false;
-
+        // Resolve SubGroupPosition parentPlacementID for ALL placements
+        for (const p of this.placements) {
+            const parentIdNode = findChildRecursive(p.furnNode, ['parentPlacementID', 'ParentPlacementID']);
             if (parentIdNode && parentIdNode.value !== -1 && parentIdNode.value !== 0) {
-                const parentPlot = plots.find(p => p.placementID === parentIdNode.value);
-                if (parentPlot) {
-                    seed.x = parentPlot.x;
-                    seed.y = parentPlot.y;
-                    seed.linkedPlot = parentPlot;
-                    parentPlot.planted_id = seed.item_id;
-                    parentPlot.linkedSeed = seed;
-                    linked = true;
+                const parentItem = this.placements.find(parent => parent.placementID === parentIdNode.value);
+                if (parentItem) {
+                    p.x = parentItem.x;
+                    p.y = parentItem.y;
+                    p.linkedParent = parentItem;
                 }
+            }
+        }
+
+        // Apply specific crop logic
+        for (const seed of seeds) {
+            seed.harvestTimeNode = findChildRecursive(seed.furnNode, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
+            seed.placedNode = findChildRecursive(seed.furnNode, ['placedOA', 'Placed', 'placed']);
+            
+            let linked = false;
+            
+            if (seed.linkedParent && plots.includes(seed.linkedParent)) {
+                const parentPlot = seed.linkedParent;
+                seed.linkedPlot = parentPlot;
+                parentPlot.planted_id = seed.item_id;
+                parentPlot.linkedSeed = seed;
+                linked = true;
             }
             
             // Fallback for older saves without parentPlacementID
@@ -371,15 +382,8 @@ class SaveParser {
         }
 
         const groupPosNode = node.children.find(c => c.name === 'groupPosition');
-        if (groupPosNode) {
-            const grid = groupPosNode.children.find(c => c.name === 'grid');
-            if (grid) {
-                const xNode = grid.children.find(c => c.name === 'x');
-                const yNode = grid.children.find(c => c.name === 'y');
-                if (xNode) xNode.value = newX;
-                if (yNode) yNode.value = newY;
-            }
-        }
+        const posNode = node.children.find(c => c.name === 'position');
+        writeGroupXY(groupPosNode, newX, newY, posNode);
         
         const vIdNode = node.children.find(c => c.name === 'verificationID');
         if (vIdNode) {
