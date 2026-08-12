@@ -356,7 +356,7 @@ class SaveParser {
             if (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id)) return true;
             const tn = p.furnNode && (p.furnNode.typeName || p.furnNode.className);
             if (tn && /CropSave/i.test(tn)) return true;
-            const hasTime = findNodeByName(p.furnNode, ['harvestTimeOA', 'placedOA', 'harvestTime', 'Placed']);
+            const hasTime = findNodeByName(p.furnNode, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
             return !!hasTime;
         };
 
@@ -401,7 +401,8 @@ class SaveParser {
         for (const p of this.placements) {
             const parentIdNode = findChildRecursive(p.furnNode, ['parentPlacementID', 'ParentPlacementID']);
             if (parentIdNode && parentIdNode.value !== -1 && parentIdNode.value !== 0) {
-                const parentItem = this.placements.find(parent => parent.placementID === parentIdNode.value);
+                const parentIdNum = Number(parentIdNode.value);
+                const parentItem = this.placements.find(parent => Number(parent.placementID) === parentIdNum);
                 if (parentItem) {
                     p.x = parentItem.x;
                     p.y = parentItem.y;
@@ -417,12 +418,14 @@ class SaveParser {
             
             let linked = false;
             
-            if (seed.linkedParent && plots.includes(seed.linkedParent)) {
-                const parentPlot = seed.linkedParent;
-                seed.linkedPlot = parentPlot;
-                parentPlot.planted_id = seed.item_id;
-                parentPlot.linkedSeed = seed;
-                linked = true;
+            if (seed.linkedParent) {
+                const parentPlot = plots.find(pl => Number(pl.placementID) === Number(seed.linkedParent.placementID));
+                if (parentPlot) {
+                    seed.linkedPlot = parentPlot;
+                    parentPlot.planted_id = seed.item_id;
+                    parentPlot.linkedSeed = seed;
+                    linked = true;
+                }
             }
             
             // Fallback for older saves without parentPlacementID

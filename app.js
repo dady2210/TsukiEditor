@@ -1067,7 +1067,7 @@ class App {
                 this.map.draw();
                 if (this.map.selectedPlacement) {
                     this.openItemEditor(this.map.selectedPlacement);
-                    if (this.map.selectedPlacement.linkedSeed && this.map.selectedPlacement.planted_id === seedId) {
+                    if (this.map.selectedPlacement.linkedSeed && Number(this.map.selectedPlacement.planted_id) === Number(seedId)) {
                         this.showToast('🌱 ¡Semilla cambiada con éxito!');
                     } else {
                         alert('⚠️ La semilla se cambió pero el link no se verificó correctamente.');
@@ -1190,7 +1190,7 @@ class App {
             
             // B2: parentPlacementID = placementID de la parcela (está dentro de groupPosition)
             const parentIdNode = this._findNodeByName(newSeedNode, ['parentPlacementID', 'ParentPlacementID']);
-            if (parentIdNode) parentIdNode.value = p.placementID;
+            if (parentIdNode) parentIdNode.value = Number(p.placementID);
             
             if (typeof calcVerificationId !== 'undefined') {
                 const vNode = this._findNodeByName(newSeedNode, ['verificationID', 'verify']);
@@ -1239,7 +1239,7 @@ class App {
 
             if (this.map.selectedPlacement) {
                 this.openItemEditor(this.map.selectedPlacement);
-                if (this.map.selectedPlacement.linkedSeed && this.map.selectedPlacement.planted_id === seedId) {
+                if (this.map.selectedPlacement.linkedSeed && Number(this.map.selectedPlacement.planted_id) === Number(seedId)) {
                     this.showToast('🌱 ¡Semilla plantada con éxito!');
                 } else {
                     alert('⚠️ El nodo se insertó pero el link parcela↔semilla no se verificó. ' +

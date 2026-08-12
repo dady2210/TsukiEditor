@@ -205,7 +205,7 @@ class IsometricMap {
         );
 
         const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
-        const seeds   = all.filter(p => SEED_IDS.has(p.item_id) && p.x !== -1 && p.y !== -1);
+        const seeds   = all.filter(p => SEED_IDS.has(p.item_id) && p.x !== -1 && p.y !== -1 && !p.linkedPlot);
         const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id));
 
         // Z-sort regular furniture by x+y (painter's algorithm)
