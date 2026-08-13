@@ -1447,7 +1447,34 @@ class App {
 
                 const tdPrize = document.createElement('td');
                 if (r.isWeekly) {
-                    tdPrize.textContent = `Mueble ID: ${r.furnID}`;
+                    tdPrize.innerHTML = `<div style="display:flex; align-items:center; gap:5px;">
+                        <span>Mueble ID:</span>
+                        <input type="number" class="weekly-furn-input" value="${r.furnID}" style="width: 80px; padding: 2px;">
+                        <button class="btn btn-sm btn-outline btn-apply-weekly-furn" style="padding: 2px 5px; font-size: 12px;">💾</button>
+                    </div>`;
+                    
+                    if (typeof KNOWN_ITEMS !== 'undefined' && KNOWN_ITEMS[r.furnID]) {
+                        const nameSpan = document.createElement('div');
+                        nameSpan.style.fontSize = '12px';
+                        nameSpan.style.color = '#666';
+                        nameSpan.textContent = KNOWN_ITEMS[r.furnID].name || `FURN_${r.furnID}`;
+                        tdPrize.appendChild(nameSpan);
+                    }
+
+                    setTimeout(() => {
+                        const btn = tdPrize.querySelector('.btn-apply-weekly-furn');
+                        const input = tdPrize.querySelector('.weekly-furn-input');
+                        if (btn && input) {
+                            btn.addEventListener('click', () => {
+                                if (this.parser.setWeeklyRewardFurnId(input.value)) {
+                                    this.showToast(`✅ ID Semanal actualizado a ${input.value}`);
+                                    this.renderPhoneTab(); // Re-render to update names if needed
+                                } else {
+                                    this.showToast(`❌ Error al actualizar ID Semanal`);
+                                }
+                            });
+                        }
+                    }, 0);
                 } else {
                     tdPrize.textContent = REWARD_TYPES[r.rewardType] || `Desconocido (${r.rewardType})`;
                     if (r.modifier > 0) tdPrize.textContent += ` (Mod: ${r.modifier})`;

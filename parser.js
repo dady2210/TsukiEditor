@@ -50,6 +50,17 @@ function findChildRecursive(node, names) {
     return null;
 }
 
+function resolveListElements(node) {
+    if (!node) return null;
+    if (node.elements) return node.elements;
+    if (node.value && node.value.elements) return node.value.elements;
+    if (node.children) {
+        const listChild = node.children.find(c => c.elements || (c.value && c.value.elements));
+        if (listChild) return listChild.elements || (listChild.value && listChild.value.elements);
+    }
+    return null;
+}
+
 function cloneOdinTree(node) {
     if (!node) return null;
     
@@ -1215,7 +1226,8 @@ class SaveParser {
                 isWeekly: true,
                 furnID: furnNode ? furnNode.value : -1,
                 claimed: claimNode ? claimNode.value : false,
-                claimNode: claimNode
+                claimNode: claimNode,
+                furnNode: furnNode
             });
         }
         
@@ -1232,14 +1244,27 @@ class SaveParser {
         return false;
     }
 
+    setWeeklyRewardFurnId(furnId) {
+        let state = this.getPunchcardState();
+        let slot = state.rewards.find(r => r.index === 6 && r.isWeekly);
+        if (slot && slot.furnNode) {
+            slot.furnNode.value = Number(furnId) | 0;
+            return true;
+        }
+        return false;
+    }
+
     getLocationsOnPhone() {
         if (!this.ast) return [];
         let locNode = findChildRecursive(this.ast, ['locationsOnPhone']);
-        if (!locNode || !locNode.elements) return [];
+        if (!locNode) return [];
+        
+        let elements = resolveListElements(locNode);
+        if (!elements) return [];
         
         let locs = [];
-        for (let i = 0; i < locNode.elements.length; i++) {
-            let el = locNode.elements[i].value || locNode.elements[i];
+        for (let i = 0; i < elements.length; i++) {
+            let el = elements[i].value || elements[i];
             let location = findChildNode(el, ['location']);
             let seen = findChildNode(el, ['seen']);
             if (location) {
@@ -1268,8 +1293,10 @@ class SaveParser {
         }
         
         // Not found, clone from first element if array is not empty
-        if (locs.length > 0 && locNode.elements) {
-            let firstEl = locNode.elements[0];
+        let elements = resolveListElements(locNode);
+        
+        if (locs.length > 0 && elements && elements.length > 0) {
+            let firstEl = elements[0];
             let newEl = cloneOdinTree(firstEl);
             
             // Adjust values
@@ -1280,10 +1307,22 @@ class SaveParser {
             if (locIdNode) locIdNode.value = locationId;
             if (seenNode) seenNode.value = seen;
             
-            locNode.elements.push(newEl);
-            // Increment array count
-            locNode.length = locNode.elements.length;
-            if (locNode.count !== undefined) locNode.count = locNode.elements.length;
+            elements.push(newEl);
+            
+            // Find the list node to increment array count
+            let listNode = null;
+            if (locNode.elements === elements) listNode = locNode;
+            else if (locNode.value && locNode.value.elements === elements) listNode = locNode.value;
+            else if (locNode.children) {
+                let lc = locNode.children.find(c => c.elements === elements || (c.value && c.value.elements === elements));
+                if (lc && lc.elements === elements) listNode = lc;
+                else if (lc && lc.value && lc.value.elements === elements) listNode = lc.value;
+            }
+            
+            if (listNode) {
+                listNode.length = elements.length;
+                if (listNode.count !== undefined) listNode.count = elements.length;
+            }
             return true;
         }
         
