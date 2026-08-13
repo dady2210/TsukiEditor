@@ -883,10 +883,32 @@ class SaveParser {
 
     getInventoryCapacityInfo(manualOverride = null) {
         const used = this.countUsedInventorySlots();
-        let capacity = 50; // Default size if no bags are detected
+        let capacity = 50; // Default base size
         let source = 'default';
         
-        if (manualOverride !== null && !isNaN(manualOverride)) {
+        // IDs of bags and their bonus capacity (item_id -> extra slots)
+        // Adjust these IDs based on extracted_items_v3.js or known_items.json
+        const BAG_BONUS = {
+            // Example: 2001: 50, // "Big Bag"
+            // Example: 2002: 150 // "Huge Bag"
+        };
+        
+        if (this.inventory) {
+            let bonus = 0;
+            for (const idStr of Object.keys(BAG_BONUS)) {
+                const id = parseInt(idStr);
+                const hasBag = this.inventory.some(i => i.item_id === id && i.qty > 0);
+                if (hasBag) {
+                    bonus += BAG_BONUS[id];
+                }
+            }
+            if (bonus > 0) {
+                capacity += bonus;
+                source = 'bags';
+            }
+        }
+        
+        if (manualOverride !== null && !isNaN(manualOverride) && manualOverride !== "") {
             capacity = parseInt(manualOverride);
             source = 'manual';
         }
@@ -1334,7 +1356,19 @@ class SaveParser {
         let cos = this.getPhoneCosmetics();
         if (!cos) return false;
         
-        let nodeKey = fieldName + 'Node';
+        const map = {
+            skinID: 'skinNode',
+            bgPatternID: 'bgPatternNode',
+            bgColorID: 'bgColorNode',
+            backgroundsUnlocked: 'backgroundsUnlockedNode',
+            colorsUnlocked: 'colorsUnlockedNode',
+            newBackgrounds: 'newBackgroundsNode',
+            newColors: 'newColorsNode'
+        };
+        
+        let nodeKey = map[fieldName];
+        if (!nodeKey) return false;
+
         if (cos.nodes[nodeKey]) {
             if (typeof cos.nodes[nodeKey].value === 'bigint' && typeof value !== 'bigint') {
                 cos.nodes[nodeKey].value = BigInt(value);

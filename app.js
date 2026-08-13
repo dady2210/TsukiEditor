@@ -946,6 +946,20 @@ class App {
         const newQty = parseInt(this.addInvQty.value);
         const newType= parseInt(this.addInvType.value);
         if (isNaN(newId) || isNaN(newQty) || isNaN(newType)) { this.showToast("Completa ID, cantidad y tipo."); return; }
+        
+        // --- Capacity Check ---
+        if (newType === 1) { // Only check for main inventory
+            const overrideInput = document.getElementById('inv-capacity-override');
+            const capInfo = this.parser.getInventoryCapacityInfo(overrideInput ? overrideInput.value : null);
+            const isStacking = this.parser.inventory.some(i => i.item_id === newId && i.qty > 0);
+            
+            if (!isStacking && capInfo.used >= capInfo.capacity) {
+                if (!confirm(`⚠️ Supera la capacidad de la mochila (${capInfo.used + 1}/${capInfo.capacity}). ¿Continuar de todos modos?`)) {
+                    return;
+                }
+            }
+        }
+        
         try {
             const result = this.parser.injectInventoryItem(newId, newQty, newType);
             this.renderInventory();
@@ -966,6 +980,10 @@ class App {
 
     saveAllInvItems() {
         if (!this.parser) return;
+        
+        let newUsedSlots = 0;
+        const updates = [];
+        
         this.invTableBody.querySelectorAll('tr').forEach(tr => {
             const idInput   = tr.querySelector('.id-input');
             const qtyInput  = tr.querySelector('.qty-input');
@@ -975,10 +993,25 @@ class App {
                 const newId  = parseInt(idInput.value);
                 const newQty = parseInt(qtyInput.value);
                 const newType= parseInt(typeInput.value);
-                if (!isNaN(newId) && !isNaN(newQty) && !isNaN(newType))
-                    this.parser.updateInventoryItem(index, newId, newQty, newType);
+                if (!isNaN(newId) && !isNaN(newQty) && !isNaN(newType)) {
+                    if (newId > 0 && newQty > 0 && newType === 1) newUsedSlots++;
+                    updates.push({index, newId, newQty, newType});
+                }
             }
         });
+        
+        // --- Capacity Check ---
+        const overrideInput = document.getElementById('inv-capacity-override');
+        const capInfo = this.parser.getInventoryCapacityInfo(overrideInput ? overrideInput.value : null);
+        
+        if (newUsedSlots > capInfo.capacity) {
+            if (!confirm(`⚠️ Guardar estos cambios superará la capacidad de la mochila (${newUsedSlots}/${capInfo.capacity}). ¿Continuar de todos modos?`)) {
+                return;
+            }
+        }
+        
+        updates.forEach(u => this.parser.updateInventoryItem(u.index, u.newId, u.newQty, u.newType));
+        this.renderInventory();
         this.showToast("✅ Todos los items aplicados");
     }
 
