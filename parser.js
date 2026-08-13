@@ -1254,6 +1254,76 @@ class SaveParser {
         return false;
     }
 
+    getPhoneCosmetics() {
+        if (!this.ast) return null;
+        let phoneSave = findChildRecursive(this.ast, ['phoneSave', 'PhoneSave']);
+        if (!phoneSave) return null;
+
+        const getValNode = (aliases) => {
+            let n = findChildRecursive(phoneSave, aliases);
+            return n ? n : null;
+        };
+
+        const skinNode = getValNode(['skinID', 'SkinID', 'skinId']);
+        const bgPatternNode = getValNode(['bgPatternID', 'BgPatternID', 'backgroundPatternID']);
+        const bgColorNode = getValNode(['bgColorID', 'BgColorID']);
+        const backgroundsUnlockedNode = getValNode(['backgroundsUnlocked', 'BackgroundsUnlocked']);
+        const colorsUnlockedNode = getValNode(['colorsUnlocked', 'ColorsUnlocked']);
+        const newBackgroundsNode = getValNode(['newBackgrounds']);
+        const newColorsNode = getValNode(['newColors']);
+
+        return {
+            nodes: {
+                skinNode, bgPatternNode, bgColorNode, 
+                backgroundsUnlockedNode, colorsUnlockedNode,
+                newBackgroundsNode, newColorsNode
+            },
+            skinID: skinNode ? skinNode.value : -1,
+            bgPatternID: bgPatternNode ? bgPatternNode.value : -1,
+            bgColorID: bgColorNode ? bgColorNode.value : -1,
+            backgroundsUnlocked: backgroundsUnlockedNode ? backgroundsUnlockedNode.value : 0,
+            colorsUnlocked: colorsUnlockedNode ? colorsUnlockedNode.value : 0,
+            newBackgrounds: newBackgroundsNode ? newBackgroundsNode.value : 0,
+            newColors: newColorsNode ? newColorsNode.value : 0
+        };
+    }
+
+    setPhoneCosmeticField(fieldName, value) {
+        let cos = this.getPhoneCosmetics();
+        if (!cos) return false;
+        
+        let nodeKey = fieldName + 'Node';
+        if (cos.nodes[nodeKey]) {
+            if (typeof cos.nodes[nodeKey].value === 'bigint' && typeof value !== 'bigint') {
+                cos.nodes[nodeKey].value = BigInt(value);
+            } else {
+                cos.nodes[nodeKey].value = value;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    unlockAllPhoneBackgrounds() {
+        let cos = this.getPhoneCosmetics();
+        if (!cos || !cos.nodes.backgroundsUnlockedNode) return false;
+        let n = cos.nodes.backgroundsUnlockedNode;
+        if (typeof n.value === 'bigint') n.value = 0xFFFFFFFFFFFFFFFFn;
+        else n.value = 0xFFFFFFFF; // Number.MAX_SAFE_INTEGER can break 32-bit uint serialization
+        if (cos.nodes.newBackgroundsNode) cos.nodes.newBackgroundsNode.value = 0;
+        return true;
+    }
+
+    unlockAllPhoneColors() {
+        let cos = this.getPhoneCosmetics();
+        if (!cos || !cos.nodes.colorsUnlockedNode) return false;
+        let n = cos.nodes.colorsUnlockedNode;
+        if (typeof n.value === 'bigint') n.value = 0xFFFFFFFFFFFFFFFFn;
+        else n.value = 0xFFFFFFFF;
+        if (cos.nodes.newColorsNode) cos.nodes.newColorsNode.value = 0;
+        return true;
+    }
+
     getLocationsOnPhone() {
         if (!this.ast) return [];
         let locNode = findChildRecursive(this.ast, ['locationsOnPhone']);

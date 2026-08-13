@@ -242,6 +242,53 @@
                                 <p>Este guardado no contiene información de ubicaciones.</p>
                             </div>
                         </div>
+
+                        <div class="section-card" id="phone-cosmetics-card">
+                            <h3>📱 Personalización (Cosméticos)</h3>
+                            <div class="grid-2col" style="gap:1rem; margin-top:1rem;">
+                                <div class="input-group">
+                                    <label>Skin ID:</label>
+                                    <input type="number" id="phone-skin-id" placeholder="-1">
+                                </div>
+                                <div class="input-group">
+                                    <label>Patrón de Fondo:</label>
+                                    <input type="number" id="phone-bg-pattern" placeholder="-1">
+                                </div>
+                                <div class="input-group">
+                                    <label>Color de Fondo:</label>
+                                    <input type="number" id="phone-bg-color" placeholder="-1">
+                                </div>
+                                <div style="display:flex; align-items:flex-end;">
+                                    <button id="btn-phone-apply-ids" class="btn-primary" style="width:100%;">Guardar IDs</button>
+                                </div>
+                            </div>
+                            
+                            <hr style="border:0; border-top:1px solid rgba(0,0,0,0.1); margin:1.5rem 0;">
+                            
+                            <h4>Desbloqueos (Bitmasks)</h4>
+                            <p class="small-text" style="margin-bottom:0.5rem;">Cada bit representa un cosmético desbloqueado.</p>
+                            
+                            <div class="grid-2col" style="gap:1rem; align-items:center;">
+                                <div>
+                                    <div class="input-group" style="margin-bottom:0.5rem;">
+                                        <label>Máscara Fondos:</label>
+                                        <input type="text" id="phone-bg-mask" disabled style="background:#e8e8e8;">
+                                    </div>
+                                    <button id="btn-phone-unlock-bg" class="btn-secondary" style="width:100%; font-size:0.8rem;">Desbloquear Todos</button>
+                                </div>
+                                <div>
+                                    <div class="input-group" style="margin-bottom:0.5rem;">
+                                        <label>Máscara Colores:</label>
+                                        <input type="text" id="phone-color-mask" disabled style="background:#e8e8e8;">
+                                    </div>
+                                    <button id="btn-phone-unlock-color" class="btn-secondary" style="width:100%; font-size:0.8rem;">Desbloquear Todos</button>
+                                </div>
+                            </div>
+                            <div id="phone-cosmetics-empty" class="empty-state hidden" style="margin-top:1rem;">
+                                <span class="material-symbols-outlined">smartphone</span>
+                                <p>Este guardado no contiene datos de personalización.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

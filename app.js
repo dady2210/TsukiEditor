@@ -350,6 +350,47 @@ class App {
             }
         });
 
+        // Phone Cosmetics
+        document.getElementById('btn-phone-apply-ids')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            const skinId = parseInt(document.getElementById('phone-skin-id').value);
+            const patternId = parseInt(document.getElementById('phone-bg-pattern').value);
+            const colorId = parseInt(document.getElementById('phone-bg-color').value);
+            
+            let changed = false;
+            if (!isNaN(skinId)) changed |= this.parser.setPhoneCosmeticField('skinID', skinId);
+            if (!isNaN(patternId)) changed |= this.parser.setPhoneCosmeticField('bgPatternID', patternId);
+            if (!isNaN(colorId)) changed |= this.parser.setPhoneCosmeticField('bgColorID', colorId);
+            
+            if (changed) {
+                this.showToast('📱 IDs de cosméticos guardados correctamente.');
+                this.renderPhoneTab();
+            } else {
+                this.showToast('No se encontraron los campos en el save.', 'error');
+            }
+        });
+
+        document.getElementById('btn-phone-unlock-bg')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            if (this.parser.unlockAllPhoneBackgrounds()) {
+                this.showToast('🖼️ Todos los fondos desbloqueados.');
+                this.renderPhoneTab();
+            } else {
+                this.showToast('Error al desbloquear fondos.', 'error');
+            }
+        });
+
+        document.getElementById('btn-phone-unlock-color')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            if (this.parser.unlockAllPhoneColors()) {
+                this.showToast('🎨 Todos los colores desbloqueados.');
+                this.renderPhoneTab();
+            } else {
+                this.showToast('Error al desbloquear colores.', 'error');
+            }
+        });
+
+
         // Map
         this.selectLocation.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); });
         this.selectFloor.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); });
@@ -1543,6 +1584,29 @@ class App {
                 wrapper.appendChild(span);
                 locContainer.appendChild(wrapper);
             });
+        }
+
+        // 3. Phone Cosmetics
+        const cosmetics = this.parser.getPhoneCosmetics();
+        const cosContainer = document.getElementById('phone-cosmetics-card');
+        const cosEmpty = document.getElementById('phone-cosmetics-empty');
+
+        if (!cosmetics) {
+            cosEmpty.classList.remove('hidden');
+            // Ocultar inputs si no hay cosméticos
+            cosContainer.querySelector('.grid-2col').style.display = 'none';
+            cosContainer.querySelectorAll('hr, h4, p, .grid-2col:nth-of-type(2)').forEach(el => el && (el.style.display = 'none'));
+        } else {
+            cosEmpty.classList.add('hidden');
+            cosContainer.querySelector('.grid-2col').style.display = 'grid';
+            cosContainer.querySelectorAll('hr, h4, p, .grid-2col:nth-of-type(2)').forEach(el => el && (el.style.display = ''));
+            
+            document.getElementById('phone-skin-id').value = cosmetics.skinID;
+            document.getElementById('phone-bg-pattern').value = cosmetics.bgPatternID;
+            document.getElementById('phone-bg-color').value = cosmetics.bgColorID;
+            
+            document.getElementById('phone-bg-mask').value = cosmetics.backgroundsUnlocked.toString();
+            document.getElementById('phone-color-mask').value = cosmetics.colorsUnlocked.toString();
         }
     }
 
