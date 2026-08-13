@@ -130,6 +130,34 @@ class IsometricMap {
         return false;
     }
 
+    getCropImage(item_id) {
+        if (item_id === undefined || item_id === -1) return null;
+        const cacheKey = `CROP_ICON_${item_id}`;
+        
+        if (this._imgCache[cacheKey] !== undefined) {
+            return this._imgCache[cacheKey];
+        }
+
+        this._imgCache[cacheKey] = false;
+        
+        const img = new Image();
+        img.onload = () => { this._imgCache[cacheKey] = img; this.draw(); };
+        img.onerror = () => {
+            const img2 = new Image();
+            img2.onload = () => { this._imgCache[cacheKey] = img2; this.draw(); };
+            img2.onerror = () => {
+                const img3 = new Image();
+                img3.onload = () => { this._imgCache[cacheKey] = img3; this.draw(); };
+                img3.onerror = () => { this._imgCache[cacheKey] = null; };
+                img3.src = `images/items/CROP_${item_id}.png?v=5`;
+            };
+            img2.src = `images/items/ITEM_${item_id}.png?v=5`;
+        };
+        img.src = `images/items/FURN_${item_id}.png?v=5`;
+        
+        return false;
+    }
+
     // ─── Coordinate transforms ───────────────────────────────────────────────
     getIsoCoords(x, y) {
         const isoX = (x - y) * (this.CELL_W / 2);
@@ -313,28 +341,10 @@ class IsometricMap {
 
         // ── Draw planted item if present ──
         if (p.planted_id !== undefined && p.planted_id > 0 && p.planted_id !== 4294967295) {
-            // First check if the image is already loaded or can be loaded
-            let plantedImg = this.getImage(p.planted_id, 0);
+            let plantedImg = this.getCropImage(p.planted_id);
             if (plantedImg) {
                 // Draw slightly higher
                 this._drawSpriteOnTile(plantedImg, p.x, p.y - 0.5, w, l, 0, p.planted_id);
-            } else {
-                // Attempt to force a load
-                let imgTemp = new Image();
-                imgTemp.onload = () => { this.draw(); }; // trigger redraw when loaded
-                imgTemp.src = 'images/items/FURN_' + p.planted_id + '_0.png?v=5';
-                // Try ITEM_ if FURN_ fails
-                imgTemp.onerror = () => {
-                    if (imgTemp.src.includes('FURN_') && imgTemp.src.includes('_0')) {
-                        imgTemp.src = 'images/items/FURN_' + p.planted_id + '.png?v=5';
-                    } else if (imgTemp.src.includes('FURN_')) {
-                        imgTemp.src = 'images/items/ITEM_' + p.planted_id + '.png?v=5';
-                    } else if (imgTemp.src.includes('ITEM_')) {
-                        imgTemp.src = 'images/items/CROP_' + p.planted_id + '.png?v=5';
-                    } else {
-                        imgTemp.onerror = null;
-                    }
-                };
             }
         }
 
