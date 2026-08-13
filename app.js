@@ -1222,7 +1222,11 @@ class App {
         if (this.seedPlantingUI) {
             // Also show crop controls for direct seeds on map
             const isSeed = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(placement.item_id));
-            if (placement.item_id === 306 || placement.item_id === 411 || isSeed) {
+            const tn = placement.furnNode ? (placement.furnNode.typeName || placement.furnNode.className) : null;
+            const isCrop = isSeed || (tn && /CropSave/i.test(tn));
+            const cropGrowthUI = document.getElementById('crop-growth-ui');
+
+            if (placement.item_id === 306 || placement.item_id === 411 || isCrop) {
                 this.seedPlantingUI.classList.remove('hidden');
                 const cropInfo = document.getElementById('current-crop-info');
                 const matureBtn = document.getElementById('btn-mature-crop');
@@ -1233,7 +1237,7 @@ class App {
 
                 if (targetPlacement) {
                     const name = window.KNOWN_ITEMS['FURN_' + targetPlacement.item_id] || 'Semilla ' + targetPlacement.item_id;
-                    if (cropInfo) cropInfo.innerHTML = `<img src=\"images/items/FURN_${targetPlacement.item_id}.png\" style=\"width:24px; vertical-align:middle; margin-right:5px;\" onerror=\"this.style.display='none'\"> <strong>${name}</strong>`;
+                    if (cropInfo) cropInfo.innerHTML = `<img src="images/items/FURN_${targetPlacement.item_id}.png" style="width:24px; vertical-align:middle; margin-right:5px;" onerror="this.style.display='none'"> <strong>${name}</strong>`;
                     if (matureBtn) matureBtn.style.display = 'block';
                     
                     const fields = this.parser.getCropSaveFields(targetPlacement);
@@ -1252,17 +1256,66 @@ class App {
                             ripeCb.checked = true;
                             this.showToast('🌱 Planta madurada.');
                             this.map.draw();
+                            this.openItemEditor(placement); // reload to update UI
                         };
                     } else if (ripeLabel) {
                         ripeLabel.style.display = 'none';
+                    }
+                    
+                    // --- Crop Growth UI Logic ---
+                    if (cropGrowthUI) {
+                        const timing = this.parser.getCropTiming(targetPlacement);
+                        if (timing && timing.harvestTimeOA !== null) {
+                            cropGrowthUI.classList.remove('hidden');
+                            const statusEl = document.getElementById('crop-growth-status');
+                            const daysInput = document.getElementById('edit-crop-days');
+                            const btnApply = document.getElementById('btn-apply-crop-time');
+                            const btnMatureS = document.getElementById('btn-mature-crop-single');
+                            const btnAddHour = document.getElementById('btn-add-crop-hour');
+                            const btnAddDay = document.getElementById('btn-add-crop-day');
+                            
+                            if (timing.isReady) {
+                                statusEl.textContent = "Listo para cosechar";
+                                statusEl.style.color = "#27ae60";
+                                daysInput.value = 0;
+                            } else {
+                                statusEl.textContent = `Quedan ~${timing.daysLeft.toFixed(1)} días`;
+                                statusEl.style.color = "#e67e22";
+                                daysInput.value = parseFloat(timing.daysLeft.toFixed(2));
+                            }
+                            
+                            const applyDays = (days) => {
+                                try {
+                                    this.parser.setCropDaysLeft(targetPlacement, days);
+                                    this.showToast(`⏱️ Tiempo aplicado (${days.toFixed(2)} días).`);
+                                    this.map.draw();
+                                    this.openItemEditor(placement); // reload ui
+                                } catch (e) {
+                                    this.showToast("❌ " + e.message);
+                                }
+                            };
+                            
+                            btnApply.onclick = () => applyDays(parseFloat(daysInput.value) || 0);
+                            btnMatureS.onclick = () => applyDays(0);
+                            btnAddHour.onclick = () => { 
+                                daysInput.value = parseFloat((parseFloat(daysInput.value) || 0) + (1/24)).toFixed(2); 
+                            };
+                            btnAddDay.onclick = () => { 
+                                daysInput.value = parseFloat((parseFloat(daysInput.value) || 0) + 1).toFixed(2); 
+                            };
+                        } else {
+                            cropGrowthUI.classList.add('hidden');
+                        }
                     }
                 } else {
                     if (cropInfo) cropInfo.textContent = 'Ningún cultivo plantado.';
                     if (matureBtn) matureBtn.style.display = 'none';
                     if (ripeLabel) ripeLabel.style.display = 'none';
+                    if (cropGrowthUI) cropGrowthUI.classList.add('hidden');
                 }
             } else {
                 this.seedPlantingUI.classList.add('hidden');
+                if (cropGrowthUI) cropGrowthUI.classList.add('hidden');
             }
         }
         

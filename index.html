@@ -663,6 +663,26 @@
                                 </div>
                             </div>
 
+                            <!-- Crop Growth UI (Only visible for planted crops/seeds) -->
+                            <div id="crop-growth-ui" class="hidden" style="margin-bottom:1.5rem; padding-top:1rem; border-top:1px solid rgba(0,0,0,0.1);">
+                                <label style="display:block; margin-bottom:5px; font-weight:bold; color:#f39c12;">⏱️ Crecimiento:</label>
+                                <div id="crop-growth-status" style="margin-bottom: 10px; font-size: 0.9em; font-weight:bold; color: #555;">
+                                    Estado actual...
+                                </div>
+                                <div class="input-group" style="margin-bottom:10px;">
+                                    <label>Días restantes:</label>
+                                    <input type="number" id="edit-crop-days" step="0.1" min="0" placeholder="Ej. 1.5">
+                                </div>
+                                <div style="display:flex; gap:5px; margin-bottom:10px;">
+                                    <button id="btn-add-crop-hour" class="btn-secondary" style="flex:1; font-size:0.8rem; padding:4px;">+1 Hora</button>
+                                    <button id="btn-add-crop-day" class="btn-secondary" style="flex:1; font-size:0.8rem; padding:4px;">+1 Día</button>
+                                </div>
+                                <div style="display:flex; gap:5px;">
+                                    <button id="btn-apply-crop-time" class="btn-primary" style="flex:2; background-color:#3498db; font-size:0.85rem;">Aplicar Tiempo</button>
+                                    <button id="btn-mature-crop-single" class="btn-primary" style="flex:1; background-color:#e67e22; font-size:0.85rem;">Madurar</button>
+                                </div>
+                            </div>
+
                             <button id="btn-apply-item" class="btn-primary w-full" style="margin-bottom:0.5rem;">Aplicar</button>
                             <button id="btn-close-editor" class="btn-text w-full">Cerrar</button>
                         </div>

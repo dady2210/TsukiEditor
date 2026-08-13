@@ -600,6 +600,48 @@ class SaveParser {
         return modified;
     }
 
+    getCropTiming(placement) {
+        const fields = this.getCropSaveFields(placement);
+        if (!fields) return null;
+        
+        const harvestTimeOA = fields.harvestTimeNode ? fields.harvestTimeNode.value : null;
+        const placedOA = fields.placedNode ? fields.placedNode.value : null;
+        const ripe = fields.ripeNode ? !!fields.ripeNode.value : false;
+        
+        let daysLeft = 0;
+        let isReady = ripe;
+        
+        if (harvestTimeOA !== null) {
+            const nowOA = dateToOADate(new Date());
+            daysLeft = Math.max(0, harvestTimeOA - nowOA);
+            if (daysLeft <= 0) isReady = true;
+        }
+        
+        return {
+            harvestTimeOA,
+            placedOA,
+            ripe,
+            daysLeft,
+            isReady
+        };
+    }
+
+    setCropDaysLeft(placement, daysLeft) {
+        const fields = this.getCropSaveFields(placement);
+        // Do not blindly create fields if they don't exist
+        if (!fields || !fields.harvestTimeNode) {
+            throw new Error("No se pudo hallar el campo harvestTimeOA en este cultivo.");
+        }
+        
+        const nowOA = dateToOADate(new Date());
+        fields.harvestTimeNode.value = nowOA + Number(daysLeft);
+        
+        if (fields.ripeNode) {
+            fields.ripeNode.value = (daysLeft <= 0);
+        }
+        return true;
+    }
+
     matureAllCrops() {
         if (!this.placements) return 0;
         let count = 0;
@@ -885,7 +927,7 @@ class SaveParser {
         if (!this.inventory) return [];
         const BAG_ITEM_IDS = new Set([124, 125, 141, 155, 156, 212, 213, 303, 308, 331, 332]);
         // KNOWN_ITEMS data can be used to resolve names if needed, but for now we just get the items
-        return this.inventory.filter(i => BAG_ITEM_IDS.has(i.item_id) && i.qty > 0 && i.invType === 0).map(i => {
+        return this.inventory.filter(i => BAG_ITEM_IDS.has(i.item_id) && i.qty > 0 && i.invType ===1).map(i => {
             return {
                 id: i.item_id,
                 qty: i.qty,
