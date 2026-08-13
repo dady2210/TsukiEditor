@@ -697,9 +697,10 @@ class SaveParser {
                     const hasParent = parentIdNode && parentIdNode.value !== -1 && parentIdNode.value !== 0;
                     
                     if (hasParent) {
-                        const parentExists = this.placements.some(pl => pl.placementID === parentIdNode.value);
+                        const parentId = Number(parentIdNode.value);
+                        const parentExists = this.placements.some(pl => Number(pl.placementID) === parentId);
                         if (!parentExists) {
-                            issues.push({ code: 'CROP_ORPHAN', severity: 'WARNING', message: `Cultivo ${p.item_id} apunta a un parent inexistente (${parentIdNode.value}).` });
+                            issues.push({ code: 'CROP_ORPHAN', severity: 'WARNING', message: `Cultivo ${p.item_id} apunta a un parent inexistente (${parentId}).` });
                         }
                         
                         // It's a planted crop on a plot. Grid MUST be 0,0
@@ -737,7 +738,7 @@ class SaveParser {
         if (locsOnPhone && locsOnPhone.length > 0) {
             const seenLocs = new Set();
             for (const l of locsOnPhone) {
-                const locVal = Number(l.location);
+                const locVal = Number(l.id);
                 if (locVal < 0 || locVal > 50) { // max arbitrary known value
                     issues.push({ code: 'LOC_INVALID', severity: 'INFO', message: `ID de ubicación en teléfono inválido: ${locVal}` });
                 }
@@ -788,9 +789,10 @@ class SaveParser {
         // --- E) Punchcard ---
         const punch = this.getPunchcardState();
         if (punch) {
+            const claimedCount = Number(punch.claimedCount) || 0;
             const claimedSlots = punch.rewards.filter(r => r.claimed).length;
-            if (punch.punchcardsClaimed < claimedSlots || punch.punchcardsClaimed > claimedSlots + 7) {
-                issues.push({ code: 'PUNCH_COUNT', severity: 'INFO', message: `Inconsistencia posible en punchcardsClaimed (${punch.punchcardsClaimed}) vs slots marcados (${claimedSlots}).` });
+            if (claimedCount < claimedSlots || claimedCount > claimedSlots + 7) {
+                issues.push({ code: 'PUNCH_COUNT', severity: 'INFO', message: `Inconsistencia posible en punchcardsClaimed (${claimedCount}) vs slots marcados (${claimedSlots}).` });
             }
         }
         
