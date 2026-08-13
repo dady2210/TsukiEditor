@@ -286,6 +286,9 @@
                             <label>Cantidad</label>
                             <input type="number" id="add-inv-qty" min="1" value="1">
                         </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; display: flex; justify-content: space-between;">
                         <button id="btn-add-inv-item" class="btn-primary">
                             <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">add</span>
                             Agregar
@@ -470,7 +473,10 @@
                                 🥕 Semillas
                             </button>
                             <button id="btn-auto-harvest" class="btn-farm btn-farm-green" title="Maximizar zanahorias del CropBox y agregar item cosecha al inventario">
-                                <span class="material-symbols-outlined" style="font-size:16px;">agriculture</span> Auto-Cosecha
+                                <span class="material-symbols-outlined">agriculture</span> Auto-Cosecha
+                            </button>
+                            <button id="btn-mature-all-crops" class="btn-farm" style="background-color: #f39c12;" title="Madurar todos los cultivos plantados en las parcelas">
+                                <span class="material-symbols-outlined">eco</span> Madurar Cultivos
                             </button>
                             <button id="btn-collect-carrots" class="btn-farm btn-farm-orange" title="Agregar 9999 zanahorias al inventario directamente">
                                 🥕 +9999 Zanahorias
@@ -555,7 +561,11 @@
                                     Ningún cultivo plantado.
                                 </div>
                                 
-                                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                                <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
+                                    <label class="check-container" style="margin:0; font-size: 0.9em; display:none;" id="label-crop-ripe">
+                                        <input type="checkbox" id="edit-crop-ripe">
+                                        <span>Maduro (Ripe)</span>
+                                    </label>
                                     <button id="btn-mature-crop" class="btn-primary" style="background-color:#f39c12; flex:1; display:none;">☀️ Madurar Ahora</button>
                                 </div>
 

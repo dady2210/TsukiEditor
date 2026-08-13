@@ -250,6 +250,20 @@ class App {
             if (btn.dataset.target === 'tab-map') this.map.resize();
         }));
 
+        // Farm mature all crops
+        document.getElementById('btn-mature-all-crops')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            const count = this.parser.matureAllCrops();
+            this.showToast(count > 0 ? `☀️ ${count} cultivos madurados.` : 'ℹ️ No hay cultivos plantados o ya están maduros.');
+            if (count > 0) {
+                // update current editor if open
+                if (!this.itemEditor.classList.contains('hidden') && this.map.selectedPlacement) {
+                    this.openItemEditor(this.map.selectedPlacement);
+                }
+                this.map.draw();
+            }
+        });
+
         // Phone Tab Buttons
         document.getElementById('btn-punchcard-claim')?.addEventListener('click', () => {
             if (!this.parser) return;
@@ -1049,18 +1063,46 @@ class App {
         this.editItemId.oninput = e => { if (icon) icon.src = `images/items/FURN_${e.target.value}.png`; };
         
         if (this.seedPlantingUI) {
-            if (placement.item_id === 306 || placement.item_id === 411) {
+            // Also show crop controls for direct seeds on map
+            const isSeed = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(placement.item_id));
+            if (placement.item_id === 306 || placement.item_id === 411 || isSeed) {
                 this.seedPlantingUI.classList.remove('hidden');
                 const cropInfo = document.getElementById('current-crop-info');
                 const matureBtn = document.getElementById('btn-mature-crop');
+                const ripeLabel = document.getElementById('label-crop-ripe');
+                const ripeCb = document.getElementById('edit-crop-ripe');
                 
-                if (placement.planted_id) {
-                    const name = window.KNOWN_ITEMS['FURN_' + placement.planted_id] || 'Semilla ' + placement.planted_id;
-                    if (cropInfo) cropInfo.innerHTML = `<img src=\"images/items/FURN_${placement.planted_id}.png\" style=\"width:24px; vertical-align:middle; margin-right:5px;\" onerror=\"this.style.display='none'\"> <strong>${name}</strong>`;
+                const targetPlacement = isSeed ? placement : placement.linkedSeed;
+
+                if (targetPlacement) {
+                    const name = window.KNOWN_ITEMS['FURN_' + targetPlacement.item_id] || 'Semilla ' + targetPlacement.item_id;
+                    if (cropInfo) cropInfo.innerHTML = `<img src=\"images/items/FURN_${targetPlacement.item_id}.png\" style=\"width:24px; vertical-align:middle; margin-right:5px;\" onerror=\"this.style.display='none'\"> <strong>${name}</strong>`;
                     if (matureBtn) matureBtn.style.display = 'block';
+                    
+                    const fields = this.parser.getCropSaveFields(targetPlacement);
+                    if (fields && ripeLabel && ripeCb) {
+                        ripeLabel.style.display = 'flex';
+                        ripeCb.checked = fields.ripeNode ? fields.ripeNode.value : false;
+                        
+                        // Handle changing ripe manually without hitting mature all
+                        ripeCb.onchange = (e) => {
+                            this.parser.setCropRipe(targetPlacement, e.target.checked);
+                            this.map.draw();
+                        };
+                        
+                        matureBtn.onclick = () => {
+                            this.parser.setCropRipe(targetPlacement, true);
+                            ripeCb.checked = true;
+                            this.showToast('🌱 Planta madurada.');
+                            this.map.draw();
+                        };
+                    } else if (ripeLabel) {
+                        ripeLabel.style.display = 'none';
+                    }
                 } else {
                     if (cropInfo) cropInfo.textContent = 'Ningún cultivo plantado.';
                     if (matureBtn) matureBtn.style.display = 'none';
+                    if (ripeLabel) ripeLabel.style.display = 'none';
                 }
             } else {
                 this.seedPlantingUI.classList.add('hidden');
@@ -1467,6 +1509,22 @@ class App {
 
     saveAndDownload() {
         if (!this.parser) return;
+        
+        // Validation pre-download
+        const validation = this.parser.validateSaveForDownload();
+        
+        // Show validation info/fixes
+        if (validation.fixes > 0) {
+            this.showToast(`[INFO] Se corrigieron ${validation.fixes} coordenadas de cultivos (grid a 0,0).`);
+        }
+        
+        if (validation.hasWarnings) {
+            const warningMsg = "Hay advertencias en el archivo:\n- " + validation.errors.filter(e => e.includes('WARNING')).join("\n- ") + "\n\n¿Descargar de todos modos?";
+            if (!confirm(warningMsg)) {
+                return;
+            }
+        }
+
         // Flush vars tab on save
         this.applyGeneralVars();
         this.downloadFile();

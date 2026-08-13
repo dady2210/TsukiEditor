@@ -28,6 +28,11 @@ function calcVerificationId(itemId) {
     return retVal >>> 0;
 }
 
+function dateToOADate(d = new Date()) {
+    const epoch = Date.UTC(1899, 11, 30);
+    return (d.getTime() - epoch) / 86400000;
+}
+
 function findChildNode(node, names) {
     if (!node || !node.children) return null;
     return node.children.find(c => names.includes(c.name));
@@ -518,6 +523,115 @@ class SaveParser {
         }
         if (count > 0) this.parseMap();
         return count;
+    }
+
+
+    // ─── Crops & Validation ──────────────────────────────────────────────
+
+    getCropSaveFields(placement) {
+        if (!placement || !placement.furnNode) return null;
+        return {
+            ripeNode: findChildRecursive(placement.furnNode, ['ripe', 'Ripe']),
+            harvestTimeNode: findChildRecursive(placement.furnNode, ['harvestTimeOA', 'harvestTime', 'HarvestTime']),
+            placedNode: findChildRecursive(placement.furnNode, ['placedOA', 'Placed', 'placed']),
+            strangeNode: findChildRecursive(placement.furnNode, ['strange', 'Strange']),
+            consumedNode: findChildRecursive(placement.furnNode, ['consumed', 'Consumed'])
+        };
+    }
+
+    setCropRipe(placement, ripe) {
+        const fields = this.getCropSaveFields(placement);
+        if (!fields) return false;
+
+        let modified = false;
+        if (fields.ripeNode) {
+            fields.ripeNode.value = !!ripe;
+            modified = true;
+        }
+
+        if (ripe && fields.harvestTimeNode) {
+            // Mature -> time is past
+            fields.harvestTimeNode.value = dateToOADate(new Date()) - 0.01;
+            modified = true;
+        }
+
+        return modified;
+    }
+
+    matureAllCrops() {
+        if (!this.placements) return 0;
+        let count = 0;
+        for (const p of this.placements) {
+            const tn = p.furnNode ? (p.furnNode.typeName || p.furnNode.className) : null;
+            const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id)) 
+                           || (tn && /CropSave/i.test(tn))
+                           || !!findChildRecursive(p.furnNode, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
+
+            if (isCrop) {
+                const fields = this.getCropSaveFields(p);
+                // Only mature if it was placed or has harvest time
+                if (fields && (fields.placedNode || fields.harvestTimeNode)) {
+                    if (this.setCropRipe(p, true)) count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    validateSaveForDownload() {
+        const errors = [];
+        let gridsFixed = 0;
+        let orphans = 0;
+        let verificationMismatches = 0;
+
+        if (!this.placements) return { errors, fixes: gridsFixed };
+
+        for (const p of this.placements) {
+            const tn = p.furnNode ? (p.furnNode.typeName || p.furnNode.className) : null;
+            const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id)) 
+                           || (tn && /CropSave/i.test(tn))
+                           || !!findChildRecursive(p.furnNode, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
+
+            const vIdNode = findChildRecursive(p.furnNode, ['verificationID']);
+            if (vIdNode) {
+                const expected = calcVerificationId(p.item_id);
+                if (vIdNode.value !== expected) {
+                    verificationMismatches++;
+                    // Optionally auto-fix verification IDs
+                    vIdNode.value = expected;
+                }
+            }
+
+            if (isCrop) {
+                const parentIdNode = findChildRecursive(p.furnNode, ['parentPlacementID', 'ParentPlacementID']);
+                const hasParent = parentIdNode && parentIdNode.value !== -1 && parentIdNode.value !== 0;
+                
+                if (hasParent) {
+                    // It's a planted crop on a plot. Grid MUST be 0,0
+                    const groupPosNode = findChildRecursive(p.furnNode, ['groupPosition']);
+                    const posNode = findChildRecursive(p.furnNode, ['position']);
+                    const gridPos = readGroupXY(groupPosNode, posNode);
+                    
+                    if (gridPos.x !== 0 || gridPos.y !== 0) {
+                        writeGroupXY(groupPosNode, 0, 0, posNode);
+                        gridsFixed++;
+                    }
+                } else if (p.x !== -1 || p.y !== -1) {
+                    // Crop without parent that was somehow drawn on map
+                    orphans++;
+                }
+            }
+        }
+
+        if (gridsFixed > 0) errors.push(`[INFO] Se corrigieron ${gridsFixed} coordenadas de cultivos (grid a 0,0).`);
+        if (orphans > 0) errors.push(`[WARNING] Hay ${orphans} cultivos huérfanos sin parcela.`);
+        if (verificationMismatches > 0) errors.push(`[WARNING] Se re-calcularon ${verificationMismatches} VerificationIDs incorrectos.`);
+
+        return {
+            errors,
+            fixes: gridsFixed,
+            hasWarnings: orphans > 0 || verificationMismatches > 0
+        };
     }
 
     // ─── Inventory ───────────────────────────────────────────────────────
