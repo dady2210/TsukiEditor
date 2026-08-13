@@ -2189,6 +2189,169 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         reader.readAsText(file);
     }
 
+
+    // --- Partial JSON Export/Import UI ---
+    openExportModal() {
+        const modal = document.getElementById('export-modal');
+        if (modal) modal.classList.remove('hidden');
+    }
+    
+    closeExportModal() {
+        const modal = document.getElementById('export-modal');
+        if (modal) modal.classList.add('hidden');
+    }
+    
+    executeExportJSON() {
+        if (!this.parser || !this.parser.ast) {
+            alert("No hay save cargado");
+            return;
+        }
+        
+        const inv = document.getElementById('export-cb-inv').checked;
+        const farm = document.getElementById('export-cb-farm').checked;
+        const phone = document.getElementById('export-cb-phone').checked;
+        
+        if (!inv && !farm && !phone) {
+            alert('Selecciona al menos una sección para exportar.');
+            return;
+        }
+        
+        const data = this.parser.exportPartialJSON({ inventory: inv, farm: farm, phone: phone });
+        
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '');
+        const filename = `partial_${dateStr}.json`;
+        
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        this.closeExportModal();
+        this.showToast('✅ JSON exportado correctamente.');
+    }
+    
+    openImportModal() {
+        const modal = document.getElementById('import-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            document.getElementById('import-file-input').value = '';
+            document.getElementById('import-preview-box').classList.add('hidden');
+            document.getElementById('btn-confirm-import').disabled = true;
+            this.pendingImportData = null;
+            
+            document.getElementById('import-cb-inv').disabled = true;
+            document.getElementById('import-cb-inv').checked = false;
+            document.getElementById('import-cb-farm').disabled = true;
+            document.getElementById('import-cb-farm').checked = false;
+            document.getElementById('import-cb-phone').disabled = true;
+            document.getElementById('import-cb-phone').checked = false;
+        }
+    }
+    
+    closeImportModal() {
+        const modal = document.getElementById('import-modal');
+        if (modal) modal.classList.add('hidden');
+        this.pendingImportData = null;
+    }
+    
+    handleImportFileSelect(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            try {
+                const data = JSON.parse(evt.target.result);
+                if (data.format !== 'TsukiEditorPartial') {
+                    alert('El archivo no tiene el formato correcto (TsukiEditorPartial).');
+                    return;
+                }
+                
+                this.pendingImportData = data;
+                
+                // Show preview
+                let previewHtml = '<strong>Resumen del archivo:</strong><br>';
+                
+                const cbInv = document.getElementById('import-cb-inv');
+                const cbFarm = document.getElementById('import-cb-farm');
+                const cbPhone = document.getElementById('import-cb-phone');
+                
+                if (data.inventory) {
+                    previewHtml += `- Inventario: ${data.inventory.length} ítems<br>`;
+                    cbInv.disabled = false;
+                    cbInv.checked = true;
+                }
+                if (data.farm && data.farm.crops) {
+                    previewHtml += `- Cultivos/Parcelas: ${data.farm.crops.length}<br>`;
+                    cbFarm.disabled = false;
+                    cbFarm.checked = true;
+                }
+                if (data.phone) {
+                    previewHtml += `- Teléfono: Incluido<br>`;
+                    cbPhone.disabled = false;
+                    cbPhone.checked = true;
+                }
+                
+                const box = document.getElementById('import-preview-box');
+                box.innerHTML = previewHtml;
+                box.classList.remove('hidden');
+                
+                document.getElementById('btn-confirm-import').disabled = false;
+                
+            } catch (err) {
+                alert('Error al leer el JSON: ' + err.message);
+                console.error(err);
+            }
+        };
+        reader.readAsText(file);
+    }
+    
+    executeImportJSON() {
+        if (!this.parser || !this.parser.ast || !this.pendingImportData) {
+            alert("No hay save cargado");
+            return;
+        }
+        
+        const inv = document.getElementById('import-cb-inv').checked;
+        const farm = document.getElementById('import-cb-farm').checked;
+        const phone = document.getElementById('import-cb-phone').checked;
+        
+        if (!inv && !farm && !phone) {
+            alert('Selecciona al menos una sección para importar.');
+            return;
+        }
+        
+        try {
+            const report = this.parser.applyPartialJSON(this.pendingImportData, { inventory: inv, farm: farm, phone: phone });
+            
+            this.closeImportModal();
+            
+            // Refresh UI
+            if (inv) this.parser.parseInventory();
+            if (farm) this.parser.parseMap();
+            
+            this.renderInventoryTab();
+            if (this.renderEventsTab) this.renderEventsTab();
+            if (this.renderPhoneTab) this.renderPhoneTab();
+            if (this.renderMailTab) this.renderMailTab();
+            if (this.map) this.map.draw();
+            
+            let msg = `✅ Importación parcial exitosa.\nAplicados: ${report.applied}`;
+            if (report.skipped.length > 0) {
+                msg += `\nOmitidos: ${report.skipped.length}`;
+                console.log("Elementos omitidos:", report.skipped);
+            }
+            this.showToast(msg);
+            
+        } catch (err) {
+            alert('Error al aplicar el JSON: ' + err.message);
+            console.error(err);
+        }
+    }
+    
     // ─── Toasts ───────────────────────────────────────────────────────
 
     showToast(message) {

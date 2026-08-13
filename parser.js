@@ -1996,29 +1996,38 @@ class SaveParser {
 
         if (sections.inventory) {
             if (!this.inventory || !this.inventory.length) this.parseInventory();
-            out.inventory = this.inventory.map(item => ({
-                id: item.id,
-                qty: item.qty,
-                invType: item.invType,
-                verificationID: item.verificationID
-            }));
+            out.inventory = this.inventory
+                .filter(i => i.item_id > 0)
+                .map(i => {
+                    let vid = 0;
+                    if (i.slotNode && i.slotNode.children) {
+                        const vidNode = i.slotNode.children.find(c => c.name === 'verificationID' || c.name === 'verify');
+                        if (vidNode) vid = vidNode.value;
+                    }
+                    return {
+                        id: i.item_id,
+                        qty: i.qty,
+                        invType: i.invType,
+                        verificationID: vid
+                    };
+                });
         }
 
         if (sections.farm) {
             if (!this.placements || !this.placements.length) this.parseMap();
             const crops = [];
             this.placements.forEach(p => {
-                // Determine if it's a crop or plot
                 const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id)) || p.planted_id !== undefined || (p.furnNode && p.furnNode.typeName && p.furnNode.typeName.includes('CropSave'));
                 
                 if (isCrop && p.placementID !== undefined) {
+                    const cInfo = this.getCropSaveFields(p);
                     crops.push({
                         placementID: p.placementID,
                         item_id: p.item_id,
                         parentPlacementID: p.parentPlacementID || 0,
                         grid: p.grid ? { x: p.grid.x, y: p.grid.y } : { x: 0, y: 0 },
-                        harvestTimeOA: p.linkedSeed && p.linkedSeed.harvestTimeNode ? p.linkedSeed.harvestTimeNode.value : (p.harvestTimeNode ? p.harvestTimeNode.value : 0),
-                        ripe: p.linkedSeed && p.linkedSeed.ripeNode ? p.linkedSeed.ripeNode.value : (p.ripeNode ? p.ripeNode.value : false),
+                        harvestTimeOA: cInfo.harvestTimeNode ? cInfo.harvestTimeNode.value : 0,
+                        ripe: cInfo.ripeNode ? cInfo.ripeNode.value : false,
                         orientation: p.orientation || 0
                     });
                 }
@@ -2028,7 +2037,6 @@ class SaveParser {
 
         if (sections.phone) {
             out.phone = {};
-            
             const cos = this.getPhoneCosmetics();
             if (cos) {
                 out.phone.cosmetics = {
@@ -2067,25 +2075,16 @@ class SaveParser {
         if (data.inventory && sections.inventory) {
             if (!this.inventory || !this.inventory.length) this.parseInventory();
             data.inventory.forEach(item => {
-                const existing = this.inventory.find(inv => inv.id === item.id);
-                if (existing) {
-                    if (existing.nodes && existing.nodes.qtyNode) {
-                        existing.nodes.qtyNode.value += item.qty;
-                        existing.qty = existing.nodes.qtyNode.value;
-                        report.applied++;
-                    }
+                const existingIndex = this.inventory.findIndex(inv => Number(inv.item_id) === Number(item.id));
+                if (existingIndex !== -1) {
+                    const existing = this.inventory[existingIndex];
+                    const newQty = existing.qty + item.qty;
+                    this.updateInventoryItem(existingIndex, item.id, newQty, item.invType ?? existing.invType);
+                    report.applied++;
                 } else {
-                    const ok = this.injectInventoryItem(item.id, item.qty, item.invType);
+                    const ok = this.injectInventoryItem(item.id, item.qty, item.invType ?? 1);
                     if (ok) report.applied++;
                     else report.skipped.push(`Item ${item.id} (No inyectable)`);
-                }
-            });
-            // recalculate verificationIDs
-            this.inventory.forEach(item => {
-                if (item.nodes && item.nodes.idNode && item.nodes.verifyNode) {
-                    if (typeof calcVerificationId !== 'undefined') {
-                        item.nodes.verifyNode.value = calcVerificationId(item.nodes.idNode.value) >>> 0;
-                    }
                 }
             });
         }
@@ -2094,28 +2093,19 @@ class SaveParser {
         if (data.farm && data.farm.crops && sections.farm) {
             if (!this.placements || !this.placements.length) this.parseMap();
             data.farm.crops.forEach(cData => {
-                const p = this.placements.find(pl => pl.placementID === cData.placementID);
+                const p = this.placements.find(pl => Number(pl.placementID) === Number(cData.placementID));
                 if (p) {
                     let changed = false;
+                    const cInfo = this.getCropSaveFields(p);
                     
-                    // Harvest time
-                    if (p.harvestTimeNode) {
-                        p.harvestTimeNode.value = cData.harvestTimeOA;
-                        changed = true;
-                    } else if (p.linkedSeed && p.linkedSeed.harvestTimeNode) {
-                        p.linkedSeed.harvestTimeNode.value = cData.harvestTimeOA;
+                    if (cInfo.harvestTimeNode) {
+                        cInfo.harvestTimeNode.value = cData.harvestTimeOA;
                         changed = true;
                     }
-                    
-                    // Ripe
-                    if (p.ripeNode) {
-                        p.ripeNode.value = cData.ripe;
-                        changed = true;
-                    } else if (p.linkedSeed && p.linkedSeed.ripeNode) {
-                        p.linkedSeed.ripeNode.value = cData.ripe;
+                    if (cInfo.ripeNode) {
+                        cInfo.ripeNode.value = cData.ripe;
                         changed = true;
                     }
-                    
                     if (changed) report.applied++;
                     else report.skipped.push(`Crop ${cData.placementID} (nodos no editables)`);
                 } else {
