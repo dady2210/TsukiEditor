@@ -1359,7 +1359,8 @@ class App {
 
     executeMatureCrop() {
         if (!this.map.selectedPlacement) return;
-        const p = this.map.selectedPlacement;
+        let p = this.map.selectedPlacement;
+        if (p.linkedPlot) p = p.linkedPlot;
         if (!p.linkedSeed) return;
 
         try {
@@ -1381,7 +1382,8 @@ class App {
 
     executePlantSeed() {
         if (!this.map.selectedPlacement) return;
-        const p = this.map.selectedPlacement;
+        let p = this.map.selectedPlacement;
+        if (p.linkedPlot) p = p.linkedPlot;
         if (p.item_id !== 306 && p.item_id !== 411) return;
 
         const seedId = parseInt(this.editSeedSelect.value);
