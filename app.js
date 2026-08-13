@@ -2095,6 +2095,100 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
     }
 
+    scanUnknownIds() {
+        if (!this.parser || (!this.parser.inventory && !this.parser.placements)) {
+            alert('Carga un save primero para escanear IDs.');
+            return;
+        }
+        
+        const missing = new Set();
+        
+        if (this.parser.inventory) {
+            this.parser.inventory.forEach(i => {
+                if (!window.KNOWN_ITEMS[`FURN_${i.id}`] && !window.KNOWN_ITEMS[`ITEM_${i.id}`]) {
+                    missing.add(i.id);
+                }
+            });
+        }
+        
+        if (this.parser.placements) {
+            this.parser.placements.forEach(p => {
+                if (p.item_id !== undefined && !window.KNOWN_ITEMS[`FURN_${p.item_id}`] && !window.KNOWN_ITEMS[`ITEM_${p.item_id}`]) {
+                    missing.add(p.item_id);
+                }
+                if (p.linkedSeed && p.linkedSeed.item_id) {
+                    if (!window.KNOWN_ITEMS[`FURN_${p.linkedSeed.item_id}`] && !window.KNOWN_ITEMS[`ITEM_${p.linkedSeed.item_id}`]) {
+                        missing.add(p.linkedSeed.item_id);
+                    }
+                }
+            });
+        }
+        
+        if (missing.size === 0) {
+            this.showToast('✅ Todos los IDs encontrados tienen nombre.', 'success');
+            return;
+        }
+        
+        const missingArray = Array.from(missing).sort((a,b) => a-b);
+        const blob = new Blob([JSON.stringify(missingArray, null, 2)], { type: "application/json" });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'missing_ids.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        this.showToast(`📥 missing_ids.json descargado con ${missing.size} IDs faltantes.`);
+    }
+    
+    handleJSONDrop(e) {
+        e.preventDefault();
+        const overlay = document.getElementById('drop-overlay');
+        if (overlay) overlay.style.display = 'none';
+        
+        const file = e.dataTransfer?.files[0];
+        if (!file || !file.name.endsWith('.json')) return;
+        
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            try {
+                const data = JSON.parse(evt.target.result);
+                let added = 0;
+                if (!window.KNOWN_ITEMS) window.KNOWN_ITEMS = {};
+                
+                Object.keys(data).forEach(id => {
+                    const entry = data[id];
+                    if (entry.FURN) {
+                        window.KNOWN_ITEMS[`FURN_${id}`] = entry.FURN;
+                        added++;
+                    }
+                    if (entry.ITEM) {
+                        window.KNOWN_ITEMS[`ITEM_${id}`] = entry.ITEM;
+                        added++;
+                    }
+                });
+                
+                if (added > 0) {
+                    this.showToast(`✅ ${added} nombres inyectados al catálogo. Refrescando interfaz...`);
+                    if (this.parser && this.parser.ast) {
+                        this.renderInventoryTab();
+                        this.renderMailTab();
+                        const tabMap = document.getElementById('tab-map');
+                        if (tabMap && tabMap.classList.contains('active') && this.map) {
+                            this.map.draw();
+                        }
+                    }
+                } else {
+                    alert('El JSON no tenía el formato de nombres esperado.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error al leer el JSON de nombres.');
+            }
+        };
+        reader.readAsText(file);
+    }
+
     // ─── Toasts ───────────────────────────────────────────────────────
 
     showToast(message) {
