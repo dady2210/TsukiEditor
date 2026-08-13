@@ -467,6 +467,19 @@ class App {
         document.getElementById('btn-apply-all').addEventListener('click', () => this.saveAllInvItems());
         const addBtn = document.getElementById('btn-add-inv-item');
         if (addBtn) addBtn.addEventListener('click', () => this.addInventoryItem());
+        
+        const capOverride = document.getElementById('inv-capacity-override');
+        if (capOverride) capOverride.addEventListener('input', () => this.renderInventory());
+        
+        const moveExcessBtn = document.getElementById('btn-inv-move-excess');
+        if (moveExcessBtn) moveExcessBtn.addEventListener('click', () => {
+            if (!this.parser) return;
+            const override = capOverride ? capOverride.value : null;
+            const info = this.parser.getInventoryCapacityInfo(override);
+            const moved = this.parser.moveExcessToHidden(info.capacity);
+            this.showToast(`🎒 Se movieron ${moved} items al inventario oculto.`);
+            this.renderInventory();
+        });
 
         // General Vars
         document.getElementById('btn-apply-vars').addEventListener('click', () => this.applyGeneralVars());
@@ -842,6 +855,24 @@ class App {
     renderInventory() {
         if (!this.parser) return;
         this.invTableBody.innerHTML = '';
+        
+        // --- Update Capacity UI ---
+        const overrideInput = document.getElementById('inv-capacity-override');
+        const capInfo = this.parser.getInventoryCapacityInfo(overrideInput ? overrideInput.value : null);
+        const capText = document.getElementById('inv-capacity-text');
+        const moveBtn = document.getElementById('btn-inv-move-excess');
+        
+        if (capText) {
+            capText.textContent = `${capInfo.used} / ${capInfo.capacity}`;
+            if (capInfo.used > capInfo.capacity) {
+                capText.style.color = '#e74c3c'; // Red warning
+                if (moveBtn) moveBtn.classList.remove('hidden');
+            } else {
+                capText.style.color = '#27ae60'; // Green ok
+                if (moveBtn) moveBtn.classList.add('hidden');
+            }
+        }
+        
         const filter = this.invSearch.value.toLowerCase();
 
         this.parser.inventory.forEach((item, index) => {

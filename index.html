@@ -310,6 +310,24 @@
                             </button>
                         </div>
                     </div>
+                    
+                    <div class="inventory-capacity-bar" style="background:#fbfbe2; border:1px solid rgba(0,0,0,0.1); border-radius:12px; padding:0.75rem 1rem; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span class="material-symbols-outlined" style="color:var(--text-muted);">backpack</span>
+                            <strong style="font-size:0.95rem;">Capacidad:</strong>
+                            <span id="inv-capacity-text" style="font-family:'Nunito Sans'; font-weight:bold; font-size:1.05rem;">? / ?</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap;">
+                            <div style="display:flex; align-items:center; gap:5px;">
+                                <label style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; font-weight:600;">Manual:</label>
+                                <input type="number" id="inv-capacity-override" placeholder="50" style="width:70px; padding:4px 8px; font-size:0.85rem;">
+                            </div>
+                            <button id="btn-inv-move-excess" class="btn-secondary hidden" style="font-size:0.8rem; padding:6px 12px; border-color:#e74c3c; color:#e74c3c;">
+                                <span class="material-symbols-outlined" style="font-size:16px; margin-right:4px;">delete_sweep</span>
+                                Mover excedente a ocultos
+                            </button>
+                        </div>
+                    </div>
 
                     <div class="inventory-add-panel rustic-panel-light">
                         <div class="input-group">

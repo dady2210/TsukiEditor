@@ -874,6 +874,48 @@ class SaveParser {
         throw new Error("No hay slots vacios y no se pudo inyectar en el AST.");
     }
 
+    // --- Inventory Capacity ---
+    
+    countUsedInventorySlots() {
+        if (!this.inventory) return 0;
+        return this.inventory.filter(i => i.item_id > 0 && i.qty > 0).length;
+    }
+
+    getInventoryCapacityInfo(manualOverride = null) {
+        const used = this.countUsedInventorySlots();
+        let capacity = 50; // Default size if no bags are detected
+        let source = 'default';
+        
+        if (manualOverride !== null && !isNaN(manualOverride)) {
+            capacity = parseInt(manualOverride);
+            source = 'manual';
+        }
+        
+        return { used, capacity, source };
+    }
+
+    moveExcessToHidden(capacity) {
+        if (!this.inventory || !this.hiddenInventory || !this.ast) return 0;
+        
+        const usedSlots = this.inventory.filter(i => i.item_id > 0 && i.qty > 0);
+        let excessCount = usedSlots.length - capacity;
+        if (excessCount <= 0) return 0;
+        
+        let movedCount = 0;
+        // Start from the end of the inventory array
+        for (let i = this.inventory.length - 1; i >= 0 && movedCount < excessCount; i--) {
+            const item = this.inventory[i];
+            if (item.item_id > 0 && item.qty > 0) {
+                // Find or create slot in hiddenInventory
+                this.injectInventoryItem(item.item_id, item.qty, 0); // 0 = hiddenItems
+                // Clear from main inventory
+                this.clearInventoryItem(i, 1); // 1 = slots
+                movedCount++;
+            }
+        }
+        return movedCount;
+    }
+
     // ─── NPC Friendship (liminalSaves) ───────────────────────────────────
 
     parseNPCSaves() {
