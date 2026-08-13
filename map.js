@@ -236,8 +236,11 @@ class IsometricMap {
         const seeds   = all.filter(p => SEED_IDS.has(p.item_id) && p.x !== -1 && p.y !== -1 && !p.linkedPlot);
         const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id));
 
-        // Z-sort regular furniture by x+y (painter's algorithm)
-        regular.sort((a, b) => (b.x + b.y) - (a.x + a.y)); // DESCENDING for bottom origin
+        // Z-sort all layers by x+y (painter's algorithm)
+        const sortByZ = (a, b) => (b.x + b.y) - (a.x + a.y); // DESCENDING for bottom origin
+        ground.sort(sortByZ);
+        seeds.sort(sortByZ);
+        regular.sort(sortByZ);
 
         // Draw layers
         for (const p of ground)  this._drawPlacement(p, 'ground');
