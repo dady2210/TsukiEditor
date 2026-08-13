@@ -1795,6 +1795,73 @@ class SaveParser {
         return false;
     }
 
+    // --- Village Events ---
+    getVillageEventState() {
+        if (!this.ast) return { present: false };
+        
+        const vNode = findChildRecursive(this.ast, ['villageEvent', 'VillageEvent', 'currentEvent']);
+        if (!vNode || !vNode.children) return { present: false };
+        
+        const eventIDNode = findChildRecursive(vNode, ['eventID', 'EventID']);
+        const tasksNode = findChildRecursive(vNode, ['tasksCompleted', 'TasksCompleted']);
+        const rewardsNode = findChildRecursive(vNode, ['rewardsClaimed', 'RewardsClaimed']);
+        const flyerNode = findChildRecursive(vNode, ['flyerSeen', 'FlyerSeen', 'seenFlyer']);
+        const calendarNode = findChildRecursive(vNode, ['calendarSeen', 'CalendarSeen']);
+        const startNode = findChildRecursive(vNode, ['eventStart', 'startOA']);
+        const endNode = findChildRecursive(vNode, ['eventEnd', 'endOA']);
+        
+        // Convert rewards to array or int depending on type
+        let rewardsParsed = [];
+        if (rewardsNode) {
+            if (rewardsNode.value !== undefined && typeof rewardsNode.value === 'number') {
+                rewardsParsed = rewardsNode.value; // Bitmask or int
+            } else if (rewardsNode.children) {
+                const rList = rewardsNode.children.find(c => c.constructor.name === 'OdinList');
+                if (rList && rList.elements) {
+                    rewardsParsed = rList.elements.map(e => e.value);
+                }
+            }
+        }
+        
+        return {
+            present: true,
+            eventID: eventIDNode ? eventIDNode.value : null,
+            tasksCompleted: tasksNode ? tasksNode.value : 0,
+            rewardsClaimed: rewardsParsed,
+            flyerSeen: flyerNode ? !!flyerNode.value : false,
+            calendarSeen: calendarNode ? !!calendarNode.value : false,
+            startOA: startNode ? startNode.value : 0,
+            endOA: endNode ? endNode.value : 0,
+            nodes: {
+                main: vNode,
+                eventIDNode,
+                tasksNode,
+                rewardsNode,
+                flyerNode,
+                calendarNode
+            }
+        };
+    }
+
+    setVillageEventField(fieldKey, value) {
+        const state = this.getVillageEventState();
+        if (!state.present) return false;
+        
+        let targetNode = null;
+        switch (fieldKey) {
+            case 'eventID': targetNode = state.nodes.eventIDNode; break;
+            case 'tasksCompleted': targetNode = state.nodes.tasksNode; break;
+            case 'flyerSeen': targetNode = state.nodes.flyerNode; break;
+            case 'calendarSeen': targetNode = state.nodes.calendarNode; break;
+        }
+        
+        if (targetNode) {
+            targetNode.value = (fieldKey === 'flyerSeen' || fieldKey === 'calendarSeen') ? !!value : Number(value);
+            return true;
+        }
+        return false;
+    }
+
     getBuffer() {
         if (this.ast) {
             try {

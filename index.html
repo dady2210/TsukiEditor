@@ -500,31 +500,54 @@
                     </div>
                 </div>
 
-                <!-- ─── TAB: Eventos ─── -->
+                <!-- ── TAB: Eventos ── -->
                 <div id="tab-events" class="tab-content hidden">
-                    <h2>Eventos de la Aldea</h2>
-                    <p class="subtitle">Visualiza y modifica el estado de los eventos activos.</p>
+                    <h2>🎪 Eventos de la Aldea</h2>
+                    <p class="subtitle">Visualiza y modifica el estado del evento activo.</p>
 
-                    <div class="info-banner" style="margin-bottom:1.5rem;">
-                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">warning</span>
-                        Los eventos aparecen aquí solo si ya existen en tu save. Modificar el <strong>año</strong> permite
-                        "re-activar" un evento ya pasado. Los campos internos (tasksCompleted, rewardsClaimed) son de solo lectura en esta versión.
+                    <div id="event-empty-state" class="info-banner" style="margin-bottom:1.5rem;">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">info</span>
+                        No hay un VillageEvent activo en este save. El evento se crea al activarse en el juego.
                     </div>
 
-                    <div class="table-container">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th style="width:60px;">ID</th>
-                                    <th>Nombre del Evento</th>
-                                    <th style="width:100px;">Año</th>
-                                    <th style="width:140px;">Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody id="events-table-body">
-                                <tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--text-muted);">Carga un archivo .csave para ver los eventos</td></tr>
-                            </tbody>
-                        </table>
+                    <div id="event-content" style="display:none;" class="section-card">
+                        <div class="grid-2col">
+                            <div>
+                                <label for="event-id">Event ID</label>
+                                <input type="number" id="event-id" class="input-field" placeholder="Ej. 4">
+                                <small style="display:block; margin-top:5px; color:var(--primary-color);" id="event-name-label">Nombre del Evento</small>
+                            </div>
+                            <div>
+                                <label>Progreso de Tareas (Tasks Completed)</label>
+                                <input type="number" id="event-tasks" class="input-field" placeholder="0">
+                            </div>
+                        </div>
+
+                        <div style="margin-top:1.5rem;" class="grid-2col">
+                            <div>
+                                <h4>Fechas de Evento</h4>
+                                <p style="font-size:0.9rem; margin-top:0.5rem;" id="event-dates">Inicio: -<br>Fin: -</p>
+                            </div>
+                            <div style="display:flex; flex-direction:column; gap:0.5rem; justify-content:center;">
+                                <label class="check-container">
+                                    <input type="checkbox" id="event-flyer-cb">
+                                    <span>Flyer Visto (FlyerSeen)</span>
+                                </label>
+                                <label class="check-container">
+                                    <input type="checkbox" id="event-calendar-cb">
+                                    <span>Calendario Visto (CalendarSeen)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:1.5rem;">
+                            <h4>Recompensas Reclamadas</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">Representación interna: <code id="event-rewards-repr"></code></p>
+                        </div>
+
+                        <div style="margin-top:2rem; display:flex; gap:1rem;">
+                            <button class="btn-primary" id="btn-apply-event">Aplicar Cambios</button>
+                        </div>
                     </div>
                 </div>
 
