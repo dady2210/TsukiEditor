@@ -1770,16 +1770,39 @@ class App {
     saveAndDownload() {
         if (!this.parser) return;
         
+        // Read checkbox for verificationID recalculation
+        const chkFixVerify = document.getElementById('chk-fix-verify');
+        const fixVerify = chkFixVerify ? chkFixVerify.checked : false;
+        
         // Validation pre-download
-        const validation = this.parser.validateSaveForDownload();
+        const validation = this.parser.validateSaveForDownload({ fixCropGrid: true, fixVerify: fixVerify });
+        
+        // Console log for debug
+        if (validation.issues && validation.issues.length > 0) {
+            console.log("Validation Issues:");
+            console.table(validation.issues);
+        }
         
         // Show validation info/fixes
         if (validation.fixes > 0) {
-            this.showToast(`[INFO] Se corrigieron ${validation.fixes} coordenadas de cultivos (grid a 0,0).`);
+            this.showToast(`✅ Se aplicaron ${validation.fixes} auto-correcciones al save.`);
         }
         
         if (validation.hasWarnings) {
-            const warningMsg = "Hay advertencias en el archivo:\n- " + validation.errors.filter(e => e.includes('WARNING')).join("\n- ") + "\n\n¿Descargar de todos modos?";
+            // Filter only FIX and WARNING severities for the alert
+            const warnings = validation.errors.filter(e => e.includes('[WARNING]') || e.includes('[FIX]'));
+            
+            // Limit to ~15 lines to avoid huge alert boxes
+            const maxLines = 15;
+            let displayWarnings = warnings.slice(0, maxLines);
+            if (warnings.length > maxLines) {
+                displayWarnings.push(`...y ${warnings.length - maxLines} problemas más.`);
+            }
+            
+            const warningMsg = "⚠️ Se detectaron problemas en el archivo:\n\n" + 
+                                displayWarnings.join("\n") + 
+                                "\n\n¿Descargar de todos modos (podría haber errores al cargar en el juego)?";
+            
             if (!confirm(warningMsg)) {
                 return;
             }

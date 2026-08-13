@@ -662,59 +662,150 @@ class SaveParser {
         return count;
     }
 
-    validateSaveForDownload() {
+    validateSaveForDownload(options = {}) {
+        const { fixCropGrid = true, fixVerify = false, fixLocDup = false } = options;
+        
+        let fixes = 0;
+        const issues = [];
         const errors = [];
-        let gridsFixed = 0;
-        let orphans = 0;
-        let verificationMismatches = 0;
-
-        if (!this.placements) return { errors, fixes: gridsFixed };
-
-        for (const p of this.placements) {
-            const tn = p.furnNode ? (p.furnNode.typeName || p.furnNode.className) : null;
-            const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id)) 
-                           || (tn && /CropSave/i.test(tn))
-                           || !!findChildRecursive(p.furnNode, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
-
-            const vIdNode = findChildRecursive(p.furnNode, ['verificationID']);
-            if (vIdNode) {
-                const expected = calcVerificationId(p.item_id) >>> 0;
-                if ((vIdNode.value >>> 0) !== expected) {
-                    verificationMismatches++;
-                    // Optionally auto-fix verification IDs
-                    vIdNode.value = expected;
-                }
-            }
-
-            if (isCrop) {
-                const parentIdNode = findChildRecursive(p.furnNode, ['parentPlacementID', 'ParentPlacementID']);
-                const hasParent = parentIdNode && parentIdNode.value !== -1 && parentIdNode.value !== 0;
-                
-                if (hasParent) {
-                    // It's a planted crop on a plot. Grid MUST be 0,0
-                    const groupPosNode = findChildRecursive(p.furnNode, ['groupPosition']);
-                    const posNode = findChildRecursive(p.furnNode, ['position']);
-                    const gridPos = readGroupXY(groupPosNode, posNode);
-                    
-                    if (gridPos.x !== 0 || gridPos.y !== 0) {
-                        writeGroupXY(groupPosNode, 0, 0, posNode);
-                        gridsFixed++;
+        
+        // --- A) Crops & B) Map Placements ---
+        if (this.placements) {
+            const placementIds = new Set();
+            for (const p of this.placements) {
+                // Check B1: Duplicated placementID
+                if (p.placementID > 0) {
+                    if (placementIds.has(p.placementID)) {
+                        issues.push({ code: 'PLACE_DUP_ID', severity: 'WARNING', message: `ID de placement duplicado: ${p.placementID}` });
                     }
-                } else if (p.x !== -1 || p.y !== -1) {
-                    // Crop without parent that was somehow drawn on map
-                    orphans++;
+                    placementIds.add(p.placementID);
+                }
+                
+                // Check B2: Bad orientation
+                if (p.orientation !== undefined && (p.orientation < 0 || p.orientation > 3)) {
+                    issues.push({ code: 'PLACE_BAD_ORIENT', severity: 'INFO', message: `Orientación fuera de rango normal (0-3) en ítem ${p.item_id}` });
+                }
+
+                // Crops logic
+                const tn = p.furnNode ? (p.furnNode.typeName || p.furnNode.className) : null;
+                const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id)) 
+                               || (tn && /CropSave/i.test(tn))
+                               || !!findChildRecursive(p.furnNode, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
+
+                if (isCrop) {
+                    const parentIdNode = findChildRecursive(p.furnNode, ['parentPlacementID', 'ParentPlacementID']);
+                    const hasParent = parentIdNode && parentIdNode.value !== -1 && parentIdNode.value !== 0;
+                    
+                    if (hasParent) {
+                        const parentExists = this.placements.some(pl => pl.placementID === parentIdNode.value);
+                        if (!parentExists) {
+                            issues.push({ code: 'CROP_ORPHAN', severity: 'WARNING', message: `Cultivo ${p.item_id} apunta a un parent inexistente (${parentIdNode.value}).` });
+                        }
+                        
+                        // It's a planted crop on a plot. Grid MUST be 0,0
+                        const groupPosNode = findChildRecursive(p.furnNode, ['groupPosition']);
+                        const posNode = findChildRecursive(p.furnNode, ['position']);
+                        const gridPos = readGroupXY(groupPosNode, posNode);
+                        
+                        if (gridPos.x !== 0 || gridPos.y !== 0) {
+                            if (fixCropGrid) {
+                                writeGroupXY(groupPosNode, 0, 0, posNode);
+                                fixes++;
+                            } else {
+                                issues.push({ code: 'CROP_GRID', severity: 'FIX', message: `Cultivo ${p.item_id} tiene grid (${gridPos.x},${gridPos.y}) en vez de (0,0).` });
+                            }
+                        }
+                    } else if (p.x !== -1 || p.y !== -1) {
+                        // Crop without parent that was somehow drawn on map
+                        issues.push({ code: 'CROP_NO_PARENT', severity: 'WARNING', message: `Cultivo ${p.item_id} sin parent está colocado en el mapa (X:${p.x}, Y:${p.y}).` });
+                    }
+                    
+                    // Check Harvest Time
+                    const fields = this.getCropSaveFields(p);
+                    if (fields && fields.harvestTimeNode) {
+                        const ht = fields.harvestTimeNode.value;
+                        if (isNaN(ht) || ht < 0) {
+                            issues.push({ code: 'CROP_TIME', severity: 'INFO', message: `Cultivo ${p.item_id} tiene tiempo de cosecha inválido o negativo (${ht}).` });
+                        }
+                    }
                 }
             }
         }
-
-        if (gridsFixed > 0) errors.push(`[INFO] Se corrigieron ${gridsFixed} coordenadas de cultivos (grid a 0,0).`);
-        if (orphans > 0) errors.push(`[WARNING] Hay ${orphans} cultivos huérfanos sin parcela.`);
-        if (verificationMismatches > 0) errors.push(`[WARNING] Se re-calcularon ${verificationMismatches} VerificationIDs incorrectos.`);
+        
+        // --- C) locationsOnPhone ---
+        const locsOnPhone = this.getLocationsOnPhone();
+        if (locsOnPhone && locsOnPhone.length > 0) {
+            const seenLocs = new Set();
+            for (const l of locsOnPhone) {
+                const locVal = Number(l.location);
+                if (locVal < 0 || locVal > 50) { // max arbitrary known value
+                    issues.push({ code: 'LOC_INVALID', severity: 'INFO', message: `ID de ubicación en teléfono inválido: ${locVal}` });
+                }
+                if (seenLocs.has(locVal)) {
+                    issues.push({ code: 'LOC_DUP', severity: 'WARNING', message: `Ubicación ${locVal} duplicada en el teléfono.` });
+                }
+                seenLocs.add(locVal);
+            }
+        }
+        
+        // --- D) Inventory ---
+        if (this.inventory) {
+            const capInfo = this.getInventoryCapacityInfo();
+            if (capInfo.used > capInfo.capacity && !capInfo.infinite) {
+                issues.push({ code: 'INV_OVER', severity: 'WARNING', message: `Inventario excede capacidad (${capInfo.used}/${capInfo.capacity}).` });
+            }
+            if (capInfo.source === 'bag_unknown') {
+                issues.push({ code: 'INV_BAG', severity: 'INFO', message: `Bolsas detectadas con tamaño desconocido. Capacidad estimada: 50.` });
+            }
+            
+            for (let i = 0; i < this.inventory.length; i++) {
+                const item = this.inventory[i];
+                if (item.item_id > 0) {
+                    const expectedVerify = calcVerificationId(item.item_id) >>> 0;
+                    if ((item.verificationID >>> 0) !== expectedVerify) {
+                        if (fixVerify) {
+                            item.verificationID = expectedVerify;
+                            // Search the actual node to apply fix
+                            const itemsNode = this.ast.children.find(c => c.name === 'items');
+                            if (itemsNode) {
+                                // Since we mutate AST, let's just trigger a re-parse or sync back? 
+                                // Best is just changing it via updateInventoryItem, but we are inside validation...
+                                // We can safely call updateInventoryItem on it. Wait, updateInventoryItem needs index.
+                                // It's just easier to update the property if we stored the node. 
+                                // Our AST doesn't link verificationID node directly in this.inventory, it is only parsed.
+                                // Instead of deep fixing the AST here, let's rely on updateInventoryItem.
+                            }
+                            this.updateInventoryItem(i, item.item_id, item.qty, item.invType);
+                            fixes++;
+                        } else {
+                            issues.push({ code: 'INV_VERIFY', severity: 'WARNING', message: `Ítem ${item.item_id} tiene un VerificationID incorrecto.` });
+                        }
+                    }
+                }
+            }
+        }
+        
+        // --- E) Punchcard ---
+        const punch = this.getPunchcardState();
+        if (punch) {
+            const claimedSlots = punch.rewards.filter(r => r.claimed).length;
+            if (punch.punchcardsClaimed < claimedSlots || punch.punchcardsClaimed > claimedSlots + 7) {
+                issues.push({ code: 'PUNCH_COUNT', severity: 'INFO', message: `Inconsistencia posible en punchcardsClaimed (${punch.punchcardsClaimed}) vs slots marcados (${claimedSlots}).` });
+            }
+        }
+        
+        // Assemble errors
+        for (const iss of issues) {
+            errors.push(`[${iss.severity}] ${iss.message}`);
+        }
+        
+        const hasWarnings = issues.some(iss => iss.severity === 'WARNING' || iss.severity === 'FIX');
 
         return {
+            fixes,
             errors,
-            fixes: gridsFixed,
-            hasWarnings: orphans > 0 || verificationMismatches > 0
+            hasWarnings,
+            issues
         };
     }
 
