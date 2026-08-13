@@ -803,41 +803,69 @@ class App {
     // ─── Events Tab ───────────────────────────────────────────────────
 
     renderEventsTab() {
-        const tbody = document.getElementById('events-table-body');
-        if (!tbody) return;
-        tbody.innerHTML = '';
-
-        if (!this.parser.eventSaves.length) {
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--text-muted);">No se encontraron eventos activos en este save.<br><small>Los eventos solo aparecen una vez activados en el juego.</small></td></tr>';
+        if (!this.parser) return;
+        
+        const state = this.parser.getVillageEventState();
+        
+        const emptyState = document.getElementById('event-empty-state');
+        const contentState = document.getElementById('event-content');
+        
+        if (!state || !state.present) {
+            if (emptyState) emptyState.style.display = 'block';
+            if (contentState) contentState.style.display = 'none';
             return;
         }
-
-        this.parser.eventSaves.forEach((ev, idx) => {
-            const name = EVENT_NAMES[ev.eventId] || `Evento ${ev.eventId}`;
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${ev.eventId}</td>
-                <td>${name}</td>
-                <td><input type="number" class="inv-input" id="ev-year-${idx}" value="${ev.year}" style="width:80px;"></td>
-                <td>
-                    <div class="row-actions">
-                        <button class="btn-primary btn-small" onclick="window.app.applyEventSingle(${idx})">✔ Aplicar</button>
-                    </div>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    applyEventSingle(idx) {
-        const yEl = document.getElementById(`ev-year-${idx}`);
-        const ev = this.parser.eventSaves[idx];
-        if (!ev) return;
-        if (yEl && ev.yearOff !== -1) {
-            const year = parseInt(yEl.value);
-            if (!isNaN(year)) { this.parser.writeInt32(ev.yearOff, year); ev.year = year; }
+        
+        if (emptyState) emptyState.style.display = 'none';
+        if (contentState) contentState.style.display = 'block';
+        
+        const idInput = document.getElementById('event-id');
+        const tasksInput = document.getElementById('event-tasks');
+        const flyerCb = document.getElementById('event-flyer-cb');
+        const calendarCb = document.getElementById('event-calendar-cb');
+        const applyBtn = document.getElementById('btn-apply-event');
+        const nameLabel = document.getElementById('event-name-label');
+        
+        if (idInput) idInput.value = state.eventID || '';
+        if (tasksInput) tasksInput.value = state.tasksCompleted || 0;
+        if (flyerCb) flyerCb.checked = !!state.shownFlyer;
+        if (calendarCb) calendarCb.checked = !!state.shownCalendar;
+        
+        if (nameLabel) {
+            const evName = (typeof EVENT_NAMES !== 'undefined' && EVENT_NAMES[state.eventID]) 
+                ? EVENT_NAMES[state.eventID] 
+                : 'Desconocido';
+            nameLabel.textContent = 'Nombre: ' + evName;
         }
-        this.showToast(`✅ Evento ${EVENT_NAMES[ev.eventId] || ev.eventId} actualizado`);
+        
+        // Remove old listeners to prevent duplicates
+        if (applyBtn) {
+            const newBtn = applyBtn.cloneNode(true);
+            applyBtn.parentNode.replaceChild(newBtn, applyBtn);
+            
+            newBtn.addEventListener('click', () => {
+                let changed = false;
+                
+                const idVal = document.getElementById('event-id').value;
+                if (idVal !== '') changed = this.parser.setVillageEventField('eventID', idVal) || changed;
+                
+                const tasksVal = document.getElementById('event-tasks').value;
+                if (tasksVal !== '') changed = this.parser.setVillageEventField('tasksCompleted', tasksVal) || changed;
+                
+                const fCb = document.getElementById('event-flyer-cb').checked;
+                changed = this.parser.setVillageEventField('shownFlyer', fCb) || changed;
+                
+                const cCb = document.getElementById('event-calendar-cb').checked;
+                changed = this.parser.setVillageEventField('shownCalendar', cCb) || changed;
+                
+                if (changed) {
+                    this.showToast('✅ Evento activo actualizado');
+                    this.renderEventsTab();
+                } else {
+                    alert('No se pudo actualizar el evento. Verifica que el save lo soporte.');
+                }
+            });
+        }
     }
 
     // ─── Train Tab ────────────────────────────────────────────────────

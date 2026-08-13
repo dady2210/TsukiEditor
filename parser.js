@@ -1637,7 +1637,12 @@ class SaveParser {
     // --- Letters & Orders ---
     getLetterSave() {
         if (!this.ast) return null;
-        return findChildRecursive(this.ast, ['letterSave', 'LetterSave']);
+        
+        let ls = this.ast.children.find(c => c.name === 'letters' && (c.typeName && c.typeName.includes('LetterSave')));
+        if (ls) return ls;
+        
+        ls = findChildRecursive(this.ast, ['uniqueOrders']);
+        return ls ? findParentOdinNode(this.ast, ls) : null;
     }
 
     getLetters() {
@@ -1647,10 +1652,13 @@ class SaveParser {
         if (!lettersNode || !lettersNode.children) return [];
         
         const listNode = lettersNode.children.find(c => c.constructor.name === 'OdinList');
-        if (!listNode || !listNode.elements) return [];
+        if (!listNode) return [];
+        
+        const elements = resolveListElements(listNode);
+        if (!elements || elements.length === 0) return [];
         
         const results = [];
-        listNode.elements.forEach((el, index) => {
+        elements.forEach((el, index) => {
             const val = el.value || el;
             if (!val || !val.children) return;
             
@@ -1664,8 +1672,10 @@ class SaveParser {
             const slots = [];
             if (slotsToClaimNode && slotsToClaimNode.children) {
                 const sList = slotsToClaimNode.children.find(c => c.constructor.name === 'OdinList');
-                if (sList && sList.elements) {
-                    sList.elements.forEach((sel, sIdx) => {
+                if (sList) {
+                    const sElements = resolveListElements(sList);
+                    if (sElements) {
+                        sElements.forEach((sel, sIdx) => {
                         const sVal = sel.value || sel;
                         if (!sVal || !sVal.children) return;
                         const idNode = findChildRecursive(sVal, ['ID', 'id', 'Id']);
@@ -1683,6 +1693,7 @@ class SaveParser {
                             });
                         }
                     });
+                    }
                 }
             }
             
@@ -1690,8 +1701,11 @@ class SaveParser {
             const claimedRewards = [];
             if (claimedRewardsNode && claimedRewardsNode.children) {
                 const cList = claimedRewardsNode.children.find(c => c.constructor.name === 'OdinList');
-                if (cList && cList.elements) {
-                    cList.elements.forEach(c => claimedRewards.push(c.value));
+                if (cList) {
+                    const cElements = resolveListElements(cList);
+                    if (cElements) {
+                        cElements.forEach(c => claimedRewards.push(c.value));
+                    }
                 }
             }
             
@@ -1717,8 +1731,9 @@ class SaveParser {
 
     setLetterRead(letterIndex, read) {
         const letters = this.getLetters();
-        if (letters[letterIndex] && letters[letterIndex].nodes.readNode) {
-            letters[letterIndex].nodes.readNode.value = !!read;
+        const idx = Number(letterIndex);
+        if (letters[idx] && letters[idx].nodes.readNode) {
+            letters[idx].nodes.readNode.value = !!read;
             return true;
         }
         return false;
@@ -1726,9 +1741,11 @@ class SaveParser {
 
     setLetterSlotItemId(letterIndex, slotIndex, newFurnitureId) {
         const letters = this.getLetters();
-        const letter = letters[letterIndex];
-        if (letter && letter.slots[slotIndex]) {
-            const slot = letter.slots[slotIndex];
+        const idx = Number(letterIndex);
+        const sIdx = Number(slotIndex);
+        const letter = letters[idx];
+        if (letter && letter.slots[sIdx]) {
+            const slot = letter.slots[sIdx];
             if (slot.idNode) {
                 slot.idNode.value = Number(newFurnitureId);
                 if (slot.verifyNode) {
@@ -1742,14 +1759,33 @@ class SaveParser {
 
     getFurnitureOrders() {
         if (!this.ast) return [];
-        const ordersNode = findChildRecursive(this.ast, ['orders']);
+        // Must find `orders` that is a list (to ignore `ordersMade`)
+        const allOrdersNodes = [];
+        const findOrders = (node) => {
+            if (node.name === 'orders') allOrdersNodes.push(node);
+            if (node.children) node.children.forEach(findOrders);
+            if (node.elements) node.elements.forEach(el => findOrders(el.value || el));
+        };
+        findOrders(this.ast);
+        
+        let ordersNode = null;
+        for (const n of allOrdersNodes) {
+            if (n.children && n.children.some(c => c.constructor.name === 'OdinList')) {
+                ordersNode = n;
+                break;
+            }
+        }
+        
         if (!ordersNode || !ordersNode.children) return [];
         
         const listNode = ordersNode.children.find(c => c.constructor.name === 'OdinList');
-        if (!listNode || !listNode.elements) return [];
+        if (!listNode) return [];
+        
+        const elements = resolveListElements(listNode);
+        if (!elements || elements.length === 0) return [];
         
         const results = [];
-        listNode.elements.forEach((el, index) => {
+        elements.forEach((el, index) => {
             const val = el.value || el;
             if (!val || !val.children) return;
             
@@ -1780,13 +1816,14 @@ class SaveParser {
 
     setOrderFurnitureId(orderIndex, newFurnitureId) {
         const orders = this.getFurnitureOrders();
-        const order = orders[orderIndex];
+        const idx = Number(orderIndex);
+        const order = orders[idx];
         if (order && order.nodes.furnitureIDNode) {
             order.nodes.furnitureIDNode.value = Number(newFurnitureId);
             
             // Sync with letter if it exists
             const letters = this.getLetters();
-            const letter = letters.find(l => l.orderID === order.orderID);
+            const letter = letters.find(l => Number(l.orderID) === Number(order.orderID));
             if (letter && letter.slots.length > 0) {
                 this.setLetterSlotItemId(letter.index, 0, newFurnitureId);
             }
@@ -1797,66 +1834,136 @@ class SaveParser {
 
     // --- Village Events ---
     getVillageEventState() {
-        if (!this.ast) return { present: false };
+        if (!this.ast) return { present: false, all: [] };
         
-        const vNode = findChildRecursive(this.ast, ['villageEvent', 'VillageEvent', 'currentEvent']);
-        if (!vNode || !vNode.children) return { present: false };
+        const eventSavesNode = findChildRecursive(this.ast, ['eventSaves']);
+        if (!eventSavesNode || !eventSavesNode.children) return { present: false, all: [] };
         
-        const eventIDNode = findChildRecursive(vNode, ['eventID', 'EventID']);
-        const tasksNode = findChildRecursive(vNode, ['tasksCompleted', 'TasksCompleted']);
-        const rewardsNode = findChildRecursive(vNode, ['rewardsClaimed', 'RewardsClaimed']);
-        const flyerNode = findChildRecursive(vNode, ['flyerSeen', 'FlyerSeen', 'seenFlyer']);
-        const calendarNode = findChildRecursive(vNode, ['calendarSeen', 'CalendarSeen']);
-        const startNode = findChildRecursive(vNode, ['eventStart', 'startOA']);
-        const endNode = findChildRecursive(vNode, ['eventEnd', 'endOA']);
+        const listNode = eventSavesNode.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode) return { present: false, all: [] };
         
-        // Convert rewards to array or int depending on type
-        let rewardsParsed = [];
-        if (rewardsNode) {
-            if (rewardsNode.value !== undefined && typeof rewardsNode.value === 'number') {
-                rewardsParsed = rewardsNode.value; // Bitmask or int
-            } else if (rewardsNode.children) {
-                const rList = rewardsNode.children.find(c => c.constructor.name === 'OdinList');
-                if (rList && rList.elements) {
-                    rewardsParsed = rList.elements.map(e => e.value);
+        const elements = resolveListElements(listNode);
+        if (!elements || elements.length === 0) return { present: false, all: [] };
+        
+        const allEvents = [];
+        elements.forEach((el, index) => {
+            const vNode = el.value || el;
+            if (!vNode || !vNode.children) return;
+            
+            const eventIDNode = findChildRecursive(vNode, ['eventID', 'EventID']);
+            const yearNode = findChildRecursive(vNode, ['year', 'Year']);
+            const tasksNode = findChildRecursive(vNode, ['tasksCompleted', 'TasksCompleted']);
+            const rewardsNode = findChildRecursive(vNode, ['rewardsClaimed', 'RewardsClaimed']);
+            const flyerNode = findChildRecursive(vNode, ['shownFlyer', 'ShownFlyer', 'flyerSeen']);
+            const calendarNode = findChildRecursive(vNode, ['shownCalendar', 'ShownCalendar', 'calendarSeen']);
+            
+            // For tasksCompleted (List<int>)
+            let tasksList = [];
+            if (tasksNode && tasksNode.children) {
+                const tList = tasksNode.children.find(c => c.constructor.name === 'OdinList');
+                if (tList) {
+                    const tElements = resolveListElements(tList);
+                    if (tElements) {
+                        tasksList = tElements.map(e => e.value);
+                    }
                 }
             }
-        }
+            
+            // For rewardsClaimed (bool[])
+            let rewardsParsed = [];
+            if (rewardsNode && rewardsNode.children) {
+                const rList = rewardsNode.children.find(c => c.constructor.name === 'OdinList');
+                if (rList) {
+                    const rElements = resolveListElements(rList);
+                    if (rElements) {
+                        rewardsParsed = rElements.map(e => e.value);
+                    }
+                }
+            }
+            
+            allEvents.push({
+                index,
+                eventID: eventIDNode ? eventIDNode.value : null,
+                year: yearNode ? yearNode.value : 0,
+                tasksCompletedList: tasksList,
+                rewardsClaimed: rewardsParsed,
+                shownFlyer: flyerNode ? !!flyerNode.value : false,
+                shownCalendar: calendarNode ? !!calendarNode.value : false,
+                nodes: {
+                    main: vNode,
+                    eventIDNode,
+                    yearNode,
+                    tasksNode,
+                    rewardsNode,
+                    flyerNode,
+                    calendarNode
+                }
+            });
+        });
+        
+        if (allEvents.length === 0) return { present: false, all: [] };
+        
+        // Active event is usually the one with the highest year/eventID or just the last one
+        allEvents.sort((a, b) => {
+            if (a.year !== b.year) return b.year - a.year;
+            return b.eventID - a.eventID;
+        });
+        
+        const active = allEvents[0];
         
         return {
             present: true,
-            eventID: eventIDNode ? eventIDNode.value : null,
-            tasksCompleted: tasksNode ? tasksNode.value : 0,
-            rewardsClaimed: rewardsParsed,
-            flyerSeen: flyerNode ? !!flyerNode.value : false,
-            calendarSeen: calendarNode ? !!calendarNode.value : false,
-            startOA: startNode ? startNode.value : 0,
-            endOA: endNode ? endNode.value : 0,
-            nodes: {
-                main: vNode,
-                eventIDNode,
-                tasksNode,
-                rewardsNode,
-                flyerNode,
-                calendarNode
-            }
+            all: allEvents,
+            eventID: active.eventID,
+            year: active.year,
+            tasksCompleted: active.tasksCompletedList.length,
+            rewardsClaimed: active.rewardsClaimed,
+            shownFlyer: active.shownFlyer,
+            shownCalendar: active.shownCalendar,
+            activeNodeIndex: active.index,
+            nodes: active.nodes
         };
     }
 
-    setVillageEventField(fieldKey, value) {
+    setVillageEventField(fieldKey, value, eventIndex = -1) {
         const state = this.getVillageEventState();
         if (!state.present) return false;
         
+        let targetEvent = null;
+        if (eventIndex >= 0) {
+            targetEvent = state.all.find(e => e.index === eventIndex);
+        } else {
+            targetEvent = state.all.find(e => e.index === state.activeNodeIndex);
+        }
+        
+        if (!targetEvent) return false;
+        
+        if (fieldKey === 'tasksCompleted') {
+            const numTasks = Number(value);
+            const tasksNode = targetEvent.nodes.tasksNode;
+            if (tasksNode && tasksNode.children) {
+                const tList = tasksNode.children.find(c => c.constructor.name === 'OdinList');
+                if (tList) {
+                    tList.elements = [];
+                    for (let i = 0; i < numTasks; i++) {
+                        tList.elements.push(new OdinPrimitive(0x17, '', i));
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+        
         let targetNode = null;
         switch (fieldKey) {
-            case 'eventID': targetNode = state.nodes.eventIDNode; break;
-            case 'tasksCompleted': targetNode = state.nodes.tasksNode; break;
-            case 'flyerSeen': targetNode = state.nodes.flyerNode; break;
-            case 'calendarSeen': targetNode = state.nodes.calendarNode; break;
+            case 'eventID': targetNode = targetEvent.nodes.eventIDNode; break;
+            case 'year': targetNode = targetEvent.nodes.yearNode; break;
+            case 'shownFlyer': targetNode = targetEvent.nodes.flyerNode; break;
+            case 'shownCalendar': targetNode = targetEvent.nodes.calendarNode; break;
         }
         
         if (targetNode) {
-            targetNode.value = (fieldKey === 'flyerSeen' || fieldKey === 'calendarSeen') ? !!value : Number(value);
+            targetNode.value = (fieldKey === 'shownFlyer' || fieldKey === 'shownCalendar') ? !!value : Number(value);
             return true;
         }
         return false;
