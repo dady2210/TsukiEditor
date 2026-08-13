@@ -90,6 +90,7 @@
                     <p class="subtitle">Administra tu pequeña vida en la aldea hongo.</p>
 
                     
+                    
                     <div style="margin-top:1.5rem; display:flex; gap:1rem;">
                         <button class="btn-primary" onclick="window.app.openExportModal()">
                             <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">download</span>
@@ -98,6 +99,10 @@
                         <button class="btn-secondary" onclick="window.app.openImportModal()">
                             <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">upload</span>
                             Importar Parcial...
+                        </button>
+                        <button class="btn-secondary" id="btn-scan-unknown" onclick="window.app.scanUnknownIds()" style="margin-left:auto;">
+                            <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">search</span>
+                            Escanear Unknown del save
                         </button>
                     </div>
                     <div class="section-card">
@@ -963,5 +968,12 @@
     </div>
     
     <script src="js/FileSaver.js"></script>
+
+    <!-- Drop Overlay -->
+    <div id="drop-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; color:white; font-size:2rem; pointer-events:none;">
+        <div style="border: 4px dashed white; padding: 3rem; border-radius: 20px;">
+            Suelta el archivo JSON aquí para cargar nombres
+        </div>
+    </div>
 </body>
 </html>

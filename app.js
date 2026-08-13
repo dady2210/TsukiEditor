@@ -53,6 +53,38 @@ class App {
         // (extracted_items_v3.js / sizes.js) — do NOT reset them here.
         window.UNKNOWN_ITEMS = new Set();
 
+// --- Nombres e Iconos ---
+window.resolveItemName = function(id, invTypeHint) {
+    if (!window.KNOWN_ITEMS) return `#${id} (Sin nombre)`;
+    const furn = window.KNOWN_ITEMS[`FURN_${id}`];
+    const item = window.KNOWN_ITEMS[`ITEM_${id}`];
+    
+    if (invTypeHint === 'furn' || invTypeHint === 'placement') {
+        if (furn) return furn;
+        if (item) return item;
+    } else {
+        if (item) return item;
+        if (furn) return furn;
+    }
+    return `#${id} (Sin nombre)`;
+};
+
+window.imageErrorFallback = function(img, id, originalPrefix) {
+    if (!img.dataset.triedFallback) {
+        img.dataset.triedFallback = "true";
+        const altPrefix = originalPrefix === 'FURN' ? 'ITEM' : 'FURN';
+        img.src = `images/items/${altPrefix}_${id}.png`;
+    } else {
+        img.style.display = 'none'; // Ambos fallaron, ocultar o usar placeholder 1x1
+    }
+};
+
+window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
+    const prefix = hint === 'furn' || hint === 'placement' ? 'FURN' : 'ITEM';
+    return `<img src="images/items/${prefix}_${id}.png" onerror="window.imageErrorFallback(this, ${id}, '${prefix}')" ${extraAttrs}>`;
+};
+
+
         this.initDOM();
         this.loadDictionaries();
     }
@@ -990,7 +1022,11 @@ class App {
                 const typ = parseInt(typeInput.value);
                 nameInput.value = this.resolveItemName(id, typ);
                 const p = typeMap[typ] || "ITEM";
-                if (imgTag) { imgTag.src = `images/items/${p}_${id}.png`; imgTag.style.display = 'block'; }
+                if (imgTag) {
+                        const newImg = document.createElement('div');
+                        newImg.innerHTML = window.getSafeImageHTML(id, 'furn', 'style="max-width:200px;max-height:200px;"');
+                        imgTag.parentNode.replaceChild(newImg.firstChild, imgTag);
+                    }
             };
             idInput.addEventListener('input', updateUI);
             typeInput.addEventListener('change', updateUI);
@@ -1245,8 +1281,19 @@ class App {
         this.editItemY.value   = placement.y;
         if (placement.orientation !== undefined && this.editItemOri) this.editItemOri.value = placement.orientation;
         const icon = document.getElementById('edit-item-icon');
-        if (icon) { icon.src = `images/items/FURN_${placement.item_id}.png`; icon.style.display = 'block'; }
-        this.editItemId.oninput = e => { if (icon) icon.src = `images/items/FURN_${e.target.value}.png`; };
+        if (icon) {
+            const newIcon = document.createElement('div');
+            newIcon.innerHTML = window.getSafeImageHTML(placement.item_id, 'furn', 'id="edit-item-icon" style="max-width:64px;max-height:64px;display:block;margin:0 auto;"');
+            icon.parentNode.replaceChild(newIcon.firstChild, icon);
+        }
+        this.editItemId.oninput = e => {
+            const currentIcon = document.getElementById('edit-item-icon');
+            if (currentIcon) {
+                const newIcon = document.createElement('div');
+                newIcon.innerHTML = window.getSafeImageHTML(e.target.value, 'furn', 'id="edit-item-icon" style="max-width:64px;max-height:64px;display:block;margin:0 auto;"');
+                currentIcon.parentNode.replaceChild(newIcon.firstChild, currentIcon);
+            }
+        };
         
         if (this.seedPlantingUI) {
             // Also show crop controls for direct seeds on map
@@ -1266,7 +1313,7 @@ class App {
 
                 if (targetPlacement) {
                     const name = window.KNOWN_ITEMS['FURN_' + targetPlacement.item_id] || 'Semilla ' + targetPlacement.item_id;
-                    if (cropInfo) cropInfo.innerHTML = `<img src="images/items/FURN_${targetPlacement.item_id}.png" style="width:24px; vertical-align:middle; margin-right:5px;" onerror="this.style.display='none'"> <strong>${name}</strong>`;
+                    if (cropInfo) cropInfo.innerHTML = window.getSafeImageHTML(targetPlacement.item_id, 'furn', 'style="width:24px; vertical-align:middle; margin-right:5px;"') + ` <strong>${name}</strong>`;
                     if (matureBtn) matureBtn.style.display = 'block';
                     
                     const fields = this.parser.getCropSaveFields(targetPlacement);
@@ -1822,13 +1869,13 @@ class App {
             orders.forEach((o, index) => {
                 const tr = document.createElement('tr');
                 
-                const idName = window.KNOWN_ITEMS['FURN_' + o.furnitureID] || '(Desconocido)';
+                const idName = window.resolveItemName(o.furnitureID, 'furn');
                 
                 tr.innerHTML = `
                     <td>${o.orderID}</td>
                     <td>
                         <div style="display:flex; align-items:center; gap:5px;">
-                            <img src="images/items/FURN_${o.furnitureID}.png" style="width:24px; height:24px;" onerror="this.style.display='none'">
+                            ${window.getSafeImageHTML(o.furnitureID, 'furn', 'style="width:24px; height:24px;"')}
                             <input type="number" class="order-furn-input" data-index="${index}" value="${o.furnitureID}" style="width:80px;">
                             <span style="font-size:0.85em; color:#666;">${idName}</span>
                         </div>
@@ -1866,7 +1913,7 @@ class App {
                 
                 const slot0 = l.slots[0];
                 const furnId = slot0 ? slot0.id : 0;
-                const idName = window.KNOWN_ITEMS['FURN_' + furnId] || '(Desconocido)';
+                const idName = window.resolveItemName(furnId, 'furn');
                 
                 tr.innerHTML = `
                     <td>${index}</td>
@@ -1875,7 +1922,7 @@ class App {
                     <td>
                         ${slot0 ? `
                         <div style="display:flex; align-items:center; gap:5px;">
-                            <img src="images/items/FURN_${furnId}.png" style="width:24px; height:24px;" onerror="this.style.display='none'">
+                            ${window.getSafeImageHTML(furnId, 'furn', 'style="width:24px; height:24px;"')}
                             <input type="number" class="letter-furn-input" data-index="${index}" value="${furnId}" style="width:80px;">
                             <span style="font-size:0.85em; color:#666;">${idName}</span>
                         </div>
