@@ -881,30 +881,53 @@ class SaveParser {
         return this.inventory.filter(i => i.item_id > 0 && i.qty > 0).length;
     }
 
+    getEquippedBags() {
+        if (!this.inventory) return [];
+        const BAG_ITEM_IDS = new Set([124, 125, 141, 155, 156, 212, 213, 303, 308, 331, 332]);
+        // KNOWN_ITEMS data can be used to resolve names if needed, but for now we just get the items
+        return this.inventory.filter(i => BAG_ITEM_IDS.has(i.item_id) && i.qty > 0 && i.invType === 0).map(i => {
+            return {
+                id: i.item_id,
+                qty: i.qty,
+                name: `ITEM_${i.item_id}`,
+                knownSize: null // We don't have verified sizes for all bags yet
+            };
+        });
+    }
+
     getInventoryCapacityInfo(manualOverride = null) {
         const used = this.countUsedInventorySlots();
-        let capacity = 50; // Default base size
+        const DEFAULT_CAPACITY = 50;
+        let capacity = DEFAULT_CAPACITY;
         let source = 'default';
+        let infinite = false;
         
-        // IDs of bags and their bonus capacity (item_id -> extra slots)
-        // Adjust these IDs based on extracted_items_v3.js or known_items.json
-        const BAG_BONUS = {
-            // Example: 2001: 50, // "Big Bag"
-            // Example: 2002: 150 // "Huge Bag"
+        const BAG_SIZE_BY_ID = {
+            // ej. 124: 50, 308: 80 - rellenar si se conocen empíricamente
         };
         
-        if (this.inventory) {
-            let bonus = 0;
-            for (const idStr of Object.keys(BAG_BONUS)) {
-                const id = parseInt(idStr);
-                const hasBag = this.inventory.some(i => i.item_id === id && i.qty > 0);
-                if (hasBag) {
-                    bonus += BAG_BONUS[id];
+        const bags = this.getEquippedBags();
+        
+        if (bags.length > 0) {
+            let maxBagSize = -1;
+            for (const bag of bags) {
+                // If we know the infinite bag ID, we could flag it here. Assuming no infinite bag ID known yet, 
+                // but if we had name check we could do it.
+                if (bag.id === 156) { // Just guessing "The Bag" or similar if it were infinite, but we don't know yet. Let's keep logic prepared.
+                    // infinite = true;
+                }
+                
+                if (BAG_SIZE_BY_ID[bag.id] !== undefined) {
+                    if (BAG_SIZE_BY_ID[bag.id] > maxBagSize) maxBagSize = BAG_SIZE_BY_ID[bag.id];
+                    bag.knownSize = BAG_SIZE_BY_ID[bag.id];
                 }
             }
-            if (bonus > 0) {
-                capacity += bonus;
-                source = 'bags';
+            if (maxBagSize > -1) {
+                capacity = maxBagSize;
+                source = 'bag';
+            } else {
+                capacity = DEFAULT_CAPACITY;
+                source = 'bag_unknown';
             }
         }
         
@@ -913,7 +936,7 @@ class SaveParser {
             source = 'manual';
         }
         
-        return { used, capacity, source };
+        return { used, capacity, source, bags, infinite };
     }
 
     moveExcessToHidden(capacity) {

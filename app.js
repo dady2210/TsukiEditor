@@ -480,6 +480,26 @@ class App {
             this.showToast(`🎒 Se movieron ${moved} items al inventario oculto.`);
             this.renderInventory();
         });
+        
+        const btnAddBag = document.getElementById('btn-add-bag');
+        const selectAddBag = document.getElementById('select-add-bag');
+        if (btnAddBag && selectAddBag) {
+            btnAddBag.addEventListener('click', () => {
+                const bagId = parseInt(selectAddBag.value);
+                if (isNaN(bagId)) {
+                    this.showToast("⚠️ Selecciona una bolsa primero.");
+                    return;
+                }
+                if (!this.parser) return;
+                try {
+                    this.parser.injectInventoryItem(bagId, 1, 0); // Bags are items (invType=0)
+                    this.showToast(`🎒 Bolsa (ID ${bagId}) añadida al inventario.`);
+                    this.renderInventory();
+                } catch (e) {
+                    this.showToast(`❌ ${e.message}`);
+                }
+            });
+        }
 
         // General Vars
         document.getElementById('btn-apply-vars').addEventListener('click', () => this.applyGeneralVars());
@@ -860,11 +880,29 @@ class App {
         const overrideInput = document.getElementById('inv-capacity-override');
         const capInfo = this.parser.getInventoryCapacityInfo(overrideInput ? overrideInput.value : null);
         const capText = document.getElementById('inv-capacity-text');
+        const capSubtext = document.getElementById('inv-capacity-subtext');
         const moveBtn = document.getElementById('btn-inv-move-excess');
         
         if (capText) {
-            capText.textContent = `${capInfo.used} / ${capInfo.capacity}`;
-            if (capInfo.used > capInfo.capacity) {
+            capText.textContent = `${capInfo.used} / ${capInfo.infinite ? '∞' : capInfo.capacity}`;
+            
+            if (capSubtext) {
+                if (capInfo.infinite) {
+                    capSubtext.textContent = '(bolsa infinita)';
+                } else if (capInfo.source === 'manual') {
+                    capSubtext.textContent = '(manual)';
+                } else if (capInfo.source === 'bag') {
+                    const bagNames = capInfo.bags.map(b => b.name).join(', ');
+                    capSubtext.textContent = `(${bagNames})`;
+                } else if (capInfo.source === 'bag_unknown') {
+                    const bagNames = capInfo.bags.map(b => b.name).join(', ');
+                    capSubtext.textContent = `(${bagNames} detectadas, tamaño según juego)`;
+                } else {
+                    capSubtext.textContent = '(default 50)';
+                }
+            }
+
+            if (!capInfo.infinite && capInfo.used > capInfo.capacity) {
                 capText.style.color = '#e74c3c'; // Red warning
                 if (moveBtn) moveBtn.classList.remove('hidden');
             } else {
