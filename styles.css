@@ -228,6 +228,7 @@ input[type="number"], input[type="text"], select {
     font-size: 0.95rem;
     transition: all 0.2s ease;
     appearance: none;
+    box-sizing: border-box;
 }
 input:focus, select:focus {
     outline: none;
@@ -353,8 +354,8 @@ canvas:active { cursor: grabbing; }
 .icon-frame img { width: 100%; height: 100%; object-fit: contain; }
 .item-editor-header input[type="number"] { min-width: 0; width: 100%; }
 #item-editor .grid-2col, #add-item-editor .grid-2col { gap: 0.75rem; }
-#item-editor .grid-2col, #add-item-editor .grid-2col input[type="number"] { padding: 0.4rem 0.5rem; text-align: center; font-size: 0.9rem; width: 100%; min-width: 0; }
-#item-editor .grid-2col, #add-item-editor .grid-2col label { font-size: 0.8rem; }
+#item-editor .grid-2col input[type="number"], #add-item-editor .grid-2col input[type="number"] { padding: 0.4rem 0.5rem; text-align: center; font-size: 0.9rem; width: 100%; min-width: 0; }
+#item-editor .grid-2col label, #add-item-editor .grid-2col label { font-size: 0.8rem; }
 
 /* ── Inventory ── */
 .inv-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem; }
