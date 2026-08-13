@@ -1634,6 +1634,167 @@ class SaveParser {
         return false;
     }
 
+    // --- Letters & Orders ---
+    getLetterSave() {
+        if (!this.ast) return null;
+        return findChildRecursive(this.ast, ['letterSave', 'LetterSave']);
+    }
+
+    getLetters() {
+        const ls = this.getLetterSave();
+        if (!ls) return [];
+        const lettersNode = findChildRecursive(ls, ['letters', 'Letters']);
+        if (!lettersNode || !lettersNode.children) return [];
+        
+        const listNode = lettersNode.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode || !listNode.elements) return [];
+        
+        const results = [];
+        listNode.elements.forEach((el, index) => {
+            const val = el.value || el;
+            if (!val || !val.children) return;
+            
+            const tn = val.typeName || val.className || 'unknown';
+            const readNode = findChildRecursive(val, ['read', 'Read']);
+            const carrotRewardNode = findChildRecursive(val, ['carrotReward', 'CarrotReward']);
+            const orderIDNode = findChildRecursive(val, ['orderID', 'OrderID']);
+            const deliveryVariantNode = findChildRecursive(val, ['deliveryVariant', 'DeliveryVariant']);
+            
+            const slotsToClaimNode = findChildRecursive(val, ['slotsToClaim', 'SlotsToClaim', 'slots']);
+            const slots = [];
+            if (slotsToClaimNode && slotsToClaimNode.children) {
+                const sList = slotsToClaimNode.children.find(c => c.constructor.name === 'OdinList');
+                if (sList && sList.elements) {
+                    sList.elements.forEach((sel, sIdx) => {
+                        const sVal = sel.value || sel;
+                        if (!sVal || !sVal.children) return;
+                        const idNode = findChildRecursive(sVal, ['ID', 'id', 'Id']);
+                        const qtyNode = findChildRecursive(sVal, ['quantity', 'Quantity']);
+                        const verifyNode = findChildRecursive(sVal, ['verificationID', 'VerificationID']);
+                        if (idNode) {
+                            slots.push({
+                                index: sIdx,
+                                id: idNode.value,
+                                qty: qtyNode ? qtyNode.value : 1,
+                                verificationID: verifyNode ? verifyNode.value : 0,
+                                idNode,
+                                qtyNode,
+                                verifyNode
+                            });
+                        }
+                    });
+                }
+            }
+            
+            const claimedRewardsNode = findChildRecursive(val, ['claimedRewards', 'ClaimedRewards']);
+            const claimedRewards = [];
+            if (claimedRewardsNode && claimedRewardsNode.children) {
+                const cList = claimedRewardsNode.children.find(c => c.constructor.name === 'OdinList');
+                if (cList && cList.elements) {
+                    cList.elements.forEach(c => claimedRewards.push(c.value));
+                }
+            }
+            
+            results.push({
+                index,
+                type: tn,
+                read: readNode ? readNode.value : false,
+                carrotReward: carrotRewardNode ? carrotRewardNode.value : 0,
+                orderID: orderIDNode ? orderIDNode.value : undefined,
+                deliveryVariant: deliveryVariantNode ? deliveryVariantNode.value : undefined,
+                slots,
+                claimedRewards,
+                nodes: {
+                    main: val,
+                    readNode,
+                    orderIDNode
+                }
+            });
+        });
+        
+        return results;
+    }
+
+    setLetterRead(letterIndex, read) {
+        const letters = this.getLetters();
+        if (letters[letterIndex] && letters[letterIndex].nodes.readNode) {
+            letters[letterIndex].nodes.readNode.value = !!read;
+            return true;
+        }
+        return false;
+    }
+
+    setLetterSlotItemId(letterIndex, slotIndex, newFurnitureId) {
+        const letters = this.getLetters();
+        const letter = letters[letterIndex];
+        if (letter && letter.slots[slotIndex]) {
+            const slot = letter.slots[slotIndex];
+            if (slot.idNode) {
+                slot.idNode.value = Number(newFurnitureId);
+                if (slot.verifyNode) {
+                    slot.verifyNode.value = calcVerificationId(newFurnitureId) >>> 0;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    getFurnitureOrders() {
+        if (!this.ast) return [];
+        const ordersNode = findChildRecursive(this.ast, ['orders']);
+        if (!ordersNode || !ordersNode.children) return [];
+        
+        const listNode = ordersNode.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode || !listNode.elements) return [];
+        
+        const results = [];
+        listNode.elements.forEach((el, index) => {
+            const val = el.value || el;
+            if (!val || !val.children) return;
+            
+            const orderIDNode = findChildRecursive(val, ['orderID']);
+            const furnitureIDNode = findChildRecursive(val, ['furnitureID']);
+            const orderDateNode = findChildRecursive(val, ['orderDate']);
+            const deliveryTimeframeNode = findChildRecursive(val, ['deliveryTimeframe']);
+            const letterCreatedNode = findChildRecursive(val, ['letterCreated']);
+            
+            if (orderIDNode && furnitureIDNode) {
+                results.push({
+                    index,
+                    orderID: orderIDNode.value,
+                    furnitureID: furnitureIDNode.value,
+                    orderDate: orderDateNode ? orderDateNode.value : 0,
+                    deliveryTimeframe: deliveryTimeframeNode ? deliveryTimeframeNode.value : 0,
+                    letterCreated: letterCreatedNode ? letterCreatedNode.value : false,
+                    nodes: {
+                        furnitureIDNode,
+                        letterCreatedNode
+                    }
+                });
+            }
+        });
+        
+        return results;
+    }
+
+    setOrderFurnitureId(orderIndex, newFurnitureId) {
+        const orders = this.getFurnitureOrders();
+        const order = orders[orderIndex];
+        if (order && order.nodes.furnitureIDNode) {
+            order.nodes.furnitureIDNode.value = Number(newFurnitureId);
+            
+            // Sync with letter if it exists
+            const letters = this.getLetters();
+            const letter = letters.find(l => l.orderID === order.orderID);
+            if (letter && letter.slots.length > 0) {
+                this.setLetterSlotItemId(letter.index, 0, newFurnitureId);
+            }
+            return true;
+        }
+        return false;
+    }
+
     getBuffer() {
         if (this.ast) {
             try {

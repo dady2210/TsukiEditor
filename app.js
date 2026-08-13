@@ -624,6 +624,7 @@ class App {
 
         // Phone (Punchcard & Locations)
         this.renderPhoneTab();
+        this.renderMailTab();
 
         // Train
         this.parser.parseTrainSave();
@@ -1762,6 +1763,128 @@ class App {
             
             document.getElementById('phone-bg-mask').value = cosmetics.backgroundsUnlocked.toString();
             document.getElementById('phone-color-mask').value = cosmetics.colorsUnlocked.toString();
+        }
+    }
+
+    // ─── Mail & Orders ───
+    renderMailTab() {
+        if (!this.parser) return;
+        
+        const orders = this.parser.getFurnitureOrders();
+        const letters = this.parser.getLetters();
+        
+        const emptyState = document.getElementById('mail-empty-state');
+        const contentState = document.getElementById('mail-content');
+        
+        if (orders.length === 0 && letters.length === 0) {
+            if (emptyState) emptyState.style.display = 'flex';
+            if (contentState) contentState.style.display = 'none';
+            return;
+        }
+        
+        if (emptyState) emptyState.style.display = 'none';
+        if (contentState) contentState.style.display = 'block';
+        
+        // Orders Table
+        const ordersTbody = document.querySelector('#orders-table tbody');
+        if (ordersTbody) {
+            ordersTbody.innerHTML = '';
+            orders.forEach((o, index) => {
+                const tr = document.createElement('tr');
+                
+                const idName = window.KNOWN_ITEMS['FURN_' + o.furnitureID] || '(Desconocido)';
+                
+                tr.innerHTML = `
+                    <td>${o.orderID}</td>
+                    <td>
+                        <div style="display:flex; align-items:center; gap:5px;">
+                            <img src="images/items/FURN_${o.furnitureID}.png" style="width:24px; height:24px;" onerror="this.style.display='none'">
+                            <input type="number" class="order-furn-input" data-index="${index}" value="${o.furnitureID}" style="width:80px;">
+                            <span style="font-size:0.85em; color:#666;">${idName}</span>
+                        </div>
+                    </td>
+                    <td>${o.letterCreated ? 'Sí' : 'No'}</td>
+                    <td>
+                        <button class="btn-secondary btn-apply-order" data-index="${index}" style="padding:4px 8px; font-size:0.8rem;">Aplicar</button>
+                    </td>
+                `;
+                ordersTbody.appendChild(tr);
+            });
+            
+            ordersTbody.querySelectorAll('.btn-apply-order').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = e.target.getAttribute('data-index');
+                    const input = ordersTbody.querySelector(`.order-furn-input[data-index="${idx}"]`);
+                    if (input) {
+                        const newId = parseInt(input.value);
+                        if (!isNaN(newId)) {
+                            this.parser.setOrderFurnitureId(idx, newId);
+                            this.showToast('📦 Premio de pedido actualizado.');
+                            this.renderMailTab(); // Refresh
+                        }
+                    }
+                });
+            });
+        }
+        
+        // Letters Table
+        const lettersTbody = document.querySelector('#letters-table tbody');
+        if (lettersTbody) {
+            lettersTbody.innerHTML = '';
+            letters.forEach((l, index) => {
+                const tr = document.createElement('tr');
+                
+                const slot0 = l.slots[0];
+                const furnId = slot0 ? slot0.id : 0;
+                const idName = window.KNOWN_ITEMS['FURN_' + furnId] || '(Desconocido)';
+                
+                tr.innerHTML = `
+                    <td>${index}</td>
+                    <td>${l.type}</td>
+                    <td>${l.orderID !== undefined ? l.orderID : '-'}</td>
+                    <td>
+                        ${slot0 ? `
+                        <div style="display:flex; align-items:center; gap:5px;">
+                            <img src="images/items/FURN_${furnId}.png" style="width:24px; height:24px;" onerror="this.style.display='none'">
+                            <input type="number" class="letter-furn-input" data-index="${index}" value="${furnId}" style="width:80px;">
+                            <span style="font-size:0.85em; color:#666;">${idName}</span>
+                        </div>
+                        ` : '-'}
+                    </td>
+                    <td>
+                        <label class="check-container" style="margin:0; justify-content:center;">
+                            <input type="checkbox" class="letter-read-cb" data-index="${index}" ${l.read ? 'checked' : ''}>
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>
+                        ${slot0 ? `<button class="btn-secondary btn-apply-letter" data-index="${index}" style="padding:4px 8px; font-size:0.8rem;">Aplicar ID</button>` : ''}
+                    </td>
+                `;
+                lettersTbody.appendChild(tr);
+            });
+            
+            lettersTbody.querySelectorAll('.btn-apply-letter').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = e.target.getAttribute('data-index');
+                    const input = lettersTbody.querySelector(`.letter-furn-input[data-index="${idx}"]`);
+                    if (input) {
+                        const newId = parseInt(input.value);
+                        if (!isNaN(newId)) {
+                            this.parser.setLetterSlotItemId(idx, 0, newId); // Always slot 0 for our usecase
+                            this.showToast('📬 Premio de carta actualizado.');
+                            this.renderMailTab(); // Refresh
+                        }
+                    }
+                });
+            });
+            
+            lettersTbody.querySelectorAll('.letter-read-cb').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const idx = e.target.getAttribute('data-index');
+                    this.parser.setLetterRead(idx, e.target.checked);
+                });
+            });
         }
     }
 

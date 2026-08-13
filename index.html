@@ -67,6 +67,9 @@
                     <button class="nav-item" data-target="tab-phone">
                         <span class="material-symbols-outlined">smartphone</span>Teléfono
                     </button>
+                    <button class="nav-item" data-target="tab-mail">
+                        <span class="material-symbols-outlined">mail</span>Correo
+                    </button>
                     <button class="nav-item" data-target="tab-events">
                         <span class="material-symbols-outlined">celebration</span>Eventos
                     </button>
@@ -439,6 +442,61 @@
                                 <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted);">Carga un archivo .csave para ver los personajes</td></tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <!-- ── TAB: Correo & Pedidos ── -->
+                <div id="tab-mail" class="tab-content hidden">
+                    <h2>✉️ Correo y Pedidos</h2>
+                    <p class="subtitle">Gestiona los pedidos de muebles y modifica los premios de las cartas recibidas.</p>
+
+                    <div id="mail-empty-state" class="info-banner" style="display:none; margin-bottom:1.5rem;">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">info</span>
+                        Sin cartas ni pedidos en este save. Encarga un mueble en el juego, o espera a que llegue una carta, y vuelve a cargar tu partida aquí.
+                    </div>
+
+                    <div id="mail-content" style="display:none;">
+                        <!-- Orders Table -->
+                        <div class="section-card" style="margin-bottom: 2rem;">
+                            <h3>📦 Pedidos Activos (Furniture Orders)</h3>
+                            <div class="table-container" style="margin-top:1rem;">
+                                <table class="data-table" id="orders-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:100px;">Order ID</th>
+                                            <th>Furniture ID (Premio)</th>
+                                            <th style="width:150px;">Carta Creada</th>
+                                            <th style="width:150px;">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Generado dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Letters Table -->
+                        <div class="section-card">
+                            <h3>📬 Buzón de Cartas (Letters)</h3>
+                            <div class="table-container" style="margin-top:1rem;">
+                                <table class="data-table" id="letters-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:80px;">Índice</th>
+                                            <th style="width:120px;">Tipo</th>
+                                            <th>Order ID</th>
+                                            <th>Premio (Slot 0 ID)</th>
+                                            <th style="width:100px;">Leída</th>
+                                            <th style="width:120px;">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Generado dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
