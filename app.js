@@ -300,17 +300,24 @@ class App {
         document.getElementById('btn-maps-unlock-all')?.addEventListener('click', () => {
             if (!this.parser) return;
             let count = 0;
+            let failedToClone = false;
             Object.keys(SLOCATION_NAMES).forEach(locIdStr => {
                 const locId = parseInt(locIdStr);
                 const locs = this.parser.getLocationsOnPhone();
                 const existing = locs.find(l => l.id === locId);
                 if (!existing || !existing.seen) {
-                    if (this.parser.setLocationUnlocked(locId, true)) count++;
+                    if (this.parser.setLocationUnlocked(locId, true)) {
+                        count++;
+                    } else if (!existing) {
+                        failedToClone = true;
+                    }
                 }
             });
             if (count > 0) {
                 this.showToast(`🗺️ ${count} ubicaciones desbloqueadas.`);
                 this.renderPhoneTab();
+            } else if (failedToClone) {
+                this.showToast('❌ No hay plantilla LocationLock, visita un mapa en el juego primero.');
             } else {
                 this.showToast('ℹ️ Todas las ubicaciones ya estaban desbloqueadas.');
             }
@@ -321,16 +328,23 @@ class App {
             // Main locations: 0 to 13 (except 7 OpeningScene)
             const mainLocs = [0,1,2,3,4,5,6,8,9,10,11,12,13];
             let count = 0;
+            let failedToClone = false;
             mainLocs.forEach(locId => {
                 const locs = this.parser.getLocationsOnPhone();
                 const existing = locs.find(l => l.id === locId);
                 if (!existing || !existing.seen) {
-                    if (this.parser.setLocationUnlocked(locId, true)) count++;
+                    if (this.parser.setLocationUnlocked(locId, true)) {
+                        count++;
+                    } else if (!existing) {
+                        failedToClone = true;
+                    }
                 }
             });
             if (count > 0) {
                 this.showToast(`🗺️ ${count} ubicaciones principales desbloqueadas.`);
                 this.renderPhoneTab();
+            } else if (failedToClone) {
+                this.showToast('❌ No hay plantilla LocationLock, visita un mapa en el juego primero.');
             } else {
                 this.showToast('ℹ️ Ubicaciones principales ya estaban desbloqueadas.');
             }

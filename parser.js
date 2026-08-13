@@ -50,6 +50,37 @@ function findChildRecursive(node, names) {
     return null;
 }
 
+function cloneOdinTree(node) {
+    if (!node) return null;
+    
+    // Si es un tipo primitivo que no es objeto, retornarlo
+    if (typeof node !== 'object') return node;
+    
+    // Crear objeto con el mismo prototipo (ej: OdinList, OdinNode, etc.)
+    const clone = Object.create(Object.getPrototypeOf(node));
+    
+    // Clonar campos propios
+    for (const key in node) {
+        if (Object.prototype.hasOwnProperty.call(node, key)) {
+            if (key === 'children' && Array.isArray(node.children)) {
+                clone.children = node.children.map(c => cloneOdinTree(c));
+            } else if (key === 'elements' && Array.isArray(node.elements)) {
+                clone.elements = node.elements.map(e => {
+                    const clonedEl = cloneOdinTree(e);
+                    // Ojo si el element tiene un wrapper { type:..., value:... }
+                    // cloneOdinTree deberia manejarlo porque itera sobre las props
+                    return clonedEl;
+                });
+            } else if (key === 'value' && typeof node.value === 'object' && node.value !== null) {
+                clone.value = cloneOdinTree(node.value);
+            } else {
+                clone[key] = node[key];
+            }
+        }
+    }
+    return clone;
+}
+
 function readGroupXY(groupPosNode, positionNodeFallback) {
     let x = -1, y = -1;
     
@@ -594,8 +625,8 @@ class SaveParser {
 
             const vIdNode = findChildRecursive(p.furnNode, ['verificationID']);
             if (vIdNode) {
-                const expected = calcVerificationId(p.item_id);
-                if (vIdNode.value !== expected) {
+                const expected = calcVerificationId(p.item_id) >>> 0;
+                if ((vIdNode.value >>> 0) !== expected) {
                     verificationMismatches++;
                     // Optionally auto-fix verification IDs
                     vIdNode.value = expected;
@@ -1137,20 +1168,33 @@ class SaveParser {
     getPunchcardState() {
         if (!this.ast) return { claimedCount: 0, rewards: [] };
         
-        let pcNode = findChildRecursive(this.ast, ['punchcard']);
+        let pcNode = findChildRecursive(this.ast, ['punchcard', 'Punchcard', 'punchCard']);
         if (!pcNode) return { claimedCount: 0, rewards: [] };
         
-        let countNode = findChildRecursive(this.ast, ['punchcardsClaimed']);
+        let countNode = findChildRecursive(this.ast, ['punchcardsClaimed', 'PunchcardsClaimed']);
         let claimedCount = countNode ? countNode.value : 0;
         
         let rewards = [];
-        let rewardsNode = findChildNode(pcNode, ['rewards']);
+        let rewardsNode = findChildNode(pcNode, ['rewards', 'Rewards', 'dailyRewards', 'slots']);
+        
+        // Sometimes rewards is just a wrapper with an OdinList .elements inside, or the node itself has .elements
+        let elements = null;
         if (rewardsNode && rewardsNode.elements) {
-            for (let i = 0; i < rewardsNode.elements.length; i++) {
-                let rNode = rewardsNode.elements[i].value || rewardsNode.elements[i];
-                let typeNode = findChildNode(rNode, ['RewardType']);
-                let claimNode = findChildNode(rNode, ['claimed']);
-                let modifierNode = findChildNode(rNode, ['modifier']);
+            elements = rewardsNode.elements;
+        } else if (rewardsNode && rewardsNode.value && rewardsNode.value.elements) {
+            elements = rewardsNode.value.elements;
+        } else {
+            // Find child with elements just in case
+            let listChild = rewardsNode && rewardsNode.children ? rewardsNode.children.find(c => c.elements) : null;
+            if (listChild) elements = listChild.elements;
+        }
+        
+        if (elements) {
+            for (let i = 0; i < elements.length; i++) {
+                let rNode = elements[i].value || elements[i];
+                let typeNode = findChildNode(rNode, ['RewardType', 'rewardType', 'type', 'Type']);
+                let claimNode = findChildNode(rNode, ['claimed', 'Claimed', 'isClaimed']);
+                let modifierNode = findChildNode(rNode, ['modifier', 'Modifier', 'rarity']);
                 
                 rewards.push({
                     index: i,
@@ -1162,10 +1206,10 @@ class SaveParser {
             }
         }
         
-        let weeklyNode = findChildNode(pcNode, ['weeklyReward']);
+        let weeklyNode = findChildNode(pcNode, ['weeklyReward', 'WeeklyReward', 'weekly', 'furnitureReward']);
         if (weeklyNode) {
-            let claimNode = findChildNode(weeklyNode, ['claimed']);
-            let furnNode = findChildNode(weeklyNode, ['furnID']);
+            let claimNode = findChildNode(weeklyNode, ['claimed', 'Claimed', 'isClaimed']);
+            let furnNode = findChildNode(weeklyNode, ['furnID', 'furnitureID', 'FurnitureID', 'id']);
             rewards.push({
                 index: 6, // 7th logical slot
                 isWeekly: true,
@@ -1225,15 +1269,8 @@ class SaveParser {
         
         // Not found, clone from first element if array is not empty
         if (locs.length > 0 && locNode.elements) {
-            const cloneNode = (node) => {
-                if (!node) return null;
-                const clone = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
-                if (node.children) clone.children = node.children.map(cloneNode);
-                return clone;
-            };
-
             let firstEl = locNode.elements[0];
-            let newEl = cloneNode(firstEl);
+            let newEl = cloneOdinTree(firstEl);
             
             // Adjust values
             let valNode = newEl.value || newEl;
@@ -1250,6 +1287,7 @@ class SaveParser {
             return true;
         }
         
+        // Cannot unlock if array is completely empty, we don't have a template to clone
         return false;
     }
 
