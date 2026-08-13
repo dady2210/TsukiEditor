@@ -1058,6 +1058,13 @@ class App {
                     if (vNode) vNode.value = calcVerificationId(seedId);
                 }
                 
+                // Force 0,0 so it anchors correctly to the plot in-game
+                const gpNode = this._findNodeByName(seedNode, ['groupPosition']);
+                const pNode = this._findNodeByName(seedNode, ['position']);
+                if (typeof writeGroupXY !== 'undefined') {
+                    writeGroupXY(gpNode, 0, 0, pNode);
+                }
+                
                 this._resetCropTime(p.linkedSeed);
                 
                 // B6: Verificar post-change
@@ -1102,6 +1109,13 @@ class App {
                     return clone;
                 };
                 newSeedNode = cloneNode(templateSeed.furnNode);
+                
+                // Force 0,0 on the cloned node in case the template was buggy
+                const gpNode = this._findNodeByName(newSeedNode, ['groupPosition']);
+                const pNode = this._findNodeByName(newSeedNode, ['position']);
+                if (typeof writeGroupXY !== 'undefined') {
+                    writeGroupXY(gpNode, 0, 0, pNode);
+                }
             } else {
                 // B3: Plantilla mínima embebida — marcadores reales del save:
                 //   FurniturePlacement (0x01, typeId=28, "FurniturePlacement, Odyssey")

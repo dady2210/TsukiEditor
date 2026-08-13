@@ -481,7 +481,17 @@ class SaveParser {
 
         const groupPosNode = node.children.find(c => c.name === 'groupPosition');
         const posNode = node.children.find(c => c.name === 'position');
-        writeGroupXY(groupPosNode, newX, newY, posNode);
+        
+        const tn = node.typeName || node.className;
+        const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(newId)) 
+                       || (tn && /CropSave/i.test(tn))
+                       || !!findChildRecursive(node, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
+
+        if (isCrop) {
+            writeGroupXY(groupPosNode, 0, 0, posNode);
+        } else {
+            writeGroupXY(groupPosNode, newX, newY, posNode);
+        }
         
         const vIdNode = node.children.find(c => c.name === 'verificationID');
         if (vIdNode) {
