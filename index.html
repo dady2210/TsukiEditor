@@ -58,6 +58,9 @@
                     <button class="nav-item" data-target="tab-npc">
                         <span class="material-symbols-outlined">group</span>Personajes
                     </button>
+                    <button class="nav-item" data-target="tab-phone">
+                        <span class="material-symbols-outlined">smartphone</span>Teléfono
+                    </button>
                     <button class="nav-item" data-target="tab-events">
                         <span class="material-symbols-outlined">celebration</span>Eventos
                     </button>
@@ -188,6 +191,57 @@
                             <span class="material-symbols-outlined" style="font-size:20px;vertical-align:text-bottom;margin-right:8px;">save</span>
                             Aplicar Variables
                         </button>
+                    </div>
+                </div>
+
+                <!-- ─── TAB: Teléfono (Punchcard y Mapas) ─── -->
+                <div id="tab-phone" class="tab-content hidden">
+                    <h2>📱 Teléfono</h2>
+                    <p class="subtitle">Gestiona tus recompensas diarias (Punchcard) y desbloquea ubicaciones en el mapa.</p>
+
+                    <div class="grid-2col" style="gap: 2rem;">
+                        <div class="section-card">
+                            <h3>🎁 Premios Diarios (Punchcard)</h3>
+                            <div class="header-actions" style="margin-bottom: 1rem; justify-content: flex-start;">
+                                <button id="btn-punchcard-claim" class="btn-primary" style="margin-right: 0.5rem;">Reclamar todos</button>
+                                <button id="btn-punchcard-reset" class="btn-secondary">Reset semana</button>
+                            </div>
+                            
+                            <table class="inventory-table" id="punchcard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Día</th>
+                                        <th>Premio</th>
+                                        <th>Reclamado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                            <div id="punchcard-empty-state" class="empty-state hidden">
+                                <span class="material-symbols-outlined">sentiment_dissatisfied</span>
+                                <p>Este guardado no contiene datos de Punchcard.</p>
+                            </div>
+                        </div>
+
+                        <div class="section-card">
+                            <h3>🗺️ Ubicaciones Desbloqueadas</h3>
+                            <p class="small-text" style="margin-bottom: 1rem;">Aparecer en el mapa del teléfono no garantiza poder entrar si faltan misiones o áreas.</p>
+                            
+                            <div class="header-actions" style="margin-bottom: 1rem; justify-content: flex-start;">
+                                <button id="btn-maps-unlock-all" class="btn-primary" style="margin-right: 0.5rem;">Desbloquear todos</button>
+                                <button id="btn-maps-unlock-main" class="btn-secondary">Solo principales</button>
+                            </div>
+                            
+                            <div class="checklist-grid" id="locations-checklist" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem;">
+                                <!-- Dynamic content -->
+                            </div>
+                            <div id="locations-empty-state" class="empty-state hidden">
+                                <span class="material-symbols-outlined">map</span>
+                                <p>Este guardado no contiene información de ubicaciones.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

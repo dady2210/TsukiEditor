@@ -25,6 +25,25 @@ const EVENT_NAMES = {
 
 const SEASON_NAMES = { 0:"Primavera", 1:"Verano", 2:"Otoño", 3:"Invierno" };
 
+const SLOCATION_NAMES = {
+    0:"Home", 1:"YorisShop", 2:"ChisHouse", 3:"MocasHouse", 4:"Pier",
+    5:"RosemarysShop", 6:"Farm", 7:"OpeningScene", 8:"TownHall",
+    9:"MomosTeaHouse", 10:"TrainStation", 11:"DawnsShop", 12:"Dojo",
+    13:"ScarlettsLounge", 14:"Travelling", 15:"SubwayStation", 16:"CityHall",
+    17:"Exit", 18:"Skytower", 19:"CapsuleHotel", 20:"ApartmentLobby",
+    21:"TheHole", 22:"Penthouse", 23:"ShoppingMall", 24:"MallEntrance",
+    25:"RugShop", 26:"Winery", 27:"IceCreamShop", 28:"JewelryStore",
+    29:"PostOffice", 30:"BubbleTea", 31:"ShoeStore", 32:"PoliceStation",
+    33:"CoffeeShop", 34:"Apartment"
+};
+
+const REWARD_TYPES = {
+    0: "🥕 Zanahorias",
+    1: "🎟️ Tickets Gacha",
+    2: "🎲 Re-roll",
+    3: "📱 Skin Teléfono"
+};
+
 class App {
     constructor() {
         this.parser = null;
@@ -231,6 +250,78 @@ class App {
             if (btn.dataset.target === 'tab-map') this.map.resize();
         }));
 
+        // Phone Tab Buttons
+        document.getElementById('btn-punchcard-claim')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            const state = this.parser.getPunchcardState();
+            let count = 0;
+            state.rewards.forEach(r => {
+                if (!r.claimed) {
+                    if (this.parser.setPunchcardSlot(r.index, true, r.isWeekly)) count++;
+                }
+            });
+            if (count > 0) {
+                this.showToast(`✅ ${count} recompensas reclamadas.`);
+                this.renderPhoneTab();
+            } else {
+                this.showToast('ℹ️ Todas las recompensas ya estaban reclamadas.');
+            }
+        });
+
+        document.getElementById('btn-punchcard-reset')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            const state = this.parser.getPunchcardState();
+            let count = 0;
+            state.rewards.forEach(r => {
+                if (r.claimed) {
+                    if (this.parser.setPunchcardSlot(r.index, false, r.isWeekly)) count++;
+                }
+            });
+            if (count > 0) {
+                this.showToast(`🔄 Semana reseteada (${count} recompensas desmarcadas).`);
+                this.renderPhoneTab();
+            }
+        });
+
+        document.getElementById('btn-maps-unlock-all')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            let count = 0;
+            Object.keys(SLOCATION_NAMES).forEach(locIdStr => {
+                const locId = parseInt(locIdStr);
+                const locs = this.parser.getLocationsOnPhone();
+                const existing = locs.find(l => l.id === locId);
+                if (!existing || !existing.seen) {
+                    if (this.parser.setLocationUnlocked(locId, true)) count++;
+                }
+            });
+            if (count > 0) {
+                this.showToast(`🗺️ ${count} ubicaciones desbloqueadas.`);
+                this.renderPhoneTab();
+            } else {
+                this.showToast('ℹ️ Todas las ubicaciones ya estaban desbloqueadas.');
+            }
+        });
+
+        document.getElementById('btn-maps-unlock-main')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            // Main locations: 0 to 13 (except 7 OpeningScene)
+            const mainLocs = [0,1,2,3,4,5,6,8,9,10,11,12,13];
+            let count = 0;
+            mainLocs.forEach(locId => {
+                const locs = this.parser.getLocationsOnPhone();
+                const existing = locs.find(l => l.id === locId);
+                if (!existing || !existing.seen) {
+                    if (this.parser.setLocationUnlocked(locId, true)) count++;
+                }
+            });
+            if (count > 0) {
+                this.showToast(`🗺️ ${count} ubicaciones principales desbloqueadas.`);
+                this.renderPhoneTab();
+            } else {
+                this.showToast('ℹ️ Ubicaciones principales ya estaban desbloqueadas.');
+            }
+        });
+
         // Map
         this.selectLocation.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); });
         this.selectFloor.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); });
@@ -428,6 +519,9 @@ class App {
         // Events
         this.parser.parseEventSaves();
         this.renderEventsTab();
+
+        // Phone (Punchcard & Locations)
+        this.renderPhoneTab();
 
         // Train
         this.parser.parseTrainSave();
@@ -1266,6 +1360,106 @@ class App {
         } catch (e) {
             console.error(e);
             alert('Error al plantar la semilla: ' + e.message);
+        }
+    }
+
+    // ─── Phone (Punchcard & Locations) ──────────────────────────────────
+
+    renderPhoneTab() {
+        if (!this.parser) return;
+
+        // 1. Punchcard
+        const pcState = this.parser.getPunchcardState();
+        const pcTbody = document.querySelector('#punchcard-table tbody');
+        const pcEmpty = document.getElementById('punchcard-empty-state');
+        const pcTable = document.getElementById('punchcard-table');
+
+        if (!pcState.pcNode) {
+            pcEmpty.classList.remove('hidden');
+            pcTable.classList.add('hidden');
+        } else {
+            pcEmpty.classList.add('hidden');
+            pcTable.classList.remove('hidden');
+            pcTbody.innerHTML = '';
+
+            pcState.rewards.forEach(r => {
+                const tr = document.createElement('tr');
+                
+                const tdDay = document.createElement('td');
+                tdDay.textContent = r.isWeekly ? 'Semana (Regalo)' : `Día ${r.index + 1}`;
+                if (r.isWeekly) tdDay.style.fontWeight = 'bold';
+
+                const tdPrize = document.createElement('td');
+                if (r.isWeekly) {
+                    tdPrize.textContent = `Mueble ID: ${r.furnID}`;
+                } else {
+                    tdPrize.textContent = REWARD_TYPES[r.rewardType] || `Desconocido (${r.rewardType})`;
+                    if (r.modifier > 0) tdPrize.textContent += ` (Mod: ${r.modifier})`;
+                }
+
+                const tdClaimed = document.createElement('td');
+                const cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.checked = r.claimed;
+                cb.onchange = (e) => {
+                    this.parser.setPunchcardSlot(r.index, e.target.checked, r.isWeekly);
+                    this.showToast(`Día ${r.isWeekly ? 'Semanal' : r.index + 1} actualizado.`);
+                };
+                tdClaimed.appendChild(cb);
+
+                tr.appendChild(tdDay);
+                tr.appendChild(tdPrize);
+                tr.appendChild(tdClaimed);
+                pcTbody.appendChild(tr);
+            });
+        }
+
+        // 2. Locations on Phone
+        const locs = this.parser.getLocationsOnPhone();
+        const locContainer = document.getElementById('locations-checklist');
+        const locEmpty = document.getElementById('locations-empty-state');
+
+        if (locs.length === 0) {
+            locEmpty.classList.remove('hidden');
+            locContainer.style.display = 'none';
+        } else {
+            locEmpty.classList.add('hidden');
+            locContainer.style.display = 'grid';
+            locContainer.innerHTML = '';
+
+            // Render all possible locations from SLOCATION_NAMES
+            Object.keys(SLOCATION_NAMES).forEach(locIdStr => {
+                const locId = parseInt(locIdStr);
+                const locName = SLOCATION_NAMES[locId];
+                const existing = locs.find(l => l.id === locId);
+                const isUnlocked = existing && existing.seen;
+
+                const wrapper = document.createElement('label');
+                wrapper.style.display = 'flex';
+                wrapper.style.alignItems = 'center';
+                wrapper.style.gap = '8px';
+                wrapper.style.cursor = 'pointer';
+
+                const cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.checked = isUnlocked;
+                cb.onchange = (e) => {
+                    const success = this.parser.setLocationUnlocked(locId, e.target.checked);
+                    if (success) {
+                        this.showToast(`${locName} ${e.target.checked ? 'desbloqueado' : 'bloqueado'}.`);
+                    } else {
+                        this.showToast(`No se pudo actualizar ${locName}.`, 'error');
+                        e.target.checked = !e.target.checked; // Revert
+                    }
+                };
+
+                const span = document.createElement('span');
+                span.textContent = locName;
+
+                wrapper.appendChild(cb);
+                wrapper.appendChild(span);
+                locContainer.appendChild(wrapper);
+            });
         }
     }
 

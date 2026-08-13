@@ -1018,6 +1018,127 @@ class SaveParser {
         return true;
     }
 
+    // ─── Punchcard & Phone ───────────────────────────────────────────────
+
+    getPunchcardState() {
+        if (!this.ast) return { claimedCount: 0, rewards: [] };
+        
+        let pcNode = findChildRecursive(this.ast, ['punchcard']);
+        if (!pcNode) return { claimedCount: 0, rewards: [] };
+        
+        let countNode = findChildRecursive(this.ast, ['punchcardsClaimed']);
+        let claimedCount = countNode ? countNode.value : 0;
+        
+        let rewards = [];
+        let rewardsNode = findChildNode(pcNode, ['rewards']);
+        if (rewardsNode && rewardsNode.elements) {
+            for (let i = 0; i < rewardsNode.elements.length; i++) {
+                let rNode = rewardsNode.elements[i].value || rewardsNode.elements[i];
+                let typeNode = findChildNode(rNode, ['RewardType']);
+                let claimNode = findChildNode(rNode, ['claimed']);
+                let modifierNode = findChildNode(rNode, ['modifier']);
+                
+                rewards.push({
+                    index: i,
+                    rewardType: typeNode ? typeNode.value : 0,
+                    claimed: claimNode ? claimNode.value : false,
+                    modifier: modifierNode ? modifierNode.value : 0,
+                    claimNode: claimNode
+                });
+            }
+        }
+        
+        let weeklyNode = findChildNode(pcNode, ['weeklyReward']);
+        if (weeklyNode) {
+            let claimNode = findChildNode(weeklyNode, ['claimed']);
+            let furnNode = findChildNode(weeklyNode, ['furnID']);
+            rewards.push({
+                index: 6, // 7th logical slot
+                isWeekly: true,
+                furnID: furnNode ? furnNode.value : -1,
+                claimed: claimNode ? claimNode.value : false,
+                claimNode: claimNode
+            });
+        }
+        
+        return { claimedCount, rewards, pcNode };
+    }
+
+    setPunchcardSlot(index, claimed, isWeekly = false) {
+        let state = this.getPunchcardState();
+        let slot = state.rewards.find(r => r.index === index && !!r.isWeekly === isWeekly);
+        if (slot && slot.claimNode) {
+            slot.claimNode.value = !!claimed;
+            return true;
+        }
+        return false;
+    }
+
+    getLocationsOnPhone() {
+        if (!this.ast) return [];
+        let locNode = findChildRecursive(this.ast, ['locationsOnPhone']);
+        if (!locNode || !locNode.elements) return [];
+        
+        let locs = [];
+        for (let i = 0; i < locNode.elements.length; i++) {
+            let el = locNode.elements[i].value || locNode.elements[i];
+            let location = findChildNode(el, ['location']);
+            let seen = findChildNode(el, ['seen']);
+            if (location) {
+                locs.push({
+                    id: location.value,
+                    seen: seen ? seen.value : false,
+                    node: el,
+                    seenNode: seen
+                });
+            }
+        }
+        return locs;
+    }
+
+    setLocationUnlocked(locationId, seen = true) {
+        if (!this.ast) return false;
+        let locNode = findChildRecursive(this.ast, ['locationsOnPhone']);
+        if (!locNode) return false;
+        
+        let locs = this.getLocationsOnPhone();
+        let existing = locs.find(l => l.id === locationId);
+        
+        if (existing) {
+            if (existing.seenNode) existing.seenNode.value = seen;
+            return true;
+        }
+        
+        // Not found, clone from first element if array is not empty
+        if (locs.length > 0 && locNode.elements) {
+            const cloneNode = (node) => {
+                if (!node) return null;
+                const clone = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
+                if (node.children) clone.children = node.children.map(cloneNode);
+                return clone;
+            };
+
+            let firstEl = locNode.elements[0];
+            let newEl = cloneNode(firstEl);
+            
+            // Adjust values
+            let valNode = newEl.value || newEl;
+            let locIdNode = findChildNode(valNode, ['location']);
+            let seenNode = findChildNode(valNode, ['seen']);
+            
+            if (locIdNode) locIdNode.value = locationId;
+            if (seenNode) seenNode.value = seen;
+            
+            locNode.elements.push(newEl);
+            // Increment array count
+            locNode.length = locNode.elements.length;
+            if (locNode.count !== undefined) locNode.count = locNode.elements.length;
+            return true;
+        }
+        
+        return false;
+    }
+
     getBuffer() {
         if (this.ast) {
             try {
