@@ -1638,17 +1638,33 @@ class SaveParser {
     getLetterSave() {
         if (!this.ast) return null;
         
-        let ls = this.ast.children.find(c => c.name === 'letters' && (c.typeName && c.typeName.includes('LetterSave')));
-        if (ls) return ls;
+        const walk = (node) => {
+            if (node.name === 'letters' && node.typeName && node.typeName.includes('LetterSave')) {
+                return node;
+            }
+            if (node.children) {
+                for (const c of node.children) {
+                    const r = walk(c);
+                    if (r) return r;
+                }
+            }
+            if (node.elements) {
+                for (const el of node.elements) {
+                    const v = el.value || el;
+                    const r = walk(v);
+                    if (r) return r;
+                }
+            }
+            return null;
+        };
         
-        ls = findChildRecursive(this.ast, ['uniqueOrders']);
-        return ls ? findParentOdinNode(this.ast, ls) : null;
+        return walk(this.ast);
     }
 
     getLetters() {
         const ls = this.getLetterSave();
         if (!ls) return [];
-        const lettersNode = findChildRecursive(ls, ['letters', 'Letters']);
+        const lettersNode = findChildNode(ls, ['letters', 'Letters']);
         if (!lettersNode || !lettersNode.children) return [];
         
         const listNode = lettersNode.children.find(c => c.constructor.name === 'OdinList');
