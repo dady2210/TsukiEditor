@@ -1985,6 +1985,177 @@ class SaveParser {
         return false;
     }
 
+
+    // --- Partial JSON Export/Import ---
+    exportPartialJSON(sections) {
+        const out = {
+            format: "TsukiEditorPartial",
+            version: 1,
+            exportedAt: new Date().toISOString()
+        };
+
+        if (sections.inventory) {
+            if (!this.inventory || !this.inventory.length) this.parseInventory();
+            out.inventory = this.inventory.map(item => ({
+                id: item.id,
+                qty: item.qty,
+                invType: item.invType,
+                verificationID: item.verificationID
+            }));
+        }
+
+        if (sections.farm) {
+            if (!this.placements || !this.placements.length) this.parseMap();
+            const crops = [];
+            this.placements.forEach(p => {
+                // Determine if it's a crop or plot
+                const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id)) || p.planted_id !== undefined || (p.furnNode && p.furnNode.typeName && p.furnNode.typeName.includes('CropSave'));
+                
+                if (isCrop && p.placementID !== undefined) {
+                    crops.push({
+                        placementID: p.placementID,
+                        item_id: p.item_id,
+                        parentPlacementID: p.parentPlacementID || 0,
+                        grid: p.grid ? { x: p.grid.x, y: p.grid.y } : { x: 0, y: 0 },
+                        harvestTimeOA: p.linkedSeed && p.linkedSeed.harvestTimeNode ? p.linkedSeed.harvestTimeNode.value : (p.harvestTimeNode ? p.harvestTimeNode.value : 0),
+                        ripe: p.linkedSeed && p.linkedSeed.ripeNode ? p.linkedSeed.ripeNode.value : (p.ripeNode ? p.ripeNode.value : false),
+                        orientation: p.orientation || 0
+                    });
+                }
+            });
+            out.farm = { crops };
+        }
+
+        if (sections.phone) {
+            out.phone = {};
+            
+            const cos = this.getPhoneCosmetics();
+            if (cos) {
+                out.phone.cosmetics = {
+                    skinID: cos.skinID,
+                    bgPatternID: cos.bgPatternID,
+                    bgColorID: cos.bgColorID,
+                    backgroundsUnlocked: cos.backgroundsUnlocked,
+                    colorsUnlocked: cos.colorsUnlocked
+                };
+            }
+            
+            const punch = this.getPunchcardState();
+            if (punch) {
+                out.phone.punchcard = {
+                    claimedCount: punch.claimedCount,
+                    rewards: punch.rewards.map(r => ({ index: r.index, claimed: r.claimed, isWeekly: r.isWeekly })),
+                    weeklyFurnID: punch.rewards.find(r => r.isWeekly && r.index === 6)?.furnID || 0
+                };
+            }
+            
+            const locs = this.getLocationsOnPhone();
+            if (locs) {
+                out.phone.locationsOnPhone = locs.map(l => ({ id: l.id, seen: l.seen }));
+            }
+        }
+
+        return out;
+    }
+
+    applyPartialJSON(data, sections = { inventory: true, farm: true, phone: true }) {
+        if (!data || data.format !== "TsukiEditorPartial") throw new Error("Formato JSON inválido");
+        
+        let report = { applied: 0, skipped: [] };
+
+        // 1. Inventory
+        if (data.inventory && sections.inventory) {
+            if (!this.inventory || !this.inventory.length) this.parseInventory();
+            data.inventory.forEach(item => {
+                const existing = this.inventory.find(inv => inv.id === item.id);
+                if (existing) {
+                    if (existing.nodes && existing.nodes.qtyNode) {
+                        existing.nodes.qtyNode.value += item.qty;
+                        existing.qty = existing.nodes.qtyNode.value;
+                        report.applied++;
+                    }
+                } else {
+                    const ok = this.injectInventoryItem(item.id, item.qty, item.invType);
+                    if (ok) report.applied++;
+                    else report.skipped.push(`Item ${item.id} (No inyectable)`);
+                }
+            });
+            // recalculate verificationIDs
+            this.inventory.forEach(item => {
+                if (item.nodes && item.nodes.idNode && item.nodes.verifyNode) {
+                    if (typeof calcVerificationId !== 'undefined') {
+                        item.nodes.verifyNode.value = calcVerificationId(item.nodes.idNode.value) >>> 0;
+                    }
+                }
+            });
+        }
+
+        // 2. Farm
+        if (data.farm && data.farm.crops && sections.farm) {
+            if (!this.placements || !this.placements.length) this.parseMap();
+            data.farm.crops.forEach(cData => {
+                const p = this.placements.find(pl => pl.placementID === cData.placementID);
+                if (p) {
+                    let changed = false;
+                    
+                    // Harvest time
+                    if (p.harvestTimeNode) {
+                        p.harvestTimeNode.value = cData.harvestTimeOA;
+                        changed = true;
+                    } else if (p.linkedSeed && p.linkedSeed.harvestTimeNode) {
+                        p.linkedSeed.harvestTimeNode.value = cData.harvestTimeOA;
+                        changed = true;
+                    }
+                    
+                    // Ripe
+                    if (p.ripeNode) {
+                        p.ripeNode.value = cData.ripe;
+                        changed = true;
+                    } else if (p.linkedSeed && p.linkedSeed.ripeNode) {
+                        p.linkedSeed.ripeNode.value = cData.ripe;
+                        changed = true;
+                    }
+                    
+                    if (changed) report.applied++;
+                    else report.skipped.push(`Crop ${cData.placementID} (nodos no editables)`);
+                } else {
+                    report.skipped.push(`Crop ${cData.placementID} (no encontrado)`);
+                }
+            });
+        }
+
+        // 3. Phone
+        if (data.phone && sections.phone) {
+            if (data.phone.cosmetics) {
+                const c = data.phone.cosmetics;
+                if (c.skinID !== undefined) this.setPhoneCosmeticField('skinID', c.skinID);
+                if (c.bgPatternID !== undefined) this.setPhoneCosmeticField('bgPatternID', c.bgPatternID);
+                if (c.bgColorID !== undefined) this.setPhoneCosmeticField('bgColorID', c.bgColorID);
+                report.applied++;
+            }
+            if (data.phone.punchcard) {
+                const p = data.phone.punchcard;
+                if (p.rewards) {
+                    p.rewards.forEach(r => {
+                        this.setPunchcardSlot(r.index, r.claimed, r.isWeekly);
+                    });
+                }
+                if (p.weeklyFurnID !== undefined) {
+                    this.setWeeklyRewardFurnId(p.weeklyFurnID);
+                }
+                report.applied++;
+            }
+            if (data.phone.locationsOnPhone) {
+                data.phone.locationsOnPhone.forEach(l => {
+                    this.setLocationUnlocked(l.id, l.seen);
+                });
+                report.applied++;
+            }
+        }
+
+        return report;
+    }
+
     getBuffer() {
         if (this.ast) {
             try {

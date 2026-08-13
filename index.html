@@ -89,6 +89,17 @@
                     <h2>Variables Generales</h2>
                     <p class="subtitle">Administra tu pequeña vida en la aldea hongo.</p>
 
+                    
+                    <div style="margin-top:1.5rem; display:flex; gap:1rem;">
+                        <button class="btn-primary" onclick="window.app.openExportModal()">
+                            <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">download</span>
+                            Exportar Parcial...
+                        </button>
+                        <button class="btn-secondary" onclick="window.app.openImportModal()">
+                            <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">upload</span>
+                            Importar Parcial...
+                        </button>
+                    </div>
                     <div class="section-card">
                         <h3>💰 Economía</h3>
                         <div class="grid-3col">
@@ -883,5 +894,74 @@
 		document.addEventListener("keydown", startAudio);
 	});
 </script>
+
+    <!-- Export Modal -->
+    <div id="export-modal" class="modal hidden">
+        <div class="modal-content rustic-panel" style="max-width:400px;">
+            <div class="modal-header">
+                <h3>Exportar JSON Parcial</h3>
+                <button class="close-modal" id="close-export-modal">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:1.5rem;">
+                <p style="margin-bottom:1rem; font-size:0.9rem; color:#666;">Selecciona las secciones que deseas incluir en el archivo JSON.</p>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <label class="check-container">
+                        <input type="checkbox" id="export-cb-inv" checked>
+                        <span>Inventario</span>
+                    </label>
+                    <label class="check-container">
+                        <input type="checkbox" id="export-cb-farm" checked>
+                        <span>Parcelas y Cultivos (Farm)</span>
+                    </label>
+                    <label class="check-container">
+                        <input type="checkbox" id="export-cb-phone" checked>
+                        <span>Teléfono (Fidelidad, Cosméticos)</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:1rem; display:flex; justify-content:flex-end; gap:10px; border-top:1px solid #ddd;">
+                <button class="btn-secondary" id="btn-cancel-export">Cancelar</button>
+                <button class="btn-primary" id="btn-confirm-export">Descargar JSON</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div id="import-modal" class="modal hidden">
+        <div class="modal-content rustic-panel" style="max-width:500px;">
+            <div class="modal-header">
+                <h3>Importar JSON Parcial</h3>
+                <button class="close-modal" id="close-import-modal">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:1.5rem;">
+                <p style="margin-bottom:1rem; font-size:0.9rem; color:#666;">Selecciona el archivo JSON y elige qué secciones aplicar al save actual.</p>
+                
+                <input type="file" id="import-file-input" accept=".json" style="margin-bottom:1rem; display:block; width:100%;">
+                
+                <div id="import-preview-box" class="info-banner hidden" style="margin-bottom:1rem;"></div>
+
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <label class="check-container">
+                        <input type="checkbox" id="import-cb-inv" checked disabled>
+                        <span>Inventario</span>
+                    </label>
+                    <label class="check-container">
+                        <input type="checkbox" id="import-cb-farm" checked disabled>
+                        <span>Parcelas y Cultivos (Farm)</span>
+                    </label>
+                    <label class="check-container">
+                        <input type="checkbox" id="import-cb-phone" checked disabled>
+                        <span>Teléfono (Fidelidad, Cosméticos)</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding:1rem; display:flex; justify-content:flex-end; gap:10px; border-top:1px solid #ddd;">
+                <button class="btn-secondary" id="btn-cancel-import">Cancelar</button>
+                <button class="btn-primary" id="btn-confirm-import" disabled>Aplicar al Save</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/FileSaver.js"></script>
 </body>
 </html>
