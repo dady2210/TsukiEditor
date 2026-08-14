@@ -1420,10 +1420,8 @@ class SaveParser {
 
         // Calculate trainNumber based on current time (minutes since midnight / 10)
         let tNum = 0;
-        const now = new Date();
-        tNum = Math.floor((now.getHours() * 60 + now.getMinutes()) / 10);
-        // subtract 1 or 2 so it has ~20 minutes of margin in the past, meaning the train will arrive soon
-        tNum = Math.max(0, tNum - 2);
+        // Time logic is now strictly derived from lastSaved OA
+
 
         // Decode B64 helper
         const decodeB64 = (b64) => {
@@ -1490,24 +1488,26 @@ class SaveParser {
             }
             hasCarriages = true;
         }
-        // 3. Update global activity and remove Tsuki from liminal (to force spawn on train)
+        // Calculate time strictly based on lastSaved to guarantee OnTrain=true
+        let baseTimeOA = 46248.0;
+        let lastSavedNode = this.ast.children.find(c => c.name === 'lastSaved');
+        if (lastSavedNode && typeof lastSavedNode.value === 'number') {
+            baseTimeOA = lastSavedNode.value;
+        }
+
+        tDay = Math.floor(baseTimeOA);
+        let fraction = baseTimeOA - tDay;
+        let mins = fraction * 24 * 60;
+        tNum = Math.floor(mins / 10) - 2;
+        tNum = Math.max(0, tNum);
+
+        // 3. Inject physical spawn (activity) and Tsuki's liminal
         if (mode === 'full') {
             const ACTIVITY_B64 = 'AQEIAAAAYQBjAHQAaQB2AGkAdAB5ADADAAAAWgkAABcBCgAAAEEAYwB0AGkAdgBpAHQAeQBJAEQAGwAAABcBBQAAAE4AcABjAEkARAD/////IQENAAAAQQBjAHQAaQB2AGkAdAB5AFMAdABhAHIAdACEZ1Z+EpXmQCsBBQAAAFYAYQBsAGkAZAABKwEEAAAAUwBlAGUAbgABFwEGAAAAUABlAHMAdABlAHIAAAAAAAMBEAAAAHAAbABhAGMAZQBtAGUAbgB0AFAAbwBpAG4AdABlAHIAMAQAAAABAQsAAABjAG8AbgB0AGEAaQBuAGUAcgBJAEQAMAoAAABbCQAAFwEKAAAAQwBhAHIAcgBpAGEAZwBlAEkARAAAAAAABRcBCwAAAHAAbABhAGMAZQBtAGUAbgB0AEkARACKi9orBQU=';
             
-            // Calculate OADate for right now
-            // Unity OADate: Days since Dec 30, 1899
-            const oaDateStart = new Date("1899-12-30T00:00:00Z").getTime();
-            // Since JS dates are relative to 1970-01-01 UTC, we adjust. 
-            // Better: difference in milliseconds / (1000*60*60*24)
-            const msPerDay = 86400000;
-            // The local offset also matters in OADate? Actually, Unity uses local time often, but OADate is a standard struct.
-            // A simple approximation is getting days + fraction
-            const nowTime = now.getTime() - (now.getTimezoneOffset() * 60000); // adjust to local
-            const oaDate = (nowTime - oaDateStart) / msPerDay;
-
             const actBuf = decodeB64(ACTIVITY_B64);
             const actView = new DataView(actBuf.buffer);
-            actView.setFloat64(113, oaDate, true); // Patch ActivityStart (double)
+            actView.setFloat64(113, baseTimeOA, true); // Patch ActivityStart for Player
 
             let actNode = this.ast.children.find(c => c.name === 'activity');
             if (actNode) {
@@ -1522,17 +1522,30 @@ class SaveParser {
                 this.ast.children.push(raw);
             }
 
-            // Remove Tsuki (49) from liminalSaves so it recreates based on global activity
+            // Patch Tsuki in liminalSaves
+            const TSUKI_LIM_B64 = 'AjBmAAAAzwkAAB0BCQAAAGMAaABhAHIAYQBjAHQAZQByADEAAAAAAAAAAQEMAAAAYQBjAHQAaQB2AGkAdAB5AFMAYQB2AGUAMAMAAADQCQAAFwEKAAAAQQBjAHQAaQB2AGkAdAB5AEkARAAAAAAAFwEFAAAATgBwAGMASQBEADAAAAAhAQ0AAABBAGMAdABpAHYAaQB0AHkAUwB0AGEAcgB0APa6bX4SleZAKwEFAAAAVgBhAGwAaQBkAAErAQQAAABTAGUAZQBuAAEXAQYAAABQAGUAcwB0AGUAcgAAAAAAAwEQAAAAcABsAGEAYwBlAG0AZQBuAHQAUABvAGkAbgB0AGUAcgAwBAAAAAEBCwAAAGMAbwBuAHQAYQBpAG4AZQByAEkARAAwCgAAANEJAAAXAQoAAABDAGEAcgByAGkAYQBnAGUASQBEAAAAAAAFFwELAAAAcABsAGEAYwBlAG0AZQBuAHQASQBEAKCurJ8FBSEBCgAAAGwAYQBzAHQAVABhAGwAawBPAEEAVVVVVYGE5kAXAQoAAABmAHIAaQBlAG4AZABzAGgAaQBwAAAAAAAXAREAAABsAGEAcwB0AEYAcgBpAGUAbgBkAHMAaABpAHAARABhAHkAAAAAAC0BCgAAAHQAZQBtAHAAVgBhAGwAdQBlAHMABQ==';
+            const tsukiBuf = decodeB64(TSUKI_LIM_B64);
+            const tsukiView = new DataView(tsukiBuf.buffer);
+            tsukiView.setFloat64(163, baseTimeOA, true); // Patch ActivityStart for Tsuki
+
             const liminalNodes = this._findNodesInAST('liminalSaves');
             if (liminalNodes.length > 0 && liminalNodes[0].children) {
                 const limList = liminalNodes[0].children.find(c => c.constructor.name === 'OdinList');
                 if (limList && limList.elements) {
-                    const originalLength = limList.elements.length;
-                    limList.elements = limList.elements.filter(entry => {
+                    let foundTsuki = false;
+                    for (const entry of limList.elements) {
                         const keyNode = entry.key;
-                        // It can be a primitive string '49' or int 49 depending on how dictionary keys are typed
-                        return !(keyNode && (keyNode.value === '49' || keyNode.value === 49 || keyNode.value === 49n));
-                    });
+                        if (keyNode && (keyNode.value === '49' || keyNode.value === 49 || keyNode.value === 49n)) {
+                            entry.value = new OdinRawBlock(tsukiBuf);
+                            entry.value.marker = 0xFE;
+                            foundTsuki = true;
+                            break;
+                        }
+                    }
+                    if (!foundTsuki) {
+                        // If Tsuki isn't in liminalSaves, we could push him, but usually he is.
+                        // We will just let the game handle it if he's absent.
+                    }
                 }
             }
         }
