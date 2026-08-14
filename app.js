@@ -551,15 +551,22 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     this.showToast('Carga un save primero.', 'error');
                     return;
                 }
-                const result = this.parser.forceCityTrip();
+                const isTripOnly = document.getElementById('cb-trip-only') && document.getElementById('cb-trip-only').checked;
+                const mode = isTripOnly ? 'trip_only' : 'full';
+                const result = this.parser.forceCityTrip({ mode });
+                
                 if (result && result.success) {
-                    this.showToast('🚞 Viaje a la Ciudad forzado con éxito!');
+                    if (result.carriages) {
+                        this.showToast('🚞 Viaje + vagones inyectados con éxito');
+                    } else {
+                        this.showToast('🚞 Solo Trip activado (sin escena 3D)');
+                    }
                     if (typeof this.renderTrainTab === 'function') this.renderTrainTab();
                 } else {
                     if (result && result.error === 'no_carriages') {
-                        this.showToast('⚠️ No se puede forzar el viaje: El save no contiene los vagones (carriages). Abre el juego, viaja legalmente una vez y vuelve a intentarlo.', 'error');
+                        this.showToast('⚠️ No se pudo inyectar la escena: faltan diccionarios base en el save para clonar.', 'error');
                     } else if (result && result.error === 'no_trainsave') {
-                        this.showToast('⚠️ No se encontró el nodo trainSave.', 'error');
+                        this.showToast('⚠️ No se encontró la raíz trainSave y no se pudo crear.', 'error');
                     } else {
                         this.showToast('⚠️ Error desconocido al forzar el viaje.', 'error');
                     }

@@ -1403,8 +1403,11 @@ class SaveParser {
 
 
 
-    forceCityTrip() {
-        if (!this.ast) return false;
+
+    forceCityTrip(options = {}) {
+        if (!this.ast) return { success: false, error: 'no_ast' };
+        
+        const mode = options.mode || 'full'; // 'full' or 'trip_only'
         
         // 1. Get current train day safely
         const dayEntry = this.generalVars['day'];
@@ -1449,15 +1452,67 @@ class SaveParser {
         setPrim(tripNode, 'trainNumber', 0, 0x17); // int32
         setPrim(tripNode, 'tripStarted', true, 0x2B); // bool
         setPrim(tripNode, 'tripEnded', false, 0x2B); // bool
+        
+        // Update Tsuki's Liminal containerID
+        const updateTsukiLiminal = () => {
+            const liminalNodes = this._findNodesInAST('liminalSaves');
+            if (liminalNodes.length > 0 && liminalNodes[0].children) {
+                const limList = liminalNodes[0].children.find(c => c.constructor.name === 'OdinList');
+                if (limList && limList.elements) {
+                    for (const entry of limList.elements) {
+                        const keyNode = entry.key;
+                        if (keyNode && keyNode.value === 49n) {
+                            const valNode = entry.value;
+                            if (valNode && valNode.children) {
+                                const actSave = valNode.children.find(c => c.name === 'activitySave');
+                                if (actSave && actSave.children) {
+                                    let contID = actSave.children.find(c => c.name === 'containerID');
+                                    if (!contID) {
+                                        contID = new OdinString();
+                                        contID.name = 'containerID';
+                                        contID.marker = 0x11;
+                                        actSave.children.push(contID);
+                                    }
+                                    contID.value = 'TrainID, Odyssey';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        
+        updateTsukiLiminal();
 
-        // 3. Ensure trainSave and carriages exist
+        if (mode === 'trip_only') {
+            return { success: true, trip: true, carriages: false };
+        }
+
+        // 3. Ensure trainSave exists
         let trainSaveNode = this.ast.children.find(c => c.name === 'trainSave');
         if (!trainSaveNode || trainSaveNode.constructor.name === 'OdinNull') {
-            return { success: false, error: 'no_trainsave' };
+            if (trainSaveNode) {
+                const idx = this.ast.children.indexOf(trainSaveNode);
+                trainSaveNode = new OdinNode();
+                trainSaveNode.name = 'trainSave';
+                trainSaveNode.typeName = 'TrainSave, Odyssey';
+                trainSaveNode.marker = 1;
+                trainSaveNode.children = [];
+                this.ast.children[idx] = trainSaveNode;
+            } else {
+                trainSaveNode = new OdinNode();
+                trainSaveNode.name = 'trainSave';
+                trainSaveNode.typeName = 'TrainSave, Odyssey';
+                trainSaveNode.marker = 1;
+                trainSaveNode.children = [];
+                this.ast.children.push(trainSaveNode);
+            }
         }
         
+        // 4. Check or Create carriages
         let hasCarriages = false;
-        const carriagesNode = trainSaveNode.children ? trainSaveNode.children.find(c => c.name === 'carriages') : null;
+        let carriagesNode = trainSaveNode.children.find(c => c.name === 'carriages');
+        
         if (carriagesNode && carriagesNode.children) {
             const carrList = carriagesNode.children.find(c => c.constructor.name === 'OdinList');
             if (carrList && carrList.elements && carrList.elements.length >= 3) {
@@ -1466,41 +1521,78 @@ class SaveParser {
         }
         
         if (!hasCarriages) {
-            return { success: false, error: 'no_carriages' };
-        }
-
-        setPrim(trainSaveNode, 'trainDay', tDay, 0x17);
-        setPrim(trainSaveNode, 'trainNumber', 0, 0x17);
-
-        // 4. Modify LiminalSaves to put Tsuki in the train
-        const liminalNodes = this._findNodesInAST('liminalSaves');
-        if (liminalNodes.length > 0 && liminalNodes[0].children) {
-            const limList = liminalNodes[0].children.find(c => c.constructor.name === 'OdinList');
-            if (limList && limList.elements) {
-                // Find Tsuki (ID 49)
-                for (const entry of limList.elements) {
-                    const keyNode = entry.key;
-                    if (keyNode && keyNode.value === 49n) {
-                        const valNode = entry.value;
-                        if (valNode && valNode.children) {
-                            const actSave = valNode.children.find(c => c.name === 'activitySave');
-                            if (actSave && actSave.children) {
-                                let contID = actSave.children.find(c => c.name === 'containerID');
-                                if (!contID) {
-                                    contID = new OdinString();
-                                    contID.name = 'containerID';
-                                    contID.marker = 0x11;
-                                    actSave.children.push(contID);
-                                }
-                                contID.value = 'TrainID, Odyssey';
-                            }
-                        }
+            // Find a valid comparer from sublocations to clone safely
+            let validComparerId = -1;
+            const sublocs = this.ast.children.find(c => c.name === 'sublocations');
+            if (sublocs && sublocs.children && sublocs.children[0] && sublocs.children[0].elements && sublocs.children[0].elements.length > 0) {
+                const el = sublocs.children[0].elements[0];
+                if (el && el.value && el.value.children) {
+                    const furn = el.value.children.find(c => c.name === 'furniture');
+                    if (furn && furn.children) {
+                        const comp = furn.children.find(c => c.constructor.name === 'OdinInternalReference' || c.name === 'comparer');
+                        if (comp) validComparerId = comp.id;
                     }
                 }
             }
+            
+            if (validComparerId === -1) {
+                return { success: false, error: 'no_carriages' };
+            }
+            
+            // Build carriages array
+            if (!carriagesNode) {
+                carriagesNode = new OdinNode();
+                carriagesNode.name = 'carriages';
+                carriagesNode.typeName = 'TrainSave+CarriageSave[], Odyssey';
+                carriagesNode.marker = 1;
+                carriagesNode.children = [];
+                trainSaveNode.children.push(carriagesNode);
+            }
+            
+            const carrList = new OdinList();
+            carrList.elements = [];
+            carriagesNode.children = [carrList];
+            
+            const buildDict = (name, typeName) => {
+                const dictNode = new OdinNode();
+                dictNode.name = name;
+                dictNode.typeName = typeName;
+                dictNode.marker = 1;
+                dictNode.children = [];
+                
+                const comp = new OdinInternalReference();
+                comp.name = 'comparer';
+                comp.id = validComparerId;
+                
+                const elList = new OdinList();
+                elList.elements = [];
+                
+                dictNode.children.push(comp, elList);
+                return dictNode;
+            };
+            
+            for (let i = 0; i < 3; i++) {
+                const cNode = new OdinNode();
+                cNode.name = null;
+                cNode.typeName = 'TrainSave+CarriageSave, Odyssey';
+                cNode.marker = 2; // UnnamedType
+                cNode.children = [
+                    buildDict('furniture', 'System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[FurniturePlacement, Odyssey]], mscorlib'),
+                    buildDict('wallFurniture', 'System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[WallPlacement, Odyssey]], mscorlib'),
+                    buildDict('wallpapers', 'System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32, mscorlib]], mscorlib'),
+                    buildDict('floors', 'System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32, mscorlib]], mscorlib')
+                ];
+                carrList.elements.push(cNode);
+            }
+            hasCarriages = true;
         }
 
-        return { success: true };
+        if (hasCarriages) {
+            setPrim(trainSaveNode, 'trainDay', tDay, 0x17);
+            setPrim(trainSaveNode, 'trainNumber', 0, 0x17);
+        }
+
+        return { success: true, trip: true, carriages: hasCarriages };
     }
 
     setTrainDay(day) {
