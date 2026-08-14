@@ -1490,36 +1490,52 @@ class SaveParser {
             }
             hasCarriages = true;
         }
+        // 3. Update global activity and remove Tsuki from liminal (to force spawn on train)
+        if (mode === 'full') {
+            const ACTIVITY_B64 = 'AQEIAAAAYQBjAHQAaQB2AGkAdAB5ADADAAAAWgkAABcBCgAAAEEAYwB0AGkAdgBpAHQAeQBJAEQAGwAAABcBBQAAAE4AcABjAEkARAD/////IQENAAAAQQBjAHQAaQB2AGkAdAB5AFMAdABhAHIAdACEZ1Z+EpXmQCsBBQAAAFYAYQBsAGkAZAABKwEEAAAAUwBlAGUAbgABFwEGAAAAUABlAHMAdABlAHIAAAAAAAMBEAAAAHAAbABhAGMAZQBtAGUAbgB0AFAAbwBpAG4AdABlAHIAMAQAAAABAQsAAABjAG8AbgB0AGEAaQBuAGUAcgBJAEQAMAoAAABbCQAAFwEKAAAAQwBhAHIAcgBpAGEAZwBlAEkARAAAAAAABRcBCwAAAHAAbABhAGMAZQBtAGUAbgB0AEkARACKi9orBQU=';
+            
+            // Calculate OADate for right now
+            // Unity OADate: Days since Dec 30, 1899
+            const oaDateStart = new Date("1899-12-30T00:00:00Z").getTime();
+            // Since JS dates are relative to 1970-01-01 UTC, we adjust. 
+            // Better: difference in milliseconds / (1000*60*60*24)
+            const msPerDay = 86400000;
+            // The local offset also matters in OADate? Actually, Unity uses local time often, but OADate is a standard struct.
+            // A simple approximation is getting days + fraction
+            const nowTime = now.getTime() - (now.getTimezoneOffset() * 60000); // adjust to local
+            const oaDate = (nowTime - oaDateStart) / msPerDay;
 
-        // 3. Update Liminal (best-effort)
-        const updateTsukiLiminal = () => {
+            const actBuf = decodeB64(ACTIVITY_B64);
+            const actView = new DataView(actBuf.buffer);
+            actView.setFloat64(113, oaDate, true); // Patch ActivityStart (double)
+
+            let actNode = this.ast.children.find(c => c.name === 'activity');
+            if (actNode) {
+                const idx = this.ast.children.indexOf(actNode);
+                this.ast.children[idx] = new OdinRawBlock(actBuf);
+                this.ast.children[idx].name = 'activity';
+                this.ast.children[idx].marker = 0xFE;
+            } else {
+                const raw = new OdinRawBlock(actBuf);
+                raw.name = 'activity';
+                raw.marker = 0xFE;
+                this.ast.children.push(raw);
+            }
+
+            // Remove Tsuki (49) from liminalSaves so it recreates based on global activity
             const liminalNodes = this._findNodesInAST('liminalSaves');
             if (liminalNodes.length > 0 && liminalNodes[0].children) {
                 const limList = liminalNodes[0].children.find(c => c.constructor.name === 'OdinList');
                 if (limList && limList.elements) {
-                    for (const entry of limList.elements) {
+                    const originalLength = limList.elements.length;
+                    limList.elements = limList.elements.filter(entry => {
                         const keyNode = entry.key;
-                        if (keyNode && keyNode.value === 49n) {
-                            const valNode = entry.value;
-                            if (valNode && valNode.children) {
-                                const actSave = valNode.children.find(c => c.name === 'activitySave');
-                                if (actSave && actSave.children) {
-                                    let contID = actSave.children.find(c => c.name === 'containerID');
-                                    if (!contID) {
-                                        contID = new OdinString();
-                                        contID.name = 'containerID';
-                                        contID.marker = 0x11;
-                                        actSave.children.push(contID);
-                                    }
-                                    contID.value = 'TrainID, Odyssey';
-                                }
-                            }
-                        }
-                    }
+                        // It can be a primitive string '49' or int 49 depending on how dictionary keys are typed
+                        return !(keyNode && (keyNode.value === '49' || keyNode.value === 49 || keyNode.value === 49n));
+                    });
                 }
             }
-        };
-        updateTsukiLiminal();
+        }
 
         return { success: true, trip: true, carriages: hasCarriages };
     }
