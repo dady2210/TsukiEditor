@@ -1402,13 +1402,17 @@ class SaveParser {
     }
 
 
+
     forceCityTrip() {
         if (!this.ast) return false;
         
-        // 1. Modify or create global trip node
+        // 1. Get current train day safely
+        const dayEntry = this.generalVars['day'];
+        let tDay = (dayEntry && typeof dayEntry.value === 'number') ? (dayEntry.value | 0) : 46248;
+
+        // 2. Modify or create global trip node
         let tripNode = this.ast.children.find(c => c.name === 'trip');
         if (!tripNode || tripNode.constructor.name === 'OdinNull') {
-            // Replace OdinNull with OdinNode if needed
             if (tripNode) {
                 const idx = this.ast.children.indexOf(tripNode);
                 tripNode = new OdinNode();
@@ -1439,9 +1443,6 @@ class SaveParser {
             child.value = val;
         };
 
-        // Get current train day (generalVars or just hardcode a reasonable number if missing)
-        let tDay = this.generalVars['day'] || 46248;
-
         setPrim(tripNode, 'start', 0n, 0x1B); // int64 0
         setPrim(tripNode, 'end', 2n, 0x1B);   // int64 2
         setPrim(tripNode, 'trainDay', tDay, 0x17); // int32
@@ -1449,7 +1450,29 @@ class SaveParser {
         setPrim(tripNode, 'tripStarted', true, 0x2B); // bool
         setPrim(tripNode, 'tripEnded', false, 0x2B); // bool
 
-        // 2. Modify LiminalSaves to put Tsuki in the train
+        // 3. Ensure trainSave and carriages exist
+        let trainSaveNode = this.ast.children.find(c => c.name === 'trainSave');
+        if (!trainSaveNode || trainSaveNode.constructor.name === 'OdinNull') {
+            return { success: false, error: 'no_trainsave' };
+        }
+        
+        let hasCarriages = false;
+        const carriagesNode = trainSaveNode.children ? trainSaveNode.children.find(c => c.name === 'carriages') : null;
+        if (carriagesNode && carriagesNode.children) {
+            const carrList = carriagesNode.children.find(c => c.constructor.name === 'OdinList');
+            if (carrList && carrList.elements && carrList.elements.length >= 3) {
+                hasCarriages = true;
+            }
+        }
+        
+        if (!hasCarriages) {
+            return { success: false, error: 'no_carriages' };
+        }
+
+        setPrim(trainSaveNode, 'trainDay', tDay, 0x17);
+        setPrim(trainSaveNode, 'trainNumber', 0, 0x17);
+
+        // 4. Modify LiminalSaves to put Tsuki in the train
         const liminalNodes = this._findNodesInAST('liminalSaves');
         if (liminalNodes.length > 0 && liminalNodes[0].children) {
             const limList = liminalNodes[0].children.find(c => c.constructor.name === 'OdinList');
@@ -1476,15 +1499,8 @@ class SaveParser {
                 }
             }
         }
-        
-        // 3. Ensure trainSave exists
-        let trainSaveNode = this.ast.children.find(c => c.name === 'trainSave');
-        if (trainSaveNode && trainSaveNode.constructor.name !== 'OdinNull') {
-            setPrim(trainSaveNode, 'trainDay', tDay, 0x17);
-            setPrim(trainSaveNode, 'trainNumber', 0, 0x17);
-        }
 
-        return true;
+        return { success: true };
     }
 
     setTrainDay(day) {

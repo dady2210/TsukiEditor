@@ -551,12 +551,18 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     this.showToast('Carga un save primero.', 'error');
                     return;
                 }
-                const success = this.parser.forceCityTrip();
-                if (success) {
+                const result = this.parser.forceCityTrip();
+                if (result && result.success) {
                     this.showToast('🚞 Viaje a la Ciudad forzado con éxito!');
                     if (typeof this.renderTrainTab === 'function') this.renderTrainTab();
                 } else {
-                    this.showToast('⚠️ No se pudo forzar el viaje.', 'error');
+                    if (result && result.error === 'no_carriages') {
+                        this.showToast('⚠️ No se puede forzar el viaje: El save no contiene los vagones (carriages). Abre el juego, viaja legalmente una vez y vuelve a intentarlo.', 'error');
+                    } else if (result && result.error === 'no_trainsave') {
+                        this.showToast('⚠️ No se encontró el nodo trainSave.', 'error');
+                    } else {
+                        this.showToast('⚠️ Error desconocido al forzar el viaje.', 'error');
+                    }
                 }
             });
         }
