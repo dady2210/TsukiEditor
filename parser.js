@@ -1404,6 +1404,7 @@ class SaveParser {
 
 
 
+
     forceCityTrip(options = {}) {
         if (!this.ast) return { success: false, error: 'no_ast' };
         
@@ -1413,15 +1414,44 @@ class SaveParser {
         const dayEntry = this.generalVars['day'];
         let tDay = (dayEntry && typeof dayEntry.value === 'number') ? (dayEntry.value | 0) : 46248;
 
+        // Ensure trainSave and carriages exist if mode is full
+        let trainSaveNode = this.ast.children.find(c => c.name === 'trainSave');
+        let hasCarriages = false;
+        
+        if (trainSaveNode && trainSaveNode.constructor.name !== 'OdinNull' && trainSaveNode.children) {
+            let carriagesNode = trainSaveNode.children.find(c => c.name === 'carriages');
+            if (carriagesNode && carriagesNode.children) {
+                const carrList = carriagesNode.children.find(c => c.constructor.name === 'OdinList');
+                if (carrList && carrList.elements && carrList.elements.length >= 3) {
+                    hasCarriages = true;
+                }
+            }
+        }
+
+        if (mode === 'full' && !hasCarriages) {
+            // DO NOT FABRICATE CARRIAGES! Return error.
+            return { success: false, error: 'no_carriages' };
+        }
+
         // 2. Modify or create global trip node
         let tripNode = this.ast.children.find(c => c.name === 'trip');
         if (!tripNode || tripNode.constructor.name === 'OdinNull') {
+            // Find max nodeId to avoid collisions, though usually 0 is fine if not referenced
+            let maxId = 0;
+            const findMax = (n) => {
+                if (n && n.nodeId !== undefined && n.nodeId > maxId) maxId = n.nodeId;
+                if (n && n.children) n.children.forEach(findMax);
+                if (n && n.elements) n.elements.forEach(e => { if (e.key) findMax(e.key); if (e.value) findMax(e.value); });
+            };
+            findMax(this.ast);
+
             if (tripNode) {
                 const idx = this.ast.children.indexOf(tripNode);
                 tripNode = new OdinNode();
                 tripNode.name = 'trip';
                 tripNode.typeName = 'Trip, Odyssey';
                 tripNode.marker = 1;
+                tripNode.nodeId = maxId + 1;
                 tripNode.children = [];
                 this.ast.children[idx] = tripNode;
             } else {
@@ -1429,6 +1459,7 @@ class SaveParser {
                 tripNode.name = 'trip';
                 tripNode.typeName = 'Trip, Odyssey';
                 tripNode.marker = 1;
+                tripNode.nodeId = maxId + 1;
                 tripNode.children = [];
                 this.ast.children.push(tripNode);
             }
@@ -1446,14 +1477,15 @@ class SaveParser {
             child.value = val;
         };
 
-        setPrim(tripNode, 'start', 0n, 0x1B); // int64 0
-        setPrim(tripNode, 'end', 2n, 0x1B);   // int64 2
-        setPrim(tripNode, 'trainDay', tDay, 0x17); // int32
-        setPrim(tripNode, 'trainNumber', 0, 0x17); // int32
-        setPrim(tripNode, 'tripStarted', true, 0x2B); // bool
-        setPrim(tripNode, 'tripEnded', false, 0x2B); // bool
+        // Use 0x1D (NamedULong / Enum) as requested by the user
+        setPrim(tripNode, 'start', 0n, 0x1D);
+        setPrim(tripNode, 'end', 2n, 0x1D);
+        setPrim(tripNode, 'trainDay', tDay, 0x17);
+        setPrim(tripNode, 'trainNumber', 0, 0x17);
+        setPrim(tripNode, 'tripStarted', true, 0x2B);
+        setPrim(tripNode, 'tripEnded', false, 0x2B);
         
-        // Update Tsuki's Liminal containerID
+        // Update Tsuki's Liminal containerID if exists
         const updateTsukiLiminal = () => {
             const liminalNodes = this._findNodesInAST('liminalSaves');
             if (liminalNodes.length > 0 && liminalNodes[0].children) {
@@ -1467,6 +1499,7 @@ class SaveParser {
                                 const actSave = valNode.children.find(c => c.name === 'activitySave');
                                 if (actSave && actSave.children) {
                                     let contID = actSave.children.find(c => c.name === 'containerID');
+                                    // Best effort only: if the node already exists or we create it
                                     if (!contID) {
                                         contID = new OdinString();
                                         contID.name = 'containerID';
@@ -1481,111 +1514,7 @@ class SaveParser {
                 }
             }
         };
-        
         updateTsukiLiminal();
-
-        if (mode === 'trip_only') {
-            return { success: true, trip: true, carriages: false };
-        }
-
-        // 3. Ensure trainSave exists
-        let trainSaveNode = this.ast.children.find(c => c.name === 'trainSave');
-        if (!trainSaveNode || trainSaveNode.constructor.name === 'OdinNull') {
-            if (trainSaveNode) {
-                const idx = this.ast.children.indexOf(trainSaveNode);
-                trainSaveNode = new OdinNode();
-                trainSaveNode.name = 'trainSave';
-                trainSaveNode.typeName = 'TrainSave, Odyssey';
-                trainSaveNode.marker = 1;
-                trainSaveNode.children = [];
-                this.ast.children[idx] = trainSaveNode;
-            } else {
-                trainSaveNode = new OdinNode();
-                trainSaveNode.name = 'trainSave';
-                trainSaveNode.typeName = 'TrainSave, Odyssey';
-                trainSaveNode.marker = 1;
-                trainSaveNode.children = [];
-                this.ast.children.push(trainSaveNode);
-            }
-        }
-        
-        // 4. Check or Create carriages
-        let hasCarriages = false;
-        let carriagesNode = trainSaveNode.children.find(c => c.name === 'carriages');
-        
-        if (carriagesNode && carriagesNode.children) {
-            const carrList = carriagesNode.children.find(c => c.constructor.name === 'OdinList');
-            if (carrList && carrList.elements && carrList.elements.length >= 3) {
-                hasCarriages = true;
-            }
-        }
-        
-        if (!hasCarriages) {
-            // Find a valid comparer from sublocations to clone safely
-            let validComparerId = -1;
-            const sublocs = this.ast.children.find(c => c.name === 'sublocations');
-            if (sublocs && sublocs.children && sublocs.children[0] && sublocs.children[0].elements && sublocs.children[0].elements.length > 0) {
-                const el = sublocs.children[0].elements[0];
-                if (el && el.value && el.value.children) {
-                    const furn = el.value.children.find(c => c.name === 'furniture');
-                    if (furn && furn.children) {
-                        const comp = furn.children.find(c => c.constructor.name === 'OdinInternalReference' || c.name === 'comparer');
-                        if (comp) validComparerId = comp.id;
-                    }
-                }
-            }
-            
-            if (validComparerId === -1) {
-                return { success: false, error: 'no_carriages' };
-            }
-            
-            // Build carriages array
-            if (!carriagesNode) {
-                carriagesNode = new OdinNode();
-                carriagesNode.name = 'carriages';
-                carriagesNode.typeName = 'TrainSave+CarriageSave[], Odyssey';
-                carriagesNode.marker = 1;
-                carriagesNode.children = [];
-                trainSaveNode.children.push(carriagesNode);
-            }
-            
-            const carrList = new OdinList();
-            carrList.elements = [];
-            carriagesNode.children = [carrList];
-            
-            const buildDict = (name, typeName) => {
-                const dictNode = new OdinNode();
-                dictNode.name = name;
-                dictNode.typeName = typeName;
-                dictNode.marker = 1;
-                dictNode.children = [];
-                
-                const comp = new OdinInternalReference();
-                comp.name = 'comparer';
-                comp.id = validComparerId;
-                
-                const elList = new OdinList();
-                elList.elements = [];
-                
-                dictNode.children.push(comp, elList);
-                return dictNode;
-            };
-            
-            for (let i = 0; i < 3; i++) {
-                const cNode = new OdinNode();
-                cNode.name = null;
-                cNode.typeName = 'TrainSave+CarriageSave, Odyssey';
-                cNode.marker = 2; // UnnamedType
-                cNode.children = [
-                    buildDict('furniture', 'System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[FurniturePlacement, Odyssey]], mscorlib'),
-                    buildDict('wallFurniture', 'System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[WallPlacement, Odyssey]], mscorlib'),
-                    buildDict('wallpapers', 'System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32, mscorlib]], mscorlib'),
-                    buildDict('floors', 'System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32, mscorlib]], mscorlib')
-                ];
-                carrList.elements.push(cNode);
-            }
-            hasCarriages = true;
-        }
 
         if (hasCarriages) {
             setPrim(trainSaveNode, 'trainDay', tDay, 0x17);
