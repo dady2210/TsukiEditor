@@ -367,7 +367,7 @@ class OdinWriter {
     writeNode(node) {
         if (!node) return;
         
-        if (typeof OdinRawBlock !== 'undefined' && node instanceof OdinRawBlock) {
+        if ((typeof OdinRawBlock !== 'undefined' && node instanceof OdinRawBlock) || node.marker === 0xFE) {
             this.ensureCapacity(node.buffer.length);
             const u8 = new Uint8Array(this.buffer.buffer, this.offset, node.buffer.length);
             u8.set(node.buffer);

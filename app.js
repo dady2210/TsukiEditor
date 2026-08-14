@@ -557,9 +557,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 
                 if (result && result.success) {
                     if (result.carriages) {
-                        this.showToast('🚞 Viaje + vagones inyectados con éxito');
+                        this.showToast('🚂 Viaje (tiempo vivo) + Vagones inyectados con éxito. El viaje dura ~2h.');
                     } else {
-                        this.showToast('🚞 Solo Trip activado (sin escena 3D)');
+                        this.showToast('🚂 Solo Trip (tiempo vivo) activado. El viaje dura ~2h.');
                     }
                     if (typeof this.renderTrainTab === 'function') this.renderTrainTab();
                 } else {
