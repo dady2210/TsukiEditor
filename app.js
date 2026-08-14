@@ -524,7 +524,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 }
                 if (!this.parser) return;
                 try {
-                    this.parser.injectInventoryItem(bagId, 1, 0); // Bags are items (invType=0)
+                    this.parser.injectInventoryItem(bagId, 1, false, 0); // Bags are items (invType=0)
                     this.showToast(`🎒 Bolsa (ID ${bagId}) añadida al inventario.`);
                     this.renderInventory();
                 } catch (e) {
@@ -718,12 +718,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (gachaInput && this.parser.inventory) {
             const qty = parseInt(gachaInput.value);
             if (!isNaN(qty) && qty >= 0) {
-                const existing = this.parser.inventory.find(it => it.item_id === 1 && it.invType === 0);
+                const existing = this.parser.inventory.find(it => it.item_id === 1);
                 if (existing) {
-                    this.parser.updateInventoryItem(this.parser.inventory.indexOf(existing), 1, qty, 0);
+                    this.parser.updateInventoryItem('inventory', this.parser.inventory.indexOf(existing), 1, qty, 0);
                     this.renderInventory();
                 } else if (qty > 0) {
-                    this.parser.injectInventoryItem(1, qty, 0);
+                    this.parser.injectInventoryItem(1, qty, false, 0);
                     this.renderInventory();
                 }
             }
@@ -1038,7 +1038,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const newQty = parseInt((document.getElementById(`inv-qty-${index}`) || {}).value);
         const newType= parseInt((document.getElementById(`inv-type-${index}`) || {}).value);
         if (!isNaN(newId) && !isNaN(newQty) && !isNaN(newType)) {
-            this.parser.updateInventoryItem(index, newId, newQty, newType);
+            this.parser.updateInventoryItem('inventory', index, newId, newQty, undefined);
             this.showToast("✅ Item actualizado");
         }
     }
@@ -1064,7 +1064,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
         
         try {
-            const result = this.parser.injectInventoryItem(newId, newQty, newType);
+            const isHidden = document.getElementById('add-inv-hidden')?.checked || false;
+            const result = this.parser.injectInventoryItem(newId, newQty, isHidden, newType);
             this.renderInventory();
             this.showToast(result.mode === "stacked" ? "📦 Cantidad sumada al item existente" : "✅ Item agregado en slot vacío");
         } catch (error) { this.showToast("❌ " + error.message); }
@@ -1076,7 +1077,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (!item || item.item_id === -1) return;
         const name = this.resolveItemName(item.item_id, item.invType);
         if (!confirm(`Eliminar ${name} (ID ${item.item_id})?`)) return;
-        this.parser.clearInventoryItem(index);
+        this.parser.clearInventoryItem('inventory', index);
         this.renderInventory();
         this.showToast("🗑️ Item eliminado");
     }
@@ -1113,7 +1114,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             }
         }
         
-        updates.forEach(u => this.parser.updateInventoryItem(u.index, u.newId, u.newQty, u.newType));
+        updates.forEach(u => this.parser.updateInventoryItem('inventory', u.index, u.newId, u.newQty, undefined));
         this.renderInventory();
         this.showToast("✅ Todos los items aplicados");
     }
@@ -2029,7 +2030,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (!this.parser) { this.showToast('Carga un save primero.'); return; }
         if (!this.parser.inventory.length) this.parser.parseInventory();
         try {
-            const result = this.parser.injectInventoryItem(itemId, qty, 1);
+            const result = this.parser.injectInventoryItem(itemId, qty, false, 1);
             const msg = result.mode === 'stacked'
                 ? `📦 ${label} — cantidad sumada (+${qty})`
                 : `✅ ${label} agregado (slot ${result.slot})`;
@@ -2070,7 +2071,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             idx += carrotsTag.length;
         }
 
-        try { this.parser.injectInventoryItem(900, 1, 1); this.renderInventory(); } catch (_) {}
+        try { this.parser.injectInventoryItem(900, 1, false, 1); this.renderInventory(); } catch (_) {}
         this.showToast(patchedCount > 0 
             ? `dYO_ Auto-Cosecha: ${patchedCount} CropBox(s) → 999,999 zanahorias`
             : 'dYO_ No se hallaron parcelas para cosechar.');
@@ -2088,7 +2089,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             this.showToast(`🥕 +${amount.toLocaleString()} zanahorias → ${newVal.toLocaleString()} total`);
         } else {
             try {
-                this.parser.injectInventoryItem(0, amount, 0);
+                this.parser.injectInventoryItem(0, amount, true, 0);
                 this.renderInventory();
                 this.showToast(`🥕 Campo no hallado — se agregó ${amount}x Lord of Carrots al inventario.`);
             } catch (e) { this.showToast('❌ ' + e.message); }

@@ -776,7 +776,7 @@ class SaveParser {
                                 // Our AST doesn't link verificationID node directly in this.inventory, it is only parsed.
                                 // Instead of deep fixing the AST here, let's rely on updateInventoryItem.
                             }
-                            this.updateInventoryItem(i, item.item_id, item.qty, item.invType);
+                            this.updateInventoryItem('inventory', i, item.item_id, item.qty, item.invType);
                             fixes++;
                         } else {
                             issues.push({ code: 'INV_VERIFY', severity: 'WARNING', message: `Ítem ${item.item_id} tiene un VerificationID incorrecto.` });
@@ -871,17 +871,21 @@ class SaveParser {
     }
 
     
-    updateInventoryItem(index, newId, newQty, newInvType) {
+    updateInventoryItem(arrayName, index, newId, newQty, newInvType) {
         let item = null;
-        if (newInvType === undefined) newInvType = 1; // Default
-        if (newInvType === 1 && this.inventory[index]) item = this.inventory[index];
-        else if (newInvType === 0 && this.hiddenInventory[index]) item = this.hiddenInventory[index];
+        if (arrayName === 'inventory' && this.inventory[index]) item = this.inventory[index];
+        else if (arrayName === 'hiddenInventory' && this.hiddenInventory[index]) item = this.hiddenInventory[index];
         
-        if (!item) return;
+        if (!item) throw new Error("Slot de inventario inválido.");
+        
+        let changed = false;
+        if (item.item_id !== newId) changed = true;
+        if (item.qty !== newQty) changed = true;
+        if (newInvType !== undefined && item.invType !== newInvType) changed = true;
         
         item.item_id = newId;
         item.qty = newQty;
-        item.invType = newInvType;
+        if (newInvType !== undefined) item.invType = newInvType;
         
         if (item.slotNode && item.slotNode.children) {
             const idNode = item.slotNode.children.find(c => c.name === 'ID');
@@ -891,18 +895,19 @@ class SaveParser {
             
             if (idNode) idNode.value = newId;
             if (qtyNode) qtyNode.value = newQty;
-            if (typeNode) typeNode.value = newInvType;
+            if (typeNode && newInvType !== undefined) typeNode.value = newInvType;
             if (vNode) vNode.value = calcVerificationId(newId);
         } else {
             console.error("AST slotNode missing for inventory update!", item);
         }
+        return changed;
     }
 
     
-    clearInventoryItem(index, invType = 1) {
+    clearInventoryItem(arrayName, index) {
         let item = null;
-        if (invType === 1 && this.inventory[index]) item = this.inventory[index];
-        else if (invType === 0 && this.hiddenInventory[index]) item = this.hiddenInventory[index];
+        if (arrayName === 'inventory' && this.inventory[index]) item = this.inventory[index];
+        else if (arrayName === 'hiddenInventory' && this.hiddenInventory[index]) item = this.hiddenInventory[index];
         
         if (!item) {
             console.error("Slot de inventario invalido.");
@@ -931,31 +936,36 @@ class SaveParser {
         return item;
     }
 
-    injectInventoryItem(newId, quantity = 1, newInvType = 1) {
+    injectInventoryItem(newId, quantity = 1, isHidden = false, visualCategory = 1) {
         if (!this.inventory || !this.inventory.length) this.parseInventory();
-        if (!Number.isInteger(newId) || !Number.isInteger(quantity) || !Number.isInteger(newInvType))
-            throw new Error("ID, cantidad y tipo deben ser enteros.");
+        if (!Number.isInteger(newId) || !Number.isInteger(quantity))
+            throw new Error("ID y cantidad deben ser enteros.");
         if (quantity <= 0) throw new Error("La cantidad debe ser mayor que cero.");
         
-        const invArray = newInvType === 1 ? this.inventory : this.hiddenInventory;
+        const arrayName = isHidden ? 'hiddenInventory' : 'inventory';
+        const invArray = isHidden ? this.hiddenInventory : this.inventory;
+        const targetInvType = visualCategory;
+        
         if (!invArray) throw new Error("El arreglo de inventario no esta inicializado.");
         const stackItem = invArray.find(i => i.item_id === newId);
         
         if (stackItem) {
             const idx = invArray.indexOf(stackItem);
-            this.updateInventoryItem(idx, newId, stackItem.qty + quantity, newInvType);
+            const changed = this.updateInventoryItem(arrayName, idx, newId, stackItem.qty + quantity, targetInvType);
+            if (!changed) throw new Error("No se pudo sumar la cantidad.");
             return { mode: 'stacked', slot: idx, item: stackItem };
         }
         
         const emptySlotIdx = invArray.findIndex(i => i.item_id === -1 || i.qty <= 0);
         if (emptySlotIdx !== -1) {
-            this.updateInventoryItem(emptySlotIdx, newId, quantity, newInvType);
+            const changed = this.updateInventoryItem(arrayName, emptySlotIdx, newId, quantity, targetInvType);
+            if (!changed) throw new Error("El slot vacío no mutó.");
             return { mode: "inserted", slot: emptySlotIdx, item: invArray[emptySlotIdx] };
         }
         
         // If there are no empty slots, we must create a new one in the AST
         if (this.ast) {
-            const parentName = newInvType === 1 ? 'slots' : 'hiddenItems';
+            const parentName = isHidden ? 'hiddenItems' : 'slots';
             const itemsNodes = this._findNodesInAST('items');
             const itemsNode = itemsNodes.length > 0 ? itemsNodes[0] : null;
             if (itemsNode) {
@@ -985,7 +995,7 @@ class SaveParser {
                         if (idNode) idNode.value = newId;
                         if (qtyNode) qtyNode.value = quantity;
                         if (vNode) vNode.value = verify;
-                        if (tNode) tNode.value = BigInt(newInvType);
+                        if (tNode) tNode.value = BigInt(targetInvType);
                         if (mNode) mNode.value = Date.now() / 86400000 + 25569;
 
                         listNode.elements.push(newNode);
@@ -994,7 +1004,7 @@ class SaveParser {
                         const newInvObj = {
                             item_id: newId,
                             qty: quantity,
-                            invType: newInvType,
+                            invType: targetInvType,
                             slotNode: newNode,
                             i_off: -1, q_off: -1, v_off: -1, t_off: -1, m_off: -1, verify: verify
                         };
@@ -1087,9 +1097,9 @@ class SaveParser {
             const item = this.inventory[i];
             if (item.item_id > 0 && item.qty > 0) {
                 // Find or create slot in hiddenInventory
-                this.injectInventoryItem(item.item_id, item.qty, 0); // 0 = hiddenItems
+                this.injectInventoryItem(item.item_id, item.qty, true); // true = isHidden
                 // Clear from main inventory
-                this.clearInventoryItem(i, 1); // 1 = slots
+                this.clearInventoryItem('inventory', i);
                 movedCount++;
             }
         }
@@ -2079,10 +2089,10 @@ class SaveParser {
                 if (existingIndex !== -1) {
                     const existing = this.inventory[existingIndex];
                     const newQty = existing.qty + item.qty;
-                    this.updateInventoryItem(existingIndex, item.id, newQty, item.invType ?? existing.invType);
+                    this.updateInventoryItem(item.invType === 0 ? 'hiddenInventory' : 'inventory', existingIndex, item.id, newQty, item.invType ?? existing.invType);
                     report.applied++;
                 } else {
-                    const ok = this.injectInventoryItem(item.id, item.qty, item.invType ?? 1);
+                    const ok = this.injectInventoryItem(item.id, item.qty, item.invType === 0);
                     if (ok) report.applied++;
                     else report.skipped.push(`Item ${item.id} (No inyectable)`);
                 }
