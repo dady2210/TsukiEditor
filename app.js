@@ -544,6 +544,24 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         // Train
         document.getElementById('btn-apply-train').addEventListener('click', () => this.applyTrainChanges());
 
+        const btnForceTrip = document.getElementById('btn-force-trip');
+        if (btnForceTrip) {
+            btnForceTrip.addEventListener('click', () => {
+                if (!this.parser || !this.parser.ast) {
+                    this.showToast('Carga un save primero.', 'error');
+                    return;
+                }
+                const success = this.parser.forceCityTrip();
+                if (success) {
+                    this.showToast('🚞 Viaje a la Ciudad forzado con éxito!');
+                    if (typeof this.renderTrainTab === 'function') this.renderTrainTab();
+                } else {
+                    this.showToast('⚠️ No se pudo forzar el viaje.', 'error');
+                }
+            });
+        }
+
+
         // Farm actions (Map tab)
         const _bindFarm = (id, fn) => { const el = document.getElementById(id); if (el) el.addEventListener('click', fn); };
         _bindFarm('btn-add-plot',        () => this.farmAddItem(306, 1,  'Parcela de tierra (FURN_306)'));
@@ -627,11 +645,13 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             opt.value = c;
             const friendlyName = (typeof SUBLOC_NAMES !== 'undefined' && SUBLOC_NAMES[c])
                 ? SUBLOC_NAMES[c]
-                : `Ubicación ${c}`;
+                : (typeof c === 'string' && c.startsWith('train_vagon_')) 
+                    ? `Tren - Vagón ${c.split('_')[2]}` 
+                    : `Ubicación ${c}`;
             opt.textContent = friendlyName;
             this.selectLocation.appendChild(opt);
         });
-        if (prevLoc && Array.from(this.parser.clusters).includes(parseInt(prevLoc))) {
+        if (prevLoc && Array.from(this.parser.clusters).some(c => c.toString() === prevLoc)) {
             this.selectLocation.value = prevLoc;
         }
         // Trigger initial label update
@@ -1201,22 +1221,34 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             return;
         }
 
-        const locId = parseInt(this.selectLocation.value);
-        if (isNaN(locId)) {
-            this.showToast('Selecciona una ubicación en el mapa', 'error');
-            return;
-        }
 
+        const locIdRaw = this.selectLocation.value;
+        const locId = parseInt(locIdRaw);
+        
         try {
             const root = this.parser.ast;
-            const sublocations = root.children.find(c => c.name === 'sublocations');
+            let locData = null;
             
-            if (!sublocations) throw new Error('No se encontró sublocations en el AST');
-            const sublocationsList = sublocations.children.find(c => c.constructor.name === 'OdinList');
-            const locEntry = sublocationsList.elements.find(e => e.key.value === locId);
-            if (!locEntry) throw new Error('Ubicación no encontrada en el AST');
-            
-            const locData = locEntry.value;
+            if (typeof locIdRaw === 'string' && locIdRaw.startsWith('train_vagon_')) {
+                const vagonIdx = parseInt(locIdRaw.split('_')[2]) - 1;
+                const trainSave = root.children.find(c => c.name === 'trainSave');
+                if (!trainSave) throw new Error('No se encontró trainSave');
+                const carriages = trainSave.children.find(c => c.name === 'carriages');
+                const carrList = carriages.children.find(c => c.constructor.name === 'OdinList');
+                locData = carrList.elements[vagonIdx];
+            } else {
+                if (isNaN(locId)) {
+                    this.showToast('Selecciona una ubicación válida', 'error');
+                    return;
+                }
+                const sublocations = root.children.find(c => c.name === 'sublocations');
+                if (!sublocations) throw new Error('No se encontró sublocations en el AST');
+                const sublocationsList = sublocations.children.find(c => c.constructor.name === 'OdinList');
+                const locEntry = sublocationsList.elements.find(e => e.key.value === locId);
+                if (!locEntry) throw new Error('Ubicación no encontrada en el AST');
+                locData = locEntry.value;
+            }
+
             const furnitureListWrapper = locData.children.find(c => c.name === 'furniture');
             if (!furnitureListWrapper) throw new Error('No se encontró lista de furniture');
             const listNode = furnitureListWrapper.children.find(c => c.constructor.name === 'OdinList');
@@ -1638,33 +1670,38 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
             this._resetCropTime({ furnNode: newSeedNode });
 
-            // B5: Insertar en furniture de la sublocalización correcta
-            const sublocsWrapper = this.parser.ast.children.find(c => c.name === 'sublocations');
-            if (!sublocsWrapper) { alert('Error: no se encontró "sublocations" en el AST.'); return; }
-            const sublocsList = sublocsWrapper.children
-                ? sublocsWrapper.children.find(c => c.constructor.name === 'OdinList')
-                : null;
-            if (!sublocsList) { alert('Error: no se encontró la lista de sublocaciones.'); return; }
-
-            // Coerción numérica por si hay mismatch number/bigint
-            const farmEntry = sublocsList.elements.find(e => {
-                if (e instanceof OdinDictionaryEntry) return Number(e.key.value) === Number(p.cluster);
-                if (e.key) return Number(e.key.value) === Number(p.cluster);
-                return false;
-            });
-
-            if (!farmEntry) {
-                alert('Error: no se encontró la sublocalización ' + p.cluster + ' en el AST.');
-                return;
+            
+            // B5: Insertar en furniture de la sublocalización correcta o tren
+            let targetFurnList = null;
+            
+            if (typeof p.cluster === 'string' && p.cluster.startsWith('train_vagon_')) {
+                const vagonIdx = parseInt(p.cluster.split('_')[2]) - 1;
+                const trainSave = this.parser.ast.children.find(c => c.name === 'trainSave');
+                if (trainSave) {
+                    const carriages = trainSave.children.find(c => c.name === 'carriages');
+                    const carrList = carriages.children.find(c => c.constructor.name === 'OdinList');
+                    const locData = carrList.elements[vagonIdx];
+                    if (locData && locData.children) {
+                        const furnWrapper = locData.children.find(c => c.name === (p.isWall ? 'wallFurniture' : 'furniture'));
+                        targetFurnList = furnWrapper ? furnWrapper.children.find(c => c.constructor.name === 'OdinList') : null;
+                    }
+                }
+            } else {
+                const sublocsWrapper = this.parser.ast.children.find(c => c.name === 'sublocations');
+                if (!sublocsWrapper) { alert('Error: no se encontró "sublocations" en el AST.'); return; }
+                const sublocsList = sublocsWrapper.children.find(c => c.constructor.name === 'OdinList');
+                const farmEntry = sublocsList.elements.find(e => e.key.value === parseInt(p.cluster));
+                if (!farmEntry) {
+                    alert('Error: no se encontró la sublocalización ' + p.cluster + ' en el AST.');
+                    return;
+                }
+                const sublocData = farmEntry.value;
+                const furnWrapper = sublocData.children.find(c => c.name === (p.isWall ? 'wallFurniture' : 'furniture'));
+                targetFurnList = furnWrapper ? furnWrapper.children.find(c => c.constructor.name === 'OdinList') : null;
             }
+            
+            if (!targetFurnList) { alert('Error: no se encontró la lista de furniture.'); return; }
 
-            const sublocNode = (farmEntry instanceof OdinDictionaryEntry) ? farmEntry.value : farmEntry.value;
-            const furnWrap = sublocNode.children.find(c => c.name === 'furniture');
-            if (!furnWrap) { alert('Error: no se encontró "furniture" en la sublocalización.'); return; }
-            const furnList = furnWrap.children
-                ? furnWrap.children.find(c => c.constructor.name === 'OdinList')
-                : null;
-            if (!furnList) { alert('Error: no se encontró la lista de furniture.'); return; }
 
             // Insertar como OdinDictionaryEntry con el formato real del save ($k/$v)
             const dictKey = new OdinPrimitive(0x17, '$k', newPlacementId);

@@ -498,6 +498,35 @@ class SaveParser {
             }
         }
 
+
+        // Train Carriages Virtual Placements
+        const trainSaveWrapper = this.ast.children.find(c => c.name === 'trainSave');
+        if (trainSaveWrapper && trainSaveWrapper.constructor.name !== 'OdinNull' && trainSaveWrapper.children) {
+            const carriagesNode = trainSaveWrapper.children.find(c => c.name === 'carriages');
+            if (carriagesNode && carriagesNode.children) {
+                const carrList = carriagesNode.children.find(c => c.constructor.name === 'OdinList');
+                if (carrList && carrList.elements) {
+                    for (let ci = 0; ci < carrList.elements.length; ci++) {
+                        const carrNode = carrList.elements[ci];
+                        if (carrNode && carrNode.children) {
+                            const virtualClusterId = 'train_vagon_' + (ci + 1);
+                            this.clusters.add(virtualClusterId);
+                            
+                            const furnNode = carrNode.children.find(c => c.name === 'furniture');
+                            if (furnNode && furnNode.children) {
+                                const furnList = furnNode.children.find(c => c.constructor.name === 'OdinList');
+                                if (furnList && furnList.elements) {
+                                    for (const fEntry of furnList.elements) {
+                                        this._parsePlacementEntry(fEntry, virtualClusterId);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         this.astPlacements = [...this.placements]; // keeping for compatibility
     }
 
@@ -1370,6 +1399,92 @@ class SaveParser {
             trainDayOff: tdIdx !== -1 ? tdIdx + trainDayTag.length : -1,
             trainNumberOff: tnIdx !== -1 ? tnIdx + trainNumTag.length : -1
         };
+    }
+
+
+    forceCityTrip() {
+        if (!this.ast) return false;
+        
+        // 1. Modify or create global trip node
+        let tripNode = this.ast.children.find(c => c.name === 'trip');
+        if (!tripNode || tripNode.constructor.name === 'OdinNull') {
+            // Replace OdinNull with OdinNode if needed
+            if (tripNode) {
+                const idx = this.ast.children.indexOf(tripNode);
+                tripNode = new OdinNode();
+                tripNode.name = 'trip';
+                tripNode.typeName = 'Trip, Odyssey';
+                tripNode.marker = 1;
+                tripNode.children = [];
+                this.ast.children[idx] = tripNode;
+            } else {
+                tripNode = new OdinNode();
+                tripNode.name = 'trip';
+                tripNode.typeName = 'Trip, Odyssey';
+                tripNode.marker = 1;
+                tripNode.children = [];
+                this.ast.children.push(tripNode);
+            }
+        }
+        
+        // Helper to set primitive
+        const setPrim = (node, name, val, marker) => {
+            let child = node.children.find(c => c.name === name);
+            if (!child) {
+                child = new OdinPrimitive();
+                child.name = name;
+                child.marker = marker;
+                node.children.push(child);
+            }
+            child.value = val;
+        };
+
+        // Get current train day (generalVars or just hardcode a reasonable number if missing)
+        let tDay = this.generalVars['day'] || 46248;
+
+        setPrim(tripNode, 'start', 0n, 0x1B); // int64 0
+        setPrim(tripNode, 'end', 2n, 0x1B);   // int64 2
+        setPrim(tripNode, 'trainDay', tDay, 0x17); // int32
+        setPrim(tripNode, 'trainNumber', 0, 0x17); // int32
+        setPrim(tripNode, 'tripStarted', true, 0x2B); // bool
+        setPrim(tripNode, 'tripEnded', false, 0x2B); // bool
+
+        // 2. Modify LiminalSaves to put Tsuki in the train
+        const liminalNodes = this._findNodesInAST('liminalSaves');
+        if (liminalNodes.length > 0 && liminalNodes[0].children) {
+            const limList = liminalNodes[0].children.find(c => c.constructor.name === 'OdinList');
+            if (limList && limList.elements) {
+                // Find Tsuki (ID 49)
+                for (const entry of limList.elements) {
+                    const keyNode = entry.key;
+                    if (keyNode && keyNode.value === 49n) {
+                        const valNode = entry.value;
+                        if (valNode && valNode.children) {
+                            const actSave = valNode.children.find(c => c.name === 'activitySave');
+                            if (actSave && actSave.children) {
+                                let contID = actSave.children.find(c => c.name === 'containerID');
+                                if (!contID) {
+                                    contID = new OdinString();
+                                    contID.name = 'containerID';
+                                    contID.marker = 0x11;
+                                    actSave.children.push(contID);
+                                }
+                                contID.value = 'TrainID, Odyssey';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // 3. Ensure trainSave exists
+        let trainSaveNode = this.ast.children.find(c => c.name === 'trainSave');
+        if (trainSaveNode && trainSaveNode.constructor.name !== 'OdinNull') {
+            setPrim(trainSaveNode, 'trainDay', tDay, 0x17);
+            setPrim(trainSaveNode, 'trainNumber', 0, 0x17);
+        }
+
+        return true;
     }
 
     setTrainDay(day) {
