@@ -1405,18 +1405,45 @@ class SaveParser {
 
 
 
+
     forceCityTrip(options = {}) {
         if (!this.ast) return { success: false, error: 'no_ast' };
         
         const mode = options.mode || 'full'; // 'full' or 'trip_only'
         
-        // 1. Get current train day safely
+        const TRIP_B64 = 'AQEEAAAAdAByAGkAcAAvWwAAAAENAAAAVAByAGkAcAAsACAATwBkAHkAcwBzAGUAeQBZCQAAHQEFAAAAcwB0AGEAcgB0AAAAAAAAAAAAHQEDAAAAZQBuAGQAAgAAAAAAAAAXAQgAAAB0AHIAYQBpAG4ARABhAHkAqLQAABcBCwAAAHQAcgBhAGkAbgBOAHUAbQBiAGUAcgAAAAAAKwELAAAAdAByAGkAcABTAHQAYQByAHQAZQBkAAErAQkAAAB0AHIAaQBwAEUAbgBkAGUAZAAABQ==';
+        const TRAINSAVE_B64 = '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';
+
         const dayEntry = this.generalVars['day'];
         let tDay = (dayEntry && typeof dayEntry.value === 'number') ? (dayEntry.value | 0) : 46248;
 
-        // Ensure trainSave and carriages exist if mode is full
-        let trainSaveNode = this.ast.children.find(c => c.name === 'trainSave');
+        // Decode B64 helper
+        const decodeB64 = (b64) => {
+            const str = atob(b64);
+            const buf = new Uint8Array(str.length);
+            for(let i=0; i<str.length; i++) buf[i] = str.charCodeAt(i);
+            return buf;
+        };
+
+        // 1. Process Trip blob
+        const tripBuf = decodeB64(TRIP_B64);
+        const tripView = new DataView(tripBuf.buffer);
+        tripView.setInt32(120, tDay, true); // Patch trainDay at known offset 120
+
+        let tripNode = this.ast.children.find(c => c.name === 'trip');
+        if (tripNode) {
+            const idx = this.ast.children.indexOf(tripNode);
+            this.ast.children[idx] = new OdinRawBlock(tripBuf);
+            this.ast.children[idx].name = 'trip';
+        } else {
+            const raw = new OdinRawBlock(tripBuf);
+            raw.name = 'trip';
+            this.ast.children.push(raw);
+        }
+
+        // 2. Process TrainSave blob if full mode
         let hasCarriages = false;
+        let trainSaveNode = this.ast.children.find(c => c.name === 'trainSave');
         
         if (trainSaveNode && trainSaveNode.constructor.name !== 'OdinNull' && trainSaveNode.children) {
             let carriagesNode = trainSaveNode.children.find(c => c.name === 'carriages');
@@ -1424,68 +1451,31 @@ class SaveParser {
                 const carrList = carriagesNode.children.find(c => c.constructor.name === 'OdinList');
                 if (carrList && carrList.elements && carrList.elements.length >= 3) {
                     hasCarriages = true;
+                    // Patch trainDay in existing AST
+                    let tChild = trainSaveNode.children.find(c => c.name === 'trainDay');
+                    if (tChild) tChild.value = tDay;
                 }
             }
         }
 
         if (mode === 'full' && !hasCarriages) {
-            // DO NOT FABRICATE CARRIAGES! Return error.
-            return { success: false, error: 'no_carriages' };
-        }
-
-        // 2. Modify or create global trip node
-        let tripNode = this.ast.children.find(c => c.name === 'trip');
-        if (!tripNode || tripNode.constructor.name === 'OdinNull') {
-            // Find max nodeId to avoid collisions, though usually 0 is fine if not referenced
-            let maxId = 0;
-            const findMax = (n) => {
-                if (n && n.nodeId !== undefined && n.nodeId > maxId) maxId = n.nodeId;
-                if (n && n.children) n.children.forEach(findMax);
-                if (n && n.elements) n.elements.forEach(e => { if (e.key) findMax(e.key); if (e.value) findMax(e.value); });
-            };
-            findMax(this.ast);
-
-            if (tripNode) {
-                const idx = this.ast.children.indexOf(tripNode);
-                tripNode = new OdinNode();
-                tripNode.name = 'trip';
-                tripNode.typeName = 'Trip, Odyssey';
-                tripNode.marker = 1;
-                tripNode.nodeId = maxId + 1;
-                tripNode.children = [];
-                this.ast.children[idx] = tripNode;
+            const tsBuf = decodeB64(TRAINSAVE_B64);
+            const tsView = new DataView(tsBuf.buffer);
+            tsView.setInt32(4181, tDay, true); // Patch trainDay at known offset 4181
+            
+            if (trainSaveNode) {
+                const idx = this.ast.children.indexOf(trainSaveNode);
+                this.ast.children[idx] = new OdinRawBlock(tsBuf);
+                this.ast.children[idx].name = 'trainSave';
             } else {
-                tripNode = new OdinNode();
-                tripNode.name = 'trip';
-                tripNode.typeName = 'Trip, Odyssey';
-                tripNode.marker = 1;
-                tripNode.nodeId = maxId + 1;
-                tripNode.children = [];
-                this.ast.children.push(tripNode);
+                const raw = new OdinRawBlock(tsBuf);
+                raw.name = 'trainSave';
+                this.ast.children.push(raw);
             }
+            hasCarriages = true;
         }
-        
-        // Helper to set primitive
-        const setPrim = (node, name, val, marker) => {
-            let child = node.children.find(c => c.name === name);
-            if (!child) {
-                child = new OdinPrimitive();
-                child.name = name;
-                child.marker = marker;
-                node.children.push(child);
-            }
-            child.value = val;
-        };
 
-        // Use 0x1D (NamedULong / Enum) as requested by the user
-        setPrim(tripNode, 'start', 0n, 0x1D);
-        setPrim(tripNode, 'end', 2n, 0x1D);
-        setPrim(tripNode, 'trainDay', tDay, 0x17);
-        setPrim(tripNode, 'trainNumber', 0, 0x17);
-        setPrim(tripNode, 'tripStarted', true, 0x2B);
-        setPrim(tripNode, 'tripEnded', false, 0x2B);
-        
-        // Update Tsuki's Liminal containerID if exists
+        // 3. Update Liminal (best-effort)
         const updateTsukiLiminal = () => {
             const liminalNodes = this._findNodesInAST('liminalSaves');
             if (liminalNodes.length > 0 && liminalNodes[0].children) {
@@ -1499,7 +1489,6 @@ class SaveParser {
                                 const actSave = valNode.children.find(c => c.name === 'activitySave');
                                 if (actSave && actSave.children) {
                                     let contID = actSave.children.find(c => c.name === 'containerID');
-                                    // Best effort only: if the node already exists or we create it
                                     if (!contID) {
                                         contID = new OdinString();
                                         contID.name = 'containerID';
@@ -1515,11 +1504,6 @@ class SaveParser {
             }
         };
         updateTsukiLiminal();
-
-        if (hasCarriages) {
-            setPrim(trainSaveNode, 'trainDay', tDay, 0x17);
-            setPrim(trainSaveNode, 'trainNumber', 0, 0x17);
-        }
 
         return { success: true, trip: true, carriages: hasCarriages };
     }

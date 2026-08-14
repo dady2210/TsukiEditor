@@ -1,4 +1,13 @@
 
+
+class OdinRawBlock {
+    constructor(buffer) {
+        this.name = 'raw_block';
+        this.buffer = buffer;
+        this.marker = 0xFE; // Dummy marker
+    }
+}
+
 class OdinNode {
     constructor(marker, name, typeId, typeName, nodeId) {
         this.marker = marker; // 0x01, 0x02, etc.
