@@ -723,7 +723,6 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         setVal('input-orders', 'ordersMade');
         setVal('input-clover', 'cloversBred');
         setVal('input-nodes', 'nodesBroken');
-        setVal('input-unluckiness', 'unluckiness');
         setVal('input-bedtime-start', 'startBedtime');
         setVal('input-bedtime-end', 'endBedtime');
 
@@ -772,7 +771,6 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         applyField('input-orders', 'ordersMade');
         applyField('input-clover', 'cloversBred');
         applyField('input-nodes', 'nodesBroken');
-        applyField('input-unluckiness', 'unluckiness');
         applyField('input-bedtime-start', 'startBedtime');
         applyField('input-bedtime-end', 'endBedtime');
 
@@ -1891,6 +1889,31 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             
             document.getElementById('phone-bg-mask').value = cosmetics.backgroundsUnlocked.toString();
             document.getElementById('phone-color-mask').value = cosmetics.colorsUnlocked.toString();
+        }
+    }
+
+    // 💌 Mail & Orders 💌
+    cloneOrderLetter() {
+        if (!this.parser) {
+            this.showToast('Carga un save primero.');
+            return;
+        }
+        
+        const input = document.getElementById('input-clone-letter-furn-id');
+        const furnId = input ? parseInt(input.value) : 0;
+        if (isNaN(furnId) || furnId <= 0) {
+            this.showToast('Ingresa un Furniture ID válido.');
+            return;
+        }
+
+        const result = this.parser.cloneOrderLetter(furnId);
+        if (result.error === 'no_template') {
+            this.showToast('No hay carta plantilla en este save. Abre el buzón / recibe un pedido en el juego, guarda y vuelve a cargar.');
+        } else if (result.success) {
+            this.showToast('💌 Carta de pedido clonada correctamente.');
+            this.renderMailTab();
+        } else {
+            this.showToast('Error desconocido al clonar la carta.', 'error');
         }
     }
 

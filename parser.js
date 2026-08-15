@@ -1852,6 +1852,68 @@ class SaveParser {
         return walk(this.ast);
     }
 
+    cloneOrderLetter(furnitureID) {
+        const ls = this.getLetterSave();
+        if (!ls) return { error: 'no_template' };
+        const lettersNode = findChildNode(ls, ['letters', 'Letters']);
+        if (!lettersNode || !lettersNode.children) return { error: 'no_template' };
+        
+        const listNode = lettersNode.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode || !listNode.elements || listNode.elements.length === 0) return { error: 'no_template' };
+        
+        // Find a template letter
+        let template = null;
+        for (const el of listNode.elements) {
+            const val = el.value || el;
+            if (val.typeName && val.typeName.includes('OrderLetter')) {
+                template = el;
+                break;
+            }
+        }
+        if (!template) template = listNode.elements[0]; // fallback
+        
+        const newEl = cloneOdinTree(template);
+        
+        // Re-assign IDs
+        const assignNewNodeIds = (n) => {
+            if (!n) return;
+            if (n.nodeId !== undefined) {
+                n.nodeId = Math.floor(Math.random() * 100000000) + 100000000;
+            }
+            if (n.children) n.children.forEach(assignNewNodeIds);
+            if (n.elements) {
+                n.elements.forEach(e => {
+                    assignNewNodeIds(e.value || e);
+                    assignNewNodeIds(e.key);
+                });
+            }
+        };
+        assignNewNodeIds(newEl.value || newEl);
+        
+        // Push it
+        listNode.elements.push(newEl);
+        
+        // Change furnitureID
+        const val = newEl.value || newEl;
+        const slotsNode = findChildNode(val, ['slots']);
+        if (slotsNode && slotsNode.children) {
+            const sList = slotsNode.children.find(c => c.constructor.name === 'OdinList');
+            if (sList && sList.elements && sList.elements.length > 0) {
+                const s0 = sList.elements[0].value || sList.elements[0];
+                const idNode = findChildNode(s0, ['id', 'ID']);
+                if (idNode) idNode.value = Number(furnitureID);
+                const vNode = findChildNode(s0, ['verify', 'verificationID']);
+                if (vNode) vNode.value = calcVerificationId(Number(furnitureID)) >>> 0;
+            }
+        }
+        
+        // Also unset 'read' and 'opened' to make it a new letter
+        const readNode = findChildNode(val, ['read', 'Read']);
+        if (readNode) readNode.value = false;
+        
+        return { success: true };
+    }
+
     getLetters() {
         const ls = this.getLetterSave();
         if (!ls) return [];
