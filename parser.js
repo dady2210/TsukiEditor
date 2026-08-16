@@ -130,7 +130,7 @@ function readGroupXY(groupPosNode, positionNodeFallback) {
     return { x, y };
 }
 
-function writeGroupXY(groupPosNode, newX, newY, positionNodeFallback) {
+function writeGroupXY(groupPosNode, newX, newY, positionNodeFallback, newFlipped) {
     let written = false;
     
     if (groupPosNode) {
@@ -625,6 +625,49 @@ class SaveParser {
             vIdNode.value = v;
             placement.verify = v;
         }
+    }
+
+    setWallPlacementCell(placementID, { x, y, groupNum, flipped }) {
+        const placement = this.placements.find(p => p.placementID === placementID && p.isWall);
+        if (!placement || !placement.furnNode) return false;
+
+        if (x !== undefined) placement.x = Number(x);
+        if (y !== undefined) placement.y = Number(y);
+        if (flipped !== undefined) placement.flipped = Boolean(flipped);
+        
+        const groupPosNode = placement.furnNode.children.find(c => c.name === 'groupPosition');
+        const posNode = placement.furnNode.children.find(c => c.name === 'position');
+        
+        writeGroupXY(groupPosNode, placement.x, placement.y, posNode, placement.flipped);
+
+        if (groupNum !== undefined && groupPosNode) {
+            placement.floor = groupNum.toString();
+            const gNumNode = findChildRecursive(groupPosNode, ['groupNum']);
+            if (gNumNode) gNumNode.value = Number(groupNum);
+        }
+        return true;
+    }
+
+    setWallpaper(sublocId, key, newId) {
+        if (!this.wallpapers || !this.wallpapers[sublocId]) return false;
+        const entry = this.wallpapers[sublocId].find(w => w.key === Number(key));
+        if (entry && entry.node) {
+            entry.id = Number(newId);
+            entry.node.value = entry.id;
+            return true;
+        }
+        return false;
+    }
+
+    setFloor(sublocId, key, newId) {
+        if (!this.floors || !this.floors[sublocId]) return false;
+        const entry = this.floors[sublocId].find(f => f.key === Number(key));
+        if (entry && entry.node) {
+            entry.id = Number(newId);
+            entry.node.value = entry.id;
+            return true;
+        }
+        return false;
     }
 
     cleanBuggySeeds() {

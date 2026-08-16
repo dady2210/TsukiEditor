@@ -169,6 +169,13 @@ class IsometricMap {
     }
 
     getCartesianCoords(screenX, screenY) {
+        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        if (layerRadio && layerRadio.value === 'wall') {
+            return {
+                x: Math.floor((screenX - this.offsetX) / this.gridSize),
+                y: Math.floor((screenY - this.offsetY) / this.gridSize)
+            };
+        }
         const isoX = (screenX - this.offsetX) / this.scale;
         const isoY = (screenY - this.offsetY) / this.scale;
         const u = isoX / (this.CELL_W / 2);
@@ -200,6 +207,7 @@ class IsometricMap {
         return false;
     }
 
+
     draw() {
         if (!this.app || !this.app.parser || !this.app.parser.placements) return;
 
@@ -207,71 +215,96 @@ class IsometricMap {
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         const targetFloor = document.getElementById('select-floor')?.value || '0';
-        let targetLocStr = document.getElementById('select-location')?.value;
+        const targetLocStr = document.getElementById('select-location')?.value;
         const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
+        
+        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const isWallLayer = layerRadio && layerRadio.value === 'wall';
+        const targetWallGroup = document.getElementById('select-wall-group')?.value || '0';
 
-        // Update location selector label
         this._updateLocationLabel(targetLoc);
 
-        let bgImgName = null;
-
-        // Subtle grid
-        ctx.save();
-        ctx.globalAlpha = 0.25; 
-        for (let x = 0; x < 32; x++) for (let y = 0; y < 32; y++) {
-            this._drawDiamondPath(x, y, 1, 1);
-            // Mimic the game's placement grid color (bright green)
-            ctx.strokeStyle = 'rgba(100, 255, 100, 0.8)';
+        if (isWallLayer) {
+            // WALL LAYER (2D Orthographic)
+            ctx.save();
+            ctx.globalAlpha = 0.25;
+            ctx.strokeStyle = 'rgba(255, 150, 100, 0.8)';
             ctx.lineWidth = 1.5;
-            ctx.stroke();
+            
+            // Draw a basic 2D grid 25x15
+            const cellSize = this.gridSize; // e.g. 50
+            for (let x = 0; x < 25; x++) {
+                for (let y = 0; y < 15; y++) {
+                    ctx.strokeRect(this.offsetX + x * cellSize, this.offsetY + y * cellSize, cellSize, cellSize);
+                }
+            }
+            ctx.restore();
+
+            const walls = this.app.parser.placements.filter(
+                p => p.cluster === targetLoc && p.isWall && p.floor === targetWallGroup && p.item_id !== -1
+            );
+
+            // Z-sort by Y
+            walls.sort((a, b) => a.y - b.y);
+
+            for (const p of walls) this._drawPlacement(p, 'regular');
+
+        } else {
+            // FLOOR LAYER (Isometric)
+            ctx.save();
+            ctx.globalAlpha = 0.25; 
+            for (let x = 0; x < 32; x++) for (let y = 0; y < 32; y++) {
+                this._drawDiamondPath(x, y, 1, 1);
+                ctx.strokeStyle = 'rgba(100, 255, 100, 0.8)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            const all = this.app.parser.placements.filter(
+                p => p.floor === targetFloor && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
+            );
+
+            const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
+            const seeds   = all.filter(p => SEED_IDS.has(p.item_id) && p.x !== -1 && p.y !== -1 && !p.linkedPlot);
+            const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id));
+
+            const sortByZ = (a, b) => (b.x + b.y) - (a.x + a.y); 
+            ground.sort(sortByZ);
+            seeds.sort(sortByZ);
+            regular.sort(sortByZ);
+
+            for (const p of ground)  this._drawPlacement(p, 'ground');
+            for (const p of seeds)   this._drawPlacement(p, 'seed');
+            for (const p of regular) this._drawPlacement(p, 'regular');
         }
-        ctx.restore();
 
-        // Split items into layers: ground → seeds → regular furniture
-        const all = this.app.parser.placements.filter(
-            p => p.floor === targetFloor && p.cluster === targetLoc && p.item_id !== -1
-        );
-
-        const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
-        const seeds   = all.filter(p => SEED_IDS.has(p.item_id) && p.x !== -1 && p.y !== -1 && !p.linkedPlot);
-        const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id));
-
-        // Z-sort all layers by x+y (painter's algorithm)
-        const sortByZ = (a, b) => (b.x + b.y) - (a.x + a.y); // DESCENDING for bottom origin
-        ground.sort(sortByZ);
-        seeds.sort(sortByZ);
-        regular.sort(sortByZ);
-
-        // Draw layers
-        for (const p of ground)  this._drawPlacement(p, 'ground');
-        for (const p of seeds)   this._drawPlacement(p, 'seed');
-        for (const p of regular) this._drawPlacement(p, 'regular');
-
-        // Draw tooltip for hovered item
         if (this.hoveredPlacement) this._drawTooltip(this.hoveredPlacement);
 
-        // Position floating rotation UI for mobile
-        const floatUI = document.getElementById('floating-rotation-ui');
+        const floatUI = document.getElementById('floating-ui');
         if (floatUI) {
             if (this.selectedPlacement) {
-                const p = this.selectedPlacement;
-                const dims = this.getRotatedSize(p.item_id, p.orientation);
+                floatUI.style.display = 'block';
+                const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+                const isWallLayer = layerRadio && layerRadio.value === 'wall';
                 
-                // Use the center of the item's grid base
-                const centerX = p.x + dims.w / 2;
-                const centerY = p.y + dims.l / 2;
+                let screenPos = { x: 0, y: 0 };
+                if (isWallLayer) {
+                    screenPos.x = this.offsetX + this.selectedPlacement.x * this.gridSize;
+                    screenPos.y = this.offsetY + this.selectedPlacement.y * this.gridSize;
+                } else {
+                    const iso = this.getIsoCoords(this.selectedPlacement.x, this.selectedPlacement.y);
+                    screenPos.x = this.offsetX + iso.x;
+                    screenPos.y = this.offsetY + iso.y;
+                }
                 
-                const screenPt = this.getIsoCoords(centerX, centerY);
-                
-                floatUI.style.left = `${screenPt.x}px`;
-                floatUI.style.top = `${screenPt.y - (40 * this.scale)}px`; // slightly above
-                floatUI.classList.remove('hidden');
+                floatUI.style.left = screenPos.x + 'px';
+                floatUI.style.top = screenPos.y + 'px';
             } else {
-                floatUI.classList.add('hidden');
+                floatUI.style.display = 'none';
             }
         }
     }
-
     _updateLocationLabel(locId) {
         const sel = document.getElementById('select-location');
         if (!sel) return;
@@ -282,6 +315,48 @@ class IsometricMap {
     }
 
     _drawPlacement(p, layer) {
+        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        if (layerRadio && layerRadio.value === 'wall' && p.isWall) {
+            const gx = this.offsetX + p.x * this.gridSize;
+            const gy = this.offsetY + p.y * this.gridSize;
+            
+            this.ctx.save();
+            const isSel = (this.selectedPlacement === p);
+            const isHov = (this.hoveredPlacement === p);
+
+            if (isSel) {
+                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+                this.ctx.fillRect(gx, gy, this.gridSize, this.gridSize);
+                this.ctx.strokeStyle = 'white';
+                this.ctx.lineWidth = 2;
+                this.ctx.strokeRect(gx, gy, this.gridSize, this.gridSize);
+            } else if (isHov) {
+                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                this.ctx.fillRect(gx, gy, this.gridSize, this.gridSize);
+                this.ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                this.ctx.lineWidth = 1;
+                this.ctx.strokeRect(gx, gy, this.gridSize, this.gridSize);
+            }
+
+            const img = this.getImage(p.item_id, 0); // Wall items are generally front-facing
+            if (img && img.complete) {
+                // scale to fit
+                const s = Math.min(this.gridSize / img.width, this.gridSize / img.height) * 0.9;
+                const dw = img.width * s;
+                const dh = img.height * s;
+                const dx = gx + (this.gridSize - dw) / 2;
+                const dy = gy + (this.gridSize - dh) / 2;
+                
+                this.ctx.translate(gx + this.gridSize/2, gy + this.gridSize/2);
+                if (p.flipped) this.ctx.scale(-1, 1);
+                this.ctx.translate(-(gx + this.gridSize/2), -(gy + this.gridSize/2));
+                
+                this.ctx.drawImage(img, dx, dy, dw, dh);
+            }
+            this.ctx.restore();
+            return;
+        }
+
         const ctx = this.ctx;
         const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
 
@@ -530,6 +605,30 @@ class IsometricMap {
 
     // ── Hit detection ─────────────────────────────────────────────────────
     _hitTest(gridX, gridY, targetFloor, targetLoc) {
+        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const isWallLayer = layerRadio && layerRadio.value === 'wall';
+        const targetWallGroup = document.getElementById('select-wall-group')?.value || '0';
+        
+        let found = [];
+        for (let i = this.app.parser.placements.length - 1; i >= 0; i--) {
+            const p = this.app.parser.placements[i];
+            if (p.cluster !== targetLoc || p.item_id === -1) continue;
+            
+            if (isWallLayer) {
+                if (!p.isWall || p.floor !== targetWallGroup) continue;
+                if (p.x === gridX && p.y === gridY) { found.push(p); }
+            } else {
+                if (p.isWall || p.floor !== targetFloor) continue;
+                
+                const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
+                if (gridX >= p.x && gridX < p.x + w && gridY >= p.y && gridY < p.y + l) {
+                    found.push(p);
+                }
+            }
+        }
+        return found;
+    }
+    _hitTestOld(gridX, gridY, targetFloor, targetLoc) {
         return this.app.parser.placements.filter(p => {
             if (p.floor !== targetFloor || p.cluster !== targetLoc || p.item_id === -1) return false;
             const { w, l } = this.getRotatedSize(p.item_id, p.orientation);

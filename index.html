@@ -661,6 +661,28 @@
                                 <span class="material-symbols-outlined dropdown-icon">expand_more</span>
                             </div>
                         </div>
+                        <div class="control-group">
+                            <label>Capa:</label>
+                            <div class="layer-switch" style="display:flex; gap:10px; align-items:center;">
+                                <label style="display:flex; align-items:center; gap:5px; margin:0; cursor:pointer;">
+                                    <input type="radio" name="map-layer" value="floor" checked>
+                                    <span style="font-weight:normal;">Suelo</span>
+                                </label>
+                                <label style="display:flex; align-items:center; gap:5px; margin:0; cursor:pointer;">
+                                    <input type="radio" name="map-layer" value="wall">
+                                    <span style="font-weight:normal;">Pared</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="control-group wall-group-selector" style="display:none;">
+                            <label>Pared (GroupNum):</label>
+                            <div class="select-wrapper">
+                                <select id="select-wall-group">
+                                    <!-- Populated dynamically based on placements -->
+                                </select>
+                                <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+                            </div>
+                        </div>
 
                         <button id="btn-open-add-furniture" class="btn-primary w-full" style="margin-bottom: 1rem;">
                             <span class="material-symbols-outlined" style="vertical-align: middle; font-size: 18px;">add_circle</span> 
@@ -756,6 +778,12 @@
                                     </select>
                                     <span class="material-symbols-outlined dropdown-icon">expand_more</span>
                                 </div>
+                            </div>
+                            <div class="input-group wall-flipped-group" style="margin-bottom:1.5rem; display:none;">
+                                <label style="display:flex; align-items:center; gap:5px; cursor:pointer;">
+                                    <input type="checkbox" id="edit-item-flipped">
+                                    <span style="font-weight:normal;">Volteado (Flipped)</span>
+                                </label>
                             </div>
                             
                             <!-- Magic Seed Planting UI (Only visible for plot 306) -->
