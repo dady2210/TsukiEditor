@@ -1325,6 +1325,80 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
     // ─── Map Editor ───────────────────────────────────────────────────────────
 
+
+    refreshWallGroupSelect() {
+        const loc = Number(document.getElementById('select-location')?.value || 1);
+        const sel = document.getElementById('select-wall-group');
+        const box = document.querySelector('.wall-group-selector');
+        if (!sel || !this.parser) return;
+
+        const groups = [...new Set(
+            this.parser.placements
+                .filter(p => p.isWall && Number(p.cluster) === loc)
+                .map(p => String(p.floor))
+        )].sort();
+
+        sel.innerHTML = groups.length
+            ? groups.map(g => `<option value="${g}">Group ${g}</option>`).join('')
+            : `<option value="" disabled selected>(sin paredes)</option>`;
+        
+        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        box.style.display = (layerRadio && layerRadio.value === 'wall') ? 'block' : 'none';
+        
+        if (groups.length > 0 && layerRadio && layerRadio.value === 'wall') {
+            this.showToast(`Paredes en subloc: ${groups.length} groups`, 'info');
+        }
+    }
+
+    renderWallpapersTab() {
+        const targetLocStr = document.getElementById('select-wallpaper-location')?.value || document.getElementById('select-location')?.value;
+        const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
+        
+        const wtable = document.querySelector('#wallpapers-table tbody');
+        const ftable = document.querySelector('#floors-table tbody');
+        if (!wtable || !ftable) return;
+        wtable.innerHTML = '';
+        ftable.innerHTML = '';
+
+        if (this.parser && this.parser.wallpapers && this.parser.wallpapers[targetLoc]) {
+            this.parser.wallpapers[targetLoc].forEach(w => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td style="padding:0.5rem;">${w.key}</td>
+                                <td><input type="number" value="${w.id}" data-key="${w.key}" class="edit-wp" style="width:100%;"></td>
+                                <td style="text-align:center;"><button class="btn-primary wp-save">Guardar</button></td>`;
+                wtable.appendChild(tr);
+            });
+        }
+        
+        if (this.parser && this.parser.floors && this.parser.floors[targetLoc]) {
+            this.parser.floors[targetLoc].forEach(f => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td style="padding:0.5rem;">${f.key}</td>
+                                <td><input type="number" value="${f.id}" data-key="${f.key}" class="edit-floor" style="width:100%;"></td>
+                                <td style="text-align:center;"><button class="btn-primary floor-save">Guardar</button></td>`;
+                ftable.appendChild(tr);
+            });
+        }
+
+        wtable.querySelectorAll('.wp-save').forEach(btn => {
+            btn.addEventListener('click', e => {
+                const tr = e.target.closest('tr');
+                const input = tr.querySelector('.edit-wp');
+                this.parser.setWallpaper(targetLoc, input.dataset.key, input.value);
+                this.showToast('Papel tapiz actualizado', 'success');
+            });
+        });
+
+        ftable.querySelectorAll('.floor-save').forEach(btn => {
+            btn.addEventListener('click', e => {
+                const tr = e.target.closest('tr');
+                const input = tr.querySelector('.edit-floor');
+                this.parser.setFloor(targetLoc, input.dataset.key, input.value);
+                this.showToast('Suelo actualizado', 'success');
+            });
+        });
+    }
+
     openItemEditor(placement) {
         this.editItemId.value  = placement.item_id;
         this.editItemX.value   = placement.x;
