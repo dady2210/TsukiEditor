@@ -2056,10 +2056,45 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (result.error === 'no_template') {
             this.showToast('No hay carta plantilla en este save. Abre el buzón / recibe un pedido en el juego, guarda y vuelve a cargar.');
         } else if (result.success) {
-            this.showToast('💌 Carta de pedido clonada correctamente.');
+            this.showToast('📦 Carta de pedido clonada correctamente (ID ' + furnId + ').', 'success');
             this.renderMailTab();
         } else {
             this.showToast('Error desconocido al clonar la carta.', 'error');
+        }
+    }
+
+    cloneFurnitureOrder() {
+        if (!this.parser) {
+            this.showToast('Carga un save primero.');
+            return;
+        }
+        
+        const input = document.getElementById('input-clone-letter-furn-id');
+        const furnId = input ? parseInt(input.value) : 0;
+        if (isNaN(furnId) || furnId <= 0) {
+            this.showToast('Ingresa un Furniture ID válido.');
+            return;
+        }
+
+        const result = this.parser.cloneFurnitureOrder({ furnitureID: furnId });
+        if (result.error === 'no_template') {
+            this.showToast('No hay un pedido activo (FurnitureOrder) en este save para usar de plantilla.', 'error');
+        } else if (result.success) {
+            this.showToast('📦 Pedido clonado correctamente (ID ' + furnId + ').', 'success');
+            this.renderMailTab();
+        } else {
+            this.showToast('Error desconocido al clonar el pedido.', 'error');
+        }
+    }
+
+    unclaimLetterSingle(idx) {
+        if (!this.parser) return;
+        const ok = this.parser.markLetterUnclaimed(idx);
+        if (ok) {
+            this.showToast('✅ Carta marcada como NO COBRADA.', 'success');
+            this.renderMailTab();
+        } else {
+            this.showToast('No se pudo modificar la carta.', 'error');
         }
     }
 
@@ -2154,8 +2189,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                             <span></span>
                         </label>
                     </td>
+                    <td>${l.claimedRewards && l.claimedRewards.length > 0 ? (l.claimedRewards.every(Boolean) ? '<span style="color:red; font-weight:bold;">Sí</span>' : (l.claimedRewards.some(Boolean) ? '<span style="color:orange;">Parcial</span>' : '<span style="color:green; font-weight:bold;">No</span>')) : '<span style="color:green; font-weight:bold;">No</span>'}</td>
                     <td>
-                        ${slot0 ? `<button class="btn-secondary btn-apply-letter" data-index="${index}" style="padding:4px 8px; font-size:0.8rem;">Aplicar ID</button>` : ''}
+                        <div style="display:flex; gap:4px; align-items:center;">
+                            ${slot0 ? `<button class="btn-secondary btn-apply-letter" data-index="${index}" style="padding:4px 8px; font-size:0.8rem;">Aplicar ID</button>` : ''}
+                            <button class="btn-danger btn-small" onclick="window.app.unclaimLetterSingle(${index})" style="padding:4px 8px; font-size:0.8rem;">No Cobrada</button>
+                        </div>
                     </td>
                 `;
                 lettersTbody.appendChild(tr);

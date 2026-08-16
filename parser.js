@@ -1926,27 +1926,69 @@ class SaveParser {
         // Push it
         listNode.elements.push(newEl);
         
-        // Change furnitureID
+        // Change furnitureID & unset read/opened
         const val = newEl.value || newEl;
-        const slotsNode = findChildNode(val, ['slots']);
-        if (slotsNode && slotsNode.children) {
-            const sList = slotsNode.children.find(c => c.constructor.name === 'OdinList');
-            if (sList && sList.elements && sList.elements.length > 0) {
-                const s0 = sList.elements[0].value || sList.elements[0];
-                const idNode = findChildNode(s0, ['id', 'ID']);
-                if (idNode) idNode.value = Number(furnitureID);
-                const vNode = findChildNode(s0, ['verify', 'verificationID']);
-                if (vNode) vNode.value = calcVerificationId(Number(furnitureID)) >>> 0;
+        
+        const newOrderID = Math.floor(Date.now() / 1000) >>> 0;
+        const orderIDNode = findChildRecursive(val, ['orderID', 'OrderID']);
+        if (orderIDNode) orderIDNode.value = newOrderID;
+
+        const updateSlots = (sNodeName) => {
+            const slotsNode = findChildRecursive(val, [sNodeName]);
+            if (slotsNode && slotsNode.children) {
+                const sList = slotsNode.children.find(c => c.constructor.name === 'OdinList');
+                if (sList && sList.elements && sList.elements.length > 0) {
+                    const s0 = sList.elements[0].value || sList.elements[0];
+                    const idNode = findChildRecursive(s0, ['id', 'ID']);
+                    if (idNode) idNode.value = Number(furnitureID);
+                    const qtyNode = findChildRecursive(s0, ['quantity', 'Quantity']);
+                    if (qtyNode && qtyNode.value < 1) qtyNode.value = 1;
+                    const vNode = findChildRecursive(s0, ['verify', 'verificationID', 'VerificationID']);
+                    if (vNode) vNode.value = calcVerificationId(Number(furnitureID)) >>> 0;
+                    return sList.elements.length;
+                }
+            }
+            return 0;
+        };
+        
+        let numSlots = updateSlots('slots');
+        numSlots = Math.max(numSlots, updateSlots('slotsToClaim'));
+        numSlots = Math.max(numSlots, updateSlots('SlotsToClaim'));
+        if (numSlots === 0) numSlots = 1; // Default
+        
+        // Reset claimedRewards
+        const claimedRewardsNode = findChildRecursive(val, ['claimedRewards', 'ClaimedRewards']);
+        if (claimedRewardsNode && claimedRewardsNode.children) {
+            const cList = claimedRewardsNode.children.find(c => c.constructor.name === 'OdinList');
+            if (cList) {
+                if (cList.elements && cList.elements.length > 0) {
+                    cList.elements.forEach(e => {
+                        const bNode = e.value || e;
+                        bNode.value = false;
+                    });
+                } else if (cList.elements) {
+                    // Create bool false elements
+                    for (let i = 0; i < numSlots; i++) {
+                        cList.elements.push({
+                            constructor: { name: 'OdinNode' },
+                            nodeId: Math.floor(Math.random() * 100000000) + 100000000,
+                            name: '',
+                            type: 'bool',
+                            value: false
+                        });
+                    }
+                }
             }
         }
         
         // Also unset 'read' and 'opened' to make it a new letter
-        const readNode = findChildNode(val, ['read', 'Read']);
+        const readNode = findChildRecursive(val, ['read', 'Read']);
         if (readNode) readNode.value = false;
+        const openedNode = findChildRecursive(val, ['opened', 'Opened']);
+        if (openedNode) openedNode.value = false;
         
-        return { success: true };
+        return { success: true, orderID: newOrderID, furnitureID };
     }
-
 
     setLetterClaimedRewards(letterIndex, claimedArrayOrFalse) {
         const lettersNode = findChildNode(this.getLetterSave(), ['letters', 'Letters']);

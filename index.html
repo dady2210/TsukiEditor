@@ -508,6 +508,7 @@
                             <div class="mail-actions" style="margin-top:0.5rem; margin-bottom:1rem; display:flex; gap:0.5rem; align-items:center;">
                                 <input type="number" id="input-clone-letter-furn-id" placeholder="Furniture ID..." style="width: 120px;">
                                 <button class="btn btn-primary" id="btn-clone-letter" onclick="window.app.cloneOrderLetter()">Clonar carta de pedido</button>
+                                <button class="btn btn-primary" id="btn-clone-order" onclick="window.app.cloneFurnitureOrder()">Clonar pedido (sin carta)</button>
                             </div>
                             <div class="table-container" style="margin-top:1rem;">
                                 <table class="data-table" id="letters-table">
@@ -518,7 +519,8 @@
                                             <th>Order ID</th>
                                             <th>Premio (Slot 0 ID)</th>
                                             <th style="width:100px;">Leída</th>
-                                            <th style="width:120px;">Acciones</th>
+                                            <th style="width:100px;">Cobrado</th>
+                                            <th style="width:180px;">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
