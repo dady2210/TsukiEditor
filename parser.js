@@ -207,6 +207,8 @@ class SaveParser {
         this.decoder = new TextDecoder('utf-8');
 
         this.placements = [];
+        this.wallpapers = {};
+        this.floors = {};
         this.clusters = new Set();
         this.inventory = [];
         this.npcSaves = [];      // LiminalNPCSave
@@ -279,7 +281,8 @@ class SaveParser {
         if (!furnNode) return;
         
         let itemId = -1, x = -1, y = -1, floor = 0, orientation = 0, verify = 0, placementID = -1;
-        let planted_id = -1;
+                        let planted_id = -1;
+                        let flipped = false;
 
         const pIdNode = furnNode.children ? furnNode.children.find(c => c.name === 'placementID') : null;
         if (pIdNode) placementID = pIdNode.value;
@@ -303,7 +306,8 @@ class SaveParser {
         const posNode = furnNode.children ? furnNode.children.find(c => c.name === 'position') : null;
         const coords = readGroupXY(groupPosNode, posNode);
         x = coords.x;
-        y = coords.y;
+                        y = coords.y;
+                        flipped = coords.flipped;
         if (groupPosNode) {
             const gNumNode = findChildRecursive(groupPosNode, ['groupNum']);
             if (gNumNode) floor = gNumNode.value;
@@ -348,7 +352,8 @@ class SaveParser {
                     for (const furnEntry of furnList.elements) {
                         const furnNode = furnEntry.value;
                         let itemId = -1, x = -1, y = -1, floor = 0, orientation = 0, verify = 0, placementID = -1;
-                        let planted_id = -1; // We can parse cropBox if needed later
+                        let planted_id = -1;
+                        let flipped = false; // We can parse cropBox if needed later
 
                         const pIdNode = furnNode.children.find(c => c.name === 'placementID');
                         if (pIdNode) placementID = pIdNode.value;
@@ -369,6 +374,7 @@ class SaveParser {
                         const coords = readGroupXY(groupPosNode, posNode);
                         x = coords.x;
                         y = coords.y;
+                        flipped = coords.flipped;
                         if (groupPosNode) {
                             const gNumNode = findChildRecursive(groupPosNode, ['groupNum']);
                             if (gNumNode) floor = gNumNode.value;
@@ -408,7 +414,7 @@ class SaveParser {
                     for (const wallEntry of wallList.elements) {
                         const wallNode = wallEntry.value;
                         let itemId = -1, x = -1, y = -1, floor = 0, orientation = 0, verify = 0, placementID = -1;
-
+                        let flipped = false;
                         const pIdNode = wallNode.children.find(c => c.name === 'placementID');
                         if (pIdNode) placementID = pIdNode.value;
 
@@ -423,6 +429,7 @@ class SaveParser {
                         const coords = readGroupXY(groupPosNode, posNode);
                         x = coords.x;
                         y = coords.y;
+                        flipped = coords.flipped;
                         if (groupPosNode) {
                             const gNumNode = findChildRecursive(groupPosNode, ['groupNum']);
                             if (gNumNode) floor = gNumNode.value;

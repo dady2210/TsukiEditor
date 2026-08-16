@@ -179,7 +179,7 @@ class IsometricMap {
         const isoX = (screenX - this.offsetX) / this.scale;
         const isoY = (screenY - this.offsetY) / this.scale;
         const u = isoX / (this.CELL_W / 2);
-        const v = -isoY / (this.CELL_H / 2); // Added negative for bottom origin
+        const v = -isoY / (this.CELL_H / 2);
         return { x: (u + v) / 2, y: (v - u) / 2 };
     }
 
@@ -615,7 +615,7 @@ class IsometricMap {
             if (p.cluster !== targetLoc || p.item_id === -1) continue;
             
             if (isWallLayer) {
-                if (!p.isWall || p.floor !== targetWallGroup) continue;
+                if (!p.isWall || String(p.floor) !== String(targetWallGroup)) continue;
                 if (p.x === gridX && p.y === gridY) { found.push(p); }
             } else {
                 if (p.isWall || p.floor !== targetFloor) continue;
