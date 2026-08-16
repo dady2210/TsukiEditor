@@ -331,8 +331,8 @@ class IsometricMap {
     _drawPlacement(p, layer) {
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         if (layerRadio && layerRadio.value === 'wall' && p.isWall) {
-            const drawOffsetX = isWallLayer ? 100 : this.offsetX;
-            const drawOffsetY = isWallLayer ? 100 : this.offsetY;
+            const drawOffsetX = 100;
+            const drawOffsetY = 100;
             const gx = drawOffsetX + p.x * this.gridSize;
             const gy = drawOffsetY + p.y * this.gridSize;
             
