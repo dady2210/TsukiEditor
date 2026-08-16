@@ -437,6 +437,44 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this.selectLocation.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); });
         this.selectFloor.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); });
 
+        document.querySelectorAll('input[name="map-layer"]').forEach(radio => {
+            radio.addEventListener('change', e => {
+                const isWall = e.target.value === 'wall';
+                const wallSelector = document.querySelector('.wall-group-selector');
+                if (wallSelector) wallSelector.style.display = isWall ? 'block' : 'none';
+                if (this.selectFloor && this.selectFloor.parentElement && this.selectFloor.parentElement.parentElement) {
+                    this.selectFloor.parentElement.parentElement.style.display = isWall ? 'none' : 'block';
+                }
+                if (this.refreshWallGroupSelect) this.refreshWallGroupSelect();
+                if (this.map) {
+                    this.map.selectedPlacement = null;
+                    this.map.hoveredPlacement = null;
+                    this.map.draw();
+                }
+            });
+        });
+
+        document.getElementById('select-wall-group')?.addEventListener('change', () => {
+            if (this.map) {
+                this.map.selectedPlacement = null;
+                this.map.hoveredPlacement = null;
+                this.map.draw();
+            }
+        });
+
+        document.getElementById('edit-item-flipped')?.addEventListener('change', e => {
+            if (!this.map || !this.map.selectedPlacement) return;
+            const p = this.map.selectedPlacement;
+            p.flipped = e.target.checked;
+            this.parser.setWallPlacementCell(p.placementID, { flipped: p.flipped });
+            this.map.draw();
+        });
+
+        document.getElementById('btn-refresh-wallpapers')?.addEventListener('click', () => {
+            if (this.renderWallpapersTab) this.renderWallpapersTab();
+        });
+
+
         // Add Furniture Modal
         if (this.btnAddFurniture) {
             this.btnAddFurniture.addEventListener('click', () => {
