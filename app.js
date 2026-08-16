@@ -1051,11 +1051,15 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const typ = parseInt(typeInput.value);
                 nameInput.value = this.resolveItemName(id, typ);
                 const p = typeMap[typ] || "ITEM";
-                if (imgTag) {
-                        const newImg = document.createElement('div');
-                        newImg.innerHTML = window.getSafeImageHTML(id, 'furn', 'style="max-width:200px;max-height:200px;"');
-                        imgTag.parentNode.replaceChild(newImg.firstChild, imgTag);
+                const currentImgTag = tr.querySelector('.item-icon');
+                if (currentImgTag) {
+                    const newImg = document.createElement('div');
+                    const hint = typ === 1 ? 'furn' : 'item';
+                    newImg.innerHTML = window.getSafeImageHTML(id, hint, 'class="item-icon" style="max-width:200px;max-height:200px;"');
+                    if (newImg.firstChild) {
+                        currentImgTag.parentNode.replaceChild(newImg.firstChild, currentImgTag);
                     }
+                }
             };
             idInput.addEventListener('input', updateUI);
             typeInput.addEventListener('change', updateUI);
