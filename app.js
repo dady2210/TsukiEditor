@@ -561,25 +561,13 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     this.showToast('Carga un save primero.', 'error');
                     return;
                 }
-                const isTripOnly = document.getElementById('cb-trip-only') && document.getElementById('cb-trip-only').checked;
-                const mode = isTripOnly ? 'trip_only' : 'full';
-                const result = this.parser.forceCityTrip({ mode });
+                const success = this.parser.applyCitySpawnTemplate();
                 
-                if (result && result.success) {
-                    if (result.carriages) {
-                        this.showToast(`🚂 Trip inyectado (trainDay=${result.tDay}, length=79) + Vagones.`);
-                    } else {
-                        this.showToast(`🚂 Solo Trip inyectado (trainDay=${result.tDay}, length=79).`);
-                    }
+                if (success) {
+                    this.showToast('✅ Viaje/Spawn en Ciudad inyectado exitosamente (Estrategia estable).', 'success');
                     if (typeof this.renderTrainTab === 'function') this.renderTrainTab();
                 } else {
-                    if (result && result.error === 'no_carriages') {
-                        this.showToast('⚠️ No se pudo inyectar la escena: faltan diccionarios base en el save para clonar.', 'error');
-                    } else if (result && result.error === 'no_trainsave') {
-                        this.showToast('⚠️ No se encontró la raíz trainSave y no se pudo crear.', 'error');
-                    } else {
-                        this.showToast('⚠️ Error desconocido al forzar el viaje.', 'error');
-                    }
+                    this.showToast('❌ Error desconocido al forzar el viaje.', 'error');
                 }
             });
         }
@@ -2059,6 +2047,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const fixVerify = chkFixVerify ? chkFixVerify.checked : false;
         
         // Validation pre-download
+        const stateValidation = this.parser.validateSaveState();
+        if (!stateValidation.valid) {
+            this.showToast(`🚫 Descarga bloqueada: ${stateValidation.reason}`, 'error');
+            return;
+        }
+
         const validation = this.parser.validateSaveForDownload({ fixCropGrid: true, fixVerify: fixVerify });
         
         // Console log for debug

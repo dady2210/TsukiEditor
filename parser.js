@@ -1457,150 +1457,29 @@ class SaveParser {
 
 
 
-    forceCityTrip(options = {}) {
-        if (!this.ast) return { success: false, error: 'no_ast' };
-        
-        const mode = options.mode || 'full'; // 'full' or 'trip_only'
-        
-        const TRIP_B64 = 'AQEEAAAAdAByAGkAcAAvTwAAAAENAAAAVAByAGkAcAAsACAATwBkAHkAcwBzAGUAeQDYAwAAHQEFAAAAcwB0AGEAcgB0AAAAAAAAAAAAHQEDAAAAZQBuAGQAAgAAAAAAAAAXAQgAAAB0AHIAYQBpAG4ARABhAHkAqLQAABcBCwAAAHQAcgBhAGkAbgBOAHUAbQBiAGUAcgAAAAAAKwELAAAAdAByAGkAcABTAHQAYQByAHQAZQBkAAErAQkAAAB0AHIAaQBwAEUAbgBkAGUAZAAABQ==';
-        const TRAINSAVE_B64 = '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';
-
-        const dayEntry = this.generalVars['day'];
-        let tDay = (dayEntry && typeof dayEntry.value === 'number') ? (dayEntry.value | 0) : 46248;
-
-        // Calculate trainNumber based on current time (minutes since midnight / 10)
-        let tNum = 0;
-        // Time logic is now strictly derived from lastSaved OA
-
-
-        // Decode B64 helper
-        const decodeB64 = (b64) => {
-            const str = atob(b64);
-            const buf = new Uint8Array(str.length);
-            for(let i=0; i<str.length; i++) buf[i] = str.charCodeAt(i);
-            return buf;
-        };
-
-        // 1. Process Trip blob
-        const tripBuf = decodeB64(TRIP_B64);
-        const tripView = new DataView(tripBuf.buffer);
-        tripView.setInt32(120, tDay, true); // Patch trainDay at known offset 120
-        tripView.setInt32(152, tNum, true); // Patch trainNumber at known offset 152
-
-        let tripNode = this.ast.children.find(c => c.name === 'trip');
-        if (tripNode) {
-            const idx = this.ast.children.indexOf(tripNode);
-            this.ast.children[idx] = new OdinRawBlock(tripBuf);
-            this.ast.children[idx].name = 'trip';
-            this.ast.children[idx].marker = 0xFE;
-        } else {
-            const raw = new OdinRawBlock(tripBuf);
-            raw.name = 'trip';
-            raw.marker = 0xFE;
-            this.ast.children.push(raw);
-        }
-
-        // 2. Process TrainSave blob if full mode
-        let hasCarriages = false;
-        let trainSaveNode = this.ast.children.find(c => c.name === 'trainSave');
-        
-        if (trainSaveNode && trainSaveNode.constructor.name !== 'OdinNull' && trainSaveNode.children) {
-            let carriagesNode = trainSaveNode.children.find(c => c.name === 'carriages');
-            if (carriagesNode && carriagesNode.children) {
-                const carrList = carriagesNode.children.find(c => c.constructor.name === 'OdinList');
-                if (carrList && carrList.elements && carrList.elements.length >= 3) {
-                    hasCarriages = true;
-                    // Patch trainDay in existing AST
-                    let tChild = trainSaveNode.children.find(c => c.name === 'trainDay');
-                    if (tChild) tChild.value = tDay;
-                    let tNumChild = trainSaveNode.children.find(c => c.name === 'trainNumber');
-                    if (tNumChild) tNumChild.value = tNum;
-                }
-            }
-        }
-
-        if (mode === 'full' && !hasCarriages) {
-            const tsBuf = decodeB64(TRAINSAVE_B64);
-            const tsView = new DataView(tsBuf.buffer);
-            tsView.setInt32(4181, tDay, true); // Patch trainDay at known offset 4181
-            tsView.setInt32(4213, tNum, true); // Patch trainNumber at known offset 4213
+    validateSaveState() {
+        if (!this.ast) return { valid: true };
+        const tripNode = this.ast.children ? this.ast.children.find(c => c.name === 'trip') : null;
+        if (tripNode && tripNode.constructor.name !== 'OdinNull' && tripNode.children) {
+            const started = tripNode.children.find(c => c.name === 'tripStarted');
+            const ended = tripNode.children.find(c => c.name === 'tripEnded');
+            const startLoc = tripNode.children.find(c => c.name === 'start');
+            const cId = tripNode.children.find(c => c.name === 'CarriageID');
             
-            if (trainSaveNode) {
-                const idx = this.ast.children.indexOf(trainSaveNode);
-                this.ast.children[idx] = new OdinRawBlock(tsBuf);
-                this.ast.children[idx].name = 'trainSave';
-                this.ast.children[idx].marker = 0xFE;
-            } else {
-                const raw = new OdinRawBlock(tsBuf);
-                raw.name = 'trainSave';
-                raw.marker = 0xFE;
-                this.ast.children.push(raw);
-            }
-            hasCarriages = true;
-        }
-        // Calculate time strictly based on lastSaved to guarantee OnTrain=true
-        let baseTimeOA = 46248.0;
-        let lastSavedNode = this.ast.children.find(c => c.name === 'lastSaved');
-        if (lastSavedNode && typeof lastSavedNode.value === 'number') {
-            baseTimeOA = lastSavedNode.value;
-        }
-
-        tDay = Math.floor(baseTimeOA);
-        let fraction = baseTimeOA - tDay;
-        let mins = fraction * 24 * 60;
-        tNum = Math.floor(mins / 10) - 2;
-        tNum = Math.max(0, tNum);
-
-        // 3. Inject physical spawn (activity) and Tsuki's liminal
-        if (mode === 'full') {
-            const ACTIVITY_B64 = 'AQEIAAAAYQBjAHQAaQB2AGkAdAB5ADADAAAAWgkAABcBCgAAAEEAYwB0AGkAdgBpAHQAeQBJAEQAGwAAABcBBQAAAE4AcABjAEkARAD/////IQENAAAAQQBjAHQAaQB2AGkAdAB5AFMAdABhAHIAdACEZ1Z+EpXmQCsBBQAAAFYAYQBsAGkAZAABKwEEAAAAUwBlAGUAbgABFwEGAAAAUABlAHMAdABlAHIAAAAAAAMBEAAAAHAAbABhAGMAZQBtAGUAbgB0AFAAbwBpAG4AdABlAHIAMAQAAAABAQsAAABjAG8AbgB0AGEAaQBuAGUAcgBJAEQAMAoAAABbCQAAFwEKAAAAQwBhAHIAcgBpAGEAZwBlAEkARAAAAAAABRcBCwAAAHAAbABhAGMAZQBtAGUAbgB0AEkARACKi9orBQU=';
+            const isStarted = started && started.value === true;
+            const isEnded = ended && ended.value === true;
+            // The values might be numbers or bigints
+            const isStartZero = startLoc && (startLoc.value === 0 || startLoc.value === 0n);
+            const isCIdZero = cId && (cId.value === 0 || cId.value === 0n);
             
-            const actBuf = decodeB64(ACTIVITY_B64);
-            const actView = new DataView(actBuf.buffer);
-            actView.setFloat64(113, baseTimeOA, true); // Patch ActivityStart for Player
-
-            let actNode = this.ast.children.find(c => c.name === 'activity');
-            if (actNode) {
-                const idx = this.ast.children.indexOf(actNode);
-                this.ast.children[idx] = new OdinRawBlock(actBuf);
-                this.ast.children[idx].name = 'activity';
-                this.ast.children[idx].marker = 0xFE;
-            } else {
-                const raw = new OdinRawBlock(actBuf);
-                raw.name = 'activity';
-                raw.marker = 0xFE;
-                this.ast.children.push(raw);
+            if (isStarted && !isEnded && isStartZero) {
+                return { valid: false, reason: 'Viaje corrupto detectado (tripStarted=true, tripEnded=false, start=0)' };
             }
-
-            // Patch Tsuki in liminalSaves
-            const TSUKI_LIM_B64 = 'AjBmAAAAzwkAAB0BCQAAAGMAaABhAHIAYQBjAHQAZQByADEAAAAAAAAAAQEMAAAAYQBjAHQAaQB2AGkAdAB5AFMAYQB2AGUAMAMAAADQCQAAFwEKAAAAQQBjAHQAaQB2AGkAdAB5AEkARAAAAAAAFwEFAAAATgBwAGMASQBEADAAAAAhAQ0AAABBAGMAdABpAHYAaQB0AHkAUwB0AGEAcgB0APa6bX4SleZAKwEFAAAAVgBhAGwAaQBkAAErAQQAAABTAGUAZQBuAAEXAQYAAABQAGUAcwB0AGUAcgAAAAAAAwEQAAAAcABsAGEAYwBlAG0AZQBuAHQAUABvAGkAbgB0AGUAcgAwBAAAAAEBCwAAAGMAbwBuAHQAYQBpAG4AZQByAEkARAAwCgAAANEJAAAXAQoAAABDAGEAcgByAGkAYQBnAGUASQBEAAAAAAAFFwELAAAAcABsAGEAYwBlAG0AZQBuAHQASQBEAKCurJ8FBSEBCgAAAGwAYQBzAHQAVABhAGwAawBPAEEAVVVVVYGE5kAXAQoAAABmAHIAaQBlAG4AZABzAGgAaQBwAAAAAAAXAREAAABsAGEAcwB0AEYAcgBpAGUAbgBkAHMAaABpAHAARABhAHkAAAAAAC0BCgAAAHQAZQBtAHAAVgBhAGwAdQBlAHMABQ==';
-            const tsukiBuf = decodeB64(TSUKI_LIM_B64);
-            const tsukiView = new DataView(tsukiBuf.buffer);
-            tsukiView.setFloat64(163, baseTimeOA, true); // Patch ActivityStart for Tsuki
-
-            const liminalNodes = this._findNodesInAST('liminalSaves');
-            if (liminalNodes.length > 0 && liminalNodes[0].children) {
-                const limList = liminalNodes[0].children.find(c => c.constructor.name === 'OdinList');
-                if (limList && limList.elements) {
-                    let foundTsuki = false;
-                    for (const entry of limList.elements) {
-                        const keyNode = entry.key;
-                        if (keyNode && (keyNode.value === '49' || keyNode.value === 49 || keyNode.value === 49n)) {
-                            entry.value = new OdinRawBlock(tsukiBuf);
-                            entry.value.marker = 0xFE;
-                            foundTsuki = true;
-                            break;
-                        }
-                    }
-                    if (!foundTsuki) {
-                        // If Tsuki isn't in liminalSaves, we could push him, but usually he is.
-                        // We will just let the game handle it if he's absent.
-                    }
-                }
+            if (isStarted && !isEnded && isCIdZero) {
+                return { valid: false, reason: 'Viaje corrupto detectado (CarriageID=0)' };
             }
         }
-
-        return { success: true, trip: true, carriages: hasCarriages };
+        return { valid: true };
     }
 
     setTrainDay(day) {
