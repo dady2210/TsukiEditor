@@ -172,8 +172,8 @@ class IsometricMap {
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         if (layerRadio && layerRadio.value === 'wall') {
             return {
-                x: Math.floor((screenX - this.offsetX) / this.gridSize),
-                y: Math.floor((screenY - this.offsetY) / this.gridSize)
+                x: Math.floor((screenX - 100) / this.gridSize),
+                y: Math.floor((screenY - 100) / this.gridSize)
             };
         }
         const isoX = (screenX - this.offsetX) / this.scale;
@@ -220,7 +220,20 @@ class IsometricMap {
         
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
-        const targetWallGroup = document.getElementById('select-wall-group')?.value || '0';
+        let targetWallGroup = document.getElementById('select-wall-group')?.value;
+        if (!targetWallGroup && this.app && this.app.parser) {
+            const walls = this.app.parser.placements.filter(p => p.cluster === targetLoc && p.isWall);
+            if (walls.length > 0) targetWallGroup = String(walls[0].floor);
+        }
+        targetWallGroup = targetWallGroup || '0';
+
+
+        let drawOffsetX = this.offsetX;
+        let drawOffsetY = this.offsetY;
+        if (isWallLayer) {
+            drawOffsetX = 100;
+            drawOffsetY = 100;
+        }
 
         this._updateLocationLabel(targetLoc);
 
@@ -235,10 +248,11 @@ class IsometricMap {
             const cellSize = this.gridSize; // e.g. 50
             for (let x = 0; x < 25; x++) {
                 for (let y = 0; y < 15; y++) {
-                    ctx.strokeRect(this.offsetX + x * cellSize, this.offsetY + y * cellSize, cellSize, cellSize);
+                    ctx.strokeRect(drawOffsetX + x * cellSize, drawOffsetY + y * cellSize, cellSize, cellSize);
                 }
             }
             ctx.restore();
+
 
             const walls = this.app.parser.placements.filter(
                 p => p.cluster === targetLoc && p.isWall && p.floor === targetWallGroup && p.item_id !== -1
@@ -290,8 +304,8 @@ class IsometricMap {
                 
                 let screenPos = { x: 0, y: 0 };
                 if (isWallLayer) {
-                    screenPos.x = this.offsetX + this.selectedPlacement.x * this.gridSize;
-                    screenPos.y = this.offsetY + this.selectedPlacement.y * this.gridSize;
+                    screenPos.x = 100 + this.selectedPlacement.x * this.gridSize;
+                    screenPos.y = 100 + this.selectedPlacement.y * this.gridSize;
                 } else {
                     const iso = this.getIsoCoords(this.selectedPlacement.x, this.selectedPlacement.y);
                     screenPos.x = this.offsetX + iso.x;
@@ -317,8 +331,10 @@ class IsometricMap {
     _drawPlacement(p, layer) {
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         if (layerRadio && layerRadio.value === 'wall' && p.isWall) {
-            const gx = this.offsetX + p.x * this.gridSize;
-            const gy = this.offsetY + p.y * this.gridSize;
+            const drawOffsetX = isWallLayer ? 100 : this.offsetX;
+            const drawOffsetY = isWallLayer ? 100 : this.offsetY;
+            const gx = drawOffsetX + p.x * this.gridSize;
+            const gy = drawOffsetY + p.y * this.gridSize;
             
             this.ctx.save();
             const isSel = (this.selectedPlacement === p);
@@ -607,7 +623,12 @@ class IsometricMap {
     _hitTest(gridX, gridY, targetFloor, targetLoc) {
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
-        const targetWallGroup = document.getElementById('select-wall-group')?.value || '0';
+        let targetWallGroup = document.getElementById('select-wall-group')?.value;
+        if (!targetWallGroup && this.app && this.app.parser) {
+            const walls = this.app.parser.placements.filter(p => p.cluster === targetLoc && p.isWall);
+            if (walls.length > 0) targetWallGroup = String(walls[0].floor);
+        }
+        targetWallGroup = targetWallGroup || '0';
         
         let found = [];
         for (let i = this.app.parser.placements.length - 1; i >= 0; i--) {

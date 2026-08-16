@@ -409,10 +409,10 @@ class SaveParser {
             // 2. WallFurniture
             const wallWrap = entry.value.children.find(c => c.name === 'wallFurniture');
             if (wallWrap) {
-                const wallList = wallWrap.children.find(c => c.constructor.name === 'OdinList');
+                const wallList = wallWrap.children.find(c => c.constructor.name === 'OdinList' || c.constructor.name === 'OdinDictionary');
                 if (wallList) {
                     for (const wallEntry of wallList.elements) {
-                        const wallNode = wallEntry.value;
+                        const wallNode = wallEntry.value && wallEntry.value.children ? wallEntry.value : (wallEntry.value.value || wallEntry.value);
                         let itemId = -1, x = -1, y = -1, floor = 0, orientation = 0, verify = 0, placementID = -1;
                         let flipped = false;
                         const pIdNode = wallNode.children.find(c => c.name === 'placementID');
