@@ -1310,16 +1310,19 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             
             // Find a clone template from ANY sublocation
             let template = null;
-            for (const sub of sublocationsList.elements) {
-                const subLocData = sub.value;
+            const globalSublocationsList = root.children.find(c => c.name === 'sublocations')?.children.find(c => c.constructor.name === 'OdinList');
+            if (globalSublocationsList && globalSublocationsList.elements) {
+                for (const sub of globalSublocationsList.elements) {
+                    const subLocData = sub.value;
                 const furnListWrap = subLocData.children.find(c => c.name === 'furniture');
                 if (furnListWrap) {
                     const lNode = furnListWrap.children.find(c => c.constructor.name === 'OdinList');
                     if (lNode && lNode.elements.length > 0) {
                         template = lNode.elements[0];
                         break;
-                    }
+                                        }
                 }
+            }
             }
             if (!template) throw new Error('No se encontró ningún mueble en todo el mapa para usar como molde.');
 
