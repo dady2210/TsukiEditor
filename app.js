@@ -382,6 +382,16 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             }
         });
 
+        document.getElementById('btn-force-city-spawn')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            const success = this.parser.applyCitySpawnTemplate();
+            if (success) {
+                this.showToast('✅ Plantilla inyectada: location fijado a 2, trip removido y activity clonada (Ciudad 19). Guarda el archivo.', 'success');
+            } else {
+                this.showToast('❌ Error: No se pudo inyectar la plantilla de ciudad.');
+            }
+        });
+
         // Phone Cosmetics
         document.getElementById('btn-phone-apply-ids')?.addEventListener('click', () => {
             if (!this.parser) return;

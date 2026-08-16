@@ -274,6 +274,56 @@ class SaveParser {
 
     // ─── Map ─────────────────────────────────────────────────────────────
 
+    _parsePlacementEntry(furnEntry, sublocId) {
+        const furnNode = furnEntry.value || furnEntry;
+        if (!furnNode) return;
+        
+        let itemId = -1, x = -1, y = -1, floor = 0, orientation = 0, verify = 0, placementID = -1;
+        let planted_id = -1;
+
+        const pIdNode = furnNode.children ? furnNode.children.find(c => c.name === 'placementID') : null;
+        if (pIdNode) placementID = pIdNode.value;
+
+        const vIdNode = furnNode.children ? furnNode.children.find(c => c.name === 'verificationID') : null;
+        if (vIdNode) verify = vIdNode.value;
+
+        const refNode = furnNode.children ? furnNode.children.find(c => c.name === 'reference') : null;
+        if (refNode && refNode.children) {
+            const idNode = refNode.children.find(c => c.name === 'id');
+            if (idNode) itemId = idNode.value;
+            const oriNode = refNode.children.find(c => c.name === 'orientation');
+            if (oriNode) orientation = oriNode.value;
+        } else {
+            // For wall furniture
+            const fIdNode = furnNode.children ? furnNode.children.find(c => c.name === 'furnitureID') : null;
+            if (fIdNode) itemId = fIdNode.value;
+        }
+
+        const groupPosNode = furnNode.children ? furnNode.children.find(c => c.name === 'groupPosition') : null;
+        const posNode = furnNode.children ? furnNode.children.find(c => c.name === 'position') : null;
+        const coords = readGroupXY(groupPosNode, posNode);
+        x = coords.x;
+        y = coords.y;
+        if (groupPosNode) {
+            const gNumNode = findChildRecursive(groupPosNode, ['groupNum']);
+            if (gNumNode) floor = gNumNode.value;
+        }
+
+        this.placements.push({
+            placementID,
+            subloc_id: sublocId,
+            item_id: itemId,
+            x, y,
+            floor: floor.toString(),
+            cluster: sublocId,
+            orientation,
+            verify,
+            planted_id,
+            furnNode,
+            isWall: !refNode
+        });
+    }
+
     parseMap() {
         this.placements = [];
         this.clusters = new Set();
@@ -2397,6 +2447,94 @@ class SaveParser {
         }
 
         return report;
+    }
+
+    _removeNodeByName(astNode, targetName) {
+        if (!astNode) return false;
+        let removed = false;
+        const t = targetName.toLowerCase();
+        if (astNode.children) {
+            const idx = astNode.children.findIndex(c => c.name && c.name.toLowerCase() === t);
+            if (idx !== -1) {
+                astNode.children.splice(idx, 1);
+                removed = true;
+            } else {
+                for (const c of astNode.children) {
+                    if (this._removeNodeByName(c, targetName)) removed = true;
+                }
+            }
+        }
+        if (astNode.elements) {
+            for (const el of astNode.elements) {
+                if (el.key && this._removeNodeByName(el.key, targetName)) removed = true;
+                if (el.value && this._removeNodeByName(el.value, targetName)) removed = true;
+            }
+        }
+        return removed;
+    }
+
+    applyCitySpawnTemplate() {
+        if (!this.ast) return false;
+
+        let locs = this._findNodesInAST('location');
+        for (const l of locs) {
+            if (typeof l.value === 'number') {
+                l.value = 2; // City
+                break;
+            } else if (typeof l.value === 'bigint') {
+                l.value = 2n;
+                break;
+            }
+        }
+
+        this._removeNodeByName(this.ast, 'trip');
+
+        const createCityActivity = () => {
+            const act = new OdinNode(1, 'activity', 7, 'FurnitureBoundActivitySave, Odyssey', Math.floor(Math.random() * 100000000) + 100000000);
+            act.children = [
+                new OdinPrimitive(23, 'ActivityID', 29),
+                new OdinPrimitive(23, 'NpcID', -1),
+                new OdinPrimitive(33, 'ActivityStart', 46249.0561),
+                new OdinPrimitive(43, 'Valid', true),
+                new OdinPrimitive(43, 'Seen', true),
+                new OdinPrimitive(23, 'Pester', 0)
+            ];
+            
+            const ptr = new OdinNode(3, 'placementPointer', 8, 'FurniturePlacementPointer, Odyssey', null);
+            ptr.children = [];
+            
+            const cID = new OdinNode(1, 'containerID', 4, 'SLocationID, Odyssey', Math.floor(Math.random() * 100000000) + 100000000);
+            cID.children = [
+                new OdinPrimitive(23, 'sublocationID', 19),
+                new OdinPrimitive(23, 'localLocationID', 0)
+            ];
+            
+            ptr.children.push(cID);
+            ptr.children.push(new OdinPrimitive(23, 'placementID', 1003104930));
+            
+            act.children.push(ptr);
+            return act;
+        };
+
+        let replaced = false;
+        const replaceActivity = (n) => {
+            if (!n) return;
+            if (n.children) {
+                const idx = n.children.findIndex(c => c.name && c.name.toLowerCase() === 'activity');
+                if (idx !== -1) {
+                    n.children[idx] = createCityActivity();
+                    replaced = true;
+                } else {
+                    n.children.forEach(replaceActivity);
+                }
+            }
+        };
+        replaceActivity(this.ast);
+
+        if (!replaced && this.ast.children) {
+            this.ast.children.push(createCityActivity());
+        }
+        return true;
     }
 
     getBuffer() {
