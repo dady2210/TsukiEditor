@@ -974,7 +974,11 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const moveBtn = document.getElementById('btn-inv-move-excess');
         
         if (capText) {
-            capText.textContent = `${capInfo.used} / ${capInfo.infinite ? '∞' : capInfo.capacity}`;
+            if (capInfo.source === 'bag_unknown') {
+                capText.textContent = `${capInfo.used} / ?`;
+            } else {
+                capText.textContent = `${capInfo.used} / ${capInfo.infinite ? '∞' : capInfo.capacity}`;
+            }
             
             if (capSubtext) {
                 if (capInfo.infinite) {
@@ -986,7 +990,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     capSubtext.textContent = `(${bagNames})`;
                 } else if (capInfo.source === 'bag_unknown') {
                     const bagNames = capInfo.bags.map(b => b.name).join(', ');
-                    capSubtext.textContent = `(${bagNames} detectadas, tamaño según juego)`;
+                    capSubtext.textContent = `(${bagNames} detectadas, capacidad desconocida)`;
                 } else {
                     capSubtext.textContent = '(default 50)';
                 }
@@ -2055,6 +2059,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (!stateValidation.valid) {
             this.showToast(`🚫 Descarga bloqueada: ${stateValidation.reason}`, 'error');
             return;
+        }
+        if (stateValidation.warning) {
+            this.showToast(`⚠️ ${stateValidation.warning}`, 'warning');
         }
 
         const validation = this.parser.validateSaveForDownload({ fixCropGrid: true, fixVerify: fixVerify });

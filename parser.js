@@ -1109,7 +1109,7 @@ class SaveParser {
         if (!this.inventory) return [];
         const BAG_ITEM_IDS = new Set([124, 125, 141, 155, 156, 212, 213, 303, 308, 331, 332]);
         // KNOWN_ITEMS data can be used to resolve names if needed, but for now we just get the items
-        return this.inventory.filter(i => BAG_ITEM_IDS.has(i.item_id) && i.qty > 0 && i.invType ===1).map(i => {
+        return this.inventory.filter(i => BAG_ITEM_IDS.has(i.item_id) && i.qty > 0 && i.invType === 0).map(i => {
             return {
                 id: i.item_id,
                 qty: i.qty,
@@ -1127,7 +1127,7 @@ class SaveParser {
         let infinite = false;
         
         const BAG_SIZE_BY_ID = {
-            // ej. 124: 50, 308: 80 - rellenar si se conocen empíricamente
+            124: 100, 125: 100, 156: Infinity, 303: 150, 212: 150
         };
         
         const bags = this.getEquippedBags();
@@ -1138,7 +1138,7 @@ class SaveParser {
                 // If we know the infinite bag ID, we could flag it here. Assuming no infinite bag ID known yet, 
                 // but if we had name check we could do it.
                 if (bag.id === 156) { // Just guessing "The Bag" or similar if it were infinite, but we don't know yet. Let's keep logic prepared.
-                    // infinite = true;
+                    infinite = true;
                 }
                 
                 if (BAG_SIZE_BY_ID[bag.id] !== undefined) {
