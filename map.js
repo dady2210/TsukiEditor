@@ -255,7 +255,7 @@ class IsometricMap {
 
 
             const walls = this.app.parser.placements.filter(
-                p => p.cluster === targetLoc && p.isWall && p.floor === targetWallGroup && p.item_id !== -1
+                p => p.isWall && Number(p.cluster) === Number(targetLoc) && String(p.floor) === String(targetWallGroup) && Number(p.item_id) > 0
             );
 
             // Z-sort by Y
@@ -355,8 +355,14 @@ class IsometricMap {
             }
 
             const img = this.getImage(p.item_id, 0); // Wall items are generally front-facing
-            if (img && img.complete) {
-                // scale to fit
+            // Always draw cell background
+            this.ctx.fillStyle = 'rgba(255, 150, 100, 0.4)';
+            this.ctx.fillRect(gx, gy, this.gridSize, this.gridSize);
+            this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+            this.ctx.lineWidth = 1;
+            this.ctx.strokeRect(gx, gy, this.gridSize, this.gridSize);
+
+            if (img && img.complete && img.naturalWidth > 0) {
                 const s = Math.min(this.gridSize / img.width, this.gridSize / img.height) * 0.9;
                 const dw = img.width * s;
                 const dh = img.height * s;
@@ -368,6 +374,12 @@ class IsometricMap {
                 this.ctx.translate(-(gx + this.gridSize/2), -(gy + this.gridSize/2));
                 
                 this.ctx.drawImage(img, dx, dy, dw, dh);
+            } else {
+                this.ctx.fillStyle = 'white';
+                this.ctx.font = '14px Arial';
+                this.ctx.textAlign = 'center';
+                this.ctx.textBaseline = 'middle';
+                this.ctx.fillText(String(p.item_id), gx + this.gridSize/2, gy + this.gridSize/2);
             }
             this.ctx.restore();
             return;

@@ -1,3 +1,9 @@
+function getDictList(wrap) {
+        if (!wrap) return null;
+        if (wrap.constructor.name === 'OdinList' || wrap.elements) return wrap;
+        if (wrap.children) return wrap.children.find(c => c.constructor.name === 'OdinList' || c.elements) || null;
+        return null;
+    }
 // ============================================================
 // calcVerificationId — réplica exacta de new System.Random(id).Next()
 // Verificado contra 11 pares reales. Ver INFORME §14.
@@ -327,6 +333,8 @@ class SaveParser {
             isWall: !refNode
         });
     }
+
+
 
     parseMap() {
         this.placements = [];
