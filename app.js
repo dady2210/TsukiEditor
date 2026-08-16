@@ -1906,7 +1906,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             return;
         }
 
-        const result = this.parser.cloneOrderLetter(furnId);
+        const result = this.parser.cloneOrderLetter({ furnitureID: furnId });
         if (result.error === 'no_template') {
             this.showToast('No hay carta plantilla en este save. Abre el buzón / recibe un pedido en el juego, guarda y vuelve a cargar.');
         } else if (result.success) {

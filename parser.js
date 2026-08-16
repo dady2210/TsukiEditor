@@ -1852,7 +1852,7 @@ class SaveParser {
         return walk(this.ast);
     }
 
-    cloneOrderLetter(furnitureID) {
+    cloneOrderLetter({ furnitureID }) {
         const ls = this.getLetterSave();
         if (!ls) return { error: 'no_template' };
         const lettersNode = findChildNode(ls, ['letters', 'Letters']);
