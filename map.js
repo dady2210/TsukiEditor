@@ -41,6 +41,7 @@ class IsometricMap {
 
         this.CELL_W = 64;
         this.CELL_H = 32;
+        this.gridSize = 50;
 
         this.offsetX = 0;
         this.offsetY = 0;
