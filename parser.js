@@ -1947,6 +1947,114 @@ class SaveParser {
         return { success: true };
     }
 
+
+    setLetterClaimedRewards(letterIndex, claimedArrayOrFalse) {
+        const lettersNode = findChildNode(this.getLetterSave(), ['letters', 'Letters']);
+        if (!lettersNode || !lettersNode.children) return false;
+        
+        const listNode = lettersNode.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode || !listNode.elements) return false;
+        
+        const elements = resolveListElements(listNode);
+        if (!elements || letterIndex >= elements.length) return false;
+        
+        const el = elements[letterIndex];
+        const val = el.value || el;
+        
+        const claimedRewardsNode = findChildRecursive(val, ['claimedRewards', 'ClaimedRewards']);
+        if (claimedRewardsNode && claimedRewardsNode.children) {
+            const cList = claimedRewardsNode.children.find(c => c.constructor.name === 'OdinList');
+            if (cList && cList.elements) {
+                cList.elements.forEach((e, idx) => {
+                    const bNode = e.value || e;
+                    if (claimedArrayOrFalse === false) {
+                        bNode.value = false;
+                    } else if (Array.isArray(claimedArrayOrFalse)) {
+                        bNode.value = !!claimedArrayOrFalse[idx];
+                    }
+                });
+                return true;
+            }
+        }
+        return false;
+    }
+
+    markLetterUnclaimed(letterIndex) {
+        this.setLetterClaimedRewards(letterIndex, false);
+        this.setLetterRead(letterIndex, false);
+        
+        const lettersNode = findChildNode(this.getLetterSave(), ['letters', 'Letters']);
+        if (!lettersNode || !lettersNode.children) return false;
+        const listNode = lettersNode.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode || !listNode.elements) return false;
+        const elements = resolveListElements(listNode);
+        if (elements && letterIndex < elements.length) {
+            const el = elements[letterIndex];
+            const val = el.value || el;
+            const openedNode = findChildRecursive(val, ['opened', 'Opened']);
+            if (openedNode) openedNode.value = false;
+        }
+        return true;
+    }
+
+    cloneFurnitureOrder({ furnitureID }) {
+        if (!this.ast) return { error: 'no_template' };
+        const allOrdersNodes = [];
+        const findOrders = (node) => {
+            if (node.name === 'orders') allOrdersNodes.push(node);
+            if (node.children) node.children.forEach(findOrders);
+            if (node.elements) node.elements.forEach(e => findOrders(e.value || e));
+        };
+        findOrders(this.ast);
+        
+        let ordersNode = null;
+        for (const n of allOrdersNodes) {
+            if (n.children && n.children.some(c => c.constructor.name === 'OdinList')) {
+                ordersNode = n;
+                break;
+            }
+        }
+        if (!ordersNode || !ordersNode.children) return { error: 'no_template' };
+        
+        const listNode = ordersNode.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode || !listNode.elements || listNode.elements.length === 0) return { error: 'no_template' };
+        
+        const template = listNode.elements[0];
+        const newEl = cloneOdinTree(template);
+        
+        const assignNewNodeIds = (n) => {
+            if (!n) return;
+            if (n.nodeId !== undefined) {
+                n.nodeId = Math.floor(Math.random() * 100000000) + 100000000;
+            }
+            if (n.children) n.children.forEach(assignNewNodeIds);
+            if (n.elements) {
+                n.elements.forEach(e => {
+                    assignNewNodeIds(e.value || e);
+                    assignNewNodeIds(e.key);
+                });
+            }
+        };
+        assignNewNodeIds(newEl.value || newEl);
+        
+        listNode.elements.push(newEl);
+        
+        const val = newEl.value || newEl;
+        
+        const newOrderID = Math.floor(Date.now() / 1000) >>> 0;
+        const orderIDNode = findChildRecursive(val, ['orderID']);
+        if (orderIDNode) orderIDNode.value = newOrderID;
+        
+        const furnitureIDNode = findChildRecursive(val, ['furnitureID']);
+        if (furnitureIDNode) furnitureIDNode.value = Number(furnitureID);
+        
+        // orderDate could be set to now, but leaving as is (template's) is usually fine.
+        const letterCreatedNode = findChildRecursive(val, ['letterCreated']);
+        if (letterCreatedNode) letterCreatedNode.value = false; // So the game creates the letter organically if needed
+        
+        return { success: true, orderID: newOrderID, furnitureID };
+    }
+
     getLetters() {
         const ls = this.getLetterSave();
         if (!ls) return [];
