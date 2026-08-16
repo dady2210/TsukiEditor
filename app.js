@@ -769,8 +769,21 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         // Homecoming booleans
         const hcIOS = document.getElementById('chk-homecoming-ios');
         const hcAnd = document.getElementById('chk-homecoming-android');
-        if (hcIOS && vars['homecomingiOS'] !== undefined) hcIOS.checked = vars['homecomingiOS'].value;
+        if (hcIOS && vars['homecomingIOS'] !== undefined) hcIOS.checked = vars['homecomingIOS'].value;
         if (hcAnd && vars['homecomingAndroid'] !== undefined) hcAnd.checked = vars['homecomingAndroid'].value;
+
+        // Expanded house (currSLocData)
+        const hcTierSelect = document.getElementById('select-homecoming-tier');
+        if (hcTierSelect) {
+            const homeTier = this.parser.getHomeCurrSLocData();
+            if (homeTier === null) {
+                hcTierSelect.disabled = true;
+                hcTierSelect.title = "No se encontró sublocación Home en el guardado";
+            } else {
+                hcTierSelect.disabled = false;
+                hcTierSelect.value = homeTier.toString();
+            }
+        }
     }
 
     applyGeneralVars() {

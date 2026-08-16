@@ -1454,7 +1454,7 @@ class SaveParser {
                 this.generalVars[key] = { value: nodes[0].value, type: 'bool', astNode: nodes[0], offset: -1 };
             } else {
                 const hcTag = [0x68,0x00,0x6f,0x00,0x6d,0x00,0x65,0x00,0x63,0x00,0x6f,0x00,0x6d,0x00,0x69,0x00,0x6e,0x00,0x67,0x00];
-                const tail = key.endsWith('iOS') ? [0x49,0x00,0x4f,0x00,0x53,0x00] : [0x41,0x00,0x6e,0x00,0x64,0x00,0x72,0x00,0x6f,0x00,0x69,0x00,0x64,0x00];
+                const tail = key.endsWith('IOS') ? [0x49,0x00,0x4f,0x00,0x53,0x00] : [0x41,0x00,0x6e,0x00,0x64,0x00,0x72,0x00,0x6f,0x00,0x69,0x00,0x64,0x00];
                 const fullTag = hcTag.concat(tail);
                 const off = this.findPattern(fullTag, 0);
                 if (off !== -1) {
@@ -1463,11 +1463,14 @@ class SaveParser {
             }
         };
 
-        parseHC('homecomingiOS');
+        parseHC('homecomingIOS');
         parseHC('homecomingAndroid');
     }
 
     writeGeneralVar(name, value) {
+        // Alias support for legacy homecomingiOS calls
+        if (name === 'homecomingiOS') name = 'homecomingIOS';
+        
         const entry = this.generalVars[name];
         if (!entry) {
             console.warn(`writeGeneralVar: No entry found for ${name}`);
@@ -1490,6 +1493,49 @@ class SaveParser {
     }
 
     // ─── Train ───────────────────────────────────────────────────────────
+
+
+    // ─── Home Sublocation Helpers ───
+
+    getHomeSublocationNode() {
+        if (!this.ast) return null;
+        const sublocsWrapper = this.ast.children.find(c => c.name === 'sublocations');
+        if (!sublocsWrapper) return null;
+        
+        const sublocsList = sublocsWrapper.children ? sublocsWrapper.children.find(c => c.constructor.name === 'OdinList') : null;
+        if (!sublocsList) return null;
+
+        for (const entry of sublocsList.elements) {
+            if (entry.key && entry.key.value == 0) {
+                return entry.value;
+            }
+            if (entry.value && entry.value.children) {
+                const slocationChild = entry.value.children.find(c => c.name === 'slocation');
+                if (slocationChild && slocationChild.value == 0) {
+                    return entry.value;
+                }
+            }
+        }
+        return null;
+    }
+
+    getHomeCurrSLocData() {
+        const homeNode = this.getHomeSublocationNode();
+        if (!homeNode || !homeNode.children) return null;
+        const currNode = homeNode.children.find(c => c.name === 'currSLocData');
+        return currNode ? currNode.value : null;
+    }
+
+    setHomeCurrSLocData(value) {
+        const homeNode = this.getHomeSublocationNode();
+        if (!homeNode || !homeNode.children) return false;
+        const currNode = homeNode.children.find(c => c.name === 'currSLocData');
+        if (currNode) {
+            currNode.value = value;
+            return true;
+        }
+        return false;
+    }
 
     parseTrainSave() {
         const trainDayTag   = this.buildFieldTag(0x17, 'trainDay');
