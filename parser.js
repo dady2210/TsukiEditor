@@ -1500,10 +1500,10 @@ class SaveParser {
     getHomeSublocationNode() {
         if (!this.ast) return null;
         const sublocsWrapper = this.ast.children.find(c => c.name === 'sublocations');
-        if (!sublocsWrapper) return null;
+        if (!sublocsWrapper || !sublocsWrapper.children) return null;
         
-        const sublocsList = sublocsWrapper.children ? sublocsWrapper.children.find(c => c.constructor.name === 'OdinList') : null;
-        if (!sublocsList) return null;
+        const sublocsList = sublocsWrapper.children.find(c => c.constructor.name === 'OdinList' || c.constructor.name === 'OdinDictionary');
+        if (!sublocsList || !sublocsList.elements) return null;
 
         for (const entry of sublocsList.elements) {
             if (entry.key && entry.key.value == 0) {

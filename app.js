@@ -828,8 +828,20 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
         const hcIOS = document.getElementById('chk-homecoming-ios');
         const hcAnd = document.getElementById('chk-homecoming-android');
-        if (hcIOS) this.parser.writeGeneralVar('homecomingiOS', hcIOS.checked);
+        if (hcIOS) this.parser.writeGeneralVar('homecomingIOS', hcIOS.checked);
         if (hcAnd) this.parser.writeGeneralVar('homecomingAndroid', hcAnd.checked);
+
+        // Apply Expanded House
+        const tierEl = document.getElementById('select-homecoming-tier');
+        if (tierEl && !tierEl.disabled) {
+            const tier = parseInt(tierEl.value, 10);
+            const ok = this.parser.setHomeCurrSLocData(tier);
+            if (!ok) {
+                this.showToast('No se pudo escribir currSLocData de Home (subloc no encontrada o sin campo)', 'error');
+            } else if (tier === 1 && !(hcAnd?.checked || hcIOS?.checked)) {
+                this.showToast('Casa ampliada aplicada, pero Homecoming está off: el juego puede no mostrar el 2º piso', 'warning');
+            }
+        }
 
         this.showToast("✅ Variables generales aplicadas");
     }
