@@ -2216,10 +2216,9 @@ class SaveParser {
                         slot.invTypeNode.value = Number(newInvType);
                     } else if (slot.mainNode && slot.mainNode.children) {
                         const tNode = {
-                            constructor: { name: 'OdinNode' },
-                            nodeId: Math.floor(Math.random() * 100000000) + 100000000,
+                            constructor: { name: 'OdinPrimitive' },
+                            marker: 0x17,
                             name: 'invType',
-                            type: 'int',
                             value: Number(newInvType)
                         };
                         slot.mainNode.children.push(tNode);
@@ -2304,10 +2303,9 @@ class SaveParser {
                     order.nodes.invTypeNode.value = Number(newInvType);
                 } else if (order.nodes.mainNode && order.nodes.mainNode.children) {
                     const tNode = {
-                        constructor: { name: 'OdinNode' },
-                        nodeId: Math.floor(Math.random() * 100000000) + 100000000,
+                        constructor: { name: 'OdinPrimitive' },
+                        marker: 0x17,
                         name: 'invType',
-                        type: 'int',
                         value: Number(newInvType)
                     };
                     order.nodes.mainNode.children.push(tNode);
