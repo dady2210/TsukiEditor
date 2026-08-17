@@ -544,6 +544,31 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         // Inventory
         this.invSearch.addEventListener('input', () => this.renderInventory());
         if (this.addInvType) this.addInvType.addEventListener('change', () => this.updateInvDatalist());
+        
+        document.getElementById('btn-clear-inv')?.addEventListener('click', () => {
+            if (!this.parser || !this.parser.inventory) return;
+            if (!confirm('¿Estás seguro de que quieres limpiar TODO el inventario? Se conservará 1 ítem por defecto para evitar errores. Esta acción no se puede deshacer.')) return;
+            
+            let keptOne = false;
+            let count = 0;
+            for (let i = 0; i < this.parser.inventory.length; i++) {
+                if (this.parser.inventory[i].item_id !== -1) {
+                    if (!keptOne) {
+                        keptOne = true;
+                        continue;
+                    }
+                    this.parser.clearInventoryItem('inventory', i);
+                    count++;
+                }
+            }
+            if (!keptOne) {
+                this.parser.injectInventoryItem(201, 1, false, 0); // Inject 1 Gacha Ticket if it was totally empty
+            }
+            
+            this.renderInventory();
+            this.showToast(`🗑️ Inventario limpiado (${count} items eliminados).`);
+        });
+
         document.getElementById('btn-apply-all').addEventListener('click', () => this.saveAllInvItems());
         const addBtn = document.getElementById('btn-add-inv-item');
         if (addBtn) addBtn.addEventListener('click', () => this.addInventoryItem());
