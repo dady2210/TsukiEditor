@@ -2148,7 +2148,8 @@ class SaveParser {
                                 idNode,
                                 qtyNode,
                                 invTypeNode,
-                                verifyNode
+                                verifyNode,
+                                mainNode: sVal
                             });
                         }
                     });
@@ -2210,8 +2211,20 @@ class SaveParser {
                 if (slot.verifyNode) {
                     slot.verifyNode.value = calcVerificationId(newFurnitureId) >>> 0;
                 }
-                if (slot.invTypeNode && newInvType !== undefined) {
-                    slot.invTypeNode.value = Number(newInvType);
+                if (newInvType !== undefined) {
+                    if (slot.invTypeNode) {
+                        slot.invTypeNode.value = Number(newInvType);
+                    } else if (slot.mainNode && slot.mainNode.children) {
+                        const tNode = {
+                            constructor: { name: 'OdinNode' },
+                            nodeId: Math.floor(Math.random() * 100000000) + 100000000,
+                            name: 'invType',
+                            type: 'int',
+                            value: Number(newInvType)
+                        };
+                        slot.mainNode.children.push(tNode);
+                        slot.invTypeNode = tNode;
+                    }
                 }
                 return true;
             }
@@ -2256,6 +2269,7 @@ class SaveParser {
             const orderDateNode = findChildRecursive(val, ['orderDate']);
             const deliveryTimeframeNode = findChildRecursive(val, ['deliveryTimeframe']);
             const letterCreatedNode = findChildRecursive(val, ['letterCreated']);
+            const invTypeNode = findChildRecursive(val, ['invType', 'InvType']);
             
             if (orderIDNode && furnitureIDNode) {
                 results.push({
@@ -2267,7 +2281,9 @@ class SaveParser {
                     letterCreated: letterCreatedNode ? letterCreatedNode.value : false,
                     nodes: {
                         furnitureIDNode,
-                        letterCreatedNode
+                        letterCreatedNode,
+                        invTypeNode,
+                        mainNode: val
                     }
                 });
             }
@@ -2282,6 +2298,22 @@ class SaveParser {
         const order = orders[idx];
         if (order && order.nodes.furnitureIDNode) {
             order.nodes.furnitureIDNode.value = Number(newFurnitureId);
+            
+            if (newInvType !== undefined) {
+                if (order.nodes.invTypeNode) {
+                    order.nodes.invTypeNode.value = Number(newInvType);
+                } else if (order.nodes.mainNode && order.nodes.mainNode.children) {
+                    const tNode = {
+                        constructor: { name: 'OdinNode' },
+                        nodeId: Math.floor(Math.random() * 100000000) + 100000000,
+                        name: 'invType',
+                        type: 'int',
+                        value: Number(newInvType)
+                    };
+                    order.nodes.mainNode.children.push(tNode);
+                    order.nodes.invTypeNode = tNode;
+                }
+            }
             
             // Sync with letter if it exists
             const letters = this.getLetters();
