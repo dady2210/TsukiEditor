@@ -880,6 +880,13 @@
                                 <label>Cantidad por slot:</label>
                                 <input type="number" id="input-batch-qty" value="1" min="1">
                             </div>
+                            <div class="input-group">
+                                <label>Tipo (si es desconocido):</label>
+                                <select id="input-batch-fallback-type" style="width:100%;">
+                                    <option value="1">Mueble</option>
+                                    <option value="0">Objeto</option>
+                                </select>
+                            </div>
                             <div class="input-group" style="display:flex; gap: 10px;">
                                 <button id="btn-batch-preview" class="btn-secondary" style="flex: 1;">Vista Previa</button>
                                 <button id="btn-batch-inject" class="btn-primary" style="flex: 1;">Inyectar</button>
@@ -912,7 +919,8 @@
     <script src="map.js?v=18"></script>
     <script src="app.js?v=6"></script>
     <script src="data/id_catalog.js"></script>
-    <script src="patch_experimental.js"></script>
+    <!-- Experimental features -->
+    <script src="patch_experimental.js?v=4"></script>
 <script>
 	document.addEventListener("DOMContentLoaded", () => {
 		// Lista con todos los enlaces mp3 proporcionados
