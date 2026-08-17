@@ -2052,7 +2052,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             return;
         }
 
-        const result = this.parser.cloneOrderLetter({ furnitureID: furnId });
+        const invTypeEl = document.getElementById('input-clone-letter-inv-type');
+        const invType = invTypeEl ? parseInt(invTypeEl.value) : 1;
+        const result = this.parser.cloneOrderLetter({ furnitureID: furnId, invType });
         if (result.error === 'no_template') {
             this.showToast('No hay carta plantilla en este save. Abre el buzón / recibe un pedido en el juego, guarda y vuelve a cargar.');
         } else if (result.success) {
@@ -2076,7 +2078,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             return;
         }
 
-        const result = this.parser.cloneFurnitureOrder({ furnitureID: furnId });
+        const invTypeEl = document.getElementById('input-clone-letter-inv-type');
+        const invType = invTypeEl ? parseInt(invTypeEl.value) : 1;
+        const result = this.parser.cloneFurnitureOrder({ furnitureID: furnId, invType });
         if (result.error === 'no_template') {
             this.showToast('No hay un pedido activo (FurnitureOrder) en este save para usar de plantilla.', 'error');
         } else if (result.success) {
@@ -2131,7 +2135,11 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     <td>
                         <div style="display:flex; align-items:center; gap:5px;">
                             ${window.getSafeImageHTML(o.furnitureID, 'furn', 'style="width:24px; height:24px;"')}
-                            <input type="number" class="order-furn-input" data-index="${index}" value="${o.furnitureID}" style="width:80px;">
+                            <input type="number" class="order-furn-input" data-index="${index}" value="${o.furnitureID}" style="width:70px;">
+                            <select class="order-invtype-select" data-index="${index}" style="padding:2px;">
+                                <option value="1" ${o.nodes.invTypeNode && o.nodes.invTypeNode.value === 1 ? 'selected' : (!o.nodes.invTypeNode ? 'selected' : '')}>Mueble</option>
+                                <option value="0" ${o.nodes.invTypeNode && o.nodes.invTypeNode.value === 0 ? 'selected' : ''}>Objeto</option>
+                            </select>
                             <span style="font-size:0.85em; color:#666;">${idName}</span>
                         </div>
                     </td>
@@ -2150,7 +2158,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     if (input) {
                         const newId = parseInt(input.value);
                         if (!isNaN(newId)) {
-                            this.parser.setOrderFurnitureId(idx, newId);
+                            const typeInput = ordersTbody.querySelector(`.order-invtype-select[data-index="${idx}"]`);
+                            const newInvType = typeInput ? parseInt(typeInput.value) : 1;
+                            this.parser.setOrderFurnitureId(idx, newId, newInvType);
                             this.showToast('📦 Premio de pedido actualizado.');
                             this.renderMailTab(); // Refresh
                         }
@@ -2178,7 +2188,11 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                         ${slot0 ? `
                         <div style="display:flex; align-items:center; gap:5px;">
                             ${window.getSafeImageHTML(furnId, 'furn', 'style="width:24px; height:24px;"')}
-                            <input type="number" class="letter-furn-input" data-index="${index}" value="${furnId}" style="width:80px;">
+                            <input type="number" class="letter-furn-input" data-index="${index}" value="${furnId}" style="width:70px;">
+                            <select class="letter-invtype-select" data-index="${index}" style="padding:2px;">
+                                <option value="1" ${slot0 && slot0.invType === 1 ? 'selected' : (!slot0 || slot0.invType === undefined ? 'selected' : '')}>Mueble</option>
+                                <option value="0" ${slot0 && slot0.invType === 0 ? 'selected' : ''}>Objeto</option>
+                            </select>
                             <span style="font-size:0.85em; color:#666;">${idName}</span>
                         </div>
                         ` : '-'}
@@ -2207,7 +2221,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     if (input) {
                         const newId = parseInt(input.value);
                         if (!isNaN(newId)) {
-                            this.parser.setLetterSlotItemId(idx, 0, newId); // Always slot 0 for our usecase
+                            const typeInput = lettersTbody.querySelector(`.letter-invtype-select[data-index="${idx}"]`);
+                            const newInvType = typeInput ? parseInt(typeInput.value) : 1;
+                            this.parser.setLetterSlotItemId(idx, 0, newId, newInvType); // Always slot 0 for our usecase
                             this.showToast('📬 Premio de carta actualizado.');
                             this.renderMailTab(); // Refresh
                         }

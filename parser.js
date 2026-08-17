@@ -1885,7 +1885,7 @@ class SaveParser {
         return walk(this.ast);
     }
 
-    cloneOrderLetter({ furnitureID }) {
+    cloneOrderLetter({ furnitureID, invType }) {
         const ls = this.getLetterSave();
         if (!ls) return { error: 'no_template' };
         const lettersNode = findChildNode(ls, ['letters', 'Letters']);
@@ -1945,6 +1945,8 @@ class SaveParser {
                     if (qtyNode && qtyNode.value < 1) qtyNode.value = 1;
                     const vNode = findChildRecursive(s0, ['verify', 'verificationID', 'VerificationID']);
                     if (vNode) vNode.value = calcVerificationId(Number(furnitureID)) >>> 0;
+                    const tNode = findChildRecursive(s0, ['invType', 'InvType']);
+                    if (tNode && invType !== undefined) tNode.value = Number(invType);
                     return sList.elements.length;
                 }
             }
@@ -2039,7 +2041,7 @@ class SaveParser {
         return true;
     }
 
-    cloneFurnitureOrder({ furnitureID }) {
+    cloneFurnitureOrder({ furnitureID, invType }) {
         if (!this.ast) return { error: 'no_template' };
         const allOrdersNodes = [];
         const findOrders = (node) => {
@@ -2089,6 +2091,8 @@ class SaveParser {
         
         const furnitureIDNode = findChildRecursive(val, ['furnitureID']);
         if (furnitureIDNode) furnitureIDNode.value = Number(furnitureID);
+        const invTypeNode = findChildRecursive(val, ['invType', 'InvType']);
+        if (invTypeNode && invType !== undefined) invTypeNode.value = Number(invType);
         
         // orderDate could be set to now, but leaving as is (template's) is usually fine.
         const letterCreatedNode = findChildRecursive(val, ['letterCreated']);
@@ -2133,14 +2137,17 @@ class SaveParser {
                         const idNode = findChildRecursive(sVal, ['ID', 'id', 'Id']);
                         const qtyNode = findChildRecursive(sVal, ['quantity', 'Quantity']);
                         const verifyNode = findChildRecursive(sVal, ['verificationID', 'VerificationID']);
+                        const invTypeNode = findChildRecursive(sVal, ['invType', 'InvType']);
                         if (idNode) {
                             slots.push({
                                 index: sIdx,
                                 id: idNode.value,
                                 qty: qtyNode ? qtyNode.value : 1,
+                                invType: invTypeNode ? invTypeNode.value : 1,
                                 verificationID: verifyNode ? verifyNode.value : 0,
                                 idNode,
                                 qtyNode,
+                                invTypeNode,
                                 verifyNode
                             });
                         }
@@ -2191,7 +2198,7 @@ class SaveParser {
         return false;
     }
 
-    setLetterSlotItemId(letterIndex, slotIndex, newFurnitureId) {
+    setLetterSlotItemId(letterIndex, slotIndex, newFurnitureId, newInvType) {
         const letters = this.getLetters();
         const idx = Number(letterIndex);
         const sIdx = Number(slotIndex);
@@ -2202,6 +2209,9 @@ class SaveParser {
                 slot.idNode.value = Number(newFurnitureId);
                 if (slot.verifyNode) {
                     slot.verifyNode.value = calcVerificationId(newFurnitureId) >>> 0;
+                }
+                if (slot.invTypeNode && newInvType !== undefined) {
+                    slot.invTypeNode.value = Number(newInvType);
                 }
                 return true;
             }
@@ -2266,7 +2276,7 @@ class SaveParser {
         return results;
     }
 
-    setOrderFurnitureId(orderIndex, newFurnitureId) {
+    setOrderFurnitureId(orderIndex, newFurnitureId, newInvType) {
         const orders = this.getFurnitureOrders();
         const idx = Number(orderIndex);
         const order = orders[idx];
@@ -2277,7 +2287,7 @@ class SaveParser {
             const letters = this.getLetters();
             const letter = letters.find(l => Number(l.orderID) === Number(order.orderID));
             if (letter && letter.slots.length > 0) {
-                this.setLetterSlotItemId(letter.index, 0, newFurnitureId);
+                this.setLetterSlotItemId(letter.index, 0, newFurnitureId, newInvType);
             }
             return true;
         }
