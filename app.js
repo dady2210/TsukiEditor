@@ -2102,6 +2102,22 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
     }
 
+    updateMailVisuals(el, type) {
+        const container = el.closest('div');
+        const idInput = container.querySelector(`.${type}-furn-input`);
+        const typeSelect = container.querySelector(`.${type}-invtype-select`);
+        const nameSpan = container.querySelector('span');
+        const imgWrapper = container.querySelector('.img-wrapper');
+        
+        if (idInput && typeSelect && nameSpan && imgWrapper) {
+            const id = parseInt(idInput.value) || 0;
+            const invType = parseInt(typeSelect.value);
+            const typeStr = invType === 0 ? 'item' : 'furn';
+            nameSpan.textContent = window.resolveItemName(id, typeStr);
+            imgWrapper.innerHTML = window.getSafeImageHTML(id, typeStr, 'style="width:24px; height:24px;"');
+        }
+    }
+
     // ─── Mail & Orders ───
     renderMailTab() {
         if (!this.parser) return;
@@ -2128,15 +2144,17 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             orders.forEach((o, index) => {
                 const tr = document.createElement('tr');
                 
-                const idName = window.resolveItemName(o.furnitureID, 'furn');
+                const initialInvType = o.nodes.invTypeNode ? o.nodes.invTypeNode.value : 1;
+                const typeStr = initialInvType === 0 ? 'item' : 'furn';
+                const idName = window.resolveItemName(o.furnitureID, typeStr);
                 
                 tr.innerHTML = `
                     <td>${o.orderID}</td>
                     <td>
-                        <div style="display:flex; align-items:center; gap:5px;">
-                            ${window.getSafeImageHTML(o.furnitureID, 'furn', 'style="width:24px; height:24px;"')}
-                            <input type="number" class="order-furn-input" data-index="${index}" value="${o.furnitureID}" style="width:70px;">
-                            <select class="order-invtype-select" data-index="${index}" style="padding:2px;">
+                        <div style="display:flex; align-items:center; gap:5px;" class="order-item-container">
+                            <div class="img-wrapper">${window.getSafeImageHTML(o.furnitureID, typeStr, 'style="width:24px; height:24px;"')}</div>
+                            <input type="number" class="order-furn-input" data-index="${index}" value="${o.furnitureID}" style="width:70px;" oninput="window.app.updateMailVisuals(this, 'order')">
+                            <select class="order-invtype-select" data-index="${index}" style="padding:2px;" onchange="window.app.updateMailVisuals(this, 'order')">
                                 <option value="1" ${o.nodes.invTypeNode && o.nodes.invTypeNode.value === 1 ? 'selected' : (!o.nodes.invTypeNode ? 'selected' : '')}>Mueble</option>
                                 <option value="0" ${o.nodes.invTypeNode && o.nodes.invTypeNode.value === 0 ? 'selected' : ''}>Objeto</option>
                             </select>
@@ -2178,7 +2196,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 
                 const slot0 = l.slots[0];
                 const furnId = slot0 ? slot0.id : 0;
-                const idName = window.resolveItemName(furnId, 'furn');
+                const initialInvType = (slot0 && slot0.invType !== undefined) ? slot0.invType : 1;
+                const typeStr = initialInvType === 0 ? 'item' : 'furn';
+                const idName = window.resolveItemName(furnId, typeStr);
                 
                 tr.innerHTML = `
                     <td>${index}</td>
@@ -2186,10 +2206,10 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     <td>${l.orderID !== undefined ? l.orderID : '-'}</td>
                     <td>
                         ${slot0 ? `
-                        <div style="display:flex; align-items:center; gap:5px;">
-                            ${window.getSafeImageHTML(furnId, 'furn', 'style="width:24px; height:24px;"')}
-                            <input type="number" class="letter-furn-input" data-index="${index}" value="${furnId}" style="width:70px;">
-                            <select class="letter-invtype-select" data-index="${index}" style="padding:2px;">
+                        <div style="display:flex; align-items:center; gap:5px;" class="letter-item-container">
+                            <div class="img-wrapper">${window.getSafeImageHTML(furnId, typeStr, 'style="width:24px; height:24px;"')}</div>
+                            <input type="number" class="letter-furn-input" data-index="${index}" value="${furnId}" style="width:70px;" oninput="window.app.updateMailVisuals(this, 'letter')">
+                            <select class="letter-invtype-select" data-index="${index}" style="padding:2px;" onchange="window.app.updateMailVisuals(this, 'letter')">
                                 <option value="1" ${slot0 && slot0.invType === 1 ? 'selected' : (!slot0 || slot0.invType === undefined ? 'selected' : '')}>Mueble</option>
                                 <option value="0" ${slot0 && slot0.invType === 0 ? 'selected' : ''}>Objeto</option>
                             </select>
