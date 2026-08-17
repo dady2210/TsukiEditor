@@ -1112,7 +1112,6 @@ class SaveParser {
                     if (listNode && listNode.elements && listNode.elements.length > 0) {
                         const template = listNode.elements[0].value || listNode.elements[0];
                         
-                        // Deep clone helper for AST nodes
                         const cloneNode = (node) => {
                             if (!node) return null;
                             const clone = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
@@ -1122,6 +1121,16 @@ class SaveParser {
                         
                         const verify = calcVerificationId(newId);
                         const newNode = cloneNode(template);
+                        
+                        // Fix: Assign unique nodeIds to avoid OdinSerializer internal references
+                        const assignNewNodeIds = (n) => {
+                            if (!n) return;
+                            if (n.constructor && n.constructor.name === 'OdinNode' && n.nodeId !== null) {
+                                n.nodeId = (Date.now() & 0x7FFFFFFF) + Math.floor(Math.random() * 10000000);
+                            }
+                            if (n.children) n.children.forEach(assignNewNodeIds);
+                        };
+                        assignNewNodeIds(newNode);
                         
                         const idNode = newNode.children.find(c => c.name === 'ID');
                         const qtyNode = newNode.children.find(c => c.name === 'quantity');
@@ -2215,12 +2224,7 @@ class SaveParser {
                     if (slot.invTypeNode) {
                         slot.invTypeNode.value = Number(newInvType);
                     } else if (slot.mainNode && slot.mainNode.children) {
-                        const tNode = {
-                            constructor: { name: 'OdinPrimitive' },
-                            marker: 0x17,
-                            name: 'invType',
-                            value: Number(newInvType)
-                        };
+                        const tNode = new OdinPrimitive(0x17, 'invType', Number(newInvType));
                         slot.mainNode.children.push(tNode);
                         slot.invTypeNode = tNode;
                     }
@@ -2302,12 +2306,7 @@ class SaveParser {
                 if (order.nodes.invTypeNode) {
                     order.nodes.invTypeNode.value = Number(newInvType);
                 } else if (order.nodes.mainNode && order.nodes.mainNode.children) {
-                    const tNode = {
-                        constructor: { name: 'OdinPrimitive' },
-                        marker: 0x17,
-                        name: 'invType',
-                        value: Number(newInvType)
-                    };
+                    const tNode = new OdinPrimitive(0x17, 'invType', Number(newInvType));
                     order.nodes.mainNode.children.push(tNode);
                     order.nodes.invTypeNode = tNode;
                 }

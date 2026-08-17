@@ -79,6 +79,9 @@
                     <button class="nav-item" data-target="tab-map">
                         <span class="material-symbols-outlined">map</span>Mapa 3D
                     </button>
+                    <button class="nav-item" data-target="tab-experimental">
+                        <span class="material-symbols-outlined">science</span>Experimental
+                    </button>
                 </nav>
             </aside>
 
@@ -852,6 +855,46 @@
                     </div>
                 </div>
 
+                <!-- ─── TAB: Experimental ─── -->
+                <div id="tab-experimental" class="tab-content hidden">
+                    <h2>🧪 Inyector por Lotes (Experimental)</h2>
+                    <p class="subtitle">Inyecta un rango de IDs en el inventario. Uso bajo tu propio riesgo.</p>
+                    
+                    <div class="info-banner" style="margin-bottom:1.5rem; background-color: #ffeaa7; border-left: 4px solid #fdcb6e; color: #d35400;">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">warning</span>
+                        <strong>¡ADVERTENCIA!</strong> Esta herramienta inyecta IDs directamente en tu partida. Algunos objetos pueden estar rotos o causar inestabilidad si no están implementados en el juego. <strong>Haz una copia de seguridad</strong> antes de guardar.
+                    </div>
+
+                    <div class="section-card">
+                        <h3>Configuración de Inyección</h3>
+                        <div class="grid-2col" style="gap: 1rem; align-items: flex-end;">
+                            <div class="input-group">
+                                <label>ID Inicial:</label>
+                                <input type="number" id="input-batch-start" value="1" min="1">
+                            </div>
+                            <div class="input-group">
+                                <label>ID Final:</label>
+                                <input type="number" id="input-batch-end" value="100" min="1">
+                            </div>
+                            <div class="input-group">
+                                <label>Cantidad por slot:</label>
+                                <input type="number" id="input-batch-qty" value="1" min="1">
+                            </div>
+                            <div class="input-group" style="display:flex; gap: 10px;">
+                                <button id="btn-batch-preview" class="btn-secondary" style="flex: 1;">Vista Previa</button>
+                                <button id="btn-batch-inject" class="btn-primary" style="flex: 1;">Inyectar</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-card" style="margin-top: 1.5rem;">
+                        <h3>Vista Previa de IDs a inyectar <span id="batch-preview-count" style="font-size: 0.9em; color: var(--text-muted);">(0)</span></h3>
+                        <div id="batch-preview-container" style="max-height: 400px; overflow-y: auto; background: var(--panel-bg); border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 10px; margin-top: 1rem;">
+                            <p style="color: var(--text-muted); text-align: center; margin-top: 20px;">Haz clic en "Vista Previa" para cargar los IDs del catálogo.</p>
+                        </div>
+                    </div>
+                </div>
+
             </main>
         </div>
     </div>
@@ -865,9 +908,11 @@
     <script src="rotation_map.js?v=19"></script>
     <script src="odin_browser.js?v=3"></script>
     <!-- App logic -->
-    <script src="parser.js?v=20260813"></script>
+    <script src="parser.js?v=20260817"></script>
     <script src="map.js?v=18"></script>
     <script src="app.js?v=6"></script>
+    <script src="data/id_catalog.js"></script>
+    <script src="patch_experimental.js"></script>
 <script>
 	document.addEventListener("DOMContentLoaded", () => {
 		// Lista con todos los enlaces mp3 proporcionados
@@ -1027,7 +1072,7 @@
         </div>
     </div>
     
-    <script src="js/FileSaver.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <!-- Drop Overlay -->
     <div id="drop-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; color:white; font-size:2rem; pointer-events:none;">
