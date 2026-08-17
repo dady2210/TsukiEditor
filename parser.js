@@ -992,9 +992,9 @@ class SaveParser {
                 
                 if (idNode && qtyNode) {
                     targetArray.push({
-                        item_id: idNode.value,
-                        qty: qtyNode.value,
-                        invType: typeNode ? typeNode.value : (parentName === 'slots' ? 1 : 0),
+                        item_id: Number(idNode.value),
+                        qty: Number(qtyNode.value),
+                        invType: typeNode ? Number(typeNode.value) : (parentName === 'slots' ? 1 : 0),
                         slotNode: val,
                         // Dummy offsets for backward compatibility (in case anything else reads them)
                         i_off: -1, q_off: -1, v_off: -1, t_off: -1, m_off: -1, verify: 0
@@ -1018,21 +1018,28 @@ class SaveParser {
         let changed = false;
         if (item.item_id !== newId) changed = true;
         if (item.qty !== newQty) changed = true;
-        if (newInvType !== undefined && item.invType !== newInvType) changed = true;
+        if (newInvType !== undefined && item.invType !== Number(newInvType)) changed = true;
         
         item.item_id = newId;
         item.qty = newQty;
-        if (newInvType !== undefined) item.invType = newInvType;
+        if (newInvType !== undefined) item.invType = Number(newInvType);
         
         if (item.slotNode && item.slotNode.children) {
             const idNode = item.slotNode.children.find(c => c.name === 'ID');
             const qtyNode = item.slotNode.children.find(c => c.name === 'quantity');
-            const typeNode = item.slotNode.children.find(c => c.name === 'invType');
+            let typeNode = item.slotNode.children.find(c => c.name === 'invType' || c.name === 'InvType');
             const vNode = item.slotNode.children.find(c => c.name === 'verify' || c.name === 'verificationID');
             
-            if (idNode) idNode.value = newId;
-            if (qtyNode) qtyNode.value = newQty;
-            if (typeNode && newInvType !== undefined) typeNode.value = newInvType;
+            if (idNode) idNode.value = (typeof idNode.value === 'bigint') ? BigInt(newId) : newId;
+            if (qtyNode) qtyNode.value = (typeof qtyNode.value === 'bigint') ? BigInt(newQty) : newQty;
+            if (newInvType !== undefined) {
+                if (typeNode) {
+                    typeNode.value = (typeof typeNode.value === 'bigint') ? BigInt(Number(newInvType)) : Number(newInvType);
+                } else if (typeof OdinPrimitive !== 'undefined') {
+                    typeNode = new OdinPrimitive(0x17, 'invType', Number(newInvType));
+                    item.slotNode.children.push(typeNode);
+                }
+            }
             if (vNode) vNode.value = calcVerificationId(newId);
         } else {
             console.error("AST slotNode missing for inventory update!", item);

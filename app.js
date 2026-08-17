@@ -1097,11 +1097,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
         this.parser.inventory.forEach((item, index) => {
             if (item.item_id === -1) return;
-            const name = this.resolveItemName(item.item_id, item.invType);
+            const invT = Number(item.invType);
+            const name = this.resolveItemName(item.item_id, invT);
             if (filter && !`${item.item_id} ${name}`.toLowerCase().includes(filter)) return;
 
             const typeMap = {0:"ITEM",1:"FURN",2:"CROP",3:"FISH"};
-            const prefix = typeMap[item.invType] || "ITEM";
+            const prefix = typeMap[invT] || "ITEM";
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -1112,10 +1113,10 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 <td>
                     <div class="inv-item-col">
                         <select class="inv-input type-input" id="inv-type-${index}" style="width:80px;margin-bottom:4px;">
-                            <option value="0" ${item.invType===0?'selected':''}>Objeto</option>
-                            <option value="1" ${item.invType===1?'selected':''}>Mueble</option>
-                            <option value="2" ${item.invType===2?'selected':''}>Cultivo</option>
-                            <option value="3" ${item.invType===3?'selected':''}>Pez</option>
+                            <option value="0" ${invT===0?'selected':''}>Objeto</option>
+                            <option value="1" ${invT===1?'selected':''}>Mueble</option>
+                            <option value="2" ${invT===2?'selected':''}>Cultivo</option>
+                            <option value="3" ${invT===3?'selected':''}>Pez</option>
                         </select>
                         <input type="number" class="inv-input id-input" value="${item.item_id}" id="inv-id-${index}">
                         <input type="text" class="inv-input name-input" value="${name}" id="inv-name-${index}" placeholder="Nombre">
@@ -1163,7 +1164,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const newQty = parseInt((document.getElementById(`inv-qty-${index}`) || {}).value);
         const newType= parseInt((document.getElementById(`inv-type-${index}`) || {}).value);
         if (!isNaN(newId) && !isNaN(newQty) && !isNaN(newType)) {
-            this.parser.updateInventoryItem('inventory', index, newId, newQty, undefined);
+            this.parser.updateInventoryItem('inventory', index, newId, newQty, newType);
+            this.renderInventory();
             this.showToast("✅ Item actualizado");
         }
     }
@@ -1239,7 +1241,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             }
         }
         
-        updates.forEach(u => this.parser.updateInventoryItem('inventory', u.index, u.newId, u.newQty, undefined));
+        updates.forEach(u => this.parser.updateInventoryItem('inventory', u.index, u.newId, u.newQty, u.newType));
         this.renderInventory();
         this.showToast("✅ Todos los items aplicados");
     }
