@@ -1,4 +1,4 @@
-const ITEM_NAMES = {
+{
     "ITEM_0": "El Señor de las Zanahorias / Lord of the Carrots",
     "FURN_0": "Duela / Floorboards",
     "ITEM_1": "Boleto Gacha / Gacha Ticket",
@@ -8000,7 +8000,5 @@ const ITEM_NAMES = {
     "ITEM_3999": "Unknown Item 3999",
     "FURN_3999": "Unknown Furniture 3999",
     "ITEM_4000": "Unknown Item 4000",
-    "FURN_4000": "Unknown Furniture 4000",
-};
-
-if (typeof window !== 'undefined') window.ITEM_NAMES = ITEM_NAMES;
+    "FURN_4000": "Unknown Furniture 4000"
+}
