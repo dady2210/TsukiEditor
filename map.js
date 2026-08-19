@@ -33,6 +33,16 @@ const HARVEST_ID   = 900;
 const DEFAULT_SIZES = { w: 2, l: 2 }; // Fallback
 const PLOT_SIZE     = { w: 2, l: 2 };   // FURN_306 Plot tile
 
+// Redondeo "half away from zero" simétrico. Math.round nativo redondea los
+// .5 siempre hacia +Infinity (round(0.5)=1 pero round(-0.5)=0), lo que hace
+// que un mueble con diferencia impar entre ancho y largo (3x2, 2x3, etc.)
+// "derive" un tile por cada vuelta completa al rotar. Con este redondeo
+// simétrico, los desplazamientos de +0.5/-0.5 de cada paso de 90° se
+// cancelan entre sí y una rotación de 360° vuelve exactamente al x/y original.
+function roundAwayFromZero(n) {
+    return Math.sign(n) * Math.round(Math.abs(n));
+}
+
 class IsometricMap {
     constructor(canvas, app) {
         this.canvas = canvas;
@@ -936,11 +946,27 @@ class IsometricMap {
     rotateSelected(direction) {
         if (!this.selectedPlacement) return;
         const p = this.selectedPlacement;
+        if (p.isWall) return; // Los muebles de pared no tienen orientation en este formato
+
         let newOri = (Number(p.orientation) + direction) % 4;
         if (newOri < 0) newOri += 4;
-        
-        p.orientation = newOri;
-        this.app.parser.writeInt32(p.o_off, newOri);
+
+        // Pivotear desde el centro: getRotatedSize() intercambia w/l en 90°/270°,
+        // así que compensamos x/y con la mitad de la diferencia (redondeado para
+        // no salirnos de la grilla entera) en vez de dejar fijo el ancla (esquina
+        // superior-izquierda), que era lo que hacía "saltar" a los muebles no
+        // cuadrados al rotarlos.
+        const oldSize = this.getRotatedSize(p.item_id, p.orientation);
+        const newSize = this.getRotatedSize(p.item_id, newOri);
+        const newX = p.x + roundAwayFromZero((oldSize.w - newSize.w) / 2);
+        const newY = p.y + roundAwayFromZero((oldSize.l - newSize.l) / 2);
+
+        // Persistir en el AST. El writeInt32(p.o_off, ...) anterior era código
+        // muerto (p.o_off nunca se asigna en ningún placement, y getBuffer()
+        // serializa desde el AST vía OdinWriter, no desde el buffer crudo), por
+        // lo que la rotación nunca llegaba a guardarse en el .csave exportado.
+        this.app.parser.applyMapChange(p, p.item_id, newX, newY, newOri);
+
         this.app.openItemEditor(p);
         
         // Force reload from cache if needed
