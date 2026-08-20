@@ -2000,10 +2000,9 @@ class SaveParser {
         }
         
         // Also unset 'read' and 'opened' to make it a new letter
-        const readNode = findChildRecursive(val, [\'read\', \'Read\']);
-    const openedNode = findChildRecursive(val, [\'opened\', \'Opened\']);
+        const readNode = findChildRecursive(val, ['read', 'Read']);
+    const openedNode = findChildRecursive(val, ['opened', 'Opened']);
         if (readNode) readNode.value = false;
-        const openedNode = findChildRecursive(val, ['opened', 'Opened']);
         if (openedNode) openedNode.value = false;
         
         return { success: true, orderID: newOrderID, furnitureID };
@@ -2136,8 +2135,8 @@ class SaveParser {
             if (!val || !val.children) return;
             
             const tn = val.typeName || val.className || 'unknown';
-            const readNode = findChildRecursive(val, [\'read\', \'Read\']);
-    const openedNode = findChildRecursive(val, [\'opened\', \'Opened\']);
+            const readNode = findChildRecursive(val, ['read', 'Read']);
+    const openedNode = findChildRecursive(val, ['opened', 'Opened']);
             const carrotRewardNode = findChildRecursive(val, ['carrotReward', 'CarrotReward']);
             const orderIDNode = findChildRecursive(val, ['orderID', 'OrderID']);
             const deliveryVariantNode = findChildRecursive(val, ['deliveryVariant', 'DeliveryVariant']);
