@@ -1036,7 +1036,7 @@ class SaveParser {
                 if (typeNode) {
                     typeNode.value = (typeof typeNode.value === 'bigint') ? BigInt(Number(newInvType)) : Number(newInvType);
                 } else if (typeof OdinPrimitive !== 'undefined') {
-                    typeNode = new OdinPrimitive(0x17, 'invType', Number(newInvType));
+                    typeNode = new OdinPrimitive(0x1D, 'invType', Number(newInvType));
                     item.slotNode.children.push(typeNode);
                 }
             }
@@ -2349,7 +2349,7 @@ class SaveParser {
                     if (slot.invTypeNode) {
                         slot.invTypeNode.value = Number(newInvType);
                     } else if (slot.mainNode && slot.mainNode.children) {
-                        const tNode = new OdinPrimitive(0x17, 'invType', Number(newInvType));
+                        const tNode = new OdinPrimitive(0x1D, 'invType', Number(newInvType));
                         slot.mainNode.children.push(tNode);
                         slot.invTypeNode = tNode;
                     }
@@ -2431,7 +2431,7 @@ class SaveParser {
                 if (order.nodes.invTypeNode) {
                     order.nodes.invTypeNode.value = Number(newInvType);
                 } else if (order.nodes.mainNode && order.nodes.mainNode.children) {
-                    const tNode = new OdinPrimitive(0x17, 'invType', Number(newInvType));
+                    const tNode = new OdinPrimitive(0x1D, 'invType', Number(newInvType));
                     order.nodes.mainNode.children.push(tNode);
                     order.nodes.invTypeNode = tNode;
                 }
