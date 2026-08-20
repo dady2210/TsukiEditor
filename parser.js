@@ -2127,17 +2127,16 @@ class SaveParser {
         const val = el.value || el;
         
         const claimedRewardsNode = findChildRecursive(val, ['claimedRewards', 'ClaimedRewards']);
-        if (claimedRewardsNode && claimedRewardsNode.children) {
-            const cList = claimedRewardsNode.children.find(c => c.constructor.name === 'OdinList');
-            if (cList && cList.elements) {
-                cList.elements.forEach((e, idx) => {
-                    const bNode = e.value || e;
+        if (claimedRewardsNode && claimedRewardsNode.children && claimedRewardsNode.children.length > 0) {
+            const arrNode = claimedRewardsNode.children[0];
+            if (arrNode.constructor && arrNode.constructor.name === 'OdinPrimitiveArray' && arrNode.rawData) {
+                for (let i = 0; i < arrNode.rawData.length; i++) {
                     if (claimedArrayOrFalse === false) {
-                        bNode.value = false;
+                        arrNode.rawData[i] = 0;
                     } else if (Array.isArray(claimedArrayOrFalse)) {
-                        bNode.value = !!claimedArrayOrFalse[idx];
+                        arrNode.rawData[i] = claimedArrayOrFalse[i] ? 1 : 0;
                     }
-                });
+                }
                 return true;
             }
         }
