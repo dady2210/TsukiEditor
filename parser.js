@@ -2000,7 +2000,8 @@ class SaveParser {
         }
         
         // Also unset 'read' and 'opened' to make it a new letter
-        const readNode = findChildRecursive(val, ['read', 'Read']);
+        const readNode = findChildRecursive(val, [\'read\', \'Read\']);
+    const openedNode = findChildRecursive(val, [\'opened\', \'Opened\']);
         if (readNode) readNode.value = false;
         const openedNode = findChildRecursive(val, ['opened', 'Opened']);
         if (openedNode) openedNode.value = false;
@@ -2135,7 +2136,8 @@ class SaveParser {
             if (!val || !val.children) return;
             
             const tn = val.typeName || val.className || 'unknown';
-            const readNode = findChildRecursive(val, ['read', 'Read']);
+            const readNode = findChildRecursive(val, [\'read\', \'Read\']);
+    const openedNode = findChildRecursive(val, [\'opened\', \'Opened\']);
             const carrotRewardNode = findChildRecursive(val, ['carrotReward', 'CarrotReward']);
             const orderIDNode = findChildRecursive(val, ['orderID', 'OrderID']);
             const deliveryVariantNode = findChildRecursive(val, ['deliveryVariant', 'DeliveryVariant']);
@@ -2189,6 +2191,8 @@ class SaveParser {
                 index,
                 type: tn,
                 read: readNode ? readNode.value : false,
+      opened: openedNode ? openedNode.value : false,
+      openedNode: openedNode,
                 carrotReward: carrotRewardNode ? carrotRewardNode.value : 0,
                 orderID: orderIDNode ? orderIDNode.value : undefined,
                 deliveryVariant: deliveryVariantNode ? deliveryVariantNode.value : undefined,
@@ -2197,12 +2201,23 @@ class SaveParser {
                 nodes: {
                     main: val,
                     readNode,
+        openedNode,
                     orderIDNode
                 }
             });
         });
         
         return results;
+    }
+
+    setLetterOpened(letterIndex, opened) {
+        const letters = this.getLetters();
+        const idx = Number(letterIndex);
+        if (letters[idx] && letters[idx].nodes.openedNode) {
+            letters[idx].nodes.openedNode.value = !!opened;
+            return true;
+        }
+        return false;
     }
 
     setLetterRead(letterIndex, read) {

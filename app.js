@@ -2294,7 +2294,13 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 });
             });
             
-            lettersTbody.querySelectorAll('.letter-read-cb').forEach(cb => {
+                            lettersTbody.querySelectorAll('.letter-opened-cb').forEach(cb => {
+                    cb.addEventListener('change', e => {
+                        const idx = e.target.getAttribute('data-index');
+                        this.parser.setLetterOpened(idx, e.target.checked);
+                    });
+                });
+                lettersTbody.querySelectorAll('.letter-read-cb').forEach(cb => {
                 cb.addEventListener('change', (e) => {
                     const idx = e.target.getAttribute('data-index');
                     this.parser.setLetterRead(idx, e.target.checked);
