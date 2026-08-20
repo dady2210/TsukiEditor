@@ -91,9 +91,13 @@ class IsometricMap {
     }
 
     getRotatedSize(item_id, orientation) {
-        const { w, l } = this.getSize(item_id);
-        if (orientation === 1 || orientation === 3) return { w: l, l: w };
-        return { w, l };
+        // La orientación en este juego es frente/atrás + espejado horizontal
+        // (ver _drawSpriteOnTile: solo flipH + darken, nunca gira el sprite
+        // 90°; y los labels de la UI son "Frente Der/Izq" / "Atrás Izq/Der",
+        // no ángulos). El footprint en grilla es una propiedad física del
+        // objeto y no cambia según hacia dónde mire, así que siempre debe
+        // ser el tamaño base de sizes.js, sin intercambiar w/l.
+        return this.getSize(item_id);
     }
 
     getImage(item_id, orientation) {
