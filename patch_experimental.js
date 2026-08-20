@@ -92,6 +92,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (btnInject) {
+        // Add Lost Items inject button
+        const btnLost = document.createElement('button');
+        btnLost.id = 'btn-batch-inject-lost';
+        btnLost.className = 'btn-secondary';
+        btnLost.style.flex = '1';
+        btnLost.style.marginLeft = '10px';
+        btnLost.style.backgroundColor = '#e74c3c';
+        btnLost.style.color = 'white';
+        btnLost.textContent = 'A Obj. Perdidos';
+        btnInject.parentNode.appendChild(btnLost);
+
+        btnLost.addEventListener('click', () => {
+            if (!window.app || !window.app.parser) {
+                alert("Por favor, carga un archivo .csave primero.");
+                return;
+            }
+            if (currentPreviewIds.length === 0) {
+                alert("Haz clic en Vista Previa primero para generar la lista de inyección.");
+                return;
+            }
+            const qty = parseInt(document.getElementById('input-batch-qty').value) || 1;
+            let injectedCount = 0;
+            try {
+                currentPreviewIds.forEach(entry => {
+                    window.app.parser.injectLostItem(entry.id, qty, entry.type);
+                    injectedCount++;
+                });
+                window.app.showToast(`📦 ${injectedCount} ítems enviados a Objetos Perdidos.`);
+            } catch (e) {
+                console.error(e);
+                alert("Error al inyectar en Objetos Perdidos: " + e.message);
+            }
+        });
+
         btnInject.addEventListener('click', () => {
             if (!window.app || !window.app.parser) {
                 alert("Por favor, carga un archivo .csave primero.");

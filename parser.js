@@ -1080,6 +1080,111 @@ class SaveParser {
         return item;
     }
 
+        injectLostItem(newId, quantity = 1, invType = 1) {
+        if (!this.ast) throw new Error("AST no cargado.");
+        if (!Number.isInteger(newId) || !Number.isInteger(quantity))
+            throw new Error("ID y cantidad deben ser enteros.");
+        if (quantity <= 0) throw new Error("La cantidad debe ser mayor que cero.");
+
+        const lostItemsNode = this._findNodesInAST('lostItems')[0];
+        if (!lostItemsNode) throw new Error("No se encontró el nodo lostItems. Inicia sesión en el Ayuntamiento una vez en el juego.");
+        
+        let listNode = null;
+        if (lostItemsNode.children) {
+            listNode = lostItemsNode.children.find(c => c.constructor.name === 'OdinList');
+        }
+        if (!listNode) throw new Error("Nodo lostItems inválido.");
+
+        // Clone template from inventory
+        const itemsNodes = this._findNodesInAST('items');
+        if (!itemsNodes || itemsNodes.length === 0) throw new Error("Inventario no encontrado para usar de plantilla.");
+        const itemsNode = itemsNodes[0];
+        const slotsNode = itemsNode.children.find(c => c.name === 'slots');
+        const invListNode = slotsNode.children.find(c => c.constructor.name === 'OdinList');
+        
+        if (!invListNode || !invListNode.elements || invListNode.elements.length === 0) {
+            throw new Error("No hay ítems en tu inventario para clonar.");
+        }
+        
+        const template = invListNode.elements[0].value || invListNode.elements[0];
+        
+        // Inline clone function
+        const cloneNode = (node) => {
+            if (!node) return null;
+            const clone = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
+            if (clone.children) clone.children = clone.children.map(cloneNode);
+            if (clone.elements) clone.elements = clone.elements.map(cloneNode);
+            if (clone.value && typeof clone.value === 'object') clone.value = cloneNode(clone.value);
+            if (clone.nodeId) clone.nodeId = Math.floor(Math.random() * 10000000) + 200000000;
+            // Clean slotSave
+            if (clone.name === 'slotSave') {
+                clone.type = 'null';
+                clone.value = null;
+                clone.children = null;
+                clone.elements = null;
+            }
+            return clone;
+        };
+
+        const clone = cloneNode(template);
+
+        // Modify values
+        const findRecursive = (n, names) => {
+            if (!n) return null;
+            if (names.includes(n.name)) return n;
+            if (n.children) {
+                for (let c of n.children) {
+                    const res = findRecursive(c, names);
+                    if (res) return res;
+                }
+            }
+            return null;
+        };
+
+        const idNode = findRecursive(clone, ['ID', 'id', 'Id']);
+        if (idNode) idNode.value = newId;
+
+        const qtyNode = findRecursive(clone, ['quantity', 'Quantity']);
+        if (qtyNode) qtyNode.value = quantity;
+
+        const typeNode = findRecursive(clone, ['invType', 'InvType']);
+        if (typeNode) typeNode.value = invType;
+
+        const verifyNode = findRecursive(clone, ['verify', 'verificationID', 'VerificationID']);
+        if (verifyNode) {
+            // Formula from report
+            const MBIG = 2147483647;
+            const MSEED = 161803398;
+            const seedArray = new Array(56).fill(0);
+            let mj = MSEED - Math.abs(newId);
+            seedArray[55] = mj;
+            let mk = 1;
+            for (let i = 1; i < 55; i++) {
+                const ii = (21 * i) % 55;
+                seedArray[ii] = mk;
+                mk = mj - mk;
+                if (mk < 0) mk += MBIG;
+                mj = seedArray[ii];
+            }
+            for (let k = 1; k < 5; k++) {
+                for (let i = 1; i < 56; i++) {
+                    seedArray[i] -= seedArray[1 + (i + 30) % 55];
+                    if (seedArray[i] < 0) seedArray[i] += MBIG;
+                }
+            }
+            let retVal = seedArray[1] - seedArray[22];
+            if (retVal === MBIG) retVal -= 1;
+            if (retVal < 0) retVal += MBIG;
+            verifyNode.value = retVal >>> 0;
+        }
+
+        // Push to lostItems list
+        listNode.elements = listNode.elements || [];
+        listNode.elements.push(clone);
+
+        return true;
+    }
+
     injectInventoryItem(newId, quantity = 1, isHidden = false, visualCategory = 1) {
         if (!this.inventory || !this.inventory.length) this.parseInventory();
         if (!Number.isInteger(newId) || !Number.isInteger(quantity))
