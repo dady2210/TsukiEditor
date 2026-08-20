@@ -2257,7 +2257,7 @@ class SaveParser {
                         if (!sVal || !sVal.children) return;
                         const idNode = findChildRecursive(sVal, ['ID', 'id', 'Id']);
                         const qtyNode = findChildRecursive(sVal, ['quantity', 'Quantity']);
-                        const verifyNode = findChildRecursive(sVal, ['verificationID', 'VerificationID']);
+                        const verifyNode = findChildRecursive(sVal, ['verify', 'verificationID', 'VerificationID']);
                         const invTypeNode = findChildRecursive(sVal, ['invType', 'InvType']);
                         if (idNode) {
                             slots.push({
