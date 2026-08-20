@@ -904,6 +904,100 @@
                             <p style="color: var(--text-muted); text-align: center; margin-top: 20px;">Haz clic en "Vista Previa" para cargar los IDs del catálogo.</p>
                         </div>
                     </div>
+
+                    <!-- ─── Editor de Tamaños de Grilla ─── -->
+                    <div class="section-card" style="margin-top: 2rem;">
+                        <h3>📐 Editor de Tamaños de Grilla</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                            Seleccioná un mueble en el <strong>Mapa 3D</strong> y volvé aquí para editar cuántas celdas ocupa.
+                        </p>
+
+                        <!-- Mueble seleccionado -->
+                        <div id="size-editor-selected" style="display:flex; align-items:center; gap:14px; padding:12px; background:var(--panel-bg); border:1px solid rgba(0,0,0,0.1); border-radius:10px; margin-bottom:1rem;">
+                            <img id="size-editor-icon" src="" style="width:52px; height:52px; object-fit:contain; border:1px solid rgba(0,0,0,0.1); border-radius:8px; background:rgba(255,255,255,0.5); display:none;" alt="">
+                            <div style="flex:1;">
+                                <div id="size-editor-name" style="font-weight:700; font-size:1rem; color:var(--text-primary);">Ningún mueble seleccionado</div>
+                                <div id="size-editor-id" style="font-size:0.8rem; color:var(--text-muted);">Seleccioná un mueble en el mapa primero</div>
+                            </div>
+                        </div>
+
+                        <!-- Inputs de tamaño -->
+                        <div class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
+                            <div class="input-group">
+                                <label>Width (eje X) 🡒</label>
+                                <input type="number" id="size-editor-width" min="1" max="10" value="2" placeholder="ej. 2">
+                            </div>
+                            <div class="input-group">
+                                <label>Length (eje Y) 🡓</label>
+                                <input type="number" id="size-editor-length" min="1" max="10" value="2" placeholder="ej. 2">
+                            </div>
+                        </div>
+
+                        <!-- Referencia visual de tamaños -->
+                        <details style="margin-bottom:1rem; font-size:0.85rem; color:var(--text-muted);">
+                            <summary style="cursor:pointer; font-weight:600;">📋 Referencia rápida de tamaños</summary>
+                            <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:0.82rem;">
+                                <thead><tr style="border-bottom:1px solid rgba(0,0,0,0.1);">
+                                    <th style="text-align:left; padding:4px 8px;">Tipo de mueble</th>
+                                    <th style="text-align:center; padding:4px 8px;">Tamaño típico</th>
+                                </tr></thead>
+                                <tbody>
+                                    <tr><td style="padding:3px 8px;">Silla / Lámpara / Planta pequeña</td><td style="text-align:center;">1 × 1</td></tr>
+                                    <tr><td style="padding:3px 8px;">Cama individual / Escritorio</td><td style="text-align:center;">1 × 2 o 2 × 1</td></tr>
+                                    <tr><td style="padding:3px 8px;">Cama doble / Sofá / Mesa</td><td style="text-align:center;">2 × 2</td></tr>
+                                    <tr><td style="padding:3px 8px;">Sofá grande / Mesa comedor</td><td style="text-align:center;">2 × 3 o 3 × 2</td></tr>
+                                    <tr><td style="padding:3px 8px;">Muebles grandes de sala</td><td style="text-align:center;">3 × 3 o 3 × 4</td></tr>
+                                    <tr><td style="padding:3px 8px;">Piano / Objetos muy grandes</td><td style="text-align:center;">4 × 4 o 4 × 5</td></tr>
+                                    <tr><td style="padding:3px 8px;">Árboles / Decoraciones especiales</td><td style="text-align:center;">5 × 5</td></tr>
+                                </tbody>
+                            </table>
+                        </details>
+
+                        <div style="display:flex; gap:10px; margin-bottom:1rem;">
+                            <button id="btn-size-apply" class="btn-primary" style="flex:1;" disabled>
+                                <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:4px;">save</span>
+                                Aplicar al mapa
+                            </button>
+                            <button id="btn-size-reset" class="btn-secondary" style="flex:1;" disabled>
+                                <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:4px;">undo</span>
+                                Restaurar original
+                            </button>
+                        </div>
+
+                        <!-- Búsqueda manual por ID -->
+                        <div style="border-top:1px solid rgba(0,0,0,0.08); padding-top:1rem; margin-top:0.5rem;">
+                            <label style="font-weight:600; font-size:0.9rem; display:block; margin-bottom:6px;">🔎 O ingresá un ID directamente:</label>
+                            <div style="display:flex; gap:8px; align-items:flex-end;">
+                                <div class="input-group" style="flex:1; margin-bottom:0;">
+                                    <input type="number" id="size-editor-manual-id" min="0" placeholder="ID del mueble (ej. 101)">
+                                </div>
+                                <button id="btn-size-manual-load" class="btn-secondary">Cargar</button>
+                            </div>
+                        </div>
+
+                        <div style="border-top:1px solid rgba(0,0,0,0.08); padding-top:1rem; margin-top:1rem;">
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                                <button id="btn-size-copy" class="btn-secondary" style="font-size:0.8rem; padding:4px 10px;" title="Copiar al portapapeles">
+                                    <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;">content_copy</span>
+                                    Copiar
+                                </button>
+                            </div>
+                            <pre id="size-editor-output" style="background:rgba(0,0,0,0.06); border-radius:8px; padding:10px; font-size:0.82rem; margin:0; white-space:pre-wrap; color:var(--text-primary);">// Seleccioná un mueble primero</pre>
+                        </div>
+
+                        <!-- Exportar todos los cambios -->
+                        <div style="border-top:1px solid rgba(0,0,0,0.08); padding-top:1rem; margin-top:1rem;">
+                            <div style="display:flex; align-items:center; justify-content:space-between;">
+                                <div>
+                                    <div style="font-weight:600; font-size:0.9rem;">💾 Exportar sesión completa</div>
+                                    <div id="size-editor-changes-count" style="font-size:0.78rem; color:var(--text-muted);">0 cambios pendientes</div>
+                                </div>
+                                <button id="btn-size-export" class="btn-primary" style="font-size:0.85rem;">
+                                    <span class="material-symbols-outlined" style="font-size:16px;vertical-align:text-bottom;margin-right:4px;">download</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </main>
@@ -913,16 +1007,12 @@
     <div id="toast-container"></div>
 
     <!-- Data bundles — loaded as scripts to work with file:// without a server -->
-    <script src="extracted_items_v3.js?v=2"></script>
-    <script src="sizes.js?v=7"></script>
-    <script src="pivots.js?v=2"></script>
-    <script src="rotation_map.js?v=19"></script>
+    <script src="data/items_db.js"></script>
     <script src="odin_browser.js?v=3"></script>
     <!-- App logic -->
     <script src="parser.js?v=20260817"></script>
     <script src="map.js?v=18"></script>
     <script src="app.js?v=7"></script>
-    <script src="data/id_catalog.js"></script>
     <!-- Experimental features -->
     <script src="patch_experimental.js?v=4"></script>
 <script>
