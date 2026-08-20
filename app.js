@@ -1511,6 +1511,22 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 currentIcon.parentNode.replaceChild(newIcon.firstChild, currentIcon);
             }
         };
+
+        const shinyBtn = document.getElementById('btn-make-shiny');
+        if (shinyBtn) {
+            const rotMap = window.ROTATION_MAP && window.ROTATION_MAP[placement.item_id];
+            if (rotMap && rotMap.B) {
+                shinyBtn.style.display = 'flex';
+                shinyBtn.onclick = () => {
+                    this.editItemId.value = rotMap.B;
+                    this.editItemId.dispatchEvent(new Event('input'));
+                    document.getElementById('btn-apply-item')?.click();
+                    this.showToast(`Convertido a variante B (ID: ${rotMap.B})`, 'success');
+                };
+            } else {
+                shinyBtn.style.display = 'none';
+            }
+        }
         
         if (this.seedPlantingUI) {
             // Also show crop controls for direct seeds on map
