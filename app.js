@@ -1225,7 +1225,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const newQty = parseInt(qtyInput.value);
                 const newType= parseInt(typeInput.value);
                 if (!isNaN(newId) && !isNaN(newQty) && !isNaN(newType)) {
-                    if (newId > 0 && newQty > 0 && newType === 1) newUsedSlots++;
+                    if (newId > 0 && newQty > 0) newUsedSlots++;
                     updates.push({index, newId, newQty, newType});
                 }
             }
@@ -1889,7 +1889,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
             // Insertar como OdinDictionaryEntry con el formato real del save ($k/$v)
             const dictKey = new OdinPrimitive(0x17, '$k', newPlacementId);
-            furnList.elements.push(new OdinDictionaryEntry(dictKey, newSeedNode));
+            targetFurnList.elements.push(new OdinDictionaryEntry(dictKey, newSeedNode));
 
             // B6: Verificar que el link quedó bien
             const savedPlotId = p.placementID;
@@ -2696,3 +2696,223 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 }
 
 window.onload = () => { window.app = new App(); };
+
+// ============================================================
+// SizeEditor — Editor de Tamaños de Grilla (Experimental Tab)
+// ============================================================
+class SizeEditor {
+    constructor() {
+        // Track changes made in this session: { id -> { width, length } }
+        this._sessionChanges = {};
+        this._currentId = null;
+        this._originalSize = null;
+
+        this._els = {
+            icon:         document.getElementById('size-editor-icon'),
+            name:         document.getElementById('size-editor-name'),
+            idLabel:      document.getElementById('size-editor-id'),
+            inputW:       document.getElementById('size-editor-width'),
+            inputL:       document.getElementById('size-editor-length'),
+            btnApply:     document.getElementById('btn-size-apply'),
+            btnReset:     document.getElementById('btn-size-reset'),
+            output:       document.getElementById('size-editor-output'),
+            btnCopy:      document.getElementById('btn-size-copy'),
+            btnExport:    document.getElementById('btn-size-export'),
+            changesCount: document.getElementById('size-editor-changes-count'),
+            manualId:     document.getElementById('size-editor-manual-id'),
+            btnManual:    document.getElementById('btn-size-manual-load'),
+        };
+
+        this._bindEvents();
+
+        // Poll selectedPlacement whenever user switches to experimental tab
+        document.querySelectorAll('.nav-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.dataset.target === 'tab-experimental') {
+                    this._syncFromMap();
+                }
+            });
+        });
+    }
+
+    // ── Sync with map's selected placement ────────────────────────────────
+    _syncFromMap() {
+        const sel = window.app && window.app.map && window.app.map.selectedPlacement;
+        if (sel && sel.item_id != null && sel.item_id !== -1) {
+            this._loadItem(sel.item_id);
+        }
+        // If nothing is selected, just leave the current state
+    }
+
+    _loadItem(id) {
+        this._currentId = id;
+        const name = window.app ? window.app.resolveItemName(id, 1) : `#${id}`;
+        
+        // Icon
+        const icon = this._els.icon;
+        icon.src = `images/items/FURN_${id}.png`;
+        icon.style.display = 'block';
+        icon.onerror = () => {
+            icon.src = `images/items/ITEM_${id}.png`;
+            icon.onerror = () => { icon.style.display = 'none'; };
+        };
+
+        // Labels
+        this._els.name.textContent = name.startsWith('#') ? `Mueble #${id}` : name;
+        this._els.idLabel.textContent = `ID: ${id}`;
+
+        // Current size (session override → sizes.js → fallback 2×2)
+        let w = 2, l = 2;
+        if (this._sessionChanges[id]) {
+            w = this._sessionChanges[id].width;
+            l = this._sessionChanges[id].length;
+        } else if (window.furnitureSizes && window.furnitureSizes[String(id)]) {
+            w = window.furnitureSizes[String(id)].width;
+            l = window.furnitureSizes[String(id)].length;
+        }
+        this._originalSize = { width: w, length: l };
+
+        this._els.inputW.value = w;
+        this._els.inputL.value = l;
+        this._els.btnApply.disabled = false;
+        this._els.btnReset.disabled = false;
+
+        this._updateOutput(id, w, l);
+    }
+
+    // ── Events ────────────────────────────────────────────────────────────
+    _bindEvents() {
+        // Live update output as user types
+        ['input', 'change'].forEach(evt => {
+            this._els.inputW.addEventListener(evt, () => this._onInputChange());
+            this._els.inputL.addEventListener(evt, () => this._onInputChange());
+        });
+
+        // Apply button → write to furnitureSizes and invalidate map image cache
+        this._els.btnApply.addEventListener('click', () => this._applySize());
+
+        // Reset button → restore original size
+        this._els.btnReset.addEventListener('click', () => {
+            if (this._currentId == null || !this._originalSize) return;
+            this._els.inputW.value = this._originalSize.width;
+            this._els.inputL.value = this._originalSize.length;
+            this._onInputChange();
+        });
+
+        // Manual ID load
+        this._els.btnManual.addEventListener('click', () => {
+            const id = parseInt(this._els.manualId.value);
+            if (isNaN(id) || id < 0) {
+                window.app && window.app.showToast('⚠️ Ingresá un ID válido (número entero ≥ 0).');
+                return;
+            }
+            this._loadItem(id);
+        });
+        this._els.manualId.addEventListener('keydown', e => {
+            if (e.key === 'Enter') this._els.btnManual.click();
+        });
+
+        // Copy output to clipboard
+        this._els.btnCopy.addEventListener('click', () => {
+            const text = this._els.output.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                window.app && window.app.showToast('📋 Copiado al portapapeles.');
+            }).catch(() => {
+                // Fallback for file:// protocol
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                window.app && window.app.showToast('📋 Copiado al portapapeles.');
+            });
+        });
+
+        // Export full sizes.js
+        this._els.btnExport.addEventListener('click', () => this._exportSizesJs());
+    }
+
+    _onInputChange() {
+        if (this._currentId == null) return;
+        const w = parseInt(this._els.inputW.value) || 1;
+        const l = parseInt(this._els.inputL.value) || 1;
+        this._updateOutput(this._currentId, w, l);
+    }
+
+    _updateOutput(id, w, l) {
+        this._els.output.textContent = `"${id}": { width: ${w}, length: ${l} },`;
+    }
+
+    _applySize() {
+        if (this._currentId == null) return;
+        const w = Math.max(1, parseInt(this._els.inputW.value) || 1);
+        const l = Math.max(1, parseInt(this._els.inputL.value) || 1);
+
+        // Ensure inputs show clamped values
+        this._els.inputW.value = w;
+        this._els.inputL.value = l;
+
+        // Write to the live furnitureSizes dictionary (used by map.js)
+        if (!window.furnitureSizes) window.furnitureSizes = {};
+        window.furnitureSizes[String(this._currentId)] = { width: w, length: l };
+
+        // Track session change
+        this._sessionChanges[this._currentId] = { width: w, length: l };
+        this._updateChangesCount();
+        this._updateOutput(this._currentId, w, l);
+
+        // Redraw map so the footprint updates immediately
+        if (window.app && window.app.map) {
+            window.app.map._imgCache = {}; // clear image cache so sizes take effect
+            window.app.map.draw();
+        }
+
+        window.app && window.app.showToast(`✅ Tamaño de ID ${this._currentId} actualizado a ${w}×${l}.`);
+    }
+
+    _updateChangesCount() {
+        const n = Object.keys(this._sessionChanges).length;
+        this._els.changesCount.textContent = `${n} cambio${n !== 1 ? 's' : ''} en esta sesión`;
+    }
+
+    // ── Export full sizes.js ───────────────────────────────────────────────
+    _exportSizesJs() {
+        // Merge session changes into the full furnitureSizes
+        const merged = Object.assign({}, window.furnitureSizes || {});
+        for (const [id, size] of Object.entries(this._sessionChanges)) {
+            merged[id] = size;
+        }
+
+        // Sort keys numerically for readability
+        const sorted = Object.keys(merged)
+            .sort((a, b) => Number(a) - Number(b))
+            .reduce((acc, k) => { acc[k] = merged[k]; return acc; }, {});
+
+        const lines = Object.entries(sorted)
+            .map(([id, s]) => `    "${id}": { width: ${s.width}, length: ${s.length} },`)
+            .join('\n');
+
+        const content = `// sizes.js — Furniture grid sizes\n// Auto-generated by Tsuky Web Editor Size Editor\nwindow.furnitureSizes = {\n${lines}\n};\n`;
+
+        const blob = new Blob([content], { type: 'application/javascript' });
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href     = url;
+        a.download = 'sizes.js';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        window.app && window.app.showToast(
+            `💾 sizes.js descargado con ${Object.keys(sorted).length} entradas (${Object.keys(this._sessionChanges).length} nuevas/editadas).`
+        );
+    }
+}
+
+// Initialize SizeEditor after DOM is ready (app.js loads after DOM anyway)
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait a tick to ensure App constructor has run
+    setTimeout(() => { window.sizeEditor = new SizeEditor(); }, 50);
+});
