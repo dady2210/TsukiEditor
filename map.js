@@ -69,6 +69,11 @@ class IsometricMap {
         // Image cache: item_id → HTMLImageElement
         this._imgCache = {};
 
+        // Background grid caches (ver _buildFloorGridCache/_buildWallGridCache)
+        this._floorGridCache = null;
+        this._wallGridCache  = null;
+        this._rafId = undefined;
+
         this.bindEvents();
     }
 
@@ -219,7 +224,84 @@ class IsometricMap {
     }
 
 
+    // ── Grid cache (fondo estático) ──────────────────────────────────────
+    // La grilla de referencia (verde en piso, naranja en pared) no cambia
+    // nunca entre frames -- solo depende de la cámara (pan/zoom), que ya se
+    // aplica como transform al pegar el bitmap. Se dibuja una sola vez a un
+    // canvas en memoria en vez de repetir cientos de stroke() por frame.
+    _isoWorld(x, y) {
+        return {
+            x: (x - y) * (this.CELL_W / 2),
+            y: -(x + y) * (this.CELL_H / 2),
+        };
+    }
+
+    _buildFloorGridCache() {
+        const pad   = 4;
+        const halfW = 32 * (this.CELL_W / 2); // 1024
+        const halfH = 32 * (this.CELL_H / 2); // 1024
+        const originX = -halfW - pad;
+        const originY = -halfH - pad;
+
+        const cache = document.createElement('canvas');
+        cache.width  = halfW * 2 + pad * 2;
+        cache.height = halfH + pad * 2;
+        const cctx = cache.getContext('2d');
+        cctx.translate(-originX, -originY);
+        cctx.strokeStyle = 'rgba(100, 255, 100, 0.8)';
+        cctx.lineWidth = 1.5;
+        for (let x = 0; x < 32; x++) {
+            for (let y = 0; y < 32; y++) {
+                const top   = this._isoWorld(x,   y);
+                const right = this._isoWorld(x+1, y);
+                const bot   = this._isoWorld(x+1, y+1);
+                const left  = this._isoWorld(x,   y+1);
+                cctx.beginPath();
+                cctx.moveTo(top.x, top.y);
+                cctx.lineTo(right.x, right.y);
+                cctx.lineTo(bot.x, bot.y);
+                cctx.lineTo(left.x, left.y);
+                cctx.closePath();
+                cctx.stroke();
+            }
+        }
+
+        this._floorGridCache   = cache;
+        this._floorGridOriginX = originX;
+        this._floorGridOriginY = originY;
+    }
+
+    _buildWallGridCache() {
+        const cellSize = this.gridSize;
+        const cache = document.createElement('canvas');
+        cache.width  = 25 * cellSize;
+        cache.height = 15 * cellSize;
+        const cctx = cache.getContext('2d');
+        cctx.strokeStyle = 'rgba(255, 150, 100, 0.8)';
+        cctx.lineWidth = 1.5;
+        for (let x = 0; x < 25; x++) {
+            for (let y = 0; y < 15; y++) {
+                cctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+            }
+        }
+        this._wallGridCache = cache;
+    }
+
+    // ── Draw (agendado) ──────────────────────────────────────────────────
+    // draw() ya no dibuja directo: agenda un único _drawImmediate() por
+    // frame vía requestAnimationFrame. Antes, cada mousemove de un pan o
+    // arrastre llamaba a draw() de forma síncrona (60-120+ veces/seg), muy
+    // por encima de lo que la pantalla puede pintar; ahora varias llamadas
+    // a draw() dentro del mismo frame colapsan en un solo redraw real.
     draw() {
+        if (this._rafId !== undefined) return;
+        this._rafId = requestAnimationFrame(() => {
+            this._rafId = undefined;
+            this._drawImmediate();
+        });
+    }
+
+    _drawImmediate() {
         if (!this.app || !this.app.parser || !this.app.parser.placements) return;
 
         const ctx = this.ctx;
@@ -250,18 +332,10 @@ class IsometricMap {
 
         if (isWallLayer) {
             // WALL LAYER (2D Orthographic)
+            if (!this._wallGridCache) this._buildWallGridCache();
             ctx.save();
             ctx.globalAlpha = 0.25;
-            ctx.strokeStyle = 'rgba(255, 150, 100, 0.8)';
-            ctx.lineWidth = 1.5;
-            
-            // Draw a basic 2D grid 25x15
-            const cellSize = this.gridSize; // e.g. 50
-            for (let x = 0; x < 25; x++) {
-                for (let y = 0; y < 15; y++) {
-                    ctx.strokeRect(drawOffsetX + x * cellSize, drawOffsetY + y * cellSize, cellSize, cellSize);
-                }
-            }
+            ctx.drawImage(this._wallGridCache, drawOffsetX, drawOffsetY);
             ctx.restore();
 
 
@@ -276,14 +350,12 @@ class IsometricMap {
 
         } else {
             // FLOOR LAYER (Isometric)
+            if (!this._floorGridCache) this._buildFloorGridCache();
             ctx.save();
-            ctx.globalAlpha = 0.25; 
-            for (let x = 0; x < 32; x++) for (let y = 0; y < 32; y++) {
-                this._drawDiamondPath(x, y, 1, 1);
-                ctx.strokeStyle = 'rgba(100, 255, 100, 0.8)';
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-            }
+            ctx.globalAlpha = 0.25;
+            ctx.translate(this.offsetX, this.offsetY);
+            ctx.scale(this.scale, this.scale);
+            ctx.drawImage(this._floorGridCache, this._floorGridOriginX, this._floorGridOriginY);
             ctx.restore();
 
             const all = this.app.parser.placements.filter(
