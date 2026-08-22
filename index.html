@@ -577,7 +577,31 @@
                                 </table>
                             </div>
                         </div>
+                    
+<!-- Unique Orders -->
+<div id="mail-unique-orders-container" class="section-card" style="margin-top:1.5rem; display:none;">
+                    <h3>🔑 Metadatos de Pedidos (uniqueOrders)</h3>
+                    <p class="subtitle" style="margin-top:0;"><code>uniqueOrders</code> es un bitmask. Limpiar un bit permite que el juego vuelva a ofrecer ese pedido.
+                        <strong>Nota:</strong> el índice de bit puede no coincidir con el furnitureID exacto; úsalo como referencia manual.</p>
+                    <div class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
+                        <div class="input-group">
+                            <label>uniqueOrders (hex / decimal)</label>
+                            <input type="text" id="mail-unique-orders-val" readonly style="background:#f4f4f4; font-family:monospace;">
+                        </div>
+                        <div class="input-group">
+                            <label>lastOrders (int32 bytes)</label>
+                            <input type="text" id="mail-last-orders-val" readonly style="background:#f4f4f4; font-family:monospace;">
+                        </div>
                     </div>
+                    <div class="grid-2col" style="gap:1rem; align-items:flex-end;">
+                        <div class="input-group">
+                            <label title="Índice 0-63 del bit a limpiar.">ID de bit a liberar (0-63)</label>
+                            <input type="number" id="input-mail-order-id" min="0" max="63" placeholder="Ej: 5">
+                        </div>
+                        <button class="btn-primary" onclick="window.app.clearUniqueOrderBit()">🔓 Liberar bit de pedido en uniqueOrders</button>
+                    </div>
+                </div>
+</div>
                 </div>
 
                 <!-- ── TAB: Eventos ── -->
@@ -654,28 +678,10 @@
                     </div>
                 </div>
                 
-                <div id="mail-unique-orders-container" class="section-card" style="margin-top:1.5rem; display:none;">
-                    <h3>🔑 Metadatos de Pedidos (uniqueOrders)</h3>
-                    <p class="subtitle" style="margin-top:0;"><code>uniqueOrders</code> es un bitmask. Limpiar un bit permite que el juego vuelva a ofrecer ese pedido.
-                        <strong>Nota:</strong> el índice de bit puede no coincidir con el furnitureID exacto; úsalo como referencia manual.</p>
-                    <div class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
-                        <div class="input-group">
-                            <label>uniqueOrders (hex / decimal)</label>
-                            <input type="text" id="mail-unique-orders-val" readonly style="background:#f4f4f4; font-family:monospace;">
-                        </div>
-                        <div class="input-group">
-                            <label>lastOrders (int32 bytes)</label>
-                            <input type="text" id="mail-last-orders-val" readonly style="background:#f4f4f4; font-family:monospace;">
-                        </div>
-                    </div>
-                    <div class="grid-2col" style="gap:1rem; align-items:flex-end;">
-                        <div class="input-group">
-                            <label title="Índice 0-63 del bit a limpiar.">ID de bit a liberar (0-63)</label>
-                            <input type="number" id="input-mail-order-id" min="0" max="63" placeholder="Ej: 5">
-                        </div>
-                        <button class="btn-primary" onclick="window.app.clearUniqueOrderBit()">🔓 Liberar bit de pedido en uniqueOrders</button>
-                    </div>
-                </div>
+                
+
+
+                
 
 <!-- 📰 TAB: Periódicos -->
                 
