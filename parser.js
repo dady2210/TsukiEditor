@@ -2610,7 +2610,7 @@ class SaveParser {
         if (tasksNode && tasksNode.children) {
             const tList = tasksNode.children.find(c => c.constructor.name === 'OdinList');
             if (tList) {
-                tList.elements = tasksArray.map(id => ({ marker: 0x18, name: null, value: Number(id) }));
+                tList.elements = tasksArray.map(id => new OdinPrimitive(0x18, null, Number(id)));
                 tList.length = tasksArray.length;
                 return true;
             }
@@ -2632,15 +2632,20 @@ class SaveParser {
 
         let primArr = rNode.marker === 0x08 ? rNode : (rNode.children ? rNode.children.find(c => c.marker === 0x08) : null);
         if (primArr && primArr.rawData) {
-            for(let i=0; i<Math.min(boolArray.length, primArr.rawData.length); i++) {
+            if (primArr.rawData.length < boolArray.length) {
+                const newArr = new Uint8Array(boolArray.length);
+                newArr.set(primArr.rawData);
+                primArr.rawData = newArr;
+                primArr.numElements = boolArray.length;
+            }
+            for (let i = 0; i < boolArray.length; i++) {
                 primArr.rawData[i] = boolArray[i] ? 1 : 0;
             }
             return true;
         } else if (rNode.children) {
             const rList = rNode.children.find(c => c.constructor.name === 'OdinList');
             if (rList) {
-                // Ensure we have exactly the right number of elements
-                rList.elements = boolArray.map(b => ({ marker: 0x18, name: null, value: b }));
+                rList.elements = boolArray.map(b => new OdinPrimitive(0x2C, null, !!b));
                 rList.length = boolArray.length;
                 return true;
             }
