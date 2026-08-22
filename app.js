@@ -2386,6 +2386,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (result.error === 'no_template') {
             this.showToast('No hay carta plantilla en este save. Abre el buzón / recibe un pedido en el juego, guarda y vuelve a cargar.');
         } else if (result.success) {
+            if (this.parser.clearUniqueOrderBit) this.parser.clearUniqueOrderBit(furnId);
             this.showToast('📦 Carta de pedido clonada correctamente (ID ' + furnId + ').', 'success');
             this.renderMailTab();
         } else {
@@ -2412,6 +2413,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (result.error === 'no_template') {
             this.showToast('No hay un pedido activo (FurnitureOrder) en este save para usar de plantilla.', 'error');
         } else if (result.success) {
+            if (this.parser.clearUniqueOrderBit) this.parser.clearUniqueOrderBit(furnId);
             this.showToast('📦 Pedido clonado correctamente (ID ' + furnId + ').', 'success');
             this.renderMailTab();
         } else {
@@ -2976,6 +2978,11 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             if (this.renderNewsTab) this.renderNewsTab();
             if (this.renderPhoneTab) this.renderPhoneTab();
             if (this.renderMailTab) this.renderMailTab();
+            if (this.renderMailUniqueOrders) this.renderMailUniqueOrders();
+            if (this.renderTrainExtra) this.renderTrainExtra();
+            if (this.renderExperimentalStructures) this.renderExperimentalStructures();
+            if (this.renderExtraVars) this.renderExtraVars();
+        
             if (this.map) this.map.draw();
             
             let msg = `✅ Importación parcial exitosa.\nAplicados: ${report.applied}`;
@@ -2992,6 +2999,253 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     }
     
     // ─── Toasts ───────────────────────────────────────────────────────
+
+    
+    // --- Feature Integrations ---
+    renderMailUniqueOrders() {
+        if (!this.parser) return;
+        const meta = this.parser.getLetterOrderMeta();
+        const container = document.getElementById('mail-unique-orders-container');
+        if (!container) return;
+        
+        if (!meta || meta.uniqueOrders === null) {
+            container.style.display = 'none';
+            return;
+        }
+        
+        container.style.display = 'block';
+        const lastOrders = document.getElementById('mail-last-orders-val');
+        if (lastOrders) lastOrders.textContent = JSON.stringify(meta.lastOrders);
+    }
+
+    clearUniqueOrderBit() {
+        if (!this.parser) return;
+        const idInput = document.getElementById('input-mail-order-id');
+        if (!idInput || idInput.value === '') return;
+        const id = parseInt(idInput.value);
+        if (isNaN(id)) return;
+        
+        if (this.parser.clearUniqueOrderBit(id)) {
+            this.showToast('✅ Bit limpiado en uniqueOrders');
+            this.renderMailUniqueOrders();
+        } else {
+            this.showToast('❌ Error al limpiar bit', 'error');
+        }
+    }
+
+    renderTrainExtra() {
+        if (!this.parser) return;
+        const acts = this.parser.getActivitySaves();
+        const tStat = document.getElementById('train-trip-status');
+        const aStat = document.getElementById('train-activity-status');
+        
+        const trip = this.parser.getTripSave();
+        if (tStat) {
+            if (trip.present && trip.isNull) tStat.innerHTML = 'Trip: <strong>Presente (OdinNull)</strong>';
+            else if (trip.present) tStat.innerHTML = 'Trip: <strong>Presente (Con datos)</strong>';
+            else tStat.innerHTML = 'Trip: <strong>No presente</strong>';
+        }
+        
+        if (aStat) {
+            if (acts.length > 0) {
+                aStat.innerHTML = acts.map(a => `Act ${a.id} (NPC ${a.npc}): ${a.valid ? 'Válido' : 'No Válido'}`).join('<br>');
+            } else {
+                aStat.innerHTML = 'No hay Activities.';
+            }
+        }
+        
+        const npcsInput = document.getElementById('input-train-npcs');
+        if (npcsInput) {
+            const npcs = this.parser.getNpcsOnTrain();
+            npcsInput.value = npcs.join(', ');
+        }
+    }
+    
+    applyTrainNpcs() {
+        if (!this.parser) return;
+        const val = document.getElementById('input-train-npcs').value;
+        const ids = val.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+        if (this.parser.setNpcsOnTrain(ids)) {
+            this.showToast('✅ NPCs en tren actualizados');
+        } else {
+            this.showToast('❌ Error al actualizar NPCs (Lista no encontrada)', 'error');
+        }
+    }
+
+    renderExperimentalStructures() {
+        if (!this.parser) return;
+        
+        // Read Only structures
+        const bounty = this.parser.getBountySave();
+        const parsnap = this.parser.getParsnapSave();
+        const cropbox = this.parser.getCropBoxSave();
+        const delivery = this.parser.getDeliverySave();
+        
+        const rBounty = document.getElementById('ro-bounty');
+        if (rBounty) rBounty.textContent = `BountySave / BountyBoard: ${bounty.message}`;
+        const rParsnap = document.getElementById('ro-parsnap');
+        if (rParsnap) rParsnap.textContent = `ParsnapSave: ${parsnap.message}`;
+        const rCrop = document.getElementById('ro-cropbox');
+        if (rCrop) rCrop.textContent = `CropBox: ${cropbox.message}`;
+        const rDel = document.getElementById('ro-delivery');
+        if (rDel) rDel.textContent = `deliverySave: ${delivery.present ? (delivery.isNull ? 'Presente (OdinNull)' : 'Presente') : 'No presente en este save.'}`;
+        
+        // Conditions Table
+        const cBody = document.getElementById('exp-conditions-body');
+        if (cBody) {
+            cBody.innerHTML = '';
+            const conds = this.parser.getConditionSaves();
+            if (conds && conds.length > 0) {
+                conds.forEach((c, idx) => {
+                    cBody.innerHTML += `<tr>
+                        <td>${c.character}</td>
+                        <td><input type="number" id="cond-id-${idx}" value="${c.conditionID}" style="width:60px;"></td>
+                        <td><input type="number" id="cond-lvl-${idx}" value="${c.level}" style="width:60px;"></td>
+                        <td><input type="number" id="cond-date-${idx}" value="${c.dateFulfilled}" style="width:120px;"></td>
+                        <td><button onclick="window.app.applyCondition(${idx})">Guardar</button></td>
+                    </tr>`;
+                });
+            } else {
+                cBody.innerHTML = '<tr><td colspan="5">No hay conditionSaves.</td></tr>';
+            }
+        }
+        
+        // Diary Table
+        const dBody = document.getElementById('exp-diary-body');
+        if (dBody) {
+            dBody.innerHTML = '';
+            const diaries = this.parser.getDiarySaves();
+            if (diaries && diaries.length > 0) {
+                diaries.forEach((d, idx) => {
+                    dBody.innerHTML += `<tr>
+                        <td>${d.num}</td>
+                        <td><input type="number" id="diary-oa-${idx}" value="${d.diaryAchievedOA}" style="width:80px;"></td>
+                        <td><input type="checkbox" id="diary-night-${idx}" ${d.night ? 'checked' : ''}></td>
+                        <td><input type="number" id="diary-state-${idx}" value="${d.state}" style="width:60px;"></td>
+                        <td><button onclick="window.app.applyDiary(${idx})">Guardar</button></td>
+                    </tr>`;
+                });
+            } else {
+                dBody.innerHTML = '<tr><td colspan="5">No hay diarySaves.</td></tr>';
+            }
+        }
+    }
+    
+    applyCondition(idx) {
+        if (!this.parser) return;
+        const id = document.getElementById(`cond-id-${idx}`).value;
+        const lvl = document.getElementById(`cond-lvl-${idx}`).value;
+        const date = document.getElementById(`cond-date-${idx}`).value;
+        
+        let up = false;
+        if (this.parser.setConditionField(idx, 'conditionID', id)) up = true;
+        if (this.parser.setConditionField(idx, 'level', lvl)) up = true;
+        if (this.parser.setConditionField(idx, 'dateFulfilled', date)) up = true;
+        
+        if (up) this.showToast('✅ Condición guardada');
+        else this.showToast('❌ Error al guardar', 'error');
+    }
+    
+    applyDiary(idx) {
+        if (!this.parser) return;
+        const oa = document.getElementById(`diary-oa-${idx}`).value;
+        const night = document.getElementById(`diary-night-${idx}`).checked;
+        const state = document.getElementById(`diary-state-${idx}`).value;
+        
+        let up = false;
+        if (this.parser.setDiarySaveField(idx, 'diaryAchievedOA', oa)) up = true;
+        if (this.parser.setDiarySaveField(idx, 'night', night)) up = true;
+        if (this.parser.setDiarySaveField(idx, 'state', state)) up = true;
+        
+        if (up) this.showToast('✅ Diary guardado');
+        else this.showToast('❌ Error al guardar', 'error');
+    }
+
+    renderExtraVars() {
+        if (!this.parser) return;
+        const vars = this.parser.getExtraVars();
+        const gs = document.getElementById('var-game-start');
+        const sr = document.getElementById('var-sickle-refresh');
+        const us = document.getElementById('var-unique-seed');
+        
+        if (gs) gs.value = vars.GameStart !== null ? vars.GameStart : '';
+        if (sr) sr.value = vars.SickleRefresh !== null ? vars.SickleRefresh : '';
+        if (us) us.value = vars.UniqueDailySeed !== null ? vars.UniqueDailySeed : '';
+    }
+    
+    applyExtraVars() {
+        if (!this.parser) return;
+        const gs = document.getElementById('var-game-start').value;
+        const sr = document.getElementById('var-sickle-refresh').value;
+        const us = document.getElementById('var-unique-seed').value;
+        
+        let up = false;
+        if (gs !== '' && this.parser.setExtraVar('GameStart', gs)) up = true;
+        if (sr !== '' && this.parser.setExtraVar('SickleRefresh', sr)) up = true;
+        if (us !== '' && this.parser.setExtraVar('UniqueDailySeed', us)) up = true;
+        
+        if (up) this.showToast('✅ Vars guardadas');
+    }
+
+    async compareSaves() {
+        if (!this.parser) return;
+        const fileInput = document.getElementById('diff-file-input');
+        const out = document.getElementById('diff-output');
+        if (!fileInput || !out) return;
+        
+        if (fileInput.files.length === 0) {
+            alert("Por favor selecciona un save para comparar.");
+            return;
+        }
+        
+        const file = fileInput.files[0];
+        const arrayBuffer = await file.arrayBuffer();
+        let otherParser;
+        try {
+            // Assume classes exist globally
+            otherParser = new SaveParser(arrayBuffer);
+            otherParser.parseAll();
+        } catch (e) {
+            alert("Error al parsear el archivo B: " + e.message);
+            return;
+        }
+        
+        out.style.display = 'block';
+        out.textContent = "Calculando diferencias...\n";
+        
+        const aData = {
+            letters: this.parser.getLetters().length,
+            events: this.parser.getVillageEventState().all.length,
+            activities: this.parser.getActivitySaves().length,
+            carrots: this.parser.getInventoryCarrots(),
+            hc: this.parser.getInventoryHomecomingTickets()
+        };
+        
+        const bData = {
+            letters: otherParser.getLetters().length,
+            events: otherParser.getVillageEventState().all.length,
+            activities: otherParser.getActivitySaves().length,
+            carrots: otherParser.getInventoryCarrots(),
+            hc: otherParser.getInventoryHomecomingTickets()
+        };
+        
+        const compare = (key, name) => {
+            if (aData[key] === bData[key]) return `IGUAL    | ${name}: ${aData[key]}`;
+            return `CAMBIÓ   | ${name}: (A) ${aData[key]} -> (B) ${bData[key]}`;
+        };
+        
+        let diff = [];
+        diff.push("--- Comparación Estructural Básica ---");
+        diff.push(compare('letters', 'Cant. Cartas'));
+        diff.push(compare('events', 'Cant. Eventos Aldea'));
+        diff.push(compare('activities', 'Cant. Actividades'));
+        diff.push(compare('carrots', 'Zanahorias'));
+        diff.push(compare('hc', 'Homecoming Tickets'));
+        
+        out.textContent = diff.join('\n');
+    }
+
+
 
     showToast(message) {
         const container = document.getElementById('toast-container');

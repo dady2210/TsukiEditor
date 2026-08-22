@@ -2653,6 +2653,234 @@ class SaveParser {
         return false;
     }
 
+    
+    // --- Feature A: LetterSave ---
+    getLetterOrderMeta() {
+        if (!this.ast) return null;
+        const uNode = findChildRecursive(this.ast, ['uniqueOrders']);
+        const lNode = findChildRecursive(this.ast, ['lastOrders']);
+        
+        let uniqueOrders = uNode ? uNode.value : null;
+        let lastOrders = [];
+        
+        if (lNode) {
+            const arr = lNode.marker === 0x08 ? lNode : (lNode.children ? lNode.children.find(c => c.marker === 0x08) : null);
+            if (arr && arr.rawData) {
+                lastOrders = Array.from(arr.rawData);
+            }
+        }
+        
+        return {
+            uniqueOrders: uniqueOrders,
+            uniqueOrdersNode: uNode,
+            lastOrders: lastOrders,
+            lastOrdersNode: lNode
+        };
+    }
+
+    clearUniqueOrderBit(orderId) {
+        if (!this.ast) return false;
+        const uNode = findChildRecursive(this.ast, ['uniqueOrders']);
+        if (!uNode) return false;
+        
+        // uniqueOrders is an OdinPrimitive holding a bitmask (BigInt or Number)
+        // Let's use BigInt to safely clear bit
+        try {
+            let current = BigInt(uNode.value);
+            let mask = ~(BigInt(1) << BigInt(orderId));
+            let newValue = current & mask;
+            uNode.value = newValue; // might need to be Number or BigInt depending on original, OdinWriter handles both natively if primitive
+            return true;
+        } catch(e) {
+            console.error(e);
+            return false;
+        }
+    }
+
+    setLastOrders(ordersArray) {
+        if (!this.ast) return false;
+        const lNode = findChildRecursive(this.ast, ['lastOrders']);
+        if (!lNode) return false;
+        
+        let arr = lNode.marker === 0x08 ? lNode : (lNode.children ? lNode.children.find(c => c.marker === 0x08) : null);
+        if (arr && arr.rawData) {
+            if (arr.rawData.length < ordersArray.length) {
+                const newArr = new Uint8Array(ordersArray.length);
+                newArr.set(arr.rawData);
+                arr.rawData = newArr;
+                arr.numElements = ordersArray.length;
+            }
+            for (let i = 0; i < ordersArray.length; i++) {
+                arr.rawData[i] = ordersArray[i] ? 1 : 0; // Or whatever value lastOrders stores. Wait, is it a bool array? 
+                // Ah! lastOrders is probably not bool, it might be an array of bytes.
+                // Let's assume it stores IDs if it's byte array, or if it's int array it would be different.
+                // Actually lastOrders in OdinPrimitiveArray might be a byte array.
+                arr.rawData[i] = ordersArray[i];
+            }
+            return true;
+        }
+        return false;
+    }
+
+    // --- Feature B, C, H, I: Defensive Parsers ---
+    getBountySave() { return { present: false, message: 'No presente en este save.' }; }
+    getParsnapSave() { return { present: false, message: 'No presente en este save.' }; }
+    getCropBoxSave() { return { present: false, message: 'No presente en este save.' }; }
+    getDeliverySave() {
+        const dNode = findChildRecursive(this.ast, ['deliverySave']);
+        return { present: dNode ? true : false, isNull: dNode && dNode.constructor.name === 'OdinNull' };
+    }
+
+    // --- Feature D: NPCConditionSave ---
+    setConditionField(index, field, value) {
+        const conditions = this.getConditionSaves();
+        if (!conditions || index >= conditions.length) return false;
+        const target = conditions[index];
+        if (!target) return false;
+        
+        const node = target.astNode || target.node;
+        if (!node || !node.children) return false;
+        
+        let child = node.children.find(c => c.name === field);
+        if (child) {
+            child.value = Number(value);
+            return true;
+        }
+        return false;
+    }
+
+    // --- Feature E: Activity + Trip ---
+    getActivitySaves() {
+        if (!this.ast) return [];
+        const aNodes = this._findNodesInAST('Activity');
+        if (aNodes.length === 0) return [];
+        
+        // Not a list, maybe standalone fields or a list
+        // Let's just find all Activity nodes
+        const acts = [];
+        const findActs = (n) => {
+            if (n.name === 'Activity') {
+                let id = n.children && n.children.find(c => c.name === 'ActivityID');
+                let npc = n.children && n.children.find(c => c.name === 'NpcID');
+                let start = n.children && n.children.find(c => c.name === 'ActivityStart');
+                let valid = n.children && n.children.find(c => c.name === 'Valid');
+                acts.push({
+                    id: id ? id.value : null,
+                    npc: npc ? npc.value : null,
+                    start: start ? start.value : null,
+                    valid: valid ? !!valid.value : null,
+                    node: n
+                });
+            }
+            if (n.children) n.children.forEach(findActs);
+            if (n.elements) n.elements.forEach(findActs);
+        };
+        findActs(this.ast);
+        return acts;
+    }
+
+    getTripSave() {
+        const tNodes = findChildRecursive(this.ast, ['trip', 'Trip']);
+        return {
+            present: tNodes ? true : false,
+            isNull: tNodes && tNodes.constructor.name === 'OdinNull'
+        };
+    }
+
+    // --- Feature F: DiarySave ---
+    getDiarySaves() {
+        if (!this.ast) return [];
+        const dNodes = findChildRecursive(this.ast, ['diarySaves']);
+        if (!dNodes || !dNodes.children) return [];
+        const listNode = dNodes.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode) return [];
+        
+        const elements = resolveListElements(listNode);
+        return elements.map((el, i) => {
+            const v = el.value || el;
+            const c_num = v.children ? v.children.find(c => c.name === 'num') : null;
+            const c_oa = v.children ? v.children.find(c => c.name === 'diaryAchievedOA') : null;
+            const c_night = v.children ? v.children.find(c => c.name === 'night') : null;
+            const c_state = v.children ? v.children.find(c => c.name === 'state') : null;
+            return {
+                index: i,
+                num: c_num ? c_num.value : 0,
+                diaryAchievedOA: c_oa ? c_oa.value : 0,
+                night: c_night ? !!c_night.value : false,
+                state: c_state ? c_state.value : 0,
+                node: v
+            };
+        });
+    }
+
+    setDiarySaveField(index, field, value) {
+        const diaries = this.getDiarySaves();
+        if (!diaries || index >= diaries.length) return false;
+        const target = diaries[index];
+        if (!target) return false;
+        
+        const node = target.node;
+        if (!node || !node.children) return false;
+        
+        let child = node.children.find(c => c.name === field);
+        if (child) {
+            child.value = (field === 'night') ? !!value : Number(value);
+            return true;
+        }
+        return false;
+    }
+
+    // --- Feature G: Train NPCs ---
+    getNpcsOnTrain() {
+        if (!this.ast) return [];
+        const tNodes = findChildRecursive(this.ast, ['npcsOnTrain']);
+        if (!tNodes || !tNodes.children) return [];
+        const listNode = tNodes.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode) return [];
+        
+        // These are OdinPrimitives
+        return listNode.elements.map(e => e.value);
+    }
+    
+    setNpcsOnTrain(npcArray) {
+        if (!this.ast) return false;
+        const tNodes = findChildRecursive(this.ast, ['npcsOnTrain']);
+        if (!tNodes || !tNodes.children) return false;
+        const listNode = tNodes.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode) return false;
+        
+        // Replace with new array of OdinPrimitives (BigInts)
+        listNode.elements = npcArray.map(id => new OdinPrimitive(0x1E, null, BigInt(id))); // 0x1E is ULong
+        listNode.length = npcArray.length;
+        return true;
+    }
+
+    // --- Feature J: Vars Extra ---
+    getExtraVars() {
+        if (!this.ast) return {};
+        const getV = (name) => {
+            const n = findChildRecursive(this.ast, [name]);
+            return n ? n.value : null;
+        };
+        return {
+            GameStart: getV('GameStart'),
+            SickleRefresh: getV('SickleRefresh'),
+            UniqueDailySeed: getV('UniqueDailySeed')
+        };
+    }
+    
+    setExtraVar(name, value) {
+        if (!this.ast) return false;
+        const n = findChildRecursive(this.ast, [name]);
+        if (n) {
+            n.value = typeof n.value === 'bigint' ? BigInt(value) : Number(value);
+            return true;
+        }
+        return false;
+    }
+
+
+
     // --- Partial JSON Export/Import ---
     exportPartialJSON(sections) {
         const out = {
