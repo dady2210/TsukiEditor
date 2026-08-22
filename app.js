@@ -18,15 +18,15 @@ const CHAR_NAMES = {
 };
 
 const EVENT_NAMES = {
-    // NOTA: Estos IDs deben validarse contra el enum VillageEvent del código del juego.
-    // Solo listamos los confirmados en archivos de guardado (0,2,4,6,7,8).
+    // NOTA: Estos IDs deben validarse contra el enum VillageEvent del código del juego (dump.cs).
+    // Solo listamos los confirmados en archivos de guardado o con evidencia.
     0: "Año Nuevo / Primavera (Spring)",
     1: "San Valentín (Valentine's)",
     2: "Pascua (Easter)",
     3: "Jumper",
     4: "Festival de Verano (Summer)",
     5: "Halloween",
-    6: "Cosecha de Otoño (Autumn)",
+    6: "Cosecha de Otoño (Autumn Harvest)",
     7: "Solsticio de Invierno (Winter)",
     8: "Navidad (Christmas)",
     9: "Fin de Año (New Year's Eve)"
@@ -1138,985 +1138,98 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (!this.parser) return;
         
         const state = this.parser.getVillageEventState();
+        const evSelect = document.getElementById('select-event-index');
+        const evContainer = document.getElementById('event-edit-container');
         
-        const emptyState = document.getElementById('event-empty-state');
-        const contentState = document.getElementById('event-content');
-        
-        if (!state || !state.present) {
-            if (emptyState) emptyState.style.display = 'block';
-            if (contentState) contentState.style.display = 'none';
+        if (!state.present || state.all.length === 0) {
+            if(evSelect) {
+                evSelect.innerHTML = '<option value="">No hay eventos en el save</option>';
+                evSelect.disabled = true;
+            }
+            if(evContainer) evContainer.style.display = 'none';
+            const ndMsg = document.getElementById('events-no-data-msg');
+            if(ndMsg) ndMsg.style.display = 'block';
             return;
         }
         
-        if (emptyState) emptyState.style.display = 'none';
-        if (contentState) contentState.style.display = 'block';
+        if(document.getElementById('events-no-data-msg')) document.getElementById('events-no-data-msg').style.display = 'none';
+        if(evSelect) evSelect.disabled = false;
+        if(evContainer) evContainer.style.display = 'block';
         
-        const idInput = document.getElementById('event-id');
-        const tasksInput = document.getElementById('event-tasks');
-        const flyerCb = document.getElementById('event-flyer-cb');
-        const calendarCb = document.getElementById('event-calendar-cb');
-        const applyBtn = document.getElementById('btn-apply-event');
-        const nameLabel = document.getElementById('event-name-label');
-        
-        if (idInput) idInput.value = state.eventID || '';
-        if (tasksInput) tasksInput.value = state.tasksCompleted || 0;
-        if (flyerCb) flyerCb.checked = !!state.shownFlyer;
-        if (calendarCb) calendarCb.checked = !!state.shownCalendar;
-        
-        if (nameLabel) {
-            const evName = (typeof EVENT_NAMES !== 'undefined' && EVENT_NAMES[state.eventID]) 
-                ? EVENT_NAMES[state.eventID] 
-                : 'Desconocido';
-            nameLabel.textContent = 'Nombre: ' + evName;
+        let selectedIndex = parseInt(evSelect.value);
+        if (isNaN(selectedIndex) || !state.all.find(e => e.index === selectedIndex)) {
+            // "Activo" = el de mayor year o mayor index
+            const activeEvent = state.all.reduce((prev, curr) => (curr.year >= prev.year ? curr : prev), state.all[0]);
+            selectedIndex = activeEvent.index;
         }
         
-        // Remove old listeners to prevent duplicates
-        if (applyBtn) {
-            const newBtn = applyBtn.cloneNode(true);
-            applyBtn.parentNode.replaceChild(newBtn, applyBtn);
-            
-            newBtn.addEventListener('click', () => {
-                let changed = false;
-                
-                const idVal = document.getElementById('event-id').value;
-                if (idVal !== '') changed = this.parser.setVillageEventField('eventID', idVal) || changed;
-                
-                const tasksVal = document.getElementById('event-tasks').value;
-                if (tasksVal !== '') changed = this.parser.setVillageEventField('tasksCompleted', tasksVal) || changed;
-                
-                const fCb = document.getElementById('event-flyer-cb').checked;
-                changed = this.parser.setVillageEventField('shownFlyer', fCb) || changed;
-                
-                const cCb = document.getElementById('event-calendar-cb').checked;
-                changed = this.parser.setVillageEventField('shownCalendar', cCb) || changed;
-                
-                if (changed) {
-                    this.showToast('✅ Evento activo actualizado');
-                    this.renderEventsTab();
-                } else {
-                    alert('No se pudo actualizar el evento. Verifica que el save lo soporte.');
-                }
+        if(evSelect) {
+            evSelect.innerHTML = '';
+            state.all.forEach(ev => {
+                const name = EVENT_NAMES[ev.eventID] || `Event #${ev.eventID}`;
+                const opt = document.createElement('option');
+                opt.value = ev.index;
+                opt.textContent = `[${ev.index}] ${name} - Año ${ev.year}`;
+                if (ev.index === selectedIndex) opt.selected = true;
+                evSelect.appendChild(opt);
             });
         }
-    }
-
-    // ─── Train Tab ────────────────────────────────────────────────────
-
-    renderTrainTab() {
-        if (!this.parser.trainSave) return;
-        const t = this.parser.trainSave;
-        const dayEl = document.getElementById('input-train-day');
-        const numEl = document.getElementById('input-train-number');
-        if (dayEl) dayEl.value = t.trainDay;
-        if (numEl) numEl.value = t.trainNumber;
-
-        const statusEl = document.getElementById('train-status');
-        if (statusEl) {
-            if (t.trainDay > 0 && t.trainNumber > 0) {
-                statusEl.textContent = `🚂 Tren activo — Día ${t.trainDay}, Número ${t.trainNumber}`;
-                statusEl.className = 'train-status-badge active';
-            } else {
-                statusEl.textContent = `🏘️ Sin viaje activo`;
-                statusEl.className = 'train-status-badge';
-            }
+        
+        const currentEvent = state.all.find(e => e.index === selectedIndex);
+        if (!currentEvent) return;
+        
+        if(document.getElementById('event-id-input')) document.getElementById('event-id-input').value = currentEvent.eventID;
+        if(document.getElementById('event-year-input')) document.getElementById('event-year-input').value = currentEvent.year;
+        if(document.getElementById('event-flyer-cb')) document.getElementById('event-flyer-cb').checked = currentEvent.shownFlyer;
+        if(document.getElementById('event-calendar-cb')) document.getElementById('event-calendar-cb').checked = currentEvent.shownCalendar;
+        if(document.getElementById('event-tasks-input')) document.getElementById('event-tasks-input').value = currentEvent.tasksCompleted.join(', ');
+        
+        // Rewards HC
+        for (let i = 0; i < 4; i++) {
+            const cb = document.getElementById(`event-reward-${i}`);
+            if (cb) cb.checked = currentEvent.rewardsClaimed[i] || false;
         }
     }
 
-    applyTrainChanges() {
-        const dayEl = document.getElementById('input-train-day');
-        const numEl = document.getElementById('input-train-number');
-        if (dayEl) this.parser.setTrainDay(parseInt(dayEl.value) || 0);
-        if (numEl) this.parser.setTrainNumber(parseInt(numEl.value) || 0);
-        this.renderTrainTab();
-        this.showToast("✅ Train Save actualizado");
-    }
-
-    // ─── Inventory ────────────────────────────────────────────────────
-
-    renderInventory() {
+    applyEventChanges() {
         if (!this.parser) return;
-        this.invTableBody.innerHTML = '';
+        const evSelect = document.getElementById('select-event-index');
+        if(!evSelect) return;
+        const index = parseInt(evSelect.value);
+        if (isNaN(index)) return;
         
-        // --- Update Capacity UI ---
-        const overrideInput = document.getElementById('inv-capacity-override');
-        const capInfo = this.parser.getInventoryCapacityInfo(overrideInput ? overrideInput.value : null);
-        const capText = document.getElementById('inv-capacity-text');
-        const capSubtext = document.getElementById('inv-capacity-subtext');
-        const moveBtn = document.getElementById('btn-inv-move-excess');
+        const eventID = parseInt(document.getElementById('event-id-input').value);
+        const year = parseInt(document.getElementById('event-year-input').value);
+        const shownFlyer = document.getElementById('event-flyer-cb').checked;
+        const shownCalendar = document.getElementById('event-calendar-cb').checked;
+        const tasksStr = document.getElementById('event-tasks-input').value;
+        const tasksCompleted = tasksStr.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
         
-        if (capText) {
-            if (capInfo.source === 'bag_unknown') {
-                capText.textContent = `${capInfo.used} / ?`;
-            } else {
-                capText.textContent = `${capInfo.used} / ${capInfo.infinite ? '∞' : capInfo.capacity}`;
-            }
-            
-            if (capSubtext) {
-                if (capInfo.infinite) {
-                    capSubtext.textContent = '(bolsa infinita)';
-                } else if (capInfo.source === 'manual') {
-                    capSubtext.textContent = '(manual)';
-                } else if (capInfo.source === 'bag') {
-                    const bagNames = capInfo.bags.map(b => b.name).join(', ');
-                    capSubtext.textContent = `(${bagNames})`;
-                } else if (capInfo.source === 'bag_unknown') {
-                    const bagNames = capInfo.bags.map(b => b.name).join(', ');
-                    capSubtext.textContent = `(${bagNames} detectadas, capacidad desconocida)`;
-                } else {
-                    capSubtext.textContent = '(default 50)';
-                }
-            }
-
-            if (!capInfo.infinite && capInfo.used > capInfo.capacity) {
-                capText.style.color = '#e74c3c'; // Red warning
-                if (moveBtn) moveBtn.classList.remove('hidden');
-            } else {
-                capText.style.color = '#27ae60'; // Green ok
-                if (moveBtn) moveBtn.classList.add('hidden');
-            }
+        const rewardsClaimed = [];
+        for (let i = 0; i < 4; i++) {
+            rewardsClaimed.push(document.getElementById(`event-reward-${i}`).checked);
         }
         
-        const filter = this.invSearch.value.toLowerCase();
+        if (year < 2020 || year > 2035) {
+            this.showToast('⚠️ Año inusual detectado.', 'warning');
+        }
 
-        this.parser.inventory.forEach((item, index) => {
-            if (item.item_id === -1) return;
-            const invT = Number(item.invType);
-            const name = this.resolveItemName(item.item_id, invT);
-            if (filter && !`${item.item_id} ${name}`.toLowerCase().includes(filter)) return;
-
-            const typeMap = {0:"ITEM",1:"FURN",2:"CROP",3:"FISH"};
-            const prefix = typeMap[invT] || "ITEM";
-
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>
-                    <img src="images/items/${prefix}_${item.item_id}.png" class="item-icon"
-                         onerror="this.style.display='none'" alt="Icon">
-                </td>
-                <td>
-                    <div class="inv-item-col">
-                        <select class="inv-input type-input" id="inv-type-${index}" style="width:80px;margin-bottom:4px;">
-                            <option value="0" ${invT===0?'selected':''}>Objeto</option>
-                            <option value="1" ${invT===1?'selected':''}>Mueble</option>
-                            <option value="2" ${invT===2?'selected':''}>Cultivo</option>
-                            <option value="3" ${invT===3?'selected':''}>Pez</option>
-                        </select>
-                        <input type="number" class="inv-input id-input" value="${item.item_id}" id="inv-id-${index}">
-                        <input type="text" class="inv-input name-input" value="${name}" id="inv-name-${index}" placeholder="Nombre">
-                    </div>
-                </td>
-                <td style="text-align:center;">
-                    <input type="number" class="inv-input qty-input" value="${item.qty}" min="1" id="inv-qty-${index}">
-                </td>
-                <td style="text-align:right;">
-                    <div class="row-actions">
-                        <button class="btn-primary btn-small" onclick="window.app.saveInvItem(${index})">✔</button>
-                        <button class="btn-danger btn-small" onclick="window.app.deleteInvItem(${index})">✕</button>
-                    </div>
-                </td>
-            `;
-            this.invTableBody.appendChild(tr);
-
-            const idInput   = tr.querySelector(`#inv-id-${index}`);
-            const typeInput = tr.querySelector(`#inv-type-${index}`);
-            const nameInput = tr.querySelector(`#inv-name-${index}`);
-            const imgTag    = tr.querySelector('.item-icon');
-
-            const updateUI = () => {
-                const id  = idInput.value;
-                const typ = parseInt(typeInput.value);
-                nameInput.value = this.resolveItemName(id, typ);
-                const p = typeMap[typ] || "ITEM";
-                const currentImgTag = tr.querySelector('.item-icon');
-                if (currentImgTag) {
-                    const newImg = document.createElement('div');
-                    const hint = typ === 1 ? 'furn' : 'item';
-                    newImg.innerHTML = window.getSafeImageHTML(id, hint, 'class="item-icon" style="max-width:200px;max-height:200px;"');
-                    if (newImg.firstChild) {
-                        currentImgTag.parentNode.replaceChild(newImg.firstChild, currentImgTag);
-                    }
-                }
-            };
-            idInput.addEventListener('input', updateUI);
-            typeInput.addEventListener('change', updateUI);
-        });
-    }
-
-    saveInvItem(index) {
-        const newId  = parseInt((document.getElementById(`inv-id-${index}`) || {}).value);
-        const newQty = parseInt((document.getElementById(`inv-qty-${index}`) || {}).value);
-        const newType= parseInt((document.getElementById(`inv-type-${index}`) || {}).value);
-        if (!isNaN(newId) && !isNaN(newQty) && !isNaN(newType)) {
-            this.parser.updateInventoryItem('inventory', index, newId, newQty, newType);
-            this.renderInventory();
-            this.showToast("✅ Item actualizado");
+        let updated = false;
+        if (this.parser.setVillageEventField(index, 'eventID', eventID)) updated = true;
+        if (this.parser.setVillageEventField(index, 'year', year)) updated = true;
+        if (this.parser.setVillageEventField(index, 'shownFlyer', shownFlyer)) updated = true;
+        if (this.parser.setVillageEventField(index, 'shownCalendar', shownCalendar)) updated = true;
+        if (this.parser.setVillageEventTasksCompleted(index, tasksCompleted)) updated = true;
+        if (this.parser.setVillageEventRewardsClaimed(index, rewardsClaimed)) updated = true;
+        
+        if (updated) {
+            this.showToast('✅ Evento actualizado.');
+            this.renderEventsTab();
+        } else {
+            this.showToast('❌ Error al actualizar el evento.', 'error');
         }
     }
 
-    addInventoryItem() {
-        if (!this.parser) return;
-        const newId  = parseInt(this.addInvId.value);
-        const newQty = parseInt(this.addInvQty.value);
-        const newType= parseInt(this.addInvType.value);
-        if (isNaN(newId) || isNaN(newQty) || isNaN(newType)) { this.showToast("Completa ID, cantidad y tipo."); return; }
-        
-        // --- Capacity Check ---
-        if (newType === 1) { // Only check for main inventory
-            const overrideInput = document.getElementById('inv-capacity-override');
-            const capInfo = this.parser.getInventoryCapacityInfo(overrideInput ? overrideInput.value : null);
-            const isStacking = this.parser.inventory.some(i => i.item_id === newId && i.qty > 0);
-            
-            if (!isStacking && capInfo.used >= capInfo.capacity) {
-                if (!confirm(`⚠️ Supera la capacidad de la mochila (${capInfo.used + 1}/${capInfo.capacity}). ¿Continuar de todos modos?`)) {
-                    return;
-                }
-            }
-        }
-        
-        try {
-            const isHidden = document.getElementById('add-inv-hidden')?.checked || false;
-            const result = this.parser.injectInventoryItem(newId, newQty, isHidden, newType);
-            this.renderInventory();
-            this.showToast(result.mode === "stacked" ? "📦 Cantidad sumada al item existente" : "✅ Item agregado en slot vacío");
-        } catch (error) { this.showToast("❌ " + error.message); }
-    }
-
-    deleteInvItem(index) {
-        if (!this.parser) return;
-        const item = this.parser.inventory[index];
-        if (!item || item.item_id === -1) return;
-        const name = this.resolveItemName(item.item_id, item.invType);
-        if (!confirm(`Eliminar ${name} (ID ${item.item_id})?`)) return;
-        this.parser.clearInventoryItem('inventory', index);
-        this.renderInventory();
-        this.showToast("🗑️ Item eliminado");
-    }
-
-    saveAllInvItems() {
-        if (!this.parser) return;
-        
-        let newUsedSlots = 0;
-        const updates = [];
-        
-        this.invTableBody.querySelectorAll('tr').forEach(tr => {
-            const idInput   = tr.querySelector('.id-input');
-            const qtyInput  = tr.querySelector('.qty-input');
-            const typeInput = tr.querySelector('.type-input');
-            if (idInput && qtyInput && typeInput) {
-                const index = parseInt(idInput.id.split('-').pop());
-                const newId  = parseInt(idInput.value);
-                const newQty = parseInt(qtyInput.value);
-                const newType= parseInt(typeInput.value);
-                if (!isNaN(newId) && !isNaN(newQty) && !isNaN(newType)) {
-                    if (newId > 0 && newQty > 0) newUsedSlots++;
-                    updates.push({index, newId, newQty, newType});
-                }
-            }
-        });
-        
-        // --- Capacity Check ---
-        const overrideInput = document.getElementById('inv-capacity-override');
-        const capInfo = this.parser.getInventoryCapacityInfo(overrideInput ? overrideInput.value : null);
-        
-        if (newUsedSlots > capInfo.capacity) {
-            if (!confirm(`⚠️ Guardar estos cambios superará la capacidad de la mochila (${newUsedSlots}/${capInfo.capacity}). ¿Continuar de todos modos?`)) {
-                return;
-            }
-        }
-        
-        updates.forEach(u => this.parser.updateInventoryItem('inventory', u.index, u.newId, u.newQty, u.newType));
-        this.renderInventory();
-        this.showToast("✅ Todos los items aplicados");
-    }
-
-    // ─── Add Furniture (OdinSerializer) ──────────────────────────────
-    
-    deepCloneNode(obj) {
-        if (obj === null || typeof obj !== 'object') return obj;
-        if (obj.constructor.name === 'OdinNode') {
-            const n = new OdinNode(obj.marker, obj.name, obj.typeId, obj.typeName, obj.nodeId);
-            n.children = obj.children.map(c => this.deepCloneNode(c));
-            return n;
-        }
-        if (obj.constructor.name === 'OdinList') {
-            const n = new OdinList(obj.marker, obj.name, obj.length);
-            n.elements = obj.elements.map(c => this.deepCloneNode(c));
-            n.hasExtraEndOfNode = obj.hasExtraEndOfNode;
-            return n;
-        }
-        if (obj.constructor.name === 'OdinPrimitiveArray') {
-            const raw = new Uint8Array(obj.rawData.length);
-            raw.set(obj.rawData);
-            return new OdinPrimitiveArray(obj.marker, obj.name, obj.numElements, obj.bytesPerElement, raw);
-        }
-        if (obj.constructor.name === 'OdinPrimitive') return new OdinPrimitive(obj.marker, obj.name, obj.value);
-        if (obj.constructor.name === 'OdinString') return new OdinString(obj.marker, obj.name, obj.value);
-        if (obj.constructor.name === 'OdinNull') return new OdinNull(obj.marker, obj.name);
-        if (obj.constructor.name === 'OdinInternalReference') return new OdinInternalReference(obj.marker, obj.name, obj.targetNodeId);
-        if (obj.constructor.name === 'OdinDictionaryEntry') return new OdinDictionaryEntry(this.deepCloneNode(obj.key), this.deepCloneNode(obj.value));
-        if (Array.isArray(obj)) return obj.map(c => this.deepCloneNode(c));
-        
-        // Handle plain objects (like { value: OdinNode } in OdinList elements)
-        if (obj.constructor.name === 'Object') {
-            const clone = {};
-            for (const k in obj) {
-                if (Object.prototype.hasOwnProperty.call(obj, k)) {
-                    clone[k] = this.deepCloneNode(obj[k]);
-                }
-            }
-            return clone;
-        }
-
-        return obj; // Fallback for primitive values
-    }
-
-    getMaxNodeId(ast) {
-        let max = -1;
-        const walk = (node) => {
-            if (!node) return;
-            if (node.constructor.name === 'OdinNode' && node.nodeId !== null && node.nodeId > max) max = node.nodeId;
-            if (node.children) node.children.forEach(walk);
-            if (node.elements) node.elements.forEach(walk);
-            if (node.constructor.name === 'OdinDictionaryEntry') { walk(node.key); walk(node.value); }
-        };
-        ast.forEach(walk);
-        return max;
-    }
-
-    assignNewNodeIds(node, maxIdObj) {
-        if (!node) return;
-        if (node.constructor.name === 'OdinNode' && node.nodeId !== null) {
-            maxIdObj.max++;
-            node.nodeId = maxIdObj.max;
-        }
-        if (node.children) node.children.forEach(c => this.assignNewNodeIds(c, maxIdObj));
-        if (node.elements) node.elements.forEach(c => this.assignNewNodeIds(c, maxIdObj));
-        if (node.constructor.name === 'OdinDictionaryEntry') {
-            this.assignNewNodeIds(node.key, maxIdObj);
-            this.assignNewNodeIds(node.value, maxIdObj);
-        }
-    }
-
-    executeAddFurniture() {
-        const furnId = parseInt(this.addItemSelect.value);
-        const x = parseInt(this.addItemX.value) || 0;
-        const y = parseInt(this.addItemY.value) || 0;
-        
-        if (isNaN(furnId)) {
-            this.showToast('Selecciona un mueble válido', 'error');
-            return;
-        }
-        if (!this.parser || !this.parser.ast) {
-            this.showToast('Carga un archivo save primero', 'error');
-            return;
-        }
-
-
-        const locIdRaw = this.selectLocation.value;
-        const locId = parseInt(locIdRaw);
-        
-        try {
-            const root = this.parser.ast;
-            let locData = null;
-            
-            if (typeof locIdRaw === 'string' && locIdRaw.startsWith('train_vagon_')) {
-                const vagonIdx = parseInt(locIdRaw.split('_')[2]) - 1;
-                const trainSave = root.children.find(c => c.name === 'trainSave');
-                if (!trainSave) throw new Error('No se encontró trainSave');
-                const carriages = trainSave.children.find(c => c.name === 'carriages');
-                const carrList = carriages.children.find(c => c.constructor.name === 'OdinList');
-                locData = carrList.elements[vagonIdx];
-            } else {
-                if (isNaN(locId)) {
-                    this.showToast('Selecciona una ubicación válida', 'error');
-                    return;
-                }
-                const sublocations = root.children.find(c => c.name === 'sublocations');
-                if (!sublocations) throw new Error('No se encontró sublocations en el AST');
-                const sublocationsList = sublocations.children.find(c => c.constructor.name === 'OdinList');
-                const locEntry = sublocationsList.elements.find(e => e.key.value === locId);
-                if (!locEntry) throw new Error('Ubicación no encontrada en el AST');
-                locData = locEntry.value;
-            }
-
-            const furnitureListWrapper = locData.children.find(c => c.name === 'furniture');
-            if (!furnitureListWrapper) throw new Error('No se encontró lista de furniture');
-            const listNode = furnitureListWrapper.children.find(c => c.constructor.name === 'OdinList');
-            
-            // Find a clone template from ANY sublocation
-            let template = null;
-            const globalSublocationsList = root.children.find(c => c.name === 'sublocations')?.children.find(c => c.constructor.name === 'OdinList');
-            if (globalSublocationsList && globalSublocationsList.elements) {
-                for (const sub of globalSublocationsList.elements) {
-                    const subLocData = sub.value;
-                const furnListWrap = subLocData.children.find(c => c.name === 'furniture');
-                if (furnListWrap) {
-                    const lNode = furnListWrap.children.find(c => c.constructor.name === 'OdinList');
-                    if (lNode && lNode.elements.length > 0) {
-                        template = lNode.elements[0];
-                        break;
-                                        }
-                }
-            }
-            }
-            if (!template) throw new Error('No se encontró ningún mueble en todo el mapa para usar como molde.');
-
-            // Clone and Modify
-            const clone = this.deepCloneNode(template);
-            
-            const maxIdObj = { max: this.getMaxNodeId([root]) };
-            this.assignNewNodeIds(clone, maxIdObj);
-            
-            const furnNode = clone.value;
-            
-            // Generate unique placementID
-            let maxPlacementID = 0;
-            this.parser.placements.forEach(p => {
-                if (p.placementID > maxPlacementID) maxPlacementID = p.placementID;
-            });
-            const newPlacementID = maxPlacementID + 1;
-            const pIdNode = furnNode.children.find(c => c.name === 'placementID');
-            if (pIdNode) pIdNode.value = newPlacementID;
-            
-            // Apply map change logic directly to node
-            const dummyPlacement = { furnNode: furnNode, isWall: false };
-            this.parser.applyMapChange(dummyPlacement, furnId, x, y, 0);
-            
-            const gNumNode = furnNode.children.find(c => c.name === 'groupPosition')?.children.find(c => c.name === 'groupNum');
-            if (gNumNode) gNumNode.value = parseInt(this.selectFloor.value) || 0;
-            
-            listNode.elements.push(clone);
-            this.parser.parseMap();
-            this.map.selectedPlacement = null;
-            this.map.draw();
-            this.addItemEditor.classList.add('hidden');
-            
-            this.showToast('✅ Mueble inyectado con éxito!');
-            
-        } catch (err) {
-            console.error(err);
-            this.showToast('Error al inyectar mueble: ' + err.message, 'error');
-        }
-    }
-
-    // ─── Map Editor ───────────────────────────────────────────────────────────
-
-
-    refreshWallGroupSelect() {
-        const loc = Number(document.getElementById('select-location')?.value || 1);
-        const sel = document.getElementById('select-wall-group');
-        const box = document.querySelector('.wall-group-selector');
-        if (!sel || !this.parser) return;
-
-        const groups = [...new Set(
-            this.parser.placements
-                .filter(p => p.isWall && Number(p.cluster) === loc)
-                .map(p => String(p.floor))
-        )].sort();
-
-        sel.innerHTML = groups.length
-            ? groups.map(g => `<option value="${g}">Group ${g}</option>`).join('')
-            : `<option value="" disabled selected>(sin paredes)</option>`;
-        
-        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
-        box.style.display = (layerRadio && layerRadio.value === 'wall') ? 'block' : 'none';
-        
-        if (groups.length > 0 && layerRadio && layerRadio.value === 'wall') {
-            this.showToast(`Paredes en subloc: ${groups.length} groups`, 'info');
-        }
-    }
-
-    renderWallpapersTab() {
-        const targetLocStr = document.getElementById('select-wallpaper-location')?.value || document.getElementById('select-location')?.value;
-        const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
-        
-        const wtable = document.querySelector('#wallpapers-table tbody');
-        const ftable = document.querySelector('#floors-table tbody');
-        if (!wtable || !ftable) return;
-        wtable.innerHTML = '';
-        ftable.innerHTML = '';
-
-        if (this.parser && this.parser.wallpapers && this.parser.wallpapers[targetLoc]) {
-            this.parser.wallpapers[targetLoc].forEach(w => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td style="padding:0.5rem;">${w.key}</td>
-                                <td><input type="number" value="${w.id}" data-key="${w.key}" class="edit-wp" style="width:100%;"></td>
-                                <td style="text-align:center;"><button class="btn-primary wp-save">Guardar</button></td>`;
-                wtable.appendChild(tr);
-            });
-        }
-        
-        if (this.parser && this.parser.floors && this.parser.floors[targetLoc]) {
-            this.parser.floors[targetLoc].forEach(f => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td style="padding:0.5rem;">${f.key}</td>
-                                <td><input type="number" value="${f.id}" data-key="${f.key}" class="edit-floor" style="width:100%;"></td>
-                                <td style="text-align:center;"><button class="btn-primary floor-save">Guardar</button></td>`;
-                ftable.appendChild(tr);
-            });
-        }
-
-        wtable.querySelectorAll('.wp-save').forEach(btn => {
-            btn.addEventListener('click', e => {
-                const tr = e.target.closest('tr');
-                const input = tr.querySelector('.edit-wp');
-                this.parser.setWallpaper(targetLoc, input.dataset.key, input.value);
-                this.showToast('Papel tapiz actualizado', 'success');
-            });
-        });
-
-        ftable.querySelectorAll('.floor-save').forEach(btn => {
-            btn.addEventListener('click', e => {
-                const tr = e.target.closest('tr');
-                const input = tr.querySelector('.edit-floor');
-                this.parser.setFloor(targetLoc, input.dataset.key, input.value);
-                this.showToast('Suelo actualizado', 'success');
-            });
-        });
-    }
-
-    openItemEditor(placement) {
-        this.editItemId.value  = placement.item_id;
-        this.editItemX.value   = placement.x;
-        this.editItemY.value   = placement.y;
-        if (placement.orientation !== undefined && this.editItemOri) this.editItemOri.value = placement.orientation;
-        const icon = document.getElementById('edit-item-icon');
-        if (icon) {
-            const newIcon = document.createElement('div');
-            newIcon.innerHTML = window.getSafeImageHTML(placement.item_id, 'furn', 'id="edit-item-icon" style="max-width:64px;max-height:64px;display:block;margin:0 auto;"');
-            icon.parentNode.replaceChild(newIcon.firstChild, icon);
-        }
-        this.editItemId.oninput = e => {
-            const currentIcon = document.getElementById('edit-item-icon');
-            if (currentIcon) {
-                const newIcon = document.createElement('div');
-                newIcon.innerHTML = window.getSafeImageHTML(e.target.value, 'furn', 'id="edit-item-icon" style="max-width:64px;max-height:64px;display:block;margin:0 auto;"');
-                currentIcon.parentNode.replaceChild(newIcon.firstChild, currentIcon);
-            }
-        };
-
-        const shinyBtn = document.getElementById('btn-make-shiny');
-        if (shinyBtn) {
-            const rotMap = window.ROTATION_MAP && window.ROTATION_MAP[placement.item_id];
-            if (rotMap && rotMap.B) {
-                shinyBtn.style.display = 'flex';
-                shinyBtn.onclick = () => {
-                    this.editItemId.value = rotMap.B;
-                    this.editItemId.dispatchEvent(new Event('input'));
-                    document.getElementById('btn-apply-item')?.click();
-                    this.showToast(`Convertido a variante B (ID: ${rotMap.B})`, 'success');
-                };
-            } else {
-                shinyBtn.style.display = 'none';
-            }
-        }
-        
-        if (this.seedPlantingUI) {
-            // Also show crop controls for direct seeds on map
-            const isSeed = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(placement.item_id));
-            const tn = placement.furnNode ? (placement.furnNode.typeName || placement.furnNode.className) : null;
-            const isCrop = isSeed || (tn && /CropSave/i.test(tn));
-            const cropGrowthUI = document.getElementById('crop-growth-ui');
-
-            if (placement.item_id === 306 || placement.item_id === 411 || isCrop) {
-                this.seedPlantingUI.classList.remove('hidden');
-                const cropInfo = document.getElementById('current-crop-info');
-                const matureBtn = document.getElementById('btn-mature-crop');
-                const ripeLabel = document.getElementById('label-crop-ripe');
-                const ripeCb = document.getElementById('edit-crop-ripe');
-                
-                const targetPlacement = isSeed ? placement : placement.linkedSeed;
-
-                if (targetPlacement) {
-                    const name = window.KNOWN_ITEMS['FURN_' + targetPlacement.item_id] || 'Semilla ' + targetPlacement.item_id;
-                    if (cropInfo) cropInfo.innerHTML = window.getSafeImageHTML(targetPlacement.item_id, 'furn', 'style="width:24px; vertical-align:middle; margin-right:5px;"') + ` <strong>${name}</strong>`;
-                    if (matureBtn) matureBtn.style.display = 'block';
-                    
-                    const fields = this.parser.getCropSaveFields(targetPlacement);
-                    if (fields && ripeLabel && ripeCb) {
-                        ripeLabel.style.display = 'flex';
-                        ripeCb.checked = fields.ripeNode ? fields.ripeNode.value : false;
-                        
-                        // Handle changing ripe manually without hitting mature all
-                        ripeCb.onchange = (e) => {
-                            this.parser.setCropRipe(targetPlacement, e.target.checked);
-                            this.map.draw();
-                        };
-                        
-                        matureBtn.onclick = () => {
-                            this.parser.setCropRipe(targetPlacement, true);
-                            ripeCb.checked = true;
-                            this.showToast('🌱 Planta madurada.');
-                            this.map.draw();
-                            this.openItemEditor(placement); // reload to update UI
-                        };
-                    } else if (ripeLabel) {
-                        ripeLabel.style.display = 'none';
-                    }
-                    
-                    // --- Crop Growth UI Logic ---
-                    if (cropGrowthUI) {
-                        const timing = this.parser.getCropTiming(targetPlacement);
-                        if (timing && timing.harvestTimeOA !== null) {
-                            cropGrowthUI.classList.remove('hidden');
-                            const statusEl = document.getElementById('crop-growth-status');
-                            const daysInput = document.getElementById('edit-crop-days');
-                            const btnApply = document.getElementById('btn-apply-crop-time');
-                            const btnMatureS = document.getElementById('btn-mature-crop-single');
-                            const btnAddHour = document.getElementById('btn-add-crop-hour');
-                            const btnAddDay = document.getElementById('btn-add-crop-day');
-                            
-                            if (timing.isReady) {
-                                statusEl.textContent = "Listo para cosechar";
-                                statusEl.style.color = "#27ae60";
-                                daysInput.value = 0;
-                            } else {
-                                statusEl.textContent = `Quedan ~${timing.daysLeft.toFixed(1)} días`;
-                                statusEl.style.color = "#e67e22";
-                                daysInput.value = parseFloat(timing.daysLeft.toFixed(2));
-                            }
-                            
-                            const applyDays = (days) => {
-                                try {
-                                    this.parser.setCropDaysLeft(targetPlacement, days);
-                                    this.showToast(`⏱️ Tiempo aplicado (${days.toFixed(2)} días).`);
-                                    this.map.draw();
-                                    this.openItemEditor(placement); // reload ui
-                                } catch (e) {
-                                    this.showToast("❌ " + e.message);
-                                }
-                            };
-                            
-                            btnApply.onclick = () => applyDays(parseFloat(daysInput.value) || 0);
-                            btnMatureS.onclick = () => applyDays(0);
-                            btnAddHour.onclick = () => { 
-                                daysInput.value = parseFloat((parseFloat(daysInput.value) || 0) + (1/24)).toFixed(2); 
-                            };
-                            btnAddDay.onclick = () => { 
-                                daysInput.value = parseFloat((parseFloat(daysInput.value) || 0) + 1).toFixed(2); 
-                            };
-                        } else {
-                            cropGrowthUI.classList.add('hidden');
-                        }
-                    }
-                } else {
-                    if (cropInfo) cropInfo.textContent = 'Ningún cultivo plantado.';
-                    if (matureBtn) matureBtn.style.display = 'none';
-                    if (ripeLabel) ripeLabel.style.display = 'none';
-                    if (cropGrowthUI) cropGrowthUI.classList.add('hidden');
-                }
-            } else {
-                this.seedPlantingUI.classList.add('hidden');
-                if (cropGrowthUI) cropGrowthUI.classList.add('hidden');
-            }
-        }
-        
-        this.itemEditor.classList.remove('hidden');
-    }
-
-    closeItemEditor() { this.itemEditor.classList.add('hidden'); }
-
-    _findNodeByName(node, names) {
-        if (!node) return null;
-        if (node.name && names.includes(node.name)) return node;
-        if (node.children) {
-            for (const c of node.children) {
-                const r = this._findNodeByName(c, names);
-                if (r) return r;
-            }
-        }
-        if (node.elements) {
-            for (const el of node.elements) {
-                const r = this._findNodeByName(el.value, names);
-                if (r) return r;
-            }
-        }
-        if (node.value && typeof node.value === 'object') {
-            return this._findNodeByName(node.value, names);
-        }
-        return null;
-    }
-
-    _resetCropTime(seedObj) {
-        const nowOADate = (Date.now() / 86400000) + 25569;
-        const durationDays = (2 / 24); // 2 hours default
-        
-        let hNode = seedObj.harvestTimeNode || this._findNodeByName(seedObj.furnNode, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
-        if (hNode) hNode.value = nowOADate + durationDays;
-
-        let pNode = seedObj.placedNode || this._findNodeByName(seedObj.furnNode, ['placedOA', 'Placed', 'placed']);
-        if (pNode) pNode.value = nowOADate;
-    }
-
-    executeMatureCrop() {
-        if (!this.map.selectedPlacement) return;
-        let p = this.map.selectedPlacement;
-        if (p.linkedPlot) p = p.linkedPlot;
-        if (!p.linkedSeed) return;
-
-        try {
-            const seed = p.linkedSeed;
-            if (seed.harvestTimeNode) {
-                const nowOADate = (Date.now() / 86400000) + 25569;
-                seed.harvestTimeNode.value = nowOADate;
-                
-                this.parser.parseMap();
-                this.showToast('☀️ ¡Cultivo madurado con éxito!');
-            } else {
-                console.warn('No se encontró el nodo harvestTime en la semilla.');
-                alert('No se pudo encontrar el tiempo de cosecha en el AST.');
-            }
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    executePlantSeed() {
-        if (!this.map.selectedPlacement) return;
-        let p = this.map.selectedPlacement;
-        if (p.linkedPlot) p = p.linkedPlot;
-        if (p.item_id !== 306 && p.item_id !== 411) return;
-
-        const seedId = parseInt(this.editSeedSelect.value);
-        if (isNaN(seedId)) return;
-
-        try {
-            // ─── Rama 1: cambiar semilla en parcela ya plantada ───
-            if (p.planted_id && p.linkedSeed) {
-                const seedNode = p.linkedSeed.furnNode;
-                const idNode = this._findNodeByName(seedNode, ['itemID', 'item_id', 'itemId']);
-                if (idNode) idNode.value = seedId;
-                
-                const refNode = this._findNodeByName(seedNode, ['reference']);
-                if (refNode) {
-                    const rIdNode = this._findNodeByName(refNode, ['id']);
-                    if (rIdNode) rIdNode.value = seedId;
-                }
-                
-                if (typeof calcVerificationId !== 'undefined') {
-                    const vNode = this._findNodeByName(seedNode, ['verificationID', 'verify']);
-                    if (vNode) vNode.value = calcVerificationId(seedId);
-                }
-                
-                // Force 0,0 so it anchors correctly to the plot in-game
-                const gpNode = this._findNodeByName(seedNode, ['groupPosition']);
-                const pNode = this._findNodeByName(seedNode, ['position']);
-                if (typeof writeGroupXY !== 'undefined') {
-                    writeGroupXY(gpNode, 0, 0, pNode);
-                }
-                
-                this._resetCropTime(p.linkedSeed);
-                
-                // B6: Verificar post-change
-                const savedPlotId = p.placementID;
-                this.parser.parseMap();
-                this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === savedPlotId);
-                this.map.draw();
-                if (this.map.selectedPlacement) {
-                    this.openItemEditor(this.map.selectedPlacement);
-                    if (this.map.selectedPlacement.linkedSeed && Number(this.map.selectedPlacement.planted_id) === Number(seedId)) {
-                        this.showToast('🌱 ¡Semilla cambiada con éxito!');
-                    } else {
-                        alert('⚠️ La semilla se cambió pero el link no se verificó correctamente.');
-                    }
-                }
-                return;
-            }
-
-            // ─── Rama 2: plantar en parcela vacía ───
-            let newSeedNode;
-
-            // Buscar template existente en el save
-            const templateSeed = this.parser.placements.find(pl => {
-                const tn = pl.furnNode && (pl.furnNode.typeName || pl.furnNode.className);
-                return (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(pl.item_id)) || (tn && /CropSave/i.test(tn));
-            });
-
-            if (templateSeed && templateSeed.furnNode) {
-                // Clonar template existente (deep clone preservando prototipos Odin)
-                const cloneNode = (node) => {
-                    if (!node) return null;
-                    if (node instanceof OdinDictionaryEntry) {
-                        return new OdinDictionaryEntry(cloneNode(node.key), cloneNode(node.value));
-                    }
-                    const clone = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
-                    if (node.children) clone.children = node.children.map(cloneNode);
-                    if (node.elements) clone.elements = node.elements.map(cloneNode);
-                    if (clone.value && typeof clone.value === 'object' && clone.value.constructor &&
-                        !(clone.value instanceof Uint8Array)) {
-                        clone.value = cloneNode(clone.value);
-                    }
-                    return clone;
-                };
-                newSeedNode = cloneNode(templateSeed.furnNode);
-                
-                // Force 0,0 on the cloned node in case the template was buggy
-                const gpNode = this._findNodeByName(newSeedNode, ['groupPosition']);
-                const pNode = this._findNodeByName(newSeedNode, ['position']);
-                if (typeof writeGroupXY !== 'undefined') {
-                    writeGroupXY(gpNode, 0, 0, pNode);
-                }
-            } else {
-                // B3: Plantilla mínima embebida — marcadores reales del save:
-                //   FurniturePlacement (0x01, typeId=28, "FurniturePlacement, Odyssey")
-                //   ├── placementID (0x17)
-                //   ├── verificationID (0x17)
-                //   ├── reference (0x03, typeId=29, "FurnitureRef, Odyssey")
-                //   │   ├── id (0x17), orientation (0x1d BigInt)
-                //   ├── groupPosition (0x01, typeId=33, "SubGroupPosition, Odyssey")
-                //   │   ├── grid (0x03, typeId=8, "SimpleGrid, Odyssey") {x, y}
-                //   │   └── parentPlacementID (0x17)
-                //   ├── position (0x03, typeId=30, "GridPointer, Odyssey")
-                //   │   ├── pointerType (0x1d), grid{x,y}, groupPointer (0x17)
-                //   └── furnSave (0x01, typeId=56, "CropSave, Odyssey")
-                //       ├── placedOA (0x21), harvestTimeOA (0x21)
-                //       ├── blessings (null), ripe, strange, consumed
-                const baseNodeId = Date.now() & 0x7FFFFFFF; // nodeId único
-                const nowOA = (Date.now() / 86400000) + 25569;
-
-                newSeedNode = new OdinNode(0x01, '$v', 28, 'FurniturePlacement, Odyssey', baseNodeId);
-                newSeedNode.children = [
-                    new OdinPrimitive(0x17, 'placementID', 0), // se asigna abajo
-                    new OdinPrimitive(0x17, 'verificationID', 0), // se asigna abajo
-                    (() => {
-                        const ref = new OdinNode(0x03, 'reference', 29, 'FurnitureRef, Odyssey', null);
-                        ref.children = [
-                            new OdinPrimitive(0x17, 'id', seedId),
-                            new OdinPrimitive(0x1d, 'orientation', 0n)
-                        ];
-                        return ref;
-                    })(),
-                    (() => {
-                        const gp = new OdinNode(0x01, 'groupPosition', 33, 'SubGroupPosition, Odyssey', baseNodeId + 1);
-                        const grid = new OdinNode(0x03, 'grid', 8, 'SimpleGrid, Odyssey', null);
-                        grid.children = [
-                            new OdinPrimitive(0x17, 'x', 0),
-                            new OdinPrimitive(0x17, 'y', 0)
-                        ];
-                        gp.children = [grid, new OdinPrimitive(0x17, 'parentPlacementID', 0)]; // se asigna abajo
-                        return gp;
-                    })(),
-                    (() => {
-                        const pos = new OdinNode(0x03, 'position', 30, 'GridPointer, Odyssey', null);
-                        const grid = new OdinNode(0x03, 'grid', 8, 'SimpleGrid, Odyssey', null);
-                        grid.children = [
-                            new OdinPrimitive(0x17, 'x', 0),
-                            new OdinPrimitive(0x17, 'y', 0)
-                        ];
-                        pos.children = [
-                            new OdinPrimitive(0x1d, 'pointerType', 0n),
-                            grid,
-                            new OdinPrimitive(0x17, 'groupPointer', 0)
-                        ];
-                        return pos;
-                    })(),
-                    (() => {
-                        const fs = new OdinNode(0x01, 'furnSave', 56, 'CropSave, Odyssey', baseNodeId + 2);
-                        fs.children = [
-                            new OdinPrimitive(0x21, 'placedOA', nowOA),
-                            new OdinPrimitive(0x21, 'harvestTimeOA', nowOA + (2/24)),
-                            new OdinNull(0x2d, 'blessings'),
-                            new OdinPrimitive(0x2b, 'ripe', false),
-                            new OdinPrimitive(0x2b, 'strange', false),
-                            new OdinPrimitive(0x2b, 'consumed', false)
-                        ];
-                        return fs;
-                    })()
-                ];
-            }
-
-            // Generar nuevo placementID único
-            const maxPlacementId = Math.max(...this.parser.placements.map(pl => pl.placementID || 0));
-            const newPlacementId = maxPlacementId + 1;
-
-            // Asignar IDs en el nodo
-            const idNode = this._findNodeByName(newSeedNode, ['itemID', 'item_id', 'itemId']);
-            if (idNode) idNode.value = seedId;
-            
-            const refNode = this._findNodeByName(newSeedNode, ['reference']);
-            if (refNode) {
-                const rIdNode = this._findNodeByName(refNode, ['id']);
-                if (rIdNode) rIdNode.value = seedId;
-            }
-
-            const pIdNode = this._findNodeByName(newSeedNode, ['placementID']);
-            if (pIdNode) pIdNode.value = newPlacementId;
-            
-            // B2: parentPlacementID = placementID de la parcela (está dentro de groupPosition)
-            const parentIdNode = this._findNodeByName(newSeedNode, ['parentPlacementID', 'ParentPlacementID']);
-            if (parentIdNode) parentIdNode.value = Number(p.placementID);
-            
-            if (typeof calcVerificationId !== 'undefined') {
-                const vNode = this._findNodeByName(newSeedNode, ['verificationID', 'verify']);
-                if (vNode) vNode.value = calcVerificationId(seedId);
-            }
-
-            this._resetCropTime({ furnNode: newSeedNode });
-
-            
-            // B5: Insertar en furniture de la sublocalización correcta o tren
-            let targetFurnList = null;
-            
-            if (typeof p.cluster === 'string' && p.cluster.startsWith('train_vagon_')) {
-                const vagonIdx = parseInt(p.cluster.split('_')[2]) - 1;
-                const trainSave = this.parser.ast.children.find(c => c.name === 'trainSave');
-                if (trainSave) {
-                    const carriages = trainSave.children.find(c => c.name === 'carriages');
-                    const carrList = carriages.children.find(c => c.constructor.name === 'OdinList');
-                    const locData = carrList.elements[vagonIdx];
-                    if (locData && locData.children) {
-                        const furnWrapper = locData.children.find(c => c.name === (p.isWall ? 'wallFurniture' : 'furniture'));
-                        targetFurnList = furnWrapper ? furnWrapper.children.find(c => c.constructor.name === 'OdinList') : null;
-                    }
-                }
-            } else {
-                const sublocsWrapper = this.parser.ast.children.find(c => c.name === 'sublocations');
-                if (!sublocsWrapper) { alert('Error: no se encontró "sublocations" en el AST.'); return; }
-                const sublocsList = sublocsWrapper.children.find(c => c.constructor.name === 'OdinList');
-                const farmEntry = sublocsList.elements.find(e => e.key.value === parseInt(p.cluster));
-                if (!farmEntry) {
-                    alert('Error: no se encontró la sublocalización ' + p.cluster + ' en el AST.');
-                    return;
-                }
-                const sublocData = farmEntry.value;
-                const furnWrapper = sublocData.children.find(c => c.name === (p.isWall ? 'wallFurniture' : 'furniture'));
-                targetFurnList = furnWrapper ? furnWrapper.children.find(c => c.constructor.name === 'OdinList') : null;
-            }
-            
-            if (!targetFurnList) { alert('Error: no se encontró la lista de furniture.'); return; }
-
-
-            // Insertar como OdinDictionaryEntry con el formato real del save ($k/$v)
-            const dictKey = new OdinPrimitive(0x17, '$k', newPlacementId);
-            targetFurnList.elements.push(new OdinDictionaryEntry(dictKey, newSeedNode));
-
-            // B6: Verificar que el link quedó bien
-            const savedPlotId = p.placementID;
-            this.parser.parseMap();
-            this.map.selectedPlacement = this.parser.placements.find(np => np.placementID === savedPlotId);
-            this.map.draw();
-
-            if (this.map.selectedPlacement) {
-                this.openItemEditor(this.map.selectedPlacement);
-                if (this.map.selectedPlacement.linkedSeed && Number(this.map.selectedPlacement.planted_id) === Number(seedId)) {
-                    this.showToast('🌱 ¡Semilla plantada con éxito!');
-                } else {
-                    alert('⚠️ El nodo se insertó pero el link parcela↔semilla no se verificó. ' +
-                          'Posible causa: parentPlacementID no coincide con la parcela.');
-                }
-            } else {
-                alert('⚠️ No se encontró la parcela tras re-parsear.');
-            }
-
-        } catch (e) {
-            console.error(e);
-            alert('Error al plantar la semilla: ' + e.message);
-        }
-    }
-
-    // ─── Phone (Punchcard & Locations) ──────────────────────────────────
-
-    // 📰 Newspapers
     renderNewsTab() {
         if (!this.parser) return;
         const news = this.parser.getNewspapers();
