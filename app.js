@@ -816,9 +816,15 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this.renderPhoneTab();
         this.renderMailTab();
 
-        // Train
+                // Train
         this.parser.parseTrainSave();
         this.renderTrainTab();
+
+        if (this.renderNewsTab) this.renderNewsTab();
+        if (this.renderMailUniqueOrders) this.renderMailUniqueOrders();
+        if (this.renderTrainExtra) this.renderTrainExtra();
+        if (this.renderExperimentalStructures) this.renderExperimentalStructures();
+        if (this.renderExtraVars) this.renderExtraVars();
     }
 
     // ─── General Variables Tab ────────────────────────────────────────
@@ -3041,14 +3047,18 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         
         const trip = this.parser.getTripSave();
         if (tStat) {
-            if (trip.present && trip.isNull) tStat.innerHTML = 'Trip: <strong>Presente (OdinNull)</strong>';
-            else if (trip.present) tStat.innerHTML = 'Trip: <strong>Presente (Con datos)</strong>';
-            else tStat.innerHTML = 'Trip: <strong>No presente</strong>';
+            if (!trip.present) {
+                tStat.textContent = '❌ Trip: no presente';
+            } else if (trip.isNull) {
+                tStat.textContent = '⚪ Trip: null (sin viaje activo)';
+            } else {
+                tStat.textContent = `✅ Trip activo (keys: ${trip.keys.join(', ')})`;
+            }
         }
         
         if (aStat) {
             if (acts.length > 0) {
-                aStat.innerHTML = acts.map(a => `Act ${a.id} (NPC ${a.npc}): ${a.valid ? 'Válido' : 'No Válido'}`).join('<br>');
+                aStat.innerHTML = acts.map(a => `Act ${a.id} (NPC ${a.npc}): ${a.valid ? 'Válido' : 'No Válido'}${a.subloc !== null ? ' - SubLoc: ' + a.subloc : ''}`).join('<br>');
             } else {
                 aStat.innerHTML = 'No hay Activities.';
             }
@@ -3056,8 +3066,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         
         const npcsInput = document.getElementById('input-train-npcs');
         if (npcsInput) {
-            const npcs = this.parser.getNpcsOnTrain();
-            npcsInput.value = npcs.join(', ');
+            const data = this.parser.getNpcsOnTrain();
+            npcsInput.value = data.npcs.join(', ');
         }
     }
     
@@ -3202,7 +3212,6 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const arrayBuffer = await file.arrayBuffer();
         let otherParser;
         try {
-            // Assume classes exist globally
             otherParser = new SaveParser(arrayBuffer);
             otherParser.parseAll();
         } catch (e) {
@@ -3213,36 +3222,50 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         out.style.display = 'block';
         out.textContent = "Calculando diferencias...\n";
         
-        const aData = {
-            letters: this.parser.getLetters().length,
-            events: this.parser.getVillageEventState().all.length,
-            activities: this.parser.getActivitySaves().length,
-            carrots: this.parser.getInventoryCarrots(),
-            hc: this.parser.getInventoryHomecomingTickets()
+        const getStats = (p) => {
+            const ev = p.getVillageEventState ? p.getVillageEventState() : {all:[]};
+            let actEv = ev.all.find(e => e.eventID > 0);
+            
+            let carrots = 0;
+            if (p.ast) {
+                const gv = p._findNodesInAST ? p._findNodesInAST('generalVars')[0] : null;
+                if (gv && gv.children) {
+                    const c = gv.children.find(ch => ch.name === 'Carrots');
+                    if (c) carrots = c.value;
+                }
+            }
+            
+            const news = p.getNewspapers ? p.getNewspapers() : [];
+            const doneNews = news.filter(n => n.done).length;
+            const meta = p.getLetterOrderMeta ? p.getLetterOrderMeta() : {};
+            const uOrd = meta.uniqueOrders;
+            const hs = p.getHomeCurrSLocData ? p.getHomeCurrSLocData() : null;
+            
+            return {
+                letters: p.getLetters ? p.getLetters().length : 0,
+                eventsTotal: ev.all.length,
+                activeEvent: actEv ? `ID:${actEv.eventID} Y:${actEv.year}` : 'None',
+                activities: p.getActivitySaves ? p.getActivitySaves().length : 0,
+                trip: (p.getTripSave && p.getTripSave().present) ? 'Yes' : 'No',
+                carrots: carrots,
+                newsDone: doneNews,
+                uniqueOrders: uOrd !== undefined && uOrd !== null ? uOrd.toString() : 'None',
+                homeTier: hs ? hs.value : 'N/A'
+            };
         };
         
-        const bData = {
-            letters: otherParser.getLetters().length,
-            events: otherParser.getVillageEventState().all.length,
-            activities: otherParser.getActivitySaves().length,
-            carrots: otherParser.getInventoryCarrots(),
-            hc: otherParser.getInventoryHomecomingTickets()
-        };
+        const aData = getStats(this.parser);
+        const bData = getStats(otherParser);
         
-        const compare = (key, name) => {
-            if (aData[key] === bData[key]) return `IGUAL    | ${name}: ${aData[key]}`;
-            return `CAMBIÓ   | ${name}: (A) ${aData[key]} -> (B) ${bData[key]}`;
-        };
+        let diffText = "";
+        for (const key in aData) {
+            if (aData[key] !== bData[key]) {
+                diffText += `[${key}] A: ${aData[key]} | B: ${bData[key]}\n`;
+            }
+        }
         
-        let diff = [];
-        diff.push("--- Comparación Estructural Básica ---");
-        diff.push(compare('letters', 'Cant. Cartas'));
-        diff.push(compare('events', 'Cant. Eventos Aldea'));
-        diff.push(compare('activities', 'Cant. Actividades'));
-        diff.push(compare('carrots', 'Zanahorias'));
-        diff.push(compare('hc', 'Homecoming Tickets'));
-        
-        out.textContent = diff.join('\n');
+        if (!diffText) diffText = "No hay diferencias en los campos rastreados.";
+        out.textContent = diffText;
     }
 
 

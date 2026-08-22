@@ -2666,7 +2666,10 @@ class SaveParser {
         if (lNode) {
             const arr = lNode.marker === 0x08 ? lNode : (lNode.children ? lNode.children.find(c => c.marker === 0x08) : null);
             if (arr && arr.rawData) {
-                lastOrders = Array.from(arr.rawData);
+                const view = new DataView(arr.rawData.buffer, arr.rawData.byteOffset, arr.rawData.byteLength);
+                for (let i = 0; i < Math.floor(arr.rawData.length / 4); i++) {
+                    lastOrders.push(view.getInt32(i * 4, true));
+                }
             }
         }
         
@@ -2683,18 +2686,14 @@ class SaveParser {
         const uNode = findChildRecursive(this.ast, ['uniqueOrders']);
         if (!uNode) return false;
         
-        // uniqueOrders is an OdinPrimitive holding a bitmask (BigInt or Number)
-        // Let's use BigInt to safely clear bit
-        try {
-            let current = BigInt(uNode.value);
-            let mask = ~(BigInt(1) << BigInt(orderId));
-            let newValue = current & mask;
-            uNode.value = newValue; // might need to be Number or BigInt depending on original, OdinWriter handles both natively if primitive
+        if (typeof uNode.value === 'bigint') {
+            uNode.value = uNode.value & ~(1n << BigInt(orderId));
             return true;
-        } catch(e) {
-            console.error(e);
-            return false;
+        } else if (typeof uNode.value === 'number') {
+            uNode.value = uNode.value & ~(1 << Number(orderId));
+            return true;
         }
+        return false;
     }
 
     setLastOrders(ordersArray) {
@@ -2703,19 +2702,15 @@ class SaveParser {
         if (!lNode) return false;
         
         let arr = lNode.marker === 0x08 ? lNode : (lNode.children ? lNode.children.find(c => c.marker === 0x08) : null);
-        if (arr && arr.rawData) {
-            if (arr.rawData.length < ordersArray.length) {
-                const newArr = new Uint8Array(ordersArray.length);
-                newArr.set(arr.rawData);
-                arr.rawData = newArr;
+        if (arr) {
+            const bytesNeeded = ordersArray.length * 4;
+            if (!arr.rawData || arr.rawData.length !== bytesNeeded) {
+                arr.rawData = new Uint8Array(bytesNeeded);
                 arr.numElements = ordersArray.length;
             }
+            const view = new DataView(arr.rawData.buffer, arr.rawData.byteOffset, arr.rawData.byteLength);
             for (let i = 0; i < ordersArray.length; i++) {
-                arr.rawData[i] = ordersArray[i] ? 1 : 0; // Or whatever value lastOrders stores. Wait, is it a bool array? 
-                // Ah! lastOrders is probably not bool, it might be an array of bytes.
-                // Let's assume it stores IDs if it's byte array, or if it's int array it would be different.
-                // Actually lastOrders in OdinPrimitiveArray might be a byte array.
-                arr.rawData[i] = ordersArray[i];
+                view.setInt32(i * 4, ordersArray[i], true);
             }
             return true;
         }
@@ -2723,9 +2718,21 @@ class SaveParser {
     }
 
     // --- Feature B, C, H, I: Defensive Parsers ---
-    getBountySave() { return { present: false, message: 'No presente en este save.' }; }
-    getParsnapSave() { return { present: false, message: 'No presente en este save.' }; }
-    getCropBoxSave() { return { present: false, message: 'No presente en este save.' }; }
+    getBountySave() {
+        let node = findChildRecursive(this.ast, ['bountySave', 'BountySave', 'bountyBoard', 'BountyBoard']);
+        if (!node) node = this._findNodesInAST('BountySave')[0] || this._findNodesInAST('BountyBoard')[0];
+        return { present: !!node, message: node ? 'Presente' : 'No presente en este save.', node };
+    }
+    getParsnapSave() {
+        let node = findChildRecursive(this.ast, ['parsnapSave', 'ParsnapSave']);
+        if (!node) node = this._findNodesInAST('ParsnapSave')[0];
+        return { present: !!node, message: node ? 'Presente' : 'No presente en este save.', node };
+    }
+    getCropBoxSave() {
+        let node = findChildRecursive(this.ast, ['cropBox', 'CropBox', 'cropBoxSave']);
+        if (!node) node = this._findNodesInAST('CropBox')[0];
+        return { present: !!node, message: node ? 'Presente' : 'No presente en este save.', node };
+    }
     getDeliverySave() {
         const dNode = findChildRecursive(this.ast, ['deliverySave']);
         return { present: dNode ? true : false, isNull: dNode && dNode.constructor.name === 'OdinNull' };
@@ -2741,9 +2748,14 @@ class SaveParser {
         const node = target.astNode || target.node;
         if (!node || !node.children) return false;
         
-        let child = node.children.find(c => c.name === field);
+        let targetField = field.toLowerCase();
+        let child = node.children.find(c => c.name && c.name.toLowerCase() === targetField);
         if (child) {
-            child.value = Number(value);
+            if (typeof child.value === 'bigint') {
+                child.value = BigInt(value);
+            } else {
+                child.value = Number(value);
+            }
             return true;
         }
         return false;
@@ -2752,38 +2764,52 @@ class SaveParser {
     // --- Feature E: Activity + Trip ---
     getActivitySaves() {
         if (!this.ast) return [];
-        const aNodes = this._findNodesInAST('Activity');
-        if (aNodes.length === 0) return [];
-        
-        // Not a list, maybe standalone fields or a list
-        // Let's just find all Activity nodes
-        const acts = [];
-        const findActs = (n) => {
-            if (n.name === 'Activity') {
-                let id = n.children && n.children.find(c => c.name === 'ActivityID');
-                let npc = n.children && n.children.find(c => c.name === 'NpcID');
-                let start = n.children && n.children.find(c => c.name === 'ActivityStart');
-                let valid = n.children && n.children.find(c => c.name === 'Valid');
-                acts.push({
-                    id: id ? id.value : null,
-                    npc: npc ? npc.value : null,
-                    start: start ? start.value : null,
-                    valid: valid ? !!valid.value : null,
-                    node: n
-                });
+        let actRoot = findChildRecursive(this.ast, ['activity']);
+        let nodes = [];
+        if (actRoot) {
+            const search = (n) => {
+                if (n && n.name && n.name.toLowerCase() === 'activity') nodes.push(n);
+                if (n && n.children) n.children.forEach(search);
+                if (n && n.elements) n.elements.forEach(search);
             }
-            if (n.children) n.children.forEach(findActs);
-            if (n.elements) n.elements.forEach(findActs);
-        };
-        findActs(this.ast);
+            search(actRoot);
+            if (nodes.length === 0 && actRoot.children) nodes.push(actRoot);
+        } else {
+            const nodes1 = this._findNodesInAST('Activity');
+            const nodes2 = this._findNodesInAST('activity');
+            nodes = [...new Set([...nodes1, ...nodes2])];
+        }
+
+        const acts = [];
+        nodes.forEach(n => {
+            if (!n.children) return;
+            let id = n.children.find(c => c.name === 'ActivityID');
+            let npc = n.children.find(c => c.name === 'NpcID');
+            let start = n.children.find(c => c.name === 'ActivityStart');
+            let valid = n.children.find(c => c.name === 'Valid');
+            let subloc = n.children.find(c => c.name === 'sublocationID' || c.name === 'localLocationID');
+            acts.push({
+                id: id ? id.value : null,
+                npc: npc ? npc.value : null,
+                start: start ? start.value : null,
+                valid: valid ? !!valid.value : false,
+                subloc: subloc ? subloc.value : null,
+                node: n
+            });
+        });
         return acts;
     }
 
     getTripSave() {
         const tNodes = findChildRecursive(this.ast, ['trip', 'Trip']);
+        let keys = [];
+        if (tNodes && tNodes.children) {
+            keys = tNodes.children.map(c => c.name).filter(Boolean);
+        }
         return {
             present: tNodes ? true : false,
-            isNull: tNodes && tNodes.constructor.name === 'OdinNull'
+            isNull: tNodes && tNodes.constructor.name === 'OdinNull',
+            keys: keys
         };
     }
 
@@ -2832,25 +2858,36 @@ class SaveParser {
 
     // --- Feature G: Train NPCs ---
     getNpcsOnTrain() {
-        if (!this.ast) return [];
+        if (!this.ast) return { npcs: [], marker: 0x1E };
         const tNodes = findChildRecursive(this.ast, ['npcsOnTrain']);
-        if (!tNodes || !tNodes.children) return [];
+        if (!tNodes || !tNodes.children) return { npcs: [], marker: 0x1E };
         const listNode = tNodes.children.find(c => c.constructor.name === 'OdinList');
-        if (!listNode) return [];
+        if (!listNode) return { npcs: [], marker: 0x1E };
         
-        // These are OdinPrimitives
-        return listNode.elements.map(e => e.value);
+        const elements = resolveListElements(listNode);
+        let marker = 0x1E;
+        if (elements.length > 0 && elements[0].marker !== undefined) {
+            marker = elements[0].marker;
+        }
+        return { npcs: elements.map(e => e.value), marker };
     }
     
     setNpcsOnTrain(npcArray) {
         if (!this.ast) return false;
+        const currentData = this.getNpcsOnTrain();
+        const marker = currentData.marker;
+
         const tNodes = findChildRecursive(this.ast, ['npcsOnTrain']);
         if (!tNodes || !tNodes.children) return false;
         const listNode = tNodes.children.find(c => c.constructor.name === 'OdinList');
         if (!listNode) return false;
         
-        // Replace with new array of OdinPrimitives (BigInts)
-        listNode.elements = npcArray.map(id => new OdinPrimitive(0x1E, null, BigInt(id))); // 0x1E is ULong
+        listNode.elements = npcArray.map(id => {
+            let val;
+            if (marker === 0x1E || marker === 0x13 || marker === 0x14) val = BigInt(id);
+            else val = Number(id);
+            return new OdinPrimitive(marker, null, val);
+        });
         listNode.length = npcArray.length;
         return true;
     }
