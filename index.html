@@ -88,7 +88,8 @@
                 </nav>
             </aside>
 
-            <main class="content-area rustic-panel">\n<div id="tab-vars" class="tab-content active">
+            <main class="content-area rustic-panel">
+<div id="tab-vars" class="tab-content active">
                     <h2>Variables Generales</h2>
                     <p class="subtitle">Administra tu pequeña vida en la aldea hongo.</p>
 
@@ -224,7 +225,8 @@
                             Aplicar Variables
                         </button>
                     </div>
-                \n<div class="section-card" style="margin-top:1.5rem;">
+                
+<div class="section-card" style="margin-top:1.5rem;">
                         <h3>⚙️ Variables Extra</h3>
                         <p class="subtitle" style="margin-top:0;">Solo se pueden editar si están presentes en el save cargado.</p>
                         <div class="grid-3col" style="gap:1rem; margin-bottom:1rem;">
@@ -242,7 +244,9 @@
                             </div>
                         </div>
                         <button class="btn-secondary" onclick="window.app.applyExtraVars()">💾 Guardar Vars Extra</button>
-                    </div>\n\n<div class="section-card" style="margin-top:1.5rem;">
+                    </div>
+
+<div class="section-card" style="margin-top:1.5rem;">
                         <h3>🔍 Comparar Saves (Diff)</h3>
                         <p class="subtitle" style="margin-top:0;">Compara el save cargado (A) con otro archivo .csave (B). Read-only; no se modifica ningún archivo.</p>
                         <div style="display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:1rem;">
@@ -253,7 +257,9 @@
                             <button class="btn-secondary" onclick="window.app.compareSaves()">🔍 Ejecutar Diff</button>
                         </div>
                         <pre id="diff-output" style="display:none; background:var(--bg-secondary); padding:1rem; border-radius:6px; font-size:0.82em; overflow-x:auto; max-height:320px; white-space:pre-wrap; margin:0;"></pre>
-                    </div>\n</div>\n<div id="tab-inv" class="tab-content hidden">
+                    </div>
+</div>
+<div id="tab-inv" class="tab-content hidden">
                     <div class="inv-header">
                         <div>
                             <h2>Inventario</h2>
@@ -360,7 +366,8 @@
                             <tbody id="inv-table-body"></tbody>
                         </table>
                     </div>
-                </div>\n<div id="tab-npc" class="tab-content hidden">
+                </div>
+<div id="tab-npc" class="tab-content hidden">
                     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
                         <div>
                             <h2>Personajes</h2>
@@ -400,7 +407,8 @@
                             </tbody>
                         </table>
                     </div>
-                </div>\n<div id="tab-phone" class="tab-content hidden">
+                </div>
+<div id="tab-phone" class="tab-content hidden">
                     <h2>📱 Teléfono</h2>
                     <p class="subtitle">Gestiona tus recompensas diarias (Punchcard) y desbloquea ubicaciones en el mapa.</p>
 
@@ -496,7 +504,8 @@
                             </div>
                         </div>
                     </div>
-                </div>\n<div id="tab-mail" class="tab-content hidden">
+                </div>
+<div id="tab-mail" class="tab-content hidden">
                     <h2>✉️ Correo y Pedidos</h2>
                     <p class="subtitle">Gestiona los pedidos de muebles y modifica los premios de las cartas recibidas.</p>
 
@@ -557,7 +566,8 @@
                                 </table>
                             </div>
                         </div>
-                    \n<div id="mail-unique-orders-container" class="section-card" style="margin-top:1.5rem; display:none;">
+                    
+<div id="mail-unique-orders-container" class="section-card" style="margin-top:1.5rem; display:none;">
                     <h3>🔑 Metadatos de Pedidos (uniqueOrders)</h3>
                     <p class="subtitle" style="margin-top:0;">
                         <code>uniqueOrders</code> es un bitmask que indica qué pedidos de muebles fueron reclamados históricamente.
@@ -583,8 +593,10 @@
                             🔓 Liberar bit de pedido en uniqueOrders
                         </button>
                     </div>
-                </div>\n</div>
-                </div>\n<div id="tab-events" class="tab-content hidden">
+                </div>
+</div>
+                </div>
+<div id="tab-events" class="tab-content hidden">
                     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
                         <div>
                             <h2>Event Calendar / Village Events</h2>
@@ -655,7 +667,8 @@
                             <button class="btn-danger" onclick="document.getElementById('event-tasks-input').value = ''; [0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=false); document.getElementById('event-calendar-cb').checked = false; document.getElementById('event-flyer-cb').checked = false;">🗑️ Reset Progreso</button>
                         </div>
                     </div>
-                </div>\n<div id="tab-news" class="tab-content hidden">
+                </div>
+<div id="tab-news" class="tab-content hidden">
     <h2>📰 Periódicos (News)</h2>
     <p class="subtitle">Gestiona las noticias mostradas y las misiones completadas.</p>
     <div id="news-content" style="display:none;">
@@ -676,7 +689,8 @@
             </div>
         </div>
     </div>
-</div>\n<div id="tab-train" class="tab-content hidden">
+</div>
+<div id="tab-train" class="tab-content hidden">
                     <h2>🚂 Sistema de Viaje — TrainSave</h2>
                     <p class="subtitle">Controla el estado del tren y los viajes entre ciudades.</p>
 
@@ -741,7 +755,8 @@
                             </label>
                         </div>
                     </div>
-                </div>\n<div id="tab-map" class="tab-content hidden">
+                </div>
+<div id="tab-map" class="tab-content hidden">
                     <div class="map-controls rustic-panel-light">
                         <div class="control-group">
                             <label>Ubicación:</label>
@@ -943,7 +958,8 @@
                             <button id="btn-close-editor" class="btn-text w-full">Cerrar</button>
                         </div>
                     </div>
-                </div>\n<div id="tab-experimental" class="tab-content hidden">
+                </div>
+<div id="tab-experimental" class="tab-content hidden">
                     <h2>🧪 Inyector por Lotes (Experimental)</h2>
                     <p class="subtitle">Inyecta un rango de IDs en el inventario. Uso bajo tu propio riesgo.</p>
                     
@@ -966,11 +982,16 @@
 
                     
                     
-                    \n<div id="timers-container" class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
+                    
+<div id="timers-container" class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
                             <!-- Dinámico -->
-                        </div>\n\n<div id="sp-events-container" class="grid-2col" style="gap:1rem;">
+                        </div>
+
+<div id="sp-events-container" class="grid-2col" style="gap:1rem;">
                             <!-- Dinámico -->
-                        </div>\n\n<div style="margin-top:1.5rem; display:flex; gap:1rem;">
+                        </div>
+
+<div style="margin-top:1.5rem; display:flex; gap:1rem;">
                             <button class="btn-primary" onclick="window.app.unlockAllCollection()">
                                 <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">menu_book</span>
                                 Completar Enciclopedia (Colección)
@@ -979,7 +1000,9 @@
                                 <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">photo_camera</span>
                                 Desbloquear todos los Parsnaps
                             </button>
-                        </div>\n\n<div class="section-card" style="margin-top:1.5rem;">
+                        </div>
+
+<div class="section-card" style="margin-top:1.5rem;">
                         <h3>📦 Estructuras Read-Only</h3>
                         <p class="subtitle" style="margin-top:0;">No encontradas en los saves analizados. Se actualizarán si el save cargado las contiene.</p>
                         <ul style="color:var(--text-muted); font-size:0.9em; line-height:1.8; list-style:none; padding:0; margin:0;">
@@ -988,7 +1011,9 @@
                             <li id="ro-cropbox">⏳ CropBox: —</li>
                             <li id="ro-delivery">⏳ deliverySave: —</li>
                         </ul>
-                    </div>\n\n<div class="section-card" style="margin-top:1.5rem;">
+                    </div>
+
+<div class="section-card" style="margin-top:1.5rem;">
                         <h3>🤝 NPCConditionSaves</h3>
                         <p class="subtitle" style="margin-top:0;">Condiciones de amistad y quests por NPC. Carga un save para ver los datos.</p>
                         <div style="overflow-x:auto; max-height:280px;">
@@ -999,7 +1024,9 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>\n\n<div class="section-card" style="margin-top:1.5rem;">
+                    </div>
+
+<div class="section-card" style="margin-top:1.5rem;">
                         <h3>📓 DiarySaves (Editor Fino)</h3>
                         <p class="subtitle" style="margin-top:0;">Edita campos individuales de entradas de diario. Carga un save primero.</p>
                         <div style="overflow-x:auto; max-height:280px;">
@@ -1010,7 +1037,9 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>\n\n<div class="section-card">
+                    </div>
+
+<div class="section-card">
                         <h3>Configuración de Inyección</h3>
                         <div class="grid-2col" style="gap: 1rem; align-items: flex-end;">
                             <div class="input-group">
@@ -1037,12 +1066,16 @@
                                 <button id="btn-batch-inject" class="btn-primary" style="flex: 1;">Inyectar</button>
                             </div>
                         </div>
-                    </div>\n\n<div class="section-card" style="margin-top: 1.5rem;">
+                    </div>
+
+<div class="section-card" style="margin-top: 1.5rem;">
                         <h3>Vista Previa de IDs a inyectar <span id="batch-preview-count" style="font-size: 0.9em; color: var(--text-muted);">(0)</span></h3>
                         <div id="batch-preview-container" style="max-height: 400px; overflow-y: auto; background: var(--panel-bg); border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 10px; margin-top: 1rem;">
                             <p style="color: var(--text-muted); text-align: center; margin-top: 20px;">Haz clic en "Vista Previa" para cargar los IDs del catálogo.</p>
                         </div>
-                    </div>\n\n<div class="section-card" style="margin-top: 2rem;">
+                    </div>
+
+<div class="section-card" style="margin-top: 2rem;">
                         <h3>📐 Editor de Tamaños de Grilla</h3>
                         <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
                             Seleccioná un mueble en el <strong>Mapa 3D</strong> y volvé aquí para editar cuántas celdas ocupa.
@@ -1133,7 +1166,9 @@
                                 </button>
                             </div>
                         </div>
-                    </div>\n</div>\n</main>
+                    </div>
+</div>
+</main>
         </div>
     </div>
 
