@@ -1,35 +1,35 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tsuki's Odyssey Save Editor</title>
-    <meta name="description" content="Editor web completo para archivos .csave de Tsuki's Odyssey. Modifica inventario, amistad de personajes, mapa 3D, eventos y m├ís.">
+    <meta name="description" content="Editor web completo para archivos .csave de Tsuki's Odyssey. Modifica inventario, amistad de personajes, mapa 3D, eventos y más.">
     <link rel="stylesheet" href="styles.css?v=20260806">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=Nunito+Sans:wght@400;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- ΓöÇΓöÇ Drop Zone ΓöÇΓöÇ -->
+    <!-- ── Drop Zone ── -->
     <div id="drop-zone" class="rustic-panel active">
         <div class="drop-content">
             <span class="material-symbols-outlined bounce-icon" style="font-size:72px;margin-bottom:1rem;color:var(--accent);">save</span>
-            <h2>Arrastra tu archivo <code>.csave</code> aqu├¡</h2>
+            <h2>Arrastra tu archivo <code>.csave</code> aquí</h2>
             <p>o haz clic para seleccionar</p>
             <input type="file" id="file-input" accept=".csave" hidden>
         </div>
     </div>
 
-    <!-- ΓöÇΓöÇ App ΓöÇΓöÇ -->
+    <!-- ── App ── -->
     <div id="app-container" class="hidden">
 
         <!-- Header -->
         <header class="rustic-panel top-header">
-            <h1>≡ƒîÖ Tsuki's Odyssey Editor</h1>
+            <h1>🌙 Tsuki's Odyssey Editor</h1>
             <div class="header-actions">
                 <span id="file-name-display">save.csave</span>
-                <button id="btn-load-another" class="btn-secondary" title="Cargar un nuevo archivo .csave sin recargar la p├ígina" style="margin-right: 8px;">
+                <button id="btn-load-another" class="btn-secondary" title="Cargar un nuevo archivo .csave sin recargar la página" style="margin-right: 8px;">
                     <span class="material-symbols-outlined" style="font-size:18px;margin-right:6px;vertical-align:text-bottom;">folder_open</span>
                     Cargar otro
                 </button>
@@ -65,7 +65,7 @@
                         <span class="material-symbols-outlined">group</span>Personajes
                     </button>
                     <button class="nav-item" data-target="tab-phone">
-                        <span class="material-symbols-outlined">smartphone</span>Tel├⌐fono
+                        <span class="material-symbols-outlined">smartphone</span>Teléfono
                     </button>
                     <button class="nav-item" data-target="tab-mail">
                         <span class="material-symbols-outlined">mail</span>Correo
@@ -74,7 +74,7 @@
                         <span class="material-symbols-outlined">celebration</span>Eventos
                     </button>
                     <button class="nav-item" data-target="tab-news">
-                        <span class="material-symbols-outlined">newspaper</span>Peri├│dicos
+                        <span class="material-symbols-outlined">newspaper</span>Periódicos
                     </button>
                     <button class="nav-item" data-target="tab-train">
                         <span class="material-symbols-outlined">train</span>Tren / Viaje
@@ -90,7 +90,7 @@
 
             <main class="content-area rustic-panel">\n<div id="tab-vars" class="tab-content active">
                     <h2>Variables Generales</h2>
-                    <p class="subtitle">Administra tu peque├▒a vida en la aldea hongo.</p>
+                    <p class="subtitle">Administra tu pequeña vida en la aldea hongo.</p>
 
                     
                     
@@ -109,95 +109,95 @@
                         </button>
                     </div>
                     <div class="section-card">
-                        <h3>≡ƒÆ░ Econom├¡a</h3>
+                        <h3>💰 Economía</h3>
                         <div class="grid-3col">
                             <div class="input-group">
-                                <label>≡ƒÑò Zanahorias</label>
+                                <label>🥕 Zanahorias</label>
                                 <input type="number" id="input-carrots" value="0" min="0">
                             </div>
                             <div class="input-group">
-                                <label>≡ƒÄƒ∩╕Å Boletos Gacha</label>
+                                <label>🎟️ Boletos Gacha</label>
                                 <input type="number" id="input-gacha-tickets" value="0" min="0">
                             </div>
                             <div class="input-group">
-                                <label title="Contador de d├¡as en los art├¡culos del tren (Odyssey Articles).">≡ƒùô∩╕Å D├¡a (OA)</label>
+                                <label title="Contador de días en los artículos del tren (Odyssey Articles).">🗓️ Día (OA)</label>
                                 <input type="number" id="input-day" value="0">
                             </div>
                         </div>
                         <div class="grid-3col">
                             <div class="input-group">
-                                <label>≡ƒùô∩╕Å Mes</label>
+                                <label>🗓️ Mes</label>
                                 <input type="number" id="input-month" value="0" min="1" max="12">
                             </div>
                             <div class="input-group">
-                                <label>≡ƒòÉ Hora del d├¡a</label>
+                                <label>🕐 Hora del día</label>
                                 <input type="number" id="input-hour" value="0" min="0" max="23">
                             </div>
                             <div class="input-group">
-                                <label>≡ƒìâ Temporada</label>
+                                <label>🍃 Temporada</label>
                                 <div class="select-wrapper">
                                     <select id="select-season">
-                                        <option value="0">≡ƒî╕ Primavera</option>
-                                        <option value="1">ΓÿÇ∩╕Å Verano</option>
-                                        <option value="2">≡ƒìé Oto├▒o</option>
-                                        <option value="3">Γ¥ä∩╕Å Invierno</option>
+                                        <option value="0">🌸 Primavera</option>
+                                        <option value="1">☀️ Verano</option>
+                                        <option value="2">🍂 Otoño</option>
+                                        <option value="3">❄️ Invierno</option>
                                     </select>
                                     <span class="material-symbols-outlined dropdown-icon">expand_more</span>
                                 </div>
                             </div>
                             <div class="input-group">
-                                <label title="Nivel de progreso de la historia en la ciudad principal (Moca, Chi, etc.).">≡ƒÉª Cap├¡tulo Raven</label>
+                                <label title="Nivel de progreso de la historia en la ciudad principal (Moca, Chi, etc.).">🐦 Capítulo Raven</label>
                                 <input type="number" id="input-raven" value="0" min="0">
                             </div>
                         </div>
                     </div>
 
                     <div class="section-card" style="margin-top:1.5rem;">
-                        <h3>≡ƒôè Estad├¡sticas</h3>
+                        <h3>📊 Estadísticas</h3>
                         <div class="grid-3col">
                             <div class="input-group">
-                                <label>≡ƒÄ░ Gacha rodado</label>
+                                <label>🎰 Gacha rodado</label>
                                 <input type="number" id="input-gacha" value="0" min="0">
                             </div>
                             <div class="input-group">
-                                <label>≡ƒÉƒ Peces atrapados</label>
+                                <label>🐟 Peces atrapados</label>
                                 <input type="number" id="input-fish-caught" value="0" min="0">
                             </div>
                             <div class="input-group">
-                                <label>≡ƒôª Pedidos hechos</label>
+                                <label>📦 Pedidos hechos</label>
                                 <input type="number" id="input-orders" value="0" min="0">
                             </div>
                             <div class="input-group">
-                                <label>Γÿÿ∩╕Å Tr├⌐boles criados</label>
+                                <label>☘️ Tréboles criados</label>
                                 <input type="number" id="input-clover" value="0" min="0">
                             </div>
                             <div class="input-group">
-                                <label>≡ƒ¬¿ Nodos rotos</label>
+                                <label>🪨 Nodos rotos</label>
                                 <input type="number" id="input-nodes" value="0" min="0">
                             </div>
                             <div class="input-group">
-                                <label>≡ƒÄ▓ Unluckiness (0ΓÇô250)</label>
+                                <label>🎲 Unluckiness (0–250)</label>
                                 <input type="number" id="input-unluckiness" value="0" min="0" max="250" step="0.1">
                             </div>
                         </div>
                     </div>
 
                     <div class="section-card" style="margin-top:1.5rem;">
-                        <h3>≡ƒÿ┤ Rutina de Sue├▒o</h3>
+                        <h3>😴 Rutina de Sueño</h3>
                         <div class="grid-3col">
                             <div class="input-group">
-                                <label>≡ƒîÖ Hora de dormir inicio</label>
+                                <label>🌙 Hora de dormir inicio</label>
                                 <input type="number" id="input-bedtime-start" value="22" min="0" max="24" step="0.1">
                             </div>
                             <div class="input-group">
-                                <label>ΓÿÇ∩╕Å Hora de dormir fin</label>
+                                <label>☀️ Hora de dormir fin</label>
                                 <input type="number" id="input-bedtime-end" value="8" min="0" max="24" step="0.1">
                             </div>
                         </div>
                     </div>
 
                     <div class="section-card" style="margin-top:1.5rem;">
-                        <h3>≡ƒÅí Homecoming</h3>
+                        <h3>🏡 Homecoming</h3>
                         <div class="grid-2col">
                             <label class="check-container card-element">
                                 <input type="checkbox" id="chk-homecoming-android">
@@ -211,10 +211,10 @@
                         <div style="margin-top: 1rem;">
                             <label style="display:block;margin-bottom:0.5rem;font-weight:600;">Niveles de la Casa (Requiere Homecoming activo)</label>
                             <select id="select-homecoming-tier" class="inv-input" style="width:100%;max-width:400px;font-size:1rem;padding:0.5rem;">
-                                <option value="0">Casa normal (base + 1┬║ piso)</option>
-                                <option value="1">Casa ampliada (incluye 2┬║ piso)</option>
+                                <option value="0">Casa normal (base + 1º piso)</option>
+                                <option value="1">Casa ampliada (incluye 2º piso)</option>
                             </select>
-                            <p style="font-size:0.85rem;color:#888;margin-top:0.3rem;font-style:italic;">Solo cambia el ├¡ndice de datos de la sublocaci├│n Home; no crea muebles autom├íticamente.</p>
+                            <p style="font-size:0.85rem;color:#888;margin-top:0.3rem;font-style:italic;">Solo cambia el índice de datos de la sublocación Home; no crea muebles automáticamente.</p>
                         </div>
                     </div>
 
@@ -225,32 +225,32 @@
                         </button>
                     </div>
                 \n<div class="section-card" style="margin-top:1.5rem;">
-                        <h3>ΓÜÖ∩╕Å Variables Extra</h3>
-                        <p class="subtitle" style="margin-top:0;">Solo se pueden editar si est├ín presentes en el save cargado.</p>
+                        <h3>⚙️ Variables Extra</h3>
+                        <p class="subtitle" style="margin-top:0;">Solo se pueden editar si están presentes en el save cargado.</p>
                         <div class="grid-3col" style="gap:1rem; margin-bottom:1rem;">
                             <div class="input-group">
                                 <label title="Timestamp del primer inicio del juego (float OA).">GameStart</label>
                                 <input type="text" id="var-game-start" placeholder="No presente en este save">
                             </div>
                             <div class="input-group">
-                                <label title="├Ültima actualizaci├│n de la hoz.">SickleRefresh</label>
+                                <label title="Última actualización de la hoz.">SickleRefresh</label>
                                 <input type="text" id="var-sickle-refresh" placeholder="No presente en este save">
                             </div>
                             <div class="input-group">
-                                <label title="Semilla diaria ├║nica.">UniqueDailySeed</label>
+                                <label title="Semilla diaria única.">UniqueDailySeed</label>
                                 <input type="text" id="var-unique-seed" placeholder="No presente en este save">
                             </div>
                         </div>
-                        <button class="btn-secondary" onclick="window.app.applyExtraVars()">≡ƒÆ╛ Guardar Vars Extra</button>
+                        <button class="btn-secondary" onclick="window.app.applyExtraVars()">💾 Guardar Vars Extra</button>
                     </div>\n\n<div class="section-card" style="margin-top:1.5rem;">
-                        <h3>≡ƒöì Comparar Saves (Diff)</h3>
-                        <p class="subtitle" style="margin-top:0;">Compara el save cargado (A) con otro archivo .csave (B). Read-only; no se modifica ning├║n archivo.</p>
+                        <h3>🔍 Comparar Saves (Diff)</h3>
+                        <p class="subtitle" style="margin-top:0;">Compara el save cargado (A) con otro archivo .csave (B). Read-only; no se modifica ningún archivo.</p>
                         <div style="display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:1rem;">
                             <div class="input-group" style="flex:1; min-width:220px;">
                                 <label>Archivo Save B:</label>
                                 <input type="file" id="diff-file-input" accept=".csave">
                             </div>
-                            <button class="btn-secondary" onclick="window.app.compareSaves()">≡ƒöì Ejecutar Diff</button>
+                            <button class="btn-secondary" onclick="window.app.compareSaves()">🔍 Ejecutar Diff</button>
                         </div>
                         <pre id="diff-output" style="display:none; background:var(--bg-secondary); padding:1rem; border-radius:6px; font-size:0.82em; overflow-x:auto; max-height:320px; white-space:pre-wrap; margin:0;"></pre>
                     </div>\n</div>\n<div id="tab-inv" class="tab-content hidden">
@@ -281,7 +281,7 @@
                         <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap;">
                             <div style="display:flex; align-items:center; gap:5px;">
                                 <select id="select-add-bag" style="padding:4px; font-size:0.8rem; border-radius:4px; border:1px solid #ccc;">
-                                    <option value="">A├▒adir bolsa...</option>
+                                    <option value="">Añadir bolsa...</option>
                                     <option value="124">Backpack</option>
                                     <option value="125">Mountaineer Backpack</option>
                                     <option value="141">Sunken Bag</option>
@@ -294,7 +294,7 @@
                                     <option value="331">Eggcellent Bag</option>
                                     <option value="332">Primal Bag</option>
                                 </select>
-                                <button id="btn-add-bag" class="btn-primary" style="font-size:0.8rem; padding:4px 8px;">A├▒adir</button>
+                                <button id="btn-add-bag" class="btn-primary" style="font-size:0.8rem; padding:4px 8px;">Añadir</button>
                             </div>
                             <div style="display:flex; align-items:center; gap:5px;">
                                 <label style="font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; font-weight:600;">Manual:</label>
@@ -321,7 +321,7 @@
                             </div>
                             <div style="margin-top: 8px;">
                                 <label style="font-size:0.8rem; display:flex; align-items:center; gap:5px; cursor:pointer; font-weight:normal; text-transform:none;">
-                                    <input type="checkbox" id="add-inv-hidden"> A├▒adir como Oculto
+                                    <input type="checkbox" id="add-inv-hidden"> Añadir como Oculto
                                 </label>
                             </div>
                         </div>
@@ -351,7 +351,7 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th style="width:60px;">├ìcono</th>
+                                    <th style="width:60px;">Ícono</th>
                                     <th>ID / Nombre</th>
                                     <th style="width:100px;">Cantidad</th>
                                     <th style="width:140px;">Acciones</th>
@@ -371,17 +371,17 @@
                                 <span class="material-symbols-outlined search-icon">search</span>
                                 <input type="text" id="npc-search" placeholder="Buscar personaje..." class="search-input" oninput="window.app.renderNPCTab()">
                             </div>
-                            <button id="btn-max-friendship" class="btn-primary" title="Establece la amistad al m├íximo para todos los NPCs conocidos.">≡ƒÆ¢ Max Amistad (Todos)</button>
-                            <button id="btn-reset-pester" class="btn-secondary" title="Reinicia el estado de 'molestia' de todos los personajes.">≡ƒÿè Reset Pester (Todos)</button>
-                            <button id="btn-apply-npc" class="btn-secondary">Γ£ö Aplicar Todos</button>
+                            <button id="btn-max-friendship" class="btn-primary" title="Establece la amistad al máximo para todos los NPCs conocidos.">💛 Max Amistad (Todos)</button>
+                            <button id="btn-reset-pester" class="btn-secondary" title="Reinicia el estado de 'molestia' de todos los personajes.">😊 Reset Pester (Todos)</button>
+                            <button id="btn-apply-npc" class="btn-secondary">✔ Aplicar Todos</button>
                         </div>
                     </div>
 
                     <div class="info-banner">
                         <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">info</span>
-                        <strong>Amistad:</strong> Cada NPC tiene un contador. Valores altos desbloquean di├ílogos especiales y eventos.
+                        <strong>Amistad:</strong> Cada NPC tiene un contador. Valores altos desbloquean diálogos especiales y eventos.
                         <strong>Pester:</strong> Si es alto, el personaje se niega a hablar. Poner en 0 para resetear.
-                        <strong>lastFriendshipDay</strong> se resetea autom├íticamente al cambiar la amistad.
+                        <strong>lastFriendshipDay</strong> se resetea automáticamente al cambiar la amistad.
                     </div>
 
                     <div class="table-container">
@@ -401,12 +401,12 @@
                         </table>
                     </div>
                 </div>\n<div id="tab-phone" class="tab-content hidden">
-                    <h2>≡ƒô▒ Tel├⌐fono</h2>
+                    <h2>📱 Teléfono</h2>
                     <p class="subtitle">Gestiona tus recompensas diarias (Punchcard) y desbloquea ubicaciones en el mapa.</p>
 
                     <div class="grid-2col" style="gap: 2rem;">
                         <div class="section-card">
-                            <h3>≡ƒÄü Premios Diarios (Punchcard)</h3>
+                            <h3>🎁 Premios Diarios (Punchcard)</h3>
                             <div class="header-actions" style="margin-bottom: 1rem; justify-content: flex-start;">
                                 <button id="btn-punchcard-claim" class="btn-primary" style="margin-right: 0.5rem;">Reclamar todos</button>
                                 <button id="btn-punchcard-reset" class="btn-secondary">Reset semana</button>
@@ -415,7 +415,7 @@
                             <table class="inventory-table" id="punchcard-table">
                                 <thead>
                                     <tr>
-                                        <th>D├¡a</th>
+                                        <th>Día</th>
                                         <th>Premio</th>
                                         <th>Reclamado</th>
                                     </tr>
@@ -431,8 +431,8 @@
                         </div>
 
                         <div class="section-card">
-                            <h3>≡ƒù║∩╕Å Ubicaciones Desbloqueadas</h3>
-                            <p class="small-text" style="margin-bottom: 1rem;">Aparecer en el mapa del tel├⌐fono no garantiza poder entrar si faltan misiones o ├íreas.</p>
+                            <h3>🗺️ Ubicaciones Desbloqueadas</h3>
+                            <p class="small-text" style="margin-bottom: 1rem;">Aparecer en el mapa del teléfono no garantiza poder entrar si faltan misiones o áreas.</p>
                             
                             <div class="header-actions" style="margin-bottom: 1rem; justify-content: flex-start; gap: 0.5rem; flex-wrap: wrap;">
                                 <button id="btn-maps-unlock-all" class="btn-primary">Desbloquear todos</button>
@@ -445,19 +445,19 @@
                             </div>
                             <div id="locations-empty-state" class="empty-state hidden">
                                 <span class="material-symbols-outlined">map</span>
-                                <p>Este guardado no contiene informaci├│n de ubicaciones.</p>
+                                <p>Este guardado no contiene información de ubicaciones.</p>
                             </div>
                         </div>
 
                         <div class="section-card" id="phone-cosmetics-card">
-                            <h3>≡ƒô▒ Personalizaci├│n (Cosm├⌐ticos)</h3>
+                            <h3>📱 Personalización (Cosméticos)</h3>
                             <div class="grid-2col" style="gap:1rem; margin-top:1rem;">
                                 <div class="input-group">
                                     <label>Skin ID:</label>
                                     <input type="number" id="phone-skin-id" placeholder="-1">
                                 </div>
                                 <div class="input-group">
-                                    <label>Patr├│n de Fondo:</label>
+                                    <label>Patrón de Fondo:</label>
                                     <input type="number" id="phone-bg-pattern" placeholder="-1">
                                 </div>
                                 <div class="input-group">
@@ -472,19 +472,19 @@
                             <hr style="border:0; border-top:1px solid rgba(0,0,0,0.1); margin:1.5rem 0;">
                             
                             <h4>Desbloqueos (Bitmasks)</h4>
-                            <p class="small-text" style="margin-bottom:0.5rem;">Cada bit representa un cosm├⌐tico desbloqueado.</p>
+                            <p class="small-text" style="margin-bottom:0.5rem;">Cada bit representa un cosmético desbloqueado.</p>
                             
                             <div class="grid-2col" style="gap:1rem; align-items:center;">
                                 <div>
                                     <div class="input-group" style="margin-bottom:0.5rem;">
-                                        <label>M├íscara Fondos:</label>
+                                        <label>Máscara Fondos:</label>
                                         <input type="text" id="phone-bg-mask" disabled style="background:#e8e8e8;">
                                     </div>
                                     <button id="btn-phone-unlock-bg" class="btn-secondary" style="width:100%; font-size:0.8rem;">Desbloquear Todos</button>
                                 </div>
                                 <div>
                                     <div class="input-group" style="margin-bottom:0.5rem;">
-                                        <label>M├íscara Colores:</label>
+                                        <label>Máscara Colores:</label>
                                         <input type="text" id="phone-color-mask" disabled style="background:#e8e8e8;">
                                     </div>
                                     <button id="btn-phone-unlock-color" class="btn-secondary" style="width:100%; font-size:0.8rem;">Desbloquear Todos</button>
@@ -492,23 +492,23 @@
                             </div>
                             <div id="phone-cosmetics-empty" class="empty-state hidden" style="margin-top:1rem;">
                                 <span class="material-symbols-outlined">smartphone</span>
-                                <p>Este guardado no contiene datos de personalizaci├│n.</p>
+                                <p>Este guardado no contiene datos de personalización.</p>
                             </div>
                         </div>
                     </div>
                 </div>\n<div id="tab-mail" class="tab-content hidden">
-                    <h2>Γ£ë∩╕Å Correo y Pedidos</h2>
+                    <h2>✉️ Correo y Pedidos</h2>
                     <p class="subtitle">Gestiona los pedidos de muebles y modifica los premios de las cartas recibidas.</p>
 
                     <div id="mail-empty-state" class="info-banner" style="display:none; margin-bottom:1.5rem;">
                         <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">info</span>
-                        Sin cartas ni pedidos en este save. Encarga un mueble en el juego, o espera a que llegue una carta, y vuelve a cargar tu partida aqu├¡.
+                        Sin cartas ni pedidos en este save. Encarga un mueble en el juego, o espera a que llegue una carta, y vuelve a cargar tu partida aquí.
                     </div>
 
                     <div id="mail-content" style="display:none;">
                         <!-- Orders Table -->
                         <div class="section-card" style="margin-bottom: 2rem;">
-                            <h3>≡ƒôª Pedidos Activos (Furniture Orders)</h3>
+                            <h3>📦 Pedidos Activos (Furniture Orders)</h3>
                             <div class="table-container" style="margin-top:1rem;">
                                 <table class="data-table" id="orders-table">
                                     <thead>
@@ -520,7 +520,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Generado din├ímicamente -->
+                                        <!-- Generado dinámicamente -->
                                     </tbody>
                                 </table>
                             </div>
@@ -528,7 +528,7 @@
 
                         <!-- Letters Table -->
                         <div class="section-card">
-                            <h3>≡ƒô¼ Buz├│n de Cartas (Letters)</h3>
+                            <h3>📬 Buzón de Cartas (Letters)</h3>
                             <div class="mail-actions" style="margin-top:0.5rem; margin-bottom:1rem; display:flex; gap:0.5rem; align-items:center;">
                                 <input type="number" id="input-clone-letter-furn-id" placeholder="Item ID..." style="width: 100px;">
                                 <select id="input-clone-letter-inv-type" style="padding:4px; border-radius:4px;">
@@ -542,27 +542,27 @@
                                 <table class="data-table" id="letters-table">
                                     <thead>
                                         <tr>
-                                            <th style="width:80px;">├ìndice</th>
+                                            <th style="width:80px;">Índice</th>
                                             <th style="width:120px;">Tipo</th>
                                             <th>Order ID</th>
                                             <th>Premio (Slot 0 ID)</th>
-                                            <th style="width:100px;">Le├¡da</th>
+                                            <th style="width:100px;">Leída</th>
                                             <th style="width:100px;">Cobrado</th>
                                             <th style="width:180px;">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Generado din├ímicamente -->
+                                        <!-- Generado dinámicamente -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     \n<div id="mail-unique-orders-container" class="section-card" style="margin-top:1.5rem; display:none;">
-                    <h3>≡ƒöæ Metadatos de Pedidos (uniqueOrders)</h3>
+                    <h3>🔑 Metadatos de Pedidos (uniqueOrders)</h3>
                     <p class="subtitle" style="margin-top:0;">
-                        <code>uniqueOrders</code> es un bitmask que indica qu├⌐ pedidos de muebles fueron reclamados hist├│ricamente.
+                        <code>uniqueOrders</code> es un bitmask que indica qué pedidos de muebles fueron reclamados históricamente.
                         Limpiar un bit permite que el juego lo ofrezca de nuevo.
-                        <strong>Aviso:</strong> el ├¡ndice de bit puede diferir del furnitureID; prueba con el ID del pedido en la carta.
+                        <strong>Aviso:</strong> el índice de bit puede diferir del furnitureID; prueba con el ID del pedido en la carta.
                     </p>
                     <div class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
                         <div class="input-group">
@@ -576,11 +576,11 @@
                     </div>
                     <div class="grid-2col" style="gap:1rem; align-items:flex-end;">
                         <div class="input-group">
-                            <label title="├ìndice del bit a limpiar. Puede coincidir con el Order/Furniture ID.">ID de bit a liberar (0-63)</label>
+                            <label title="Índice del bit a limpiar. Puede coincidir con el Order/Furniture ID.">ID de bit a liberar (0-63)</label>
                             <input type="number" id="input-mail-order-id" min="0" max="63" placeholder="Ej: 5">
                         </div>
                         <button class="btn-primary" onclick="window.app.clearUniqueOrderBit()">
-                            ≡ƒöô Liberar bit de pedido en uniqueOrders
+                            🔓 Liberar bit de pedido en uniqueOrders
                         </button>
                     </div>
                 </div>\n</div>
@@ -594,7 +594,7 @@
 
                     <div id="event-dates" class="info-banner">
                         <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">info</span>
-                        <strong>Aviso:</strong> Las fechas del evento las define el cliente por UTC; el save solo guarda eventID/year/progreso. Cambiar el ID o a├▒o aqu├¡ no activar├í la decoraci├│n ni los NPCs si el reloj de tu dispositivo no coincide con la fecha oficial. (Recompensas HC del calendario pueden requerir la compra en el juego).
+                        <strong>Aviso:</strong> Las fechas del evento las define el cliente por UTC; el save solo guarda eventID/year/progreso. Cambiar el ID o año aquí no activará la decoración ni los NPCs si el reloj de tu dispositivo no coincide con la fecha oficial. (Recompensas HC del calendario pueden requerir la compra en el juego).
                     </div>
 
                     <div id="events-no-data-msg" style="display:none; padding:2rem; text-align:center; color:var(--text-muted); background:var(--bg-secondary); border-radius:8px; margin-top:1rem;">
@@ -603,17 +603,17 @@
 
                     <div id="event-edit-container" class="section-card" style="display:none; margin-top: 1rem;">
                         <div class="input-group" style="margin-bottom: 1.5rem;">
-                            <label>Seleccionar Evento a Editar (Mayor a├▒o = Evento Activo):</label>
+                            <label>Seleccionar Evento a Editar (Mayor año = Evento Activo):</label>
                             <select id="select-event-index" onchange="window.app.renderEventsTab()"></select>
                         </div>
 
                         <div class="grid-2col" style="gap: 1rem; margin-bottom: 1rem;">
                             <div class="input-group">
-                                <label title="ID del evento. Val├¡dalo contra el enum VillageEvent del dump.">Event ID</label>
+                                <label title="ID del evento. Valídalo contra el enum VillageEvent del dump.">Event ID</label>
                                 <input type="number" id="event-id-input">
                             </div>
                             <div class="input-group">
-                                <label>A├▒o (Year)</label>
+                                <label>Año (Year)</label>
                                 <input type="number" id="event-year-input">
                             </div>
                         </div>
@@ -649,10 +649,10 @@
                         </div>
 
                         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 2rem;">
-                            <button id="btn-apply-event" class="btn-primary" onclick="window.app.applyEventChanges()">≡ƒÆ╛ Aplicar Cambios al AST</button>
-                            <button class="btn-secondary" onclick="document.getElementById('event-calendar-cb').checked = true; document.getElementById('event-flyer-cb').checked = true;">≡ƒæÇ Marcar Vistos</button>
-                            <button class="btn-secondary" onclick="[0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=true)">≡ƒÄü Reclamar Todo HC</button>
-                            <button class="btn-danger" onclick="document.getElementById('event-tasks-input').value = ''; [0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=false); document.getElementById('event-calendar-cb').checked = false; document.getElementById('event-flyer-cb').checked = false;">≡ƒùæ∩╕Å Reset Progreso</button>
+                            <button id="btn-apply-event" class="btn-primary" onclick="window.app.applyEventChanges()">💾 Aplicar Cambios al AST</button>
+                            <button class="btn-secondary" onclick="document.getElementById('event-calendar-cb').checked = true; document.getElementById('event-flyer-cb').checked = true;">👀 Marcar Vistos</button>
+                            <button class="btn-secondary" onclick="[0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=true)">🎁 Reclamar Todo HC</button>
+                            <button class="btn-danger" onclick="document.getElementById('event-tasks-input').value = ''; [0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=false); document.getElementById('event-calendar-cb').checked = false; document.getElementById('event-flyer-cb').checked = false;">🗑️ Reset Progreso</button>
                         </div>
                     </div>
                 </div>\n<div id="tab-news" class="tab-content hidden">
@@ -677,30 +677,30 @@
         </div>
     </div>
 </div>\n<div id="tab-train" class="tab-content hidden">
-                    <h2>≡ƒÜé Sistema de Viaje ΓÇö TrainSave</h2>
+                    <h2>🚂 Sistema de Viaje — TrainSave</h2>
                     <p class="subtitle">Controla el estado del tren y los viajes entre ciudades.</p>
 
                     <div class="info-banner" style="margin-bottom:1.5rem;">
                         <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">info</span>
                         <strong>Locations:</strong> MV=0 (Mushroom Village), Train=1, GC=2 (nueva ciudad). 
-                        <strong>trainDay</strong> es el d├¡a OA en que iniciaste el viaje.
-                        <strong>trainNumber</strong> es el n├║mero del boleto/tren. Valores >0 activan el viaje.
+                        <strong>trainDay</strong> es el día OA en que iniciaste el viaje.
+                        <strong>trainNumber</strong> es el número del boleto/tren. Valores >0 activan el viaje.
                     </div>
 
-                    <div id="train-status" class="train-status-badge">≡ƒÅÿ∩╕Å Sin viaje activo</div>
+                    <div id="train-status" class="train-status-badge">🏘️ Sin viaje activo</div>
 
                     <div class="section-card" style="margin-top:1.5rem;">
-                        <h3>ΓÜÖ∩╕Å Configuraci├│n del Tren</h3>
+                        <h3>⚙️ Configuración del Tren</h3>
                         <div class="grid-3col">
                             <div class="input-group">
-                                <label title="Contador de d├¡as en los art├¡culos del tren (Odyssey Articles).">≡ƒÜé Train Day (d├¡a OA)</label>
+                                <label title="Contador de días en los artículos del tren (Odyssey Articles).">🚂 Train Day (día OA)</label>
                                 <input type="number" id="input-train-day" value="0" min="0">
-                                <small style="color:var(--text-muted);">D├¡a actual: ~46200 aprox.</small>
+                                <small style="color:var(--text-muted);">Día actual: ~46200 aprox.</small>
                             </div>
                             <div class="input-group">
-                                <label>≡ƒÄ½ Train Number</label>
+                                <label>🎫 Train Number</label>
                                 <input type="number" id="input-train-number" value="0" min="0">
-                                <small style="color:var(--text-muted);">84 = n├║mero visto en save5</small>
+                                <small style="color:var(--text-muted);">84 = número visto en save5</small>
                             </div>
                         </div>
 
@@ -711,17 +711,17 @@
                         </div>
 
                         <div class="section-card" style="margin-top:1rem;">
-                            <h4 style="margin:0 0 0.5rem;">≡ƒÜë Spawn / Activity & Trip</h4>
-                            <div id="train-trip-status" style="margin-bottom:0.4rem; font-size:0.9rem; color:var(--text-muted);">ΓÇö</div>
-                            <div id="train-activity-status" style="font-size:0.85rem; color:var(--text-muted);">ΓÇö</div>
+                            <h4 style="margin:0 0 0.5rem;">🚉 Spawn / Activity & Trip</h4>
+                            <div id="train-trip-status" style="margin-bottom:0.4rem; font-size:0.9rem; color:var(--text-muted);">—</div>
+                            <div id="train-activity-status" style="font-size:0.85rem; color:var(--text-muted);">—</div>
                         </div>
                         <div class="section-card" style="margin-top:1rem;">
-                            <h4 style="margin:0 0 0.5rem;">≡ƒæÑ NPCs a Bordo (npcsOnTrain)</h4>
+                            <h4 style="margin:0 0 0.5rem;">👥 NPCs a Bordo (npcsOnTrain)</h4>
                             <p class="small-text" style="margin:0 0 0.5rem;">IDs separados por coma (CharEnum ULong). Se llena al cargar el save.</p>
                             <div class="input-group" style="margin-bottom:0.75rem;">
                                 <input type="text" id="input-train-npcs" placeholder="Ej: 49, 63, 48, 69, 38">
                             </div>
-                            <button class="btn-secondary" onclick="window.app.applyTrainNpcs()">≡ƒÆ╛ Guardar NPCs del Tren</button>
+                            <button class="btn-secondary" onclick="window.app.applyTrainNpcs()">💾 Guardar NPCs del Tren</button>
                         </div>
 
                         <div style="display:flex; flex-direction: column; gap:1rem; margin-top:1.5rem;">
@@ -737,14 +737,14 @@
                             </div>
                             <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
                                 <input type="checkbox" id="cb-trip-only">
-                                <span>Solo Viaje L├│gico (sin forzar vagones 3D)</span>
+                                <span>Solo Viaje Lógico (sin forzar vagones 3D)</span>
                             </label>
                         </div>
                     </div>
                 </div>\n<div id="tab-map" class="tab-content hidden">
                     <div class="map-controls rustic-panel-light">
                         <div class="control-group">
-                            <label>Ubicaci├│n:</label>
+                            <label>Ubicación:</label>
                             <div class="select-wrapper">
                                 <select id="select-location"></select>
                                 <span class="material-symbols-outlined dropdown-icon">expand_more</span>
@@ -793,12 +793,12 @@
 
                         <!-- Farm Actions -->
                         <div class="control-group farm-actions">
-                            <span style="font-family:'Quicksand',sans-serif;font-weight:600;color:var(--text-muted);font-size:0.85rem;">≡ƒî╛ Granja:</span>
-                            <button id="btn-add-plot" class="btn-farm" title="Agregar parcela de tierra (FURN_306) en slot vac├¡o del inventario">
+                            <span style="font-family:'Quicksand',sans-serif;font-weight:600;color:var(--text-muted);font-size:0.85rem;">🌾 Granja:</span>
+                            <button id="btn-add-plot" class="btn-farm" title="Agregar parcela de tierra (FURN_306) en slot vacío del inventario">
                                 <span class="material-symbols-outlined" style="font-size:16px;">add_box</span> Parcela
                             </button>
                             <button id="btn-add-seeds" class="btn-farm" title="Agregar semillas de zanahoria (FURN_342)">
-                                ≡ƒÑò Semillas
+                                🥕 Semillas
                             </button>
                             <button id="btn-auto-harvest" class="btn-farm btn-farm-green" title="Maximizar zanahorias del CropBox y agregar item cosecha al inventario">
                                 <span class="material-symbols-outlined">agriculture</span> Auto-Cosecha
@@ -807,17 +807,17 @@
                                 <span class="material-symbols-outlined">eco</span> Madurar Cultivos
                             </button>
                             <button id="btn-collect-carrots" class="btn-farm btn-farm-orange" title="Agregar 9999 zanahorias al inventario directamente">
-                                ≡ƒÑò +9999 Zanahorias
+                                🥕 +9999 Zanahorias
                             </button>
-                            <button id="btn-clean-seeds" class="btn-farm" style="background-color: #e74c3c;" title="Eliminar solo semillas sin parcela asignada (no toca cultivos v├ílidos)">
-                                ≡ƒº╣ Limpiar Semillas Bugeadas
+                            <button id="btn-clean-seeds" class="btn-farm" style="background-color: #e74c3c;" title="Eliminar solo semillas sin parcela asignada (no toca cultivos válidos)">
+                                🧹 Limpiar Semillas Bugeadas
                             </button>
                         </div>
 
                         <div class="control-tips">
                             <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;">mouse</span> Rueda=Zoom
                             <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;margin-left:6px;">drag_pan</span> Arrastrar=Mover
-                            <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;margin-left:6px;">flip_camera_android</span> Shift+Rueda / Flechas Γåö∩╕Å = Rotar mueble seleccionado
+                            <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;margin-left:6px;">flip_camera_android</span> Shift+Rueda / Flechas ↔️ = Rotar mueble seleccionado
                         </div>
                     </div>
 
@@ -835,7 +835,7 @@
                         </div>
 
                         <div id="add-item-editor" class="rustic-panel hidden">
-                            <h4>Γ₧ò Agregar Mueble</h4>
+                            <h4>➕ Agregar Mueble</h4>
                             <div class="input-group" style="margin-bottom:1rem;">
                                 <label>Seleccionar Mueble:</label>
                                 <div class="select-wrapper w-full" style="display:flex; gap:10px; align-items:center;">
@@ -855,7 +855,7 @@
                         </div>
 
                         <div id="item-editor" class="rustic-panel hidden">
-                            <h4>Γ£Å∩╕Å Editar Mueble</h4>
+                            <h4>✏️ Editar Mueble</h4>
                             <div class="item-editor-header" style="display:flex;align-items:center;gap:15px;margin-bottom:15px;">
                                 <div class="icon-frame">
                                     <img id="edit-item-icon" src="" onerror="this.style.display='none'" alt="Icon">
@@ -870,20 +870,20 @@
                                 <div class="input-group"><label>Y:</label><input type="number" id="edit-item-y"></div>
                             </div>
                             <div class="input-group" style="margin-bottom:1.5rem;">
-                                <label>Rotaci├│n:</label>
+                                <label>Rotación:</label>
                                 <div class="select-wrapper w-full">
                                     <select id="edit-item-ori" style="width:100%;">
                                         <option value="0">Frente Der. (0)</option>
                                         <option value="1">Frente Izq. (1)</option>
-                                        <option value="2">Atr├ís Izq. (2)</option>
-                                        <option value="3">Atr├ís Der. (3)</option>
+                                        <option value="2">Atrás Izq. (2)</option>
+                                        <option value="3">Atrás Der. (3)</option>
                                     </select>
                                     <span class="material-symbols-outlined dropdown-icon">expand_more</span>
                                 </div>
                             </div>
                             
                             <button id="btn-make-shiny" class="btn-primary w-full" style="display:none; margin-bottom: 1.5rem; background-color: #f1c40f; color: #333; font-weight: bold; align-items: center; justify-content: center; gap: 5px;">
-                                Γÿà Convertir a Variante B
+                                ★ Convertir a Variante B
                             </button>
 
                             <div class="input-group wall-flipped-group" style="margin-bottom:1.5rem; display:none;">
@@ -895,9 +895,9 @@
                             
                             <!-- Magic Seed Planting UI (Only visible for plot 306) -->
                             <div id="seed-planting-ui" class="hidden" style="margin-bottom:1.5rem; padding-top:1rem; border-top:1px solid rgba(0,0,0,0.1);">
-                                <label style="display:block; margin-bottom:5px; font-weight:bold; color:#27ae60;">≡ƒî▒ Cultivo en Parcela:</label>
+                                <label style="display:block; margin-bottom:5px; font-weight:bold; color:#27ae60;">🌱 Cultivo en Parcela:</label>
                                 <div id="current-crop-info" style="margin-bottom: 10px; font-size: 0.9em; color: #555;">
-                                    Ning├║n cultivo plantado.
+                                    Ningún cultivo plantado.
                                 </div>
                                 
                                 <div style="display:flex; gap:10px; margin-bottom:10px; align-items:center;">
@@ -905,7 +905,7 @@
                                         <input type="checkbox" id="edit-crop-ripe">
                                         <span>Maduro (Ripe)</span>
                                     </label>
-                                    <button id="btn-mature-crop" class="btn-primary" style="background-color:#f39c12; flex:1; display:none;">ΓÿÇ∩╕Å Madurar Ahora</button>
+                                    <button id="btn-mature-crop" class="btn-primary" style="background-color:#f39c12; flex:1; display:none;">☀️ Madurar Ahora</button>
                                 </div>
 
                                 <div style="display:flex; gap:10px;">
@@ -921,17 +921,17 @@
 
                             <!-- Crop Growth UI (Only visible for planted crops/seeds) -->
                             <div id="crop-growth-ui" class="hidden" style="margin-bottom:1.5rem; padding-top:1rem; border-top:1px solid rgba(0,0,0,0.1);">
-                                <label style="display:block; margin-bottom:5px; font-weight:bold; color:#f39c12;">ΓÅ▒∩╕Å Crecimiento:</label>
+                                <label style="display:block; margin-bottom:5px; font-weight:bold; color:#f39c12;">⏱️ Crecimiento:</label>
                                 <div id="crop-growth-status" style="margin-bottom: 10px; font-size: 0.9em; font-weight:bold; color: #555;">
                                     Estado actual...
                                 </div>
                                 <div class="input-group" style="margin-bottom:10px;">
-                                    <label>D├¡as restantes:</label>
+                                    <label>Días restantes:</label>
                                     <input type="number" id="edit-crop-days" step="0.1" min="0" placeholder="Ej. 1.5">
                                 </div>
                                 <div style="display:flex; gap:5px; margin-bottom:10px;">
                                     <button id="btn-add-crop-hour" class="btn-secondary" style="flex:1; font-size:0.8rem; padding:4px;">+1 Hora</button>
-                                    <button id="btn-add-crop-day" class="btn-secondary" style="flex:1; font-size:0.8rem; padding:4px;">+1 D├¡a</button>
+                                    <button id="btn-add-crop-day" class="btn-secondary" style="flex:1; font-size:0.8rem; padding:4px;">+1 Día</button>
                                 </div>
                                 <div style="display:flex; gap:5px;">
                                     <button id="btn-apply-crop-time" class="btn-primary" style="flex:2; background-color:#3498db; font-size:0.85rem;">Aplicar Tiempo</button>
@@ -944,12 +944,12 @@
                         </div>
                     </div>
                 </div>\n<div id="tab-experimental" class="tab-content hidden">
-                    <h2>≡ƒº¬ Inyector por Lotes (Experimental)</h2>
+                    <h2>🧪 Inyector por Lotes (Experimental)</h2>
                     <p class="subtitle">Inyecta un rango de IDs en el inventario. Uso bajo tu propio riesgo.</p>
                     
                     <div class="info-banner" style="margin-bottom:1.5rem; background-color: #ffeaa7; border-left: 4px solid #fdcb6e; color: #d35400;">
                         <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">warning</span>
-                        <strong>┬íADVERTENCIA!</strong> Esta herramienta inyecta IDs directamente en tu partida. Algunos objetos pueden estar rotos o causar inestabilidad si no est├ín implementados en el juego. <strong>Haz una copia de seguridad</strong> antes de guardar.
+                        <strong>¡ADVERTENCIA!</strong> Esta herramienta inyecta IDs directamente en tu partida. Algunos objetos pueden estar rotos o causar inestabilidad si no están implementados en el juego. <strong>Haz una copia de seguridad</strong> antes de guardar.
                     </div>
 
                     
@@ -967,53 +967,171 @@
                     
                     
                     \n<div id="timers-container" class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
-                            <!-- Din├ímico -->
+                            <!-- Dinámico -->
                         </div>\n\n<div id="sp-events-container" class="grid-2col" style="gap:1rem;">
-                            <!-- Din├ímico -->
+                            <!-- Dinámico -->
                         </div>\n\n<div style="margin-top:1.5rem; display:flex; gap:1rem;">
                             <button class="btn-primary" onclick="window.app.unlockAllCollection()">
                                 <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">menu_book</span>
-                                Completar Enciclopedia (Colecci├│n)
+                                Completar Enciclopedia (Colección)
                             </button>
                             <button class="btn-primary" onclick="window.app.unlockAllParsnaps()">
                                 <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">photo_camera</span>
                                 Desbloquear todos los Parsnaps
                             </button>
                         </div>\n\n<div class="section-card" style="margin-top:1.5rem;">
-                        <h3>≡ƒôª Estructuras Read-Only</h3>
-                        <p class="subtitle" style="margin-top:0;">No encontradas en los saves analizados. Se actualizar├ín si el save cargado las contiene.</p>
+                        <h3>📦 Estructuras Read-Only</h3>
+                        <p class="subtitle" style="margin-top:0;">No encontradas en los saves analizados. Se actualizarán si el save cargado las contiene.</p>
                         <ul style="color:var(--text-muted); font-size:0.9em; line-height:1.8; list-style:none; padding:0; margin:0;">
-                            <li id="ro-bounty">ΓÅ│ BountySave / BountyBoard: ΓÇö</li>
-                            <li id="ro-parsnap">ΓÅ│ ParsnapSave: ΓÇö</li>
-                            <li id="ro-cropbox">ΓÅ│ CropBox: ΓÇö</li>
-                            <li id="ro-delivery">ΓÅ│ deliverySave: ΓÇö</li>
+                            <li id="ro-bounty">⏳ BountySave / BountyBoard: —</li>
+                            <li id="ro-parsnap">⏳ ParsnapSave: —</li>
+                            <li id="ro-cropbox">⏳ CropBox: —</li>
+                            <li id="ro-delivery">⏳ deliverySave: —</li>
                         </ul>
                     </div>\n\n<div class="section-card" style="margin-top:1.5rem;">
-                        <h3>≡ƒñ¥ NPCConditionSaves</h3>
+                        <h3>🤝 NPCConditionSaves</h3>
                         <p class="subtitle" style="margin-top:0;">Condiciones de amistad y quests por NPC. Carga un save para ver los datos.</p>
                         <div style="overflow-x:auto; max-height:280px;">
                             <table class="inventory-table" style="width:100%; font-size:0.85rem;">
-                                <thead><tr><th>Char ID</th><th>Condition ID</th><th>Level</th><th>Date Fulfilled</th><th>Acci├│n</th></tr></thead>
+                                <thead><tr><th>Char ID</th><th>Condition ID</th><th>Level</th><th>Date Fulfilled</th><th>Acción</th></tr></thead>
                                 <tbody id="exp-conditions-body">
                                     <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:1rem;">Carga un save para ver las condiciones.</td></tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>\n\n<div class="section-card" style="margin-top:1.5rem;">
-                        <h3>≡ƒôô DiarySaves (Editor Fino)</h3>
+                        <h3>📓 DiarySaves (Editor Fino)</h3>
                         <p class="subtitle" style="margin-top:0;">Edita campos individuales de entradas de diario. Carga un save primero.</p>
                         <div style="overflow-x:auto; max-height:280px;">
                             <table class="inventory-table" style="width:100%; font-size:0.85rem;">
-                                <thead><tr><th>Num (ID)</th><th>AchievedOA</th><th>Night</th><th>State</th><th>Acci├│n</th></tr></thead>
+                                <thead><tr><th>Num (ID)</th><th>AchievedOA</th><th>Night</th><th>State</th><th>Acción</th></tr></thead>
                                 <tbody id="exp-diary-body">
                                     <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:1rem;">Carga un save para ver el diario.</td></tr>
                                 </tbody>
                             </table>
                         </div>
+                    </div>\n\n<div class="section-card">
+                        <h3>Configuración de Inyección</h3>
+                        <div class="grid-2col" style="gap: 1rem; align-items: flex-end;">
+                            <div class="input-group">
+                                <label>ID Inicial:</label>
+                                <input type="number" id="input-batch-start" value="1" min="1">
+                            </div>
+                            <div class="input-group">
+                                <label>ID Final:</label>
+                                <input type="number" id="input-batch-end" value="100" min="1">
+                            </div>
+                            <div class="input-group">
+                                <label>Cantidad por slot:</label>
+                                <input type="number" id="input-batch-qty" value="1" min="1">
+                            </div>
+                            <div class="input-group">
+                                <label>Tipo (si es desconocido):</label>
+                                <select id="input-batch-fallback-type" style="width:100%;">
+                                    <option value="1">Mueble</option>
+                                    <option value="0">Objeto</option>
+                                </select>
+                            </div>
+                            <div class="input-group" style="display:flex; gap: 10px;">
+                                <button id="btn-batch-preview" class="btn-secondary" style="flex: 1;">Vista Previa</button>
+                                <button id="btn-batch-inject" class="btn-primary" style="flex: 1;">Inyectar</button>
+                            </div>
+                        </div>
                     </div>\n\n<div class="section-card" style="margin-top: 1.5rem;">
                         <h3>Vista Previa de IDs a inyectar <span id="batch-preview-count" style="font-size: 0.9em; color: var(--text-muted);">(0)</span></h3>
                         <div id="batch-preview-container" style="max-height: 400px; overflow-y: auto; background: var(--panel-bg); border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 10px; margin-top: 1rem;">
-                            <p style="color: var(--text-muted); text-align: center; margin-top: 20px;">Haz clic en "Vista Previa" para cargar los IDs del cat├ílogo.</p>
+                            <p style="color: var(--text-muted); text-align: center; margin-top: 20px;">Haz clic en "Vista Previa" para cargar los IDs del catálogo.</p>
+                        </div>
+                    </div>\n\n<div class="section-card" style="margin-top: 2rem;">
+                        <h3>📐 Editor de Tamaños de Grilla</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                            Seleccioná un mueble en el <strong>Mapa 3D</strong> y volvé aquí para editar cuántas celdas ocupa.
+                        </p>
+
+                        <!-- Mueble seleccionado -->
+                        <div id="size-editor-selected" style="display:flex; align-items:center; gap:14px; padding:12px; background:var(--panel-bg); border:1px solid rgba(0,0,0,0.1); border-radius:10px; margin-bottom:1rem;">
+                            <img id="size-editor-icon" src="" style="width:52px; height:52px; object-fit:contain; border:1px solid rgba(0,0,0,0.1); border-radius:8px; background:rgba(255,255,255,0.5); display:none;" alt="">
+                            <div style="flex:1;">
+                                <div id="size-editor-name" style="font-weight:700; font-size:1rem; color:var(--text-primary);">Ningún mueble seleccionado</div>
+                                <div id="size-editor-id" style="font-size:0.8rem; color:var(--text-muted);">Seleccioná un mueble en el mapa primero</div>
+                            </div>
+                        </div>
+
+                        <!-- Inputs de tamaño -->
+                        <div class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
+                            <div class="input-group">
+                                <label>Width (eje X) 🡒</label>
+                                <input type="number" id="size-editor-width" min="1" max="10" value="2" placeholder="ej. 2">
+                            </div>
+                            <div class="input-group">
+                                <label>Length (eje Y) 🡓</label>
+                                <input type="number" id="size-editor-length" min="1" max="10" value="2" placeholder="ej. 2">
+                            </div>
+                        </div>
+
+                        <!-- Referencia visual de tamaños -->
+                        <details style="margin-bottom:1rem; font-size:0.85rem; color:var(--text-muted);">
+                            <summary style="cursor:pointer; font-weight:600;">📋 Referencia rápida de tamaños</summary>
+                            <table style="width:100%; border-collapse:collapse; margin-top:8px; font-size:0.82rem;">
+                                <thead><tr style="border-bottom:1px solid rgba(0,0,0,0.1);">
+                                    <th style="text-align:left; padding:4px 8px;">Tipo de mueble</th>
+                                    <th style="text-align:center; padding:4px 8px;">Tamaño típico</th>
+                                </tr></thead>
+                                <tbody>
+                                    <tr><td style="padding:3px 8px;">Silla / Lámpara / Planta pequeña</td><td style="text-align:center;">1 × 1</td></tr>
+                                    <tr><td style="padding:3px 8px;">Cama individual / Escritorio</td><td style="text-align:center;">1 × 2 o 2 × 1</td></tr>
+                                    <tr><td style="padding:3px 8px;">Cama doble / Sofá / Mesa</td><td style="text-align:center;">2 × 2</td></tr>
+                                    <tr><td style="padding:3px 8px;">Sofá grande / Mesa comedor</td><td style="text-align:center;">2 × 3 o 3 × 2</td></tr>
+                                    <tr><td style="padding:3px 8px;">Muebles grandes de sala</td><td style="text-align:center;">3 × 3 o 3 × 4</td></tr>
+                                    <tr><td style="padding:3px 8px;">Piano / Objetos muy grandes</td><td style="text-align:center;">4 × 4 o 4 × 5</td></tr>
+                                    <tr><td style="padding:3px 8px;">Árboles / Decoraciones especiales</td><td style="text-align:center;">5 × 5</td></tr>
+                                </tbody>
+                            </table>
+                        </details>
+
+                        <div style="display:flex; gap:10px; margin-bottom:1rem;">
+                            <button id="btn-size-apply" class="btn-primary" style="flex:1;" disabled>
+                                <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:4px;">save</span>
+                                Aplicar al mapa
+                            </button>
+                            <button id="btn-size-reset" class="btn-secondary" style="flex:1;" disabled>
+                                <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:4px;">undo</span>
+                                Restaurar original
+                            </button>
+                        </div>
+
+                        <!-- Búsqueda manual por ID -->
+                        <div style="border-top:1px solid rgba(0,0,0,0.08); padding-top:1rem; margin-top:0.5rem;">
+                            <label style="font-weight:600; font-size:0.9rem; display:block; margin-bottom:6px;">🔎 O ingresá un ID directamente:</label>
+                            <div style="display:flex; gap:8px; align-items:flex-end;">
+                                <div class="input-group" style="flex:1; margin-bottom:0;">
+                                    <input type="number" id="size-editor-manual-id" min="0" placeholder="ID del mueble (ej. 101)">
+                                </div>
+                                <button id="btn-size-manual-load" class="btn-secondary">Cargar</button>
+                            </div>
+                        </div>
+
+                        <div style="border-top:1px solid rgba(0,0,0,0.08); padding-top:1rem; margin-top:1rem;">
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                                <button id="btn-size-copy" class="btn-secondary" style="font-size:0.8rem; padding:4px 10px;" title="Copiar al portapapeles">
+                                    <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;">content_copy</span>
+                                    Copiar
+                                </button>
+                            </div>
+                            <pre id="size-editor-output" style="background:rgba(0,0,0,0.06); border-radius:8px; padding:10px; font-size:0.82rem; margin:0; white-space:pre-wrap; color:var(--text-primary);">// Seleccioná un mueble primero</pre>
+                        </div>
+
+                        <!-- Exportar todos los cambios -->
+                        <div style="border-top:1px solid rgba(0,0,0,0.08); padding-top:1rem; margin-top:1rem;">
+                            <div style="display:flex; align-items:center; justify-content:space-between;">
+                                <div>
+                                    <div style="font-weight:600; font-size:0.9rem;">💾 Exportar sesión completa</div>
+                                    <div id="size-editor-changes-count" style="font-size:0.78rem; color:var(--text-muted);">0 cambios pendientes</div>
+                                </div>
+                                <button id="btn-size-export" class="btn-primary" style="font-size:0.85rem;">
+                                    <span class="material-symbols-outlined" style="font-size:16px;vertical-align:text-bottom;margin-right:4px;">download</span>
+                                </button>
+                            </div>
                         </div>
                     </div>\n</div>\n</main>
         </div>
@@ -1021,7 +1139,7 @@
 
     <div id="toast-container"></div>
 
-    <!-- Data bundles ΓÇö loaded as scripts to work with file:// without a server -->
+    <!-- Data bundles — loaded as scripts to work with file:// without a server -->
     <script src="data/items_db.js"></script>
     <script src="odin_browser.js?v=3"></script>
     <!-- App logic -->
@@ -1075,7 +1193,7 @@
 			return arr;
 		};
 
-		// Funci├│n para reproducir la siguiente pista
+		// Función para reproducir la siguiente pista
 		const playNextTrack = () => {
 			// Si ya sonaron todas, se vuelve a mezclar la lista entera
 			if (currentIndex >= shuffledPlaylist.length) {
@@ -1087,17 +1205,17 @@
 			currentIndex++;
 
 			bgMusic.play().catch(error => {
-				console.log("El navegador bloque├│ la reproducci├│n autom├ítica. Esperando interacci├│n.");
+				console.log("El navegador bloqueó la reproducción automática. Esperando interacción.");
 			});
 		};
 
-		// Pasa a la siguiente canci├│n al finalizar la actual
+		// Pasa a la siguiente canción al finalizar la actual
 		bgMusic.addEventListener("ended", playNextTrack);
 
 		// Mezcla la lista por primera vez al cargar
 		shuffledPlaylist = shuffle(playlist);
 
-		// Funci├│n de inicio (inicia con el primer tema de la lista aleatoria)
+		// Función de inicio (inicia con el primer tema de la lista aleatoria)
 		const startAudio = () => {
 			if (!bgMusic.src) {
 				bgMusic.src = shuffledPlaylist[currentIndex];
@@ -1105,11 +1223,11 @@
 			}
 
 			bgMusic.play().then(() => {
-				// Remover listeners al iniciar la reproducci├│n
+				// Remover listeners al iniciar la reproducción
 				document.removeEventListener("click", startAudio);
 				document.removeEventListener("keydown", startAudio);
 			}).catch(error => {
-				console.log("El navegador bloque├│ el autoplay. Esperando interacci├│n del usuario.");
+				console.log("El navegador bloqueó el autoplay. Esperando interacción del usuario.");
 			});
 		};
 
@@ -1142,7 +1260,7 @@
                     </label>
                     <label class="check-container">
                         <input type="checkbox" id="export-cb-phone" checked>
-                        <span>Tel├⌐fono (Fidelidad, Cosm├⌐ticos)</span>
+                        <span>Teléfono (Fidelidad, Cosméticos)</span>
                     </label>
                 </div>
             </div>
@@ -1161,7 +1279,7 @@
                 <button class="close-modal" id="close-import-modal">&times;</button>
             </div>
             <div class="modal-body" style="padding:1.5rem;">
-                <p style="margin-bottom:1rem; font-size:0.9rem; color:#666;">Selecciona el archivo JSON y elige qu├⌐ secciones aplicar al save actual.</p>
+                <p style="margin-bottom:1rem; font-size:0.9rem; color:#666;">Selecciona el archivo JSON y elige qué secciones aplicar al save actual.</p>
                 
                 <input type="file" id="import-file-input" accept=".json" style="margin-bottom:1rem; display:block; width:100%;">
                 
@@ -1178,7 +1296,7 @@
                     </label>
                     <label class="check-container">
                         <input type="checkbox" id="import-cb-phone" checked disabled>
-                        <span>Tel├⌐fono (Fidelidad, Cosm├⌐ticos)</span>
+                        <span>Teléfono (Fidelidad, Cosméticos)</span>
                     </label>
                 </div>
             </div>
@@ -1194,7 +1312,7 @@
     <!-- Drop Overlay -->
     <div id="drop-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; color:white; font-size:2rem; pointer-events:none;">
         <div style="border: 4px dashed white; padding: 3rem; border-radius: 20px;">
-            Suelta el archivo JSON aqu├¡ para cargar nombres
+            Suelta el archivo JSON aquí para cargar nombres
         </div>
     </div>
 </body>
