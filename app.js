@@ -220,12 +220,36 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     }
 
     loadDictionaries() {
-        // Data is injected via <script> tags (extracted_items_v3.js / sizes.js)
-        // so no fetch() needed - works with file:// protocol without a server.
-        if (typeof ITEM_NAMES !== 'undefined') window.KNOWN_ITEMS = ITEM_NAMES;
-        if (typeof window.furnitureSizes !== 'undefined') window.ITEM_SIZES = window.furnitureSizes;
+        // Data is injected via <script> tags (extracted_items_v3.js / sizes.js / data/items_db.js)
+        
         if (!window.KNOWN_ITEMS) window.KNOWN_ITEMS = {};
-        if (!window.ITEM_SIZES)  window.ITEM_SIZES  = {};
+        if (!window.furnitureSizes) window.furnitureSizes = {};
+        
+        if (typeof ITEM_NAMES !== 'undefined') window.KNOWN_ITEMS = ITEM_NAMES;
+        
+        if (window.ITEMS_DB) {
+            for (const id in window.ITEMS_DB) {
+                const entry = window.ITEMS_DB[id];
+                if (entry.item_name) window.KNOWN_ITEMS[`ITEM_${id}`] = entry.item_name;
+                if (entry.furn_name) window.KNOWN_ITEMS[`FURN_${id}`] = entry.furn_name;
+                
+                // Populate furnitureSizes from ITEMS_DB for SizeEditor
+                if (entry.width > 0 && entry.length > 0 && !window.furnitureSizes[id]) {
+                    window.furnitureSizes[id] = { width: entry.width, length: entry.length };
+                }
+            }
+        }
+
+        window.ITEM_SIZES = window.furnitureSizes;
+        
+        window.getFurnitureSize = function(id) {
+            const e = window.ITEMS_DB && window.ITEMS_DB[String(id)];
+            if (e && e.width > 0 && e.length > 0) return { width: e.width, length: e.length };
+            if (window.furnitureSizes && window.furnitureSizes[String(id)])
+                return window.furnitureSizes[String(id)];
+            return null;
+        };
+
         console.log(`[App] Items loaded: ${Object.keys(window.KNOWN_ITEMS).length}`);
 
         if (this.addItemSelect) {
@@ -353,6 +377,35 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             } else {
                 this.showToast('ℹ️ Todas las ubicaciones ya estaban desbloqueadas.');
             }
+        });
+
+
+        document.getElementById('btn-news-all-shown')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            const news = this.parser.getNewspapers();
+            let count = 0;
+            news.forEach(n => {
+                if (!n.shown) {
+                    this.parser.setNewspaperStatus(n.id, true, n.done);
+                    count++;
+                }
+            });
+            this.showToast(`📰 ${count} periódicos marcados como vistos.`);
+            if (this.renderNewsTab) this.renderNewsTab();
+        });
+
+        document.getElementById('btn-news-all-done')?.addEventListener('click', () => {
+            if (!this.parser) return;
+            const news = this.parser.getNewspapers();
+            let count = 0;
+            news.forEach(n => {
+                if (!n.done) {
+                    this.parser.setNewspaperStatus(n.id, n.shown, true);
+                    count++;
+                }
+            });
+            this.showToast(`✅ ${count} recompensas de periódicos completadas.`);
+            if (this.renderNewsTab) this.renderNewsTab();
         });
 
         document.getElementById('btn-maps-unlock-main')?.addEventListener('click', () => {
@@ -1933,6 +1986,78 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
     // ─── Phone (Punchcard & Locations) ──────────────────────────────────
 
+    // 📰 Newspapers
+    renderNewsTab() {
+        if (!this.parser) return;
+        const news = this.parser.getNewspapers();
+        const container = document.getElementById('news-checklist');
+        const emptyState = document.getElementById('news-empty-state');
+        
+        if (!news || news.length === 0) {
+            if (container) container.innerHTML = '';
+            if (emptyState) emptyState.classList.remove('hidden');
+            return;
+        }
+        
+        if (emptyState) emptyState.classList.add('hidden');
+        if (container) {
+            container.innerHTML = '';
+            
+            // Sort by ID to keep it tidy
+            news.sort((a, b) => a.id - b.id);
+            
+            news.forEach(n => {
+                const el = document.createElement('div');
+                el.className = 'list-item';
+                el.style.display = 'flex';
+                el.style.flexDirection = 'column';
+                el.style.gap = '0.5rem';
+                el.style.padding = '10px';
+                el.style.border = '1px solid #444';
+                el.style.borderRadius = '5px';
+                
+                // Try to get title from DB if available, else fallback to ID
+                const title = window.NEWSPAPER_DB && window.NEWSPAPER_DB[n.id] ? window.NEWSPAPER_DB[n.id] : 'Periódico #' + n.id;
+                
+                el.innerHTML = `
+                    <div style="font-weight: bold; margin-bottom: 0.2rem; display: flex; justify-content: space-between;">
+                        <span>${title}</span>
+                        <span style="font-size: 0.8em; color: #888;">ID: ${n.id}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" class="news-shown-cb" data-id="${n.id}" ${n.shown ? 'checked' : ''}>
+                            <span>Visto (Shown)</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" class="news-done-cb" data-id="${n.id}" ${n.done ? 'checked' : ''}>
+                            <span>Recompensa (Done)</span>
+                        </label>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+            
+            // Event Listeners for checkboxes
+            container.querySelectorAll('.news-shown-cb').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.getAttribute('data-id'));
+                    const doneCb = container.querySelector('.news-done-cb[data-id="' + id + '"]');
+                    this.parser.setNewspaperStatus(id, e.target.checked, doneCb.checked);
+                });
+            });
+            
+            container.querySelectorAll('.news-done-cb').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.getAttribute('data-id'));
+                    const shownCb = container.querySelector('.news-shown-cb[data-id="' + id + '"]');
+                    this.parser.setNewspaperStatus(id, shownCb.checked, e.target.checked);
+                });
+            });
+        }
+    }
+
+
     renderPhoneTab() {
         if (!this.parser) return;
 
@@ -2688,6 +2813,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             
             this.renderInventoryTab();
             if (this.renderEventsTab) this.renderEventsTab();
+            if (this.renderNewsTab) this.renderNewsTab();
             if (this.renderPhoneTab) this.renderPhoneTab();
             if (this.renderMailTab) this.renderMailTab();
             if (this.map) this.map.draw();

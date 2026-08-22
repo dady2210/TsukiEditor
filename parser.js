@@ -1080,7 +1080,7 @@ class SaveParser {
         return item;
     }
 
-        injectLostItem(newId, quantity = 1, invType = 1) {
+    injectLostItem(newId, quantity = 1, invType = 1) {
         if (!this.ast) throw new Error("AST no cargado.");
         if (!Number.isInteger(newId) || !Number.isInteger(quantity))
             throw new Error("ID y cantidad deben ser enteros.");
@@ -1196,7 +1196,7 @@ class SaveParser {
         const targetInvType = visualCategory;
         
         if (!invArray) throw new Error("El arreglo de inventario no esta inicializado.");
-        const stackItem = invArray.find(i => i.item_id === newId);
+        const stackItem = invArray.find(i => i.item_id === newId && Number(i.invType) === Number(targetInvType));
         
         if (stackItem) {
             const idx = invArray.indexOf(stackItem);
@@ -1817,6 +1817,57 @@ class SaveParser {
         if (slot && slot.furnNode) {
             slot.furnNode.value = Number(furnId) | 0;
             return true;
+        }
+        return false;
+    }
+
+    getNewspapers() {
+        if (!this.ast) return [];
+        const nNode = findChildRecursive({children: this.ast}, ['newspapers']);
+        if (!nNode || !nNode.children || nNode.children.length === 0) return [];
+        
+        const list = nNode.children[0];
+        if (!list || !list.elements) return [];
+        
+        const results = [];
+        for (const el of list.elements) {
+            const val = el.value || el;
+            const idNode = findChildRecursive(val, ['ID', 'id']);
+            const shownNode = findChildRecursive(val, ['shown', 'Shown']);
+            const doneNode = findChildRecursive(val, ['done', 'Done']);
+            const dayNode = findChildRecursive(val, ['day', 'Day']);
+            
+            if (idNode) {
+                results.push({
+                    id: idNode.value,
+                    shown: shownNode ? shownNode.value : false,
+                    done: doneNode ? doneNode.value : false,
+                    day: dayNode ? dayNode.value : 0,
+                    nodes: { shownNode, doneNode }
+                });
+            }
+        }
+        return results;
+    }
+
+    setNewspaperStatus(id, shown, done) {
+        if (!this.ast) return false;
+        const nNode = findChildRecursive({children: this.ast}, ['newspapers']);
+        if (!nNode || !nNode.children || nNode.children.length === 0) return false;
+        
+        const list = nNode.children[0];
+        if (!list || !list.elements) return false;
+        
+        for (const el of list.elements) {
+            const val = el.value || el;
+            const idNode = findChildRecursive(val, ['ID', 'id']);
+            if (idNode && idNode.value == id) {
+                const shownNode = findChildRecursive(val, ['shown', 'Shown']);
+                const doneNode = findChildRecursive(val, ['done', 'Done']);
+                if (shownNode) shownNode.value = shown;
+                if (doneNode) doneNode.value = done;
+                return true;
+            }
         }
         return false;
     }

@@ -1,3 +1,5 @@
+window.NEWSPAPER_DB = {};
+
 window.ITEMS_DB = {
   "0": {
     "id": 0,
@@ -19677,7 +19679,7 @@ window.ITEMS_DB = {
     "id": 2643,
     "furn_name": "Raven Stool_Internal"
   }
-};\n
+};
 // SHIM FOR LEGACY GLOBALS
 window.KNOWN_ITEMS = {};
 window.furnitureSizes = {};
