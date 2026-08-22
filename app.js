@@ -3085,20 +3085,47 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     renderExperimentalStructures() {
         if (!this.parser) return;
         
-        // Read Only structures
-        const bounty = this.parser.getBountySave();
-        const parsnap = this.parser.getParsnapSave();
-        const cropbox = this.parser.getCropBoxSave();
-        const delivery = this.parser.getDeliverySave();
+        const formatNode = (nodeObj, liId, name) => {
+            const el = document.getElementById(liId);
+            if (!el) return;
+            
+            if (!nodeObj.present) {
+                el.innerHTML = `❌ ${name}: No presente en este save`;
+                return;
+            }
+            
+            let html = `✅ ${name}: Presente`;
+            const n = nodeObj.node;
+            if (n && n.children && n.children.length > 0) {
+                const fields = [];
+                let count = 0;
+                for (const c of n.children) {
+                    if (count >= 10) break; // MAX_FIELDS
+                    if (c.value !== undefined && c.value !== null && typeof c.value !== 'object') {
+                        fields.push(`<b>${c.name}</b>: ${c.value}`);
+                        count++;
+                    }
+                }
+                if (fields.length > 0) {
+                    html += `<div style="font-size:0.85rem; margin-top:0.25rem; padding:0.5rem; background:#f4f4f4; border-radius:4px;">${fields.join('<br>')}</div>`;
+                } else {
+                    html += ` <i>(sin campos parseables)</i>`;
+                }
+            } else {
+                html += ` <i>(sin campos parseables)</i>`;
+            }
+            el.innerHTML = html;
+        };
+
+        formatNode(this.parser.getBountySave(), 'ro-bounty', 'BountySave / BountyBoard');
+        formatNode(this.parser.getParsnapSave(), 'ro-parsnap', 'ParsnapSave');
+        formatNode(this.parser.getCropBoxSave(), 'ro-cropbox', 'CropBox');
         
-        const rBounty = document.getElementById('ro-bounty');
-        if (rBounty) rBounty.textContent = `BountySave / BountyBoard: ${bounty.message}`;
-        const rParsnap = document.getElementById('ro-parsnap');
-        if (rParsnap) rParsnap.textContent = `ParsnapSave: ${parsnap.message}`;
-        const rCrop = document.getElementById('ro-cropbox');
-        if (rCrop) rCrop.textContent = `CropBox: ${cropbox.message}`;
-        const rDel = document.getElementById('ro-delivery');
-        if (rDel) rDel.textContent = `deliverySave: ${delivery.present ? (delivery.isNull ? 'Presente (OdinNull)' : 'Presente') : 'No presente en este save.'}`;
+        const del = this.parser.getDeliverySave();
+        const delEl = document.getElementById('ro-delivery');
+        if (delEl) {
+            delEl.innerHTML = del.present ? `✅ deliverySave: Presente` : `❌ deliverySave: No presente`;
+        }
         
         // Conditions Table
         const cBody = document.getElementById('exp-conditions-body');
@@ -3213,7 +3240,17 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         let otherParser;
         try {
             otherParser = new SaveParser(arrayBuffer);
-            otherParser.parseAll();
+            const reader = new OdinReader(otherParser.buffer.buffer);
+            let ast = reader.parse();
+            if (Array.isArray(ast)) ast = ast[0];
+            otherParser.ast = ast;
+            
+            otherParser.parseGeneralVars();
+            otherParser.parseMap();
+            otherParser.parseInventory();
+            otherParser.parseNPCSaves();
+            otherParser.parseEventSaves();
+            otherParser.parseTrainSave();
         } catch (e) {
             alert("Error al parsear el archivo B: " + e.message);
             return;
@@ -3227,19 +3264,25 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             let actEv = ev.all.find(e => e.eventID > 0);
             
             let carrots = 0;
-            if (p.ast) {
-                const gv = p._findNodesInAST ? p._findNodesInAST('generalVars')[0] : null;
-                if (gv && gv.children) {
-                    const c = gv.children.find(ch => ch.name === 'Carrots');
-                    if (c) carrots = c.value;
-                }
+            if (p.generalVars && p.generalVars['carrots'] !== undefined) {
+                carrots = p.generalVars['carrots'];
+            } else if (p.generalVars && p.generalVars['Carrots'] !== undefined) {
+                carrots = p.generalVars['Carrots'];
+            } else if (p.inventory) {
+                const cItem = p.inventory.find(i => (typeof i.id === 'string' && i.id.toLowerCase() === 'carrots') || i.id === 'carrots' || i.name === 'carrots');
+                if (cItem) carrots = cItem.quantity;
             }
             
             const news = p.getNewspapers ? p.getNewspapers() : [];
             const doneNews = news.filter(n => n.done).length;
             const meta = p.getLetterOrderMeta ? p.getLetterOrderMeta() : {};
             const uOrd = meta.uniqueOrders;
-            const hs = p.getHomeCurrSLocData ? p.getHomeCurrSLocData() : null;
+            
+            let hs = null;
+            if (p.getHomeCurrSLocData) {
+                const hsRaw = p.getHomeCurrSLocData();
+                hs = (hsRaw !== null && typeof hsRaw === 'object' && 'value' in hsRaw) ? hsRaw.value : hsRaw;
+            }
             
             return {
                 letters: p.getLetters ? p.getLetters().length : 0,
@@ -3250,7 +3293,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 carrots: carrots,
                 newsDone: doneNews,
                 uniqueOrders: uOrd !== undefined && uOrd !== null ? uOrd.toString() : 'None',
-                homeTier: hs ? hs.value : 'N/A'
+                homeTier: hs !== null ? hs : 'N/A'
             };
         };
         
