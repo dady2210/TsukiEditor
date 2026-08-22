@@ -1823,7 +1823,7 @@ class SaveParser {
 
     getNewspapers() {
         if (!this.ast) return [];
-        const nNode = findChildRecursive({children: this.ast}, ['newspapers']);
+        const nNode = findChildRecursive(this.ast, ['newspapers']);
         if (!nNode || !nNode.children || nNode.children.length === 0) return [];
         
         const list = nNode.children[0];
@@ -1852,7 +1852,7 @@ class SaveParser {
 
     setNewspaperStatus(id, shown, done) {
         if (!this.ast) return false;
-        const nNode = findChildRecursive({children: this.ast}, ['newspapers']);
+        const nNode = findChildRecursive(this.ast, ['newspapers']);
         if (!nNode || !nNode.children || nNode.children.length === 0) return false;
         
         const list = nNode.children[0];
