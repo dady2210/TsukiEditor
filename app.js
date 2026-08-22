@@ -18,15 +18,15 @@ const CHAR_NAMES = {
 };
 
 const EVENT_NAMES = {
-    // NOTA: Estos IDs deben validarse contra el enum VillageEvent del código del juego.
-    // Solo listamos los confirmados en archivos de guardado (0,2,4,6,7,8).
+    // NOTA: Estos IDs deben validarse contra el enum VillageEvent del código del juego (dump.cs).
+    // Solo listamos los confirmados en archivos de guardado o con evidencia.
     0: "Año Nuevo / Primavera (Spring)",
     1: "San Valentín (Valentine's)",
     2: "Pascua (Easter)",
     3: "Jumper",
     4: "Festival de Verano (Summer)",
     5: "Halloween",
-    6: "Cosecha de Otoño (Autumn)",
+    6: "Cosecha de Otoño (Autumn Harvest)",
     7: "Solsticio de Invierno (Winter)",
     8: "Navidad (Christmas)",
     9: "Fin de Año (New Year's Eve)"
@@ -1138,65 +1138,95 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (!this.parser) return;
         
         const state = this.parser.getVillageEventState();
+        const evSelect = document.getElementById('select-event-index');
+        const evContainer = document.getElementById('event-edit-container');
         
-        const emptyState = document.getElementById('event-empty-state');
-        const contentState = document.getElementById('event-content');
-        
-        if (!state || !state.present) {
-            if (emptyState) emptyState.style.display = 'block';
-            if (contentState) contentState.style.display = 'none';
+        if (!state.present || state.all.length === 0) {
+            if(evSelect) {
+                evSelect.innerHTML = '<option value="">No hay eventos en el save</option>';
+                evSelect.disabled = true;
+            }
+            if(evContainer) evContainer.style.display = 'none';
+            const ndMsg = document.getElementById('events-no-data-msg');
+            if(ndMsg) ndMsg.style.display = 'block';
             return;
         }
         
-        if (emptyState) emptyState.style.display = 'none';
-        if (contentState) contentState.style.display = 'block';
+        if(document.getElementById('events-no-data-msg')) document.getElementById('events-no-data-msg').style.display = 'none';
+        if(evSelect) evSelect.disabled = false;
+        if(evContainer) evContainer.style.display = 'block';
         
-        const idInput = document.getElementById('event-id');
-        const tasksInput = document.getElementById('event-tasks');
-        const flyerCb = document.getElementById('event-flyer-cb');
-        const calendarCb = document.getElementById('event-calendar-cb');
-        const applyBtn = document.getElementById('btn-apply-event');
-        const nameLabel = document.getElementById('event-name-label');
-        
-        if (idInput) idInput.value = state.eventID || '';
-        if (tasksInput) tasksInput.value = state.tasksCompleted || 0;
-        if (flyerCb) flyerCb.checked = !!state.shownFlyer;
-        if (calendarCb) calendarCb.checked = !!state.shownCalendar;
-        
-        if (nameLabel) {
-            const evName = (typeof EVENT_NAMES !== 'undefined' && EVENT_NAMES[state.eventID]) 
-                ? EVENT_NAMES[state.eventID] 
-                : 'Desconocido';
-            nameLabel.textContent = 'Nombre: ' + evName;
+        let selectedIndex = parseInt(evSelect.value);
+        if (isNaN(selectedIndex) || !state.all.find(e => e.index === selectedIndex)) {
+            // "Activo" = el de mayor year o mayor index
+            const activeEvent = state.all.reduce((prev, curr) => (curr.year >= prev.year ? curr : prev), state.all[0]);
+            selectedIndex = activeEvent.index;
         }
         
-        // Remove old listeners to prevent duplicates
-        if (applyBtn) {
-            const newBtn = applyBtn.cloneNode(true);
-            applyBtn.parentNode.replaceChild(newBtn, applyBtn);
-            
-            newBtn.addEventListener('click', () => {
-                let changed = false;
-                
-                const idVal = document.getElementById('event-id').value;
-                if (idVal !== '') changed = this.parser.setVillageEventField('eventID', idVal) || changed;
-                
-                const tasksVal = document.getElementById('event-tasks').value;
-                if (tasksVal !== '') changed = this.parser.setVillageEventField('tasksCompleted', tasksVal) || changed;
-                
-                const fCb = document.getElementById('event-flyer-cb').checked;
-                changed = this.parser.setVillageEventField('shownFlyer', fCb) || changed;
-                
-                const cCb = document.getElementById('event-calendar-cb').checked;
-                changed = this.parser.setVillageEventField('shownCalendar', cCb) || changed;
-                
-                if (changed) {
-                    this.showToast('✅ Evento activo actualizado');
-                    this.renderEventsTab();
-                } else {
-                    alert('No se pudo actualizar el evento. Verifica que el save lo soporte.');
-                }
+        if(evSelect) {
+            evSelect.innerHTML = '';
+            state.all.forEach(ev => {
+                const name = EVENT_NAMES[ev.eventID] || `Event #${ev.eventID}`;
+                const opt = document.createElement('option');
+                opt.value = ev.index;
+                opt.textContent = `[${ev.index}] ${name} - Año ${ev.year}`;
+                if (ev.index === selectedIndex) opt.selected = true;
+                evSelect.appendChild(opt);
             });
+        }
+        
+        const currentEvent = state.all.find(e => e.index === selectedIndex);
+        if (!currentEvent) return;
+        
+        if(document.getElementById('event-id-input')) document.getElementById('event-id-input').value = currentEvent.eventID;
+        if(document.getElementById('event-year-input')) document.getElementById('event-year-input').value = currentEvent.year;
+        if(document.getElementById('event-flyer-cb')) document.getElementById('event-flyer-cb').checked = currentEvent.shownFlyer;
+        if(document.getElementById('event-calendar-cb')) document.getElementById('event-calendar-cb').checked = currentEvent.shownCalendar;
+        if(document.getElementById('event-tasks-input')) document.getElementById('event-tasks-input').value = currentEvent.tasksCompleted.join(', ');
+        
+        // Rewards HC
+        for (let i = 0; i < 4; i++) {
+            const cb = document.getElementById(`event-reward-${i}`);
+            if (cb) cb.checked = currentEvent.rewardsClaimed[i] || false;
+        }
+    }
+
+    applyEventChanges() {
+        if (!this.parser) return;
+        const evSelect = document.getElementById('select-event-index');
+        if(!evSelect) return;
+        const index = parseInt(evSelect.value);
+        if (isNaN(index)) return;
+        
+        const eventID = parseInt(document.getElementById('event-id-input').value);
+        const year = parseInt(document.getElementById('event-year-input').value);
+        const shownFlyer = document.getElementById('event-flyer-cb').checked;
+        const shownCalendar = document.getElementById('event-calendar-cb').checked;
+        const tasksStr = document.getElementById('event-tasks-input').value;
+        const tasksCompleted = tasksStr.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+        
+        const rewardsClaimed = [];
+        for (let i = 0; i < 4; i++) {
+            rewardsClaimed.push(document.getElementById(`event-reward-${i}`).checked);
+        }
+        
+        if (year < 2020 || year > 2035) {
+            this.showToast('⚠️ Año inusual detectado.', 'warning');
+        }
+
+        let updated = false;
+        if (this.parser.setVillageEventField(index, 'eventID', eventID)) updated = true;
+        if (this.parser.setVillageEventField(index, 'year', year)) updated = true;
+        if (this.parser.setVillageEventField(index, 'shownFlyer', shownFlyer)) updated = true;
+        if (this.parser.setVillageEventField(index, 'shownCalendar', shownCalendar)) updated = true;
+        if (this.parser.setVillageEventTasksCompleted(index, tasksCompleted)) updated = true;
+        if (this.parser.setVillageEventRewardsClaimed(index, rewardsClaimed)) updated = true;
+        
+        if (updated) {
+            this.showToast('✅ Evento actualizado.');
+            this.renderEventsTab();
+        } else {
+            this.showToast('❌ Error al actualizar el evento.', 'error');
         }
     }
 

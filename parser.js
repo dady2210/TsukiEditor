@@ -2524,102 +2524,66 @@ class SaveParser {
             const flyerNode = findChildRecursive(vNode, ['shownFlyer', 'ShownFlyer', 'flyerSeen']);
             const calendarNode = findChildRecursive(vNode, ['shownCalendar', 'ShownCalendar', 'calendarSeen']);
             
-            // For tasksCompleted (List<int>)
             let tasksList = [];
             if (tasksNode && tasksNode.children) {
                 const tList = tasksNode.children.find(c => c.constructor.name === 'OdinList');
                 if (tList) {
                     const tElements = resolveListElements(tList);
-                    if (tElements) {
-                        tasksList = tElements.map(e => e.value);
-                    }
+                    if (tElements) tasksList = tElements.map(e => Number(e.value || 0));
                 }
             }
             
-            // For rewardsClaimed (bool[])
-            let rewardsParsed = [];
-            if (rewardsNode && rewardsNode.children) {
-                const rList = rewardsNode.children.find(c => c.constructor.name === 'OdinList');
-                if (rList) {
-                    const rElements = resolveListElements(rList);
-                    if (rElements) {
-                        rewardsParsed = rElements.map(e => e.value);
+            let rewardsParsed = [false, false, false, false];
+            if (rewardsNode) {
+                // a) OdinPrimitiveArray (marker 0x08) — caso real del .csave
+                const arr = rewardsNode.children?.find(c => c.constructor?.name === 'OdinPrimitiveArray' || c.marker === 0x08)
+                         || ((rewardsNode.constructor?.name === 'OdinPrimitiveArray' || rewardsNode.marker === 0x08) ? rewardsNode : null);
+                if (arr && arr.rawData) {
+                    for (let i = 0; i < Math.min(4, arr.rawData.length); i++)
+                        rewardsParsed[i] = !!arr.rawData[i];
+                } else {
+                    // b) OdinList de bools (fallback)
+                    const rList = rewardsNode.children?.find(c => c.constructor?.name === 'OdinList');
+                    if (rList) {
+                        const els = resolveListElements(rList) || [];
+                        for (let i = 0; i < Math.min(4, els.length); i++)
+                            rewardsParsed[i] = !!els[i].value;
                     }
                 }
             }
             
             allEvents.push({
                 index,
-                eventID: eventIDNode ? eventIDNode.value : null,
-                year: yearNode ? yearNode.value : 0,
-                tasksCompletedList: tasksList,
-                rewardsClaimed: rewardsParsed,
+                eventID: eventIDNode ? Number(eventIDNode.value) : -1,
+                year: yearNode ? Number(yearNode.value) : 0,
                 shownFlyer: flyerNode ? !!flyerNode.value : false,
                 shownCalendar: calendarNode ? !!calendarNode.value : false,
+                tasksCompleted: tasksList,
+                rewardsClaimed: rewardsParsed,
                 nodes: {
-                    main: vNode,
+                    root: vNode,
                     eventIDNode,
                     yearNode,
-                    tasksNode,
-                    rewardsNode,
                     flyerNode,
-                    calendarNode
+                    calendarNode,
+                    tasksNode,
+                    rewardsNode
                 }
             });
         });
         
-        if (allEvents.length === 0) return { present: false, all: [] };
-        
-        // Active event is usually the one with the highest year/eventID or just the last one
-        allEvents.sort((a, b) => {
-            if (a.year !== b.year) return b.year - a.year;
-            return b.eventID - a.eventID;
-        });
-        
-        const active = allEvents[0];
-        
         return {
             present: true,
-            all: allEvents,
-            eventID: active.eventID,
-            year: active.year,
-            tasksCompleted: active.tasksCompletedList.length,
-            rewardsClaimed: active.rewardsClaimed,
-            shownFlyer: active.shownFlyer,
-            shownCalendar: active.shownCalendar,
-            activeNodeIndex: active.index,
-            nodes: active.nodes
+            all: allEvents
         };
     }
 
-    setVillageEventField(fieldKey, value, eventIndex = -1) {
+    setVillageEventField(eventIndex, fieldKey, value) {
         const state = this.getVillageEventState();
         if (!state.present) return false;
         
-        let targetEvent = null;
-        if (eventIndex >= 0) {
-            targetEvent = state.all.find(e => e.index === eventIndex);
-        } else {
-            targetEvent = state.all.find(e => e.index === state.activeNodeIndex);
-        }
-        
+        const targetEvent = state.all.find(e => e.index === eventIndex);
         if (!targetEvent) return false;
-        
-        if (fieldKey === 'tasksCompleted') {
-            const numTasks = Number(value);
-            const tasksNode = targetEvent.nodes.tasksNode;
-            if (tasksNode && tasksNode.children) {
-                const tList = tasksNode.children.find(c => c.constructor.name === 'OdinList');
-                if (tList) {
-                    tList.elements = [];
-                    for (let i = 0; i < numTasks; i++) {
-                        tList.elements.push(new OdinPrimitive(0x17, '', i));
-                    }
-                    return true;
-                }
-            }
-            return false;
-        }
         
         let targetNode = null;
         switch (fieldKey) {
@@ -2636,6 +2600,53 @@ class SaveParser {
         return false;
     }
 
+    setVillageEventTasksCompleted(eventIndex, tasksArray) {
+        const state = this.getVillageEventState();
+        if (!state.present) return false;
+        const targetEvent = state.all.find(e => e.index === eventIndex);
+        if (!targetEvent) return false;
+        
+        const tasksNode = targetEvent.nodes.tasksNode;
+        if (tasksNode && tasksNode.children) {
+            const tList = tasksNode.children.find(c => c.constructor.name === 'OdinList');
+            if (tList) {
+                tList.elements = tasksArray.map(id => ({ marker: 0x18, name: null, value: Number(id) }));
+                tList.length = tasksArray.length;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    setVillageEventRewardsClaimed(eventIndex, boolArray) {
+        const state = this.getVillageEventState();
+        if (!state.present) return false;
+        const targetEvent = state.all.find(e => e.index === eventIndex);
+        if (!targetEvent) return false;
+        
+        const rNode = targetEvent.nodes.rewardsNode;
+        if (!rNode) {
+            console.log("No rewardsClaimed node found to overwrite. Will not create one from scratch.");
+            return false;
+        }
+
+        let primArr = rNode.marker === 0x08 ? rNode : (rNode.children ? rNode.children.find(c => c.marker === 0x08) : null);
+        if (primArr && primArr.rawData) {
+            for(let i=0; i<Math.min(boolArray.length, primArr.rawData.length); i++) {
+                primArr.rawData[i] = boolArray[i] ? 1 : 0;
+            }
+            return true;
+        } else if (rNode.children) {
+            const rList = rNode.children.find(c => c.constructor.name === 'OdinList');
+            if (rList) {
+                // Ensure we have exactly the right number of elements
+                rList.elements = boolArray.map(b => ({ marker: 0x18, name: null, value: b }));
+                rList.length = boolArray.length;
+                return true;
+            }
+        }
+        return false;
+    }
 
     // --- Partial JSON Export/Import ---
     exportPartialJSON(sections) {

@@ -548,76 +548,77 @@
 
                 <!-- ── TAB: Eventos ── -->
                 <div id="tab-events" class="tab-content hidden">
-                    <h2>🎪 Eventos de la Aldea</h2>
-                    <p class="subtitle">Visualiza y modifica el estado del evento activo.</p>
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+                        <div>
+                            <h2>Event Calendar / Village Events</h2>
+                            <p class="subtitle">Gestiona los festivales y eventos de la aldea (Calendario y Flyers).</p>
+                        </div>
+                    </div>
 
-                    <div id="event-empty-state" class="info-banner" style="margin-bottom:1.5rem;">
+                    <div id="event-dates" class="info-banner">
                         <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">info</span>
-                        No hay un VillageEvent activo en este save. El evento se crea al activarse en el juego.
+                        <strong>Aviso:</strong> Las fechas del evento las define el cliente por UTC; el save solo guarda eventID/year/progreso. Cambiar el ID o año aquí no activará la decoración ni los NPCs si el reloj de tu dispositivo no coincide con la fecha oficial. (Recompensas HC del calendario pueden requerir la compra en el juego).
                     </div>
 
-                    <div id="event-content" style="display:none;" class="section-card">
-                        <div class="grid-2col">
-                            <div>
-                                <label for="event-id">Event ID</label>
-                                <input type="number" id="event-id" class="input-field" placeholder="Ej. 4">
-                                <small style="display:block; margin-top:5px; color:var(--primary-color);" id="event-name-label">Nombre del Evento</small>
+                    <div id="events-no-data-msg" style="display:none; padding:2rem; text-align:center; color:var(--text-muted); background:var(--bg-secondary); border-radius:8px; margin-top:1rem;">
+                        Este save no tiene un historial de eventos.
+                    </div>
+
+                    <div id="event-edit-container" class="section-card" style="display:none; margin-top: 1rem;">
+                        <div class="input-group" style="margin-bottom: 1.5rem;">
+                            <label>Seleccionar Evento a Editar (Mayor año = Evento Activo):</label>
+                            <select id="select-event-index" onchange="window.app.renderEventsTab()"></select>
+                        </div>
+
+                        <div class="grid-2col" style="gap: 1rem; margin-bottom: 1rem;">
+                            <div class="input-group">
+                                <label title="ID del evento. Valídalo contra el enum VillageEvent del dump.">Event ID</label>
+                                <input type="number" id="event-id-input">
                             </div>
-                            <div>
-                                <label>Progreso de Tareas (Tasks Completed)</label>
-                                <input type="number" id="event-tasks" class="input-field" placeholder="0">
+                            <div class="input-group">
+                                <label>Año (Year)</label>
+                                <input type="number" id="event-year-input">
                             </div>
                         </div>
 
-                        <div style="margin-top:1.5rem;" class="grid-2col">
-                            <div>
-                                <h4>Fechas de Evento</h4>
-                                <p style="font-size:0.9rem; margin-top:0.5rem;" id="event-dates">Inicio: -<br>Fin: -</p>
-                            </div>
-                            <div style="display:flex; flex-direction:column; gap:0.5rem; justify-content:center;">
-                                <label class="check-container">
+                        <div class="grid-2col" style="gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="input-group">
+                                <label style="display: flex; align-items: center; gap: 8px;">
                                     <input type="checkbox" id="event-flyer-cb">
-                                    <span>Flyer Visto (shownFlyer)</span>
+                                    Flyer Visto (shownFlyer)
                                 </label>
-                                <label class="check-container">
+                            </div>
+                            <div class="input-group">
+                                <label style="display: flex; align-items: center; gap: 8px;">
                                     <input type="checkbox" id="event-calendar-cb">
-                                    <span>Calendario Visto (shownCalendar)</span>
+                                    Calendario Visto (shownCalendar)
                                 </label>
                             </div>
                         </div>
 
-                        <div style="margin-top:1.5rem;">
-                            <h4>Recompensas Reclamadas</h4>
-                            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">Representación interna: <code id="event-rewards-repr"></code></p>
+                        <div class="input-group" style="margin-bottom: 1.5rem;">
+                            <label title="Lista de IDs separados por comas (ej: 0, 1, 5). No necesitan ser secuenciales.">Tareas Completadas (tasksCompleted)</label>
+                            <input type="text" id="event-tasks-input" placeholder="Ej: 0, 1, 2, 5, 8">
                         </div>
 
-                        <div style="margin-top:2rem; display:flex; gap:1rem;">
-                            <button class="btn-primary" id="btn-apply-event">Aplicar Cambios</button>
+                        <div class="input-group" style="margin-bottom: 1.5rem;">
+                            <label>Hitos Reclamados (rewardsClaimed) [HC]</label>
+                            <div style="display: flex; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap;" id="event-rewards-repr">
+                                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="event-reward-0"> Hito 1</label>
+                                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="event-reward-1"> Hito 2</label>
+                                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="event-reward-2"> Hito 3</label>
+                                <label style="display:flex; align-items:center; gap:5px;"><input type="checkbox" id="event-reward-3"> Hito 4</label>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- 📰 TAB: Periódicos -->
-                <div id="tab-news" class="tab-content hidden">
-                    <h2>📰 Periódicos (Newspapers)</h2>
-                    <p class="subtitle">Gestiona el estado de lectura (shown) y recompensa (done) de todos los artículos de periódico.</p>
-                    
-                    <div class="header-actions" style="margin-bottom: 1rem; justify-content: flex-start;">
-                        <button id="btn-news-all-shown" class="btn-primary" style="margin-right: 0.5rem;">Marcar todos como Leídos</button>
-                        <button id="btn-news-all-done" class="btn-secondary" style="margin-right: 0.5rem;">Marcar todos como Completados</button>
-                    </div>
-
-                    <div class="section-card">
-                        <div id="news-empty-state" class="empty-state hidden">
-                            <span class="material-symbols-outlined" style="font-size: 48px; color: #ccc;">newspaper</span>
-                            <p>No se encontraron periódicos en el archivo de guardado.</p>
-                        </div>
-                        <div class="checklist-grid" id="news-checklist" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.5rem; max-height: 60vh; overflow-y: auto;">
-                            <!-- Periódicos generados aquí -->
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 2rem;">
+                            <button id="btn-apply-event" class="btn-primary" onclick="window.app.applyEventChanges()">💾 Aplicar Cambios al AST</button>
+                            <button class="btn-secondary" onclick="document.getElementById('event-calendar-cb').checked = true; document.getElementById('event-flyer-cb').checked = true;">👀 Marcar Vistos</button>
+                            <button class="btn-secondary" onclick="[0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=true)">🎁 Reclamar Todo HC</button>
+                            <button class="btn-danger" onclick="document.getElementById('event-tasks-input').value = ''; [0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=false); document.getElementById('event-calendar-cb').checked = false; document.getElementById('event-flyer-cb').checked = false;">🗑️ Reset Progreso</button>
                         </div>
                     </div>
                 </div>
-
                 <!-- ─── TAB: Tren / Viaje ─── -->
                 <div id="tab-train" class="tab-content hidden">
                     <h2>🚂 Sistema de Viaje — TrainSave</h2>
