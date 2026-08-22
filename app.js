@@ -18,9 +18,18 @@ const CHAR_NAMES = {
 };
 
 const EVENT_NAMES = {
-    0:"New Year", 1:"Valentine's Day", 2:"Spring Festival", 3:"Easter",
-    4:"Summer Festival", 5:"Halloween", 6:"Autumn Harvest", 7:"Winter Solstice",
-    8:"Christmas", 9:"New Year's Eve"
+    // NOTA: Estos IDs deben validarse contra el enum VillageEvent del código del juego.
+    // Solo listamos los confirmados en archivos de guardado (0,2,4,6,7,8).
+    0: "Año Nuevo / Primavera (Spring)",
+    1: "San Valentín (Valentine's)",
+    2: "Pascua (Easter)",
+    3: "Jumper",
+    4: "Festival de Verano (Summer)",
+    5: "Halloween",
+    6: "Cosecha de Otoño (Autumn)",
+    7: "Solsticio de Invierno (Winter)",
+    8: "Navidad (Christmas)",
+    9: "Fin de Año (New Year's Eve)"
 };
 
 const SEASON_NAMES = { 0:"Primavera", 1:"Verano", 2:"Otoño", 3:"Invierno" };
@@ -802,6 +811,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this.renderEventsTab();
 
         // Phone (Punchcard & Locations)
+        this.renderTimersAndEvents();
+
         this.renderPhoneTab();
         this.renderMailTab();
 
@@ -985,6 +996,114 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this.renderNPCTab();
     }
 
+    
+    unlockAllCollection() {
+        if (!this.parser || !window.KNOWN_ITEMS) return;
+        const ids = Object.keys(window.KNOWN_ITEMS).map(k => {
+            const parts = k.split('_');
+            return Number(parts[1]);
+        }).filter(n => !isNaN(n));
+        
+        const added = this.parser.maxAllCollection(ids);
+        if (added !== false) {
+            this.showToast('✅ Se añadieron ' + added + ' objetos a la Colección.');
+        } else {
+            this.showToast('❌ Error: Nodo collection no encontrado.', 'error');
+        }
+    }
+
+    unlockAllParsnaps() {
+        if (!this.parser) return;
+        const added = this.parser.unlockAllParsnaps(250);
+        if (added !== false) {
+            this.showToast('📸 Se desbloquearon ' + added + ' nuevos Parsnaps en el Diario.');
+        } else {
+            this.showToast('❌ Error: Nodo diarySaves vacío o no encontrado.', 'error');
+        }
+    }
+
+    renderTimersAndEvents() {
+        if (!this.parser) return;
+
+        const timersContainer = document.getElementById('timers-container');
+        if (timersContainer) {
+            timersContainer.innerHTML = '';
+            const timers = this.parser.getTempTimers();
+            if (timers.length === 0) {
+                timersContainer.innerHTML = '<p class="subtitle">No hay temporizadores activos.</p>';
+            } else {
+                timers.forEach(t => {
+                    const grp = document.createElement('div');
+                    grp.className = 'input-group';
+                    const lbl = document.createElement('label');
+                    lbl.textContent = t.id || 'Unknown Timer';
+                    const inp = document.createElement('input');
+                    inp.type = 'number';
+                    inp.value = t.minutesActive;
+                    inp.onchange = (e) => {
+                        if (this.parser.setTempTimerMinutes(t.id, e.target.value)) {}
+                    };
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-secondary btn-sm';
+                    btn.textContent = 'Forzar Fin (0)';
+                    btn.style.marginTop = '4px';
+                    btn.onclick = () => {
+                        inp.value = 0;
+                        if (this.parser.setTempTimerMinutes(t.id, 0)) {}
+                    };
+                    grp.appendChild(lbl);
+                    grp.appendChild(inp);
+                    grp.appendChild(btn);
+                    timersContainer.appendChild(grp);
+                });
+            }
+        }
+
+        const spEventsContainer = document.getElementById('sp-events-container');
+        if (spEventsContainer) {
+            spEventsContainer.innerHTML = '';
+            const sps = this.parser.getSpEventSaves();
+            if (sps.length === 0) {
+                spEventsContainer.innerHTML = '<p class="subtitle">No hay eventos especiales activos.</p>';
+            } else {
+                sps.forEach((sp, i) => {
+                    const card = document.createElement('div');
+                    card.className = 'input-group';
+                    card.style.border = '1px solid #ddd';
+                    card.style.padding = '8px';
+                    card.style.borderRadius = '4px';
+                    
+                    const title = document.createElement('label');
+                    title.textContent = `Evento ${sp.eventID} (${sp.year})`;
+                    card.appendChild(title);
+                    
+                    const createCheck = (labelTxt, field) => {
+                        const lbl = document.createElement('label');
+                        lbl.style.display = 'flex';
+                        lbl.style.alignItems = 'center';
+                        lbl.style.gap = '5px';
+                        lbl.style.fontWeight = 'normal';
+                        lbl.style.marginTop = '4px';
+                        const chk = document.createElement('input');
+                        chk.type = 'checkbox';
+                        chk.checked = !!sp[field];
+                        chk.onchange = (e) => {
+                            if (this.parser.setSpEventField(i, field, e.target.checked)) {}
+                        };
+                        lbl.appendChild(chk);
+                        lbl.appendChild(document.createTextNode(labelTxt));
+                        return lbl;
+                    };
+                    
+                    card.appendChild(createCheck('Cutscene Vista', 'ranCutscene'));
+                    card.appendChild(createCheck('Carta Triggered', 'letterTriggered'));
+                    
+                    spEventsContainer.appendChild(card);
+                });
+            }
+        }
+    }
+
     applyNPCChanges() {
         this.parser.npcSaves.forEach((_, idx) => this.applyNPCSingle(idx));
         this.showToast("✅ Todos los NPCs actualizados");
@@ -992,7 +1111,18 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
     maxAllFriendship() {
         this.parser.npcSaves.forEach((_, idx) => this.parser.setNPCFriendship(idx, 99999));
-        this.showToast("💛 Amistad máxima para TODOS los personajes");
+        
+        let conditionUpdates = 0;
+        if (typeof this.parser.unlockAllNPCConditions === 'function') {
+            conditionUpdates = this.parser.unlockAllNPCConditions(3);
+        }
+
+        if (conditionUpdates > 0) {
+            this.showToast('✅ Amistad máxima y ' + conditionUpdates + ' hitos de historia (Nivel 3) inyectados.');
+        } else {
+            this.showToast("✅ Amistad máxima para TODOS los personajes");
+        }
+        
         this.renderNPCTab();
     }
 

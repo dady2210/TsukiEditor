@@ -2899,4 +2899,224 @@ class SaveParser {
         }
         return this.buffer.buffer;
     }
+
+    // --- NEW EXPERIMENTAL METHODS ---
+    getSpEventSaves() {
+        if (!this.ast) return [];
+        const spNodes = this._findNodesInAST('spEventSaves');
+        if (spNodes.length === 0 || !spNodes[0].children) return [];
+        const listNode = spNodes[0].children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode) return [];
+        
+        const elements = resolveListElements(listNode);
+        return elements.map((el, i) => {
+            const val = el.value || el;
+            return {
+                index: i,
+                astNode: val,
+                year: findChildRecursive(val, ['year'])?.value,
+                eventID: findChildRecursive(val, ['eventID'])?.value,
+                ranCutscene: findChildRecursive(val, ['ranCutscene'])?.value,
+                letterTriggered: findChildRecursive(val, ['letterTriggered'])?.value
+            };
+        });
+    }
+
+    setSpEventField(index, fieldName, newValue) {
+        const evs = this.getSpEventSaves();
+        if (index >= 0 && index < evs.length) {
+            const fNode = findChildRecursive(evs[index].astNode, [fieldName]);
+            if (fNode) {
+                fNode.value = newValue;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    getTempTimers() {
+        if (!this.ast) return [];
+        const tNodes = this._findNodesInAST('tempTimers');
+        if (tNodes.length === 0 || !tNodes[0].children) return [];
+        const listNode = tNodes[0].children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode) return [];
+        
+        const elements = resolveListElements(listNode);
+        return elements.map(el => {
+            const val = el.value || el;
+            return {
+                astNode: val,
+                id: findChildRecursive(val, ['ID', 'id'])?.value,
+                startTime: findChildRecursive(val, ['startTime', 'StartTime'])?.value,
+                minutesActive: findChildRecursive(val, ['minutesActive', 'MinutesActive'])?.value
+            };
+        });
+    }
+
+    setTempTimerMinutes(idStr, newMinutes) {
+        const timers = this.getTempTimers();
+        const t = timers.find(x => x.id === idStr);
+        if (t) {
+            const mNode = findChildRecursive(t.astNode, ['minutesActive', 'MinutesActive']);
+            if (mNode) {
+                mNode.value = Number(newMinutes);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    maxAllCollection(allIdsArray) {
+        const colNodes = this._findNodesInAST('collection');
+        if (colNodes.length === 0 || !colNodes[0].children) return false;
+        let listNode = colNodes[0].children.find(c => c.marker === 0x06 || c.elements);
+        if (!listNode) return false;
+        
+        const currentSet = new Set(listNode.elements.map(e => Number(e.value)));
+        let added = 0;
+        for (const id of allIdsArray) {
+            if (!currentSet.has(Number(id))) {
+                listNode.elements.push({ marker: 0x18, name: null, value: Number(id) });
+                currentSet.add(Number(id));
+                added++;
+            }
+        }
+        listNode.length = listNode.elements.length;
+        return added;
+    }
+
+    getConditionSaves() {
+        if (!this.ast) return [];
+        const cNodes = this._findNodesInAST('conditionSaves');
+        if (cNodes.length === 0 || !cNodes[0].children) return false;
+        let listNode = cNodes[0].children.find(c => c.marker === 0x06 || c.elements);
+        if (!listNode) return [];
+        
+        const elements = resolveListElements(listNode);
+        return elements.map((el, i) => {
+            const val = el.value || el;
+            return {
+                index: i,
+                astNode: val,
+                character: findChildRecursive(val, ['character'])?.value,
+                conditionID: findChildRecursive(val, ['conditionID'])?.value,
+                level: findChildRecursive(val, ['level'])?.value,
+                dateFulfilled: findChildRecursive(val, ['dateFulfilled'])?.value
+            };
+        });
+    }
+
+    unlockAllNPCConditions(maxLevel = 3) {
+        if (!this.ast) return false;
+        const cNodes = this._findNodesInAST('conditionSaves');
+        if (cNodes.length === 0 || !cNodes[0].children) return false;
+        let listNode = cNodes[0].children.find(c => c.marker === 0x06 || c.elements);
+        if (!listNode || listNode.elements.length === 0) return false;
+
+        let maxNodeId = 10000;
+        const findMaxId = (n) => {
+            if (n.nodeId && n.nodeId > maxNodeId) maxNodeId = n.nodeId;
+            if (n.children) n.children.forEach(findMaxId);
+            if (n.elements) n.elements.forEach(findMaxId);
+        };
+        findMaxId(this.ast);
+
+        const template = listNode.elements[0];
+        
+        const existingChars = new Map();
+        listNode.elements.forEach(e => {
+            const charNode = findChildRecursive(e, ['character']);
+            const condNode = findChildRecursive(e, ['conditionID']);
+            const lvlNode = findChildRecursive(e, ['level']);
+            if (charNode && condNode && lvlNode && condNode.value === 0) {
+                existingChars.set(charNode.value, lvlNode);
+            }
+        });
+
+        const nowOA = this.generalVars['gameStartOA'] ? this.generalVars['gameStartOA'].value + 20 : 46000;
+        let addedOrUpdated = 0;
+
+        const npcSaves = this.npcSaves || [];
+        for (const npc of npcSaves) {
+            const charId = String(npc.charId);
+            if (existingChars.has(charId)) {
+                const lvlNode = existingChars.get(charId);
+                if (lvlNode.value < maxLevel) {
+                    lvlNode.value = maxLevel;
+                    addedOrUpdated++;
+                }
+            } else {
+                const clone = this._deepCloneOdin(template);
+                clone.nodeId = ++maxNodeId;
+                if (clone.children) {
+                    clone.children.forEach(c => {
+                        if (c.name === 'character') c.value = charId;
+                        if (c.name === 'conditionID') c.value = 0;
+                        if (c.name === 'level') c.value = maxLevel;
+                        if (c.name === 'dateFulfilled') c.value = nowOA;
+                    });
+                }
+                listNode.elements.push(clone);
+                addedOrUpdated++;
+            }
+        }
+        listNode.length = listNode.elements.length;
+        return addedOrUpdated;
+    }
+
+    _deepCloneOdin(obj) {
+        if (obj === null || typeof obj !== 'object') return obj;
+        if (typeof obj === 'bigint') return obj;
+        if (Array.isArray(obj)) return obj.map(x => this._deepCloneOdin(x));
+        const cloned = {};
+        for (const key in obj) {
+            cloned[key] = this._deepCloneOdin(obj[key]);
+        }
+        return cloned;
+    }
+
+    unlockAllParsnaps(maxId = 200) {
+        const dNodes = this._findNodesInAST('diarySaves');
+        if (dNodes.length === 0 || !dNodes[0].children) return false;
+        let listNode = dNodes[0].children.find(c => c.marker === 0x06 || c.elements);
+        if (!listNode || listNode.elements.length === 0) return false;
+        
+        let maxNodeId = 10000;
+        const findMaxId = (n) => {
+            if (n.nodeId && n.nodeId > maxNodeId) maxNodeId = n.nodeId;
+            if (n.children) n.children.forEach(findMaxId);
+            if (n.elements) n.elements.forEach(findMaxId);
+        };
+        findMaxId(this.ast);
+        
+        const template = listNode.elements[0];
+        const currentNums = new Set();
+        listNode.elements.forEach(e => {
+            const numNode = findChildRecursive(e, ['num', 'Num']);
+            if (numNode) currentNums.add(Number(numNode.value));
+        });
+        
+        let added = 0;
+        const currentOA = this.generalVars['gameStartOA'] ? this.generalVars['gameStartOA'].value + 10 : 46000;
+        
+        for (let i = 1; i <= maxId; i++) {
+            if (!currentNums.has(i)) {
+                const clone = this._deepCloneOdin(template);
+                clone.nodeId = ++maxNodeId;
+                if (clone.children) {
+                    clone.children.forEach(c => {
+                        if (c.name === 'num') c.value = i;
+                        if (c.name === 'diaryAchievedOA') c.value = currentOA;
+                        if (c.name === 'state') c.value = typeof c.value === 'string' ? "2" : 2;
+                        if (c.name === 'night') c.value = false;
+                    });
+                }
+                listNode.elements.push(clone);
+                added++;
+            }
+        }
+        listNode.length = listNode.elements.length;
+        return added;
+    }
+
 }
