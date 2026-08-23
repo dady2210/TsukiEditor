@@ -2922,14 +2922,14 @@ class SaveParser {
     exportPartialJSON(sections) {
         const out = {
             format: "TsukiEditorPartial",
-            version: 1,
+            version: 2,
             exportedAt: new Date().toISOString()
         };
 
         if (sections.inventory) {
             if (!this.inventory || !this.inventory.length) this.parseInventory();
             out.inventory = this.inventory
-                .filter(i => i.item_id > 0)
+                .filter(i => i.item_id >= 0)
                 .map(i => {
                     let vid = 0;
                     if (i.slotNode && i.slotNode.children) {
@@ -2943,28 +2943,54 @@ class SaveParser {
                         verificationID: vid
                     };
                 });
+            
+            if (this.generalVars && this.generalVars.carrots !== undefined) {
+                out.carrots = this.generalVars.carrots;
+            }
         }
 
         if (sections.farm) {
             if (!this.placements || !this.placements.length) this.parseMap();
+            
+            // Legacy crops list
             const crops = [];
+            // Detailed placements list
+            const placements = [];
+            
             this.placements.forEach(p => {
+                const cInfo = this.getCropSaveFields(p) || {};
                 const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id)) || p.planted_id !== undefined || (p.furnNode && p.furnNode.typeName && p.furnNode.typeName.includes('CropSave'));
                 
                 if (isCrop && p.placementID !== undefined) {
-                    const cInfo = this.getCropSaveFields(p);
                     crops.push({
                         placementID: p.placementID,
                         item_id: p.item_id,
                         parentPlacementID: p.parentPlacementID || 0,
-                        grid: p.grid ? { x: p.grid.x, y: p.grid.y } : { x: 0, y: 0 },
+                        grid: p.grid ? { x: p.grid.x, y: p.grid.y } : { x: p.x || 0, y: p.y || 0 },
                         harvestTimeOA: cInfo.harvestTimeNode ? cInfo.harvestTimeNode.value : 0,
                         ripe: cInfo.ripeNode ? cInfo.ripeNode.value : false,
                         orientation: p.orientation || 0
                     });
                 }
+                
+                placements.push({
+                    placementID: p.placementID,
+                    item_id: p.item_id,
+                    subloc_id: p.subloc_id,
+                    cluster: p.cluster,
+                    parentPlacementID: p.parentPlacementID || 0,
+                    grid: p.grid ? { x: p.grid.x, y: p.grid.y } : { x: p.x || 0, y: p.y || 0 },
+                    orientation: p.orientation || 0,
+                    isCrop: !!isCrop,
+                    harvestTimeOA: cInfo.harvestTimeNode ? cInfo.harvestTimeNode.value : 0,
+                    ripe: cInfo.ripeNode ? cInfo.ripeNode.value : false,
+                    isWall: !!p.isWall,
+                    floor: p.floor
+                });
             });
+            
             out.farm = { crops };
+            out.placements = placements;
         }
 
         if (sections.phone) {
@@ -2999,7 +3025,7 @@ class SaveParser {
     }
 
     applyPartialJSON(data, sections = { inventory: true, farm: true, phone: true }) {
-        if (!data || data.format !== "TsukiEditorPartial") throw new Error("Formato JSON inválido");
+        if (!data || !data.format || !data.format.startsWith("TsukiEditorPartial")) throw new Error("Formato JSON inválido");
         
         let report = { applied: 0, skipped: [] };
 
@@ -3010,66 +3036,92 @@ class SaveParser {
                 const existingIndex = this.inventory.findIndex(inv => Number(inv.item_id) === Number(item.id));
                 if (existingIndex !== -1) {
                     const existing = this.inventory[existingIndex];
-                    const newQty = existing.qty + item.qty;
-                    this.updateInventoryItem(item.invType === 0 ? 'hiddenInventory' : 'inventory', existingIndex, item.id, newQty, item.invType ?? existing.invType);
+                    const newQty = existing.qty + Number(item.qty);
+                    this.updateInventoryItem('inventory', existingIndex, item.id, newQty, item.invType ?? existing.invType);
                     report.applied++;
                 } else {
-                    const ok = this.injectInventoryItem(item.id, item.qty, item.invType === 0);
+                    const ok = this.injectInventoryItem(item.id, Number(item.qty), false, item.invType ?? 1);
                     if (ok) report.applied++;
                     else report.skipped.push(`Item ${item.id} (No inyectable)`);
                 }
             });
+            
+            if (data.carrots !== undefined) {
+                this.writeGeneralVar('carrots', Number(data.carrots));
+                report.applied++;
+            }
         }
 
         // 2. Farm
-        if (data.farm && data.farm.crops && sections.farm) {
+        if (sections.farm) {
             if (!this.placements || !this.placements.length) this.parseMap();
-            data.farm.crops.forEach(cData => {
-                const p = this.placements.find(pl => Number(pl.placementID) === Number(cData.placementID));
-                if (p) {
-                    let changed = false;
-                    const cInfo = this.getCropSaveFields(p);
-                    
-                    if (cInfo.harvestTimeNode) {
-                        cInfo.harvestTimeNode.value = cData.harvestTimeOA;
-                        changed = true;
+            
+            if (data.farm && data.farm.crops) {
+                data.farm.crops.forEach(cData => {
+                    const p = this.placements.find(pl => Number(pl.placementID) === Number(cData.placementID));
+                    if (p) {
+                        let changed = false;
+                        const cInfo = this.getCropSaveFields(p) || {};
+                        
+                        if (cInfo.harvestTimeNode) {
+                            cInfo.harvestTimeNode.value = Number(cData.harvestTimeOA);
+                            changed = true;
+                        }
+                        if (cInfo.ripeNode) {
+                            cInfo.ripeNode.value = Boolean(cData.ripe);
+                            changed = true;
+                        }
+                        if (changed) report.applied++;
+                        else report.skipped.push(`Crop ${cData.placementID} (nodos no editables)`);
+                    } else {
+                        report.skipped.push(`Crop ${cData.placementID} (no encontrado)`);
                     }
-                    if (cInfo.ripeNode) {
-                        cInfo.ripeNode.value = cData.ripe;
-                        changed = true;
+                });
+            }
+            
+            if (data.placements) {
+                data.placements.forEach(plData => {
+                    const p = this.placements.find(pl => Number(pl.placementID) === Number(plData.placementID));
+                    if (p) {
+                        let changed = false;
+                        // Orientación (si es distinto y existe)
+                        if (plData.orientation !== undefined && p.orientation !== plData.orientation) {
+                            const oNode = p.furnNode ? p.furnNode.children.find(c => c.name === 'orientation' || c.name === 'rotation' || c.name === 'flipped' || c.name === 'isFlipped') : null;
+                            if (oNode) {
+                                oNode.value = plData.orientation;
+                                changed = true;
+                            }
+                        }
+                        if (changed) report.applied++;
                     }
-                    if (changed) report.applied++;
-                    else report.skipped.push(`Crop ${cData.placementID} (nodos no editables)`);
-                } else {
-                    report.skipped.push(`Crop ${cData.placementID} (no encontrado)`);
-                }
-            });
+                });
+            }
         }
 
         // 3. Phone
         if (data.phone && sections.phone) {
             if (data.phone.cosmetics) {
                 const c = data.phone.cosmetics;
-                if (c.skinID !== undefined) this.setPhoneCosmeticField('skinID', c.skinID);
-                if (c.bgPatternID !== undefined) this.setPhoneCosmeticField('bgPatternID', c.bgPatternID);
-                if (c.bgColorID !== undefined) this.setPhoneCosmeticField('bgColorID', c.bgColorID);
+                if (c.skinID !== undefined) this.setPhoneCosmeticField('skinID', Number(c.skinID));
+                if (c.bgPatternID !== undefined) this.setPhoneCosmeticField('bgPatternID', Number(c.bgPatternID));
+                if (c.bgColorID !== undefined) this.setPhoneCosmeticField('bgColorID', Number(c.bgColorID));
                 report.applied++;
             }
             if (data.phone.punchcard) {
                 const p = data.phone.punchcard;
                 if (p.rewards) {
                     p.rewards.forEach(r => {
-                        this.setPunchcardSlot(r.index, r.claimed, r.isWeekly);
+                        this.setPunchcardSlot(Number(r.index), Boolean(r.claimed), Boolean(r.isWeekly));
                     });
                 }
                 if (p.weeklyFurnID !== undefined) {
-                    this.setWeeklyRewardFurnId(p.weeklyFurnID);
+                    this.setWeeklyRewardFurnId(Number(p.weeklyFurnID));
                 }
                 report.applied++;
             }
             if (data.phone.locationsOnPhone) {
                 data.phone.locationsOnPhone.forEach(l => {
-                    this.setLocationUnlocked(l.id, l.seen);
+                    this.setLocationUnlocked(Number(l.id), Boolean(l.seen));
                 });
                 report.applied++;
             }

@@ -2895,7 +2895,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         
         const data = this.parser.exportPartialJSON({ inventory: inv, farm: farm, phone: phone });
         
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const blob = new Blob([JSON.stringify(data, (key, value) => typeof value === 'bigint' ? value.toString() : value, 2)], { type: 'application/json' });
         const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '');
         const filename = `partial_${dateStr}.json`;
         
