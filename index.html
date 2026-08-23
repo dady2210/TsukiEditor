@@ -93,23 +93,25 @@
                     <h2>Variables Generales</h2>
                     <p class="subtitle">Administra tu pequeña vida en la aldea hongo.</p>
 
-                    
-                    
-                    <div style="margin-top:1.5rem; display:flex; gap:1rem;">
-                        <button class="btn-primary" onclick="window.app.openExportModal()">
-                            <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">download</span>
-                            Exportar Parcial...
-                        </button>
-                        <button class="btn-secondary" onclick="window.app.openImportModal()">
-                            <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">upload</span>
-                            Importar Parcial...
-                        </button>
-                        <button class="btn-secondary" id="btn-scan-unknown" onclick="window.app.scanUnknownIds()" style="margin-left:auto;">
-                            <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">search</span>
-                            Escanear Unknown del save
-                        </button>
-                    </div>
                     <div class="section-card">
+                        <h3>🛠️ Herramientas</h3>
+                        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                            <button class="btn-primary" onclick="window.app.openExportModal()">
+                                <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">download</span>
+                                Exportar Parcial...
+                            </button>
+                            <button class="btn-secondary" onclick="window.app.openImportModal()">
+                                <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">upload</span>
+                                Importar Parcial...
+                            </button>
+                            <button class="btn-secondary" id="btn-scan-unknown" onclick="window.app.scanUnknownIds()" style="margin-left:auto;">
+                                <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">search</span>
+                                Escanear Unknown del save
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="section-card" style="margin-top:1.5rem;">
                         <h3>💰 Economía</h3>
                         <div class="grid-3col">
                             <div class="input-group">
@@ -120,12 +122,16 @@
                                 <label>🎟️ Boletos Gacha</label>
                                 <input type="number" id="input-gacha-tickets" value="0" min="0">
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card" style="margin-top:1.5rem;">
+                        <h3>🗓️ Fecha y Hora del Juego</h3>
+                        <div class="grid-3col">
                             <div class="input-group">
                                 <label title="Contador de días en los artículos del tren (Odyssey Articles).">🗓️ Día (OA)</label>
                                 <input type="number" id="input-day" value="0">
                             </div>
-                        </div>
-                        <div class="grid-3col">
                             <div class="input-group">
                                 <label>🗓️ Mes</label>
                                 <input type="number" id="input-month" value="0" min="1" max="12">
@@ -146,16 +152,16 @@
                                     <span class="material-symbols-outlined dropdown-icon">expand_more</span>
                                 </div>
                             </div>
-                            <div class="input-group">
-                                <label title="Nivel de progreso de la historia en la ciudad principal (Moca, Chi, etc.).">🐦 Capítulo Raven</label>
-                                <input type="number" id="input-raven" value="0" min="0">
-                            </div>
                         </div>
                     </div>
 
                     <div class="section-card" style="margin-top:1.5rem;">
                         <h3>📊 Estadísticas</h3>
                         <div class="grid-3col">
+                            <div class="input-group">
+                                <label title="Nivel de progreso de la historia en la ciudad principal (Moca, Chi, etc.).">🐦 Capítulo Raven</label>
+                                <input type="number" id="input-raven" value="0" min="0">
+                            </div>
                             <div class="input-group">
                                 <label>🎰 Gacha rodado</label>
                                 <input type="number" id="input-gacha" value="0" min="0">
@@ -224,9 +230,16 @@
                             <span class="material-symbols-outlined" style="font-size:20px;vertical-align:text-bottom;margin-right:8px;">save</span>
                             Aplicar Variables
                         </button>
+                        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;">Guarda todos los campos de las tarjetas de arriba (Economía, Fecha y Hora, Estadísticas, Sueño y Homecoming).</p>
                     </div>
-                
-<div class="section-card" style="margin-top:1.5rem;">
+
+                    <div style="display:flex; align-items:center; gap:0.75rem; margin:2.5rem 0 0.5rem;">
+                        <span style="font-family:'Quicksand',sans-serif; font-weight:700; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.03em; white-space:nowrap;">Herramientas adicionales</span>
+                        <hr style="flex:1; border:0; border-top:1.5px solid var(--input-border);">
+                    </div>
+                    <p class="subtitle" style="margin-top:0;">Cada una de estas tarjetas tiene su propio botón de guardado, independiente de "Aplicar Variables".</p>
+
+                    <div class="section-card" style="margin-top:0.5rem;">
                         <h3>⚙️ Variables Extra</h3>
                         <p class="subtitle" style="margin-top:0;">Solo se pueden editar si están presentes en el save cargado.</p>
                         <div class="grid-3col" style="gap:1rem; margin-bottom:1rem;">
@@ -246,7 +259,7 @@
                         <button class="btn-secondary" onclick="window.app.applyExtraVars()">💾 Guardar Vars Extra</button>
                     </div>
 
-<div class="section-card" style="margin-top:1.5rem;">
+                    <div class="section-card" style="margin-top:1.5rem;">
                         <h3>🔍 Comparar Saves (Diff)</h3>
                         <p class="subtitle" style="margin-top:0;">Compara el save cargado (A) con otro archivo .csave (B). Read-only; no se modifica ningún archivo.</p>
                         <div style="display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:1rem;">
@@ -258,7 +271,7 @@
                         </div>
                         <pre id="diff-output" style="display:none; background:var(--bg-secondary); padding:1rem; border-radius:6px; font-size:0.82em; overflow-x:auto; max-height:320px; white-space:pre-wrap; margin:0;"></pre>
                     </div>
-</div>
+                </div>
 <div id="tab-inv" class="tab-content hidden">
                     <div class="inv-header">
                         <div>
@@ -342,7 +355,7 @@
                         </div>
                     </div>
                     
-                    <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+                    <div style="margin-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
                         <button id="btn-add-inv-item" class="btn-primary">
                             <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">add</span>
                             Agregar
@@ -457,7 +470,7 @@
                             </div>
                         </div>
 
-                        <div class="section-card" id="phone-cosmetics-card">
+                        <div class="section-card" id="phone-cosmetics-card" style="grid-column: 1 / -1;">
                             <h3>📱 Personalización (Cosméticos)</h3>
                             <div class="grid-2col" style="gap:1rem; margin-top:1rem;">
                                 <div class="input-group">
@@ -538,7 +551,7 @@
                         <!-- Letters Table -->
                         <div class="section-card">
                             <h3>📬 Buzón de Cartas (Letters)</h3>
-                            <div class="mail-actions" style="margin-top:0.5rem; margin-bottom:1rem; display:flex; gap:0.5rem; align-items:center;">
+                            <div class="mail-actions" style="margin-top:0.5rem; margin-bottom:1rem; display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
                                 <input type="number" id="input-clone-letter-furn-id" placeholder="Item ID..." style="width: 100px;">
                                 <select id="input-clone-letter-inv-type" style="padding:4px; border-radius:4px;">
                                     <option value="1">Mueble</option>
@@ -675,7 +688,7 @@
         <div class="section-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
                 <h3>Lista de Periódicos</h3>
-                <div style="display:flex; gap:10px;">
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
                     <button class="btn-secondary" onclick="window.app.toggleAllNewsShown(true)">Mostrar Todos</button>
                     <button class="btn-secondary" onclick="window.app.toggleAllNewsShown(false)">Ocultar Todos</button>
                     <button class="btn-primary" onclick="window.app.toggleAllNewsDone(true)">Completar Todos</button>
@@ -739,7 +752,7 @@
                         </div>
 
                         <div style="display:flex; flex-direction: column; gap:1rem; margin-top:1.5rem;">
-                            <div style="display:flex; gap:1rem;">
+                            <div style="display:flex; gap:1rem; flex-wrap:wrap;">
                                 <button id="btn-apply-train" class="btn-primary">
                                     <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">train</span>
                                     Aplicar Train Save
@@ -970,28 +983,18 @@
 
                     
                     <div class="section-card">
-                        <h3>Timers y Eventos Especiales</h3>
+                        <h3>⏱️ Timers y Eventos Especiales</h3>
                         <p class="subtitle" style="margin-top:0;">Fuerza la completitud de temporizadores o activa flags de eventos.</p>
-                        
-                        
-                        
-                        
 
-                        
-                    </div>
-
-                    
-                    
-                    
-<div id="timers-container" class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
+                        <div id="timers-container" class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
                             <!-- Dinámico -->
                         </div>
 
-<div id="sp-events-container" class="grid-2col" style="gap:1rem;">
+                        <div id="sp-events-container" class="grid-2col" style="gap:1rem;">
                             <!-- Dinámico -->
                         </div>
 
-<div style="margin-top:1.5rem; display:flex; gap:1rem;">
+                        <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
                             <button class="btn-primary" onclick="window.app.unlockAllCollection()">
                                 <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">menu_book</span>
                                 Completar Enciclopedia (Colección)
@@ -1001,6 +1004,7 @@
                                 Desbloquear todos los Parsnaps
                             </button>
                         </div>
+                    </div>
 
 <div class="section-card" style="margin-top:1.5rem;">
                         <h3>📦 Estructuras Read-Only</h3>
@@ -1299,7 +1303,7 @@
                     </label>
                 </div>
             </div>
-            <div class="modal-footer" style="padding:1rem; display:flex; justify-content:flex-end; gap:10px; border-top:1px solid #ddd;">
+            <div class="modal-footer" style="padding:1rem; display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; border-top:1px solid #ddd;">
                 <button class="btn-secondary" id="btn-cancel-export">Cancelar</button>
                 <button class="btn-primary" id="btn-confirm-export">Descargar JSON</button>
             </div>
@@ -1335,7 +1339,7 @@
                     </label>
                 </div>
             </div>
-            <div class="modal-footer" style="padding:1rem; display:flex; justify-content:flex-end; gap:10px; border-top:1px solid #ddd;">
+            <div class="modal-footer" style="padding:1rem; display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; border-top:1px solid #ddd;">
                 <button class="btn-secondary" id="btn-cancel-import">Cancelar</button>
                 <button class="btn-primary" id="btn-confirm-import" disabled>Aplicar al Save</button>
             </div>

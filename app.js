@@ -304,6 +304,37 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this.dropZone.addEventListener('click', () => this.fileInput.click());
         this.fileInput.addEventListener('change', e => { if (e.target.files.length) this.loadFile(e.target.files[0]); });
 
+        // Export/Import Parcial (modal) — los botones existían en el HTML y la
+        // lógica ya estaba escrita, pero no había ningún listener conectándolos.
+        document.getElementById('close-export-modal')?.addEventListener('click', () => this.closeExportModal());
+        document.getElementById('btn-cancel-export')?.addEventListener('click', () => this.closeExportModal());
+        document.getElementById('btn-confirm-export')?.addEventListener('click', () => this.executeExportJSON());
+        document.getElementById('close-import-modal')?.addEventListener('click', () => this.closeImportModal());
+        document.getElementById('btn-cancel-import')?.addEventListener('click', () => this.closeImportModal());
+        document.getElementById('btn-confirm-import')?.addEventListener('click', () => this.executeImportJSON());
+        document.getElementById('import-file-input')?.addEventListener('change', e => this.handleImportFileSelect(e));
+
+        // Drop global de JSON de nombres (fuera del drop-zone de .csave) — muestra
+        // #drop-overlay mientras se arrastra un archivo y solo actúa si es .json.
+        const dropOverlay = document.getElementById('drop-overlay');
+        let dragDepth = 0;
+        window.addEventListener('dragenter', e => {
+            if (!this.parser) return; // Solo tiene sentido con un save ya cargado
+            if (![...(e.dataTransfer?.items || [])].some(it => it.kind === 'file')) return;
+            dragDepth++;
+            if (dropOverlay) dropOverlay.style.display = 'flex';
+        });
+        window.addEventListener('dragleave', () => {
+            dragDepth = Math.max(0, dragDepth - 1);
+            if (dragDepth === 0 && dropOverlay) dropOverlay.style.display = 'none';
+        });
+        window.addEventListener('drop', e => {
+            dragDepth = 0;
+            if (dropOverlay) dropOverlay.style.display = 'none';
+            const file = e.dataTransfer?.files?.[0];
+            if (this.parser && file && file.name.endsWith('.json')) this.handleJSONDrop(e);
+        });
+
         // Tabs
         this.navItems.forEach(btn => btn.addEventListener('click', () => {
             this.navItems.forEach(b => b.classList.remove('active'));

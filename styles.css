@@ -201,6 +201,43 @@ header.top-header {
 .tab-content { display: flex; flex-direction: column; }
 .tab-content.hidden { display: none !important; }
 
+/* ── Modals ── */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(62, 39, 35, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 1rem;
+}
+.modal.hidden { display: none !important; }
+.modal-content {
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.close-modal {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.25rem 0.6rem;
+    box-shadow: none;
+}
+.close-modal:hover { color: var(--text-primary); background: rgba(0,0,0,0.05); }
+
 /* ── Grids ── */
 .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 .grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; }
