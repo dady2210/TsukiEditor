@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tsuki's Odyssey Save Editor</title>
     <meta name="description" content="Editor web completo para archivos .csave de Tsuki's Odyssey. Modifica inventario, amistad de personajes, mapa 3D, eventos y más.">
-    <link rel="stylesheet" href="styles.css?v=20260806">
+    <link rel="stylesheet" href="styles.css?v=20260824">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=Nunito+Sans:wght@400;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 </head>
@@ -41,10 +41,6 @@
                     <label class="check-container" style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0;">
                         <input type="checkbox" id="chk-fix-verify">
                         <span>Recalcular verificationID</span>
-                    </label>
-                    <label class="check-container">
-                        <input type="checkbox" id="export-cb-coverings" checked>
-                        <span>Revestimientos (Wallpaper/Floor)</span>
                     </label>
                 </div>
                 <button id="btn-save" class="btn-primary">
@@ -1392,7 +1388,7 @@
                         <span>Teléfono (Fidelidad, Cosméticos)</span>
                     </label>
                     <label class="check-container">
-                        <input type="checkbox" id="export-cb-coverings" checked>
+                        <input type="checkbox" id="import-cb-coverings" checked disabled>
                         <span>Revestimientos (Wallpaper/Floor)</span>
                     </label>
                 </div>

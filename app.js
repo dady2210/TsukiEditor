@@ -343,7 +343,10 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const tab = document.getElementById(btn.dataset.target);
             tab.classList.remove('hidden');
             tab.classList.add('active');
-            if (btn.dataset.target === 'tab-map') this.map.resize();
+            if (btn.dataset.target === 'tab-map') {
+                this.map.resize();
+                if (this.renderWallpapersTab) this.renderWallpapersTab();
+            }
         }));
 
         // Farm mature all crops
@@ -2939,6 +2942,11 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             document.getElementById('import-cb-farm').checked = false;
             document.getElementById('import-cb-phone').disabled = true;
             document.getElementById('import-cb-phone').checked = false;
+            const cbCoverings = document.getElementById('import-cb-coverings');
+            if (cbCoverings) {
+                cbCoverings.disabled = true;
+                cbCoverings.checked = false;
+            }
         }
     }
     
@@ -2969,6 +2977,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const cbInv = document.getElementById('import-cb-inv');
                 const cbFarm = document.getElementById('import-cb-farm');
                 const cbPhone = document.getElementById('import-cb-phone');
+                const cbCoverings = document.getElementById('import-cb-coverings');
                 
                 if (data.inventory) {
                     previewHtml += `- Inventario: ${data.inventory.length} ítems<br>`;
@@ -2984,6 +2993,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     previewHtml += `- Teléfono: Incluido<br>`;
                     cbPhone.disabled = false;
                     cbPhone.checked = true;
+                }
+                if (data.mapCoverings && cbCoverings) {
+                    const locCount = Object.keys(data.mapCoverings).length;
+                    previewHtml += `- Revestimientos: ${locCount} sublocación(es)<br>`;
+                    cbCoverings.disabled = false;
+                    cbCoverings.checked = true;
                 }
                 
                 const box = document.getElementById('import-preview-box');
@@ -3009,14 +3024,16 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const inv = document.getElementById('import-cb-inv').checked;
         const farm = document.getElementById('import-cb-farm').checked;
         const phone = document.getElementById('import-cb-phone').checked;
+        const coveringsNode = document.getElementById('import-cb-coverings');
+        const coverings = coveringsNode ? coveringsNode.checked : false;
         
-        if (!inv && !farm && !phone) {
+        if (!inv && !farm && !phone && !coverings) {
             alert('Selecciona al menos una sección para importar.');
             return;
         }
         
         try {
-            const report = this.parser.applyPartialJSON(this.pendingImportData, { inventory: inv, farm: farm, phone: phone });
+            const report = this.parser.applyPartialJSON(this.pendingImportData, { inventory: inv, farm: farm, phone: phone, coverings: coverings });
             
             this.closeImportModal();
             
@@ -3033,6 +3050,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             if (this.renderTrainExtra) this.renderTrainExtra();
             if (this.renderExperimentalStructures) this.renderExperimentalStructures();
             if (this.renderExtraVars) this.renderExtraVars();
+            if (coverings && this.renderWallpapersTab) this.renderWallpapersTab();
         
             if (this.map) this.map.draw();
             

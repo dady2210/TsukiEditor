@@ -371,6 +371,7 @@ button {
 .control-tips { margin-left: auto; font-size: 0.82rem; color: var(--text-secondary); display: flex; align-items: center; }
 .canvas-container {
     flex: 1;
+    min-height: 320px;
     position: relative;
     border: 3px solid var(--panel-border);
     border-radius: 24px;
@@ -573,6 +574,14 @@ canvas:active { cursor: grabbing; }
 
 /* ── Map controls: allow wrapping with farm buttons ── */
 .map-controls { flex-wrap: wrap; row-gap: 0.5rem; }
+
+/* Coverings card is a full-width block inside the wrap row; cap height so
+   the tables scroll instead of shrinking .canvas-container to 0. */
+#tab-map .map-controls > .section-card {
+    flex-basis: 100%;
+    max-height: 220px;
+    overflow-y: auto;
+}
 
 /* 📱 Mobile Responsive Styles 📱 */
 @media (max-width: 900px) {
