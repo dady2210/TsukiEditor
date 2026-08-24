@@ -352,6 +352,44 @@ class SaveParser {
             const sublocId = entry.key.value;
             this.clusters.add(sublocId);
             
+            // Wallpapers
+            const wNode = entry.value.children.find(c => c.name && c.name.toLowerCase() === 'wallpapers' || c.name && c.name.toLowerCase() === 'wallpaper');
+            if (wNode && wNode.children) {
+                const list = wNode.children.find(c => c.constructor.name === 'OdinList');
+                if (list && list.elements) {
+                    this.wallpapers[sublocId] = list.elements.map(el => ({
+                        key: Number(el.key.value !== undefined ? el.key.value : el.key),
+                        id: Number(el.value.value !== undefined ? el.value.value : el.value),
+                        node: el.value
+                    }));
+                } else {
+                    this.wallpapers[sublocId] = [];
+                }
+            } else {
+                this.wallpapers[sublocId] = [];
+            }
+            
+            // Floors
+            const fNode = entry.value.children.find(c => c.name && c.name.toLowerCase() === 'floors' || c.name && c.name.toLowerCase() === 'floor');
+            if (fNode && fNode.children) {
+                const list = fNode.children.find(c => c.constructor.name === 'OdinList');
+                if (list && list.elements) {
+                    this.floors[sublocId] = list.elements.map(el => ({
+                        key: Number(el.key.value !== undefined ? el.key.value : el.key),
+                        id: Number(el.value.value !== undefined ? el.value.value : el.value),
+                        node: el.value
+                    }));
+                } else {
+                    this.floors[sublocId] = [];
+                }
+            } else {
+                this.floors[sublocId] = [];
+            }
+            
+            // Logging requested by spec
+            console.log(`[Sublocation ${sublocId}] wallpapers: ${this.wallpapers[sublocId].length}`);
+            console.log(`[Sublocation ${sublocId}] floors: ${this.floors[sublocId].length}`);
+            
             // 1. Furniture
             const furnWrap = entry.value.children.find(c => c.name === 'furniture');
             if (furnWrap) {
@@ -3021,6 +3059,31 @@ class SaveParser {
             }
         }
 
+        if (sections.coverings) {
+            out.mapCoverings = {};
+            let hasCoverings = false;
+            for (const sublocId in this.wallpapers) {
+                const w = this.wallpapers[sublocId];
+                const f = this.floors[sublocId];
+                if ((w && w.length) || (f && f.length)) {
+                    hasCoverings = true;
+                    out.mapCoverings[sublocId] = {};
+                    if (w && w.length) {
+                        out.mapCoverings[sublocId].wallpapers = w.map(entry => ({
+                            key: entry.key,
+                            id: entry.id
+                        }));
+                    }
+                    if (f && f.length) {
+                        out.mapCoverings[sublocId].floors = f.map(entry => ({
+                            key: entry.key,
+                            id: entry.id
+                        }));
+                    }
+                }
+            }
+            if (!hasCoverings) delete out.mapCoverings;
+        }
         return out;
     }
 
@@ -3127,6 +3190,32 @@ class SaveParser {
             }
         }
 
+        // 4. Coverings
+        if (sections.coverings) {
+            if (data.mapCoverings) {
+                for (const sublocId in data.mapCoverings) {
+                    const locData = data.mapCoverings[sublocId];
+                    if (locData.wallpapers) {
+                        locData.wallpapers.forEach(w => {
+                            if (this.setWallpaper(sublocId, w.key, w.id)) {
+                                report.applied++;
+                            } else {
+                                report.skipped.push(`Wallpaper subloc=${sublocId} key=${w.key}`);
+                            }
+                        });
+                    }
+                    if (locData.floors) {
+                        locData.floors.forEach(f => {
+                            if (this.setFloor(sublocId, f.key, f.id)) {
+                                report.applied++;
+                            } else {
+                                report.skipped.push(`Floor subloc=${sublocId} key=${f.key}`);
+                            }
+                        });
+                    }
+                }
+            }
+        }
         return report;
     }
 

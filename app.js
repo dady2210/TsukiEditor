@@ -527,7 +527,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
 
         // Map
-        this.selectLocation.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); });
+        this.selectLocation.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); if (this.renderWallpapersTab) this.renderWallpapersTab(); });
         this.selectFloor.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); });
 
         document.querySelectorAll('input[name="map-layer"]').forEach(radio => {
@@ -1703,24 +1703,34 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         wtable.innerHTML = '';
         ftable.innerHTML = '';
 
-        if (this.parser && this.parser.wallpapers && this.parser.wallpapers[targetLoc]) {
+        if (this.parser && this.parser.wallpapers && this.parser.wallpapers[targetLoc] && this.parser.wallpapers[targetLoc].length) {
             this.parser.wallpapers[targetLoc].forEach(w => {
                 const tr = document.createElement('tr');
+                const name = this.resolveItemName ? this.resolveItemName(w.id, 'furn') : '—';
+                const nameStr = name && name !== '???' ? name : '—';
                 tr.innerHTML = `<td style="padding:0.5rem;">${w.key}</td>
-                                <td><input type="number" value="${w.id}" data-key="${w.key}" class="edit-wp" style="width:100%;"></td>
+                                <td><input type="number" value="${w.id}" data-key="${w.key}" class="edit-wp" style="width:80px;"></td>
+                                <td style="font-size: 0.8rem;">${nameStr}</td>
                                 <td style="text-align:center;"><button class="btn-primary wp-save">Guardar</button></td>`;
                 wtable.appendChild(tr);
             });
+        } else {
+            wtable.innerHTML = '<tr><td colspan="4" style="text-align:center;">Esta sublocación no tiene wallpapers en el save</td></tr>';
         }
         
-        if (this.parser && this.parser.floors && this.parser.floors[targetLoc]) {
+        if (this.parser && this.parser.floors && this.parser.floors[targetLoc] && this.parser.floors[targetLoc].length) {
             this.parser.floors[targetLoc].forEach(f => {
                 const tr = document.createElement('tr');
+                const name = this.resolveItemName ? this.resolveItemName(f.id, 'furn') : '—';
+                const nameStr = name && name !== '???' ? name : '—';
                 tr.innerHTML = `<td style="padding:0.5rem;">${f.key}</td>
-                                <td><input type="number" value="${f.id}" data-key="${f.key}" class="edit-floor" style="width:100%;"></td>
+                                <td><input type="number" value="${f.id}" data-key="${f.key}" class="edit-floor" style="width:80px;"></td>
+                                <td style="font-size: 0.8rem;">${nameStr}</td>
                                 <td style="text-align:center;"><button class="btn-primary floor-save">Guardar</button></td>`;
                 ftable.appendChild(tr);
             });
+        } else {
+            ftable.innerHTML = '<tr><td colspan="4" style="text-align:center;">Esta sublocación no tiene floors en el save</td></tr>';
         }
 
         wtable.querySelectorAll('.wp-save').forEach(btn => {
@@ -1729,6 +1739,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const input = tr.querySelector('.edit-wp');
                 this.parser.setWallpaper(targetLoc, input.dataset.key, input.value);
                 this.showToast('Papel tapiz actualizado', 'success');
+                this.renderWallpapersTab(); // Re-render to update name
             });
         });
 
@@ -1738,6 +1749,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const input = tr.querySelector('.edit-floor');
                 this.parser.setFloor(targetLoc, input.dataset.key, input.value);
                 this.showToast('Suelo actualizado', 'success');
+                this.renderWallpapersTab(); // Re-render to update name
             });
         });
     }
@@ -2887,13 +2899,15 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const inv = document.getElementById('export-cb-inv').checked;
         const farm = document.getElementById('export-cb-farm').checked;
         const phone = document.getElementById('export-cb-phone').checked;
+        const coveringsNode = document.getElementById('export-cb-coverings');
+        const coverings = coveringsNode ? coveringsNode.checked : false;
         
-        if (!inv && !farm && !phone) {
+        if (!inv && !farm && !phone && !coverings) {
             alert('Selecciona al menos una sección para exportar.');
             return;
         }
         
-        const data = this.parser.exportPartialJSON({ inventory: inv, farm: farm, phone: phone });
+        const data = this.parser.exportPartialJSON({ inventory: inv, farm: farm, phone: phone, coverings: coverings });
         
         const blob = new Blob([JSON.stringify(data, (key, value) => typeof value === 'bigint' ? value.toString() : value, 2)], { type: 'application/json' });
         const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '');

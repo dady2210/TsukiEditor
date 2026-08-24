@@ -42,6 +42,10 @@
                         <input type="checkbox" id="chk-fix-verify">
                         <span>Recalcular verificationID</span>
                     </label>
+                    <label class="check-container">
+                        <input type="checkbox" id="export-cb-coverings" checked>
+                        <span>Revestimientos (Wallpaper/Floor)</span>
+                    </label>
                 </div>
                 <button id="btn-save" class="btn-primary">
                     <span class="material-symbols-outlined" style="font-size:18px;margin-right:6px;vertical-align:text-bottom;">download</span>
@@ -842,6 +846,52 @@
                             </button>
                         </div>
 
+                        
+                        <!-- Revestimientos (Wallpaper / Floor) -->
+                        <div class="section-card" style="margin-top:1rem;">
+                            <h4 style="margin:0 0 0.5rem; display:flex; justify-content:space-between; align-items:center;">
+                                <span>🎨 Revestimientos (Wallpaper / Floor)</span>
+                                <button id="btn-refresh-wallpapers" class="btn-secondary" style="padding: 2px 8px; font-size: 0.8rem;">
+                                    <span class="material-symbols-outlined" style="font-size: 14px; vertical-align: text-bottom;">refresh</span>
+                                </button>
+                            </h4>
+                            <p class="small-text" style="margin:0 0 0.5rem;">Sincronizado con la ubicación actual del mapa.</p>
+                            
+                            <div style="margin-bottom: 0.5rem;">
+                                <strong>Paredes (Wallpapers)</strong>
+                                <table id="wallpapers-table" class="data-table" style="width: 100%; margin-top: 5px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td colspan="4" style="text-align:center;">Cargando...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div>
+                                <strong>Suelos (Floors)</strong>
+                                <table id="floors-table" class="data-table" style="width: 100%; margin-top: 5px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td colspan="4" style="text-align:center;">Cargando...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                         <div class="control-tips">
                             <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;">mouse</span> Rueda=Zoom
                             <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;margin-left:6px;">drag_pan</span> Arrastrar=Mover
@@ -1301,6 +1351,10 @@
                         <input type="checkbox" id="export-cb-phone" checked>
                         <span>Teléfono (Fidelidad, Cosméticos)</span>
                     </label>
+                    <label class="check-container">
+                        <input type="checkbox" id="export-cb-coverings" checked>
+                        <span>Revestimientos (Wallpaper/Floor)</span>
+                    </label>
                 </div>
             </div>
             <div class="modal-footer" style="padding:1rem; display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; border-top:1px solid #ddd;">
@@ -1336,6 +1390,10 @@
                     <label class="check-container">
                         <input type="checkbox" id="import-cb-phone" checked disabled>
                         <span>Teléfono (Fidelidad, Cosméticos)</span>
+                    </label>
+                    <label class="check-container">
+                        <input type="checkbox" id="export-cb-coverings" checked>
+                        <span>Revestimientos (Wallpaper/Floor)</span>
                     </label>
                 </div>
             </div>
