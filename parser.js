@@ -2959,9 +2959,10 @@ class SaveParser {
     // --- Partial JSON Export/Import ---
     exportPartialJSON(sections) {
         const out = {
-            format: "TsukiEditorPartial",
-            version: 2,
-            exportedAt: new Date().toISOString()
+            format: "TsukiPortDefinitivo",
+            version: 1,
+            exportedAt: new Date().toISOString(),
+            mapas: {}
         };
 
         if (sections.inventory) {
@@ -2974,245 +2975,114 @@ class SaveParser {
                         const vidNode = i.slotNode.children.find(c => c.name === 'verificationID' || c.name === 'verify');
                         if (vidNode) vid = vidNode.value;
                     }
-                    return {
-                        id: i.item_id,
-                        qty: i.qty,
-                        invType: i.invType,
-                        verificationID: vid
-                    };
+                    return { id: i.item_id, qty: i.qty, invType: i.invType, verificationID: vid };
                 });
-            
-            if (this.generalVars && this.generalVars.carrots !== undefined) {
-                out.carrots = this.generalVars.carrots;
-            }
+            if (this.generalVars && this.generalVars.carrots !== undefined) out.carrots = this.generalVars.carrots;
         }
 
         if (sections.farm) {
             if (!this.placements || !this.placements.length) this.parseMap();
             
-            // Legacy crops list
-            const crops = [];
-            // Detailed placements list
-            const placements = [];
-            
             this.placements.forEach(p => {
+                if (p.placementID === undefined || p.placementID === -1) return;
+
+				let mapaId = p.subloc_id;
+                
+                // Ignorar ubicaciones de texto raras en la exportación para Godot
+                if (typeof mapaId === 'string' && isNaN(parseInt(mapaId))) return;
+                mapaId = parseInt(mapaId);
+
+                // --- 2. DETERMINAR SI ES CULTIVO ---
                 const cInfo = this.getCropSaveFields(p) || {};
-                const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id)) || p.planted_id !== undefined || (p.furnNode && p.furnNode.typeName && p.furnNode.typeName.includes('CropSave'));
+                const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(p.item_id)) || 
+                               p.item_id === 306 || p.item_id === 411 || 
+                               (p.planted_id !== undefined && p.planted_id !== -1) || 
+                               (p.furnNode && p.furnNode.typeName && p.furnNode.typeName.includes('CropSave'));
                 
-                if (isCrop && p.placementID !== undefined) {
-                    crops.push({
-                        placementID: p.placementID,
-                        item_id: p.item_id,
-                        parentPlacementID: p.parentPlacementID || 0,
-                        grid: p.grid ? { x: p.grid.x, y: p.grid.y } : { x: p.x || 0, y: p.y || 0 },
-                        harvestTimeOA: cInfo.harvestTimeNode ? cInfo.harvestTimeNode.value : 0,
-                        ripe: cInfo.ripeNode ? cInfo.ripeNode.value : false,
-                        orientation: p.orientation || 0
-                    });
+                if (isCrop) mapaId = 6;
+
+                // 3. Construir la estructura anidada
+                if (!out.mapas[mapaId]) {
+                    out.mapas[mapaId] = { 
+                        nombre_referencia: mapaId === 2 ? "Casa Tsuki" : (mapaId === 3 ? "Casa Tsuki (Piso 2)" : (mapaId === 6 ? "Granja" : `Mapa ${mapaId}`)),
+                        pisos: {} 
+                    };
                 }
-                
-                placements.push({
-                    placementID: p.placementID,
+
+                let pisoId = String(p.floor || "0");
+                if (!out.mapas[mapaId].pisos[pisoId]) {
+                    out.mapas[mapaId].pisos[pisoId] = [];
+                }
+
+                out.mapas[mapaId].pisos[pisoId].push({
+                    placement_id: p.placementID,
                     item_id: p.item_id,
-                    subloc_id: p.subloc_id,
-                    cluster: p.cluster,
-                    parentPlacementID: p.parentPlacementID || 0,
-                    grid: p.grid ? { x: p.grid.x, y: p.grid.y } : { x: p.x || 0, y: p.y || 0 },
-                    orientation: p.orientation || 0,
-                    isCrop: !!isCrop,
-                    harvestTimeOA: cInfo.harvestTimeNode ? cInfo.harvestTimeNode.value : 0,
-                    ripe: cInfo.ripeNode ? cInfo.ripeNode.value : false,
-                    isWall: !!p.isWall,
-                    floor: p.floor
+                    x: p.grid ? p.grid.x : (p.x || 0),
+                    y: p.grid ? p.grid.y : (p.y || 0),
+                    rotacion: p.orientation || 0,
+                    es_pared: !!p.isWall,
+                    es_cultivo: !!isCrop,
+                    flipped: !!p.flipped,
+                    harvestTimeOA: isCrop && cInfo.harvestTimeNode ? cInfo.harvestTimeNode.value : 0,
+                    ripe: isCrop && cInfo.ripeNode ? !!cInfo.ripeNode.value : false
                 });
             });
-            
-            out.farm = { crops };
-            out.placements = placements;
         }
-
-        if (sections.phone) {
-            out.phone = {};
-            const cos = this.getPhoneCosmetics();
-            if (cos) {
-                out.phone.cosmetics = {
-                    skinID: cos.skinID,
-                    bgPatternID: cos.bgPatternID,
-                    bgColorID: cos.bgColorID,
-                    backgroundsUnlocked: cos.backgroundsUnlocked,
-                    colorsUnlocked: cos.colorsUnlocked
-                };
-            }
-            
-            const punch = this.getPunchcardState();
-            if (punch) {
-                out.phone.punchcard = {
-                    claimedCount: punch.claimedCount,
-                    rewards: punch.rewards.map(r => ({ index: r.index, claimed: r.claimed, isWeekly: r.isWeekly })),
-                    weeklyFurnID: punch.rewards.find(r => r.isWeekly && r.index === 6)?.furnID || 0
-                };
-            }
-            
-            const locs = this.getLocationsOnPhone();
-            if (locs) {
-                out.phone.locationsOnPhone = locs.map(l => ({ id: l.id, seen: l.seen }));
-            }
-        }
-
-        if (sections.coverings) {
-            out.mapCoverings = {};
-            let hasCoverings = false;
-            for (const sublocId in this.wallpapers) {
-                const w = this.wallpapers[sublocId];
-                const f = this.floors[sublocId];
-                if ((w && w.length) || (f && f.length)) {
-                    hasCoverings = true;
-                    out.mapCoverings[sublocId] = {};
-                    if (w && w.length) {
-                        out.mapCoverings[sublocId].wallpapers = w.map(entry => ({
-                            key: entry.key,
-                            id: entry.id
-                        }));
-                    }
-                    if (f && f.length) {
-                        out.mapCoverings[sublocId].floors = f.map(entry => ({
-                            key: entry.key,
-                            id: entry.id
-                        }));
-                    }
-                }
-            }
-            if (!hasCoverings) delete out.mapCoverings;
-        }
+        
+        // (Opcional) Podés mantener acá la lógica de out.phone y out.mapCoverings si las seguís exportando
         return out;
     }
 
     applyPartialJSON(data, sections = { inventory: true, farm: true, phone: true }) {
-        if (!data || !data.format || !data.format.startsWith("TsukiEditorPartial")) throw new Error("Formato JSON inválido");
+        if (!data || data.format !== "TsukiPortDefinitivo") throw new Error("Formato JSON inválido. Se requiere TsukiPortDefinitivo.");
         
         let report = { applied: 0, skipped: [] };
 
-        // 1. Inventory
-        if (data.inventory && sections.inventory) {
-            if (!this.inventory || !this.inventory.length) this.parseInventory();
-            data.inventory.forEach(item => {
-                const existingIndex = this.inventory.findIndex(inv => Number(inv.item_id) === Number(item.id));
-                if (existingIndex !== -1) {
-                    const existing = this.inventory[existingIndex];
-                    const newQty = existing.qty + Number(item.qty);
-                    this.updateInventoryItem('inventory', existingIndex, item.id, newQty, item.invType ?? existing.invType);
-                    report.applied++;
-                } else {
-                    const ok = this.injectInventoryItem(item.id, Number(item.qty), false, item.invType ?? 1);
-                    if (ok) report.applied++;
-                    else report.skipped.push(`Item ${item.id} (No inyectable)`);
-                }
-            });
-            
-            if (data.carrots !== undefined) {
-                this.writeGeneralVar('carrots', Number(data.carrots));
-                report.applied++;
-            }
-        }
-
-        // 2. Farm
-        if (sections.farm) {
+        if (data.mapas && sections.farm) {
             if (!this.placements || !this.placements.length) this.parseMap();
-            
-            if (data.farm && data.farm.crops) {
-                data.farm.crops.forEach(cData => {
-                    const p = this.placements.find(pl => Number(pl.placementID) === Number(cData.placementID));
-                    if (p) {
-                        let changed = false;
-                        const cInfo = this.getCropSaveFields(p) || {};
-                        
-                        if (cInfo.harvestTimeNode) {
-                            cInfo.harvestTimeNode.value = Number(cData.harvestTimeOA);
-                            changed = true;
-                        }
-                        if (cInfo.ripeNode) {
-                            cInfo.ripeNode.value = Boolean(cData.ripe);
-                            changed = true;
-                        }
-                        if (changed) report.applied++;
-                        else report.skipped.push(`Crop ${cData.placementID} (nodos no editables)`);
-                    } else {
-                        report.skipped.push(`Crop ${cData.placementID} (no encontrado)`);
-                    }
-                });
-            }
-            
-            if (data.placements) {
-                data.placements.forEach(plData => {
-                    const p = this.placements.find(pl => Number(pl.placementID) === Number(plData.placementID));
-                    if (p) {
-                        let changed = false;
-                        // Orientación (si es distinto y existe)
-                        if (plData.orientation !== undefined && p.orientation !== plData.orientation) {
-                            const oNode = p.furnNode ? p.furnNode.children.find(c => c.name === 'orientation' || c.name === 'rotation' || c.name === 'flipped' || c.name === 'isFlipped') : null;
-                            if (oNode) {
-                                oNode.value = plData.orientation;
+
+            for (const mapaId in data.mapas) {
+                const mapa = data.mapas[mapaId];
+                for (const pisoId in mapa.pisos) {
+                    const muebles = mapa.pisos[pisoId];
+                    
+                    muebles.forEach(mData => {
+                        const p = this.placements.find(pl => Number(pl.placementID) === Number(mData.placement_id));
+                        if (p) {
+                            let changed = false;
+                            
+                            // Actualizar Rotación
+                            if (mData.rotacion !== undefined && p.orientation !== mData.rotacion) {
+                                const oNode = p.furnNode ? p.furnNode.children.find(c => c.name === 'orientation' || c.name === 'rotation' || c.name === 'flipped' || c.name === 'isFlipped') : null;
+                                if (oNode) { oNode.value = mData.rotacion; changed = true; }
+                            }
+                            
+                            // Actualizar Posición
+                            if (mData.x !== undefined && mData.y !== undefined) {
+                                if (p.x !== mData.x || p.y !== mData.y) {
+                                    this.applyMapChange(p, mData.item_id, mData.x, mData.y, mData.rotacion);
+                                    changed = true;
+                                }
+                            }
+
+                            // Actualizar Flipped (Espejado)
+                            if (mData.flipped !== undefined && p.isWall && p.flipped !== mData.flipped) {
+                                this.setWallPlacementCell(p.placementID, { flipped: mData.flipped });
                                 changed = true;
                             }
+
+                            // Actualizar Tiempos de Cultivo
+                            if (mData.es_cultivo) {
+                                const cInfo = this.getCropSaveFields(p) || {};
+                                if (cInfo.harvestTimeNode && mData.harvestTimeOA !== undefined) { cInfo.harvestTimeNode.value = mData.harvestTimeOA; changed = true; }
+                                if (cInfo.ripeNode && mData.ripe !== undefined) { cInfo.ripeNode.value = mData.ripe; changed = true; }
+                            }
+
+                            if (changed) report.applied++;
+                        } else {
+                            report.skipped.push(`Mueble ID ${mData.placement_id} no hallado en AST`);
                         }
-                        if (changed) report.applied++;
-                    }
-                });
-            }
-        }
-
-        // 3. Phone
-        if (data.phone && sections.phone) {
-            if (data.phone.cosmetics) {
-                const c = data.phone.cosmetics;
-                if (c.skinID !== undefined) this.setPhoneCosmeticField('skinID', Number(c.skinID));
-                if (c.bgPatternID !== undefined) this.setPhoneCosmeticField('bgPatternID', Number(c.bgPatternID));
-                if (c.bgColorID !== undefined) this.setPhoneCosmeticField('bgColorID', Number(c.bgColorID));
-                report.applied++;
-            }
-            if (data.phone.punchcard) {
-                const p = data.phone.punchcard;
-                if (p.rewards) {
-                    p.rewards.forEach(r => {
-                        this.setPunchcardSlot(Number(r.index), Boolean(r.claimed), Boolean(r.isWeekly));
                     });
-                }
-                if (p.weeklyFurnID !== undefined) {
-                    this.setWeeklyRewardFurnId(Number(p.weeklyFurnID));
-                }
-                report.applied++;
-            }
-            if (data.phone.locationsOnPhone) {
-                data.phone.locationsOnPhone.forEach(l => {
-                    this.setLocationUnlocked(Number(l.id), Boolean(l.seen));
-                });
-                report.applied++;
-            }
-        }
-
-        // 4. Coverings
-        if (sections.coverings) {
-            if (data.mapCoverings) {
-                for (const sublocId in data.mapCoverings) {
-                    const locData = data.mapCoverings[sublocId];
-                    if (locData.wallpapers) {
-                        locData.wallpapers.forEach(w => {
-                            if (this.setWallpaper(sublocId, w.key, w.id)) {
-                                report.applied++;
-                            } else {
-                                report.skipped.push(`Wallpaper subloc=${sublocId} key=${w.key}`);
-                            }
-                        });
-                    }
-                    if (locData.floors) {
-                        locData.floors.forEach(f => {
-                            if (this.setFloor(sublocId, f.key, f.id)) {
-                                report.applied++;
-                            } else {
-                                report.skipped.push(`Floor subloc=${sublocId} key=${f.key}`);
-                            }
-                        });
-                    }
                 }
             }
         }

@@ -2863,7 +2863,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 if (added > 0) {
                     this.showToast(`✅ ${added} nombres inyectados al catálogo. Refrescando interfaz...`);
                     if (this.parser && this.parser.ast) {
-                        this.renderInventoryTab();
+                        this.renderInventory();
                         this.renderMailTab();
                         const tabMap = document.getElementById('tab-map');
                         if (tabMap && tabMap.classList.contains('active') && this.map) {
@@ -2964,14 +2964,16 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         reader.onload = (evt) => {
             try {
                 const data = JSON.parse(evt.target.result);
-                if (data.format !== 'TsukiEditorPartial') {
-                    alert('El archivo no tiene el formato correcto (TsukiEditorPartial).');
+                
+                // 1. ACEPTAR EL NUEVO FORMATO (y el viejo por compatibilidad)
+                if (data.format !== 'TsukiPortDefinitivo' && data.format !== 'TsukiEditorPartial') {
+                    alert('El archivo no tiene el formato correcto. Se requiere TsukiPortDefinitivo.');
                     return;
                 }
                 
                 this.pendingImportData = data;
                 
-                // Show preview
+                // 2. CONSTRUIR VISTA PREVIA
                 let previewHtml = '<strong>Resumen del archivo:</strong><br>';
                 
                 const cbInv = document.getElementById('import-cb-inv');
@@ -2984,11 +2986,26 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     cbInv.disabled = false;
                     cbInv.checked = true;
                 }
-                if (data.farm && data.farm.crops) {
+                
+                // Leer el nuevo formato de mapas
+                if (data.mapas) {
+                    let totalMuebles = 0;
+                    for (const mId in data.mapas) {
+                        for (const pId in data.mapas[mId].pisos) {
+                            totalMuebles += data.mapas[mId].pisos[pId].length;
+                        }
+                    }
+                    previewHtml += `- Muebles/Cultivos: ${totalMuebles} ítems en total<br>`;
+                    cbFarm.disabled = false;
+                    cbFarm.checked = true;
+                } 
+                // Fallback por si cargás un archivo viejo
+                else if (data.farm && data.farm.crops) {
                     previewHtml += `- Cultivos/Parcelas: ${data.farm.crops.length}<br>`;
                     cbFarm.disabled = false;
                     cbFarm.checked = true;
                 }
+                
                 if (data.phone) {
                     previewHtml += `- Teléfono: Incluido<br>`;
                     cbPhone.disabled = false;
@@ -3041,7 +3058,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             if (inv) this.parser.parseInventory();
             if (farm) this.parser.parseMap();
             
-            this.renderInventoryTab();
+            this.renderInventory();
             if (this.renderEventsTab) this.renderEventsTab();
             if (this.renderNewsTab) this.renderNewsTab();
             if (this.renderPhoneTab) this.renderPhoneTab();
