@@ -100,40 +100,54 @@ function cloneOdinTree(node) {
 
 function readGroupXY(groupPosNode, positionNodeFallback) {
     let x = -1, y = -1;
-    
+    let flipped = false;
+
+    // WallGroupPosition.flipped elige la cara: true = pared izq (eje X),
+    // false = pared der (eje Y). Hay que leerlo SIEMPRE, también cuando
+    // x/y salen del grid, si no todos los muebles de pared caen en la cara normal.
+    if (groupPosNode) {
+        const flipNode = findChildNode(groupPosNode, ['flipped'])
+            || findChildRecursive(groupPosNode, ['flipped']);
+        if (flipNode && flipNode.value !== undefined && flipNode.value !== null) {
+            flipped = flipNode.value === true || flipNode.value === 1 || flipNode.value === 'true';
+        }
+    }
+
+    const finish = (xx, yy) => ({ x: Number(xx), y: Number(yy), flipped: !!flipped });
+
     if (groupPosNode) {
         // 1) groupPosition.grid.x/y
         const grid = findChildNode(groupPosNode, ['grid']);
         if (grid) {
             const xNode = findChildNode(grid, ['x']);
             const yNode = findChildNode(grid, ['y']);
-            if (xNode && yNode) return { x: Number(xNode.value), y: Number(yNode.value) };
+            if (xNode && yNode) return finish(xNode.value, yNode.value);
         }
-        
+
         // 2) groupPosition.x/y directos
         const xNodeDirect = findChildNode(groupPosNode, ['x']);
         const yNodeDirect = findChildNode(groupPosNode, ['y']);
-        if (xNodeDirect && yNodeDirect) return { x: Number(xNodeDirect.value), y: Number(yNodeDirect.value) };
+        if (xNodeDirect && yNodeDirect) return finish(xNodeDirect.value, yNodeDirect.value);
     }
-    
+
     // 3) position.grid.x/y (GridPointer)
     if (positionNodeFallback) {
         const grid = findChildNode(positionNodeFallback, ['grid']);
         if (grid) {
             const xNode = findChildNode(grid, ['x']);
             const yNode = findChildNode(grid, ['y']);
-            if (xNode && yNode) return { x: Number(xNode.value), y: Number(yNode.value) };
+            if (xNode && yNode) return finish(xNode.value, yNode.value);
         }
     }
-    
+
     // 4) buscar recursivo hijos llamados 'x'/'y' bajo groupPosition
     if (groupPosNode) {
         const xNode = findChildRecursive(groupPosNode, ['x']);
         const yNode = findChildRecursive(groupPosNode, ['y']);
-        if (xNode && yNode) return { x: Number(xNode.value), y: Number(yNode.value) };
+        if (xNode && yNode) return finish(xNode.value, yNode.value);
     }
-    
-    return { x, y };
+
+    return { x, y, flipped: !!flipped };
 }
 
 function writeGroupXY(groupPosNode, newX, newY, positionNodeFallback, newFlipped) {
@@ -173,6 +187,12 @@ function writeGroupXY(groupPosNode, newX, newY, positionNodeFallback, newFlipped
         const yNode = findChildRecursive(groupPosNode, ['y']);
         if (xNode) xNode.value = newX;
         if (yNode) yNode.value = newY;
+    }
+
+    if (newFlipped !== undefined && groupPosNode) {
+        const flipNode = findChildNode(groupPosNode, ['flipped'])
+            || findChildRecursive(groupPosNode, ['flipped']);
+        if (flipNode) flipNode.value = Boolean(newFlipped);
     }
 }
 

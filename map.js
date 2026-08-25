@@ -72,6 +72,7 @@ class IsometricMap {
         // Background grid caches (ver _buildFloorGridCache/_buildWallGridCache)
         this._floorGridCache = null;
         this._wallGridCache  = null;
+        this._wallRoomBBox   = null;
         this._rafId = undefined;
 
         this.bindEvents();
@@ -309,24 +310,65 @@ class IsometricMap {
         return (dict && dict[loc]) ? dict[loc] : [];
     }
 
-    // Pared isométrica: cara no-flipped corre sobre el eje Y del piso (x=0);
-    // cara flipped corre sobre el eje X (y=0). wy es altura sobre la pared.
-    getWallIsoCoords(wx, wy, flipped) {
-        const base = flipped ? this.getIsoCoords(wx, 0) : this.getIsoCoords(0, wx);
+    // Casa isométrica (como la de Tsuki): el piso es el diamante, las dos
+    // paredes VISIBLES se levantan en los bordes de ATRÁS.
+    //
+    // iso: (0,0) es el frente (abajo); x+y alto es el fondo (arriba).
+    // WallGroupPosition.flipped del .csave elige la cara:
+    //   flipped=true  → pared IZQUIERDA, a lo largo de X, anclada en y = ymax
+    //   flipped=false → pared DERECHA,  a lo largo de Y, anclada en x = xmax
+    // wx del save es coordenada de piso en ese eje; wy es altura sobre el piso.
+    getWallIsoCoords(wx, wy, flipped, bbox) {
+        const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 0, ymax: 0 };
+        const base = flipped
+            ? this.getIsoCoords(wx, box.ymax)
+            : this.getIsoCoords(box.xmax, wx);
         return { x: base.x, y: base.y - wy * this.CELL_H * this.scale };
     }
 
-    _pathWallCell(wx, wy, ww, wh, flipped) {
-        const bl = this.getWallIsoCoords(wx, wy, flipped);
-        const br = this.getWallIsoCoords(wx + ww, wy, flipped);
-        const tr = this.getWallIsoCoords(wx + ww, wy + wh, flipped);
-        const tl = this.getWallIsoCoords(wx, wy + wh, flipped);
+    _pathWallCell(wx, wy, ww, wh, flipped, bbox) {
+        const box = bbox || this._wallRoomBBox;
+        const bl = this.getWallIsoCoords(wx, wy, flipped, box);
+        const br = this.getWallIsoCoords(wx + ww, wy, flipped, box);
+        const tr = this.getWallIsoCoords(wx + ww, wy + wh, flipped, box);
+        const tl = this.getWallIsoCoords(wx, wy + wh, flipped, box);
         this.ctx.beginPath();
         this.ctx.moveTo(bl.x, bl.y);
         this.ctx.lineTo(br.x, br.y);
         this.ctx.lineTo(tr.x, tr.y);
         this.ctx.lineTo(tl.x, tl.y);
         this.ctx.closePath();
+    }
+
+    _groupFloorBBox(items) {
+        let xmin = Infinity, ymin = Infinity, xmax = -Infinity, ymax = -Infinity;
+        for (const p of items) {
+            if (p.x < 0 || p.y < 0 || Number(p.item_id) <= 0) continue;
+            const sz = this.getSize(p.item_id);
+            xmin = Math.min(xmin, p.x);
+            ymin = Math.min(ymin, p.y);
+            xmax = Math.max(xmax, p.x + (sz.w || 1));
+            ymax = Math.max(ymax, p.y + (sz.l || 1));
+        }
+        if (!isFinite(xmin)) return null;
+        return { xmin, ymin, xmax, ymax };
+    }
+
+    _groupRoomBBox(floorItems, wallItems) {
+        const box = this._groupFloorBBox(floorItems) || { xmin: 0, ymin: 0, xmax: 8, ymax: 8 };
+        for (const p of wallItems) {
+            const sz = this.getWallSize(p.item_id);
+            if (p.flipped) {
+                box.xmin = Math.min(box.xmin, p.x);
+                box.xmax = Math.max(box.xmax, p.x + sz.w);
+            } else {
+                box.ymin = Math.min(box.ymin, p.x);
+                box.ymax = Math.max(box.ymax, p.x + sz.w);
+            }
+        }
+        if (box.xmax - box.xmin < 2) box.xmax = box.xmin + 4;
+        if (box.ymax - box.ymin < 2) box.ymax = box.ymin + 4;
+        return box;
     }
 
     _drawMapHud(targetLoc, isWallLayer, targetWallGroup) {
@@ -346,9 +388,11 @@ class IsometricMap {
         const flTxt = fls.length
             ? fls.map(f => `key ${f.key} → ID ${f.id}`).join('   ·   ')
             : 'sin floor covering';
+        const nIzq = walls.filter(p => p.flipped).length;
+        const nDer = walls.filter(p => !p.flipped).length;
         const wallTxt = isWallLayer
             ? `Pared group ${targetWallGroup}: ${groupWalls.length} muebles`
-            : `Muebles de pared: ${walls.length} (capa Pared para editar)`;
+            : `Muebles de pared: ${walls.length} (izq ${nIzq} · der ${nDer})`;
 
         const lines = [
             `🎨 Wallpaper: ${wpTxt}`,
@@ -376,39 +420,84 @@ class IsometricMap {
     }
 
     _drawIsoWallGrids(targetLoc) {
-        const walls = (this.app.parser.placements || []).filter(
+        const placements = this.app.parser.placements || [];
+        const walls = placements.filter(
             p => p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0
         );
-        for (const flipped of [false, true]) {
+        const floors = placements.filter(
+            p => !p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0 && p.x >= 0 && p.y >= 0
+        );
+        const wps = this._wallpaperEntries(targetLoc);
+        const indoor = walls.length > 0 || wps.length > 0;
+
+        const groups = new Set();
+        for (const p of floors) groups.add(String(p.floor));
+        for (const p of walls) groups.add(String(p.floor));
+
+        const rooms = [];
+        for (const g of groups) {
+            const gFloors = floors.filter(p => String(p.floor) === g);
+            const gWalls = walls.filter(p => String(p.floor) === g);
+            if (!gWalls.length && !(indoor && gFloors.length >= 2)) continue;
+            rooms.push({
+                group: g,
+                bbox: this._groupRoomBBox(gFloors, gWalls),
+                walls: gWalls
+            });
+        }
+        if (!rooms.length) {
+            this._wallRoomBBox = null;
+            return;
+        }
+
+        // Pintar de atrás hacia adelante: group con mayor x+y de su esquina trasera primero.
+        rooms.sort((a, b) => (b.bbox.xmax + b.bbox.ymax) - (a.bbox.xmax + a.bbox.ymax));
+
+        for (const room of rooms) {
+            this._wallRoomBBox = room.bbox;
+            this._drawIsoWallRoom(targetLoc, room.bbox, room.walls, wps);
+        }
+        this._wallRoomBBox = rooms[rooms.length - 1].bbox;
+    }
+
+    _drawIsoWallRoom(targetLoc, bbox, walls, wps) {
+        const maxHFromItems = walls.reduce((m, p) => {
+            const sz = this.getWallSize(p.item_id);
+            return Math.max(m, (p.y || 0) + sz.h);
+        }, 0);
+        const wallH = Math.min(Math.max(maxHFromItems, 6), 16);
+
+        for (const flipped of [true, false]) {
             const subset = walls.filter(p => !!p.flipped === flipped);
-            let maxX = 10;
-            let maxY = 6;
-            for (const p of subset) {
-                const sz = this.getWallSize(p.item_id);
-                maxX = Math.max(maxX, (p.x || 0) + sz.w);
-                maxY = Math.max(maxY, (p.y || 0) + sz.h);
-            }
-            maxX = Math.min(Math.max(maxX, 8), 28);
-            maxY = Math.min(Math.max(maxY, 5), 14);
+            const along0 = flipped ? bbox.xmin : bbox.ymin;
+            let along1 = flipped ? bbox.xmax : bbox.ymax;
+            if (along1 - along0 < 4) along1 = along0 + 4;
+            const alongLen = along1 - along0;
+
+            this.ctx.save();
+            this.ctx.globalAlpha = 0.18;
+            this.ctx.fillStyle = flipped ? 'rgba(255, 160, 80, 1)' : 'rgba(110, 190, 255, 1)';
+            this._pathWallCell(along0, 0, alongLen, wallH, flipped, bbox);
+            this.ctx.fill();
+            this.ctx.restore();
 
             this.ctx.save();
             this.ctx.strokeStyle = flipped ? 'rgba(255, 160, 80, 0.85)' : 'rgba(110, 190, 255, 0.85)';
             this.ctx.lineWidth = 1;
-            this.ctx.globalAlpha = 0.45;
-            for (let x = 0; x < maxX; x++) {
-                for (let y = 0; y < maxY; y++) {
-                    this._pathWallCell(x, y, 1, 1, flipped);
+            this.ctx.globalAlpha = 0.5;
+            for (let x = along0; x < along1; x++) {
+                for (let y = 0; y < wallH; y++) {
+                    this._pathWallCell(x, y, 1, 1, flipped, bbox);
                     this.ctx.stroke();
                 }
             }
             this.ctx.restore();
 
-            // Etiqueta de wallpaper sobre el tope de cada cara
-            const wps = this._wallpaperEntries(targetLoc);
-            const top = this.getWallIsoCoords(maxX / 2, maxY + 0.4, flipped);
+            const top = this.getWallIsoCoords((along0 + along1) / 2, wallH + 0.4, flipped, bbox);
+            const side = flipped ? 'izq' : 'der';
             const label = wps.length
-                ? `WP ${wps.map(w => w.id).join(', ')}  (${flipped ? 'flipped' : 'normal'})`
-                : `(${flipped ? 'flipped' : 'normal'})`;
+                ? `Pared ${side} · WP ${wps.map(w => w.id).join(', ')}`
+                : `Pared ${side}`;
             this.ctx.save();
             this.ctx.font = `bold ${Math.max(10, Math.round(11 * this.scale))}px 'Quicksand', sans-serif`;
             this.ctx.fillStyle = 'rgba(20,12,8,0.75)';
@@ -422,26 +511,27 @@ class IsometricMap {
             this.ctx.fillText(label, top.x, top.y - 5);
             this.ctx.restore();
 
-            subset.sort((a, b) => a.y - b.y);
-            for (const p of subset) this._drawIsoWallItem(p);
+            subset.sort((a, b) => (b.x - a.x) || (a.y - b.y));
+            for (const p of subset) this._drawIsoWallItem(p, bbox);
         }
     }
 
-    _drawIsoWallItem(p) {
+    _drawIsoWallItem(p, bbox) {
         const sz = this.getWallSize(p.item_id);
         const flipped = !!p.flipped;
         const isSel = this.selectedPlacement === p;
         const isHov = this.hoveredPlacement === p;
+        const box = bbox || this._wallRoomBBox;
 
         this.ctx.save();
-        this._pathWallCell(p.x, p.y, sz.w, sz.h, flipped);
+        this._pathWallCell(p.x, p.y, sz.w, sz.h, flipped, box);
         this.ctx.fillStyle = isSel ? 'rgba(255,255,255,0.35)' : isHov ? 'rgba(255,200,120,0.28)' : 'rgba(255,140,70,0.22)';
         this.ctx.fill();
         this.ctx.strokeStyle = isSel ? '#fff' : 'rgba(255,220,180,0.85)';
         this.ctx.lineWidth = isSel ? 2 : 1;
         this.ctx.stroke();
 
-        const mid = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, flipped);
+        const mid = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, flipped, box);
         const img = this.getImage(p.item_id, 0);
         if (img && img.complete && img.naturalWidth > 0) {
             const maxW = Math.max(18, sz.w * this.CELL_W * 0.35 * this.scale);
@@ -457,7 +547,7 @@ class IsometricMap {
         this.ctx.textBaseline = 'top';
         this.ctx.shadowColor = 'rgba(0,0,0,0.8)';
         this.ctx.shadowBlur = 3;
-        this.ctx.fillText(`ID ${p.item_id}`, mid.x, mid.y + 6 * this.scale);
+        this.ctx.fillText(`ID ${p.item_id}${flipped ? ' izq' : ' der'}`, mid.x, mid.y + 6 * this.scale);
         this.ctx.restore();
     }
 
@@ -858,7 +948,7 @@ class IsometricMap {
             };
         } else if (p.isWall) {
             const sz = this.getWallSize(p.item_id);
-            center = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, !!p.flipped);
+            center = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, !!p.flipped, this._wallRoomBBox);
         } else {
             const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
             center = this._tileCenter(p.x, p.y, w, l);
