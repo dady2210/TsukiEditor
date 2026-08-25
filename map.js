@@ -32,6 +32,9 @@ const HARVEST_ID   = 900;
 // Default sizes for IDs where sizes.json has w:0 (unknown)
 const DEFAULT_SIZES = { w: 2, l: 2 }; // Fallback
 const PLOT_SIZE     = { w: 2, l: 2 };   // FURN_306 Plot tile
+// Grilla de piso del juego: 16×16 celdas (casa de Tsuki). (0,0) es el frente;
+// x=16 / y=16 son los bordes de ATRÁS, donde se levantan las paredes.
+const FLOOR_GRID_N  = 16;
 
 // Redondeo "half away from zero" simétrico. Math.round nativo redondea los
 // .5 siempre hacia +Infinity (round(0.5)=1 pero round(-0.5)=0), lo que hace
@@ -71,6 +74,7 @@ class IsometricMap {
 
         // Background grid caches (ver _buildFloorGridCache/_buildWallGridCache)
         this._floorGridCache = null;
+        this._floorGridN     = 0;
         this._wallGridCache  = null;
         this._wallRoomBBox   = null;
         this._rafId = undefined;
@@ -241,35 +245,68 @@ class IsometricMap {
         };
     }
 
-    _buildFloorGridCache() {
+    _buildFloorGridCache(n) {
+        n = Math.max(FLOOR_GRID_N, n | 0);
+        if (this._floorGridCache && this._floorGridN === n) return;
+        this._floorGridN = n;
+
         const pad   = 4;
-        const halfW = 32 * (this.CELL_W / 2); // 1024
-        const halfH = 32 * (this.CELL_H / 2); // 1024
+        const halfW = n * (this.CELL_W / 2);
+        const fullH = n * this.CELL_H; // diamante completo: frente (0,0) → atrás (n,n)
         const originX = -halfW - pad;
-        const originY = -halfH - pad;
+        const originY = -fullH - pad;
 
         const cache = document.createElement('canvas');
-        cache.width  = halfW * 2 + pad * 2;
-        cache.height = halfH + pad * 2;
+        cache.width  = Math.ceil(halfW * 2 + pad * 2);
+        cache.height = Math.ceil(fullH + pad * 2);
         const cctx = cache.getContext('2d');
         cctx.translate(-originX, -originY);
-        cctx.strokeStyle = 'rgba(100, 255, 100, 0.8)';
-        cctx.lineWidth = 1.5;
-        for (let x = 0; x < 32; x++) {
-            for (let y = 0; y < 32; y++) {
-                const top   = this._isoWorld(x,   y);
-                const right = this._isoWorld(x+1, y);
-                const bot   = this._isoWorld(x+1, y+1);
-                const left  = this._isoWorld(x,   y+1);
-                cctx.beginPath();
-                cctx.moveTo(top.x, top.y);
-                cctx.lineTo(right.x, right.y);
-                cctx.lineTo(bot.x, bot.y);
-                cctx.lineTo(left.x, left.y);
-                cctx.closePath();
-                cctx.stroke();
+
+        const strokeCell = (x, y, style, width) => {
+            const top   = this._isoWorld(x,   y);
+            const right = this._isoWorld(x+1, y);
+            const bot   = this._isoWorld(x+1, y+1);
+            const left  = this._isoWorld(x,   y+1);
+            cctx.beginPath();
+            cctx.moveTo(top.x, top.y);
+            cctx.lineTo(right.x, right.y);
+            cctx.lineTo(bot.x, bot.y);
+            cctx.lineTo(left.x, left.y);
+            cctx.closePath();
+            cctx.strokeStyle = style;
+            cctx.lineWidth = width;
+            cctx.stroke();
+        };
+
+        if (n > FLOOR_GRID_N) {
+            for (let x = 0; x < n; x++) {
+                for (let y = 0; y < n; y++) {
+                    if (x < FLOOR_GRID_N && y < FLOOR_GRID_N) continue;
+                    strokeCell(x, y, 'rgba(100, 255, 100, 0.28)', 1);
+                }
             }
         }
+        const room = Math.min(n, FLOOR_GRID_N);
+        for (let x = 0; x < room; x++) {
+            for (let y = 0; y < room; y++) {
+                strokeCell(x, y, 'rgba(100, 255, 100, 0.85)', 1.5);
+            }
+        }
+
+        // Contorno 16×16: las paredes se levantan en el borde de atrás (arriba)
+        const a = this._isoWorld(0, 0);
+        const b = this._isoWorld(FLOOR_GRID_N, 0);
+        const cpt = this._isoWorld(FLOOR_GRID_N, FLOOR_GRID_N);
+        const d = this._isoWorld(0, FLOOR_GRID_N);
+        cctx.beginPath();
+        cctx.moveTo(a.x, a.y);
+        cctx.lineTo(b.x, b.y);
+        cctx.lineTo(cpt.x, cpt.y);
+        cctx.lineTo(d.x, d.y);
+        cctx.closePath();
+        cctx.strokeStyle = 'rgba(200, 255, 200, 0.95)';
+        cctx.lineWidth = 2.5;
+        cctx.stroke();
 
         this._floorGridCache   = cache;
         this._floorGridOriginX = originX;
@@ -354,21 +391,40 @@ class IsometricMap {
         return { xmin, ymin, xmax, ymax };
     }
 
-    _groupRoomBBox(floorItems, wallItems) {
-        const box = this._groupFloorBBox(floorItems) || { xmin: 0, ymin: 0, xmax: 8, ymax: 8 };
+    // Habitación isométrica: piso 16×16 anclado en (0,0). Las paredes se
+    // levantan en x=16 (derecha) e y=16 (izquierda), detrás de la maceta y
+    // el resto del mobiliario. Si un mapa (granja, Chi) se sale, se expande.
+    _locationRoomBBox(floorItems, wallItems) {
+        let xmax = FLOOR_GRID_N;
+        let ymax = FLOOR_GRID_N;
+        for (const p of floorItems) {
+            if (p.x < 0 || p.y < 0 || Number(p.item_id) <= 0) continue;
+            const sz = this.getSize(p.item_id);
+            xmax = Math.max(xmax, p.x + (sz.w || 1));
+            ymax = Math.max(ymax, p.y + (sz.l || 1));
+        }
         for (const p of wallItems) {
             const sz = this.getWallSize(p.item_id);
-            if (p.flipped) {
-                box.xmin = Math.min(box.xmin, p.x);
-                box.xmax = Math.max(box.xmax, p.x + sz.w);
+            if (p.flipped) xmax = Math.max(xmax, p.x + sz.w);
+            else ymax = Math.max(ymax, p.x + sz.w);
+        }
+        return { xmin: 0, ymin: 0, xmax, ymax };
+    }
+
+    _floorExtentForLoc(loc) {
+        let n = FLOOR_GRID_N;
+        const placements = (this.app.parser && this.app.parser.placements) || [];
+        for (const p of placements) {
+            if (Number(p.cluster) !== Number(loc) || Number(p.item_id) <= 0) continue;
+            if (p.x < 0 || p.y < 0) continue;
+            if (p.isWall) {
+                n = Math.max(n, (p.x || 0) + 1);
             } else {
-                box.ymin = Math.min(box.ymin, p.x);
-                box.ymax = Math.max(box.ymax, p.x + sz.w);
+                const sz = this.getSize(p.item_id);
+                n = Math.max(n, p.x + (sz.w || 1), p.y + (sz.l || 1));
             }
         }
-        if (box.xmax - box.xmin < 2) box.xmax = box.xmin + 4;
-        if (box.ymax - box.ymin < 2) box.ymax = box.ymin + 4;
-        return box;
+        return n;
     }
 
     _drawMapHud(targetLoc, isWallLayer, targetWallGroup) {
@@ -428,36 +484,13 @@ class IsometricMap {
             p => !p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0 && p.x >= 0 && p.y >= 0
         );
         const wps = this._wallpaperEntries(targetLoc);
-        const indoor = walls.length > 0 || wps.length > 0;
-
-        const groups = new Set();
-        for (const p of floors) groups.add(String(p.floor));
-        for (const p of walls) groups.add(String(p.floor));
-
-        const rooms = [];
-        for (const g of groups) {
-            const gFloors = floors.filter(p => String(p.floor) === g);
-            const gWalls = walls.filter(p => String(p.floor) === g);
-            if (!gWalls.length && !(indoor && gFloors.length >= 2)) continue;
-            rooms.push({
-                group: g,
-                bbox: this._groupRoomBBox(gFloors, gWalls),
-                walls: gWalls
-            });
-        }
-        if (!rooms.length) {
+        if (!walls.length && !wps.length && !floors.length) {
             this._wallRoomBBox = null;
             return;
         }
-
-        // Pintar de atrás hacia adelante: group con mayor x+y de su esquina trasera primero.
-        rooms.sort((a, b) => (b.bbox.xmax + b.bbox.ymax) - (a.bbox.xmax + a.bbox.ymax));
-
-        for (const room of rooms) {
-            this._wallRoomBBox = room.bbox;
-            this._drawIsoWallRoom(targetLoc, room.bbox, room.walls, wps);
-        }
-        this._wallRoomBBox = rooms[rooms.length - 1].bbox;
+        const bbox = this._locationRoomBBox(floors, walls);
+        this._wallRoomBBox = bbox;
+        this._drawIsoWallRoom(targetLoc, bbox, walls, wps);
     }
 
     _drawIsoWallRoom(targetLoc, bbox, walls, wps) {
@@ -628,7 +661,7 @@ class IsometricMap {
 
         } else {
             // FLOOR LAYER (Isometric)
-            if (!this._floorGridCache) this._buildFloorGridCache();
+            this._buildFloorGridCache(this._floorExtentForLoc(targetLoc));
             ctx.save();
             ctx.globalAlpha = 0.25;
             ctx.translate(this.offsetX, this.offsetY);
