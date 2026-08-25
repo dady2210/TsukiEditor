@@ -2990,14 +2990,29 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 // Leer el nuevo formato de mapas
                 if (data.mapas) {
                     let totalMuebles = 0;
+                    let totalParedes = 0;
+                    let totalWp = 0;
                     for (const mId in data.mapas) {
-                        for (const pId in data.mapas[mId].pisos) {
-                            totalMuebles += data.mapas[mId].pisos[pId].length;
+                        const mapa = data.mapas[mId];
+                        if (mapa.pisos) {
+                            for (const pId in mapa.pisos) {
+                                totalMuebles += mapa.pisos[pId].length;
+                            }
+                        }
+                        if (mapa.paredes) totalParedes += mapa.paredes.length;
+                        if (mapa.revestimientos && mapa.revestimientos.wallpapers) {
+                            totalWp += mapa.revestimientos.wallpapers.length;
                         }
                     }
                     previewHtml += `- Muebles/Cultivos: ${totalMuebles} ítems en total<br>`;
+                    if (totalParedes) previewHtml += `- Muebles de pared: ${totalParedes}<br>`;
+                    if (totalWp) previewHtml += `- Wallpapers: ${totalWp} anclas<br>`;
                     cbFarm.disabled = false;
                     cbFarm.checked = true;
+                    if (cbCoverings && (totalWp || totalParedes)) {
+                        cbCoverings.disabled = false;
+                        cbCoverings.checked = true;
+                    }
                 } 
                 // Fallback por si cargás un archivo viejo
                 else if (data.farm && data.farm.crops) {

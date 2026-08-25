@@ -330,6 +330,7 @@ class SaveParser {
             verify,
             planted_id,
             furnNode,
+            flipped: !!flipped,
             isWall: !refNode
         });
     }
@@ -492,6 +493,7 @@ class SaveParser {
                             verify,
                             planted_id: -1,
                             furnNode: wallNode,
+                            flipped: !!flipped,
                             isWall: true
                         });
                     }
@@ -2956,6 +2958,36 @@ class SaveParser {
 
 
 
+    _coveringsForSubloc(sublocId) {
+        const wallpapers = (this.wallpapers && this.wallpapers[sublocId])
+            ? this.wallpapers[sublocId].map(e => ({ key: e.key, id: e.id }))
+            : [];
+        const floors = (this.floors && this.floors[sublocId])
+            ? this.floors[sublocId].map(e => ({ key: e.key, id: e.id }))
+            : [];
+        return { wallpapers, floors };
+    }
+
+    _applyCoveringsDict(mapCoverings, report) {
+        if (!mapCoverings) return;
+        for (const sublocId in mapCoverings) {
+            const locData = mapCoverings[sublocId];
+            if (!locData) continue;
+            if (locData.wallpapers) {
+                locData.wallpapers.forEach(w => {
+                    if (this.setWallpaper(sublocId, w.key, w.id)) report.applied++;
+                    else report.skipped.push(`Wallpaper subloc=${sublocId} key=${w.key}`);
+                });
+            }
+            if (locData.floors) {
+                locData.floors.forEach(f => {
+                    if (this.setFloor(sublocId, f.key, f.id)) report.applied++;
+                    else report.skipped.push(`Floor subloc=${sublocId} key=${f.key}`);
+                });
+            }
+        }
+    }
+
     // --- Partial JSON Export/Import ---
     exportPartialJSON(sections) {
         const out = {
@@ -3005,7 +3037,9 @@ class SaveParser {
                 if (!out.mapas[mapaId]) {
                     out.mapas[mapaId] = { 
                         nombre_referencia: mapaId === 2 ? "Casa Tsuki" : (mapaId === 3 ? "Casa Tsuki (Piso 2)" : (mapaId === 6 ? "Granja" : `Mapa ${mapaId}`)),
-                        pisos: {} 
+                        pisos: {},
+                        paredes: [],
+                        revestimientos: this._coveringsForSubloc(mapaId)
                     };
                 }
 
@@ -3014,7 +3048,7 @@ class SaveParser {
                     out.mapas[mapaId].pisos[pisoId] = [];
                 }
 
-                out.mapas[mapaId].pisos[pisoId].push({
+                const entry = {
                     placement_id: p.placementID,
                     item_id: p.item_id,
                     x: p.grid ? p.grid.x : (p.x || 0),
@@ -3023,26 +3057,141 @@ class SaveParser {
                     es_pared: !!p.isWall,
                     es_cultivo: !!isCrop,
                     flipped: !!p.flipped,
+                    groupNum: p.isWall ? Number(p.floor) : undefined,
                     harvestTimeOA: isCrop && cInfo.harvestTimeNode ? cInfo.harvestTimeNode.value : 0,
                     ripe: isCrop && cInfo.ripeNode ? !!cInfo.ripeNode.value : false
-                });
+                };
+                out.mapas[mapaId].pisos[pisoId].push(entry);
+
+                if (p.isWall && Number(p.item_id) > 0) {
+                    out.mapas[mapaId].paredes.push({
+                        placement_id: p.placementID,
+                        item_id: p.item_id,
+                        x: p.x || 0,
+                        y: p.y || 0,
+                        groupNum: Number(p.floor),
+                        flipped: !!p.flipped
+                    });
+                }
             });
+
+            // Rellenar revestimientos de sublocs que tienen wallpaper/floor pero
+            // ningún placement (o que se parsearon fuera del loop de placements).
+            if (this.wallpapers) {
+                for (const sublocId in this.wallpapers) {
+                    const mapaId = parseInt(sublocId, 10);
+                    if (Number.isNaN(mapaId)) continue;
+                    const cov = this._coveringsForSubloc(sublocId);
+                    if (!cov.wallpapers.length && !cov.floors.length) continue;
+                    if (!out.mapas[mapaId]) {
+                        out.mapas[mapaId] = {
+                            nombre_referencia: `Mapa ${mapaId}`,
+                            pisos: {},
+                            paredes: [],
+                            revestimientos: cov
+                        };
+                    } else {
+                        out.mapas[mapaId].revestimientos = cov;
+                    }
+                }
+            }
         }
         
-        // (Opcional) Podés mantener acá la lógica de out.phone y out.mapCoverings si las seguís exportando
+        if (sections.phone) {
+            out.phone = {};
+            const cos = this.getPhoneCosmetics ? this.getPhoneCosmetics() : null;
+            if (cos) {
+                out.phone.cosmetics = {
+                    skinID: cos.skinID,
+                    bgPatternID: cos.bgPatternID,
+                    bgColorID: cos.bgColorID,
+                    backgroundsUnlocked: cos.backgroundsUnlocked,
+                    colorsUnlocked: cos.colorsUnlocked
+                };
+            }
+            const punch = this.getPunchcardState ? this.getPunchcardState() : null;
+            if (punch) {
+                out.phone.punchcard = {
+                    claimedCount: punch.claimedCount,
+                    rewards: punch.rewards.map(r => ({ index: r.index, claimed: r.claimed, isWeekly: r.isWeekly })),
+                    weeklyFurnID: punch.rewards.find(r => r.isWeekly && r.index === 6)?.furnID || 0
+                };
+            }
+            const locs = this.getLocationsOnPhone ? this.getLocationsOnPhone() : null;
+            if (locs) {
+                out.phone.locationsOnPhone = locs.map(l => ({ id: l.id, seen: l.seen }));
+            }
+        }
+
+        if (sections.coverings) {
+            out.mapCoverings = {};
+            let hasCoverings = false;
+            const ids = new Set([
+                ...Object.keys(this.wallpapers || {}),
+                ...Object.keys(this.floors || {})
+            ]);
+            for (const sublocId of ids) {
+                const cov = this._coveringsForSubloc(sublocId);
+                if (cov.wallpapers.length || cov.floors.length) {
+                    hasCoverings = true;
+                    out.mapCoverings[sublocId] = cov;
+                    const mapaId = parseInt(sublocId, 10);
+                    if (!Number.isNaN(mapaId)) {
+                        if (!out.mapas[mapaId]) {
+                            out.mapas[mapaId] = {
+                                nombre_referencia: `Mapa ${mapaId}`,
+                                pisos: {},
+                                paredes: [],
+                                revestimientos: cov
+                            };
+                        } else {
+                            out.mapas[mapaId].revestimientos = cov;
+                        }
+                    }
+                }
+            }
+            if (!hasCoverings) delete out.mapCoverings;
+        }
+
         return out;
     }
 
     applyPartialJSON(data, sections = { inventory: true, farm: true, phone: true }) {
-        if (!data || data.format !== "TsukiPortDefinitivo") throw new Error("Formato JSON inválido. Se requiere TsukiPortDefinitivo.");
+        if (!data || !data.format) throw new Error("Formato JSON inválido");
+        const okFmt = data.format === "TsukiPortDefinitivo" || data.format === "TsukiEditorPartial";
+        if (!okFmt) throw new Error("Formato JSON inválido. Se requiere TsukiPortDefinitivo.");
         
         let report = { applied: 0, skipped: [] };
+
+        // 1. Inventory
+        if (data.inventory && sections.inventory) {
+            if (!this.inventory || !this.inventory.length) this.parseInventory();
+            data.inventory.forEach(item => {
+                const existingIndex = this.inventory.findIndex(inv => Number(inv.item_id) === Number(item.id));
+                if (existingIndex !== -1) {
+                    const existing = this.inventory[existingIndex];
+                    const newQty = existing.qty + Number(item.qty);
+                    this.updateInventoryItem('inventory', existingIndex, item.id, newQty, item.invType ?? existing.invType);
+                    report.applied++;
+                } else {
+                    const ok = this.injectInventoryItem(item.id, Number(item.qty), false, item.invType ?? 1);
+                    if (ok) report.applied++;
+                    else report.skipped.push(`Item ${item.id} (No inyectable)`);
+                }
+            });
+            
+            if (data.carrots !== undefined) {
+                this.writeGeneralVar('carrots', Number(data.carrots));
+                report.applied++;
+            }
+        }
 
         if (data.mapas && sections.farm) {
             if (!this.placements || !this.placements.length) this.parseMap();
 
             for (const mapaId in data.mapas) {
                 const mapa = data.mapas[mapaId];
+                if (mapa.pisos) {
                 for (const pisoId in mapa.pisos) {
                     const muebles = mapa.pisos[pisoId];
                     
@@ -3084,8 +3233,96 @@ class SaveParser {
                         }
                     });
                 }
+                }
+
+                if (mapa.paredes) {
+                    mapa.paredes.forEach(wData => {
+                        const p = this.placements.find(pl => Number(pl.placementID) === Number(wData.placement_id) && pl.isWall);
+                        if (!p) {
+                            report.skipped.push(`Pared ID ${wData.placement_id} no hallado`);
+                            return;
+                        }
+                        let changed = false;
+                        if (wData.x !== undefined && wData.y !== undefined && (p.x !== wData.x || p.y !== wData.y)) {
+                            this.applyMapChange(p, wData.item_id ?? p.item_id, wData.x, wData.y);
+                            changed = true;
+                        }
+                        const cell = {};
+                        if (wData.flipped !== undefined) cell.flipped = wData.flipped;
+                        if (wData.groupNum !== undefined) cell.groupNum = wData.groupNum;
+                        if (Object.keys(cell).length) {
+                            this.setWallPlacementCell(p.placementID, cell);
+                            changed = true;
+                        }
+                        if (changed) report.applied++;
+                    });
+                }
+
+                if (mapa.revestimientos && (sections.coverings || sections.farm)) {
+                    this._applyCoveringsDict({ [mapaId]: mapa.revestimientos }, report);
+                }
             }
         }
+
+        // Formato viejo TsukiEditorPartial (farm.crops / placements)
+        if (sections.farm && data.farm && data.farm.crops && !data.mapas) {
+            if (!this.placements || !this.placements.length) this.parseMap();
+            data.farm.crops.forEach(cData => {
+                const p = this.placements.find(pl => Number(pl.placementID) === Number(cData.placementID));
+                if (p) {
+                    const cInfo = this.getCropSaveFields(p) || {};
+                    if (cInfo.harvestTimeNode) cInfo.harvestTimeNode.value = Number(cData.harvestTimeOA);
+                    if (cInfo.ripeNode) cInfo.ripeNode.value = Boolean(cData.ripe);
+                    report.applied++;
+                } else {
+                    report.skipped.push(`Crop ${cData.placementID} (no encontrado)`);
+                }
+            });
+        }
+        if (sections.farm && data.placements && !data.mapas) {
+            if (!this.placements || !this.placements.length) this.parseMap();
+            data.placements.forEach(plData => {
+                const p = this.placements.find(pl => Number(pl.placementID) === Number(plData.placementID));
+                if (p && plData.orientation !== undefined && p.orientation !== plData.orientation) {
+                    const oNode = p.furnNode ? p.furnNode.children.find(c => c.name === 'orientation' || c.name === 'rotation' || c.name === 'flipped' || c.name === 'isFlipped') : null;
+                    if (oNode) { oNode.value = plData.orientation; report.applied++; }
+                }
+            });
+        }
+
+        // 3. Phone
+        if (data.phone && sections.phone) {
+            if (data.phone.cosmetics) {
+                const c = data.phone.cosmetics;
+                if (c.skinID !== undefined) this.setPhoneCosmeticField('skinID', Number(c.skinID));
+                if (c.bgPatternID !== undefined) this.setPhoneCosmeticField('bgPatternID', Number(c.bgPatternID));
+                if (c.bgColorID !== undefined) this.setPhoneCosmeticField('bgColorID', Number(c.bgColorID));
+                report.applied++;
+            }
+            if (data.phone.punchcard) {
+                const p = data.phone.punchcard;
+                if (p.rewards) {
+                    p.rewards.forEach(r => {
+                        this.setPunchcardSlot(Number(r.index), Boolean(r.claimed), Boolean(r.isWeekly));
+                    });
+                }
+                if (p.weeklyFurnID !== undefined) {
+                    this.setWeeklyRewardFurnId(Number(p.weeklyFurnID));
+                }
+                report.applied++;
+            }
+            if (data.phone.locationsOnPhone) {
+                data.phone.locationsOnPhone.forEach(l => {
+                    this.setLocationUnlocked(Number(l.id), Boolean(l.seen));
+                });
+                report.applied++;
+            }
+        }
+
+        if (sections.coverings && data.mapCoverings) {
+            this._applyCoveringsDict(data.mapCoverings, report);
+        }
+
         return report;
     }
 

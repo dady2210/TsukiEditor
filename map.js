@@ -291,6 +291,176 @@ class IsometricMap {
         this._wallGridCache = cache;
     }
 
+    getWallSize(item_id) {
+        if (typeof window.getFurnitureSize === 'function') {
+            const s = window.getFurnitureSize(String(item_id));
+            if (s && s.width > 0) return { w: s.width, h: (s.height || s.length || 1) };
+        }
+        return { w: 1, h: 1 };
+    }
+
+    _wallpaperEntries(loc) {
+        const dict = this.app.parser && this.app.parser.wallpapers;
+        return (dict && dict[loc]) ? dict[loc] : [];
+    }
+
+    _floorCoveringEntries(loc) {
+        const dict = this.app.parser && this.app.parser.floors;
+        return (dict && dict[loc]) ? dict[loc] : [];
+    }
+
+    // Pared isométrica: cara no-flipped corre sobre el eje Y del piso (x=0);
+    // cara flipped corre sobre el eje X (y=0). wy es altura sobre la pared.
+    getWallIsoCoords(wx, wy, flipped) {
+        const base = flipped ? this.getIsoCoords(wx, 0) : this.getIsoCoords(0, wx);
+        return { x: base.x, y: base.y - wy * this.CELL_H * this.scale };
+    }
+
+    _pathWallCell(wx, wy, ww, wh, flipped) {
+        const bl = this.getWallIsoCoords(wx, wy, flipped);
+        const br = this.getWallIsoCoords(wx + ww, wy, flipped);
+        const tr = this.getWallIsoCoords(wx + ww, wy + wh, flipped);
+        const tl = this.getWallIsoCoords(wx, wy + wh, flipped);
+        this.ctx.beginPath();
+        this.ctx.moveTo(bl.x, bl.y);
+        this.ctx.lineTo(br.x, br.y);
+        this.ctx.lineTo(tr.x, tr.y);
+        this.ctx.lineTo(tl.x, tl.y);
+        this.ctx.closePath();
+    }
+
+    _drawMapHud(targetLoc, isWallLayer, targetWallGroup) {
+        const ctx = this.ctx;
+        const wps = this._wallpaperEntries(targetLoc);
+        const fls = this._floorCoveringEntries(targetLoc);
+        const walls = (this.app.parser.placements || []).filter(
+            p => p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0
+        );
+        const groupWalls = isWallLayer
+            ? walls.filter(p => String(p.floor) === String(targetWallGroup))
+            : walls;
+
+        const wpTxt = wps.length
+            ? wps.map(w => `key ${w.key} → ID ${w.id}`).join('   ·   ')
+            : 'sin wallpaper en el save';
+        const flTxt = fls.length
+            ? fls.map(f => `key ${f.key} → ID ${f.id}`).join('   ·   ')
+            : 'sin floor covering';
+        const wallTxt = isWallLayer
+            ? `Pared group ${targetWallGroup}: ${groupWalls.length} muebles`
+            : `Muebles de pared: ${walls.length} (capa Pared para editar)`;
+
+        const lines = [
+            `🎨 Wallpaper: ${wpTxt}`,
+            `🪵 Piso cubierto: ${flTxt}`,
+            `🖼️ ${wallTxt}`
+        ];
+
+        ctx.save();
+        ctx.font = `600 ${Math.max(11, Math.round(12 * Math.min(1.2, this.scale)))}px 'Quicksand', sans-serif`;
+        let maxW = 0;
+        for (const ln of lines) maxW = Math.max(maxW, ctx.measureText(ln).width);
+        const pad = 10;
+        const lineH = 18;
+        const boxW = Math.min(this.canvas.width - 24, maxW + pad * 2);
+        const boxH = lines.length * lineH + pad * 2;
+        ctx.fillStyle = 'rgba(30, 18, 10, 0.78)';
+        ctx.beginPath();
+        ctx.roundRect(12, 12, boxW, boxH, 10);
+        ctx.fill();
+        ctx.fillStyle = '#f5e6c8';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        lines.forEach((ln, i) => ctx.fillText(ln, 12 + pad, 12 + pad + i * lineH, boxW - pad * 2));
+        ctx.restore();
+    }
+
+    _drawIsoWallGrids(targetLoc) {
+        const walls = (this.app.parser.placements || []).filter(
+            p => p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0
+        );
+        for (const flipped of [false, true]) {
+            const subset = walls.filter(p => !!p.flipped === flipped);
+            let maxX = 10;
+            let maxY = 6;
+            for (const p of subset) {
+                const sz = this.getWallSize(p.item_id);
+                maxX = Math.max(maxX, (p.x || 0) + sz.w);
+                maxY = Math.max(maxY, (p.y || 0) + sz.h);
+            }
+            maxX = Math.min(Math.max(maxX, 8), 28);
+            maxY = Math.min(Math.max(maxY, 5), 14);
+
+            this.ctx.save();
+            this.ctx.strokeStyle = flipped ? 'rgba(255, 160, 80, 0.85)' : 'rgba(110, 190, 255, 0.85)';
+            this.ctx.lineWidth = 1;
+            this.ctx.globalAlpha = 0.45;
+            for (let x = 0; x < maxX; x++) {
+                for (let y = 0; y < maxY; y++) {
+                    this._pathWallCell(x, y, 1, 1, flipped);
+                    this.ctx.stroke();
+                }
+            }
+            this.ctx.restore();
+
+            // Etiqueta de wallpaper sobre el tope de cada cara
+            const wps = this._wallpaperEntries(targetLoc);
+            const top = this.getWallIsoCoords(maxX / 2, maxY + 0.4, flipped);
+            const label = wps.length
+                ? `WP ${wps.map(w => w.id).join(', ')}  (${flipped ? 'flipped' : 'normal'})`
+                : `(${flipped ? 'flipped' : 'normal'})`;
+            this.ctx.save();
+            this.ctx.font = `bold ${Math.max(10, Math.round(11 * this.scale))}px 'Quicksand', sans-serif`;
+            this.ctx.fillStyle = 'rgba(20,12,8,0.75)';
+            const tw = this.ctx.measureText(label).width;
+            this.ctx.beginPath();
+            this.ctx.roundRect(top.x - tw / 2 - 6, top.y - 14, tw + 12, 18, 6);
+            this.ctx.fill();
+            this.ctx.fillStyle = '#ffe7c2';
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText(label, top.x, top.y - 5);
+            this.ctx.restore();
+
+            subset.sort((a, b) => a.y - b.y);
+            for (const p of subset) this._drawIsoWallItem(p);
+        }
+    }
+
+    _drawIsoWallItem(p) {
+        const sz = this.getWallSize(p.item_id);
+        const flipped = !!p.flipped;
+        const isSel = this.selectedPlacement === p;
+        const isHov = this.hoveredPlacement === p;
+
+        this.ctx.save();
+        this._pathWallCell(p.x, p.y, sz.w, sz.h, flipped);
+        this.ctx.fillStyle = isSel ? 'rgba(255,255,255,0.35)' : isHov ? 'rgba(255,200,120,0.28)' : 'rgba(255,140,70,0.22)';
+        this.ctx.fill();
+        this.ctx.strokeStyle = isSel ? '#fff' : 'rgba(255,220,180,0.85)';
+        this.ctx.lineWidth = isSel ? 2 : 1;
+        this.ctx.stroke();
+
+        const mid = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, flipped);
+        const img = this.getImage(p.item_id, 0);
+        if (img && img.complete && img.naturalWidth > 0) {
+            const maxW = Math.max(18, sz.w * this.CELL_W * 0.35 * this.scale);
+            const maxH = Math.max(18, sz.h * this.CELL_H * 1.2 * this.scale);
+            const s = Math.min(maxW / img.width, maxH / img.height);
+            const dw = img.width * s;
+            const dh = img.height * s;
+            this.ctx.drawImage(img, mid.x - dw / 2, mid.y - dh / 2, dw, dh);
+        }
+        this.ctx.fillStyle = '#fff';
+        this.ctx.font = `bold ${Math.max(9, Math.round(10 * this.scale))}px 'Quicksand', sans-serif`;
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'top';
+        this.ctx.shadowColor = 'rgba(0,0,0,0.8)';
+        this.ctx.shadowBlur = 3;
+        this.ctx.fillText(`ID ${p.item_id}`, mid.x, mid.y + 6 * this.scale);
+        this.ctx.restore();
+    }
+
     // ── Draw (agendado) ──────────────────────────────────────────────────
     // draw() ya no dibuja directo: agenda un único _drawImmediate() por
     // frame vía requestAnimationFrame. Antes, cada mousemove de un pan o
@@ -342,6 +512,19 @@ class IsometricMap {
             ctx.drawImage(this._wallGridCache, drawOffsetX, drawOffsetY);
             ctx.restore();
 
+            // Ejes de la grilla de pared (x a lo largo, y altura)
+            ctx.save();
+            ctx.font = '10px Quicksand, sans-serif';
+            ctx.fillStyle = 'rgba(255,220,180,0.8)';
+            ctx.textAlign = 'center';
+            for (let x = 0; x < 25; x += 2) {
+                ctx.fillText(String(x), drawOffsetX + x * this.gridSize + this.gridSize / 2, drawOffsetY - 6);
+            }
+            ctx.textAlign = 'right';
+            for (let y = 0; y < 15; y += 2) {
+                ctx.fillText(String(y), drawOffsetX - 6, drawOffsetY + y * this.gridSize + this.gridSize / 2);
+            }
+            ctx.restore();
 
             const walls = this.app.parser.placements.filter(
                 p => p.isWall && Number(p.cluster) === Number(targetLoc) && String(p.floor) === String(targetWallGroup) && Number(p.item_id) > 0
@@ -351,6 +534,7 @@ class IsometricMap {
             walls.sort((a, b) => a.y - b.y);
 
             for (const p of walls) this._drawPlacement(p, 'regular');
+            this._drawMapHud(targetLoc, true, targetWallGroup);
 
         } else {
             // FLOOR LAYER (Isometric)
@@ -361,6 +545,9 @@ class IsometricMap {
             ctx.scale(this.scale, this.scale);
             ctx.drawImage(this._floorGridCache, this._floorGridOriginX, this._floorGridOriginY);
             ctx.restore();
+
+            // Grilla de paredes (isométrica, dos caras) + muebles de pared + IDs
+            this._drawIsoWallGrids(targetLoc);
 
             const all = this.app.parser.placements.filter(
                 p => p.floor === targetFloor && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
@@ -378,6 +565,7 @@ class IsometricMap {
             for (const p of ground)  this._drawPlacement(p, 'ground');
             for (const p of seeds)   this._drawPlacement(p, 'seed');
             for (const p of regular) this._drawPlacement(p, 'regular');
+            this._drawMapHud(targetLoc, false, targetWallGroup);
         }
 
         if (this.hoveredPlacement) this._drawTooltip(this.hoveredPlacement);
@@ -420,8 +608,11 @@ class IsometricMap {
         if (layerRadio && layerRadio.value === 'wall' && p.isWall) {
             const drawOffsetX = 100;
             const drawOffsetY = 100;
+            const sz = this.getWallSize(p.item_id);
             const gx = drawOffsetX + p.x * this.gridSize;
             const gy = drawOffsetY + p.y * this.gridSize;
+            const gw = this.gridSize * sz.w;
+            const gh = this.gridSize * sz.h;
             
             this.ctx.save();
             const isSel = (this.selectedPlacement === p);
@@ -429,45 +620,46 @@ class IsometricMap {
 
             if (isSel) {
                 this.ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-                this.ctx.fillRect(gx, gy, this.gridSize, this.gridSize);
+                this.ctx.fillRect(gx, gy, gw, gh);
                 this.ctx.strokeStyle = 'white';
                 this.ctx.lineWidth = 2;
-                this.ctx.strokeRect(gx, gy, this.gridSize, this.gridSize);
+                this.ctx.strokeRect(gx, gy, gw, gh);
             } else if (isHov) {
                 this.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-                this.ctx.fillRect(gx, gy, this.gridSize, this.gridSize);
+                this.ctx.fillRect(gx, gy, gw, gh);
                 this.ctx.strokeStyle = 'rgba(255,255,255,0.5)';
                 this.ctx.lineWidth = 1;
-                this.ctx.strokeRect(gx, gy, this.gridSize, this.gridSize);
+                this.ctx.strokeRect(gx, gy, gw, gh);
             }
 
             const img = this.getImage(p.item_id, 0); // Wall items are generally front-facing
             // Always draw cell background
-            this.ctx.fillStyle = 'rgba(255, 150, 100, 0.4)';
-            this.ctx.fillRect(gx, gy, this.gridSize, this.gridSize);
+            this.ctx.fillStyle = p.flipped ? 'rgba(80, 160, 255, 0.35)' : 'rgba(255, 150, 100, 0.4)';
+            this.ctx.fillRect(gx, gy, gw, gh);
             this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
             this.ctx.lineWidth = 1;
-            this.ctx.strokeRect(gx, gy, this.gridSize, this.gridSize);
+            this.ctx.strokeRect(gx, gy, gw, gh);
 
             if (img && img.complete && img.naturalWidth > 0) {
-                const s = Math.min(this.gridSize / img.width, this.gridSize / img.height) * 0.9;
+                const s = Math.min(gw / img.width, gh / img.height) * 0.9;
                 const dw = img.width * s;
                 const dh = img.height * s;
-                const dx = gx + (this.gridSize - dw) / 2;
-                const dy = gy + (this.gridSize - dh) / 2;
-                
-                this.ctx.translate(gx + this.gridSize/2, gy + this.gridSize/2);
+                const dx = gx + (gw - dw) / 2;
+                const dy = gy + (gh - dh) / 2;
+                this.ctx.save();
+                this.ctx.translate(gx + gw/2, gy + gh/2);
                 if (p.flipped) this.ctx.scale(-1, 1);
-                this.ctx.translate(-(gx + this.gridSize/2), -(gy + this.gridSize/2));
-                
+                this.ctx.translate(-(gx + gw/2), -(gy + gh/2));
                 this.ctx.drawImage(img, dx, dy, dw, dh);
-            } else {
-                this.ctx.fillStyle = 'white';
-                this.ctx.font = '14px Arial';
-                this.ctx.textAlign = 'center';
-                this.ctx.textBaseline = 'middle';
-                this.ctx.fillText(String(p.item_id), gx + this.gridSize/2, gy + this.gridSize/2);
+                this.ctx.restore();
             }
+            this.ctx.fillStyle = 'white';
+            this.ctx.font = 'bold 11px Quicksand, Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'bottom';
+            this.ctx.shadowColor = 'rgba(0,0,0,0.85)';
+            this.ctx.shadowBlur = 3;
+            this.ctx.fillText(`ID ${p.item_id}${p.flipped ? ' F' : ''}`, gx + gw / 2, gy + gh - 3);
             this.ctx.restore();
             return;
         }
@@ -654,11 +846,27 @@ class IsometricMap {
 
     _drawTooltip(p) {
         const ctx  = this.ctx;
-        const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
-        const center   = this._tileCenter(p.x, p.y, w, l);
+        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const isWallLayer = layerRadio && layerRadio.value === 'wall' && p.isWall;
+
+        let center;
+        if (isWallLayer) {
+            const sz = this.getWallSize(p.item_id);
+            center = {
+                x: 100 + (p.x + sz.w / 2) * this.gridSize,
+                y: 100 + (p.y + sz.h / 2) * this.gridSize
+            };
+        } else if (p.isWall) {
+            const sz = this.getWallSize(p.item_id);
+            center = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, !!p.flipped);
+        } else {
+            const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
+            center = this._tileCenter(p.x, p.y, w, l);
+        }
 
         const name  = this.app.resolveItemName(p.item_id, 1);
-        const label = `${name} (ID:${p.item_id}) [${p.x},${p.y}]`;
+        const extra = p.isWall ? ` pared g${p.floor}${p.flipped ? ' F' : ''}` : '';
+        const label = `${name} (ID:${p.item_id}) [${p.x},${p.y}]${extra}`;
 
         ctx.save();
         ctx.font = `bold ${Math.max(11, Math.round(13 * this.scale))}px 'Quicksand', sans-serif`;
@@ -736,7 +944,8 @@ class IsometricMap {
             
             if (isWallLayer) {
                 if (!p.isWall || String(p.floor) !== String(targetWallGroup)) continue;
-                if (p.x === gridX && p.y === gridY) { found.push(p); }
+                const sz = this.getWallSize(p.item_id);
+                if (gridX >= p.x && gridX < p.x + sz.w && gridY >= p.y && gridY < p.y + sz.h) { found.push(p); }
             } else {
                 if (p.isWall || p.floor !== targetFloor) continue;
                 
