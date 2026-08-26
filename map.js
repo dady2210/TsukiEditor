@@ -363,6 +363,72 @@ class IsometricMap {
         return { x: base.x, y: base.y - wy * this.CELL_H * this.scale };
     }
 
+    _sameFloor(p, targetFloor) {
+        return String(p.floor) === String(targetFloor);
+    }
+
+    _pointInPoly(px, py, pts) {
+        let inside = false;
+        for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+            const xi = pts[i].x, yi = pts[i].y;
+            const xj = pts[j].x, yj = pts[j].y;
+            const denom = (yj - yi) || 1e-12;
+            if (((yi > py) !== (yj > py)) && (px < (xj - xi) * (py - yi) / denom + xi)) inside = !inside;
+        }
+        return inside;
+    }
+
+    // Inversa de getWallIsoCoords. flipped elige la cara (izq/der).
+    screenToWallGrid(screenX, screenY, flipped, bbox) {
+        const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: FLOOR_GRID_N, ymax: FLOOR_GRID_N };
+        const isoX = (screenX - this.offsetX) / this.scale;
+        const isoY = (screenY - this.offsetY) / this.scale;
+        const hw = this.CELL_W / 2;
+        const hh = this.CELL_H / 2;
+        if (flipped) {
+            const wx = isoX / hw + box.ymax;
+            const wy = (-isoY - (wx + box.ymax) * hh) / this.CELL_H;
+            return { x: wx, y: wy };
+        }
+        const wx = box.xmax - isoX / hw;
+        const wy = (-isoY - (box.xmax + wx) * hh) / this.CELL_H;
+        return { x: wx, y: wy };
+    }
+
+    _pointerToGrid(mouseX, mouseY, placement) {
+        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const isWallLayer = layerRadio && layerRadio.value === 'wall';
+        if (placement && placement.isWall && !isWallLayer) {
+            const w = this.screenToWallGrid(mouseX, mouseY, !!placement.flipped);
+            return { x: Math.round(w.x), y: Math.max(0, Math.round(w.y)) };
+        }
+        const cart = this.getCartesianCoords(mouseX, mouseY);
+        return { x: Math.floor(cart.x + 0.5), y: Math.floor(cart.y + 0.5) };
+    }
+
+    _hitTestIsoWalls(screenX, screenY, targetFloor, targetLoc) {
+        const found = [];
+        if (screenX == null || screenY == null || !this.app || !this.app.parser) return found;
+        const bbox = this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: FLOOR_GRID_N, ymax: FLOOR_GRID_N };
+        const walls = this.app.parser.placements.filter(
+            p => p.isWall && Number(p.cluster) === Number(targetLoc)
+                && this._sameFloor(p, targetFloor) && Number(p.item_id) > 0
+        );
+        for (let i = walls.length - 1; i >= 0; i--) {
+            const p = walls[i];
+            const sz = this.getWallSize(p.item_id);
+            const f = !!p.flipped;
+            const pts = [
+                this.getWallIsoCoords(p.x, p.y, f, bbox),
+                this.getWallIsoCoords(p.x + sz.w, p.y, f, bbox),
+                this.getWallIsoCoords(p.x + sz.w, p.y + sz.h, f, bbox),
+                this.getWallIsoCoords(p.x, p.y + sz.h, f, bbox)
+            ];
+            if (this._pointInPoly(screenX, screenY, pts)) found.push(p);
+        }
+        return found;
+    }
+
     _pathWallCell(wx, wy, ww, wh, flipped, bbox) {
         const box = bbox || this._wallRoomBBox;
         const bl = this.getWallIsoCoords(wx, wy, flipped, box);
@@ -427,16 +493,16 @@ class IsometricMap {
         return n;
     }
 
-    _drawMapHud(targetLoc, isWallLayer, targetWallGroup) {
+    _drawMapHud(targetLoc, isWallLayer, targetWallGroup, targetFloor) {
         const ctx = this.ctx;
         const wps = this._wallpaperEntries(targetLoc);
         const fls = this._floorCoveringEntries(targetLoc);
-        const walls = (this.app.parser.placements || []).filter(
+        const wallsAll = (this.app.parser.placements || []).filter(
             p => p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0
         );
-        const groupWalls = isWallLayer
-            ? walls.filter(p => String(p.floor) === String(targetWallGroup))
-            : walls;
+        const walls = isWallLayer
+            ? wallsAll.filter(p => String(p.floor) === String(targetWallGroup))
+            : wallsAll.filter(p => this._sameFloor(p, targetFloor));
 
         const wpTxt = wps.length
             ? wps.map(w => `key ${w.key} → ID ${w.id}`).join('   ·   ')
@@ -447,8 +513,8 @@ class IsometricMap {
         const nIzq = walls.filter(p => p.flipped).length;
         const nDer = walls.filter(p => !p.flipped).length;
         const wallTxt = isWallLayer
-            ? `Pared group ${targetWallGroup}: ${groupWalls.length} muebles`
-            : `Muebles de pared: ${walls.length} (izq ${nIzq} · der ${nDer})`;
+            ? `Pared group ${targetWallGroup}: ${walls.length} muebles`
+            : `Piso ${targetFloor}: ${walls.length} muebles de pared (izq ${nIzq} · der ${nDer})`;
 
         const lines = [
             `🎨 Wallpaper: ${wpTxt}`,
@@ -475,13 +541,16 @@ class IsometricMap {
         ctx.restore();
     }
 
-    _drawIsoWallGrids(targetLoc) {
+    _drawIsoWallGrids(targetLoc, targetFloor) {
         const placements = this.app.parser.placements || [];
+        const floorKey = String(targetFloor);
         const walls = placements.filter(
             p => p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0
+                && String(p.floor) === floorKey
         );
         const floors = placements.filter(
-            p => !p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0 && p.x >= 0 && p.y >= 0
+            p => !p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0
+                && p.x >= 0 && p.y >= 0 && String(p.floor) === floorKey
         );
         const wps = this._wallpaperEntries(targetLoc);
         if (!walls.length && !wps.length && !floors.length) {
@@ -657,7 +726,7 @@ class IsometricMap {
             walls.sort((a, b) => a.y - b.y);
 
             for (const p of walls) this._drawPlacement(p, 'regular');
-            this._drawMapHud(targetLoc, true, targetWallGroup);
+            this._drawMapHud(targetLoc, true, targetWallGroup, targetFloor);
 
         } else {
             // FLOOR LAYER (Isometric)
@@ -669,8 +738,8 @@ class IsometricMap {
             ctx.drawImage(this._floorGridCache, this._floorGridOriginX, this._floorGridOriginY);
             ctx.restore();
 
-            // Grilla de paredes (isométrica, dos caras) + muebles de pared + IDs
-            this._drawIsoWallGrids(targetLoc);
+            // Grilla de paredes del PISO seleccionado (groupNum === select-floor)
+            this._drawIsoWallGrids(targetLoc, targetFloor);
 
             const all = this.app.parser.placements.filter(
                 p => p.floor === targetFloor && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
@@ -688,7 +757,7 @@ class IsometricMap {
             for (const p of ground)  this._drawPlacement(p, 'ground');
             for (const p of seeds)   this._drawPlacement(p, 'seed');
             for (const p of regular) this._drawPlacement(p, 'regular');
-            this._drawMapHud(targetLoc, false, targetWallGroup);
+            this._drawMapHud(targetLoc, false, targetWallGroup, targetFloor);
         }
 
         if (this.hoveredPlacement) this._drawTooltip(this.hoveredPlacement);
@@ -1050,7 +1119,7 @@ class IsometricMap {
     }
 
     // ── Hit detection ─────────────────────────────────────────────────────
-    _hitTest(gridX, gridY, targetFloor, targetLoc) {
+    _hitTest(gridX, gridY, targetFloor, targetLoc, screenX, screenY) {
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
         let targetWallGroup = document.getElementById('select-wall-group')?.value;
@@ -1077,6 +1146,10 @@ class IsometricMap {
                     found.push(p);
                 }
             }
+        }
+        if (!isWallLayer) {
+            const wallHits = this._hitTestIsoWalls(screenX, screenY, targetFloor, targetLoc);
+            found = wallHits.concat(found);
         }
         return found;
     }
@@ -1137,9 +1210,9 @@ class IsometricMap {
                       const rect   = this.canvas.getBoundingClientRect();
                       const mouseX = e.clientX - rect.left;
                       const mouseY = e.clientY - rect.top;
-                      const cart  = this.getCartesianCoords(mouseX, mouseY);
-                      this.dragItemOffsetX = Math.floor(cart.x + 0.5) - this.selectedPlacement.x;
-                      this.dragItemOffsetY = Math.floor(cart.y + 0.5) - this.selectedPlacement.y;
+                      const g = this._pointerToGrid(mouseX, mouseY, this.selectedPlacement);
+                      this.dragItemOffsetX = g.x - this.selectedPlacement.x;
+                      this.dragItemOffsetY = g.y - this.selectedPlacement.y;
 
                       this.draw();
                 } else {
@@ -1170,18 +1243,19 @@ class IsometricMap {
             const gridY = Math.floor(cart.y + 0.5);
 
             if (this.isItemDragging && this.selectedPlacement) {
-                const gridX = Math.floor(cart.x + 0.5) - (this.dragItemOffsetX || 0);
-                const gridY = Math.floor(cart.y + 0.5) - (this.dragItemOffsetY || 0);
+                const g = this._pointerToGrid(mouseX, mouseY, this.selectedPlacement);
+                const nextX = g.x - (this.dragItemOffsetX || 0);
+                const nextY = g.y - (this.dragItemOffsetY || 0);
 
-                if (this.selectedPlacement.x !== gridX || this.selectedPlacement.y !== gridY) {
+                if (this.selectedPlacement.x !== nextX || this.selectedPlacement.y !== nextY) {
                     try {
                         this.app.parser.applyMapChange(
                             this.selectedPlacement,
-                            this.selectedPlacement.item_id, gridX, gridY,
+                            this.selectedPlacement.item_id, nextX, nextY,
                             this.selectedPlacement.orientation
                         );
-                        this.app.editItemX.value = gridX;
-                        this.app.editItemY.value = gridY;
+                        this.app.editItemX.value = nextX;
+                        this.app.editItemY.value = nextY;
                     } catch (err) {
                         console.error('Error applying map change:', err);
                     }
@@ -1194,13 +1268,12 @@ class IsometricMap {
                 const targetFloor = document.getElementById('select-floor').value;
                 const locVal = document.getElementById('select-location').value;
                 const targetLoc = locVal !== "" ? parseInt(locVal, 10) : 1;
-                const hits        = this._hitTest(gridX, gridY, targetFloor, targetLoc);
+                const hits        = this._hitTest(gridX, gridY, targetFloor, targetLoc, mouseX, mouseY);
 
-                // Prefer non-ground items for hover
+                // Prefer wall items, then non-ground furniture
                 hits.sort((a, b) => {
-                    const az = GROUND_IDS.has(a.item_id) ? 0 : 1;
-                    const bz = GROUND_IDS.has(b.item_id) ? 0 : 1;
-                    return bz - az;
+                    const score = (p) => p.isWall ? 2 : (GROUND_IDS.has(p.item_id) ? 0 : 1);
+                    return score(b) - score(a);
                 });
 
                 const top = hits[0] || null;
@@ -1237,9 +1310,12 @@ class IsometricMap {
                 const targetFloor = document.getElementById('select-floor').value;
                 const locVal = document.getElementById('select-location').value;
                 const targetLoc = locVal !== "" ? parseInt(locVal, 10) : 0;
-                const hits        = this.app.parser ? this._hitTest(gridX, gridY, targetFloor, targetLoc) : [];
+                const hits        = this.app.parser ? this._hitTest(gridX, gridY, targetFloor, targetLoc, mouseX, mouseY) : [];
 
-                hits.sort((a, b) => (GROUND_IDS.has(a.item_id) ? 0 : 1) - (GROUND_IDS.has(b.item_id) ? 0 : 1));
+                hits.sort((a, b) => {
+                    const score = (p) => p.isWall ? 2 : (GROUND_IDS.has(p.item_id) ? 0 : 1);
+                    return score(a) - score(b);
+                });
                 const top = hits[hits.length - 1] || null;
 
                   if (top) {
@@ -1247,9 +1323,9 @@ class IsometricMap {
                       this.app.openItemEditor(this.selectedPlacement);
                       this.isItemDragging = true;
 
-                      const cart = this.getCartesianCoords(mouseX, mouseY);
-                      this.dragItemOffsetX = Math.floor(cart.x + 0.5) - this.selectedPlacement.x;
-                      this.dragItemOffsetY = Math.floor(cart.y + 0.5) - this.selectedPlacement.y;
+                      const g = this._pointerToGrid(mouseX, mouseY, this.selectedPlacement);
+                      this.dragItemOffsetX = g.x - this.selectedPlacement.x;
+                      this.dragItemOffsetY = g.y - this.selectedPlacement.y;
 
                       this.draw();
                 } else {
@@ -1285,19 +1361,19 @@ class IsometricMap {
                 }
 
                 if (this.isItemDragging && this.selectedPlacement) {
-                    const cart = this.getCartesianCoords(mouseX, mouseY);
-                    const gridX = Math.floor(cart.x + 0.5) - (this.dragItemOffsetX || 0);
-                    const gridY = Math.floor(cart.y + 0.5) - (this.dragItemOffsetY || 0);
+                    const g = this._pointerToGrid(mouseX, mouseY, this.selectedPlacement);
+                    const nextX = g.x - (this.dragItemOffsetX || 0);
+                    const nextY = g.y - (this.dragItemOffsetY || 0);
 
-                    if (this.selectedPlacement.x !== gridX || this.selectedPlacement.y !== gridY) {
+                    if (this.selectedPlacement.x !== nextX || this.selectedPlacement.y !== nextY) {
                         try {
                             this.app.parser.applyMapChange(
                                 this.selectedPlacement,
-                                this.selectedPlacement.item_id, gridX, gridY,
+                                this.selectedPlacement.item_id, nextX, nextY,
                                 this.selectedPlacement.orientation
                             );
-                            this.app.editItemX.value = gridX;
-                            this.app.editItemY.value = gridY;
+                            this.app.editItemX.value = nextX;
+                            this.app.editItemY.value = nextY;
                         } catch (err) {
                             console.error('Error applying map change:', err);
                         }

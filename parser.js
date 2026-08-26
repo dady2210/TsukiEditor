@@ -690,6 +690,8 @@ class SaveParser {
 
         if (isCrop) {
             writeGroupXY(groupPosNode, 0, 0, posNode);
+        } else if (placement.isWall) {
+            writeGroupXY(groupPosNode, newX, newY, posNode, placement.flipped);
         } else {
             writeGroupXY(groupPosNode, newX, newY, posNode);
         }

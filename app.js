@@ -1894,6 +1894,18 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
         
         this.itemEditor.classList.remove('hidden');
+
+        const flipGroup = document.querySelector('.wall-flipped-group');
+        const oriWrap = this.editItemOri ? this.editItemOri.closest('.input-group') : null;
+        if (placement.isWall) {
+            if (flipGroup) flipGroup.style.display = '';
+            const flipCb = document.getElementById('edit-item-flipped');
+            if (flipCb) flipCb.checked = !!placement.flipped;
+            if (oriWrap) oriWrap.style.display = 'none';
+        } else {
+            if (flipGroup) flipGroup.style.display = 'none';
+            if (oriWrap) oriWrap.style.display = '';
+        }
     }
 
     closeItemEditor() { this.itemEditor.classList.add('hidden'); }
