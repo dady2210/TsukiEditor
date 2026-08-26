@@ -30,7 +30,7 @@ const SEED_IDS     = new Set([342, 345, 1208, 1230, 1231, 1232, 1233, 1237, 1238
 const HARVEST_ID   = 900;
 
 // Default sizes for IDs where sizes.json has w:0 (unknown)
-const DEFAULT_SIZES = { w: 2, l: 2 }; // Fallback
+const DEFAULT_SIZES = { w: 1, l: 1 }; // Fallback: la grilla del juego es de celdas 1×1
 const PLOT_SIZE     = { w: 2, l: 2 };   // FURN_306 Plot tile
 // Grilla de piso del juego: 16×16 celdas (casa de Tsuki). (0,0) es el frente;
 // x=16 / y=16 son los bordes de ATRÁS, donde se levantan las paredes.
@@ -62,6 +62,37 @@ function furnitureStackRole(label) {
     const surface = /planter|maceta|jardinera|\btable\b|\bmesa\b|desk|escritorio|pedestal|counter|shelf|estante|\bcama\b|\bbed\b|sof[aá]|couch|nightstand|mesita|cabinet|armario/.test(s);
     const topper = !surface && /tulip|cactus|aloe|bonsai|flower|\bflor\b|\btree\b|árbol|carrot|zanahoria|lámpara|\blamp\b|jarrón|\bvase\b|bromelia|spider plant|snake plant|\bplanta\b|(?:^|[^a-z])plant(?:s|a)?(?:[^a-z]|$)/i.test(s);
     return { surface, topper };
+}
+
+// Pivote Unity (x desde la izquierda, y desde ABAJO) a partir del alpha.
+// Los PNG 128×128 del atlas dejan padding a la derecha y abajo: si se usa
+// (0.5, 0.15) la maceta queda flotando y corrida del centro de la celda.
+function opaquePivotFromRgba(data, w, h, th = 12) {
+    let minx = w, maxx = -1, miny = h, maxy = -1;
+    for (let y = 0; y < h; y++) {
+        const row = y * w;
+        for (let x = 0; x < w; x++) {
+            if (data[(row + x) * 4 + 3] > th) {
+                if (x < minx) minx = x;
+                if (x > maxx) maxx = x;
+                if (y < miny) miny = y;
+                if (y > maxy) maxy = y;
+            }
+        }
+    }
+    if (maxx < 0) return { x: 0.5, y: 0.08 };
+    let footX = 0, footN = 0;
+    const y0 = Math.max(0, maxy - 3);
+    for (let y = y0; y <= maxy; y++) {
+        const row = y * w;
+        for (let x = 0; x < w; x++) {
+            if (data[(row + x) * 4 + 3] > th) { footX += x; footN++; }
+        }
+    }
+    return {
+        x: footN ? footX / footN / w : (minx + maxx) / 2 / w,
+        y: Math.max(0.004, 1 - (maxy + 0.5) / h)
+    };
 }
 
 class IsometricMap {
@@ -173,6 +204,22 @@ class IsometricMap {
         }
         
         return false;
+    }
+
+    _contentPivot(img) {
+        if (!img || !img.complete || !img.naturalWidth) return { x: 0.5, y: 0.08 };
+        if (img._contentPivot) return img._contentPivot;
+        try {
+            const w = img.naturalWidth, h = img.naturalHeight;
+            const c = document.createElement('canvas');
+            c.width = w; c.height = h;
+            const g = c.getContext('2d', { willReadFrequently: true });
+            g.drawImage(img, 0, 0);
+            img._contentPivot = opaquePivotFromRgba(g.getImageData(0, 0, w, h).data, w, h);
+        } catch (err) {
+            img._contentPivot = { x: 0.5, y: 0.08 };
+        }
+        return img._contentPivot;
     }
 
     getCropImage(item_id) {
@@ -1163,17 +1210,19 @@ class IsometricMap {
         }
 
 
-        // Anchor at bot.y (the lowest vertex of the diamond) because in Isometric 2D,
-        // the sprite's pivot is usually its lowest physical point touching the floor.
-        // Anchor at bot.y (the front-most vertex of the diamond)
+        // Punto de contacto = centro del diamante (el piso de la celda).
         const anchorY = cy;
         
         let pivotX = 0.5;
-        let pivotY = 0.15; // default fallback
+        let pivotY = 0.08;
         
         if (window.spritePivots && window.spritePivots[item_id]) {
             pivotX = window.spritePivots[item_id].x;
             pivotY = window.spritePivots[item_id].y;
+        } else if (img) {
+            const cp = this._contentPivot(img);
+            pivotX = cp.x;
+            pivotY = cp.y;
         }
 
         // Unity's pivot Y is from the BOTTOM. Canvas Y is from the TOP.
