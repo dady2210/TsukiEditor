@@ -222,6 +222,23 @@ class IsometricMap {
         return img._contentPivot;
     }
 
+    // file:// bloquea getImageData: primero data/content_pivots.js (píxeles reales
+    // del PNG), luego pivote Unity, y solo al final se intenta leer el canvas.
+    _resolveSpritePivot(item_id, img, orientation) {
+        const baked = (typeof window !== 'undefined' && window.contentPivots) || {};
+        const isBack = orientation === 2 || orientation === 3;
+        const key = String(item_id);
+        if (isBack && baked[key + '_BACK']) return baked[key + '_BACK'];
+        if (baked[key]) return baked[key];
+        if (window.spritePivots && window.spritePivots[item_id]) {
+            return window.spritePivots[item_id];
+        }
+        if (window.spritePivots && window.spritePivots[key]) {
+            return window.spritePivots[key];
+        }
+        return this._contentPivot(img);
+    }
+
     getCropImage(item_id) {
         if (item_id === undefined || item_id === -1) return null;
         const cacheKey = `CROP_ICON_${item_id}`;
@@ -1212,18 +1229,9 @@ class IsometricMap {
 
         // Punto de contacto = centro del diamante (el piso de la celda).
         const anchorY = cy;
-        
-        let pivotX = 0.5;
-        let pivotY = 0.08;
-        
-        if (window.spritePivots && window.spritePivots[item_id]) {
-            pivotX = window.spritePivots[item_id].x;
-            pivotY = window.spritePivots[item_id].y;
-        } else if (img) {
-            const cp = this._contentPivot(img);
-            pivotX = cp.x;
-            pivotY = cp.y;
-        }
+        const pivot = this._resolveSpritePivot(item_id, img, orientation);
+        const pivotX = pivot.x;
+        const pivotY = pivot.y;
 
         // Unity's pivot Y is from the BOTTOM. Canvas Y is from the TOP.
         // So the distance from the top of the image to the pivot is (1 - pivotY) * drawH
