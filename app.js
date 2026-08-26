@@ -1609,17 +1609,23 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 locData = locEntry.value;
             }
 
-            const furnitureListWrapper = locData.children.find(c => c.name === 'furniture');
-            if (!furnitureListWrapper) throw new Error('No se encontró lista de furniture');
+            const isWallLayer = document.querySelector('input[name="map-layer"]:checked')?.value === 'wall';
+            const listName = isWallLayer ? 'wallFurniture' : 'furniture';
+
+            const furnitureListWrapper = locData.children.find(c => c.name === listName);
+            if (!furnitureListWrapper) throw new Error(isWallLayer
+                ? 'Esta ubicación no tiene lista de wallFurniture (pared).'
+                : 'No se encontró lista de furniture');
             const listNode = furnitureListWrapper.children.find(c => c.constructor.name === 'OdinList');
+            if (!listNode) throw new Error('Lista de muebles vacía o ilegible');
             
-            // Find a clone template from ANY sublocation
+            // Find a clone template from ANY sublocation (same list type)
             let template = null;
             const globalSublocationsList = root.children.find(c => c.name === 'sublocations')?.children.find(c => c.constructor.name === 'OdinList');
             if (globalSublocationsList && globalSublocationsList.elements) {
                 for (const sub of globalSublocationsList.elements) {
                     const subLocData = sub.value;
-                const furnListWrap = subLocData.children.find(c => c.name === 'furniture');
+                const furnListWrap = subLocData.children.find(c => c.name === listName);
                 if (furnListWrap) {
                     const lNode = furnListWrap.children.find(c => c.constructor.name === 'OdinList');
                     if (lNode && lNode.elements.length > 0) {
@@ -1629,7 +1635,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 }
             }
             }
-            if (!template) throw new Error('No se encontró ningún mueble en todo el mapa para usar como molde.');
+            if (!template) throw new Error(isWallLayer
+                ? 'No hay un mueble de pared en el save para usar de molde. Colocá uno en el juego primero.'
+                : 'No se encontró ningún mueble en todo el mapa para usar como molde.');
 
             // Clone and Modify
             const clone = this.deepCloneNode(template);
@@ -1648,12 +1656,19 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const pIdNode = furnNode.children.find(c => c.name === 'placementID');
             if (pIdNode) pIdNode.value = newPlacementID;
             
-            // Apply map change logic directly to node
-            const dummyPlacement = { furnNode: furnNode, isWall: false };
+            const dummyPlacement = { furnNode: furnNode, isWall: isWallLayer };
             this.parser.applyMapChange(dummyPlacement, furnId, x, y, 0);
-            
-            const gNumNode = furnNode.children.find(c => c.name === 'groupPosition')?.children.find(c => c.name === 'groupNum');
-            if (gNumNode) gNumNode.value = parseInt(this.selectFloor.value) || 0;
+
+            const groupPos = furnNode.children.find(c => c.name === 'groupPosition');
+            const gNumNode = groupPos && (groupPos.children || []).find(c => c.name === 'groupNum');
+            if (isWallLayer) {
+                const wallGroup = document.getElementById('select-wall-group')?.value;
+                if (gNumNode) gNumNode.value = parseInt(wallGroup, 10) || 0;
+                const flipNode = groupPos && (groupPos.children || []).find(c => c.name === 'flipped');
+                if (flipNode && flipNode.value === undefined) flipNode.value = true;
+            } else if (gNumNode) {
+                gNumNode.value = parseInt(this.selectFloor.value) || 0;
+            }
             
             listNode.elements.push(clone);
             this.parser.parseMap();

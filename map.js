@@ -46,6 +46,24 @@ function roundAwayFromZero(n) {
     return Math.sign(n) * Math.round(Math.abs(n));
 }
 
+// Imán leve: se queda en la celda actual hasta que el puntero se acerca
+// de verdad al centro de la vecina (evita el temblor entre dos tiles).
+function snapAxis(raw, last, stick = 0.22) {
+    const n = Math.round(raw);
+    if (last == null || Number.isNaN(Number(last))) return n;
+    const prev = Number(last);
+    if (n === prev) return prev;
+    if (Math.abs(raw - n) + stick < Math.abs(raw - prev)) return n;
+    return prev;
+}
+
+function furnitureStackRole(label) {
+    const s = String(label || '').toLowerCase();
+    const surface = /planter|maceta|jardinera|\btable\b|\bmesa\b|desk|escritorio|pedestal|counter|shelf|estante|\bcama\b|\bbed\b|sof[aá]|couch|nightstand|mesita|cabinet|armario/.test(s);
+    const topper = !surface && /tulip|cactus|aloe|bonsai|flower|\bflor\b|\btree\b|árbol|carrot|zanahoria|lámpara|\blamp\b|jarrón|\bvase\b|bromelia|spider plant|snake plant|\bplanta\b|(?:^|[^a-z])plant(?:s|a)?(?:[^a-z]|$)/i.test(s);
+    return { surface, topper };
+}
+
 class IsometricMap {
     constructor(canvas, app) {
         this.canvas = canvas;
@@ -77,6 +95,8 @@ class IsometricMap {
         this._floorGridN     = 0;
         this._wallGridCache  = null;
         this._wallRoomBBox   = null;
+        this._stackInfo      = new Map();
+        this._dragSnap       = null;
         this._rafId = undefined;
 
         this.bindEvents();
@@ -396,14 +416,138 @@ class IsometricMap {
     }
 
     _pointerToGrid(mouseX, mouseY, placement) {
+        const raw = this._pointerToRawGrid(mouseX, mouseY, placement);
+        return { x: Math.round(raw.x), y: Math.round(raw.y) };
+    }
+
+    _pointerToRawGrid(mouseX, mouseY, placement) {
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
-        if (placement && placement.isWall && !isWallLayer) {
-            const w = this.screenToWallGrid(mouseX, mouseY, !!placement.flipped);
-            return { x: Math.round(w.x), y: Math.max(0, Math.round(w.y)) };
+        if (placement && placement.isWall) {
+            if (!isWallLayer) return this.screenToWallGrid(mouseX, mouseY, !!placement.flipped);
+            return {
+                x: (mouseX - 100) / this.gridSize,
+                y: (mouseY - 100) / this.gridSize
+            };
         }
         const cart = this.getCartesianCoords(mouseX, mouseY);
-        return { x: Math.floor(cart.x + 0.5), y: Math.floor(cart.y + 0.5) };
+        return { x: cart.x, y: cart.y };
+    }
+
+    _itemLabel(item_id) {
+        const db = (typeof window !== 'undefined' && window.ITEMS_DB) ? window.ITEMS_DB[String(item_id)] : null;
+        const furn = (db && (db.furn_name || db.item_name)) || '';
+        const resolved = (this.app && typeof this.app.resolveItemName === 'function')
+            ? this.app.resolveItemName(item_id, 1) : '';
+        return `${resolved} ${furn}`;
+    }
+
+    _stackRole(p) {
+        return furnitureStackRole(this._itemLabel(p.item_id));
+    }
+
+    _computeStackInfo(items) {
+        const info = new Map();
+        if (!items || !items.length) return info;
+        const meta = items.map(p => {
+            const sz = this.getRotatedSize(p.item_id, p.orientation);
+            return { p, w: sz.w || 1, l: sz.l || 1, area: (sz.w || 1) * (sz.l || 1), role: this._stackRole(p) };
+        });
+        for (const a of meta) {
+            let base = null;
+            let best = -1;
+            for (const b of meta) {
+                if (a.p === b.p) continue;
+                const overlap = a.p.x < b.p.x + b.w && a.p.x + a.w > b.p.x
+                    && a.p.y < b.p.y + b.l && a.p.y + a.l > b.p.y;
+                if (!overlap) continue;
+                const aOnB = (b.role.surface && !a.role.surface)
+                    || (a.role.topper && !b.role.topper)
+                    || (!a.role.surface && !a.role.topper && b.area > a.area);
+                if (!aOnB) continue;
+                const score = (b.role.surface ? 10 : 0) + b.area;
+                if (score > best) { best = score; base = b; }
+            }
+            if (base) {
+                const baseLabel = this._itemLabel(base.p.item_id).toLowerCase();
+                const lift = /\btable\b|\bmesa\b|desk|cama|\bbed\b/.test(baseLabel) ? 0.95 : 0.62;
+                info.set(a.p, { lift, base: base.p });
+            }
+        }
+        return info;
+    }
+
+    _clampFloorGrid(p, x, y) {
+        const locVal = document.getElementById('select-location')?.value;
+        const loc = locVal !== '' && locVal != null ? parseInt(locVal, 10) : 0;
+        const n = this._floorExtentForLoc(loc) || FLOOR_GRID_N;
+        const sz = this.getRotatedSize(p.item_id, p.orientation);
+        const w = sz.w || 1, l = sz.l || 1;
+        return {
+            x: Math.max(0, Math.min(n - w, x)),
+            y: Math.max(0, Math.min(n - l, y))
+        };
+    }
+
+    _clampWallGrid(p, x, y) {
+        const sz = this.getWallSize(p.item_id);
+        const w = sz.w || 1, h = sz.h || 1;
+        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const isWallLayer = layerRadio && layerRadio.value === 'wall';
+        if (isWallLayer) {
+            return {
+                x: Math.max(0, Math.min(25 - w, x)),
+                y: Math.max(0, Math.min(15 - h, y))
+            };
+        }
+        const box = this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: FLOOR_GRID_N, ymax: FLOOR_GRID_N };
+        const along0 = p.flipped ? box.xmin : box.ymin;
+        const along1 = p.flipped ? box.xmax : box.ymax;
+        const maxAlong = Math.max(along0, along1 - w);
+        return {
+            x: Math.max(along0, Math.min(maxAlong, x)),
+            y: Math.max(0, Math.min(12 - h, y))
+        };
+    }
+
+    _snapMove(p, rawX, rawY) {
+        const last = this._dragSnap || { x: p.x, y: p.y };
+        let x = snapAxis(rawX, last.x);
+        let y = snapAxis(rawY, last.y);
+        const clamped = p.isWall ? this._clampWallGrid(p, x, y) : this._clampFloorGrid(p, x, y);
+        this._dragSnap = { x: clamped.x, y: clamped.y };
+        return clamped;
+    }
+
+    _drawSnapGhost(p) {
+        if (!p) return;
+        const x = (this._dragSnap && this._dragSnap.x != null) ? this._dragSnap.x : p.x;
+        const y = (this._dragSnap && this._dragSnap.y != null) ? this._dragSnap.y : p.y;
+        this.ctx.save();
+        this.ctx.globalAlpha = 0.85;
+        this.ctx.strokeStyle = '#f5c542';
+        this.ctx.fillStyle = 'rgba(245, 197, 66, 0.18)';
+        this.ctx.lineWidth = 2.5;
+        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const isWallLayer = layerRadio && layerRadio.value === 'wall';
+        if (p.isWall && isWallLayer) {
+            const sz = this.getWallSize(p.item_id);
+            const gx = 100 + x * this.gridSize;
+            const gy = 100 + y * this.gridSize;
+            this.ctx.fillRect(gx, gy, this.gridSize * sz.w, this.gridSize * sz.h);
+            this.ctx.strokeRect(gx, gy, this.gridSize * sz.w, this.gridSize * sz.h);
+        } else if (p.isWall) {
+            const sz = this.getWallSize(p.item_id);
+            this._pathWallCell(x, y, sz.w, sz.h, !!p.flipped, this._wallRoomBBox);
+            this.ctx.fill();
+            this.ctx.stroke();
+        } else {
+            const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
+            this._drawDiamondPath(x, y, w, l, 0);
+            this.ctx.fill();
+            this.ctx.stroke();
+        }
+        this.ctx.restore();
     }
 
     _hitTestIsoWalls(screenX, screenY, targetFloor, targetLoc) {
@@ -726,6 +870,7 @@ class IsometricMap {
             walls.sort((a, b) => a.y - b.y);
 
             for (const p of walls) this._drawPlacement(p, 'regular');
+            if (this.isItemDragging && this.selectedPlacement) this._drawSnapGhost(this.selectedPlacement);
             this._drawMapHud(targetLoc, true, targetWallGroup, targetFloor);
 
         } else {
@@ -749,7 +894,15 @@ class IsometricMap {
             const seeds   = all.filter(p => SEED_IDS.has(p.item_id) && p.x !== -1 && p.y !== -1 && !p.linkedPlot);
             const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id));
 
-            const sortByZ = (a, b) => (b.x + b.y) - (a.x + a.y); 
+            this._stackInfo = this._computeStackInfo(regular);
+
+            const sortByZ = (a, b) => {
+                const z = (b.x + b.y) - (a.x + a.y);
+                if (z) return z;
+                const la = (this._stackInfo.get(a) || {}).lift || 0;
+                const lb = (this._stackInfo.get(b) || {}).lift || 0;
+                return la - lb;
+            };
             ground.sort(sortByZ);
             seeds.sort(sortByZ);
             regular.sort(sortByZ);
@@ -757,6 +910,7 @@ class IsometricMap {
             for (const p of ground)  this._drawPlacement(p, 'ground');
             for (const p of seeds)   this._drawPlacement(p, 'seed');
             for (const p of regular) this._drawPlacement(p, 'regular');
+            if (this.isItemDragging && this.selectedPlacement) this._drawSnapGhost(this.selectedPlacement);
             this._drawMapHud(targetLoc, false, targetWallGroup, targetFloor);
         }
 
@@ -858,51 +1012,51 @@ class IsometricMap {
 
         const ctx = this.ctx;
         const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
+        const stack = (this._stackInfo && this._stackInfo.get(p)) || null;
+        const lift = stack ? stack.lift : 0;
 
         const isHovered  = p === this.hoveredPlacement;
         const isSelected = p === this.selectedPlacement;
 
+        ctx.save();
+        if (lift) ctx.translate(0, -lift * this.CELL_H * this.scale);
+
         // ── Tile fill color ──
         let fillColor;
         if (layer === 'ground') {
-            // Dirt/Plot tile — earthy brown with green tint
             fillColor = isSelected ? '#e07b3f' : isHovered ? '#c47a30' : '#8B6914';
         } else if (layer === 'seed') {
-            // Seed/Crop on top — green
             fillColor = isSelected ? '#66bb6a' : isHovered ? '#81c784' : '#4caf50';
+        } else if (lift) {
+            fillColor = isSelected ? '#f0c14a' : isHovered ? '#e8b86d' : 'rgba(255, 214, 120, 0.55)';
         } else {
-            // Regular furniture
             fillColor = isSelected ? '#ef4444' : isHovered ? '#f97316' : '#4A90D9';
         }
 
-        // Draw tile shadow first
-        ctx.save();
-        ctx.globalAlpha = 0.25;
-        this._drawDiamondPath(p.x + 0.1, p.y + 0.1, w, l, 1.5);
-        ctx.fillStyle = '#000';
-        ctx.fill();
-        ctx.restore();
+        if (!lift) {
+            ctx.save();
+            ctx.globalAlpha = 0.25;
+            this._drawDiamondPath(p.x + 0.1, p.y + 0.1, w, l, 1.5);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+            ctx.restore();
+        }
 
-        // Draw tile base
-        this._drawDiamondPath(p.x, p.y, w, l, layer === 'ground' ? 0 : 2);
+        this._drawDiamondPath(p.x, p.y, w, l, layer === 'ground' ? 0 : (lift ? 3 : 2));
         ctx.fillStyle   = fillColor;
-        ctx.strokeStyle = isSelected ? '#ff2222' : isHovered ? '#ffaa00' : 'rgba(0,0,0,0.4)';
+        ctx.strokeStyle = isSelected ? '#ff2222' : isHovered ? '#ffaa00' : (lift ? 'rgba(180,120,40,0.5)' : 'rgba(0,0,0,0.4)');
         ctx.lineWidth   = isSelected ? 2.5 : 1.5;
         ctx.fill();
         ctx.stroke();
 
-        // ── Dirt texture pattern for ground tiles ──
         if (layer === 'ground') {
             this._drawDirtTexture(p.x, p.y, w, l);
         }
 
-        // ── Try to draw item image ──
-        // Force loading of base image or back variant based on orientation. We'll handle mirroring via Canvas.
         const img = this.getImage(p.item_id, p.orientation);
         if (img) {
             this._drawSpriteOnTile(img, p.x, p.y, w, l, p.orientation, p.item_id);
         } else {
-            // Fallback: draw item ID text or name
             const center = this._tileCenter(p.x, p.y, w, l);
             const name   = this._shortName(p.item_id);
             ctx.save();
@@ -916,16 +1070,13 @@ class IsometricMap {
             ctx.restore();
         }
 
-        // ── Draw planted item if present ──
         if (p.planted_id !== undefined && p.planted_id > 0 && p.planted_id !== 4294967295) {
             let plantedImg = this.getCropImage(p.planted_id);
             if (plantedImg) {
-                // Draw slightly higher
                 this._drawSpriteOnTile(plantedImg, p.x, p.y - 0.5, w, l, 0, p.planted_id);
             }
         }
 
-        // ── Seed label overlay on plot ──
         if (layer === 'seed') {
             const center = this._tileCenter(p.x, p.y, w, l);
             ctx.save();
@@ -938,6 +1089,7 @@ class IsometricMap {
             ctx.fillText('🌱', center.x, center.y - 8 * this.scale);
             ctx.restore();
         }
+        ctx.restore();
     }
 
     _drawDirtTexture(gx, gy, w, l) {
@@ -1210,9 +1362,10 @@ class IsometricMap {
                       const rect   = this.canvas.getBoundingClientRect();
                       const mouseX = e.clientX - rect.left;
                       const mouseY = e.clientY - rect.top;
-                      const g = this._pointerToGrid(mouseX, mouseY, this.selectedPlacement);
+                      const g = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
                       this.dragItemOffsetX = g.x - this.selectedPlacement.x;
                       this.dragItemOffsetY = g.y - this.selectedPlacement.y;
+                      this._dragSnap = { x: this.selectedPlacement.x, y: this.selectedPlacement.y };
 
                       this.draw();
                 } else {
@@ -1243,19 +1396,20 @@ class IsometricMap {
             const gridY = Math.floor(cart.y + 0.5);
 
             if (this.isItemDragging && this.selectedPlacement) {
-                const g = this._pointerToGrid(mouseX, mouseY, this.selectedPlacement);
-                const nextX = g.x - (this.dragItemOffsetX || 0);
-                const nextY = g.y - (this.dragItemOffsetY || 0);
+                const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
+                const floatedX = raw.x - (this.dragItemOffsetX || 0);
+                const floatedY = raw.y - (this.dragItemOffsetY || 0);
+                const snapped = this._snapMove(this.selectedPlacement, floatedX, floatedY);
 
-                if (this.selectedPlacement.x !== nextX || this.selectedPlacement.y !== nextY) {
+                if (this.selectedPlacement.x !== snapped.x || this.selectedPlacement.y !== snapped.y) {
                     try {
                         this.app.parser.applyMapChange(
                             this.selectedPlacement,
-                            this.selectedPlacement.item_id, nextX, nextY,
+                            this.selectedPlacement.item_id, snapped.x, snapped.y,
                             this.selectedPlacement.orientation
                         );
-                        this.app.editItemX.value = nextX;
-                        this.app.editItemY.value = nextY;
+                        this.app.editItemX.value = snapped.x;
+                        this.app.editItemY.value = snapped.y;
                     } catch (err) {
                         console.error('Error applying map change:', err);
                     }
@@ -1272,7 +1426,12 @@ class IsometricMap {
 
                 // Prefer wall items, then non-ground furniture
                 hits.sort((a, b) => {
-                    const score = (p) => p.isWall ? 2 : (GROUND_IDS.has(p.item_id) ? 0 : 1);
+                    const score = (p) => {
+                        if (p.isWall) return 3;
+                        const lift = (this._stackInfo && this._stackInfo.get(p) || {}).lift || 0;
+                        if (lift) return 2;
+                        return GROUND_IDS.has(p.item_id) ? 0 : 1;
+                    };
                     return score(b) - score(a);
                 });
 
@@ -1287,11 +1446,13 @@ class IsometricMap {
         this.canvas.addEventListener('mouseup', () => {
             this.isPanDragging  = false;
             this.isItemDragging = false;
+            this._dragSnap = null;
         });
 
         this.canvas.addEventListener('mouseleave', () => {
             this.isPanDragging  = false;
             this.isItemDragging = false;
+            this._dragSnap = null;
             if (this.hoveredPlacement) { this.hoveredPlacement = null; this.draw(); }
         });
 
@@ -1313,7 +1474,12 @@ class IsometricMap {
                 const hits        = this.app.parser ? this._hitTest(gridX, gridY, targetFloor, targetLoc, mouseX, mouseY) : [];
 
                 hits.sort((a, b) => {
-                    const score = (p) => p.isWall ? 2 : (GROUND_IDS.has(p.item_id) ? 0 : 1);
+                    const score = (p) => {
+                        if (p.isWall) return 3;
+                        const lift = (this._stackInfo && this._stackInfo.get(p) || {}).lift || 0;
+                        if (lift) return 2;
+                        return GROUND_IDS.has(p.item_id) ? 0 : 1;
+                    };
                     return score(a) - score(b);
                 });
                 const top = hits[hits.length - 1] || null;
@@ -1323,9 +1489,10 @@ class IsometricMap {
                       this.app.openItemEditor(this.selectedPlacement);
                       this.isItemDragging = true;
 
-                      const g = this._pointerToGrid(mouseX, mouseY, this.selectedPlacement);
+                      const g = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
                       this.dragItemOffsetX = g.x - this.selectedPlacement.x;
                       this.dragItemOffsetY = g.y - this.selectedPlacement.y;
+                      this._dragSnap = { x: this.selectedPlacement.x, y: this.selectedPlacement.y };
 
                       this.draw();
                 } else {
@@ -1361,19 +1528,20 @@ class IsometricMap {
                 }
 
                 if (this.isItemDragging && this.selectedPlacement) {
-                    const g = this._pointerToGrid(mouseX, mouseY, this.selectedPlacement);
-                    const nextX = g.x - (this.dragItemOffsetX || 0);
-                    const nextY = g.y - (this.dragItemOffsetY || 0);
+                    const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
+                    const floatedX = raw.x - (this.dragItemOffsetX || 0);
+                    const floatedY = raw.y - (this.dragItemOffsetY || 0);
+                    const snapped = this._snapMove(this.selectedPlacement, floatedX, floatedY);
 
-                    if (this.selectedPlacement.x !== nextX || this.selectedPlacement.y !== nextY) {
+                    if (this.selectedPlacement.x !== snapped.x || this.selectedPlacement.y !== snapped.y) {
                         try {
                             this.app.parser.applyMapChange(
                                 this.selectedPlacement,
-                                this.selectedPlacement.item_id, nextX, nextY,
+                                this.selectedPlacement.item_id, snapped.x, snapped.y,
                                 this.selectedPlacement.orientation
                             );
-                            this.app.editItemX.value = nextX;
-                            this.app.editItemY.value = nextY;
+                            this.app.editItemX.value = snapped.x;
+                            this.app.editItemY.value = snapped.y;
                         } catch (err) {
                             console.error('Error applying map change:', err);
                         }
@@ -1420,6 +1588,7 @@ class IsometricMap {
             if (e.touches.length === 0) {
                 this.isPanDragging  = false;
                 this.isItemDragging = false;
+                this._dragSnap = null;
             }
         });
 
