@@ -216,7 +216,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const isGrid = hash.startsWith('#/grid-editor');
         
         document.body.classList.remove('play-mode', 'grid-mode');
-        document.getElementById('play-hud').style.display = 'none';
+        const hudTop = document.getElementById('port-hud-top');
+        if (hudTop) hudTop.style.display = 'none';
+        if (this.tsukiPort) this.tsukiPort.exitPlayMode();
         document.getElementById('grid-hud').style.display = 'none';
         document.getElementById('nav-editor').className = 'btn-secondary';
         document.getElementById('nav-play').className = 'btn-secondary';
@@ -225,7 +227,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (isPlay) {
             document.body.classList.add('play-mode');
             document.getElementById('nav-play').className = 'btn-primary';
-            document.getElementById('play-hud').style.display = 'block';
+            const hudTop = document.getElementById('port-hud-top');
+            if (hudTop) hudTop.style.display = 'flex';
+            if (this.tsukiPort) this.tsukiPort.enterPlayMode();
             if (this.parser && this.map) {
                 const locSelect = document.getElementById('select-location');
                 if (locSelect) {
@@ -233,7 +237,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     locSelect.dispatchEvent(new Event('change'));
                 }
                 const carrots = this.parser.generalVars && this.parser.generalVars.carrots ? this.parser.generalVars.carrots.value : 0;
-                document.getElementById('hud-carrots').textContent = carrots;
+                const hc = document.getElementById('port-hud-carrots');
+                if (hc) hc.textContent = carrots;
                 this.map.draw();
                 const mapBtn = document.querySelector('[data-target="tab-map"]');
                 if (mapBtn && !mapBtn.classList.contains('active')) {
@@ -690,16 +695,18 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             btnMature.addEventListener('click', () => this.executeMatureCrop());
         }
 
-        document.getElementById('btn-float-rot-left').addEventListener('click', () => {
-            if (this.map && this.map.selectedPlacement) {
-                this.map.rotateSelected(-1);
-            }
-        });
-        document.getElementById('btn-float-rot-right').addEventListener('click', () => {
-            if (this.map && this.map.selectedPlacement) {
-                this.map.rotateSelected(1);
-            }
-        });
+        const btnRotLeft = document.getElementById('btn-float-rot-left');
+        if (btnRotLeft) {
+            btnRotLeft.addEventListener('click', () => {
+                if (this.map && this.map.selectedPlacement) this.map.rotateSelected(-1);
+            });
+        }
+        const btnRotRight = document.getElementById('btn-float-rot-right');
+        if (btnRotRight) {
+            btnRotRight.addEventListener('click', () => {
+                if (this.map && this.map.selectedPlacement) this.map.rotateSelected(1);
+            });
+        }
 
         // Inventory
         this.invSearch.addEventListener('input', () => this.renderInventory());
