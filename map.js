@@ -288,9 +288,16 @@ class IsometricMap {
     }
 
     // ─── Coordinate transforms ───────────────────────────────────────────────
-    getIsoCoords(x, y) {
-        const isoX = (x - y) * (this.CELL_W / 2);
-        const isoY = -(x + y) * (this.CELL_H / 2); // Negative so it goes UP the screen
+    getFloorOffset(floorNum) {
+        if (!document.body.classList.contains('play-mode')) return { x: 0, y: 0 };
+        const f = Number(floorNum) || 0;
+        return { x: 0, y: f === 1 ? -420 : (f === 2 ? -840 : 0) };
+    }
+
+    getIsoCoords(x, y, floorNum = 0) {
+        const off = this.getFloorOffset(floorNum);
+        const isoX = (x - y) * (this.CELL_W / 2) + off.x;
+        const isoY = -(x + y) * (this.CELL_H / 2) + off.y; // Negative so it goes UP the screen
         return {
             x: isoX * this.scale + this.offsetX,
             y: isoY * this.scale + this.offsetY,
@@ -342,10 +349,11 @@ class IsometricMap {
     // nunca entre frames -- solo depende de la cámara (pan/zoom), que ya se
     // aplica como transform al pegar el bitmap. Se dibuja una sola vez a un
     // canvas en memoria en vez de repetir cientos de stroke() por frame.
-    _isoWorld(x, y) {
+    _isoWorld(x, y, floorNum = 0) {
+        const off = this.getFloorOffset(floorNum);
         return {
-            x: (x - y) * (this.CELL_W / 2),
-            y: -(x + y) * (this.CELL_H / 2),
+            x: (x - y) * (this.CELL_W / 2) + off.x,
+            y: -(x + y) * (this.CELL_H / 2) + off.y,
         };
     }
 
@@ -846,10 +854,12 @@ class IsometricMap {
             this.ctx.strokeStyle = flipped ? 'rgba(255, 160, 80, 0.85)' : 'rgba(110, 190, 255, 0.85)';
             this.ctx.lineWidth = 1;
             this.ctx.globalAlpha = 0.5;
-            for (let x = along0; x < along1; x++) {
-                for (let y = 0; y < wallH; y++) {
-                    this._pathWallCell(x, y, 1, 1, flipped, bbox);
-                    this.ctx.stroke();
+            if (!document.body.classList.contains('play-mode')) {
+                for (let x = along0; x < along1; x++) {
+                    for (let y = 0; y < wallH; y++) {
+                        this._pathWallCell(x, y, 1, 1, flipped, bbox);
+                        this.ctx.stroke();
+                    }
                 }
             }
             this.ctx.restore();
@@ -995,41 +1005,38 @@ class IsometricMap {
             ctx.translate(this.offsetX, this.offsetY);
             ctx.scale(this.scale, this.scale);
             
-            // Draw floor texture pattern if available
-            let floorId = null;
-            if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
-                const entry = this.app.parser.floors[targetLoc].find(f => String(f.key) === String(targetFloor));
-                if (entry) floorId = entry.id;
-            }
-            
-            const floorTex = this._getTilesetTexture('floor', floorId);
-            if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0) {
-                if (!floorTex.pattern) floorTex.pattern = ctx.createPattern(floorTex.img, 'repeat');
+            for (let vf of visibleFloors) {
+                let floorId = null;
+                if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
+                    const entry = this.app.parser.floors[targetLoc].find(f => String(f.key) === String(vf));
+                    if (entry) floorId = entry.id;
+                }
                 
-                ctx.save();
-                // We rotate 45 degrees (Math.PI/4) and scale Y by 0.5 to create the isometric floor mapping
-                // For a tile of 64x64 to map well, we might need a scaling factor.
-                // DOMMatrix expects a, b, c, d, e, f
-                // scale(0.25, 0.25) -> rotate(45) -> scale(1, 0.5)
-                // We'll let DOMMatrix do the math:
-                const matrix = new DOMMatrix().scale(1, 0.5).rotate(-45).scale(0.35, 0.35);
-                floorTex.pattern.setTransform(matrix);
-                ctx.fillStyle = floorTex.pattern;
-                
-                // Draw a large polygon covering the current room extent (FLOOR_GRID_N)
-                const n = Math.min(this._floorGridN, FLOOR_GRID_N);
-                ctx.beginPath();
-                ctx.moveTo(this._isoWorld(0, 0).x, this._isoWorld(0, 0).y);
-                ctx.lineTo(this._isoWorld(n, 0).x, this._isoWorld(n, 0).y);
-                ctx.lineTo(this._isoWorld(n, n).x, this._isoWorld(n, n).y);
-                ctx.lineTo(this._isoWorld(0, n).x, this._isoWorld(0, n).y);
-                ctx.closePath();
-                ctx.fill();
-                ctx.restore();
+                const floorTex = this._getTilesetTexture('floor', floorId);
+                if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0) {
+                    if (!floorTex.pattern) floorTex.pattern = ctx.createPattern(floorTex.img, 'repeat');
+                    
+                    ctx.save();
+                    const matrix = new DOMMatrix().scale(1, 0.5).rotate(-45).scale(0.35, 0.35);
+                    floorTex.pattern.setTransform(matrix);
+                    ctx.fillStyle = floorTex.pattern;
+                    
+                    const n = Math.min(this._floorGridN, FLOOR_GRID_N);
+                    ctx.beginPath();
+                    ctx.moveTo(this._isoWorld(0, 0, vf).x, this._isoWorld(0, 0, vf).y);
+                    ctx.lineTo(this._isoWorld(n, 0, vf).x, this._isoWorld(n, 0, vf).y);
+                    ctx.lineTo(this._isoWorld(n, n, vf).x, this._isoWorld(n, n, vf).y);
+                    ctx.lineTo(this._isoWorld(0, n, vf).x, this._isoWorld(0, n, vf).y);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+                }
             }
 
-            ctx.globalAlpha = 0.25;
-            ctx.drawImage(this._floorGridCache, this._floorGridOriginX, this._floorGridOriginY);
+            if (!isPlay) {
+                ctx.globalAlpha = 0.25;
+                ctx.drawImage(this._floorGridCache, this._floorGridOriginX, this._floorGridOriginY);
+            }
             ctx.restore();
 
             // Grilla de paredes del PISO seleccionado (groupNum === select-floor)
@@ -1046,6 +1053,8 @@ class IsometricMap {
             this._stackInfo = this._computeStackInfo(regular);
 
             const sortByZ = (a, b) => {
+                const fb = Number(b.floor||0), fa = Number(a.floor||0); 
+                if (fa !== fb) return fa - fb;
                 const z = (b.x + b.y) - (a.x + a.y);
                 if (z) return z;
                 const la = (this._stackInfo.get(a) || {}).lift || 0;
@@ -1773,3 +1782,4 @@ class IsometricMap {
         this.draw();
     }
 }
+
