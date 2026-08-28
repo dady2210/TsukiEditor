@@ -225,7 +225,6 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             document.getElementById('nav-play').className = 'btn-primary';
             document.getElementById('play-hud').style.display = 'block';
             if (this.parser && this.map) {
-                // Forzar mapa 0 y dibujar
                 const locSelect = document.getElementById('select-location');
                 if (locSelect) {
                     locSelect.value = "0";
@@ -234,29 +233,34 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const carrots = this.parser.generalVars && this.parser.generalVars.carrots ? this.parser.generalVars.carrots.value : 0;
                 document.getElementById('hud-carrots').textContent = carrots;
                 this.map.draw();
-                // We must also ensure we switch to tab-map conceptually so canvas renders correctly?
-                // Wait, play-mode CSS forces #tab-map to be visible and hides others, but map.js might check tab visibility.
-                // We should simulate clicking the map tab to ensure variables are set.
                 const mapBtn = document.querySelector('[data-target="tab-map"]');
                 if (mapBtn && !mapBtn.classList.contains('active')) {
                     mapBtn.click();
                 }
             } else {
-                // No hay save cargado. Mostrar dropzone y forzar hud vacio.
                 document.getElementById('hud-carrots').textContent = 0;
             }
+        } else if (isGrid) {
+            document.body.classList.add('grid-mode');
+            if (document.getElementById('nav-grid')) document.getElementById('nav-grid').className = 'btn-primary';
+            document.getElementById('grid-hud').style.display = 'block';
+            if (this.parser && this.map) {
+                const locSelect = document.getElementById('select-location');
+                if (locSelect) {
+                    locSelect.value = "0";
+                    locSelect.dispatchEvent(new Event('change'));
+                }
+                this.map.draw();
+                const mapBtn = document.querySelector('[data-target="tab-map"]');
+                if (mapBtn && !mapBtn.classList.contains('active')) mapBtn.click();
+            }
         } else {
-            document.body.classList.remove('play-mode');
             document.getElementById('nav-editor').className = 'btn-primary';
-            document.getElementById('nav-play').className = 'btn-secondary';
-            document.getElementById('nav-editor').className = 'btn-primary';
-            document.getElementById('nav-play').className = 'btn-secondary';
             if (this.parser && this.map) {
                 this.map.draw();
             }
         }
     }
-
     updateInvDatalist() {
         const datalist = document.getElementById('add-inv-datalist');
         if (!datalist || !this.addInvType) return;
