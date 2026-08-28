@@ -478,11 +478,37 @@ class IsometricMap {
     //   flipped=true  → pared IZQUIERDA, a lo largo de X, anclada en y = ymax
     //   flipped=false → pared DERECHA,  a lo largo de Y, anclada en x = xmax
     // wx del save es coordenada de piso en ese eje; wy es altura sobre el piso.
+    getWallOffset(floorNum, flipped) {
+        let isPlay = document.body.classList.contains('play-mode');
+        let isGrid = document.body.classList.contains('grid-mode');
+        if (!isPlay && !isGrid) return null;
+        
+        if (window.mapsAtlas) {
+            const surf = window.mapsAtlas.find(s => s.kind === 'wall' && Number(s.groupNum) === Number(floorNum) && !!s.flipped === !!flipped);
+            if (surf) {
+                return { x: surf.origin_px.x * 0.75, y: surf.origin_px.y * 0.75 };
+            }
+        }
+        return null;
+    }
+
     getWallIsoCoords(wx, wy, flipped, bbox, floorNum = 0) {
         const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 0, ymax: 0 };
+        
+        // Base coordinate without ANY offsets (force floorNum = -1 or bypass offset)
+        const dummyFloorOffset = this.getFloorOffset(floorNum);
+        
         const base = flipped
             ? this.getIsoCoords(wx, box.ymax, floorNum)
             : this.getIsoCoords(box.xmax, wx, floorNum);
+            
+        // If the wall has a custom offset, we SUBTRACT the floor offset and ADD the wall offset
+        const customWallOffset = this.getWallOffset(floorNum, flipped);
+        if (customWallOffset) {
+            base.x = base.x - (dummyFloorOffset.x * this.scale) + (customWallOffset.x * this.scale);
+            base.y = base.y - (dummyFloorOffset.y * this.scale) + (customWallOffset.y * this.scale);
+        }
+
         return { x: base.x, y: base.y - wy * this.CELL_H * this.scale };
     }
 
@@ -970,7 +996,7 @@ class IsometricMap {
         }
         
         if (bgActive) {
-            const bgImg = this.getBackgroundImage('Exportado_level2/level2_Ensamblado.png');
+            const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
             if (bgImg && bgImg.complete && bgImg.width > 0) {
                 const s = 0.75 * this.scale;
                 // Draw background starting at (0,0) of the world space
@@ -1722,12 +1748,14 @@ class IsometricMap {
         this.canvas.addEventListener('mouseup', () => {
             this.isPanDragging  = false;
             this.isItemDragging = false;
+            this.isGridDragging = false;
             this._dragSnap = null;
         });
 
         this.canvas.addEventListener('mouseleave', () => {
             this.isPanDragging  = false;
             this.isItemDragging = false;
+            this.isGridDragging = false;
             this._dragSnap = null;
             if (this.hoveredPlacement) { this.hoveredPlacement = null; this.draw(); }
         });
