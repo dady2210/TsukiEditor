@@ -1216,7 +1216,7 @@ class IsometricMap {
                     screenPos.x = 100 + this.selectedPlacement.x * this.gridSize;
                     screenPos.y = 100 + this.selectedPlacement.y * this.gridSize;
                 } else {
-                    const iso = this.getIsoCoords(this.selectedPlacement.x, this.selectedPlacement.y);
+                    const iso = this.getIsoCoords(this.selectedPlacement.x, this.selectedPlacement.y, this.selectedPlacement.floor);
                     screenPos.x = this.offsetX + iso.x;
                     screenPos.y = this.offsetY + iso.y;
                 }
@@ -1324,13 +1324,13 @@ class IsometricMap {
         if (!lift) {
             ctx.save();
             ctx.globalAlpha = 0.25;
-            this._drawDiamondPath(p.x + 0.1, p.y + 0.1, w, l, 1.5);
+            this._drawDiamondPath(p.x + 0.1, p.y + 0.1, w, l, 1.5, p.floor);
             ctx.fillStyle = '#000';
             ctx.fill();
             ctx.restore();
         }
 
-        this._drawDiamondPath(p.x, p.y, w, l, layer === 'ground' ? 0 : (lift ? 3 : 2));
+        this._drawDiamondPath(p.x, p.y, w, l, layer === 'ground' ? 0 : (lift ? 3 : 2), p.floor);
         ctx.fillStyle   = fillColor;
         ctx.strokeStyle = isSelected ? '#ff2222' : isHovered ? '#ffaa00' : (lift ? 'rgba(180,120,40,0.5)' : 'rgba(0,0,0,0.4)');
         ctx.lineWidth   = isSelected ? 2.5 : 1.5;
@@ -1338,14 +1338,14 @@ class IsometricMap {
         ctx.stroke();
 
         if (layer === 'ground') {
-            this._drawDirtTexture(p.x, p.y, w, l);
+            this._drawDirtTexture(p.x, p.y, w, l, p.floor);
         }
 
         const img = this.getImage(p.item_id, p.orientation);
         if (img) {
-            this._drawSpriteOnTile(img, p.x, p.y, w, l, p.orientation, p.item_id);
+            this._drawSpriteOnTile(img, p.x, p.y, w, l, p.orientation, p.item_id, p.floor);
         } else {
-            const center = this._tileCenter(p.x, p.y, w, l);
+            const center = this._tileCenter(p.x, p.y, w, l, p.floor);
             const name   = this._shortName(p.item_id);
             ctx.save();
             ctx.font      = `bold ${Math.max(7, Math.round(10 * this.scale))}px 'Quicksand', sans-serif`;
@@ -1361,12 +1361,12 @@ class IsometricMap {
         if (p.planted_id !== undefined && p.planted_id > 0 && p.planted_id !== 4294967295) {
             let plantedImg = this.getCropImage(p.planted_id);
             if (plantedImg) {
-                this._drawSpriteOnTile(plantedImg, p.x, p.y - 0.5, w, l, 0, p.planted_id);
+                this._drawSpriteOnTile(plantedImg, p.x, p.y - 0.5, w, l, 0, p.planted_id, p.floor);
             }
         }
 
         if (layer === 'seed') {
-            const center = this._tileCenter(p.x, p.y, w, l);
+            const center = this._tileCenter(p.x, p.y, w, l, p.floor);
             ctx.save();
             ctx.font      = `${Math.max(6, Math.round(8 * this.scale))}px 'Nunito Sans', sans-serif`;
             ctx.fillStyle = '#fff';
@@ -1380,13 +1380,13 @@ class IsometricMap {
         ctx.restore();
     }
 
-    _drawDirtTexture(gx, gy, w, l) {
+    _drawDirtTexture(gx, gy, w, l, floorNum = 0) {
         // Draw a subtle criss-cross dirt pattern inside the tile
         const ctx = this.ctx;
-        const top   = this.getIsoCoords(gx,   gy);
-        const right = this.getIsoCoords(gx+w, gy);
-        const bot   = this.getIsoCoords(gx+w, gy+l);
-        const left  = this.getIsoCoords(gx,   gy+l);
+        const top   = this.getIsoCoords(gx,   gy, floorNum);
+        const right = this.getIsoCoords(gx+w, gy, floorNum);
+        const bot   = this.getIsoCoords(gx+w, gy+l, floorNum);
+        const left  = this.getIsoCoords(gx,   gy+l, floorNum);
 
         ctx.save();
         ctx.beginPath();
@@ -1413,12 +1413,12 @@ class IsometricMap {
         ctx.restore();
     }
 
-    _drawSpriteOnTile(img, gx, gy, w, l, orientation = 0, item_id = null) {
+    _drawSpriteOnTile(img, gx, gy, w, l, orientation = 0, item_id = null, floorNum = 0) {
         const ctx = this.ctx;
-        const top   = this.getIsoCoords(gx,   gy);
-        const right = this.getIsoCoords(gx+w, gy);
-        const bot   = this.getIsoCoords(gx+w, gy+l);
-        const left  = this.getIsoCoords(gx,   gy+l);
+        const top   = this.getIsoCoords(gx,   gy, floorNum);
+        const right = this.getIsoCoords(gx+w, gy, floorNum);
+        const bot   = this.getIsoCoords(gx+w, gy+l, floorNum);
+        const left  = this.getIsoCoords(gx,   gy+l, floorNum);
 
         const cx = (top.x + bot.x) / 2;
         const cy = (top.y + bot.y) / 2;
@@ -1515,12 +1515,12 @@ class IsometricMap {
         ctx.restore();
     }
 
-    _drawDiamondPath(gx, gy, w, l, shrinkPx = 0) {
+    _drawDiamondPath(gx, gy, w, l, shrinkPx = 0, floorNum = 0) {
         const ctx = this.ctx;
-        const top   = this.getIsoCoords(gx,   gy);
-        const right = this.getIsoCoords(gx+w, gy);
-        const bot   = this.getIsoCoords(gx+w, gy+l);
-        const left  = this.getIsoCoords(gx,   gy+l);
+        const top   = this.getIsoCoords(gx,   gy, floorNum);
+        const right = this.getIsoCoords(gx+w, gy, floorNum);
+        const bot   = this.getIsoCoords(gx+w, gy+l, floorNum);
+        const left  = this.getIsoCoords(gx,   gy+l, floorNum);
         const cx    = (top.x + bot.x) / 2;
         const cy    = (top.y + bot.y) / 2;
 
@@ -1536,9 +1536,9 @@ class IsometricMap {
         ctx.closePath();
     }
 
-    _tileCenter(gx, gy, w, l) {
-        const top = this.getIsoCoords(gx,   gy);
-        const bot = this.getIsoCoords(gx+w, gy+l);
+    _tileCenter(gx, gy, w, l, floorNum = 0) {
+        const top = this.getIsoCoords(gx,   gy, floorNum);
+        const bot = this.getIsoCoords(gx+w, gy+l, floorNum);
         return { x: (top.x + bot.x) / 2, y: (top.y + bot.y) / 2 };
     }
 
