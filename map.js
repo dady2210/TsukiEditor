@@ -493,7 +493,7 @@ class IsometricMap {
     }
 
     getWallIsoCoords(wx, wy, flipped, bbox, floorNum = 0) {
-        const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 0, ymax: 0 };
+        const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: FLOOR_GRID_N, ymax: FLOOR_GRID_N };
         
         // Base coordinate without ANY offsets (force floorNum = -1 or bypass offset)
         const dummyFloorOffset = this.getFloorOffset(floorNum);
