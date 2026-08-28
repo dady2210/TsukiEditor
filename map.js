@@ -1033,23 +1033,25 @@ class IsometricMap {
             }
             this.ctx.restore();
 
-            const top = this.getWallIsoCoords((along0 + along1) / 2, wallH + 0.4, flipped, bbox, targetFloor);
-            const side = flipped ? 'der' : 'izq';
-            const label = wps.length
-                ? `Pared ${side} · WP ${wps.map(w => w.id).join(', ')}`
-                : `Pared ${side}`;
-            this.ctx.save();
-            this.ctx.font = `bold ${Math.max(10, Math.round(11 * this.scale))}px 'Quicksand', sans-serif`;
-            this.ctx.fillStyle = 'rgba(20,12,8,0.75)';
-            const tw = this.ctx.measureText(label).width;
-            this.ctx.beginPath();
-            this.ctx.roundRect(top.x - tw / 2 - 6, top.y - 14, tw + 12, 18, 6);
-            this.ctx.fill();
-            this.ctx.fillStyle = '#ffe7c2';
-            this.ctx.textAlign = 'center';
-            this.ctx.textBaseline = 'middle';
-            this.ctx.fillText(label, top.x, top.y - 5);
-            this.ctx.restore();
+            if (!document.body.classList.contains(\'play-mode\') && !document.body.classList.contains(\'grid-mode\')) {
+                const top = this.getWallIsoCoords((along0 + along1) / 2, wallH + 0.4, flipped, bbox, targetFloor);
+                            const side = flipped ? 'der' : 'izq';
+                            const label = wps.length
+                                ? `Pared ${side} · WP ${wps.map(w => w.id).join(', ')}`
+                                : `Pared ${side}`;
+                            this.ctx.save();
+                            this.ctx.font = `bold ${Math.max(10, Math.round(11 * this.scale))}px 'Quicksand', sans-serif`;
+                            this.ctx.fillStyle = 'rgba(20,12,8,0.75)';
+                            const tw = this.ctx.measureText(label).width;
+                            this.ctx.beginPath();
+                            this.ctx.roundRect(top.x - tw / 2 - 6, top.y - 14, tw + 12, 18, 6);
+                            this.ctx.fill();
+                            this.ctx.fillStyle = '#ffe7c2';
+                            this.ctx.textAlign = 'center';
+                            this.ctx.textBaseline = 'middle';
+                            this.ctx.fillText(label, top.x, top.y - 5);
+                            this.ctx.restore();
+            }
 
             subset.sort((a, b) => (b.x - a.x) || (a.y - b.y));
             for (const p of subset) this._drawIsoWallItem(p, bbox);
@@ -1722,7 +1724,7 @@ class IsometricMap {
                 }
             }
         }
-        if (!isWallLayer) {
+        if (!isWallLayer && !document.body.classList.contains('play-mode')) {
             const wallHits = this._hitTestIsoWalls(screenX, screenY, targetFloor, targetLoc);
             found = wallHits.concat(found);
         }
