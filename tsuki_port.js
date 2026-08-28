@@ -61,6 +61,60 @@ class TsukiPort {
         }
     }
     
+
+    enterBagMode() {
+        this.bottomBar.style.display = 'none';
+        if (this.bagUI) this.bagUI.style.display = 'flex';
+        this.renderBagInventory();
+    }
+    
+    exitBagMode() {
+        if (this.bagUI) this.bagUI.style.display = 'none';
+        if (document.body.classList.contains('play-mode') && !this.isHammerMode) {
+            if (this.bottomBar) this.bottomBar.style.display = 'flex';
+        }
+    }
+    
+    renderBagInventory() {
+        if (!this.bagPanel) return;
+        this.bagPanel.innerHTML = '';
+        
+        if (!this.app.parser) return;
+        if (!this.app.parser.inventory || this.app.parser.inventory.length === 0) {
+            if (typeof this.app.parser.parseInventory === 'function') {
+                this.app.parser.parseInventory();
+            }
+        }
+        
+        const items = (this.app.parser.inventory || []).filter(i => i.qty > 0 && i.item_id !== -1);
+        
+        if (items.length === 0) {
+            this.bagPanel.innerHTML = '<div style="width:100%; text-align:center; margin-top:20px; color:rgba(0,0,0,0.5);">La mochila est\xE1 vac\xEDa.</div>';
+            return;
+        }
+        
+        items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'bag-inv-slot';
+            
+            const imgObj = this.app.map ? this.app.map.getImage(item.item_id, 0) : null;
+            if (imgObj && imgObj.complete && imgObj.naturalWidth > 0) {
+                const img = document.createElement('img');
+                img.src = imgObj.src;
+                div.appendChild(img);
+            } else {
+                div.textContent = item.item_id;
+            }
+            
+            const qty = document.createElement('div');
+            qty.className = 'bag-inv-qty';
+            qty.textContent = item.qty;
+            div.appendChild(qty);
+            
+            this.bagPanel.appendChild(div);
+        });
+    }
+
     enterPlayMode() {
         this.bottomBar.style.display = 'flex';
         this.exitHammerMode();
