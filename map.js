@@ -1235,22 +1235,26 @@ class IsometricMap {
                             // In Tsuki, walls are drawn vertically. 
                             let ix, iy;
                             if (!surf.flipped) {
-                                ix = oX + (x - 0) * (w / 2);
-                                iy = oY - (x + 0) * (h / 2) - y * h;
+                                // Right wall: starts at Right corner (wx=0), moves LEFT and UP towards Top corner
+                                ix = oX - x * (w / 2);
+                                iy = oY - x * (h / 2) - y * h;
                             } else {
-                                ix = oX + (0 - x) * (w / 2);
-                                iy = oY - (0 + x) * (h / 2) - y * h;
+                                // Left wall: starts at Left corner (wx=0), moves RIGHT and UP towards Top corner
+                                ix = oX + x * (w / 2);
+                                iy = oY - x * (h / 2) - y * h;
                             }
                             
                             ctx.beginPath();
                             ctx.moveTo(ix, iy);
                             if (!surf.flipped) {
-                                ctx.lineTo(ix + w/2, iy - h/2);
-                                ctx.lineTo(ix + w/2, iy - h/2 - h);
-                                ctx.lineTo(ix, iy - h);
-                            } else {
+                                // Right wall cells: move LEFT and UP to complete the diamond
                                 ctx.lineTo(ix - w/2, iy - h/2);
                                 ctx.lineTo(ix - w/2, iy - h/2 - h);
+                                ctx.lineTo(ix, iy - h);
+                            } else {
+                                // Left wall cells: move RIGHT and UP to complete the diamond
+                                ctx.lineTo(ix + w/2, iy - h/2);
+                                ctx.lineTo(ix + w/2, iy - h/2 - h);
                                 ctx.lineTo(ix, iy - h);
                             }
                             ctx.closePath();
