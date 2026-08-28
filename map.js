@@ -942,9 +942,25 @@ class IsometricMap {
         const ctx = this.ctx;
         ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        const targetFloor = document.getElementById('select-floor')?.value || '0';
         const targetLocStr = document.getElementById('select-location')?.value;
         const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
+        
+        let visibleFloors = [document.getElementById('select-floor')?.value || '0'];
+        let isPlay = document.body.classList.contains('play-mode');
+        if (isPlay && targetLoc === 0) {
+            visibleFloors = ['0', '1'];
+            const slocData = this.app?.parser?.ast?.children?.find(c => c.name === 'sublocations')?.elements?.[0]?.children?.find(c => c.name === 'currSLocData');
+            if (slocData && slocData.value === 1) visibleFloors.push('2');
+            
+            const bgImg = this.getBackgroundImage('../../Exportado_level2/level2_Ensamblado.png');
+            if (bgImg && bgImg.complete && bgImg.width > 0) {
+                const s = 0.75 * this.scale;
+                const px = this.offsetX - (329 * s);
+                const py = this.offsetY - (926 * s);
+                ctx.drawImage(bgImg, px, py, bgImg.width * s, bgImg.height * s);
+            }
+        }
+        const targetFloor = visibleFloors[0];
         
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
