@@ -15134,6 +15134,8 @@ window.ITEMS_DB = {
     "id": 2130,
     "item_name": "Unknown Item 2130",
     "furn_name": "Mesa Sandía Buendía / Frooty Watermelon Table",
+	"width": 3,
+    "length": 3,
     "rotations": {
       "B": 2131
     }

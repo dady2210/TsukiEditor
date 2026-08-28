@@ -108,6 +108,8 @@ class IsometricMap {
         this.offsetX = 0;
         this.offsetY = 0;
         this.scale   = window.innerWidth <= 900 ? 0.6 : 1.0;
+        this._imgCache       = {}; // For placing items (furniture icons)
+        this._patternCache   = {}; // For Isometric Tileset Patterns (wallpapers/floors)
 
         this.isDragging    = false;
         this.isPanDragging = false;
@@ -117,9 +119,6 @@ class IsometricMap {
 
         this.selectedPlacement = null;
         this.hoveredPlacement  = null;
-
-        // Image cache: item_id → HTMLImageElement
-        this._imgCache = {};
 
         // Background grid caches (ver _buildFloorGridCache/_buildWallGridCache)
         this._floorGridCache = null;
@@ -131,6 +130,27 @@ class IsometricMap {
         this._rafId = undefined;
 
         this.bindEvents();
+    }
+
+    // Tileset Image Loader (for Wallpapers/Floors)
+    _getTilesetTexture(type, id) {
+        if (!id || id <= 0) return null;
+        const cacheKey = `${type}_${id}`;
+        
+        if (this._patternCache[cacheKey]) return this._patternCache[cacheKey];
+
+        const img = new Image();
+        img.src = `images/tilesets/${type}s/${id}.png`;
+        img.onload = () => {
+            this._patternCache[cacheKey] = { img: img, pattern: null };
+            this.draw(); // Redraw map once the tileset loads
+        };
+        img.onerror = () => {
+            this._patternCache[cacheKey] = { error: true }; // Prevent infinite loops
+        };
+        
+        this._patternCache[cacheKey] = { loading: true };
+        return null;
     }
 
     // ── Size helpers ──────────────────────────────────────────────────────
@@ -760,7 +780,7 @@ class IsometricMap {
             p => !p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0
                 && p.x >= 0 && p.y >= 0 && String(p.floor) === floorKey
         );
-        const wps = this._wallpaperEntries(targetLoc);
+        const wps = this._wallpaperEntries(targetLoc).filter(w => String(w.key) === floorKey);
         if (!walls.length && !wps.length && !floors.length) {
             this._wallRoomBBox = null;
             return;
@@ -785,10 +805,41 @@ class IsometricMap {
             const alongLen = along1 - along0;
 
             this.ctx.save();
-            this.ctx.globalAlpha = 0.18;
-            this.ctx.fillStyle = flipped ? 'rgba(255, 160, 80, 1)' : 'rgba(110, 190, 255, 1)';
-            this._pathWallCell(along0, 0, alongLen, wallH, flipped, bbox);
-            this.ctx.fill();
+            this.ctx.globalAlpha = 1.0;
+            
+            let filledWithTex = false;
+            if (wps && wps.length > 0) {
+                // Determine wallpaper ID. Left wall (flipped=false), Right wall (flipped=true)
+                const wpEntry = wps[0]; // Currently game usually applies 1 wallpaper to both, or index based. Let's use the first one.
+                const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
+                if (wpTex && wpTex.img && wpTex.img.complete && wpTex.img.width > 0) {
+                    if (!wpTex.pattern) wpTex.pattern = this.ctx.createPattern(wpTex.img, 'repeat');
+                    
+                    this.ctx.save();
+                    // Shear for walls. 
+                    // Right wall (flipped=true): slope up-right. Shear Y by X. 
+                    // Left wall (flipped=false): slope up-left. Shear Y by -X.
+                    // The _pathWallCell sets up the path. The pattern transform applies to the bounding box.
+                    const shearSlope = flipped ? -0.5 : 0.5;
+                    const scaleFactor = 0.35;
+                    const matrix = new DOMMatrix([scaleFactor, shearSlope * scaleFactor, 0, scaleFactor, 0, 0]);
+                    
+                    wpTex.pattern.setTransform(matrix);
+                    this.ctx.fillStyle = wpTex.pattern;
+                    this._pathWallCell(along0, 0, alongLen, wallH, flipped, bbox);
+                    this.ctx.fill();
+                    this.ctx.restore();
+                    filledWithTex = true;
+                }
+            }
+            
+            if (!filledWithTex) {
+                this.ctx.globalAlpha = 0.18;
+                this.ctx.fillStyle = flipped ? 'rgba(255, 160, 80, 1)' : 'rgba(110, 190, 255, 1)';
+                this._pathWallCell(along0, 0, alongLen, wallH, flipped, bbox);
+                this.ctx.fill();
+            }
+            
             this.ctx.restore();
 
             this.ctx.save();
@@ -941,9 +992,43 @@ class IsometricMap {
             // FLOOR LAYER (Isometric)
             this._buildFloorGridCache(this._floorExtentForLoc(targetLoc));
             ctx.save();
-            ctx.globalAlpha = 0.25;
             ctx.translate(this.offsetX, this.offsetY);
             ctx.scale(this.scale, this.scale);
+            
+            // Draw floor texture pattern if available
+            let floorId = null;
+            if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
+                const entry = this.app.parser.floors[targetLoc].find(f => String(f.key) === String(targetFloor));
+                if (entry) floorId = entry.id;
+            }
+            
+            const floorTex = this._getTilesetTexture('floor', floorId);
+            if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0) {
+                if (!floorTex.pattern) floorTex.pattern = ctx.createPattern(floorTex.img, 'repeat');
+                
+                ctx.save();
+                // We rotate 45 degrees (Math.PI/4) and scale Y by 0.5 to create the isometric floor mapping
+                // For a tile of 64x64 to map well, we might need a scaling factor.
+                // DOMMatrix expects a, b, c, d, e, f
+                // scale(0.25, 0.25) -> rotate(45) -> scale(1, 0.5)
+                // We'll let DOMMatrix do the math:
+                const matrix = new DOMMatrix().scale(1, 0.5).rotate(-45).scale(0.35, 0.35);
+                floorTex.pattern.setTransform(matrix);
+                ctx.fillStyle = floorTex.pattern;
+                
+                // Draw a large polygon covering the current room extent (FLOOR_GRID_N)
+                const n = Math.min(this._floorGridN, FLOOR_GRID_N);
+                ctx.beginPath();
+                ctx.moveTo(this._isoWorld(0, 0).x, this._isoWorld(0, 0).y);
+                ctx.lineTo(this._isoWorld(n, 0).x, this._isoWorld(n, 0).y);
+                ctx.lineTo(this._isoWorld(n, n).x, this._isoWorld(n, n).y);
+                ctx.lineTo(this._isoWorld(0, n).x, this._isoWorld(0, n).y);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+
+            ctx.globalAlpha = 0.25;
             ctx.drawImage(this._floorGridCache, this._floorGridOriginX, this._floorGridOriginY);
             ctx.restore();
 
