@@ -992,7 +992,12 @@ class IsometricMap {
             const slocData = this.app?.parser?.ast?.children?.find(c => c.name === 'sublocations')?.elements?.[0]?.children?.find(c => c.name === 'currSLocData');
             if (slocData && slocData.value === 1) visibleFloors.push('2');
         } else if (isGrid) {
-            visibleFloors = ['0', '1', '2'];
+            if (this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1) {
+                const surf = window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex];
+                visibleFloors = [String(surf.groupNum)];
+            } else {
+                visibleFloors = ['0'];
+            }
         }
         
         if (bgActive) {
@@ -1168,8 +1173,7 @@ class IsometricMap {
             if (!isGrid) this._drawIsoWallGrids(targetLoc, targetFloor);
 
             const all = this.app.parser.placements.filter(
-                p => (isGrid ? visibleFloors.includes(String(p.floor)) : (p.floor === targetFloor))
-                    && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
+                p => p.floor === targetFloor && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
             );
 
             const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
