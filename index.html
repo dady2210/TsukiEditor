@@ -930,7 +930,19 @@
                                 <input type="number" id="grid-groupnum" style="width:100%; margin-bottom:5px;">
                             </div>
                             <div>
-                                <label><input type="checkbox" id="grid-flipped"> Flipped (Pared Der)</label>
+                                <label><input type="checkbox" id="grid-flipped"> Flipped (Pared Izq)</label>
+                            </div>
+                            <div style="margin-top:10px;">
+                                <label style="display:block; margin-bottom:4px;">Tamaño celda &mdash; Ancho:</label>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <input type="range" id="grid-cell-w-range" min="8" max="256" step="1" value="64" style="flex:1;">
+                                    <input type="number" id="grid-cell-w" min="8" max="512" step="1" value="64" style="width:56px;">
+                                </div>
+                                <label style="display:block; margin-top:6px; margin-bottom:4px;">Alto:</label>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <input type="range" id="grid-cell-h-range" min="4" max="128" step="1" value="32" style="flex:1;">
+                                    <input type="number" id="grid-cell-h" min="4" max="256" step="1" value="32" style="width:56px;">
+                                </div>
                             </div>
                             <button id="btn-save-atlas" class="btn-primary" style="width:100%; margin-top:10px;">Descargar maps_atlas.js</button>
                             <p style="font-size:12px; margin-bottom:0; margin-top:10px; color:#666;">Arrastra en el canvas para mover la grilla activa.</p>
