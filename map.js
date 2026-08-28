@@ -546,7 +546,6 @@ class IsometricMap {
             base.y = base.y - (dummyFloorOffset.y * this.scale) + (customWallOffset.y * this.scale);
         }
         return { x: base.x, y: base.y - wy * this.CELL_H * this.scale };
-    };
     }
 
     _sameFloor(p, targetFloor) {
@@ -623,8 +622,6 @@ class IsometricMap {
             const baseY = -(box.xmax + wx) * hh;
             const wy = (baseY - isoY) / this.CELL_H;
             return { x: wx, y: wy };
-        }
-    };
         }
     }
 
@@ -1018,7 +1015,6 @@ class IsometricMap {
                 this.ctx.fillStyle = flipped ? 'rgba(255, 160, 80, 1)' : 'rgba(110, 190, 255, 1)';
                 this._pathWallCell(along0, 0, alongLen, wallH, flipped, bbox);
                 this.ctx.fill();
-            }
             }
             
             this.ctx.restore();
