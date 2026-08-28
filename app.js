@@ -211,11 +211,18 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     handleRouting() {
         const hash = window.location.hash || '#/editor';
         const isPlay = hash.startsWith('#/play');
+        const isGrid = hash.startsWith('#/grid-editor');
+        
+        document.body.classList.remove('play-mode', 'grid-mode');
+        document.getElementById('play-hud').style.display = 'none';
+        document.getElementById('grid-hud').style.display = 'none';
+        document.getElementById('nav-editor').className = 'btn-secondary';
+        document.getElementById('nav-play').className = 'btn-secondary';
         
         if (isPlay) {
             document.body.classList.add('play-mode');
-            document.getElementById('nav-editor').className = 'btn-secondary';
             document.getElementById('nav-play').className = 'btn-primary';
+            document.getElementById('play-hud').style.display = 'block';
             if (this.parser && this.map) {
                 // Forzar mapa 0 y dibujar
                 const locSelect = document.getElementById('select-location');
@@ -291,6 +298,20 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 }
             }
         }
+        
+        window.mapsAtlas = [];
+        fetch('data/maps_atlas.json')
+            .then(r => r.json())
+            .then(data => {
+                window.mapsAtlas = data;
+                this.gridEditor = new GridEditor(this);
+                this.gridEditor.refreshSelect();
+                if (this.map) this.map.draw();
+            })
+            .catch(e => {
+                console.warn('No maps_atlas.json found', e);
+                this.gridEditor = new GridEditor(this);
+            });
 
         window.ITEM_SIZES = window.furnitureSizes;
         

@@ -904,6 +904,36 @@
 
                     <div class="canvas-container wood-texture" style="position:relative; overflow:hidden;">
                         <canvas id="map-canvas"></canvas>
+                        <!-- Grid HUD -->
+                        <div id="grid-hud" class="rustic-panel-light" style="display: none; position: absolute; top: 20px; left: 20px; z-index: 9999; width: 300px; font-family: 'Quicksand', sans-serif;">
+                            <h3 style="margin-top:0;">Editor de Atlas</h3>
+                            <label>Superficie:</label>
+                            <select id="grid-surface-select" style="width:100%; margin-bottom: 5px;"></select>
+                            <div style="display:flex; gap:5px; margin-bottom:10px;">
+                                <button id="btn-add-floor" class="btn-primary" style="flex:1;">+ Piso</button>
+                                <button id="btn-add-wall" class="btn-primary" style="flex:1;">+ Pared</button>
+                            </div>
+                            <div style="display:flex; gap:10px; margin-bottom:10px;">
+                                <div style="flex:1;"><label>Cols:</label><input type="number" id="grid-cols" value="16" style="width:100%;"></div>
+                                <div style="flex:1;"><label>Filas:</label><input type="number" id="grid-rows" value="16" style="width:100%;"></div>
+                            </div>
+                            <div style="text-align:center; margin-bottom:10px;">
+                                <label style="display:block; text-align:left;">Mover Origen (px):</label>
+                                <button class="btn-secondary" id="grid-btn-up">UP</button><br>
+                                <button class="btn-secondary" id="grid-btn-left">LEFT</button>
+                                <button class="btn-secondary" id="grid-btn-down">DOWN</button>
+                                <button class="btn-secondary" id="grid-btn-right">RIGHT</button>
+                            </div>
+                            <div>
+                                <label>GroupNum:</label>
+                                <input type="number" id="grid-groupnum" style="width:100%; margin-bottom:5px;">
+                            </div>
+                            <div>
+                                <label><input type="checkbox" id="grid-flipped"> Flipped (Pared Der)</label>
+                            </div>
+                            <button id="btn-save-atlas" class="btn-primary" style="width:100%; margin-top:10px;">Descargar maps_atlas.json</button>
+                            <p style="font-size:12px; margin-bottom:0; margin-top:10px; color:#666;">Arrastra en el canvas para mover la grilla activa.</p>
+                        </div>
                         <!-- Play HUD -->
                         <div id="play-hud" style="display: none; position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 20px; font-weight: bold; font-family: 'Quicksand', sans-serif; z-index: 9999; pointer-events: none; border: 2px solid #FF9800; text-shadow: 1px 1px 2px black;">
                             <span style="color: #FF9800;">Modo Jugar</span> | <span id="hud-carrots">0</span> dY?A

@@ -288,10 +288,21 @@ class IsometricMap {
     }
 
     // ─── Coordinate transforms ───────────────────────────────────────────────
+    getAtlasSurface(kind, groupNum) {
+        if (!window.mapsAtlas) return null;
+        return window.mapsAtlas.find(s => s.kind === kind && Number(s.groupNum) === Number(groupNum));
+    }
+    
     getFloorOffset(floorNum) {
-        if (!document.body.classList.contains('play-mode')) return { x: 0, y: 0 };
-        const f = Number(floorNum) || 0;
-        return { x: 0, y: f === 1 ? -420 : (f === 2 ? -840 : 0) };
+        let isPlay = document.body.classList.contains('play-mode');
+        let isGrid = document.body.classList.contains('grid-mode');
+        if (!isPlay && !isGrid) return { x: 0, y: 0 };
+        const surf = this.getAtlasSurface('floor', floorNum);
+        if (surf) {
+            // Convert PNG pixel coordinate to unscaled isometric coordinate
+            return { x: surf.origin_px.x * 0.75, y: surf.origin_px.y * 0.75 };
+        }
+        return { x: 0, y: 0 };
     }
 
     getIsoCoords(x, y, floorNum = 0) {
@@ -467,11 +478,11 @@ class IsometricMap {
     //   flipped=true  → pared IZQUIERDA, a lo largo de X, anclada en y = ymax
     //   flipped=false → pared DERECHA,  a lo largo de Y, anclada en x = xmax
     // wx del save es coordenada de piso en ese eje; wy es altura sobre el piso.
-    getWallIsoCoords(wx, wy, flipped, bbox) {
+    getWallIsoCoords(wx, wy, flipped, bbox, floorNum = 0) {
         const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 0, ymax: 0 };
         const base = flipped
-            ? this.getIsoCoords(wx, box.ymax)
-            : this.getIsoCoords(box.xmax, wx);
+            ? this.getIsoCoords(wx, box.ymax, floorNum)
+            : this.getIsoCoords(box.xmax, wx, floorNum);
         return { x: base.x, y: base.y - wy * this.CELL_H * this.scale };
     }
 
@@ -630,7 +641,7 @@ class IsometricMap {
             this.ctx.strokeRect(gx, gy, this.gridSize * sz.w, this.gridSize * sz.h);
         } else if (p.isWall) {
             const sz = this.getWallSize(p.item_id);
-            this._pathWallCell(x, y, sz.w, sz.h, !!p.flipped, this._wallRoomBBox);
+            this._pathWallCell(x, y, sz.w, sz.h, !!p.flipped, this._wallRoomBBox, p.floor);
             this.ctx.fill();
             this.ctx.stroke();
         } else {
@@ -655,10 +666,10 @@ class IsometricMap {
             const sz = this.getWallSize(p.item_id);
             const f = !!p.flipped;
             const pts = [
-                this.getWallIsoCoords(p.x, p.y, f, bbox),
-                this.getWallIsoCoords(p.x + sz.w, p.y, f, bbox),
-                this.getWallIsoCoords(p.x + sz.w, p.y + sz.h, f, bbox),
-                this.getWallIsoCoords(p.x, p.y + sz.h, f, bbox)
+                this.getWallIsoCoords(p.x, p.y, f, bbox, p.floor),
+                this.getWallIsoCoords(p.x + sz.w, p.y, f, bbox, p.floor),
+                this.getWallIsoCoords(p.x + sz.w, p.y + sz.h, f, bbox, p.floor),
+                this.getWallIsoCoords(p.x, p.y + sz.h, f, bbox, p.floor)
             ];
             if (this._pointInPoly(screenX, screenY, pts)) found.push(p);
         }
@@ -667,7 +678,7 @@ class IsometricMap {
 
     _pathWallCell(wx, wy, ww, wh, flipped, bbox) {
         const box = bbox || this._wallRoomBBox;
-        const bl = this.getWallIsoCoords(wx, wy, flipped, box);
+        const bl = this.getWallIsoCoords(wx, wy, flipped, box, flipped ? (walls[0]?.floor || 0) : (walls[0]?.floor || 0));
         const br = this.getWallIsoCoords(wx + ww, wy, flipped, box);
         const tr = this.getWallIsoCoords(wx + ww, wy + wh, flipped, box);
         const tl = this.getWallIsoCoords(wx, wy + wh, flipped, box);
@@ -795,10 +806,10 @@ class IsometricMap {
         }
         const bbox = this._locationRoomBBox(floors, walls);
         this._wallRoomBBox = bbox;
-        this._drawIsoWallRoom(targetLoc, bbox, walls, wps);
+        this._drawIsoWallRoom(targetLoc, bbox, walls, wps, targetFloor);
     }
 
-    _drawIsoWallRoom(targetLoc, bbox, walls, wps) {
+    _drawIsoWallRoom(targetLoc, bbox, walls, wps, targetFloor = 0) {
         const maxHFromItems = walls.reduce((m, p) => {
             const sz = this.getWallSize(p.item_id);
             return Math.max(m, (p.y || 0) + sz.h);
@@ -857,14 +868,14 @@ class IsometricMap {
             if (!document.body.classList.contains('play-mode')) {
                 for (let x = along0; x < along1; x++) {
                     for (let y = 0; y < wallH; y++) {
-                        this._pathWallCell(x, y, 1, 1, flipped, bbox);
+                        this._pathWallCell(x, y, 1, 1, flipped, bbox, targetFloor);
                         this.ctx.stroke();
                     }
                 }
             }
             this.ctx.restore();
 
-            const top = this.getWallIsoCoords((along0 + along1) / 2, wallH + 0.4, flipped, bbox);
+            const top = this.getWallIsoCoords((along0 + along1) / 2, wallH + 0.4, flipped, bbox, targetFloor);
             const side = flipped ? 'izq' : 'der';
             const label = wps.length
                 ? `Pared ${side} · WP ${wps.map(w => w.id).join(', ')}`
@@ -902,7 +913,7 @@ class IsometricMap {
         this.ctx.lineWidth = isSel ? 2 : 1;
         this.ctx.stroke();
 
-        const mid = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, flipped, box);
+        const mid = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, flipped, box, p.floor);
         const img = this.getImage(p.item_id, 0);
         if (img && img.complete && img.naturalWidth > 0) {
             const maxW = Math.max(18, sz.w * this.CELL_W * 0.35 * this.scale);
@@ -947,17 +958,23 @@ class IsometricMap {
         
         let visibleFloors = [document.getElementById('select-floor')?.value || '0'];
         let isPlay = document.body.classList.contains('play-mode');
+        let isGrid = document.body.classList.contains('grid-mode');
+        let bgActive = (isPlay || isGrid) && targetLoc === 0;
+        
         if (isPlay && targetLoc === 0) {
             visibleFloors = ['0', '1'];
             const slocData = this.app?.parser?.ast?.children?.find(c => c.name === 'sublocations')?.elements?.[0]?.children?.find(c => c.name === 'currSLocData');
             if (slocData && slocData.value === 1) visibleFloors.push('2');
-            
+        } else if (isGrid) {
+            visibleFloors = ['0', '1', '2'];
+        }
+        
+        if (bgActive) {
             const bgImg = this.getBackgroundImage('../../Exportado_level2/level2_Ensamblado.png');
             if (bgImg && bgImg.complete && bgImg.width > 0) {
                 const s = 0.75 * this.scale;
-                const px = this.offsetX - (329 * s);
-                const py = this.offsetY - (926 * s);
-                ctx.drawImage(bgImg, px, py, bgImg.width * s, bgImg.height * s);
+                // Draw background starting at (0,0) of the world space
+                ctx.drawImage(bgImg, this.offsetX, this.offsetY, bgImg.width * s, bgImg.height * s);
             }
         }
         const targetFloor = visibleFloors[0];
@@ -1049,9 +1066,74 @@ class IsometricMap {
                 }
             }
 
-            if (!isPlay) {
+            if (!isPlay && !isGrid) {
                 ctx.globalAlpha = 0.25;
                 ctx.drawImage(this._floorGridCache, this._floorGridOriginX, this._floorGridOriginY);
+            } else if (isGrid && this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1) {
+                const surf = window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex];
+                if (surf.kind === 'floor') {
+                    ctx.save();
+                    ctx.globalAlpha = 0.5;
+                    ctx.strokeStyle = 'rgba(100, 255, 100, 0.9)';
+                    ctx.lineWidth = 1;
+                    const w = surf.cell.w || 64;
+                    const h = surf.cell.h || 32;
+                    for (let x = 0; x < surf.cols; x++) {
+                        for (let y = 0; y < surf.rows; y++) {
+                            const oX = surf.origin_px.x * 0.75;
+                            const oY = surf.origin_px.y * 0.75;
+                            const ix = oX + (x - y) * (w / 2);
+                            const iy = oY - (x + y) * (h / 2);
+                            
+                            ctx.beginPath();
+                            ctx.moveTo(ix, iy);
+                            ctx.lineTo(ix + w/2, iy - h/2);
+                            ctx.lineTo(ix, iy - h);
+                            ctx.lineTo(ix - w/2, iy - h/2);
+                            ctx.closePath();
+                            ctx.stroke();
+                        }
+                    }
+                    ctx.restore();
+                } else if (surf.kind === 'wall') {
+                    ctx.save();
+                    ctx.globalAlpha = 0.5;
+                    ctx.strokeStyle = surf.flipped ? 'rgba(255, 100, 100, 0.9)' : 'rgba(100, 100, 255, 0.9)';
+                    ctx.lineWidth = 1;
+                    const w = surf.cell.w || 64;
+                    const h = surf.cell.h || 32;
+                    for (let x = 0; x < surf.cols; x++) {
+                        for (let y = 0; y < surf.rows; y++) {
+                            const oX = surf.origin_px.x * 0.75;
+                            const oY = surf.origin_px.y * 0.75;
+                            // Wall coordinates
+                            // In Tsuki, walls are drawn vertically. 
+                            let ix, iy;
+                            if (!surf.flipped) {
+                                ix = oX + (x - 0) * (w / 2);
+                                iy = oY - (x + 0) * (h / 2) - y * h;
+                            } else {
+                                ix = oX + (0 - x) * (w / 2);
+                                iy = oY - (0 + x) * (h / 2) - y * h;
+                            }
+                            
+                            ctx.beginPath();
+                            ctx.moveTo(ix, iy);
+                            if (!surf.flipped) {
+                                ctx.lineTo(ix + w/2, iy - h/2);
+                                ctx.lineTo(ix + w/2, iy - h/2 - h);
+                                ctx.lineTo(ix, iy - h);
+                            } else {
+                                ctx.lineTo(ix - w/2, iy - h/2);
+                                ctx.lineTo(ix - w/2, iy - h/2 - h);
+                                ctx.lineTo(ix, iy - h);
+                            }
+                            ctx.closePath();
+                            ctx.stroke();
+                        }
+                    }
+                    ctx.restore();
+                }
             }
             ctx.restore();
 
@@ -1369,7 +1451,7 @@ class IsometricMap {
             };
         } else if (p.isWall) {
             const sz = this.getWallSize(p.item_id);
-            center = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, !!p.flipped, this._wallRoomBBox);
+            center = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, !!p.flipped, this._wallRoomBBox, p.floor);
         } else {
             const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
             center = this._tileCenter(p.x, p.y, w, l);
@@ -1516,11 +1598,23 @@ class IsometricMap {
         }, { passive: false });
 
         this.canvas.addEventListener('mousedown', e => {
+            let isGrid = document.body.classList.contains('grid-mode');
+            
             if (e.button === 1 || e.shiftKey || e.button === 2) {
                 this.isPanDragging = true;
                 this.dragStartX    = e.clientX - this.offsetX;
                 this.dragStartY    = e.clientY - this.offsetY;
             } else if (e.button === 0) {
+                if (isGrid && this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1) {
+                    this.isGridDragging = true;
+                    this.dragStartX = e.clientX;
+                    this.dragStartY = e.clientY;
+                    const surf = window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex];
+                    this.gridStartOriginX = surf.origin_px.x;
+                    this.gridStartOriginY = surf.origin_px.y;
+                    return;
+                }
+
                   if (this.hoveredPlacement) {
                       this.selectedPlacement = this.hoveredPlacement;
                       this.app.openItemEditor(this.selectedPlacement);
@@ -1555,6 +1649,21 @@ class IsometricMap {
                 this.offsetX = e.clientX - this.dragStartX;
                 this.offsetY = e.clientY - this.dragStartY;
                 this.draw();
+                return;
+            }
+            if (this.isGridDragging && this.app.gridEditor) {
+                const surf = window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex];
+                if (surf) {
+                    // Mover la grilla en píxeles. Puesto que la cámara puede estar escalada,
+                    // el desplazamiento del mouse (dx, dy) en pantalla corresponde a (dx/scale, dy/scale)
+                    // en el espacio no escalado. Y porque 'origin_px' asume un espacio escalado por 0.75,
+                    // la escala total es 0.75 * this.scale
+                    const dx = e.clientX - this.dragStartX;
+                    const dy = e.clientY - this.dragStartY;
+                    surf.origin_px.x = this.gridStartOriginX + dx / (0.75 * this.scale);
+                    surf.origin_px.y = this.gridStartOriginY + dy / (0.75 * this.scale);
+                    this.draw();
+                }
                 return;
             }
 
