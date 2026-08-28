@@ -163,7 +163,136 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         return `#${id}`;
     }
 
-    initDOM() {
+    
+    togglePlayInventory(invType) {
+        const panel = document.getElementById('play-inventory-panel');
+        if (!panel) return;
+        if (panel.style.display === 'flex' && this._currentPlayInvType === invType) {
+            panel.style.display = 'none';
+            this._currentPlayInvType = null;
+        } else {
+            panel.style.display = 'flex';
+            this._currentPlayInvType = invType;
+            this.renderPlayInventory(invType);
+        }
+    }
+
+    renderPlayInventory(invType) {
+        const panel = document.getElementById('play-inventory-panel');
+        if (!panel) return;
+        panel.innerHTML = '';
+        
+        if (!this.parser) return;
+        if (!this.parser.inventory || this.parser.inventory.length === 0) {
+            if (typeof this.parser.parseInventory === 'function') {
+                this.parser.parseInventory();
+            }
+        }
+        
+        const items = (this.parser.inventory || []).filter(i => {
+            if (i.qty <= 0 || i.item_id === -1) return false;
+            if (invType === 1) {
+                // Include regular furniture (1), wall (2), and floor/pedestals (3)
+                return [1, 2, 3].includes(Number(i.invType));
+            }
+            return Number(i.invType) === Number(invType);
+        });
+        
+        if (items.length === 0) {
+            panel.innerHTML = '<div style="width:100%; text-align:center; margin-top:20px; color:rgba(0,0,0,0.5);">La mochila está vacía.</div>';
+            return;
+        }
+        
+        items.forEach(item => {
+            const div = document.createElement('div');
+            div.style.width = '60px';
+            div.style.height = '60px';
+            div.style.background = 'rgba(255,255,255,0.7)';
+            div.style.border = '2px solid rgba(0,0,0,0.2)';
+            div.style.borderRadius = '10px';
+            div.style.position = 'relative';
+            div.style.cursor = 'grab';
+            div.style.display = 'flex';
+            div.style.alignItems = 'center';
+            div.style.justifyContent = 'center';
+            div.draggable = true;
+            
+            const imgObj = this.map ? this.map.getImage(item.item_id, 0) : null;
+            if (imgObj && imgObj.complete) {
+                const img = document.createElement('img');
+                img.src = imgObj.src;
+                img.style.maxWidth = '80%';
+                img.style.maxHeight = '80%';
+                div.appendChild(img);
+            } else {
+                div.textContent = item.item_id;
+                div.style.fontSize = '12px';
+            }
+            
+            const qty = document.createElement('div');
+            qty.textContent = 'x' + item.qty;
+            qty.style.position = 'absolute';
+            qty.style.bottom = '2px';
+            qty.style.right = '4px';
+            qty.style.fontSize = '12px';
+            qty.style.fontWeight = 'bold';
+            qty.style.color = '#fff';
+            qty.style.textShadow = '1px 1px 2px #000';
+            div.appendChild(qty);
+            
+            div.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('application/json', JSON.stringify({
+                    item_id: item.item_id,
+                    invType: invType
+                }));
+                div.style.opacity = '0.5';
+            });
+            div.addEventListener('dragend', () => {
+                div.style.opacity = '1';
+            });
+            
+            panel.appendChild(div);
+        });
+    }
+
+    pickupSelectedPlacement() {
+        if (!this.map || !this.map.selectedPlacement) return;
+        const p = this.map.selectedPlacement;
+        if (p.item_id === -1) return;
+        
+        // Return to inventory
+        try {
+            let targetInvType = 1;
+            if (this.map.SEED_IDS && this.map.SEED_IDS.has(p.item_id)) {
+                targetInvType = 4;
+            }
+            
+            this.parser.injectInventoryItem(p.item_id, 1, false, targetInvType);
+        } catch (e) {
+            console.warn("Could not return item to inventory:", e);
+        }
+        
+        // Remove from placements
+        const idx = this.parser.placements.indexOf(p);
+        if (idx !== -1) {
+            this.parser.placements.splice(idx, 1);
+        }
+        
+        this.map.selectedPlacement = null;
+        this.map.draw();
+        if (this._currentPlayInvType !== null) {
+            this.renderPlayInventory(this._currentPlayInvType);
+        }
+    }
+
+        initDOM() {
+        const btnItems = document.getElementById('btn-hud-items');
+        if (btnItems) btnItems.addEventListener('click', () => this.togglePlayInventory(0));
+        const btnFurn = document.getElementById('btn-hud-furn');
+        if (btnFurn) btnFurn.addEventListener('click', () => this.togglePlayInventory(1));
+        const btnPickup = document.getElementById('btn-float-pickup');
+        if (btnPickup) btnPickup.addEventListener('click', () => this.pickupSelectedPlacement());
+
         this.dropZone    = document.getElementById('drop-zone');
         this.fileInput   = document.getElementById('file-input');
         this.appContainer= document.getElementById('app-container');
