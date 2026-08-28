@@ -944,6 +944,13 @@
                                     <input type="number" id="grid-cell-h" min="4" max="256" step="1" value="32" style="width:56px;">
                                 </div>
                             </div>
+                            <div style="margin-top:10px;">
+                                <label style="display:block; margin-bottom:4px;">Escala fondo (bgScale):</label>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <input type="range" id="grid-bg-scale-range" min="0.2" max="3.0" step="0.01" value="0.75" style="flex:1;">
+                                    <input type="number" id="grid-bg-scale-num" min="0.2" max="3.0" step="0.01" value="0.75" style="width:60px;">
+                                </div>
+                            </div>
                             <button id="btn-save-atlas" class="btn-primary" style="width:100%; margin-top:10px;">Descargar maps_atlas.js</button>
                             <p style="font-size:12px; margin-bottom:0; margin-top:10px; color:#666;">Arrastra en el canvas para mover la grilla activa.</p>
                         </div>

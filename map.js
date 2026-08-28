@@ -300,7 +300,7 @@ class IsometricMap {
         const surf = this.getAtlasSurface('floor', floorNum);
         if (surf) {
             // Convert PNG pixel coordinate to unscaled isometric coordinate
-            return { x: surf.origin_px.x * 0.75, y: surf.origin_px.y * 0.75 };
+            return { x: surf.origin_px.x * (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75), y: surf.origin_px.y * (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) };
         }
         return { x: 0, y: 0 };
     }
@@ -486,7 +486,7 @@ class IsometricMap {
         if (window.mapsAtlas) {
             const surf = window.mapsAtlas.find(s => s.kind === 'wall' && Number(s.groupNum) === Number(floorNum) && !!s.flipped === !!flipped);
             if (surf) {
-                return { x: surf.origin_px.x * 0.75, y: surf.origin_px.y * 0.75 };
+                return { x: surf.origin_px.x * (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75), y: surf.origin_px.y * (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) };
             }
         }
         return null;
@@ -998,7 +998,8 @@ class IsometricMap {
         if (bgActive) {
             const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
             if (bgImg && bgImg.complete && bgImg.width > 0) {
-                const s = 0.75 * this.scale;
+                const bgScale = (window.atlasConfig && window.atlasConfig.bgScale) ? window.atlasConfig.bgScale : 0.75;
+                const s = bgScale * this.scale;
                 // Draw background starting at (0,0) of the world space
                 ctx.drawImage(bgImg, this.offsetX, this.offsetY, bgImg.width * s, bgImg.height * s);
             }
@@ -1106,8 +1107,8 @@ class IsometricMap {
                     const h = surf.cell.h || 32;
                     for (let x = 0; x < surf.cols; x++) {
                         for (let y = 0; y < surf.rows; y++) {
-                            const oX = surf.origin_px.x * 0.75;
-                            const oY = surf.origin_px.y * 0.75;
+                            const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75); const oX = surf.origin_px.x * _bgo;
+                            const oY = surf.origin_px.y * _bgo;
                             const ix = oX + (x - y) * (w / 2);
                             const iy = oY - (x + y) * (h / 2);
                             
@@ -1130,8 +1131,8 @@ class IsometricMap {
                     const h = surf.cell.h || 32;
                     for (let x = 0; x < surf.cols; x++) {
                         for (let y = 0; y < surf.rows; y++) {
-                            const oX = surf.origin_px.x * 0.75;
-                            const oY = surf.origin_px.y * 0.75;
+                            const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75); const oX = surf.origin_px.x * _bgo;
+                            const oY = surf.origin_px.y * _bgo;
                             // Wall coordinates
                             // In Tsuki, walls are drawn vertically. 
                             let ix, iy;
@@ -1164,10 +1165,11 @@ class IsometricMap {
             ctx.restore();
 
             // Grilla de paredes del PISO seleccionado (groupNum === select-floor)
-            this._drawIsoWallGrids(targetLoc, targetFloor);
+            if (!isGrid) this._drawIsoWallGrids(targetLoc, targetFloor);
 
             const all = this.app.parser.placements.filter(
-                p => p.floor === targetFloor && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
+                p => (isGrid ? visibleFloors.includes(String(p.floor)) : (p.floor === targetFloor))
+                    && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
             );
 
             const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
