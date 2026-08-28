@@ -679,6 +679,61 @@ class IsometricMap {
         this.ctx.restore();
     }
 
+
+    _hitTestPlayFloors(screenX, screenY) {
+        if (!window.mapsAtlas) return null;
+        // Solo modo jugar
+        if (!document.body.classList.contains('play-mode')) return null;
+        
+        // Iteramos de arriba hacia abajo (Grp 2 -> 1 -> 0) para chequear superposición visual
+        for (let g = 2; g >= 0; g--) {
+            const surf = window.mapsAtlas.find(s => s.kind === 'floor' && s.groupNum === g);
+            if (surf) {
+                const off = this.getFloorOffset(g);
+                // Inversión geométrica isométrica
+                const dx = (screenX - this.offsetX) / this.scale - off.x;
+                const dy = (screenY - this.offsetY) / this.scale - off.y;
+                
+                // isoX = (x - y) * (W/2)
+                // isoY = -(x + y) * (H/2)
+                // x - y = dx / (W/2)
+                // x + y = -dy / (H/2)
+                // 2x = dx/(W/2) - dy/(H/2) => x = (dx/(W/2) - dy/(H/2))/2
+                // 2y = -dy/(H/2) - dx/(W/2) => y = -(dy/(H/2) + dx/(W/2))/2
+                const cx = (dx / (this.CELL_W / 2) - dy / (this.CELL_H / 2)) / 2;
+                const cy = -(dy / (this.CELL_H / 2) + dx / (this.CELL_W / 2)) / 2;
+                
+                const gridX = Math.floor(cx);
+                const gridY = Math.floor(cy);
+                
+                if (gridX >= 0 && gridX < surf.cols && gridY >= 0 && gridY < surf.rows) {
+                    return { floorNum: g, x: gridX, y: gridY };
+                }
+            }
+        }
+        return null;
+    }
+
+    _isAreaOccupied(floor, x, y, w, l) {
+        if (!this.app || !this.app.parser) return false;
+        const targetLocStr = document.getElementById('select-location')?.value;
+        const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
+        
+        for (const p of this.app.parser.placements) {
+            if (p.cluster !== targetLoc || p.isWall || p.item_id === -1) continue;
+            if (Number(p.floor) !== Number(floor)) continue;
+            if (p === this.isItemDragging) continue; // Si estamos arrastrando uno existente
+            
+            const sz = this.getRotatedSize(p.item_id, p.orientation);
+            // Footprint de p: p.x hasta p.x + sz.w, p.y hasta p.y + sz.l
+            // Footprint de arrastre: x hasta x + w, y hasta y + l
+            if (x < p.x + sz.w && x + w > p.x && y < p.y + sz.l && y + l > p.y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     _hitTestIsoWalls(screenX, screenY, targetFloor, targetLoc) {
         const found = [];
         if (screenX == null || screenY == null || !this.app || !this.app.parser) return found;
@@ -1613,6 +1668,99 @@ class IsometricMap {
             } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
                 this.rotateSelected(-1);
                 e.preventDefault();
+            }
+        });
+
+        
+        this.canvas.addEventListener('dragover', e => {
+            if (!document.body.classList.contains('play-mode')) return;
+            e.preventDefault(); // Permitir drop
+            
+            const rect = this.canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            const hit = this._hitTestPlayFloors(mouseX, mouseY);
+            if (hit) {
+                // Leer datos arrastrados, pero dataTransfer no está disponible en dragover para leer el JSON completo en Chrome a veces.
+                // Usaremos un hack local si es necesario, pero por ahora solo mostraremos un snap genérico o no mostraremos fantasma si no sabemos el tamaño.
+                // Como workaround, guardaremos el item arrastrado en la instancia si viene de la mochila.
+                if (this.draggedInventoryItem) {
+                    const item_id = this.draggedInventoryItem.item_id;
+                    const { w, l } = this.getRotatedSize(item_id, 0);
+                    this.isItemDragging = {
+                        item_id: item_id,
+                        x: hit.x,
+                        y: hit.y,
+                        floor: hit.floorNum,
+                        orientation: 0
+                    };
+                    this.isItemDragging.occupied = this._isAreaOccupied(hit.floorNum, hit.x, hit.y, w, l);
+                    this.draw();
+                }
+            } else {
+                this.isItemDragging = null;
+                this.draw();
+            }
+        });
+
+        this.canvas.addEventListener('dragleave', e => {
+            this.isItemDragging = null;
+            this.draw();
+        });
+
+        this.canvas.addEventListener('drop', e => {
+            if (!document.body.classList.contains('play-mode')) return;
+            e.preventDefault();
+            this.isItemDragging = null;
+            this.draw();
+            
+            try {
+                const data = JSON.parse(e.dataTransfer.getData('application/json'));
+                if (!data || !data.item_id) return;
+                
+                const rect = this.canvas.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                
+                const hit = this._hitTestPlayFloors(mouseX, mouseY);
+                if (hit) {
+                    const { w, l } = this.getRotatedSize(data.item_id, 0);
+                    if (this._isAreaOccupied(hit.floorNum, hit.x, hit.y, w, l)) {
+                        console.warn("Posición ocupada.");
+                        return; // Ocupado
+                    }
+                    
+                    // Colocar!
+                    const targetLocStr = document.getElementById('select-location')?.value;
+                    const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
+                    
+                    const newPlacement = {
+                        item_id: data.item_id,
+                        x: hit.x,
+                        y: hit.y,
+                        floor: hit.floorNum,
+                        orientation: 0,
+                        cluster: targetLoc,
+                        isWall: false,
+                        flipped: false
+                    };
+                    
+                    // Descontar del inventario
+                    const invArray = this.app.parser.inventory;
+                    const slotIdx = invArray.findIndex(i => i.item_id === data.item_id && i.invType == data.invType && i.qty > 0);
+                    if (slotIdx !== -1) {
+                        this.app.parser.updateInventoryItem('inventory', slotIdx, data.item_id, invArray[slotIdx].qty - 1, data.invType);
+                        this.app.parser.placements.push(newPlacement);
+                        this.selectedPlacement = newPlacement;
+                        this.draw();
+                        if (this.app._currentPlayInvType !== null) {
+                            this.app.renderPlayInventory(this.app._currentPlayInvType);
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error("Error on drop", err);
             }
         });
 
