@@ -676,7 +676,7 @@ class IsometricMap {
         return found;
     }
 
-    _pathWallCell(wx, wy, ww, wh, flipped, bbox) {
+    _pathWallCell(wx, wy, ww, wh, flipped, bbox, floorNum = 0) {
         const box = bbox || this._wallRoomBBox;
         const bl = this.getWallIsoCoords(wx, wy, flipped, box, floorNum);
         const br = this.getWallIsoCoords(wx + ww, wy, flipped, box, floorNum);
