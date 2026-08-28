@@ -96,15 +96,8 @@ class TsukiPort {
         items.forEach(item => {
             const div = document.createElement('div');
             div.className = 'bag-inv-slot';
-            
-            const imgObj = this.app.map ? this.app.map.getImage(item.item_id, 0) : null;
-            if (imgObj && imgObj.complete && imgObj.naturalWidth > 0) {
-                const img = document.createElement('img');
-                img.src = imgObj.src;
-                div.appendChild(img);
-            } else {
-                div.textContent = item.item_id;
-            }
+            const typeStr = item.invType === 0 ? 'item' : 'furn';
+            div.innerHTML = window.getSafeImageHTML(item.item_id, typeStr, 'style="max-width:70%; max-height:70%;"');
             
             const qty = document.createElement('div');
             qty.className = 'bag-inv-qty';
@@ -191,13 +184,12 @@ class TsukiPort {
             const div = document.createElement('div');
             div.className = 'hammer-inv-slot';
             div.draggable = true;
+            const typeStr = item.invType === 0 ? 'item' : 'furn';
+            div.innerHTML = window.getSafeImageHTML(item.item_id, typeStr, 'style="max-width:80%; max-height:80%;"');
             
+            // Allow dragging (keep existing imgObj logic for dragImage)
             const imgObj = this.app.map ? this.app.map.getImage(item.item_id, 0) : null;
-            if (imgObj && imgObj.complete && imgObj.naturalWidth > 0) {
-                const img = document.createElement('img');
-                img.src = imgObj.src;
-                div.appendChild(img);
-                
+            if (true) {
                 div.addEventListener('dragstart', (e) => {
                     e.dataTransfer.setData('application/json', JSON.stringify({
                         item_id: item.item_id,
