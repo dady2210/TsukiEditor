@@ -678,10 +678,10 @@ class IsometricMap {
 
     _pathWallCell(wx, wy, ww, wh, flipped, bbox) {
         const box = bbox || this._wallRoomBBox;
-        const bl = this.getWallIsoCoords(wx, wy, flipped, box, flipped ? (walls[0]?.floor || 0) : (walls[0]?.floor || 0));
-        const br = this.getWallIsoCoords(wx + ww, wy, flipped, box);
-        const tr = this.getWallIsoCoords(wx + ww, wy + wh, flipped, box);
-        const tl = this.getWallIsoCoords(wx, wy + wh, flipped, box);
+        const bl = this.getWallIsoCoords(wx, wy, flipped, box, floorNum);
+        const br = this.getWallIsoCoords(wx + ww, wy, flipped, box, floorNum);
+        const tr = this.getWallIsoCoords(wx + ww, wy + wh, flipped, box, floorNum);
+        const tl = this.getWallIsoCoords(wx, wy + wh, flipped, box, floorNum);
         this.ctx.beginPath();
         this.ctx.moveTo(bl.x, bl.y);
         this.ctx.lineTo(br.x, br.y);
