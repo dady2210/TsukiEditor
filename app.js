@@ -204,6 +204,49 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this.editSeedSelect = document.getElementById('edit-seed-select');
 
         this.bindEvents();
+        window.addEventListener("hashchange", () => this.handleRouting());
+        this.handleRouting();
+    }
+
+    handleRouting() {
+        const hash = window.location.hash || '#/editor';
+        const isPlay = hash.startsWith('#/play');
+        
+        if (isPlay) {
+            document.body.classList.add('play-mode');
+            document.getElementById('nav-editor').className = 'btn-secondary';
+            document.getElementById('nav-play').className = 'btn-primary';
+            if (this.parser && this.map) {
+                // Forzar mapa 0 y dibujar
+                const locSelect = document.getElementById('select-location');
+                if (locSelect) {
+                    locSelect.value = "0";
+                    locSelect.dispatchEvent(new Event('change'));
+                }
+                const carrots = this.parser.generalVars && this.parser.generalVars.carrots ? this.parser.generalVars.carrots.value : 0;
+                document.getElementById('hud-carrots').textContent = carrots;
+                this.map.draw();
+                // We must also ensure we switch to tab-map conceptually so canvas renders correctly?
+                // Wait, play-mode CSS forces #tab-map to be visible and hides others, but map.js might check tab visibility.
+                // We should simulate clicking the map tab to ensure variables are set.
+                const mapBtn = document.querySelector('[data-target="tab-map"]');
+                if (mapBtn && !mapBtn.classList.contains('active')) {
+                    mapBtn.click();
+                }
+            } else {
+                // No hay save cargado. Mostrar dropzone y forzar hud vacio.
+                document.getElementById('hud-carrots').textContent = 0;
+            }
+        } else {
+            document.body.classList.remove('play-mode');
+            document.getElementById('nav-editor').className = 'btn-primary';
+            document.getElementById('nav-play').className = 'btn-secondary';
+            document.getElementById('nav-editor').className = 'btn-primary';
+            document.getElementById('nav-play').className = 'btn-secondary';
+            if (this.parser && this.map) {
+                this.map.draw();
+            }
+        }
     }
 
     updateInvDatalist() {
@@ -530,8 +573,10 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
 
         // Map
-        this.selectLocation.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); if (this.renderWallpapersTab) this.renderWallpapersTab(); });
-        this.selectFloor.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw(); });
+        this.selectLocation.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw();
+                document.getElementById('nav-play').className = 'btn-primary'; if (this.renderWallpapersTab) this.renderWallpapersTab(); });
+        this.selectFloor.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw();
+                document.getElementById('nav-play').className = 'btn-primary'; });
 
         document.querySelectorAll('input[name="map-layer"]').forEach(radio => {
             radio.addEventListener('change', e => {
@@ -790,6 +835,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 setTimeout(() => {
                     this.map.resize();
                     this.reportUnknownItems();
+                    this.handleRouting();
                 }, 100);
 
             } catch (err) {
@@ -3666,3 +3712,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Wait a tick to ensure App constructor has run
     setTimeout(() => { window.sizeEditor = new SizeEditor(); }, 50);
 });
+
+
+
+
+
+
+
+

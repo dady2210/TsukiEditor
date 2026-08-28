@@ -693,3 +693,52 @@ canvas:active { cursor: grabbing; }
         grid-template-columns: 1fr !important;
     }
 }
+
+/* --- W2: PLAY MODE --- */
+body.play-mode #shell-nav {
+    position: absolute;
+    top: 10px; left: 10px;
+    z-index: 10000;
+}
+body.play-mode .top-header,
+body.play-mode .sidebar {
+    display: none !important;
+}
+body.play-mode .main-layout {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+}
+body.play-mode .content-area {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+}
+body.play-mode .tab-content {
+    display: none !important;
+}
+body.play-mode #tab-map {
+    display: flex !important;
+    flex-direction: column;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100vh;
+}
+body.play-mode .map-controls,
+body.play-mode .controls-overlay,
+body.play-mode #floating-rotation-ui,
+body.play-mode .item-editor {
+    display: none !important;
+}
+body.play-mode .canvas-container {
+    border-radius: 0 !important;
+    height: 100vh !important;
+    width: 100vw !important;
+}
+body.play-mode #play-hud {
+    display: block !important;
+}
+

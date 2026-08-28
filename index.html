@@ -12,12 +12,19 @@
 <body>
 
     <!-- ── Drop Zone ── -->
-    <div id="drop-zone" class="rustic-panel active">
+    <nav id="shell-nav" class="rustic-panel" style="display:flex; justify-content:center; gap:20px; padding: 10px; margin: 10px; z-index: 10000; position: relative;">
+    <a href="#/editor" class="btn-primary" id="nav-editor">Editor</a>
+    <a href="#/play" class="btn-secondary" id="nav-play">Jugar</a>
+</nav>
+
+<div id="drop-zone" class="rustic-panel active">
         <div class="drop-content">
             <span class="material-symbols-outlined bounce-icon" style="font-size:72px;margin-bottom:1rem;color:var(--accent);">save</span>
             <h2>Arrastra tu archivo <code>.csave</code> aquí</h2>
             <p>o haz clic para seleccionar</p>
             <input type="file" id="file-input" accept=".csave" hidden>
+            <br><br>
+            <button id="btn-new-game" class="btn-primary" disabled title="A�n no implementado">Nueva Partida</button>
         </div>
     </div>
 
@@ -897,6 +904,10 @@
 
                     <div class="canvas-container wood-texture" style="position:relative; overflow:hidden;">
                         <canvas id="map-canvas"></canvas>
+                        <!-- Play HUD -->
+                        <div id="play-hud" style="display: none; position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 20px; font-weight: bold; font-family: 'Quicksand', sans-serif; z-index: 9999; pointer-events: none; border: 2px solid #FF9800; text-shadow: 1px 1px 2px black;">
+                            <span style="color: #FF9800;">Modo Jugar</span> | <span id="hud-carrots">0</span> dY?A
+                        </div>
 
                         <!-- Floating rotation buttons -->
                         <div id="floating-rotation-ui" class="hidden" style="position:absolute; display:flex; gap:0.5rem; transform:translate(-50%, -100%); pointer-events:auto; z-index:9999;">
@@ -1230,7 +1241,7 @@
     <script src="odin_browser.js?v=3"></script>
     <!-- App logic -->
     <script src="parser.js?v=20260825-wallfloor"></script>
-    <script src="map.js?v=25"></script>
+    <script src="map.js?v=27"></script>
     <script src="app.js?v=10"></script>
     <!-- Experimental features -->
     <script src="patch_experimental.js?v=4"></script>
@@ -1411,3 +1422,8 @@
     </div>
 </body>
 </html>
+
+
+
+
+
