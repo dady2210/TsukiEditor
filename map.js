@@ -511,7 +511,7 @@ class IsometricMap {
         // Paredes traseras: 
         // Si flipped == true (Pared Derecha), avanza a lo largo de x (varía wx), y se ancla al fondo en box.ymin
         // Si flipped == false (Pared Izquierda), avanza a lo largo de y (varía wx), y se ancla al fondo en box.xmin
-        const base = flipped ? this.getIsoCoords(box.xmin, wx, floorNum) : this.getIsoCoords(wx, box.ymin, floorNum);
+        const base = flipped ? this.getIsoCoords(wx, box.ymax, floorNum) : this.getIsoCoords(box.xmax, wx, floorNum);
             
         // If the wall has a custom offset, we SUBTRACT the floor offset and ADD the wall offset
         const customWallOffset = this.getWallOffset(floorNum, flipped);
@@ -576,13 +576,13 @@ class IsometricMap {
         // isoY = base.y - wy * this.CELL_H => wy = (base.y - isoY) / this.CELL_H
         
         if (flipped) {
-            const wx = box.xmin - isoX / hw;
-            const baseY = -(box.xmin + wx) * hh;
+            const wx = isoX / hw + box.ymax;
+            const baseY = -(wx + box.ymax) * hh;
             const wy = (baseY - isoY) / this.CELL_H;
             return { x: wx, y: wy };
         } else {
-            const wx = isoX / hw + box.ymin;
-            const baseY = -(wx + box.ymin) * hh;
+            const wx = box.xmax - isoX / hw;
+            const baseY = -(box.xmax + wx) * hh;
             const wy = (baseY - isoY) / this.CELL_H;
             return { x: wx, y: wy };
         }
@@ -997,7 +997,7 @@ class IsometricMap {
             this.ctx.restore();
 
             const top = this.getWallIsoCoords((along0 + along1) / 2, wallH + 0.4, flipped, bbox, targetFloor);
-            const side = flipped ? 'izq' : 'der';
+            const side = flipped ? 'der' : 'izq';
             const label = wps.length
                 ? `Pared ${side} Â· WP ${wps.map(w => w.id).join(', ')}`
                 : `Pared ${side}`;
@@ -1050,7 +1050,7 @@ class IsometricMap {
         this.ctx.textBaseline = 'top';
         this.ctx.shadowColor = 'rgba(0,0,0,0.8)';
         this.ctx.shadowBlur = 3;
-        this.ctx.fillText(`ID ${p.item_id}${flipped ? ' izq' : ' der'}`, mid.x, mid.y + 6 * this.scale);
+        this.ctx.fillText(`ID ${p.item_id}${flipped ? ' der' : ' izq'}`, mid.x, mid.y + 6 * this.scale);
         this.ctx.restore();
     }
 
