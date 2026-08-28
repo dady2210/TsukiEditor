@@ -891,7 +891,7 @@ class IsometricMap {
             this.ctx.strokeStyle = flipped ? 'rgba(255, 160, 80, 0.85)' : 'rgba(110, 190, 255, 0.85)';
             this.ctx.lineWidth = 1;
             this.ctx.globalAlpha = 0.5;
-            if (!document.body.classList.contains('play-mode')) {
+            if (!document.body.classList.contains('play-mode') && !document.body.classList.contains('grid-mode')) {
                 for (let x = along0; x < along1; x++) {
                     for (let y = 0; y < wallH; y++) {
                         this._pathWallCell(x, y, 1, 1, flipped, bbox, targetFloor);
