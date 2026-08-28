@@ -224,6 +224,11 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         document.getElementById('nav-play').className = 'btn-secondary';
         if (document.getElementById('nav-grid')) document.getElementById('nav-grid').className = 'btn-secondary';
         
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.style.display = isPlay ? 'none' : 'flex';
+        const content = document.querySelector('.content');
+        if (content) content.style.display = isPlay ? 'none' : 'block';
+        
         if (isPlay) {
             document.body.classList.add('play-mode');
             document.getElementById('nav-play').className = 'btn-primary';
@@ -245,7 +250,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     mapBtn.click();
                 }
             } else {
-                document.getElementById('hud-carrots').textContent = 0;
+                const hc = document.getElementById('port-hud-carrots');
+                if (hc) hc.textContent = 0;
             }
         } else if (isGrid) {
             document.body.classList.add('grid-mode');
