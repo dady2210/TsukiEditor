@@ -508,9 +508,12 @@ class IsometricMap {
         // Base coordinate without ANY offsets (force floorNum = -1 or bypass offset)
         const dummyFloorOffset = this.getFloorOffset(floorNum);
         
+        // Paredes traseras: 
+        // Si flipped == true (Pared Derecha), avanza a lo largo de x (varía wx), y se ancla al fondo en box.ymin
+        // Si flipped == false (Pared Izquierda), avanza a lo largo de y (varía wx), y se ancla al fondo en box.xmin
         const base = flipped
-            ? this.getIsoCoords(wx, box.ymax, floorNum)
-            : this.getIsoCoords(box.xmax, wx, floorNum);
+            ? this.getIsoCoords(wx, box.ymin, floorNum)
+            : this.getIsoCoords(box.xmin, wx, floorNum);
             
         // If the wall has a custom offset, we SUBTRACT the floor offset and ADD the wall offset
         const customWallOffset = this.getWallOffset(floorNum, flipped);
@@ -538,20 +541,53 @@ class IsometricMap {
     }
 
     // Inversa de getWallIsoCoords. flipped elige la cara (izq/der).
-    screenToWallGrid(screenX, screenY, flipped, bbox) {
+    screenToWallGrid(screenX, screenY, flipped, bbox, floorNum = 0) {
         const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: FLOOR_GRID_N, ymax: FLOOR_GRID_N };
-        const isoX = (screenX - this.offsetX) / this.scale;
-        const isoY = (screenY - this.offsetY) / this.scale;
-        const hw = this.CELL_W / 2;
-        const hh = this.CELL_H / 2;
+        
+        let cellW = this.CELL_W;
+        let cellH = this.CELL_H;
+        if (window.mapsAtlas) {
+            const surf = window.mapsAtlas.find(s => s.kind === 'floor' && String(s.groupNum) === String(floorNum));
+            if (surf && surf.cell) {
+                cellW = surf.cell.w || this.CELL_W;
+                cellH = surf.cell.h || this.CELL_H;
+            }
+        }
+        
+        const off = this.getFloorOffset(floorNum);
+        
+        // Convert screen to iso coordinates without scale/offset
+        const isoX = (screenX - this.offsetX) / this.scale - off.x;
+        let isoY = (screenY - this.offsetY) / this.scale - off.y;
+        
+        const hw = cellW / 2;
+        const hh = cellH / 2;
+        
+        // base.x = (x - y) * hw
+        // base.y = -(x + y) * hh
+        // return.y = base.y - wy * this.CELL_H
+        // 
+        // If flipped (Pared Derecha, y = box.ymin):
+        // isoX = (wx - box.ymin) * hw  =>  wx = isoX / hw + box.ymin
+        // base.y = -(wx + box.ymin) * hh
+        // isoY = base.y - wy * this.CELL_H => wy = (base.y - isoY) / this.CELL_H
+        
+        // If !flipped (Pared Izquierda, x = box.xmin):
+        // isoX = (box.xmin - wx) * hw  => wx = box.xmin - isoX / hw
+        // base.y = -(box.xmin + wx) * hh
+        // isoY = base.y - wy * this.CELL_H => wy = (base.y - isoY) / this.CELL_H
+        
         if (flipped) {
-            const wx = isoX / hw + box.ymax;
-            const wy = (-isoY - (wx + box.ymax) * hh) / this.CELL_H;
+            const wx = isoX / hw + box.ymin;
+            const baseY = -(wx + box.ymin) * hh;
+            const wy = (baseY - isoY) / this.CELL_H;
+            return { x: wx, y: wy };
+        } else {
+            const wx = box.xmin - isoX / hw;
+            const baseY = -(box.xmin + wx) * hh;
+            const wy = (baseY - isoY) / this.CELL_H;
             return { x: wx, y: wy };
         }
-        const wx = box.xmax - isoX / hw;
-        const wy = (-isoY - (box.xmax + wx) * hh) / this.CELL_H;
-        return { x: wx, y: wy };
     }
 
     _pointerToGrid(mouseX, mouseY, placement) {
@@ -563,7 +599,7 @@ class IsometricMap {
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
         if (placement && placement.isWall) {
-            if (!isWallLayer) return this.screenToWallGrid(mouseX, mouseY, !!placement.flipped);
+            if (!isWallLayer) return this.screenToWallGrid(mouseX, mouseY, !!placement.flipped, null, placement.floor);
             return {
                 x: (mouseX - 100) / this.gridSize,
                 y: (mouseY - 100) / this.gridSize
@@ -923,8 +959,8 @@ class IsometricMap {
                     
                     this.ctx.save();
                     // Shear for walls. 
-                    // Right wall (flipped=true): slope up-right. Shear Y by X. 
-                    // Left wall (flipped=false): slope up-left. Shear Y by -X.
+                    // Pared Derecha (flipped=true): slope up-right. Shear Y by X. 
+                    // Pared Izquierda (flipped=false): slope up-left. Shear Y by -X.
                     // The _pathWallCell sets up the path. The pattern transform applies to the bounding box.
                     const shearSlope = flipped ? -0.5 : 0.5;
                     const scaleFactor = 0.35;
@@ -963,7 +999,7 @@ class IsometricMap {
             this.ctx.restore();
 
             const top = this.getWallIsoCoords((along0 + along1) / 2, wallH + 0.4, flipped, bbox, targetFloor);
-            const side = flipped ? 'izq' : 'der';
+            const side = flipped ? 'der' : 'izq';
             const label = wps.length
                 ? `Pared ${side} Â· WP ${wps.map(w => w.id).join(', ')}`
                 : `Pared ${side}`;
