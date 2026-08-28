@@ -7,6 +7,9 @@ class TsukiPort {
         this.bottomBar = document.getElementById('play-bottom-bar');
         this.hammerUI = document.getElementById('hammer-ui');
         this.hammerInvPanel = document.getElementById('hammer-inv-panel');
+        this.bagUI = document.getElementById('bag-ui');
+        this.bagPanel = document.getElementById('bag-panel');
+        this.btnBagExit = document.getElementById('btn-bag-exit');
         this.btnHammerExit = document.getElementById('btn-hammer-exit');
         
         this.btnBag = document.getElementById('btn-port-bag');
@@ -24,6 +27,12 @@ class TsukiPort {
     }
     
     setupEvents() {
+        if (this.btnBag) {
+            this.btnBag.addEventListener('click', () => this.enterBagMode());
+        }
+        if (this.btnBagExit) {
+            this.btnBagExit.addEventListener('click', () => this.exitBagMode());
+        }
         if (this.btnHammer) {
             this.btnHammer.addEventListener('click', () => this.enterHammerMode());
         }
@@ -45,10 +54,8 @@ class TsukiPort {
         
         if (this.btnHammerFlip) {
             this.btnHammerFlip.addEventListener('click', () => {
-                const map = this.app.map;
-                if (map && map.selectedPlacement) {
-                    map.selectedPlacement.orientation = (map.selectedPlacement.orientation + 1) % 4;
-                    map.draw();
+                if (this.hammerUI) {
+                    this.hammerUI.classList.toggle('right-side');
                 }
             });
         }

@@ -817,3 +817,39 @@ body.play-mode #shell-nav { display: none !important; }
 body.play-mode { margin: 0; padding: 0; overflow: hidden; }
 body.play-mode .main-layout { margin: 0; padding: 0; height: 100vh; width: 100vw; }
 body.play-mode .content-area { margin: 0; border: none; border-radius: 0; }
+
+.hammer-ui-container.right-side .hammer-sidebar {
+    left: auto; right: 20px;
+}
+.hammer-ui-container.right-side .hammer-sidebar-panel {
+    left: auto; right: 110px;
+}
+
+.bag-ui-container {
+    position: fixed; bottom: 0; left: 0; width: 100%; height: 250px;
+    pointer-events: none; z-index: 9998; display: none; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 20px;
+}
+.bag-panel {
+    width: 90%; max-width: 800px; height: 180px;
+    background: #a9bba3; border: 4px dashed rgba(255,255,255,0.5); border-radius: 20px;
+    display: flex; flex-wrap: wrap; padding: 15px;
+    pointer-events: auto; overflow-y: auto; gap: 10px; align-content: flex-start;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+.bag-inv-slot {
+    width: 60px; height: 60px; background: rgba(255,255,255,0.6);
+    border-radius: 50%; position: relative; display: flex;
+    align-items: center; justify-content: center;
+}
+.bag-inv-slot img { max-width: 70%; max-height: 70%; }
+.bag-inv-qty {
+    position: absolute; bottom: 0; right: 0; font-size: 12px;
+    font-weight: bold; color: #333; background: white; border-radius: 10px; padding: 0 4px;
+}
+.btn-bag-exit {
+    position: absolute; bottom: -10px; right: 5%;
+    width: 50px; height: 50px; border-radius: 50%; background: #e57373;
+    border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 30px; font-weight: bold; cursor: pointer; pointer-events: auto;
+}

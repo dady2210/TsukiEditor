@@ -1304,7 +1304,7 @@ class IsometricMap {
             ctx.restore();
 
             // Grilla de paredes del PISO seleccionado (groupNum === select-floor)
-            if (!isGrid) this._drawIsoWallGrids(targetLoc, targetFloor);
+            if (!isGrid && this.isHammerMode && this.forceDrawGrid) this._drawIsoWallGrids(targetLoc, targetFloor);
 
             const all = this.app.parser.placements.filter(
                 p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
