@@ -19,3 +19,5 @@
 !data/
 !data/**
 !patch_experimental.js
+!csave_io.js
+!test_w1.js
