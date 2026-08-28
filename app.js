@@ -509,7 +509,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         let dragDepth = 0;
         window.addEventListener('dragenter', e => {
             if (!this.parser) return; // Solo tiene sentido con un save ya cargado
-            if (!e.dataTransfer || !e.dataTransfer.types || !Array.from(e.dataTransfer.types).includes('Files')) return;
+            if (!e.dataTransfer || !e.dataTransfer.types || !Array.from(e.dataTransfer.types).includes('Files') || Array.from(e.dataTransfer.types).includes('application/json')) return;
             dragDepth++;
             if (dropOverlay) dropOverlay.style.display = 'flex';
         });
