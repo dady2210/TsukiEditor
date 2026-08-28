@@ -503,24 +503,50 @@ class IsometricMap {
     }
 
     getWallIsoCoords(wx, wy, flipped, bbox, floorNum = 0) {
-        const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: FLOOR_GRID_N, ymax: FLOOR_GRID_N };
+        let isPlay = document.body.classList.contains('play-mode');
+        let isGrid = document.body.classList.contains('grid-mode');
         
-        // Base coordinate without ANY offsets (force floorNum = -1 or bypass offset)
+        // Si tenemos config en atlas, usamos ESA lógica directamente para que los muebles
+        // sigan 100% a la grilla roja del editor de atlas.
+        if (window.mapsAtlas && (isPlay || isGrid)) {
+            const surf = window.mapsAtlas.find(s => s.kind === 'wall' && String(s.groupNum) === String(floorNum) && !!s.flipped === !!flipped);
+            if (surf) {
+                const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                const oX = surf.origin_px.x * _bgo;
+                const oY = surf.origin_px.y * _bgo;
+                const cellW = surf.cell && surf.cell.w ? surf.cell.w : this.CELL_W;
+                const cellH = surf.cell && surf.cell.h ? surf.cell.h : this.CELL_H;
+                
+                let ix, iy;
+                if (!flipped) {
+                    ix = oX - wx * (cellW / 2);
+                    iy = oY - wx * (cellH / 2) - wy * cellH;
+                } else {
+                    ix = oX + wx * (cellW / 2);
+                    iy = oY - wx * (cellH / 2) - wy * cellH;
+                }
+                
+                return {
+                    x: ix * this.scale + this.offsetX,
+                    y: iy * this.scale + this.offsetY
+                };
+            }
+        }
+        
+        // Fallback al motor original 3D de _drawIsoWallRoom
+        const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 16, ymax: 16 };
         const dummyFloorOffset = this.getFloorOffset(floorNum);
-        
-        // Paredes traseras: 
-        // Si flipped == true (Pared Derecha), avanza a lo largo de x (varía wx), y se ancla al fondo en box.ymin
-        // Si flipped == false (Pared Izquierda), avanza a lo largo de y (varía wx), y se ancla al fondo en box.xmin
-        const base = flipped ? this.getIsoCoords(wx, box.ymax, floorNum) : this.getIsoCoords(box.xmax, wx, floorNum);
+        const base = flipped
+            ? this.getIsoCoords(wx, box.ymax, floorNum)
+            : this.getIsoCoords(box.xmax, wx, floorNum);
             
-        // If the wall has a custom offset, we SUBTRACT the floor offset and ADD the wall offset
         const customWallOffset = this.getWallOffset(floorNum, flipped);
         if (customWallOffset) {
             base.x = base.x - (dummyFloorOffset.x * this.scale) + (customWallOffset.x * this.scale);
             base.y = base.y - (dummyFloorOffset.y * this.scale) + (customWallOffset.y * this.scale);
         }
-
         return { x: base.x, y: base.y - wy * this.CELL_H * this.scale };
+    };
     }
 
     _sameFloor(p, targetFloor) {
@@ -540,40 +566,52 @@ class IsometricMap {
 
     // Inversa de getWallIsoCoords. flipped elige la cara (izq/der).
     screenToWallGrid(screenX, screenY, flipped, bbox, floorNum = 0) {
-        const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: FLOOR_GRID_N, ymax: FLOOR_GRID_N };
+        let isPlay = document.body.classList.contains('play-mode');
+        let isGrid = document.body.classList.contains('grid-mode');
         
-        let cellW = this.CELL_W;
-        let cellH = this.CELL_H;
-        if (window.mapsAtlas) {
-            const surf = window.mapsAtlas.find(s => s.kind === 'floor' && String(s.groupNum) === String(floorNum));
-            if (surf && surf.cell) {
-                cellW = surf.cell.w || this.CELL_W;
-                cellH = surf.cell.h || this.CELL_H;
+        if (window.mapsAtlas && (isPlay || isGrid)) {
+            const surf = window.mapsAtlas.find(s => s.kind === 'wall' && String(s.groupNum) === String(floorNum) && !!s.flipped === !!flipped);
+            if (surf) {
+                const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                const oX = surf.origin_px.x * _bgo;
+                const oY = surf.origin_px.y * _bgo;
+                const cellW = surf.cell && surf.cell.w ? surf.cell.w : this.CELL_W;
+                const cellH = surf.cell && surf.cell.h ? surf.cell.h : this.CELL_H;
+                
+                const ix = (screenX - this.offsetX) / this.scale;
+                const iy = (screenY - this.offsetY) / this.scale;
+                
+                // if !flipped:
+                // ix = oX - wx * cellW/2 => wx = (oX - ix) / (cellW/2)
+                // iy = oY - wx * cellH/2 - wy * cellH => wy = (oY - iy - wx * cellH/2) / cellH
+                
+                // if flipped:
+                // ix = oX + wx * cellW/2 => wx = (ix - oX) / (cellW/2)
+                
+                if (!flipped) {
+                    const wx = (oX - ix) / (cellW / 2);
+                    const wy = (oY - iy - wx * (cellH / 2)) / cellH;
+                    return { x: wx, y: wy };
+                } else {
+                    const wx = (ix - oX) / (cellW / 2);
+                    const wy = (oY - iy - wx * (cellH / 2)) / cellH;
+                    return { x: wx, y: wy };
+                }
             }
         }
         
+        // Fallback al motor original 3D de _drawIsoWallRoom
+        const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 16, ymax: 16 };
+        
+        let cellW = this.CELL_W;
+        let cellH = this.CELL_H;
         const off = this.getFloorOffset(floorNum);
         
-        // Convert screen to iso coordinates without scale/offset
         const isoX = (screenX - this.offsetX) / this.scale - off.x;
         let isoY = (screenY - this.offsetY) / this.scale - off.y;
         
         const hw = cellW / 2;
         const hh = cellH / 2;
-        
-        // base.x = (x - y) * hw
-        // base.y = -(x + y) * hh
-        // return.y = base.y - wy * this.CELL_H
-        // 
-        // If flipped (Pared Derecha, y = box.ymin):
-        // isoX = (wx - box.ymin) * hw  =>  wx = isoX / hw + box.ymin
-        // base.y = -(wx + box.ymin) * hh
-        // isoY = base.y - wy * this.CELL_H => wy = (base.y - isoY) / this.CELL_H
-        
-        // If !flipped (Pared Izquierda, x = box.xmin):
-        // isoX = (box.xmin - wx) * hw  => wx = box.xmin - isoX / hw
-        // base.y = -(box.xmin + wx) * hh
-        // isoY = base.y - wy * this.CELL_H => wy = (base.y - isoY) / this.CELL_H
         
         if (flipped) {
             const wx = isoX / hw + box.ymax;
@@ -585,6 +623,8 @@ class IsometricMap {
             const baseY = -(box.xmax + wx) * hh;
             const wy = (baseY - isoY) / this.CELL_H;
             return { x: wx, y: wy };
+        }
+    };
         }
     }
 
@@ -973,11 +1013,12 @@ class IsometricMap {
                 }
             }
             
-            if (!filledWithTex) {
+            if (!filledWithTex && !document.body.classList.contains('play-mode')) {
                 this.ctx.globalAlpha = 0.18;
                 this.ctx.fillStyle = flipped ? 'rgba(255, 160, 80, 1)' : 'rgba(110, 190, 255, 1)';
                 this._pathWallCell(along0, 0, alongLen, wallH, flipped, bbox);
                 this.ctx.fill();
+            }
             }
             
             this.ctx.restore();
