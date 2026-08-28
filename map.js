@@ -307,8 +307,18 @@ class IsometricMap {
 
     getIsoCoords(x, y, floorNum = 0) {
         const off = this.getFloorOffset(floorNum);
-        const isoX = (x - y) * (this.CELL_W / 2) + off.x;
-        const isoY = -(x + y) * (this.CELL_H / 2) + off.y; // Negative so it goes UP the screen
+        let cellW = this.CELL_W;
+        let cellH = this.CELL_H;
+        if (window.mapsAtlas) {
+            const surf = window.mapsAtlas.find(s => s.kind === 'floor' && String(s.groupNum) === String(floorNum));
+            if (surf && surf.cell) {
+                cellW = surf.cell.w || this.CELL_W;
+                cellH = surf.cell.h || this.CELL_H;
+            }
+        }
+        
+        const isoX = (x - y) * (cellW / 2) + off.x;
+        const isoY = -(x + y) * (cellH / 2) + off.y; // Negative so it goes UP the screen
         return {
             x: isoX * this.scale + this.offsetX,
             y: isoY * this.scale + this.offsetY,
@@ -694,14 +704,10 @@ class IsometricMap {
                 const dx = (screenX - this.offsetX) / this.scale - off.x;
                 const dy = (screenY - this.offsetY) / this.scale - off.y;
                 
-                // isoX = (x - y) * (W/2)
-                // isoY = -(x + y) * (H/2)
-                // x - y = dx / (W/2)
-                // x + y = -dy / (H/2)
-                // 2x = dx/(W/2) - dy/(H/2) => x = (dx/(W/2) - dy/(H/2))/2
-                // 2y = -dy/(H/2) - dx/(W/2) => y = -(dy/(H/2) + dx/(W/2))/2
-                const cx = (dx / (this.CELL_W / 2) - dy / (this.CELL_H / 2)) / 2;
-                const cy = -(dy / (this.CELL_H / 2) + dx / (this.CELL_W / 2)) / 2;
+                const cellW = surf.cell && surf.cell.w ? surf.cell.w : this.CELL_W;
+                const cellH = surf.cell && surf.cell.h ? surf.cell.h : this.CELL_H;
+                const cx = (dx / (cellW / 2) - dy / (cellH / 2)) / 2;
+                const cy = -(dy / (cellH / 2) + dx / (cellW / 2)) / 2;
                 
                 const gridX = Math.floor(cx);
                 const gridY = Math.floor(cy);
