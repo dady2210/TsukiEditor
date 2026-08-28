@@ -970,7 +970,7 @@ class IsometricMap {
         }
         
         if (bgActive) {
-            const bgImg = this.getBackgroundImage('../../Exportado_level2/level2_Ensamblado.png');
+            const bgImg = this.getBackgroundImage('Exportado_level2/level2_Ensamblado.png');
             if (bgImg && bgImg.complete && bgImg.width > 0) {
                 const s = 0.75 * this.scale;
                 // Draw background starting at (0,0) of the world space
