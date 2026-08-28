@@ -162,18 +162,6 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
         
         return `#${id}`;
-    }        
-        // Remove from placements
-        const idx = this.parser.placements.indexOf(p);
-        if (idx !== -1) {
-            this.parser.placements.splice(idx, 1);
-        }
-        
-        this.map.selectedPlacement = null;
-        this.map.draw();
-        if (this._currentPlayInvType !== null) {
-            this.renderPlayInventory(this._currentPlayInvType);
-        }
     }
 
         initDOM() {
