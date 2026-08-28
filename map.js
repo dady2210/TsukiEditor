@@ -988,9 +988,7 @@ class IsometricMap {
         let bgActive = (isPlay || isGrid) && targetLoc === 0;
         
         if (isPlay && targetLoc === 0) {
-            visibleFloors = ['0', '1'];
-            const slocData = this.app?.parser?.ast?.children?.find(c => c.name === 'sublocations')?.elements?.[0]?.children?.find(c => c.name === 'currSLocData');
-            if (slocData && slocData.value === 1) visibleFloors.push('2');
+            visibleFloors = ['0', '1', '2'];
         } else if (isGrid) {
             if (this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1) {
                 const surf = window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex];
@@ -1173,7 +1171,7 @@ class IsometricMap {
             if (!isGrid) this._drawIsoWallGrids(targetLoc, targetFloor);
 
             const all = this.app.parser.placements.filter(
-                p => p.floor === targetFloor && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
+                p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
             );
 
             const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
@@ -1321,7 +1319,13 @@ class IsometricMap {
             fillColor = isSelected ? '#ef4444' : isHovered ? '#f97316' : '#4A90D9';
         }
 
-        if (!lift) {
+        let hideBox = false;
+        if (document.body.classList.contains('play-mode') && !isSelected && !isHovered && layer !== 'ground') {
+            const _imgCheck = this.getImage(p.item_id, p.orientation);
+            if (_imgCheck) hideBox = true;
+        }
+
+        if (!lift && !hideBox) {
             ctx.save();
             ctx.globalAlpha = 0.25;
             this._drawDiamondPath(p.x + 0.1, p.y + 0.1, w, l, 1.5, p.floor);
@@ -1330,12 +1334,14 @@ class IsometricMap {
             ctx.restore();
         }
 
-        this._drawDiamondPath(p.x, p.y, w, l, layer === 'ground' ? 0 : (lift ? 3 : 2), p.floor);
-        ctx.fillStyle   = fillColor;
-        ctx.strokeStyle = isSelected ? '#ff2222' : isHovered ? '#ffaa00' : (lift ? 'rgba(180,120,40,0.5)' : 'rgba(0,0,0,0.4)');
-        ctx.lineWidth   = isSelected ? 2.5 : 1.5;
-        ctx.fill();
-        ctx.stroke();
+        if (!hideBox) {
+            this._drawDiamondPath(p.x, p.y, w, l, layer === 'ground' ? 0 : (lift ? 3 : 2), p.floor);
+            ctx.fillStyle   = fillColor;
+            ctx.strokeStyle = isSelected ? '#ff2222' : isHovered ? '#ffaa00' : (lift ? 'rgba(180,120,40,0.5)' : 'rgba(0,0,0,0.4)');
+            ctx.lineWidth   = isSelected ? 2.5 : 1.5;
+            ctx.fill();
+            ctx.stroke();
+        }
 
         if (layer === 'ground') {
             this._drawDirtTexture(p.x, p.y, w, l, p.floor);
