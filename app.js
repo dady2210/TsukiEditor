@@ -218,6 +218,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         document.getElementById('grid-hud').style.display = 'none';
         document.getElementById('nav-editor').className = 'btn-secondary';
         document.getElementById('nav-play').className = 'btn-secondary';
+        if (document.getElementById('nav-grid')) document.getElementById('nav-grid').className = 'btn-secondary';
         
         if (isPlay) {
             document.body.classList.add('play-mode');
