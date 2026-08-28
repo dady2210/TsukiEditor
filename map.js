@@ -1033,7 +1033,7 @@ class IsometricMap {
             }
             this.ctx.restore();
 
-            if (!document.body.classList.contains(\'play-mode\') && !document.body.classList.contains(\'grid-mode\')) {
+            if (!document.body.classList.contains('play-mode') && !document.body.classList.contains('grid-mode')) {
                 const top = this.getWallIsoCoords((along0 + along1) / 2, wallH + 0.4, flipped, bbox, targetFloor);
                             const side = flipped ? 'der' : 'izq';
                             const label = wps.length
@@ -1076,9 +1076,7 @@ class IsometricMap {
         const mid = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, flipped, box, p.floor);
         const img = this.getImage(p.item_id, 0);
         if (img && img.complete && img.naturalWidth > 0) {
-            const maxW = Math.max(18, sz.w * this.CELL_W * 0.35 * this.scale);
-            const maxH = Math.max(18, sz.h * this.CELL_H * 1.2 * this.scale);
-            const s = Math.min(maxW / img.width, maxH / img.height);
+            const s = 0.75 * this.scale;
             const dw = img.width * s;
             const dh = img.height * s;
             this.ctx.drawImage(img, mid.x - dw / 2, mid.y - dh / 2, dw, dh);
