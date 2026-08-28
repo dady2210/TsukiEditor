@@ -299,19 +299,10 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             }
         }
         
-        window.mapsAtlas = [];
-        fetch('data/maps_atlas.json')
-            .then(r => r.json())
-            .then(data => {
-                window.mapsAtlas = data;
-                this.gridEditor = new GridEditor(this);
-                this.gridEditor.refreshSelect();
-                if (this.map) this.map.draw();
-            })
-            .catch(e => {
-                console.warn('No maps_atlas.json found', e);
-                this.gridEditor = new GridEditor(this);
-            });
+        if (!window.mapsAtlas) window.mapsAtlas = [];
+        this.gridEditor = new GridEditor(this);
+        this.gridEditor.refreshSelect();
+        if (this.map) this.map.draw();
 
         window.ITEM_SIZES = window.furnitureSizes;
         

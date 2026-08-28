@@ -101,11 +101,12 @@ class GridEditor {
     
     saveAtlas() {
         const jsonStr = JSON.stringify(window.mapsAtlas, null, 2);
-        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const fileContent = "window.mapsAtlas = " + jsonStr + ";\n";
+        const blob = new Blob([fileContent], { type: 'application/javascript' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'maps_atlas.json';
+        a.download = 'maps_atlas.js';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
