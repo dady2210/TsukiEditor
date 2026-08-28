@@ -1,0 +1,221 @@
+class TsukiPort {
+    constructor(app) {
+        this.app = app;
+        this.isHammerMode = false;
+        
+        // Cache DOM elements
+        this.bottomBar = document.getElementById('play-bottom-bar');
+        this.hammerUI = document.getElementById('hammer-ui');
+        this.hammerInvPanel = document.getElementById('hammer-inv-panel');
+        this.btnHammerExit = document.getElementById('btn-hammer-exit');
+        
+        this.btnBag = document.getElementById('btn-port-bag');
+        this.btnHammer = document.getElementById('btn-port-hammer');
+        this.btnPhone = document.getElementById('btn-port-phone');
+        this.btnSettings = document.getElementById('btn-port-settings');
+        
+        this.btnHammerGrid = document.getElementById('btn-hammer-grid');
+        this.btnHammerFlip = document.getElementById('btn-hammer-flip');
+        
+        this.currentCategory = 1; // 1 = Furniture (default)
+        this.showGrid = true;
+        
+        this.setupEvents();
+    }
+    
+    setupEvents() {
+        if (this.btnHammer) {
+            this.btnHammer.addEventListener('click', () => this.enterHammerMode());
+        }
+        
+        if (this.btnHammerExit) {
+            this.btnHammerExit.addEventListener('click', () => this.exitHammerMode());
+        }
+        
+        if (this.btnHammerGrid) {
+            this.btnHammerGrid.addEventListener('click', () => {
+                this.showGrid = !this.showGrid;
+                if (this.app.map) {
+                    this.app.map.forceDrawGrid = this.showGrid;
+                    this.app.map.draw();
+                }
+                this.btnHammerGrid.style.opacity = this.showGrid ? '1' : '0.5';
+            });
+        }
+        
+        if (this.btnHammerFlip) {
+            this.btnHammerFlip.addEventListener('click', () => {
+                const map = this.app.map;
+                if (map && map.selectedPlacement) {
+                    map.selectedPlacement.orientation = (map.selectedPlacement.orientation + 1) % 4;
+                    map.draw();
+                }
+            });
+        }
+    }
+    
+    enterPlayMode() {
+        this.bottomBar.style.display = 'flex';
+        this.exitHammerMode();
+        
+        // Set up the carrots display
+        const hudCarrots = document.getElementById('port-hud-carrots');
+        if (hudCarrots && this.app.parser && this.app.parser.generalVars) {
+            hudCarrots.textContent = this.app.parser.generalVars.carrots || 0;
+        }
+    }
+    
+    exitPlayMode() {
+        this.bottomBar.style.display = 'none';
+        this.exitHammerMode();
+    }
+    
+    enterHammerMode() {
+        this.isHammerMode = true;
+        this.bottomBar.style.display = 'none';
+        this.hammerUI.style.display = 'flex';
+        
+        if (this.app.map) {
+            this.app.map.isHammerMode = true;
+            this.app.map.forceDrawGrid = this.showGrid;
+            this.btnHammerGrid.style.opacity = this.showGrid ? '1' : '0.5';
+            this.app.map.draw();
+        }
+        
+        this.renderHammerInventory();
+    }
+    
+    exitHammerMode() {
+        this.isHammerMode = false;
+        if (this.hammerUI) this.hammerUI.style.display = 'none';
+        if (document.body.classList.contains('play-mode')) {
+            if (this.bottomBar) this.bottomBar.style.display = 'flex';
+        }
+        
+        if (this.app.map) {
+            this.app.map.isHammerMode = false;
+            this.app.map.forceDrawGrid = false;
+            
+            // Re-inject picked up item if we are holding something
+            if (this.app.map.selectedPlacement) {
+                this.pickupSelectedPlacement();
+            }
+            this.app.map.draw();
+        }
+    }
+    
+    renderHammerInventory() {
+        if (!this.hammerInvPanel) return;
+        this.hammerInvPanel.innerHTML = '';
+        
+        if (!this.app.parser) return;
+        if (!this.app.parser.inventory || this.app.parser.inventory.length === 0) {
+            if (typeof this.app.parser.parseInventory === 'function') {
+                this.app.parser.parseInventory();
+            }
+        }
+        
+        // Filter: invType 1, 2, 3 are all "furniture" categories roughly.
+        const items = (this.app.parser.inventory || []).filter(i => {
+            if (i.qty <= 0 || i.item_id === -1) return false;
+            return [1, 2, 3].includes(Number(i.invType));
+        });
+        
+        if (items.length === 0) {
+            this.hammerInvPanel.innerHTML = '<div style="color: rgba(255,255,255,0.7); padding: 20px; text-align: center;">Vacio</div>';
+            return;
+        }
+        
+        items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'hammer-inv-slot';
+            div.draggable = true;
+            
+            const imgObj = this.app.map ? this.app.map.getImage(item.item_id, 0) : null;
+            if (imgObj && imgObj.complete && imgObj.naturalWidth > 0) {
+                const img = document.createElement('img');
+                img.src = imgObj.src;
+                div.appendChild(img);
+                
+                div.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('application/json', JSON.stringify({
+                        item_id: item.item_id,
+                        invType: item.invType
+                    }));
+                    
+                    // BIG DRAG IMAGE
+                    const dragImg = new Image();
+                    dragImg.src = imgObj.src;
+                    dragImg.style.position = 'absolute';
+                    dragImg.style.top = '-9999px';
+                    dragImg.style.opacity = '1';
+                    // We need it in the DOM temporarily for setDragImage in some browsers
+                    document.body.appendChild(dragImg);
+                    
+                    // We use native width/height to make it look full size
+                    // Since isometric items scale, we might want to scale it by `map.scale` 
+                    const s = 0.75 * (this.app.map ? this.app.map.scale : 1);
+                    const dw = imgObj.width * s;
+                    const dh = imgObj.height * s;
+                    
+                    dragImg.width = dw;
+                    dragImg.height = dh;
+                    
+                    e.dataTransfer.setDragImage(dragImg, dw / 2, dh);
+                    
+                    setTimeout(() => dragImg.remove(), 100);
+                    div.style.opacity = '0.5';
+                });
+                
+            } else {
+                div.textContent = item.item_id;
+                div.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('application/json', JSON.stringify({ item_id: item.item_id }));
+                });
+            }
+            
+            const qty = document.createElement('div');
+            qty.className = 'hammer-inv-qty';
+            qty.textContent = item.qty;
+            div.appendChild(qty);
+            
+            div.addEventListener('dragend', () => {
+                div.style.opacity = '1';
+            });
+            
+            this.hammerInvPanel.appendChild(div);
+        });
+    }
+    
+    pickupSelectedPlacement() {
+        const map = this.app.map;
+        if (!map || !map.selectedPlacement) return;
+        const p = map.selectedPlacement;
+        if (p.item_id === -1) return;
+        
+        try {
+            let targetInvType = 1;
+            if (map.SEED_IDS && map.SEED_IDS.has(p.item_id)) {
+                targetInvType = 4;
+            }
+            this.app.parser.injectInventoryItem(p.item_id, 1, false, targetInvType);
+        } catch (e) {
+            console.warn("Could not return item to inventory:", e);
+        }
+        
+        const idx = this.app.parser.placements.indexOf(p);
+        if (idx !== -1) {
+            this.app.parser.placements.splice(idx, 1);
+        }
+        
+        map.selectedPlacement = null;
+        map.draw();
+        
+        if (this.isHammerMode) {
+            this.renderHammerInventory();
+        }
+    }
+}
+
+// Make it globally available
+window.TsukiPort = TsukiPort;

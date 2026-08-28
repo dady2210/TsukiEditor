@@ -955,34 +955,52 @@
                             <p style="font-size:12px; margin-bottom:0; margin-top:10px; color:#666;">Arrastra en el canvas para mover la grilla activa.</p>
                         </div>
                         <!-- Play HUD -->
-                        <div id="play-hud" style="display: none; position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 20px; font-weight: bold; font-family: 'Quicksand', sans-serif; z-index: 9999; pointer-events: auto; border: 2px solid #FF9800; text-shadow: 1px 1px 2px black; display: flex; align-items: center; gap: 15px;">
-                            <div><span style="color: #FF9800;">Modo Jugar</span></div>
-                            <div style="display: flex; gap: 10px;">
-                                <button id="btn-hud-items" style="background:none;border:none;color:white;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'Quicksand';font-weight:bold;padding:5px;border-radius:10px;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='none'">
-                                    <span class="material-symbols-outlined">category</span> Ítems
-                                </button>
-                                <button id="btn-hud-furn" style="background:none;border:none;color:white;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'Quicksand';font-weight:bold;padding:5px;border-radius:10px;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='none'">
-                                    <span class="material-symbols-outlined">chair</span> Muebles
-                                </button>
-                            </div>
-                            <div><span id="hud-carrots">0</span> &#129365;</div>
+                        
+                        
+                        
+
+                        
+
+                        
+                        <!-- Port HUD Top -->
+                        <div class="port-hud-top" id="port-hud-top" style="display:none;">
+                            <span id="port-hud-carrots">0</span> &#129365;
                         </div>
                         
-                        <div id="play-inventory-panel" class="rustic-panel-light" style="display:none; position:fixed; bottom:20px; left:50%; transform:translateX(-50%); width:80%; height:200px; z-index:9998; overflow-y:auto; display:flex; flex-wrap:wrap; gap:10px; align-content:flex-start;">
-                            <!-- Items populated dynamically -->
+                        <!-- Port Bottom Bar -->
+                        <div id="play-bottom-bar" class="port-bottom-bar" style="display:none;">
+                            <div class="port-btn" id="btn-port-bag" title="Mochila">
+                                <span class="material-symbols-outlined" style="font-size:32px; color:#795548;">backpack</span>
+                            </div>
+                            <div class="port-btn" id="btn-port-hammer" title="Martillo">
+                                <span class="material-symbols-outlined" style="font-size:32px; color:#ff9800;">hardware</span>
+                            </div>
+                            <div class="port-btn" id="btn-port-phone" title="Teléfono">
+                                <span class="material-symbols-outlined" style="font-size:32px; color:#2196f3;">smartphone</span>
+                            </div>
+                            <div class="port-btn" id="btn-port-settings" title="Configuración">
+                                <span class="material-symbols-outlined" style="font-size:32px; color:#9e9e9e;">settings</span>
+                            </div>
                         </div>
-
-                        <!-- Floating rotation buttons -->
-                        <div id="floating-rotation-ui" class="hidden" style="position:absolute; display:flex; gap:0.5rem; transform:translate(-50%, -100%); pointer-events:auto; z-index:9999;">
-                            <button id="btn-float-rot-left" class="btn-secondary" style="padding:0.4rem; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 6px rgba(0,0,0,0.3);">
-                                <span class="material-symbols-outlined" style="font-size:20px;">rotate_left</span>
-                            </button>
-                            <button id="btn-float-rot-right" class="btn-secondary" style="padding:0.4rem; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 6px rgba(0,0,0,0.3);">
-                                <span class="material-symbols-outlined" style="font-size:20px;">rotate_right</span>
-                            </button>
-                            <button id="btn-float-pickup" class="btn-primary" style="padding:0.4rem; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 6px rgba(0,0,0,0.3); background-color: #ef4444; color: white;" title="Guardar en mochila">
-                                <span class="material-symbols-outlined" style="font-size:20px;">backpack</span>
-                            </button>
+                        
+                        <!-- Hammer UI Mode -->
+                        <div id="hammer-ui" class="hammer-ui-container">
+                            <div class="hammer-sidebar">
+                                <button class="btn-hammer-tool" id="btn-hammer-flip">
+                                    <span class="material-symbols-outlined">rotate_right</span>
+                                    Voltear
+                                </button>
+                                <button class="btn-hammer-tool" id="btn-hammer-grid">
+                                    <span class="material-symbols-outlined">grid_on</span>
+                                    Grid
+                                </button>
+                            </div>
+                            <div class="hammer-sidebar-panel" id="hammer-inv-panel">
+                                <!-- Populated dynamically -->
+                            </div>
+                            <div class="btn-hammer-exit" id="btn-hammer-exit">
+                                <span class="material-symbols-outlined" style="font-size:40px;">close</span>
+                            </div>
                         </div>
 
                         <div id="add-item-editor" class="rustic-panel hidden">
@@ -1310,6 +1328,7 @@
     <script src="map.js?v=27"></script>
     <script src="data/maps_atlas.js"></script>
     <script src="grid_editor.js"></script>
+    <script src="tsuki_port.js"></script>
     <script src="app.js?v=10"></script>
     <!-- Experimental features -->
     <script src="patch_experimental.js?v=4"></script>
