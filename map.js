@@ -1181,6 +1181,7 @@ class IsometricMap {
     // por encima de lo que la pantalla puede pintar; ahora varias llamadas
     // a draw() dentro del mismo frame colapsan en un solo redraw real.
     draw() {
+        this._clampCamera();
         if (this._rafId !== undefined) return;
         this._rafId = requestAnimationFrame(() => {
             this._rafId = undefined;
@@ -2637,4 +2638,3 @@ class IsometricMap {
         this.draw();
     }
 }
-
