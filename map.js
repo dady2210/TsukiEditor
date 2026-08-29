@@ -1405,11 +1405,17 @@ class IsometricMap {
                         floorTex.pattern.setTransform(new DOMMatrix().scale(1, 0.5).rotate(-45).scale(0.35, 0.35));
                         ctx.fillStyle = floorTex.pattern;
                         const n = Math.min(this._floorGridN, FLOOR_GRID_N);
+                        // Diamond polygon in screen coords
+                        const pt = (gx, gy) => atlasToScreen(
+                            oX + (gx - gy) * (cw / 2),
+                            oY - (gx + gy) * (ch / 2)
+                        );
+                        
                         ctx.beginPath();
-                        ctx.moveTo(this._isoWorld(0, 0, vf).x, this._isoWorld(0, 0, vf).y);
-                        ctx.lineTo(this._isoWorld(n, 0, vf).x, this._isoWorld(n, 0, vf).y);
-                        ctx.lineTo(this._isoWorld(n, n, vf).x, this._isoWorld(n, n, vf).y);
-                        ctx.lineTo(this._isoWorld(0, n, vf).x, this._isoWorld(0, n, vf).y);
+                        ctx.moveTo(pt(0, 0).x, pt(0, 0).y);
+                        ctx.lineTo(pt(cols, 0).x, pt(cols, 0).y);
+                        ctx.lineTo(pt(cols, rows).x, pt(cols, rows).y);
+                        ctx.lineTo(pt(0, rows).x, pt(0, rows).y);
                         ctx.closePath();
                         ctx.fill();
                     }
