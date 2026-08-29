@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tsuki's Odyssey Save Editor</title>
     <meta name="description" content="Editor web completo para archivos .csave de Tsuki's Odyssey. Modifica inventario, amistad de personajes, mapa 3D, eventos y más.">
-    <link rel="stylesheet" href="styles.css?v=20260825">
+    <link rel="stylesheet" href="styles.css?v=20260826">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=Nunito+Sans:wght@400;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 </head>
@@ -102,7 +102,7 @@
                     <p class="subtitle">Administra tu pequeña vida en la aldea hongo.</p>
 
                     <div class="section-card">
-                        <h3>🛠️ Herramientas</h3>
+                        <h3>🛠�? Herramientas</h3>
                         <div style="display:flex; gap:1rem; flex-wrap:wrap;">
                             <button class="btn-primary" onclick="window.app.openExportModal()">
                                 <span class="material-symbols-outlined" style="font-size:18px; margin-right:5px; vertical-align:text-bottom;">download</span>
@@ -127,35 +127,35 @@
                                 <input type="number" id="input-carrots" value="0" min="0">
                             </div>
                             <div class="input-group">
-                                <label>🎟️ Boletos Gacha</label>
+                                <label>🎟�? Boletos Gacha</label>
                                 <input type="number" id="input-gacha-tickets" value="0" min="0">
                             </div>
                         </div>
                     </div>
 
                     <div class="section-card" style="margin-top:1.5rem;">
-                        <h3>🗓️ Fecha y Hora del Juego</h3>
+                        <h3>🗓�? Fecha y Hora del Juego</h3>
                         <div class="grid-3col">
                             <div class="input-group">
-                                <label title="Contador de días en los artículos del tren (Odyssey Articles).">🗓️ Día (OA)</label>
+                                <label title="Contador de días en los artículos del tren (Odyssey Articles).">🗓�? Día (OA)</label>
                                 <input type="number" id="input-day" value="0">
                             </div>
                             <div class="input-group">
-                                <label>🗓️ Mes</label>
+                                <label>🗓�? Mes</label>
                                 <input type="number" id="input-month" value="0" min="1" max="12">
                             </div>
                             <div class="input-group">
-                                <label>🕐 Hora del día</label>
+                                <label>�? Hora del día</label>
                                 <input type="number" id="input-hour" value="0" min="0" max="23">
                             </div>
                             <div class="input-group">
-                                <label>🍃 Temporada</label>
+                                <label>�?� Temporada</label>
                                 <div class="select-wrapper">
                                     <select id="select-season">
                                         <option value="0">🌸 Primavera</option>
-                                        <option value="1">☀️ Verano</option>
-                                        <option value="2">🍂 Otoño</option>
-                                        <option value="3">❄️ Invierno</option>
+                                        <option value="1">☀�? Verano</option>
+                                        <option value="2">�?� Otoño</option>
+                                        <option value="3">�?��? Invierno</option>
                                     </select>
                                     <span class="material-symbols-outlined dropdown-icon">expand_more</span>
                                 </div>
@@ -167,7 +167,7 @@
                         <h3>📊 Estadísticas</h3>
                         <div class="grid-3col">
                             <div class="input-group">
-                                <label title="Nivel de progreso de la historia en la ciudad principal (Moca, Chi, etc.).">🐦 Capítulo Raven</label>
+                                <label title="Nivel de progreso de la historia en la ciudad principal (Moca, Chi, etc.).">�?� Capítulo Raven</label>
                                 <input type="number" id="input-raven" value="0" min="0">
                             </div>
                             <div class="input-group">
@@ -175,7 +175,7 @@
                                 <input type="number" id="input-gacha" value="0" min="0">
                             </div>
                             <div class="input-group">
-                                <label>🐟 Peces atrapados</label>
+                                <label>�?� Peces atrapados</label>
                                 <input type="number" id="input-fish-caught" value="0" min="0">
                             </div>
                             <div class="input-group">
@@ -183,7 +183,7 @@
                                 <input type="number" id="input-orders" value="0" min="0">
                             </div>
                             <div class="input-group">
-                                <label>☘️ Tréboles criados</label>
+                                <label>☘�? Tréboles criados</label>
                                 <input type="number" id="input-clover" value="0" min="0">
                             </div>
                             <div class="input-group">
@@ -205,14 +205,14 @@
                                 <input type="number" id="input-bedtime-start" value="22" min="0" max="24" step="0.1">
                             </div>
                             <div class="input-group">
-                                <label>☀️ Hora de dormir fin</label>
+                                <label>☀�? Hora de dormir fin</label>
                                 <input type="number" id="input-bedtime-end" value="8" min="0" max="24" step="0.1">
                             </div>
                         </div>
                     </div>
 
                     <div class="section-card" style="margin-top:1.5rem;">
-                        <h3>🏡 Homecoming</h3>
+                        <h3>�?� Homecoming</h3>
                         <div class="grid-2col">
                             <label class="check-container card-element">
                                 <input type="checkbox" id="chk-homecoming-android">
@@ -248,7 +248,7 @@
                     <p class="subtitle" style="margin-top:0;">Cada una de estas tarjetas tiene su propio botón de guardado, independiente de "Aplicar Variables".</p>
 
                     <div class="section-card" style="margin-top:0.5rem;">
-                        <h3>⚙️ Variables Extra</h3>
+                        <h3>⚙�? Variables Extra</h3>
                         <p class="subtitle" style="margin-top:0;">Solo se pueden editar si están presentes en el save cargado.</p>
                         <div class="grid-3col" style="gap:1rem; margin-bottom:1rem;">
                             <div class="input-group">
@@ -268,14 +268,14 @@
                     </div>
 
                     <div class="section-card" style="margin-top:1.5rem;">
-                        <h3>🔍 Comparar Saves (Diff)</h3>
+                        <h3>�? Comparar Saves (Diff)</h3>
                         <p class="subtitle" style="margin-top:0;">Compara el save cargado (A) con otro archivo .csave (B). Read-only; no se modifica ningún archivo.</p>
                         <div style="display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:1rem;">
                             <div class="input-group" style="flex:1; min-width:220px;">
                                 <label>Archivo Save B:</label>
                                 <input type="file" id="diff-file-input" accept=".csave">
                             </div>
-                            <button class="btn-secondary" onclick="window.app.compareSaves()">🔍 Ejecutar Diff</button>
+                            <button class="btn-secondary" onclick="window.app.compareSaves()">�? Ejecutar Diff</button>
                         </div>
                         <pre id="diff-output" style="display:none; background:var(--bg-secondary); padding:1rem; border-radius:6px; font-size:0.82em; overflow-x:auto; max-height:320px; white-space:pre-wrap; margin:0;"></pre>
                     </div>
@@ -378,7 +378,7 @@
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th style="width:60px;">Ícono</th>
+                                    <th style="width:60px;">�?cono</th>
                                     <th>ID / Nombre</th>
                                     <th style="width:100px;">Cantidad</th>
                                     <th style="width:140px;">Acciones</th>
@@ -435,7 +435,7 @@
 
                     <div class="grid-2col" style="gap: 2rem;">
                         <div class="section-card">
-                            <h3>🎁 Premios Diarios (Punchcard)</h3>
+                            <h3>�? Premios Diarios (Punchcard)</h3>
                             <div class="header-actions" style="margin-bottom: 1rem; justify-content: flex-start;">
                                 <button id="btn-punchcard-claim" class="btn-primary" style="margin-right: 0.5rem;">Reclamar todos</button>
                                 <button id="btn-punchcard-reset" class="btn-secondary">Reset semana</button>
@@ -460,7 +460,7 @@
                         </div>
 
                         <div class="section-card">
-                            <h3>🗺️ Ubicaciones Desbloqueadas</h3>
+                            <h3>🗺�? Ubicaciones Desbloqueadas</h3>
                             <p class="small-text" style="margin-bottom: 1rem;">Aparecer en el mapa del teléfono no garantiza poder entrar si faltan misiones o áreas.</p>
                             
                             <div class="header-actions" style="margin-bottom: 1rem; justify-content: flex-start; gap: 0.5rem; flex-wrap: wrap;">
@@ -527,7 +527,7 @@
                     </div>
                 </div>
 <div id="tab-mail" class="tab-content hidden">
-                    <h2>✉️ Correo y Pedidos</h2>
+                    <h2>✉�? Correo y Pedidos</h2>
                     <p class="subtitle">Gestiona los pedidos de muebles y modifica los premios de las cartas recibidas.</p>
 
                     <div id="mail-empty-state" class="info-banner" style="display:none; margin-bottom:1.5rem;">
@@ -572,7 +572,7 @@
                                 <table class="data-table" id="letters-table">
                                     <thead>
                                         <tr>
-                                            <th style="width:80px;">Índice</th>
+                                            <th style="width:80px;">�?ndice</th>
                                             <th style="width:120px;">Tipo</th>
                                             <th>Order ID</th>
                                             <th>Premio (Slot 0 ID)</th>
@@ -607,7 +607,7 @@
                     </div>
                     <div class="grid-2col" style="gap:1rem; align-items:flex-end;">
                         <div class="input-group">
-                            <label title="Índice del bit a limpiar. Puede coincidir con el Order/Furniture ID.">ID de bit a liberar (0-63)</label>
+                            <label title="�?ndice del bit a limpiar. Puede coincidir con el Order/Furniture ID.">ID de bit a liberar (0-63)</label>
                             <input type="number" id="input-mail-order-id" min="0" max="63" placeholder="Ej: 5">
                         </div>
                         <button class="btn-primary" onclick="window.app.clearUniqueOrderBit()">
@@ -684,8 +684,8 @@
                         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 2rem;">
                             <button id="btn-apply-event" class="btn-primary" onclick="window.app.applyEventChanges()">💾 Aplicar Cambios al AST</button>
                             <button class="btn-secondary" onclick="document.getElementById('event-calendar-cb').checked = true; document.getElementById('event-flyer-cb').checked = true;">👀 Marcar Vistos</button>
-                            <button class="btn-secondary" onclick="[0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=true)">🎁 Reclamar Todo HC</button>
-                            <button class="btn-danger" onclick="document.getElementById('event-tasks-input').value = ''; [0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=false); document.getElementById('event-calendar-cb').checked = false; document.getElementById('event-flyer-cb').checked = false;">🗑️ Reset Progreso</button>
+                            <button class="btn-secondary" onclick="[0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=true)">�? Reclamar Todo HC</button>
+                            <button class="btn-danger" onclick="document.getElementById('event-tasks-input').value = ''; [0,1,2,3].forEach(i=>document.getElementById('event-reward-'+i).checked=false); document.getElementById('event-calendar-cb').checked = false; document.getElementById('event-flyer-cb').checked = false;">🗑�? Reset Progreso</button>
                         </div>
                     </div>
                 </div>
@@ -722,10 +722,10 @@
                         <strong>trainNumber</strong> es el número del boleto/tren. Valores >0 activan el viaje.
                     </div>
 
-                    <div id="train-status" class="train-status-badge">🏘️ Sin viaje activo</div>
+                    <div id="train-status" class="train-status-badge">�?��? Sin viaje activo</div>
 
                     <div class="section-card" style="margin-top:1.5rem;">
-                        <h3>⚙️ Configuración del Tren</h3>
+                        <h3>⚙�? Configuración del Tren</h3>
                         <div class="grid-3col">
                             <div class="input-group">
                                 <label title="Contador de días en los artículos del tren (Odyssey Articles).">🚂 Train Day (día OA)</label>
@@ -899,7 +899,7 @@
                         <div class="control-tips">
                             <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;">mouse</span> Rueda=Zoom
                             <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;margin-left:6px;">drag_pan</span> Arrastrar=Mover
-                            <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;margin-left:6px;">flip_camera_android</span> Shift+Rueda / Flechas ↔️ = Rotar mueble seleccionado
+                            <span class="material-symbols-outlined" style="font-size:15px;vertical-align:text-bottom;margin-left:6px;">flip_camera_android</span> Shift+Rueda / Flechas ↔�? = Rotar mueble seleccionado
                         </div>
                     </div>
 
@@ -974,7 +974,7 @@
 
                     
                     <div class="section-card">
-                        <h3>⏱️ Timers y Eventos Especiales</h3>
+                        <h3>�?��? Timers y Eventos Especiales</h3>
                         <p class="subtitle" style="margin-top:0;">Fuerza la completitud de temporizadores o activa flags de eventos.</p>
 
                         <div id="timers-container" class="grid-2col" style="gap:1rem; margin-bottom:1rem;">
@@ -1001,15 +1001,15 @@
                         <h3>📦 Estructuras Read-Only</h3>
                         <p class="subtitle" style="margin-top:0;">No encontradas en los saves analizados. Se actualizarán si el save cargado las contiene.</p>
                         <ul style="color:var(--text-muted); font-size:0.9em; line-height:1.8; list-style:none; padding:0; margin:0;">
-                            <li id="ro-bounty">⏳ BountySave / BountyBoard: —</li>
-                            <li id="ro-parsnap">⏳ ParsnapSave: —</li>
-                            <li id="ro-cropbox">⏳ CropBox: —</li>
-                            <li id="ro-delivery">⏳ deliverySave: —</li>
+                            <li id="ro-bounty">�?� BountySave / BountyBoard: —</li>
+                            <li id="ro-parsnap">�?� ParsnapSave: —</li>
+                            <li id="ro-cropbox">�?� CropBox: —</li>
+                            <li id="ro-delivery">�?� deliverySave: —</li>
                         </ul>
                     </div>
 
 <div class="section-card" style="margin-top:1.5rem;">
-                        <h3>🤝 NPCConditionSaves</h3>
+                        <h3>�? NPCConditionSaves</h3>
                         <p class="subtitle" style="margin-top:0;">Condiciones de amistad y quests por NPC. Carga un save para ver los datos.</p>
                         <div style="overflow-x:auto; max-height:280px;">
                             <table class="inventory-table" style="width:100%; font-size:0.85rem;">
@@ -1071,7 +1071,7 @@
                     </div>
 
 <div class="section-card" style="margin-top: 2rem;">
-                        <h3>📐 Editor de Tamaños de Grilla</h3>
+                        <h3>�? Editor de Tamaños de Grilla</h3>
                         <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
                             Seleccioná un mueble en el <strong>Mapa 3D</strong> y volvé aquí para editar cuántas celdas ocupa.
                         </p>
@@ -1112,7 +1112,7 @@
                                     <tr><td style="padding:3px 8px;">Sofá grande / Mesa comedor</td><td style="text-align:center;">2 × 3 o 3 × 2</td></tr>
                                     <tr><td style="padding:3px 8px;">Muebles grandes de sala</td><td style="text-align:center;">3 × 3 o 3 × 4</td></tr>
                                     <tr><td style="padding:3px 8px;">Piano / Objetos muy grandes</td><td style="text-align:center;">4 × 4 o 4 × 5</td></tr>
-                                    <tr><td style="padding:3px 8px;">Árboles / Decoraciones especiales</td><td style="text-align:center;">5 × 5</td></tr>
+                                    <tr><td style="padding:3px 8px;">�?rboles / Decoraciones especiales</td><td style="text-align:center;">5 × 5</td></tr>
                                 </tbody>
                             </table>
                         </details>
@@ -1171,17 +1171,17 @@
 
     <!-- Data bundles — loaded as scripts to work with file:// without a server -->
     <script src="data/items_db.js"></script>
-    <script src="data/content_pivots.js?v=2"></script>
-    <script src="odin_browser.js?v=4"></script>
+    <script src="data/content_pivots.js?v=3"></script>
+    <script src="odin_browser.js?v=5"></script>
     <!-- App logic -->
-    <script src="parser.js?v=20260826-wallfloor"></script>
-    <script src="map.js?v=29"></script>
+    <script src="parser.js?v=20260827-wallfloor"></script>
+    <script src="map.js?v=30"></script>
     <script src="data/maps_atlas.js"></script>
     <script src="grid_editor.js"></script>
     <script src="tsuki_port.js"></script>
-    <script src="app.js?v=12"></script>
+    <script src="app.js?v=13"></script>
     <!-- Experimental features -->
-    <script src="patch_experimental.js?v=5"></script>
+    <script src="patch_experimental.js?v=6"></script>
 <script>
 	document.addEventListener("DOMContentLoaded", () => {
 		// Lista con todos los enlaces mp3 proporcionados
@@ -1430,7 +1430,7 @@
                         </div>
 
                         <div id="item-editor" class="rustic-panel hidden">
-                            <h4>✏️ Editar Mueble</h4>
+                            <h4>�?�? Editar Mueble</h4>
                             <div class="item-editor-header" style="display:flex;align-items:center;gap:15px;margin-bottom:15px;">
                                 <div class="icon-frame">
                                     <img id="edit-item-icon" src="" onerror="this.style.display='none'" alt="Icon">
@@ -1480,7 +1480,7 @@
                                         <input type="checkbox" id="edit-crop-ripe">
                                         <span>Maduro (Ripe)</span>
                                     </label>
-                                    <button id="btn-mature-crop" class="btn-primary" style="background-color:#f39c12; flex:1; display:none;">☀️ Madurar Ahora</button>
+                                    <button id="btn-mature-crop" class="btn-primary" style="background-color:#f39c12; flex:1; display:none;">☀�? Madurar Ahora</button>
                                 </div>
 
                                 <div style="display:flex; gap:10px;">
@@ -1496,7 +1496,7 @@
 
                             <!-- Crop Growth UI (Only visible for planted crops/seeds) -->
                             <div id="crop-growth-ui" class="hidden" style="margin-bottom:1.5rem; padding-top:1rem; border-top:1px solid rgba(0,0,0,0.1);">
-                                <label style="display:block; margin-bottom:5px; font-weight:bold; color:#f39c12;">⏱️ Crecimiento:</label>
+                                <label style="display:block; margin-bottom:5px; font-weight:bold; color:#f39c12;">�?��? Crecimiento:</label>
                                 <div id="crop-growth-status" style="margin-bottom: 10px; font-size: 0.9em; font-weight:bold; color: #555;">
                                     Estado actual...
                                 </div>

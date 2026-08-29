@@ -7,16 +7,16 @@
 // The real sublocationSave keys are Int32s; until we fully walk that dict,
 // we map location IDs to standard generic names since they can vary.
 const SUBLOC_NAMES = {
-    0:  "ðŸ¡ Tsuki's Treehouse",
+    0:  "ðŸ?¡ Tsuki's Treehouse",
     1:  "ðŸš‚ Train Station",
     2:  "ðŸ¦’ Chi's House",
-    3:  "ðŸ¢ Moca's House",
-    4:  "ðŸª Yori's General Store",
-    5:  "ðŸ§œâ€â™€ï¸ Mermaid Coast",
+    3:  "ðŸ?¢ Moca's House",
+    4:  "ðŸ?ª Yori's General Store",
+    5:  "ðŸ§œâ€?â™€ï¸? Mermaid Coast",
     6:  "ðŸ¥• Tsuki's Farm",
-    7:  "ðŸ›ï¸ Town Hall",
-    8:  "ðŸœ Bobo's Ramen Restaurant",
-    9:  "ðŸµ Momo's Tea House",
+    7:  "ðŸ?›ï¸? Town Hall",
+    8:  "ðŸ?œ Bobo's Ramen Restaurant",
+    9:  "ðŸ?µ Momo's Tea House",
     10: "ðŸŒ» Rosemary's Plant Shop",
     11: "ðŸ§° Dawn's Workshop",
     12: "ðŸŽ· Scarlett's Lounge"
@@ -33,7 +33,7 @@ const HARVEST_ID   = 900;
 const DEFAULT_SIZES = { w: 1, l: 1 }; // Fallback: la grilla del juego es de celdas 1Ã—1
 const PLOT_SIZE     = { w: 2, l: 2 };   // FURN_306 Plot tile
 // Grilla de piso del juego: 16Ã—16 celdas (casa de Tsuki). (0,0) es el frente;
-// x=16 / y=16 son los bordes de ATRÃS, donde se levantan las paredes.
+// x=16 / y=16 son los bordes de ATRÃ?S, donde se levantan las paredes.
 const FLOOR_GRID_N  = 16;
 
 // Redondeo "half away from zero" simÃ©trico. Math.round nativo redondea los
@@ -481,7 +481,7 @@ class IsometricMap {
     }
 
     // Casa isomÃ©trica (como la de Tsuki): el piso es el diamante, las dos
-    // paredes VISIBLES se levantan en los bordes de ATRÃS.
+    // paredes VISIBLES se levantan en los bordes de ATRÃ?S.
     //
     // iso: (0,0) es el frente (abajo); x+y alto es el fondo (arriba).
     // WallGroupPosition.flipped del .csave elige la cara:
@@ -961,7 +961,7 @@ class IsometricMap {
         const lines = [
             `ðŸŽ¨ Wallpaper: ${wpTxt}`,
             `ðŸªµ Piso cubierto: ${flTxt}`,
-            `ðŸ–¼ï¸ ${wallTxt}`
+            `ðŸ–¼ï¸? ${wallTxt}`
         ];
 
         ctx.save();
@@ -1210,15 +1210,7 @@ class IsometricMap {
             }
         }
         
-        if (bgActive) {
-            const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
-            if (bgImg && bgImg.complete && bgImg.width > 0) {
-                const bgScale = (window.atlasConfig && window.atlasConfig.bgScale) ? window.atlasConfig.bgScale : 0.75;
-                const s = bgScale * this.scale;
-                // Draw background starting at (0,0) of the world space
-                ctx.drawImage(bgImg, this.offsetX, this.offsetY, bgImg.width * s, bgImg.height * s);
-            }
-        }
+        // bgImage is now drawn inside the floor layer (after tilesets)
         const targetFloor = visibleFloors[0];
         
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
@@ -1274,58 +1266,158 @@ class IsometricMap {
             this._drawMapHud(targetLoc, true, targetWallGroup, targetFloor);
 
         } else {
+            // ??????????????????????????????????????????????????????????????????????????
             // FLOOR LAYER (Isometric)
-            this._buildFloorGridCache(this._floorExtentForLoc(targetLoc));
-            ctx.save();
-            ctx.translate(this.offsetX, this.offsetY);
-            ctx.scale(this.scale, this.scale);
+            //
+            // Draw order in Play/Grid mode:
+            //   1. Floor tilesets       ? drawn BEFORE bgImage (go under the tree)
+            //   2. Wall tilesets        ? drawn BEFORE bgImage
+            //   3. bgImage (tree/room)  ? has alpha on floor/wall areas, covers tilesets correctly
+            //   4. Grid overlay         ? ON TOP of bg (only when Hammer mode + grid toggle)
+            //   5. Furniture / wall items
+            // ??????????????????????????????????????????????????????????????????????????
             
-            for (let vf of visibleFloors) {
-                let floorId = null;
-                if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
-                    const entry = this.app.parser.floors[targetLoc].find(f => String(f.key) === String(vf));
-                    if (entry) floorId = entry.id;
-                }
-                
-                const floorTex = this._getTilesetTexture('floor', floorId);
-                if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0) {
+            this._buildFloorGridCache(this._floorExtentForLoc(targetLoc));
+            
+            // Helper: convert atlas world coord to screen pixel
+            const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+            const atlasToScreen = (ax, ay) => ({
+                x: ax * this.scale + this.offsetX,
+                y: ay * this.scale + this.offsetY
+            });
+
+            // ?? 1. FLOOR TILESETS (screen space, responds to zoom/pan) ???????????????
+            if ((isPlay || isGrid) && window.mapsAtlas) {
+                for (const vf of visibleFloors) {
+                    let floorId = null;
+                    if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
+                        const entry = this.app.parser.floors[targetLoc].find(f => String(f.key) === String(vf));
+                        if (entry) floorId = entry.id;
+                    }
+                    const floorTex = this._getTilesetTexture('floor', floorId);
+                    if (!floorTex || !floorTex.img || !floorTex.img.complete || !floorTex.img.width) continue;
+
+                    const atlasSurf = window.mapsAtlas.find(s => s.kind === 'floor' && String(s.groupNum) === String(vf));
+                    if (!atlasSurf) continue;
+
+                    const oX = atlasSurf.origin_px.x * _bgo;
+                    const oY = atlasSurf.origin_px.y * _bgo;
+                    const cw = atlasSurf.cell.w || 64;
+                    const ch = atlasSurf.cell.h || 32;
+                    const cols = atlasSurf.cols;
+                    const rows = atlasSurf.rows;
+
                     if (!floorTex.pattern) floorTex.pattern = ctx.createPattern(floorTex.img, 'repeat');
-                    
-                    ctx.save();
-                    
-                    // In Play Mode, use atlas surface coordinates; otherwise use _isoWorld
-                    const atlasSurf = (isPlay || isGrid) && window.mapsAtlas ? window.mapsAtlas.find(s => s.kind === 'floor' && String(s.groupNum) === String(vf)) : null;
-                    
-                    if (atlasSurf) {
-                        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
-                        const oX = atlasSurf.origin_px.x * _bgo;
-                        const oY = atlasSurf.origin_px.y * _bgo;
-                        const cw = atlasSurf.cell.w || 64;
-                        const ch = atlasSurf.cell.h || 32;
-                        const cols = atlasSurf.cols;
-                        const rows = atlasSurf.rows;
-                        
-                        const matrix = new DOMMatrix([cw/2 * 0.5, -ch/2 * 0.5, cw/2 * 0.5, ch/2 * 0.5, oX, oY]);
-                        floorTex.pattern.setTransform(matrix);
+
+                    // Pattern transform maps texture to isometric diamond on screen
+                    const sc = this.scale;
+                    floorTex.pattern.setTransform(new DOMMatrix([
+                        (cw / 2) * sc, -(ch / 2) * sc * 0.5,
+                        (cw / 2) * sc,  (ch / 2) * sc * 0.5,
+                        oX * sc + this.offsetX,
+                        oY * sc + this.offsetY
+                    ]));
+                    ctx.fillStyle = floorTex.pattern;
+
+                    // Diamond polygon in screen coords
+                    const pt = (gx, gy) => atlasToScreen(
+                        oX + (gx - gy) * (cw / 2),
+                        oY - (gx + gy) * (ch / 2)
+                    );
+                    ctx.beginPath();
+                    ctx.moveTo(pt(0, 0).x, pt(0, 0).y);
+                    ctx.lineTo(pt(cols, 0).x, pt(cols, 0).y);
+                    ctx.lineTo(pt(cols, rows).x, pt(cols, rows).y);
+                    ctx.lineTo(pt(0, rows).x, pt(0, rows).y);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+
+                // ?? 2. WALL TILESETS ?????????????????????????????????????????????????
+                const wpDict = this.app.parser && this.app.parser.wallpapers;
+                if (wpDict && wpDict[targetLoc]) {
+                    for (const wpEntry of wpDict[targetLoc]) {
+                        if (!wpEntry.id || wpEntry.id <= 0) continue;
+                        const floorNum = wpEntry.key;
+                        const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
+                        if (!wpTex || !wpTex.img || !wpTex.img.complete || !wpTex.img.width) continue;
+
+                        for (const flipped of [false, true]) {
+                            const wallSurf = window.mapsAtlas.find(s =>
+                                s.kind === 'wall' &&
+                                String(s.groupNum) === String(floorNum) &&
+                                !!s.flipped === flipped
+                            );
+                            if (!wallSurf) continue;
+
+                            const oX = wallSurf.origin_px.x * _bgo;
+                            const oY = wallSurf.origin_px.y * _bgo;
+                            const cw = wallSurf.cell.w || 64;
+                            const ch = wallSurf.cell.h || 32;
+                            const cols = wallSurf.cols;
+                            const rows = wallSurf.rows;
+
+                            if (!wpTex.pattern) wpTex.pattern = ctx.createPattern(wpTex.img, 'repeat');
+
+                            const sc = this.scale;
+                            // Wall pattern transform (shear for isometric wall slope)
+                            const shear = flipped ? 0.5 : -0.5;
+                            wpTex.pattern.setTransform(new DOMMatrix([
+                                (cw / 2) * sc,  shear * ch * sc,
+                                0,               ch * sc,
+                                oX * sc + this.offsetX,
+                                oY * sc + this.offsetY
+                            ]));
+                            ctx.fillStyle = wpTex.pattern;
+
+                            // Wall polygon: left wall or right wall
+                            const wpt = (wx, wy) => {
+                                let px, py;
+                                if (!flipped) {
+                                    px = oX - wx * (cw / 2);
+                                    py = oY - wx * (ch / 2) - wy * ch;
+                                } else {
+                                    px = oX + wx * (cw / 2);
+                                    py = oY - wx * (ch / 2) - wy * ch;
+                                }
+                                return atlasToScreen(px, py);
+                            };
+
+                            ctx.beginPath();
+                            ctx.moveTo(...Object.values(wpt(0, 0)));
+                            ctx.lineTo(...Object.values(wpt(cols, 0)));
+                            ctx.lineTo(...Object.values(wpt(cols, rows)));
+                            ctx.lineTo(...Object.values(wpt(0, rows)));
+                            ctx.closePath();
+                            ctx.fill();
+                        }
+                    }
+                }
+
+                // ?? 3. BACKGROUND IMAGE (alpha on floor/wall ? tilesets show through) ?
+                const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
+                if (bgImg && bgImg.complete && bgImg.width > 0) {
+                    const bgScale = _bgo;
+                    const s = bgScale * this.scale;
+                    ctx.drawImage(bgImg, this.offsetX, this.offsetY, bgImg.width * s, bgImg.height * s);
+                }
+
+            } else {
+                // ?? Editor mode: draw floor tilesets inside scaled ctx ????????????????
+                ctx.save();
+                ctx.translate(this.offsetX, this.offsetY);
+                ctx.scale(this.scale, this.scale);
+                for (const vf of visibleFloors) {
+                    let floorId = null;
+                    if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
+                        const entry = this.app.parser.floors[targetLoc].find(f => String(f.key) === String(vf));
+                        if (entry) floorId = entry.id;
+                    }
+                    const floorTex = this._getTilesetTexture('floor', floorId);
+                    if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0) {
+                        if (!floorTex.pattern) floorTex.pattern = ctx.createPattern(floorTex.img, 'repeat');
+                        floorTex.pattern.setTransform(new DOMMatrix().scale(1, 0.5).rotate(-45).scale(0.35, 0.35));
                         ctx.fillStyle = floorTex.pattern;
-                        
-                        // Draw diamond polygon from corners
-                        const pt = (gx, gy) => ({
-                            x: oX + (gx - gy) * (cw / 2),
-                            y: oY - (gx + gy) * (ch / 2)
-                        });
-                        ctx.beginPath();
-                        ctx.moveTo(pt(0, 0).x, pt(0, 0).y);
-                        ctx.lineTo(pt(cols, 0).x, pt(cols, 0).y);
-                        ctx.lineTo(pt(cols, rows).x, pt(cols, rows).y);
-                        ctx.lineTo(pt(0, rows).x, pt(0, rows).y);
-                        ctx.closePath();
-                        ctx.fill();
-                    } else {
-                        const matrix = new DOMMatrix().scale(1, 0.5).rotate(-45).scale(0.35, 0.35);
-                        floorTex.pattern.setTransform(matrix);
-                        ctx.fillStyle = floorTex.pattern;
-                        
                         const n = Math.min(this._floorGridN, FLOOR_GRID_N);
                         ctx.beginPath();
                         ctx.moveTo(this._isoWorld(0, 0, vf).x, this._isoWorld(0, 0, vf).y);
@@ -1335,105 +1427,102 @@ class IsometricMap {
                         ctx.closePath();
                         ctx.fill();
                     }
-                    
-                    ctx.restore();
                 }
+                ctx.restore();
             }
 
-            const showFloorGrids = (!isPlay && !isGrid) || (isPlay && this.isHammerMode && this.forceDrawGrid);
+            // ?? 4. GRID OVERLAY ???????????????????????????????????????????????????????
+            // Editor: cached grid (inside scaled ctx)
             if (!isPlay && !isGrid) {
+                ctx.save();
+                ctx.translate(this.offsetX, this.offsetY);
+                ctx.scale(this.scale, this.scale);
                 ctx.globalAlpha = 0.25;
                 const off0 = this.getFloorOffset(0);
-                for (let vf of visibleFloors) {
+                for (const vf of visibleFloors) {
                     const off = this.getFloorOffset(vf);
                     const dx = off.x - off0.x;
                     const dy = off.y - off0.y;
                     ctx.drawImage(this._floorGridCache, this._floorGridOriginX + dx, this._floorGridOriginY + dy);
                 }
+                ctx.restore();
             }
-            
+
+            // Play/Grid: Atlas grid in SCREEN SPACE (coords = atlas_world * scale + offset)
             const shouldDrawAtlasGridPlay = (isPlay && this.isHammerMode && this.forceDrawGrid);
             const shouldDrawAtlasGridEdit = (isGrid && this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1);
-            
+
             if (shouldDrawAtlasGridPlay || shouldDrawAtlasGridEdit) {
-                const surfaces = shouldDrawAtlasGridPlay 
-                    ? window.mapsAtlas.filter(s => visibleFloors.includes(String(s.groupNum))) 
+                const surfaces = shouldDrawAtlasGridPlay
+                    ? window.mapsAtlas.filter(s => visibleFloors.includes(String(s.groupNum)))
                     : [window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex]];
-                
+
                 for (const surf of surfaces) {
+                    const oX = surf.origin_px.x * _bgo;
+                    const oY = surf.origin_px.y * _bgo;
+                    const cw = surf.cell.w || 64;
+                    const ch = surf.cell.h || 32;
+
+                    ctx.save();
+                    ctx.globalAlpha = 0.5;
+                    ctx.lineWidth = 1;
+
                     if (surf.kind === 'floor') {
-                        // Note: ctx at this point has translate(offsetX,offsetY)+scale(scale) applied.
-                        // Atlas coords (origin_px * bgScale) are in world pixel space.
-                        // Since ctx already has scale/translate, just use atlas world coords directly.
-                        ctx.save();
-                        ctx.globalAlpha = 0.5;
                         ctx.strokeStyle = 'rgba(100, 255, 100, 0.9)';
-                        ctx.lineWidth = 1;
-                        const w = surf.cell.w || 64;
-                        const h = surf.cell.h || 32;
-                        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
-                        const oX = surf.origin_px.x * _bgo;
-                        const oY = surf.origin_px.y * _bgo;
                         for (let x = 0; x < surf.cols; x++) {
                             for (let y = 0; y < surf.rows; y++) {
-                                const ix = oX + (x - y) * (w / 2);
-                                const iy = oY - (x + y) * (h / 2);
-                                
+                                // Atlas world ? screen
+                                const ix = oX + (x - y) * (cw / 2);
+                                const iy = oY - (x + y) * (ch / 2);
+                                const sx = ix * this.scale + this.offsetX;
+                                const sy = iy * this.scale + this.offsetY;
+                                const scw = (cw / 2) * this.scale;
+                                const sch = (ch / 2) * this.scale;
                                 ctx.beginPath();
-                                ctx.moveTo(ix, iy);
-                                ctx.lineTo(ix + w/2, iy - h/2);
-                                ctx.lineTo(ix, iy - h);
-                                ctx.lineTo(ix - w/2, iy - h/2);
+                                ctx.moveTo(sx, sy);
+                                ctx.lineTo(sx + scw, sy - sch);
+                                ctx.lineTo(sx, sy - 2 * sch);
+                                ctx.lineTo(sx - scw, sy - sch);
                                 ctx.closePath();
                                 ctx.stroke();
                             }
                         }
-                        ctx.restore();
                     } else if (surf.kind === 'wall') {
-                        if (!isPlay) {
-                            // Same as floor: ctx has translate+scale, use raw atlas coords
-                            ctx.save();
-                            ctx.globalAlpha = 0.5;
-                            ctx.strokeStyle = surf.flipped ? 'rgba(255, 100, 100, 0.9)' : 'rgba(100, 100, 255, 0.9)';
-                            ctx.lineWidth = 1;
-                            const w = surf.cell.w || 64;
-                            const h = surf.cell.h || 32;
-                            const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
-                            const oX = surf.origin_px.x * _bgo;
-                            const oY = surf.origin_px.y * _bgo;
-                            for (let x = 0; x < surf.cols; x++) {
-                                for (let y = 0; y < surf.rows; y++) {
-                                    let ix, iy;
-                                    if (!surf.flipped) {
-                                        ix = oX - x * (w / 2);
-                                        iy = oY - x * (h / 2) - y * h;
-                                    } else {
-                                        ix = oX + x * (w / 2);
-                                        iy = oY - x * (h / 2) - y * h;
-                                    }
-                                    
-                                    ctx.beginPath();
-                                    ctx.moveTo(ix, iy);
-                                    ctx.lineTo(ix, iy - h);
-                                    if (!surf.flipped) {
-                                        ctx.lineTo(ix - w/2, iy - h - h/2);
-                                        ctx.lineTo(ix - w/2, iy - h/2);
-                                    } else {
-                                        ctx.lineTo(ix + w/2, iy - h - h/2);
-                                        ctx.lineTo(ix + w/2, iy - h/2);
-                                    }
-                                    ctx.closePath();
-                                    ctx.stroke();
+                        ctx.strokeStyle = surf.flipped ? 'rgba(255, 100, 100, 0.9)' : 'rgba(100, 100, 255, 0.9)';
+                        for (let x = 0; x < surf.cols; x++) {
+                            for (let y = 0; y < surf.rows; y++) {
+                                let ix, iy;
+                                if (!surf.flipped) {
+                                    ix = oX - x * (cw / 2);
+                                    iy = oY - x * (ch / 2) - y * ch;
+                                } else {
+                                    ix = oX + x * (cw / 2);
+                                    iy = oY - x * (ch / 2) - y * ch;
                                 }
+                                const sx = ix * this.scale + this.offsetX;
+                                const sy = iy * this.scale + this.offsetY;
+                                const scw2 = (cw / 2) * this.scale;
+                                const sch2 = ch * this.scale;
+                                ctx.beginPath();
+                                ctx.moveTo(sx, sy);
+                                ctx.lineTo(sx, sy - sch2);
+                                if (!surf.flipped) {
+                                    ctx.lineTo(sx - scw2, sy - sch2 - sch2 / 2);
+                                    ctx.lineTo(sx - scw2, sy - sch2 / 2);
+                                } else {
+                                    ctx.lineTo(sx + scw2, sy - sch2 - sch2 / 2);
+                                    ctx.lineTo(sx + scw2, sy - sch2 / 2);
+                                }
+                                ctx.closePath();
+                                ctx.stroke();
                             }
-                            ctx.restore();
                         }
                     }
+                    ctx.restore();
                 }
             }
-            ctx.restore();
 
-            // Grilla de paredes del PISO seleccionado (groupNum === select-floor)
+            // ?? 5. WALL ITEMS + FLOOR FURNITURE ??????????????????????????????????????
             if (!isGrid) this._drawIsoWallGrids(targetLoc, targetFloor);
 
             const all = this.app.parser.placements.filter(
@@ -1447,7 +1536,7 @@ class IsometricMap {
             this._stackInfo = this._computeStackInfo(regular);
 
             const sortByZ = (a, b) => {
-                const fb = Number(b.floor||0), fa = Number(a.floor||0); 
+                const fb = Number(b.floor||0), fa = Number(a.floor||0);
                 if (fa !== fb) return fa - fb;
                 const z = (b.x + b.y) - (a.x + a.y);
                 if (z) return z;
