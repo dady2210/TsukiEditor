@@ -1346,10 +1346,10 @@ class IsometricMap {
                           let floorNum, isRightWall;
                           // Match the serialization order from Unity
                           if (targetLoc === 0 && wpArr.length >= 4) {
-                              if (wpIndex === 0) { floorNum = 1; isRightWall = false; }
-                              else if (wpIndex === 1) { floorNum = 0; isRightWall = false; }
-                              else if (wpIndex === 2) { floorNum = 0; isRightWall = true; }
-                              else if (wpIndex === 3) { floorNum = 1; isRightWall = true; }
+                              if (wpIndex === 0) { floorNum = 0; isRightWall = false; }
+                              else if (wpIndex === 1) { floorNum = 1; isRightWall = false; }
+                              else if (wpIndex === 2) { floorNum = 1; isRightWall = true; }
+                              else if (wpIndex === 3) { floorNum = 0; isRightWall = true; }
                               // Ignoramos index >= 4 por ahora (podria ser el piso 2 u otras paredes ocultas)
                               else continue; 
                           } else {

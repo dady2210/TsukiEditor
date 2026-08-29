@@ -730,13 +730,13 @@ class SaveParser {
         const arr = this.wallpapers[sublocId];
         // Unity serializes the treehouse wall dictionary in a specific order.
         // Based on user testing and csave analysis, the order is:
-        // Index 0: Floor 1 Left
-        // Index 1: Floor 0 Left
-        // Index 2: Floor 0 Right
-        // Index 3: Floor 1 Right
+        // Index 0: Floor 0 Left
+        // Index 1: Floor 1 Left
+        // Index 2: Floor 1 Right
+        // Index 3: Floor 0 Right
         let idx = 0;
         if (Number(sublocId) === 0 && arr.length >= 4) {
-            idx = isRightWall ? (floorNum === 0 ? 2 : 3) : (floorNum === 0 ? 1 : 0);
+            idx = isRightWall ? (floorNum === 0 ? 3 : 2) : (floorNum === 0 ? 0 : 1);
         } else {
             idx = (floorNum * 2) + (isRightWall ? 1 : 0);
         }
