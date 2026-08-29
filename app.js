@@ -372,7 +372,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             }
         }
 
-        this.updateInvDatalist();
+        this._inventoryRendered = false;
+        if (!document.body.classList.contains('play-mode')) {
+            this.updateInvDatalist();
+            this.renderInventory();
+            this._inventoryRendered = true;
+        }
     }
 
     // ─── Events ────────────────────────────────────────────────────────
@@ -770,7 +775,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const info = this.parser.getInventoryCapacityInfo(override);
             const moved = this.parser.moveExcessToHidden(info.capacity);
             this.showToast(`🎒 Se movieron ${moved} items al inventario oculto.`);
-            this.renderInventory();
+            // this.renderInventory(); // lazy loaded
         });
         
         const btnAddBag = document.getElementById('btn-add-bag');
