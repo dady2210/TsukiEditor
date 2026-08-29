@@ -147,7 +147,7 @@ class IsometricMap {
         img.onerror = () => {
             this._imgCache[cacheKey] = false;
         };
-        img.src = `../maps/Exportado_level${loc}/mask_${type}_${floorKey}.png`;
+        img.src = `images/maps/Exportado_level${loc}/mask_${type}_${floorKey}.png`;
         return false;
     }
 
