@@ -150,7 +150,15 @@ class IsometricMap {
         img.onerror = () => {
             this._imgCache[cacheKey] = false;
         };
-        img.src = 'images/maps/Exportado_level' + exportDir + '/mask_' + type + '_' + floorKey + '.png';
+        
+        let maskName = 'mask_' + type + '_' + floorKey;
+        if (type === 'wall' && loc === 0) {
+            const isRight = (floorKey % 2) !== 0;
+            const fNum = Math.floor(floorKey / 2);
+            maskName = 'mask_wall' + (isRight ? 'R' : 'L') + '_' + fNum;
+        }
+        
+        img.src = 'images/maps/Exportado_level' + exportDir + '/' + maskName + '.png';
         return false;
     }
 
@@ -1426,7 +1434,7 @@ class IsometricMap {
                             }
                             if (floorNum >= 2) continue; // Only 2 floors supported for now
                             const wallMask = this._getMaskImage('wall', (floorNum * 2) + (isRightWall ? 1 : 0), targetLoc);
-                            drawMaskLayer('wallpaper', entry.id, wallMask, !isRightWall);
+                            drawMaskLayer('wall', entry.id, wallMask, !isRightWall);
                         }
                     }
                     
