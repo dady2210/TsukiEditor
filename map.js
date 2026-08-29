@@ -133,12 +133,16 @@ class IsometricMap {
     }
 
     // Tileset Image Loader (for Wallpapers/Floors)
-    _getTilesetTexture(type, id) {
+        _getTilesetTexture(type, id) {
         if (!id || id <= 0) return null;
         const cacheKey = `${type}_${id}`;
         
-        if (this._patternCache[cacheKey]) return this._patternCache[cacheKey];
+        if (this._patternCache[cacheKey]) {
+            if (this._patternCache[cacheKey].loading) return null;
+            return this._patternCache[cacheKey];
+        }
 
+        this._patternCache[cacheKey] = { loading: true };
         const img = new Image();
         img.src = `images/tilesets/${type}s/${id}.png`;
         img.onload = () => {
@@ -146,10 +150,8 @@ class IsometricMap {
             this.draw(); // Redraw map once the tileset loads
         };
         img.onerror = () => {
-            this._patternCache[cacheKey] = { error: true }; // Prevent infinite loops
-        };
-        
-        this._patternCache[cacheKey] = { loading: true };
+            this._patternCache[cacheKey] = { error: true };
+        }
         return null;
     }
 
@@ -1289,12 +1291,13 @@ class IsometricMap {
 
                     // Pattern transform maps texture to isometric diamond on screen
                     const sc = this.scale;
-                    floorTex.pattern.setTransform(new DOMMatrix([
-                        (cw / 2) * sc, -(ch / 2) * sc * 0.5,
-                        (cw / 2) * sc,  (ch / 2) * sc * 0.5,
-                        oX * sc + this.offsetX,
-                        oY * sc + this.offsetY
-                    ]));
+                    const floorMatrix = new DOMMatrix()
+                            .translate(oX * sc + this.offsetX, oY * sc + this.offsetY)
+                            .scale(sc, sc)
+                            .scale(1, 0.5)
+                            .rotate(-45)
+                            .scale(0.35, 0.35);
+                        floorTex.pattern.setTransform(floorMatrix);
                     ctx.fillStyle = floorTex.pattern;
 
                     // Diamond polygon in screen coords
@@ -1338,26 +1341,17 @@ class IsometricMap {
                             if (!wpTex.pattern) wpTex.pattern = ctx.createPattern(wpTex.img, 'repeat');
 
                             const sc = this.scale;
-                            // Wall pattern transform
-                            // u vector (along wall): Left(-cw/2, -ch/2), Right(+cw/2, -ch/2)
-                            // v vector (down wall): (0, ch)
-                            const u_x = (flipped ? 1 : -1) * (cw / 2);
-                            const u_y = -ch / 2;
-                            const v_x = 0;
-                            const v_y = ch;
-                            
-                            // We might also need to scale the texture so it fits nicely.
-                            // The game typically uses a scale factor of 0.35 for wallpapers
                             const texScale = 0.35;
-                            
-                            // Adjust origin so texture tiles from top of the wall correctly
-                            // oX, oY is the bottom corner. Top corner is oY - rows * ch.
+                            const shearSlope = flipped ? -0.5 : 0.5;
                             const originY = oY - rows * ch;
                             
+                            // Transform coordinates based on screen space slope.
                             wpTex.pattern.setTransform(new DOMMatrix([
-                                u_x * sc * texScale, u_y * sc * texScale,
-                                v_x * sc * texScale, v_y * sc * texScale,
-                                oX * sc + this.offsetX,
+                                sc * texScale, 
+                                shearSlope * sc * texScale, 
+                                0, 
+                                sc * texScale, 
+                                oX * sc + this.offsetX, 
                                 originY * sc + this.offsetY
                             ]));
                             ctx.fillStyle = wpTex.pattern;
