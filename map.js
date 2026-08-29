@@ -155,7 +155,7 @@ class IsometricMap {
         if (type === 'wall' && loc === 0) {
             const isRight = (floorKey % 2) !== 0;
             const fNum = Math.floor(floorKey / 2);
-            maskName = 'mask_wall' + (isRight ? 'L' : 'R') + '_' + fNum; // Swapped because the physical files are named backwards
+            maskName = 'mask_wall' + (isRight ? 'R' : 'L') + '_' + fNum;
         }
         
         img.src = 'images/maps/Exportado_level' + exportDir + '/' + maskName + '.png';
