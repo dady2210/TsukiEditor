@@ -1306,6 +1306,11 @@ class IsometricMap {
                       const floorTex = this._getTilesetTexture('floor', floorId);
                       const floorMask = this._getMaskImage('floor', vf, targetLoc);
                       
+                      console.log('[MASK DBG] vf=' + vf + ' floorId=' + floorId + ' targetLoc=' + targetLoc,
+                          'floorTex=', floorTex,
+                          'floorMask=', floorMask,
+                          'parser.floors=', this.app.parser.floors);
+                      
                       if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0 && floorMask && floorMask.complete && floorMask.width > 0) {
                           // CRITICAL: create pattern on the offscreen context, not this.ctx
                           const floorPattern = this.maskCtx.createPattern(floorTex.img, 'repeat');
