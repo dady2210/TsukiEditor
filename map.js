@@ -1297,76 +1297,50 @@ class IsometricMap {
                   const s = this.scale;
                   const bgScale = _bgo;
                   
-                  for (const vf of visibleFloors) {
-                      let floorId = null;
-                      if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
-                          const entry = this.app.parser.floors[targetLoc].find(f => String(f.key) === String(vf));
-                          if (entry) floorId = entry.id;
-                      }
-                      const floorTex = this._getTilesetTexture('floor', floorId);
-                      const floorMask = this._getMaskImage('floor', vf, targetLoc);
-                      
-                      // Log the actual contents so we can see what key format is used
-                      if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
-                          console.log('[MASK DBG floors data]', JSON.stringify(this.app.parser.floors[targetLoc]));
-                      }
-                      console.log('[MASK DBG] vf=' + vf + ' floorId=' + floorId + ' targetLoc=' + targetLoc,
-                          'floorTex=', floorTex,
-                          'floorMask=', floorMask,
-                          'parser.floors=', this.app.parser.floors);
-                      
-                      if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0 && floorMask && floorMask.complete && floorMask.width > 0) {
-                          // CRITICAL: create pattern on the offscreen context, not this.ctx
-                          const floorPattern = this.maskCtx.createPattern(floorTex.img, 'repeat');
-                          
-                          this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                          this.maskCtx.globalCompositeOperation = 'source-over';
-                          
-                          const floorMatrix = new DOMMatrix()
-                              .translate(this.offsetX, this.offsetY)
-                              .scale(s, s)
-                              .scale(1, 0.5)
-                              .rotate(-45)
-                              .scale(0.35, 0.35);
-                          floorPattern.setTransform(floorMatrix);
-                          this.maskCtx.fillStyle = floorPattern;
-                          this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                          
-                          this.maskCtx.globalCompositeOperation = 'destination-in';
-                          this.maskCtx.drawImage(floorMask, this.offsetX, this.offsetY, floorMask.width * bgScale * s, floorMask.height * bgScale * s);
-                          
-                          this.maskCtx.globalCompositeOperation = 'source-over';
-                          this.ctx.drawImage(this.maskCanvas, 0, 0);
+                  // FLOOR MASKS: index-based, mask_floor_0.png = first floor entry, etc.
+                  if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
+                      const floorEntries = this.app.parser.floors[targetLoc];
+                      for (let fi = 0; fi < floorEntries.length; fi++) {
+                          const entry = floorEntries[fi];
+                          if (!entry || !entry.id || entry.id <= 0) continue;
+                          const floorTex = this._getTilesetTexture('floor', entry.id);
+                          const floorMask = this._getMaskImage('floor', fi, targetLoc);
+                          if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0 && floorMask && floorMask.complete && floorMask.width > 0) {
+                              const floorPattern = this.maskCtx.createPattern(floorTex.img, 'repeat');
+                              this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                              this.maskCtx.globalCompositeOperation = 'source-over';
+                              const floorMatrix = new DOMMatrix()
+                                  .translate(this.offsetX, this.offsetY)
+                                  .scale(s, s).scale(1, 0.5).rotate(-45).scale(0.35, 0.35);
+                              floorPattern.setTransform(floorMatrix);
+                              this.maskCtx.fillStyle = floorPattern;
+                              this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                              this.maskCtx.globalCompositeOperation = 'destination-in';
+                              this.maskCtx.drawImage(floorMask, this.offsetX, this.offsetY, floorMask.width * s, floorMask.height * s);
+                              this.maskCtx.globalCompositeOperation = 'source-over';
+                              this.ctx.drawImage(this.maskCanvas, 0, 0);
+                          }
                       }
                   }
 
+                  // WALL MASKS: index-based, mask_wall_0.png = first wallpaper entry, etc.
                   const wpDict = this.app.parser && this.app.parser.wallpapers;
                   if (wpDict && wpDict[targetLoc]) {
                       let wpIndex = 0;
                       for (const wpEntry of wpDict[targetLoc]) {
-                          if (!wpEntry.id || wpEntry.id <= 0) continue;
+                          if (!wpEntry.id || wpEntry.id <= 0) { wpIndex++; continue; }
                           const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
                           const wallMask = this._getMaskImage('wall', wpIndex, targetLoc);
                           wpIndex++;
-                          
                           if (wpTex && wpTex.img && wpTex.img.complete && wpTex.img.width > 0 && wallMask && wallMask.complete && wallMask.width > 0) {
-                              // CRITICAL: create pattern on the offscreen context
                               const wallPattern = this.maskCtx.createPattern(wpTex.img, 'repeat');
-                              
                               this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'source-over';
-                              
-                              wallPattern.setTransform(new DOMMatrix([
-                                  s * 0.35, 0.5 * s * 0.35, 
-                                  0, s * 0.35, 
-                                  this.offsetX, this.offsetY
-                              ]));
+                              wallPattern.setTransform(new DOMMatrix([s*0.35, 0.5*s*0.35, 0, s*0.35, this.offsetX, this.offsetY]));
                               this.maskCtx.fillStyle = wallPattern;
                               this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                              
                               this.maskCtx.globalCompositeOperation = 'destination-in';
-                              this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * bgScale * s, wallMask.height * bgScale * s);
-                              
+                              this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * s, wallMask.height * s);
                               this.maskCtx.globalCompositeOperation = 'source-over';
                               this.ctx.drawImage(this.maskCanvas, 0, 0);
                           }
