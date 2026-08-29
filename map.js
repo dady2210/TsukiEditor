@@ -1214,18 +1214,27 @@ class IsometricMap {
         // logrando exactamente lo que se ve en la captura del usuario (casa completa).
         let targetScale = Math.min(cw / bgW, ch / bgH);
         
-        // Restringimos el zoom severamente como pidió el usuario:
-        // No zoom out (fijado en targetScale), solo un poquitito de zoom in (1.2x max).
-        this.scale = Math.max(targetScale, Math.min(this.scale, targetScale * 1.2));
+        // Añadimos un poco más de zoom base (1.15x del mínimo) como pidió el usuario
+        targetScale = targetScale * 1.15;
+        
+        // Restringimos el zoom severamente: no zoom out, solo un poco de zoom in (hasta 1.3x).
+        this.scale = Math.max(targetScale, Math.min(this.scale, targetScale * 1.3));
         
         const drawnW = bgW * this.scale;
         const drawnH = bgH * this.scale;
         
         // Clampeamos el paneo al 10% (0.1) como pidió el usuario.
+        // Usamos min/max dinámicos para centrar si la imagen es pequeña,
+        // pero manteniendo el margen de 10% de tope.
         const marginW = cw * 0.1;
-        this.offsetX = Math.max(cw - drawnW - marginW, Math.min(this.offsetX, marginW));
+        const minX = Math.min(cw - drawnW - marginW, marginW);
+        const maxX = Math.max(cw - drawnW - marginW, marginW);
+        this.offsetX = Math.max(minX, Math.min(this.offsetX, maxX));
+        
         const marginH = ch * 0.1;
-        this.offsetY = Math.max(ch - drawnH - marginH, Math.min(this.offsetY, marginH));
+        const minY = Math.min(ch - drawnH - marginH, marginH);
+        const maxY = Math.max(ch - drawnH - marginH, marginH);
+        this.offsetY = Math.max(minY, Math.min(this.offsetY, maxY));
     }
 
     _drawImmediate() {
@@ -1352,6 +1361,7 @@ class IsometricMap {
                     // Draw base treehouse
                     bCtx.drawImage(bgImg, 0, 0);
                     
+                    let allLoaded = true;
                     // Helper to draw a mask layer
                     const drawMaskLayer = (type, id, maskImg, isFlipped) => {
                         const tex = this._getTilesetTexture(type, id);
@@ -1383,6 +1393,8 @@ class IsometricMap {
                             // Draw to baked
                             bCtx.globalCompositeOperation = 'source-over';
                             bCtx.drawImage(tmp, 0, 0);
+                        } else {
+                            allLoaded = false;
                         }
                     };
                     
@@ -1418,7 +1430,9 @@ class IsometricMap {
                         }
                     }
                     
-                    this._bakedBgKey = bakeKey;
+                    if (allLoaded) {
+                        this._bakedBgKey = bakeKey;
+                    }
                 }
                 
                 // Draw the baked background directly to screen
