@@ -728,7 +728,13 @@ class SaveParser {
     setWallpaper(sublocId, floorNum, isRightWall, newId) {
         if (!this.wallpapers || !this.wallpapers[sublocId]) return false;
         const arr = this.wallpapers[sublocId];
-        const idx = (floorNum * 2) + (isRightWall ? 1 : 0);
+        let idx = 0;
+        if (Number(sublocId) === 0 && arr.length >= 4) {
+            idx = isRightWall ? (floorNum === 0 ? 2 : 3) : (floorNum === 0 ? 1 : 0);
+        } else {
+            idx = (floorNum * 2) + (isRightWall ? 1 : 0);
+        }
+        
         if (arr[idx] && arr[idx].node) {
             arr[idx].id = Number(newId);
             arr[idx].node.value = arr[idx].id;
@@ -3672,3 +3678,4 @@ class SaveParser {
     }
 
 }
+if (typeof module !== 'undefined') module.exports = SaveParser;
