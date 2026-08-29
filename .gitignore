@@ -23,3 +23,6 @@
 !test_w1.js
 
 !grid_editor.js
+
+!docs/
+!docs/**
