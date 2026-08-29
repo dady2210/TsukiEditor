@@ -204,7 +204,8 @@ class IsometricMap {
         // 1: SW (Front Left)
         // 2: NW (Back Left)
         // 3: NE (Back Right)
-        const isBack = orientation === 2 || orientation === 3;
+        const ori = Number(orientation);
+        const isBack = ori === 2 || ori === 3;
         const frontKey = `${item_id}`;
         const backKey = `${item_id}_BACK`;
         
@@ -269,7 +270,8 @@ class IsometricMap {
     // del PNG), luego pivote Unity, y solo al final se intenta leer el canvas.
     _resolveSpritePivot(item_id, img, orientation) {
         const baked = (typeof window !== 'undefined' && window.contentPivots) || {};
-        const isBack = orientation === 2 || orientation === 3;
+        const ori = Number(orientation);
+        const isBack = ori === 2 || ori === 3;
         const key = String(item_id);
         if (isBack && baked[key + '_BACK']) return baked[key + '_BACK'];
         if (baked[key]) return baked[key];
@@ -1870,8 +1872,9 @@ class IsometricMap {
         // 2: NW (Back Left, Mirrored horizontally, darker)
         // 3: NE (Back Right, darker)
         
-        const flipH = (orientation === 1 || orientation === 2);
-        const darken = (orientation === 2 || orientation === 3);
+        const oriNum = Number(orientation);
+        const flipH = (oriNum === 1 || oriNum === 2);
+        const darken = (oriNum === 2 || oriNum === 3);
         
         if (flipH) {
             ctx.translate(cx, 0);
