@@ -725,20 +725,26 @@ class SaveParser {
         return true;
     }
 
-    setWallpaper(sublocId, floorNum, isRightWall, newId) {
+    setWallpaper(sublocId, floorNum, isFlipped, newId) {
         if (!this.wallpapers || !this.wallpapers[sublocId]) return false;
         const arr = this.wallpapers[sublocId];
+        
         // Unity serializes the treehouse wall dictionary in a specific order.
-        // Based on user testing and csave analysis, the order is:
         // Index 0: Floor 0 Left
         // Index 1: Floor 1 Left
         // Index 2: Floor 1 Right
         // Index 3: Floor 0 Right
+        //
+        // In the WebEditor's map atlas, the Left walls face bottom-right and have flipped=true.
+        // The Right walls face bottom-left and have flipped=false.
+        // We definitively map the geometric isFlipped property to the correct Unity index here:
         let idx = 0;
         if (Number(sublocId) === 0 && arr.length >= 4) {
-            idx = isRightWall ? (floorNum === 0 ? 3 : 2) : (floorNum === 0 ? 0 : 1);
+            // isFlipped === true means it's the LEFT wall geometrically.
+            idx = isFlipped ? (floorNum === 0 ? 0 : 1) : (floorNum === 0 ? 3 : 2);
         } else {
-            idx = (floorNum * 2) + (isRightWall ? 1 : 0);
+            // For other locations, assume a standard mapping
+            idx = (floorNum * 2) + (isFlipped ? 0 : 1);
         }
         
         if (arr[idx] && arr[idx].node) {

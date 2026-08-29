@@ -2213,7 +2213,7 @@ class IsometricMap {
                         if (coveringType === 'floor' && hit.kind === 'floor') {
                             if (this.app.parser.setFloor(targetLoc, hit.floorNum, data.item_id) !== false) applied = true;
                         } else if (coveringType === 'wallpaper' && hit.kind === 'wall') {
-                            if (this.app.parser.setWallpaper(targetLoc, hit.floorNum, !hit.flipped, data.item_id) !== false) applied = true; // Invert hit.flipped because wSurf.flipped=true is Left Wall
+                            if (this.app.parser.setWallpaper(targetLoc, hit.floorNum, hit.flipped, data.item_id) !== false) applied = true;
                         }
                         
                         if (applied) {
