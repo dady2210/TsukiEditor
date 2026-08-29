@@ -134,7 +134,10 @@ class IsometricMap {
 
     // Tileset Image Loader (for Wallpapers/Floors)
         _getMaskImage(type, floorKey, loc) {
-        const cacheKey = `mask_${loc}_${type}_${floorKey}`;
+        let exportDir = loc;
+        // Tsuki Odyssey loc 0 (Treehouse) is exported as level2
+        if (loc === 0) exportDir = 2;
+        const cacheKey = 'mask_' + exportDir + '_' + type + '_' + floorKey;
         if (this._imgCache[cacheKey] !== undefined) {
             return this._imgCache[cacheKey];
         }
@@ -147,7 +150,7 @@ class IsometricMap {
         img.onerror = () => {
             this._imgCache[cacheKey] = false;
         };
-        img.src = `images/maps/Exportado_level${loc}/mask_${type}_${floorKey}.png`;
+        img.src = 'images/maps/Exportado_level' + exportDir + '/mask_' + type + '_' + floorKey + '.png';
         return false;
     }
 
@@ -1340,10 +1343,21 @@ class IsometricMap {
                           const wpEntry = wpArr[wpIndex];
                           if (!wpEntry || !wpEntry.id || wpEntry.id <= 0) continue;
                           
-                          let floorNum = Math.floor(wpIndex / 2);
-                          let isRightWall = (wpIndex % 2) !== 0;
+                          let floorNum, isRightWall;
+                          // Match the serialization order from Unity
+                          if (targetLoc === 0 && wpArr.length >= 4) {
+                              if (wpIndex === 0) { floorNum = 1; isRightWall = false; }
+                              else if (wpIndex === 1) { floorNum = 0; isRightWall = false; }
+                              else if (wpIndex === 2) { floorNum = 0; isRightWall = true; }
+                              else if (wpIndex === 3) { floorNum = 1; isRightWall = true; }
+                              // Ignoramos index >= 4 por ahora (podria ser el piso 2 u otras paredes ocultas)
+                              else continue; 
+                          } else {
+                              floorNum = Math.floor(wpIndex / 2);
+                              isRightWall = (wpIndex % 2) !== 0;
+                          }
                           
-                          const maskPrefix = isRightWall ? 'wallL' : 'wallR'; // Nombres invertidos fisicamente
+                          const maskPrefix = isRightWall ? 'wallR' : 'wallL';
                           const wallMask = this._getMaskImage(maskPrefix, floorNum, targetLoc);
                           
                           if (!wallMask || !wallMask.complete || wallMask.width <= 0) continue;
