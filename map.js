@@ -1222,19 +1222,10 @@ class IsometricMap {
         const drawnH = bgH * this.scale;
         
         // Clampeamos el paneo al 10% (0.1) como pidió el usuario.
-        if (drawnW >= cw) {
-            this.offsetX = Math.max(cw - drawnW, Math.min(this.offsetX, 0));
-        } else {
-            const margin = cw * 0.1;
-            this.offsetX = Math.max(cw - drawnW - margin, Math.min(this.offsetX, margin));
-        }
-        
-        if (drawnH >= ch) {
-            this.offsetY = Math.max(ch - drawnH, Math.min(this.offsetY, 0));
-        } else {
-            const marginH = ch * 0.1;
-            this.offsetY = Math.max(ch - drawnH - marginH, Math.min(this.offsetY, marginH));
-        }
+        const marginW = cw * 0.1;
+        this.offsetX = Math.max(cw - drawnW - marginW, Math.min(this.offsetX, marginW));
+        const marginH = ch * 0.1;
+        this.offsetY = Math.max(ch - drawnH - marginH, Math.min(this.offsetY, marginH));
     }
 
     _drawImmediate() {
@@ -1338,6 +1329,7 @@ class IsometricMap {
                 y: ay * this.scale + this.offsetY
             });
 
+            if ((isPlay || isGrid) && window.mapsAtlas) {
             // 1, 2, 3: BAKED BACKGROUND (Treehouse + Walls + Floors)
             const targetLoc = document.getElementById('select-location') ? parseInt(document.getElementById('select-location').value) : 0;
             const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
