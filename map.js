@@ -761,33 +761,69 @@ class IsometricMap {
     }
 
 
-    _hitTestPlayFloors(screenX, screenY) {
+    _hitTestPlaySurface(screenX, screenY) {
         if (!window.mapsAtlas) return null;
-        // Solo modo jugar
         if (!document.body.classList.contains('play-mode')) return null;
         
-        // Iteramos de arriba hacia abajo (Grp 2 -> 1 -> 0) para chequear superposición visual
         for (let g = 2; g >= 0; g--) {
-            const surf = window.mapsAtlas.find(s => s.kind === 'floor' && s.groupNum === g);
+            // Check walls first (they occlude floors)
+            const walls = window.mapsAtlas.filter(s => s.kind === 'wall' && String(s.groupNum) === String(g));
+            // We check both left (flipped=false) and right (flipped=true) walls
+            for (let wSurf of walls) {
+                const isRightWall = !!wSurf.flipped;
+                const dummyBbox = this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 16, ymax: 16 };
+                const wCoords = this.screenToWallGrid(screenX, screenY, isRightWall, dummyBbox, g);
+                const wx = Math.floor(wCoords.x);
+                const wy = Math.floor(wCoords.y);
+                if (wx >= 0 && wx < wSurf.cols && wy >= 0 && wy < wSurf.rows) {
+                    return { kind: 'wall', floorNum: g, x: wx, y: wy, flipped: isRightWall };
+                }
+            }
+            
+            // Check floors
+            const surf = window.mapsAtlas.find(s => s.kind === 'floor' && String(s.groupNum) === String(g));
             if (surf) {
                 const off = this.getFloorOffset(g);
-                // Inversión geométrica isométrica
                 const dx = (screenX - this.offsetX) / this.scale - off.x;
                 const dy = (screenY - this.offsetY) / this.scale - off.y;
-                
                 const cellW = surf.cell && surf.cell.w ? surf.cell.w : this.CELL_W;
                 const cellH = surf.cell && surf.cell.h ? surf.cell.h : this.CELL_H;
                 const cx = (dx / (cellW / 2) - dy / (cellH / 2)) / 2;
                 const cy = -(dy / (cellH / 2) + dx / (cellW / 2)) / 2;
-                
                 const gridX = Math.floor(cx);
                 const gridY = Math.floor(cy);
-                
                 if (gridX >= 0 && gridX < surf.cols && gridY >= 0 && gridY < surf.rows) {
-                    return { floorNum: g, x: gridX, y: gridY };
+                    return { kind: 'floor', floorNum: g, x: gridX, y: gridY };
                 }
             }
         }
+        return null;
+    }
+
+    isWallFurniture(item_id) {
+        const WALL_IDS = new Set([98, 2140, 2146]);
+        if (WALL_IDS.has(Number(item_id))) return true;
+        
+        const db = (typeof window !== 'undefined' && window.ITEMS_DB) ? window.ITEMS_DB[String(item_id)] : null;
+        if (db) {
+            const cat = (db.category || '').toUpperCase();
+            if (cat.includes('WALLDECO') || cat.includes('LAMP') || cat.includes('POSTER')) return true;
+            
+            const name = (db.furn_name || db.item_name || '').toUpperCase();
+            if (name.includes('WALL LAMP') || name.includes('WALLDECO') || name.includes('POSTER') || name.includes('LÁMPARA DE PARED') || name.includes('CUADRO') || name.includes('WALL')) return true;
+        }
+        return false;
+    }
+    
+    isCovering(item_id) {
+        const COVERING_FLOORS = new Set([100, 1166, 1167, 1168, 1169, 128, 130, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610, 1611, 1612, 1613, 1614, 1615, 1861, 1862, 1863, 1864, 1866, 1867, 2181, 240, 242, 244, 245, 246, 250, 347, 67, 69, 749, 750, 755, 796, 797, 798, 95, 98, 99]);
+        const COVERING_WALLPAPERS = new Set([1118, 1316, 1585, 1588, 1589, 1590, 1591, 1592, 1594, 1595, 1596, 1599, 1617, 2009, 2084, 2127, 2128, 2129, 2195, 2308, 2424, 2484, 2486, 396, 410, 417, 418, 419, 420, 421, 752, 753, 754, 755, 756, 757, 761, 763, 764, 765, 787, 794, 795, 804, 882, 883, 884, 914]);
+        
+        // Exceptional cases: if 98 is indeed wall furniture, don't return it as a floor covering
+        if (this.isWallFurniture(item_id)) return null;
+
+        if (COVERING_FLOORS.has(Number(item_id))) return 'floor';
+        if (COVERING_WALLPAPERS.has(Number(item_id))) return 'wallpaper';
         return null;
     }
 
@@ -1120,7 +1156,7 @@ class IsometricMap {
         let isGrid = document.body.classList.contains('grid-mode');
         let bgActive = (isPlay || isGrid) && targetLoc === 0;
         
-        if (isPlay && targetLoc === 0) {
+        if (isPlay) {
             visibleFloors = ['0', '1', '2'];
         } else if (isGrid) {
             if (this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1) {
@@ -1769,22 +1805,38 @@ class IsometricMap {
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
             
-            const hit = this._hitTestPlayFloors(mouseX, mouseY);
+            const hit = this._hitTestPlaySurface(mouseX, mouseY);
             if (hit) {
                 // Leer datos arrastrados, pero dataTransfer no está disponible en dragover para leer el JSON completo en Chrome a veces.
                 // Usaremos un hack local si es necesario, pero por ahora solo mostraremos un snap genérico o no mostraremos fantasma si no sabemos el tamaño.
                 // Como workaround, guardaremos el item arrastrado en la instancia si viene de la mochila.
                 if (this.draggedInventoryItem) {
                     const item_id = this.draggedInventoryItem.item_id;
-                    const { w, l } = this.getRotatedSize(item_id, 0);
-                    this.isItemDragging = {
-                        item_id: item_id,
-                        x: hit.x,
-                        y: hit.y,
-                        floor: hit.floorNum,
-                        orientation: 0
-                    };
-                    this.isItemDragging.occupied = this._isAreaOccupied(hit.floorNum, hit.x, hit.y, w, l);
+                    const coveringType = this.isCovering(item_id);
+                    const isWallItem = this.isWallFurniture(item_id);
+
+                    if (coveringType) {
+                        const valid = (coveringType === 'floor' && hit.kind === 'floor') || (coveringType === 'wallpaper' && hit.kind === 'wall');
+                        this.isItemDragging = valid ? {
+                            item_id: item_id, x: hit.x, y: hit.y, floor: hit.floorNum, orientation: 0, occupied: false, isWall: hit.kind === 'wall', flipped: hit.flipped
+                        } : null;
+                    } else if (isWallItem && hit.kind !== 'wall') {
+                        this.isItemDragging = null;
+                    } else if (!isWallItem && hit.kind === 'wall') {
+                        this.isItemDragging = null;
+                    } else {
+                        const { w, l } = this.getRotatedSize(item_id, 0);
+                        this.isItemDragging = {
+                            item_id: item_id,
+                            x: hit.x,
+                            y: hit.y,
+                            floor: hit.floorNum,
+                            orientation: 0,
+                            isWall: hit.kind === 'wall',
+                            flipped: hit.flipped,
+                            occupied: this._isAreaOccupied(hit.floorNum, hit.x, hit.y, w, l)
+                        };
+                    }
                     this.draw();
                 }
             } else {
@@ -1812,18 +1864,56 @@ class IsometricMap {
                 const mouseX = e.clientX - rect.left;
                 const mouseY = e.clientY - rect.top;
                 
-                const hit = this._hitTestPlayFloors(mouseX, mouseY);
+                const hit = this._hitTestPlaySurface(mouseX, mouseY);
                 if (hit) {
+                    const targetLocStr = document.getElementById('select-location')?.value;
+                    const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
+                    
+                    const coveringType = this.isCovering(data.item_id);
+                    if (coveringType) {
+                        let applied = false;
+                        if (coveringType === 'floor' && hit.kind === 'floor') {
+                            if (this.app.parser.setFloor(targetLoc, hit.floorNum, data.item_id) !== false) applied = true;
+                        } else if (coveringType === 'wallpaper' && hit.kind === 'wall') {
+                            if (this.app.parser.setWallpaper(targetLoc, hit.floorNum, data.item_id) !== false) applied = true;
+                        }
+                        
+                        if (applied) {
+                            const invArray = this.app.parser.inventory;
+                            const slotIdx = invArray.findIndex(i => i.item_id === data.item_id && i.invType == data.invType && i.qty > 0);
+                            if (slotIdx !== -1) {
+                                this.app.parser.updateInventoryItem('inventory', slotIdx, data.item_id, invArray[slotIdx].qty - 1, data.invType);
+                            }
+                            // Important: force refresh tileset texture cache
+                            const typeName = coveringType === 'wallpaper' ? 'wallpaper' : 'floor';
+                            const cacheKey = `${typeName}_${data.item_id}`;
+                            if (!this._patternCache[cacheKey]) this._getTilesetTexture(typeName, data.item_id);
+                            
+                            this.draw();
+                            if (this.app.tsukiPort && typeof this.app.tsukiPort.renderBagInventory === 'function') this.app.tsukiPort.renderBagInventory();
+                            if (this.app.tsukiPort && typeof this.app.tsukiPort.renderHammerInventory === 'function') this.app.tsukiPort.renderHammerInventory();
+                        }
+                        return;
+                    }
+                    
+                    const isWallItem = this.isWallFurniture(data.item_id);
+                    if (isWallItem && hit.kind !== 'wall') {
+                        console.warn("Item de pared no puede ir en piso");
+                        return;
+                    }
+                    if (!isWallItem && hit.kind === 'wall') {
+                        console.warn("Item de piso no puede ir en pared");
+                        return;
+                    }
+                    
                     const { w, l } = this.getRotatedSize(data.item_id, 0);
+                    // For walls, maybe w,l don't apply the same way, but let's keep _isAreaOccupied checking simple for now.
                     if (this._isAreaOccupied(hit.floorNum, hit.x, hit.y, w, l)) {
                         console.warn("Posición ocupada.");
                         return; // Ocupado
                     }
                     
                     // Colocar!
-                    const targetLocStr = document.getElementById('select-location')?.value;
-                    const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
-                    
                     const newPlacement = {
                         item_id: data.item_id,
                         x: hit.x,
@@ -1831,8 +1921,8 @@ class IsometricMap {
                         floor: hit.floorNum,
                         orientation: 0,
                         cluster: targetLoc,
-                        isWall: false,
-                        flipped: false
+                        isWall: hit.kind === 'wall',
+                        flipped: hit.kind === 'wall' ? hit.flipped : false
                     };
                     
                     // Descontar del inventario
