@@ -1307,7 +1307,8 @@ class IsometricMap {
                       const floorMask = this._getMaskImage('floor', vf, targetLoc);
                       
                       if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0 && floorMask && floorMask.complete && floorMask.width > 0) {
-                          if (!floorTex.pattern) floorTex.pattern = this.ctx.createPattern(floorTex.img, 'repeat');
+                          // CRITICAL: create pattern on the offscreen context, not this.ctx
+                          const floorPattern = this.maskCtx.createPattern(floorTex.img, 'repeat');
                           
                           this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                           this.maskCtx.globalCompositeOperation = 'source-over';
@@ -1318,13 +1319,14 @@ class IsometricMap {
                               .scale(1, 0.5)
                               .rotate(-45)
                               .scale(0.35, 0.35);
-                          floorTex.pattern.setTransform(floorMatrix);
-                          this.maskCtx.fillStyle = floorTex.pattern;
+                          floorPattern.setTransform(floorMatrix);
+                          this.maskCtx.fillStyle = floorPattern;
                           this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                           
                           this.maskCtx.globalCompositeOperation = 'destination-in';
                           this.maskCtx.drawImage(floorMask, this.offsetX, this.offsetY, floorMask.width * bgScale * s, floorMask.height * bgScale * s);
                           
+                          this.maskCtx.globalCompositeOperation = 'source-over';
                           this.ctx.drawImage(this.maskCanvas, 0, 0);
                       }
                   }
@@ -1334,34 +1336,35 @@ class IsometricMap {
                       let wpIndex = 0;
                       for (const wpEntry of wpDict[targetLoc]) {
                           if (!wpEntry.id || wpEntry.id <= 0) continue;
-                          const floorNum = wpEntry.key;
                           const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
-                          // Use index 0, 1, 2 for the wall masks to make it easy for the user
                           const wallMask = this._getMaskImage('wall', wpIndex, targetLoc);
                           wpIndex++;
                           
                           if (wpTex && wpTex.img && wpTex.img.complete && wpTex.img.width > 0 && wallMask && wallMask.complete && wallMask.width > 0) {
-                              if (!wpTex.pattern) wpTex.pattern = this.ctx.createPattern(wpTex.img, 'repeat');
+                              // CRITICAL: create pattern on the offscreen context
+                              const wallPattern = this.maskCtx.createPattern(wpTex.img, 'repeat');
                               
                               this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'source-over';
                               
-                              wpTex.pattern.setTransform(new DOMMatrix([
+                              wallPattern.setTransform(new DOMMatrix([
                                   s * 0.35, 0.5 * s * 0.35, 
                                   0, s * 0.35, 
                                   this.offsetX, this.offsetY
                               ]));
-                              this.maskCtx.fillStyle = wpTex.pattern;
+                              this.maskCtx.fillStyle = wallPattern;
                               this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               
                               this.maskCtx.globalCompositeOperation = 'destination-in';
                               this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * bgScale * s, wallMask.height * bgScale * s);
                               
+                              this.maskCtx.globalCompositeOperation = 'source-over';
                               this.ctx.drawImage(this.maskCanvas, 0, 0);
                           }
                       }
                   }
-              // ?? 3. BACKGROUND IMAGE (alpha on floor/wall ? tilesets show through) ?
+                  
+                  // ?? 3. BACKGROUND IMAGE (alpha on floor/wall ? tilesets show through) ?
                 const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
                 if (bgImg && bgImg.complete && bgImg.width > 0) {
                     const bgScale = _bgo;
