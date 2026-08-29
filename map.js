@@ -1209,32 +1209,33 @@ class IsometricMap {
         const bgW = bgImg.width * bgScale;
         const bgH = bgImg.height * bgScale;
         
-        // Tsuki Odyssey: NO SE DEBE VER NINGÚN VACÍO (VOID).
-        // Así que la escala mínima (targetScale) debe cubrir AMBAS dimensiones de la pantalla.
-        // En móvil (Portrait), esto significa que encaja el alto y sobra ancho (paneo horizontal).
-        // En PC (Landscape), esto significa que encaja el ancho y sobra alto (paneo vertical).
-        let targetScale = Math.max(cw / bgW, ch / bgH);
+        // Tsuki Odyssey: Permitimos ver la casa entera sin cortes.
+        // targetScale usa Math.min para asegurar que SIEMPRE quepa en pantalla,
+        // logrando exactamente lo que se ve en la captura del usuario (casa completa).
+        let targetScale = Math.min(cw / bgW, ch / bgH);
         
-        // Restringimos el zoom. No puede ser menor que targetScale (para no ver void).
-        // Y no dejamos hacer mucho zoom in (hasta 1.3x).
-        this.scale = Math.max(targetScale, Math.min(this.scale, targetScale * 1.3));
+        // Restringimos el zoom. No puede ser tan pequeño que la casa sea un pixel,
+        // ni puede ser infinito. Lo bloqueamos entre que quepa justa, y un zoom de 1.5x.
+        this.scale = Math.max(targetScale, Math.min(this.scale, targetScale * 1.5));
         
         const drawnW = bgW * this.scale;
         const drawnH = bgH * this.scale;
         
-        // Clampeamos el paneo para que los bordes de la imagen nunca entren a la pantalla.
-        // Si drawnW >= cw, offsetX debe estar entre (cw - drawnW) y 0.
+        // Clampeamos el paneo.
         if (drawnW >= cw) {
             this.offsetX = Math.max(cw - drawnW, Math.min(this.offsetX, 0));
         } else {
-            // Failsafe por si acaso (nunca debería pasar con el targetScale)
-            this.offsetX = (cw - drawnW) / 2;
+            // Si sobra espacio (pantalla muy ancha), permitimos panear "un poco" hacia los lados
+            // como pide el usuario, pero con un límite estricto para no ir al vacío infinito.
+            const margin = cw * 0.15; // Límite de cuánto vacío puedes ver
+            this.offsetX = Math.max(cw - drawnW - margin, Math.min(this.offsetX, margin));
         }
         
         if (drawnH >= ch) {
             this.offsetY = Math.max(ch - drawnH, Math.min(this.offsetY, 0));
         } else {
-            this.offsetY = (ch - drawnH) / 2;
+            const marginH = ch * 0.15;
+            this.offsetY = Math.max(ch - drawnH - marginH, Math.min(this.offsetY, marginH));
         }
     }
 
