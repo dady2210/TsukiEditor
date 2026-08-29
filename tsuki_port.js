@@ -63,15 +63,15 @@ class TsukiPort {
     
 
     enterBagMode() {
-        this.bottomBar.style.display = 'none';
-        if (this.bagUI) this.bagUI.style.display = 'flex';
+        this.bottomBar.classList.remove('active-ui');
+        if (this.bagUI) this.bagUI.classList.add('active-ui');
         this.renderBagInventory();
     }
     
     exitBagMode() {
-        if (this.bagUI) this.bagUI.style.display = 'none';
+        if (this.bagUI) this.bagUI.classList.remove('active-ui');
         if (document.body.classList.contains('play-mode') && !this.isHammerMode) {
-            if (this.bottomBar) this.bottomBar.style.display = 'flex';
+            if (this.bottomBar) this.bottomBar.classList.add('active-ui');
         }
     }
     
@@ -109,7 +109,7 @@ class TsukiPort {
     }
 
     enterPlayMode() {
-        this.bottomBar.style.display = 'flex';
+        this.bottomBar.classList.add('active-ui');
         this.exitHammerMode();
         
         // Set up the carrots display
@@ -120,14 +120,14 @@ class TsukiPort {
     }
     
     exitPlayMode() {
-        this.bottomBar.style.display = 'none';
+        this.bottomBar.classList.remove('active-ui');
         this.exitHammerMode();
     }
     
     enterHammerMode() {
         this.isHammerMode = true;
-        this.bottomBar.style.display = 'none';
-        this.hammerUI.style.display = 'flex';
+        this.bottomBar.classList.remove('active-ui');
+        this.hammerUI.classList.add('active-ui');
         
         if (this.app.map) {
             this.app.map.isHammerMode = true;
@@ -141,9 +141,9 @@ class TsukiPort {
     
     exitHammerMode() {
         this.isHammerMode = false;
-        if (this.hammerUI) this.hammerUI.style.display = 'none';
+        if (this.hammerUI) this.hammerUI.classList.remove('active-ui');
         if (document.body.classList.contains('play-mode')) {
-            if (this.bottomBar) this.bottomBar.style.display = 'flex';
+            if (this.bottomBar) this.bottomBar.classList.add('active-ui');
         }
         
         if (this.app.map) {

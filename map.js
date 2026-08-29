@@ -1023,7 +1023,8 @@ class IsometricMap {
             this.ctx.strokeStyle = flipped ? 'rgba(255, 160, 80, 0.85)' : 'rgba(110, 190, 255, 0.85)';
             this.ctx.lineWidth = 1;
             this.ctx.globalAlpha = 0.5;
-            if (!document.body.classList.contains('play-mode') || this.isHammerMode) {
+            const showWallGrids = !document.body.classList.contains('play-mode') || (this.isHammerMode && this.forceDrawGrid);
+            if (showWallGrids) {
                 for (let x = along0; x < along1; x++) {
                     for (let y = 0; y < wallH; y++) {
                         this._pathWallCell(x, y, 1, 1, flipped, bbox, targetFloor);
@@ -1228,9 +1229,16 @@ class IsometricMap {
                 }
             }
 
-            if (!isPlay && !isGrid) {
+            const showFloorGrids = (!isPlay && !isGrid) || (isPlay && this.isHammerMode && this.forceDrawGrid);
+            if (showFloorGrids) {
                 ctx.globalAlpha = 0.25;
-                ctx.drawImage(this._floorGridCache, this._floorGridOriginX, this._floorGridOriginY);
+                const off0 = this.getFloorOffset(0);
+                for (let vf of visibleFloors) {
+                    const off = this.getFloorOffset(vf);
+                    const dx = off.x - off0.x;
+                    const dy = off.y - off0.y;
+                    ctx.drawImage(this._floorGridCache, this._floorGridOriginX + dx, this._floorGridOriginY + dy);
+                }
             } else if (isGrid && this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1) {
                 const surf = window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex];
                 if (surf.kind === 'floor') {
@@ -1304,7 +1312,7 @@ class IsometricMap {
             ctx.restore();
 
             // Grilla de paredes del PISO seleccionado (groupNum === select-floor)
-            if (!isGrid && this.isHammerMode && this.forceDrawGrid) this._drawIsoWallGrids(targetLoc, targetFloor);
+            if (!isGrid) this._drawIsoWallGrids(targetLoc, targetFloor);
 
             const all = this.app.parser.placements.filter(
                 p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && !p.isWall && p.item_id !== -1

@@ -772,10 +772,16 @@ body.play-mode #play-hud {
 
 .hammer-ui-container {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    pointer-events: none; z-index: 9998; display: none;
+    pointer-events: none; z-index: 9998;
+    display: flex; opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.hammer-ui-container.active-ui {
+    opacity: 1; visibility: visible;
 }
 .hammer-sidebar {
     position: absolute; left: 20px; top: 50px; bottom: 100px; width: 80px;
+    transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1), right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     background: rgba(0,0,0,0.4); border-radius: 20px;
     display: flex; flex-direction: column; padding: 10px;
     pointer-events: auto; gap: 10px; align-items: center;
@@ -827,7 +833,12 @@ body.play-mode .content-area { margin: 0; border: none; border-radius: 0; }
 
 .bag-ui-container {
     position: fixed; bottom: 0; left: 0; width: 100%; height: 250px;
-    pointer-events: none; z-index: 9998; display: none; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 20px;
+    pointer-events: none; z-index: 9998; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 20px;
+    display: flex; opacity: 0; visibility: hidden; transform: translateY(20px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+.bag-ui-container.active-ui {
+    opacity: 1; visibility: visible; transform: translateY(0);
 }
 .bag-panel {
     width: 90%; max-width: 800px; height: 180px;
