@@ -1311,12 +1311,12 @@ class IsometricMap {
                               this.maskCtx.globalCompositeOperation = 'source-over';
                               const floorMatrix = new DOMMatrix()
                                   .translate(this.offsetX, this.offsetY)
-                                  .scale(s, s).scale(1, 0.5).rotate(-45).scale(0.35, 0.35);
+                                  .scale(bgScale * s, bgScale * s).scale(1, 0.5).rotate(-45).scale(0.35, 0.35);
                               floorPattern.setTransform(floorMatrix);
                               this.maskCtx.fillStyle = floorPattern;
                               this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'destination-in';
-                              this.maskCtx.drawImage(floorMask, this.offsetX, this.offsetY, floorMask.width * s, floorMask.height * s);
+                              this.maskCtx.drawImage(floorMask, this.offsetX, this.offsetY, floorMask.width * bgScale * s, floorMask.height * bgScale * s);
                               this.maskCtx.globalCompositeOperation = 'source-over';
                               this.ctx.drawImage(this.maskCanvas, 0, 0);
                           }
@@ -1336,11 +1336,11 @@ class IsometricMap {
                               const wallPattern = this.maskCtx.createPattern(wpTex.img, 'repeat');
                               this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'source-over';
-                              wallPattern.setTransform(new DOMMatrix([s*0.35, 0.5*s*0.35, 0, s*0.35, this.offsetX, this.offsetY]));
+                              wallPattern.setTransform(new DOMMatrix([bgScale*s*0.35, 0.5*bgScale*s*0.35, 0, bgScale*s*0.35, this.offsetX, this.offsetY]));
                               this.maskCtx.fillStyle = wallPattern;
                               this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'destination-in';
-                              this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * s, wallMask.height * s);
+                              this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * bgScale * s, wallMask.height * bgScale * s);
                               this.maskCtx.globalCompositeOperation = 'source-over';
                               this.ctx.drawImage(this.maskCanvas, 0, 0);
                           }
