@@ -1337,7 +1337,7 @@ class IsometricMap {
                           
                           const floorNum = Math.floor(wpIndex / 2);
                           const isRightWall = (wpIndex % 2) !== 0;
-                          const maskPrefix = isRightWall ? 'wallR' : 'wallL';
+                          const maskPrefix = isRightWall ? 'wallL' : 'wallR';
                           const wallMask = this._getMaskImage(maskPrefix, floorNum, targetLoc);
                           
                           if (!wallMask || !wallMask.complete || wallMask.width <= 0) continue;
