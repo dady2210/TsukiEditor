@@ -22,6 +22,10 @@ class TsukiPort {
         
         this.currentCategory = 1; // 1 = Furniture (default)
         this.showGrid = true;
+        this.autosaveEnabled = false;
+        this.autosaveTimer = null;
+        this.playTime = 0;
+        this.lastWrite = Date.now();
         
         this.setupEvents();
     }
@@ -56,6 +60,25 @@ class TsukiPort {
             this.btnHammerFlip.addEventListener('click', () => {
                 if (this.hammerUI) {
                     this.hammerUI.classList.toggle('right-side');
+                }
+            });
+        }
+        
+        if (this.btnSettings) {
+            this.btnSettings.addEventListener('click', () => {
+                if (!this.autosaveEnabled) {
+                    if (confirm('¿Activar Autosave? El csave del celular se va a parchear.')) {
+                        this.autosaveEnabled = true;
+                        this.btnSettings.style.color = '#4caf50';
+                        this.app.showToast('Autosave activado (cada 30s).');
+                        this.triggerAutosave();
+                        this.autosaveTimer = setInterval(() => this.triggerAutosave(), 30000);
+                    }
+                } else {
+                    this.autosaveEnabled = false;
+                    this.btnSettings.style.color = '#9e9e9e';
+                    clearInterval(this.autosaveTimer);
+                    this.app.showToast('Autosave desactivado.');
                 }
             });
         }
@@ -120,7 +143,33 @@ class TsukiPort {
         }
     }
     
+
+    
+    
+    triggerAutosave() {
+        if (!this.autosaveEnabled || !this.app.parser) return;
+        
+        const now = Date.now();
+        this.playTime += Math.floor((now - this.lastWrite) / 1000);
+        this.lastWrite = now;
+        
+        if (this.app.parser.generalVars && typeof this.app.parser.generalVars.playTime === 'undefined') {
+            this.app.parser.generalVars.playTime = { type: 'Int32', value: this.playTime, _stub: true };
+        }
+        
+        // El Autosave simplemente fuerza la descarga del csave
+        // Si el usuario est? en un entorno (ej: WebView Android o script) que intercepta
+        // la descarga, esto autom?ticamente parchar? su save real.
+        if (typeof this.app.downloadFile === 'function') {
+            this.app.applyGeneralVars();
+            this.app.downloadFile();
+            this.app.showToast('Autosave generado.', 'info');
+        }
+    }
+
     exitPlayMode() {
+        this.triggerAutosave();
+
         if (this.bottomBar) this.bottomBar.style.display = 'none';
         this.exitHammerMode();
     }
@@ -246,6 +295,8 @@ class TsukiPort {
     }
     
     pickupSelectedPlacement() {
+        this.triggerAutosave();
+
         const map = this.app.map;
         if (!map || !map.selectedPlacement) return;
         const p = map.selectedPlacement;

@@ -7,16 +7,16 @@
 // The real sublocationSave keys are Int32s; until we fully walk that dict,
 // we map location IDs to standard generic names since they can vary.
 const SUBLOC_NAMES = {
-    0:  "ðŸ?¡ Tsuki's Treehouse",
+    0:  "ï¿½?ï¿½ Tsuki's Treehouse",
     1:  "ðŸš‚ Train Station",
     2:  "ðŸ¦’ Chi's House",
-    3:  "ðŸ?¢ Moca's House",
-    4:  "ðŸ?ª Yori's General Store",
-    5:  "ðŸ§œâ€?â™€ï¸? Mermaid Coast",
+    3:  "ï¿½?ï¿½ Moca's House",
+    4:  "ï¿½?ï¿½ Yori's General Store",
+    5:  "ðŸ§œï¿½?â™€ï¿½? Mermaid Coast",
     6:  "ðŸ¥• Tsuki's Farm",
-    7:  "ðŸ?›ï¸? Town Hall",
-    8:  "ðŸ?œ Bobo's Ramen Restaurant",
-    9:  "ðŸ?µ Momo's Tea House",
+    7:  "ï¿½?ï¿½ï¿½? Town Hall",
+    8:  "ï¿½?ï¿½ Bobo's Ramen Restaurant",
+    9:  "ï¿½?ï¿½ Momo's Tea House",
     10: "ðŸŒ» Rosemary's Plant Shop",
     11: "ðŸ§° Dawn's Workshop",
     12: "ðŸŽ· Scarlett's Lounge"
@@ -33,7 +33,7 @@ const HARVEST_ID   = 900;
 const DEFAULT_SIZES = { w: 1, l: 1 }; // Fallback: la grilla del juego es de celdas 1Ã—1
 const PLOT_SIZE     = { w: 2, l: 2 };   // FURN_306 Plot tile
 // Grilla de piso del juego: 16Ã—16 celdas (casa de Tsuki). (0,0) es el frente;
-// x=16 / y=16 son los bordes de ATRÃ?S, donde se levantan las paredes.
+// x=16 / y=16 son los bordes de ATRï¿½?S, donde se levantan las paredes.
 const FLOOR_GRID_N  = 16;
 
 // Redondeo "half away from zero" simÃ©trico. Math.round nativo redondea los
@@ -501,7 +501,7 @@ class IsometricMap {
     }
 
     // Casa isomÃ©trica (como la de Tsuki): el piso es el diamante, las dos
-    // paredes VISIBLES se levantan en los bordes de ATRÃ?S.
+    // paredes VISIBLES se levantan en los bordes de ATRï¿½?S.
     //
     // iso: (0,0) es el frente (abajo); x+y alto es el fondo (arriba).
     // WallGroupPosition.flipped del .csave elige la cara:
@@ -526,7 +526,7 @@ class IsometricMap {
         let isPlay = document.body.classList.contains('play-mode');
         let isGrid = document.body.classList.contains('grid-mode');
         
-        // Si tenemos config en atlas, usamos ESA lógica directamente para que los muebles
+        // Si tenemos config en atlas, usamos ESA lï¿½gica directamente para que los muebles
         // sigan 100% a la grilla roja del editor de atlas.
         if (window.mapsAtlas && (isPlay || isGrid)) {
             const surf = window.mapsAtlas.find(s => s.kind === 'wall' && String(s.groupNum) === String(floorNum) && !!s.flipped === !!flipped);
@@ -831,7 +831,7 @@ class IsometricMap {
             
             const name = (db.furn_name || db.item_name || '').toUpperCase();
             if (name.includes('WALLPAPER') || name.includes('TAPIZ')) return false;
-            if (name.includes('WALL LAMP') || name.includes('WALLDECO') || name.includes('POSTER') || name.includes('LÁMPARA DE PARED') || name.includes('CUADRO') || name.includes('WALL')) return true;
+            if (name.includes('WALL LAMP') || name.includes('WALLDECO') || name.includes('POSTER') || name.includes('Lï¿½MPARA DE PARED') || name.includes('CUADRO') || name.includes('WALL')) return true;
         }
         return false;
     }
@@ -982,7 +982,7 @@ class IsometricMap {
         const lines = [
             `ðŸŽ¨ Wallpaper: ${wpTxt}`,
             `ðŸªµ Piso cubierto: ${flTxt}`,
-            `ðŸ–¼ï¸? ${wallTxt}`
+            `ðŸ–¼ï¿½? ${wallTxt}`
         ];
 
         ctx.save();
@@ -1982,8 +1982,8 @@ class IsometricMap {
             
             const hit = this._hitTestPlaySurface(mouseX, mouseY);
             if (hit) {
-                // Leer datos arrastrados, pero dataTransfer no está disponible en dragover para leer el JSON completo en Chrome a veces.
-                // Usaremos un hack local si es necesario, pero por ahora solo mostraremos un snap genérico o no mostraremos fantasma si no sabemos el tamaño.
+                // Leer datos arrastrados, pero dataTransfer no estï¿½ disponible en dragover para leer el JSON completo en Chrome a veces.
+                // Usaremos un hack local si es necesario, pero por ahora solo mostraremos un snap genï¿½rico o no mostraremos fantasma si no sabemos el tamaï¿½o.
                 // Como workaround, guardaremos el item arrastrado en la instancia si viene de la mochila.
                 if (this.draggedInventoryItem) {
                     const item_id = this.draggedInventoryItem.item_id;
@@ -2067,6 +2067,7 @@ class IsometricMap {
                             this.draw();
                             if (this.app.tsukiPort && typeof this.app.tsukiPort.renderBagInventory === 'function') this.app.tsukiPort.renderBagInventory();
                             if (this.app.tsukiPort && typeof this.app.tsukiPort.renderHammerInventory === 'function') this.app.tsukiPort.renderHammerInventory();
+                            if (this.app.tsukiPort && typeof this.app.tsukiPort.triggerAutosave === 'function') this.app.tsukiPort.triggerAutosave();
                         }
                         return;
                     }
@@ -2084,7 +2085,7 @@ class IsometricMap {
                     const { w, l } = this.getRotatedSize(data.item_id, 0);
                     // For walls, maybe w,l don't apply the same way, but let's keep _isAreaOccupied checking simple for now.
                     if (this._isAreaOccupied(hit.floorNum, hit.x, hit.y, w, l)) {
-                        console.warn("Posición ocupada.");
+                        console.warn("Posiciï¿½n ocupada.");
                         return; // Ocupado
                     }
                     
@@ -2111,6 +2112,7 @@ class IsometricMap {
                         if (this.app.tsukiPort) {
                             if (this.isHammerMode && typeof this.app.tsukiPort.renderHammerInventory === 'function') this.app.tsukiPort.renderHammerInventory();
                             if (!this.isHammerMode && typeof this.app.tsukiPort.renderBagInventory === 'function') this.app.tsukiPort.renderBagInventory();
+                            if (typeof this.app.tsukiPort.triggerAutosave === 'function') this.app.tsukiPort.triggerAutosave();
                         }
                     }
                 }
