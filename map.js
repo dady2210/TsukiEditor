@@ -1188,6 +1188,55 @@ class IsometricMap {
         });
     }
 
+    _clampCamera() {
+        if (!document.body.classList.contains('play-mode')) return;
+
+        if (!this._bgCache) return;
+        let bgImg = null;
+        for (let k in this._bgCache) {
+            if (k.includes('level') && this._bgCache[k] && this._bgCache[k].width > 0) {
+                bgImg = this._bgCache[k];
+                break;
+            }
+        }
+        if (!bgImg) return;
+        
+        const bgScale = (window.atlasConfig && window.atlasConfig.bgScale) || 0.75;
+        const cw = this.canvas.width;
+        const ch = this.canvas.height;
+        
+        const bgW = bgImg.width * bgScale;
+        const bgH = bgImg.height * bgScale;
+        
+        // Tsuki Odyssey: NO SE DEBE VER NINGÚN VACÍO (VOID).
+        // Así que la escala mínima (targetScale) debe cubrir AMBAS dimensiones de la pantalla.
+        // En móvil (Portrait), esto significa que encaja el alto y sobra ancho (paneo horizontal).
+        // En PC (Landscape), esto significa que encaja el ancho y sobra alto (paneo vertical).
+        let targetScale = Math.max(cw / bgW, ch / bgH);
+        
+        // Restringimos el zoom. No puede ser menor que targetScale (para no ver void).
+        // Y no dejamos hacer mucho zoom in (hasta 1.3x).
+        this.scale = Math.max(targetScale, Math.min(this.scale, targetScale * 1.3));
+        
+        const drawnW = bgW * this.scale;
+        const drawnH = bgH * this.scale;
+        
+        // Clampeamos el paneo para que los bordes de la imagen nunca entren a la pantalla.
+        // Si drawnW >= cw, offsetX debe estar entre (cw - drawnW) y 0.
+        if (drawnW >= cw) {
+            this.offsetX = Math.max(cw - drawnW, Math.min(this.offsetX, 0));
+        } else {
+            // Failsafe por si acaso (nunca debería pasar con el targetScale)
+            this.offsetX = (cw - drawnW) / 2;
+        }
+        
+        if (drawnH >= ch) {
+            this.offsetY = Math.max(ch - drawnH, Math.min(this.offsetY, 0));
+        } else {
+            this.offsetY = (ch - drawnH) / 2;
+        }
+    }
+
     _drawImmediate() {
         if (!this.app || !this.app.parser || !this.app.parser.placements) return;
 
