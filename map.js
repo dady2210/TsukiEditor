@@ -173,7 +173,7 @@ class IsometricMap {
 
         this._patternCache[cacheKey] = { loading: true };
         const img = new Image();
-        img.src = `images/tilesets/${type}s/${id}.png`;
+        img.src = `images/tilesets/${type === 'wall' ? 'wallpapers' : type + 's'}/${id}.png`;
         img.onload = () => {
             this._patternCache[cacheKey] = { img: img, pattern: null };
             this.draw(); // Redraw map once the tileset loads
