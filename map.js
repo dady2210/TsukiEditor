@@ -1214,27 +1214,25 @@ class IsometricMap {
         // logrando exactamente lo que se ve en la captura del usuario (casa completa).
         let targetScale = Math.min(cw / bgW, ch / bgH);
         
-        // Restringimos el zoom. No puede ser tan pequeño que la casa sea un pixel,
-        // ni puede ser infinito. Lo bloqueamos entre que quepa justa, y un zoom de 1.5x.
-        this.scale = Math.max(targetScale, Math.min(this.scale, targetScale * 1.5));
+        // Restringimos el zoom severamente como pidió el usuario:
+        // No zoom out (fijado en targetScale), solo un poquitito de zoom in (1.2x max).
+        this.scale = Math.max(targetScale, Math.min(this.scale, targetScale * 1.2));
         
         const drawnW = bgW * this.scale;
         const drawnH = bgH * this.scale;
         
-        // Clampeamos el paneo.
+        // Clampeamos el paneo al 10% (0.1) como pidió el usuario.
         if (drawnW >= cw) {
             this.offsetX = Math.max(cw - drawnW, Math.min(this.offsetX, 0));
         } else {
-            // Si sobra espacio (pantalla muy ancha), permitimos panear "un poco" hacia los lados
-            // como pide el usuario, pero con un límite estricto para no ir al vacío infinito.
-            const margin = cw * 0.15; // Límite de cuánto vacío puedes ver
+            const margin = cw * 0.1;
             this.offsetX = Math.max(cw - drawnW - margin, Math.min(this.offsetX, margin));
         }
         
         if (drawnH >= ch) {
             this.offsetY = Math.max(ch - drawnH, Math.min(this.offsetY, 0));
         } else {
-            const marginH = ch * 0.15;
+            const marginH = ch * 0.1;
             this.offsetY = Math.max(ch - drawnH - marginH, Math.min(this.offsetY, marginH));
         }
     }
@@ -1340,158 +1338,121 @@ class IsometricMap {
                 y: ay * this.scale + this.offsetY
             });
 
-            // ?? 1. FLOOR TILESETS (screen space, responds to zoom/pan) ???????????????
-            if ((isPlay || isGrid) && window.mapsAtlas) {
-                  // MASK SYSTEM
-                  if (!this.maskCanvas) {
-                      this.maskCanvas = document.createElement('canvas');
-                      this.maskCtx = this.maskCanvas.getContext('2d');
-                  }
-                  if (this.maskCanvas.width !== this.canvas.width) this.maskCanvas.width = this.canvas.width;
-                  if (this.maskCanvas.height !== this.canvas.height) this.maskCanvas.height = this.canvas.height;
-                  
-                  const s = this.scale;
-                  const bgScale = _bgo;
-                  
-                  // FLOOR MASKS: index-based, mask_floor_0.png = first floor entry, etc.
-                  if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
-                      const floorEntries = this.app.parser.floors[targetLoc];
-                      for (let fi = 0; fi < floorEntries.length; fi++) {
-                          const entry = floorEntries[fi];
-                          if (!entry || !entry.id || entry.id <= 0) continue;
-                          const floorTex = this._getTilesetTexture('floor', entry.id);
-                          const floorMask = this._getMaskImage('floor', fi, targetLoc);
-                          if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0 && floorMask && floorMask.complete && floorMask.width > 0) {
-                              // Simple tile repeat - PNG already has isometric perspective baked in
-                              const floorCacheKey = 'maskPat_floor_' + entry.id;
-                              if (!this._patternCache[floorCacheKey] || !this._patternCache[floorCacheKey].pat) {
-                                  if (!this._patternCache[floorCacheKey]) this._patternCache[floorCacheKey] = {};
-                                  this._patternCache[floorCacheKey].pat = this.maskCtx.createPattern(floorTex.img, 'repeat');
-                              }
-                              const floorPattern = this._patternCache[floorCacheKey].pat;
-                              const mW = floorMask.width * bgScale * s;
-                              const mH = floorMask.height * bgScale * s;
-                              const mX = this.offsetX;
-                              const mY = this.offsetY;
-                              if (mX <= this.canvas.width && mY <= this.canvas.height && mX + mW >= 0 && mY + mH >= 0) {
-                                  const drawX = Math.floor(Math.max(0, mX));
-                                  const drawY = Math.floor(Math.max(0, mY));
-                                  const drawW = Math.ceil(Math.min(this.canvas.width - drawX, mX + mW - drawX));
-                                  const drawH = Math.ceil(Math.min(this.canvas.height - drawY, mY + mH - drawY));
-                                  
-                                  this.maskCtx.clearRect(drawX, drawY, drawW, drawH);
-                                  this.maskCtx.globalCompositeOperation = 'source-over';
-                                  floorPattern.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
-                                  this.maskCtx.fillStyle = floorPattern;
-                                  this.maskCtx.fillRect(drawX, drawY, drawW, drawH);
-                                  this.maskCtx.globalCompositeOperation = 'destination-in';
-                                  this.maskCtx.drawImage(floorMask, mX, mY, mW, mH);
-                                  this.maskCtx.globalCompositeOperation = 'source-over';
-                                  this.ctx.drawImage(this.maskCanvas, drawX, drawY, drawW, drawH, drawX, drawY, drawW, drawH);
-                              }
-                          }
-                      }
-                  }
-
-                  // WALL MASKS
-                  const wpDict = this.app.parser && this.app.parser.wallpapers;
-                  if (wpDict && wpDict[targetLoc]) {
-                      const wpArr = wpDict[targetLoc];
-                      if (targetLoc === 0 && !window._loggedWp) {
-                          console.log('POR FAVOR COPIA Y PEGA ESTO:');
-                          console.log(JSON.stringify(wpArr.map(w => ({key: w.key, id: w.id}))));
-                          window._loggedWp = true;
-                      }
-                      for (let wpIndex = 0; wpIndex < wpArr.length; wpIndex++) {
-                          const wpEntry = wpArr[wpIndex];
-                          if (!wpEntry || !wpEntry.id || wpEntry.id <= 0) continue;
-                          
-                          let floorNum, isRightWall;
-                          // Match the serialization order from Unity
-                          if (targetLoc === 0 && wpArr.length >= 4) {
-                              if (wpIndex === 0) { floorNum = 0; isRightWall = false; }
-                              else if (wpIndex === 1) { floorNum = 1; isRightWall = false; }
-                              else if (wpIndex === 2) { floorNum = 1; isRightWall = true; }
-                              else if (wpIndex === 3) { floorNum = 0; isRightWall = true; }
-                              // Ignoramos index >= 4 por ahora (podria ser el piso 2 u otras paredes ocultas)
-                              else continue; 
-                          } else {
-                              floorNum = Math.floor(wpIndex / 2);
-                              isRightWall = (wpIndex % 2) !== 0;
-                          }
-                          
-                          const maskPrefix = isRightWall ? 'wallR' : 'wallL';
-                          const wallMask = this._getMaskImage(maskPrefix, floorNum, targetLoc);
-                          
-                          if (!wallMask || !wallMask.complete || wallMask.width <= 0) continue;
-                          
-                          const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
-                          if (!wpTex || !wpTex.img || !wpTex.img.complete || wpTex.img.width <= 0) continue;
-                          
-                          const wallCacheKey = 'maskPat_wall_' + wpEntry.id;
-                          if (!this._patternCache[wallCacheKey]) this._patternCache[wallCacheKey] = {};
-                          
-                          if (!this._patternCache[wallCacheKey].pat) {
-                              this._patternCache[wallCacheKey].pat = this.maskCtx.createPattern(wpTex.img, 'repeat');
-                          }
-                          if (!this._patternCache[wallCacheKey].patFlipped) {
-                              const tmpCanvas = document.createElement('canvas');
-                              tmpCanvas.width = wpTex.img.width;
-                              tmpCanvas.height = wpTex.img.height;
-                              const tmpCtx = tmpCanvas.getContext('2d');
-                              tmpCtx.translate(tmpCanvas.width, 0);
-                              tmpCtx.scale(-1, 1);
-                              tmpCtx.drawImage(wpTex.img, 0, 0);
-                              this._patternCache[wallCacheKey].patFlipped = this.maskCtx.createPattern(tmpCanvas, 'repeat');
-                          }
-                          
-                          const pat = isRightWall ? this._patternCache[wallCacheKey].pat : this._patternCache[wallCacheKey].patFlipped;
-                           const mW = wallMask.width * bgScale * s;
-                           const mH = wallMask.height * bgScale * s;
-                           const mX = this.offsetX;
-                           const mY = this.offsetY;
-                           if (mX <= this.canvas.width && mY <= this.canvas.height && mX + mW >= 0 && mY + mH >= 0) {
-                               const drawX = Math.floor(Math.max(0, mX));
-                               const drawY = Math.floor(Math.max(0, mY));
-                               const drawW = Math.ceil(Math.min(this.canvas.width - drawX, mX + mW - drawX));
-                               const drawH = Math.ceil(Math.min(this.canvas.height - drawY, mY + mH - drawY));
-                               
-                               this.maskCtx.clearRect(drawX, drawY, drawW, drawH);
-                               this.maskCtx.globalCompositeOperation = 'source-over';
-                               pat.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
-                               this.maskCtx.fillStyle = pat;
-                               this.maskCtx.fillRect(drawX, drawY, drawW, drawH);
-                               this.maskCtx.globalCompositeOperation = 'destination-in';
-                               this.maskCtx.drawImage(wallMask, mX, mY, mW, mH);
-                               this.maskCtx.globalCompositeOperation = 'source-over';
-                               this.ctx.drawImage(this.maskCanvas, drawX, drawY, drawW, drawH, drawX, drawY, drawW, drawH);
-                           }
-                      }
-                  }
-                  // ?? 3. BACKGROUND IMAGE (alpha on floor/wall ? tilesets show through) ?
-                const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
-                if (bgImg && bgImg.complete && bgImg.width > 0) {
-                    const bgScale = _bgo;
-                    const s = bgScale * this.scale;
-                    const drawW = bgImg.width * s;
-                    const drawH = bgImg.height * s;
-                    const dx = this.offsetX;
-                    const dy = this.offsetY;
-                    const destX = Math.floor(Math.max(0, dx));
-                    const destY = Math.floor(Math.max(0, dy));
-                    const destRight = Math.ceil(Math.min(this.canvas.width, dx + drawW));
-                    const destBottom = Math.ceil(Math.min(this.canvas.height, dy + drawH));
-                    const destDrawW = destRight - destX;
-                    const destDrawH = destBottom - destY;
-                    if (destDrawW > 0 && destDrawH > 0) {
-                        const sx = (destX - dx) / s;
-                        const sy = (destY - dy) / s;
-                        const sw = destDrawW / s;
-                        const sh = destDrawH / s;
-                        ctx.drawImage(bgImg, sx, sy, sw, sh, destX, destY, destDrawW, destDrawH);
+            // 1, 2, 3: BAKED BACKGROUND (Treehouse + Walls + Floors)
+            const targetLoc = document.getElementById('select-location') ? parseInt(document.getElementById('select-location').value) : 0;
+            const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
+            
+            // Only bake if bgImg is loaded and we haven't baked this combination yet
+            const wpDict = this.app.parser && this.app.parser.wallpapers;
+            const floorDict = this.app.parser && this.app.parser.floors;
+            const wpStr = wpDict && wpDict[targetLoc] ? wpDict[targetLoc].map(x => x.id).join(',') : '';
+            const flStr = floorDict && floorDict[targetLoc] ? floorDict[targetLoc].map(x => x.id).join(',') : '';
+            const bakeKey = targetLoc + '_' + wpStr + '_' + flStr;
+            
+            if (bgImg && bgImg.complete && bgImg.width > 0) {
+                if (!this._bakedBgCanvas || this._bakedBgKey !== bakeKey) {
+                    // Bake the background
+                    this._bakedBgCanvas = document.createElement('canvas');
+                    this._bakedBgCanvas.width = bgImg.width;
+                    this._bakedBgCanvas.height = bgImg.height;
+                    const bCtx = this._bakedBgCanvas.getContext('2d');
+                    
+                    // Draw base treehouse
+                    bCtx.drawImage(bgImg, 0, 0);
+                    
+                    // Helper to draw a mask layer
+                    const drawMaskLayer = (type, id, maskImg, isFlipped) => {
+                        const tex = this._getTilesetTexture(type, id);
+                        if (tex && tex.img && tex.img.complete && tex.img.width > 0 && maskImg && maskImg.complete && maskImg.width > 0) {
+                            const tmp = document.createElement('canvas');
+                            tmp.width = bgImg.width;
+                            tmp.height = bgImg.height;
+                            const tCtx = tmp.getContext('2d');
+                            
+                            // Fill with pattern
+                            const tmpPat = document.createElement('canvas');
+                            tmpPat.width = tex.img.width;
+                            tmpPat.height = tex.img.height;
+                            const pCtx = tmpPat.getContext('2d');
+                            if (isFlipped) {
+                                pCtx.translate(tmpPat.width, 0);
+                                pCtx.scale(-1, 1);
+                            }
+                            pCtx.drawImage(tex.img, 0, 0);
+                            
+                            const pat = tCtx.createPattern(tmpPat, 'repeat');
+                            tCtx.fillStyle = pat;
+                            tCtx.fillRect(0, 0, tmp.width, tmp.height);
+                            
+                            // Mask
+                            tCtx.globalCompositeOperation = 'destination-in';
+                            tCtx.drawImage(maskImg, 0, 0, tmp.width, tmp.height);
+                            
+                            // Draw to baked
+                            bCtx.globalCompositeOperation = 'source-over';
+                            bCtx.drawImage(tmp, 0, 0);
+                        }
+                    };
+                    
+                    // Floors
+                    if (floorDict && floorDict[targetLoc]) {
+                        for (let fi = 0; fi < floorDict[targetLoc].length; fi++) {
+                            const entry = floorDict[targetLoc][fi];
+                            if (!entry || !entry.id || entry.id <= 0) continue;
+                            const floorMask = this._getMaskImage('floor', fi, targetLoc);
+                            drawMaskLayer('floor', entry.id, floorMask, false);
+                        }
                     }
+                    
+                    // Walls
+                    if (wpDict && wpDict[targetLoc]) {
+                        for (let wpIndex = 0; wpIndex < wpDict[targetLoc].length; wpIndex++) {
+                            const entry = wpDict[targetLoc][wpIndex];
+                            if (!entry || !entry.id || entry.id <= 0) continue;
+                            let floorNum, isRightWall;
+                            if (targetLoc === 0 && wpDict[targetLoc].length >= 4) {
+                                if (wpIndex === 0) { floorNum = 0; isRightWall = false; }
+                                else if (wpIndex === 1) { floorNum = 1; isRightWall = false; }
+                                else if (wpIndex === 2) { floorNum = 1; isRightWall = true; }
+                                else if (wpIndex === 3) { floorNum = 0; isRightWall = true; }
+                                else continue;
+                            } else {
+                                floorNum = Math.floor(wpIndex / 2);
+                                isRightWall = (wpIndex % 2) !== 0;
+                            }
+                            if (floorNum >= 2) continue; // Only 2 floors supported for now
+                            const wallMask = this._getMaskImage('wall', (floorNum * 2) + (isRightWall ? 1 : 0), targetLoc);
+                            drawMaskLayer('wallpaper', entry.id, wallMask, !isRightWall);
+                        }
+                    }
+                    
+                    this._bakedBgKey = bakeKey;
                 }
-
+                
+                // Draw the baked background directly to screen
+                const bgScale = _bgo;
+                const s = bgScale * this.scale;
+                const drawW = this._bakedBgCanvas.width * s;
+                const drawH = this._bakedBgCanvas.height * s;
+                const dx = this.offsetX;
+                const dy = this.offsetY;
+                
+                // Optimized clipping
+                const destX = Math.floor(Math.max(0, dx));
+                const destY = Math.floor(Math.max(0, dy));
+                const destRight = Math.ceil(Math.min(this.canvas.width, dx + drawW));
+                const destBottom = Math.ceil(Math.min(this.canvas.height, dy + drawH));
+                const destDrawW = destRight - destX;
+                const destDrawH = destBottom - destY;
+                
+                if (destDrawW > 0 && destDrawH > 0) {
+                    const sx = (destX - dx) / s;
+                    const sy = (destY - dy) / s;
+                    const sw = destDrawW / s;
+                    const sh = destDrawH / s;
+                    ctx.drawImage(this._bakedBgCanvas, sx, sy, sw, sh, destX, destY, destDrawW, destDrawH);
+                }
+            }
             } else {
                 // ?? Editor mode: draw floor tilesets inside scaled ctx ????????????????
                 ctx.save();
