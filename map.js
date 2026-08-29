@@ -1422,7 +1422,23 @@ class IsometricMap {
                 if (bgImg && bgImg.complete && bgImg.width > 0) {
                     const bgScale = _bgo;
                     const s = bgScale * this.scale;
-                    ctx.drawImage(bgImg, this.offsetX, this.offsetY, bgImg.width * s, bgImg.height * s);
+                    const drawW = bgImg.width * s;
+                    const drawH = bgImg.height * s;
+                    const dx = this.offsetX;
+                    const dy = this.offsetY;
+                    const destX = Math.floor(Math.max(0, dx));
+                    const destY = Math.floor(Math.max(0, dy));
+                    const destRight = Math.ceil(Math.min(this.canvas.width, dx + drawW));
+                    const destBottom = Math.ceil(Math.min(this.canvas.height, dy + drawH));
+                    const destDrawW = destRight - destX;
+                    const destDrawH = destBottom - destY;
+                    if (destDrawW > 0 && destDrawH > 0) {
+                        const sx = (destX - dx) / s;
+                        const sy = (destY - dy) / s;
+                        const sw = destDrawW / s;
+                        const sh = destDrawH / s;
+                        ctx.drawImage(bgImg, sx, sy, sw, sh, destX, destY, destDrawW, destDrawH);
+                    }
                 }
 
             } else {
@@ -1554,32 +1570,40 @@ class IsometricMap {
             // ?? 5. WALL ITEMS + FLOOR FURNITURE ??????????????????????????????????????
             if (!isGrid && !isPlay) this._drawIsoWallGrids(targetLoc, targetFloor);
 
-            const allWalls = this.app.parser.placements.filter(
-                p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
-            );
-
-            const all = this.app.parser.placements.filter(
-                p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && !p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
-            );
-
-            const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
-            const seeds   = all.filter(p => SEED_IDS.has(p.item_id) && p.x !== -1 && p.y !== -1 && !p.linkedPlot);
-            const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id));
-
-            this._stackInfo = this._computeStackInfo(regular);
-
-            const sortByZ = (a, b) => {
-                const fb = Number(b.floor||0), fa = Number(a.floor||0);
-                if (fa !== fb) return fa - fb;
-                const z = (b.x + b.y) - (a.x + a.y);
-                if (z) return z;
-                const la = (this._stackInfo.get(a) || {}).lift || 0;
-                const lb = (this._stackInfo.get(b) || {}).lift || 0;
-                return la - lb;
-            };
-            ground.sort(sortByZ);
-            seeds.sort(sortByZ);
-            regular.sort(sortByZ);
+            let itemHash = 0;
+            if (this.app.parser.placements) {
+                for (const p of this.app.parser.placements) {
+                    if (p.cluster === targetLoc) itemHash += (p.x || 0) + (p.y || 0) + (p.item_id || 0) + (p.floor || 0) + (p.flipped ? 1 : 0) + (p.orientation || 0);
+                }
+            }
+            const cacheKey = this.app.parser.placements.length + '_' + targetLoc + '_' + targetFloor + '_' + visibleFloors.join(',') + '_' + isPlay + '_' + isGrid + '_' + itemHash;
+            if (!this._renderCache || this._renderCache.key !== cacheKey || this.isItemDragging) {
+                const allWalls = this.app.parser.placements.filter(
+                    p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
+                );
+                const all = this.app.parser.placements.filter(
+                    p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && !p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
+                );
+                const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
+                const seeds   = all.filter(p => SEED_IDS.has(p.item_id) && p.x !== -1 && p.y !== -1 && !p.linkedPlot);
+                const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id));
+                this._stackInfo = this._computeStackInfo(regular);
+                const sortByZ = (a, b) => {
+                    const fb = Number(b.floor||0), fa = Number(a.floor||0);
+                    if (fa !== fb) return fa - fb;
+                    const z = (b.x + b.y) - (a.x + a.y);
+                    if (z) return z;
+                    const la = (this._stackInfo.get(a) || {}).lift || 0;
+                    const lb = (this._stackInfo.get(b) || {}).lift || 0;
+                    return la - lb;
+                };
+                ground.sort(sortByZ);
+                seeds.sort(sortByZ);
+                regular.sort(sortByZ);
+                this._renderCache = { key: cacheKey, allWalls, ground, seeds, regular, stackInfo: this._stackInfo };
+            }
+            const { allWalls, ground, seeds, regular, stackInfo } = this._renderCache;
+            this._stackInfo = stackInfo;
 
             for (const p of ground)  this._drawPlacement(p, 'ground');
             for (const p of seeds)   this._drawPlacement(p, 'seed');
