@@ -1327,30 +1327,59 @@ class IsometricMap {
                       }
                   }
 
-                  // WALL MASKS: index-based, mask_wall_0.png = first wallpaper entry, etc.
+                  // WALL MASKS: check for L and R masks
                   const wpDict = this.app.parser && this.app.parser.wallpapers;
                   if (wpDict && wpDict[targetLoc]) {
                       let wpIndex = 0;
                       for (const wpEntry of wpDict[targetLoc]) {
                           if (!wpEntry.id || wpEntry.id <= 0) { wpIndex++; continue; }
                           const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
-                          const wallMask = this._getMaskImage('wall', wpIndex, targetLoc);
+                          
+                          const wallMaskL = this._getMaskImage('wallL', wpIndex, targetLoc);
+                          const wallMaskR = this._getMaskImage('wallR', wpIndex, targetLoc);
                           wpIndex++;
-                          if (wpTex && wpTex.img && wpTex.img.complete && wpTex.img.width > 0 && wallMask && wallMask.complete && wallMask.width > 0) {
-                              // Simple tile repeat - PNG already has isometric perspective baked in
-                              const wallCacheKey = 'maskPat_wall_' + wpEntry.id;
-                              if (!this._patternCache[wallCacheKey] || !this._patternCache[wallCacheKey].pat) {
-                                  if (!this._patternCache[wallCacheKey]) this._patternCache[wallCacheKey] = {};
-                                  this._patternCache[wallCacheKey].pat = this.maskCtx.createPattern(wpTex.img, 'repeat');
-                              }
-                              const wallPattern = this._patternCache[wallCacheKey].pat;
+                          
+                          if (!wpTex || !wpTex.img || !wpTex.img.complete || wpTex.img.width <= 0) continue;
+                          
+                          const wallCacheKey = 'maskPat_wall_' + wpEntry.id;
+                          if (!this._patternCache[wallCacheKey]) this._patternCache[wallCacheKey] = {};
+                          
+                          if (!this._patternCache[wallCacheKey].pat) {
+                              this._patternCache[wallCacheKey].pat = this.maskCtx.createPattern(wpTex.img, 'repeat');
+                          }
+                          if (!this._patternCache[wallCacheKey].patFlipped) {
+                              const tmpCanvas = document.createElement('canvas');
+                              tmpCanvas.width = wpTex.img.width;
+                              tmpCanvas.height = wpTex.img.height;
+                              const tmpCtx = tmpCanvas.getContext('2d');
+                              tmpCtx.translate(tmpCanvas.width, 0);
+                              tmpCtx.scale(-1, 1);
+                              tmpCtx.drawImage(wpTex.img, 0, 0);
+                              this._patternCache[wallCacheKey].patFlipped = this.maskCtx.createPattern(tmpCanvas, 'repeat');
+                          }
+                          
+                          if (wallMaskL && wallMaskL.complete && wallMaskL.width > 0) {
+                              const patFlipped = this._patternCache[wallCacheKey].patFlipped;
                               this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'source-over';
-                              wallPattern.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
-                              this.maskCtx.fillStyle = wallPattern;
+                              patFlipped.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
+                              this.maskCtx.fillStyle = patFlipped;
                               this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'destination-in';
-                              this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * bgScale * s, wallMask.height * bgScale * s);
+                              this.maskCtx.drawImage(wallMaskL, this.offsetX, this.offsetY, wallMaskL.width * bgScale * s, wallMaskL.height * bgScale * s);
+                              this.maskCtx.globalCompositeOperation = 'source-over';
+                              this.ctx.drawImage(this.maskCanvas, 0, 0);
+                          }
+                          
+                          if (wallMaskR && wallMaskR.complete && wallMaskR.width > 0) {
+                              const patNormal = this._patternCache[wallCacheKey].pat;
+                              this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                              this.maskCtx.globalCompositeOperation = 'source-over';
+                              patNormal.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
+                              this.maskCtx.fillStyle = patNormal;
+                              this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                              this.maskCtx.globalCompositeOperation = 'destination-in';
+                              this.maskCtx.drawImage(wallMaskR, this.offsetX, this.offsetY, wallMaskR.width * bgScale * s, wallMaskR.height * bgScale * s);
                               this.maskCtx.globalCompositeOperation = 'source-over';
                               this.ctx.drawImage(this.maskCanvas, 0, 0);
                           }
