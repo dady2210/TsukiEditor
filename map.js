@@ -1331,20 +1331,17 @@ class IsometricMap {
                   const wpDict = this.app.parser && this.app.parser.wallpapers;
                   if (wpDict && wpDict[targetLoc]) {
                       const wpArr = wpDict[targetLoc];
+                      if (targetLoc === 0 && !window._loggedWp) {
+                          console.log('POR FAVOR COPIA Y PEGA ESTO:');
+                          console.log(JSON.stringify(wpArr.map(w => ({key: w.key, id: w.id}))));
+                          window._loggedWp = true;
+                      }
                       for (let wpIndex = 0; wpIndex < wpArr.length; wpIndex++) {
                           const wpEntry = wpArr[wpIndex];
                           if (!wpEntry || !wpEntry.id || wpEntry.id <= 0) continue;
                           
-                          let floorNum, isRightWall;
-                          if (targetLoc === 0 && wpArr.length >= 4) {
-                              if (wpIndex === 0) { floorNum = 1; isRightWall = false; }
-                              else if (wpIndex === 1) { floorNum = 0; isRightWall = false; }
-                              else if (wpIndex === 2) { floorNum = 0; isRightWall = true; }
-                              else if (wpIndex === 3) { floorNum = 1; isRightWall = true; }
-                          } else {
-                              floorNum = Math.floor(wpIndex / 2);
-                              isRightWall = (wpIndex % 2) !== 0;
-                          }
+                          let floorNum = Math.floor(wpIndex / 2);
+                          let isRightWall = (wpIndex % 2) !== 0;
                           
                           const maskPrefix = isRightWall ? 'wallL' : 'wallR'; // Nombres invertidos fisicamente
                           const wallMask = this._getMaskImage(maskPrefix, floorNum, targetLoc);
