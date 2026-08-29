@@ -235,6 +235,20 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const hudTop = document.getElementById('port-hud-top');
             if (hudTop) hudTop.style.display = 'flex';
             if (this.tsukiPort) this.tsukiPort.enterPlayMode();
+            // Preload all covering textures for the current location
+            if (this.map) {
+                const parser = this.parser;
+                if (parser && parser.wallpapers) {
+                    for (const locId in parser.wallpapers) {
+                        (parser.wallpapers[locId] || []).forEach(w => { if (w.id > 0) this.map._getTilesetTexture('wallpaper', w.id); });
+                    }
+                }
+                if (parser && parser.floors) {
+                    for (const locId in parser.floors) {
+                        (parser.floors[locId] || []).forEach(f => { if (f.id > 0) this.map._getTilesetTexture('floor', f.id); });
+                    }
+                }
+            }
             if (this.parser && this.map) {
                 const locSelect = document.getElementById('select-location');
                 if (locSelect) {

@@ -810,6 +810,7 @@ class IsometricMap {
             if (cat.includes('WALLDECO') || cat.includes('LAMP') || cat.includes('POSTER')) return true;
             
             const name = (db.furn_name || db.item_name || '').toUpperCase();
+            if (name.includes('WALLPAPER') || name.includes('TAPIZ')) return false;
             if (name.includes('WALL LAMP') || name.includes('WALLDECO') || name.includes('POSTER') || name.includes('LÁMPARA DE PARED') || name.includes('CUADRO') || name.includes('WALL')) return true;
         }
         return false;
@@ -1059,12 +1060,54 @@ class IsometricMap {
             this.ctx.strokeStyle = flipped ? 'rgba(255, 160, 80, 0.85)' : 'rgba(110, 190, 255, 0.85)';
             this.ctx.lineWidth = 1;
             this.ctx.globalAlpha = 0.5;
-            const showWallGrids = !document.body.classList.contains('play-mode') || (this.isHammerMode && this.forceDrawGrid);
+            const isPlay = document.body.classList.contains('play-mode');
+            const showWallGrids = !isPlay || (this.isHammerMode && this.forceDrawGrid);
             if (showWallGrids) {
-                for (let x = along0; x < along1; x++) {
-                    for (let y = 0; y < wallH; y++) {
-                        this._pathWallCell(x, y, 1, 1, flipped, bbox, targetFloor);
-                        this.ctx.stroke();
+                if (isPlay && window.mapsAtlas) {
+                    const surf = window.mapsAtlas.find(s => s.kind === 'wall' && String(s.groupNum) === String(targetFloor) && !!s.flipped === flipped);
+                    if (surf) {
+                        const w = surf.cell.w || 64;
+                        const h = surf.cell.h || 32;
+                        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75); 
+                        const oX = surf.origin_px.x * _bgo;
+                        const oY = surf.origin_px.y * _bgo;
+                        
+                        this.ctx.save();
+                        this.ctx.globalAlpha = 0.5;
+                        this.ctx.strokeStyle = flipped ? 'rgba(255, 100, 100, 0.9)' : 'rgba(100, 100, 255, 0.9)';
+                        this.ctx.lineWidth = 1;
+                        for (let x = 0; x < surf.cols; x++) {
+                            for (let y = 0; y < surf.rows; y++) {
+                                let ix, iy;
+                                if (!surf.flipped) {
+                                    ix = oX - x * (w / 2);
+                                    iy = oY - x * (h / 2) - y * h;
+                                } else {
+                                    ix = oX + x * (w / 2);
+                                    iy = oY - x * (h / 2) - y * h;
+                                }
+                                this.ctx.beginPath();
+                                this.ctx.moveTo(ix, iy);
+                                this.ctx.lineTo(ix, iy - h);
+                                if (!surf.flipped) {
+                                    this.ctx.lineTo(ix - w/2, iy - h - h/2);
+                                    this.ctx.lineTo(ix - w/2, iy - h/2);
+                                } else {
+                                    this.ctx.lineTo(ix + w/2, iy - h - h/2);
+                                    this.ctx.lineTo(ix + w/2, iy - h/2);
+                                }
+                                this.ctx.closePath();
+                                this.ctx.stroke();
+                            }
+                        }
+                        this.ctx.restore();
+                    }
+                } else {
+                    for (let x = along0; x < along1; x++) {
+                        for (let y = 0; y < wallH; y++) {
+                            this._pathWallCell(x, y, 1, 1, flipped, bbox, targetFloor);
+                            this.ctx.stroke();
+                        }
                     }
                 }
             }
@@ -1249,24 +1292,56 @@ class IsometricMap {
                     if (!floorTex.pattern) floorTex.pattern = ctx.createPattern(floorTex.img, 'repeat');
                     
                     ctx.save();
-                    const matrix = new DOMMatrix().scale(1, 0.5).rotate(-45).scale(0.35, 0.35);
-                    floorTex.pattern.setTransform(matrix);
-                    ctx.fillStyle = floorTex.pattern;
                     
-                    const n = Math.min(this._floorGridN, FLOOR_GRID_N);
-                    ctx.beginPath();
-                    ctx.moveTo(this._isoWorld(0, 0, vf).x, this._isoWorld(0, 0, vf).y);
-                    ctx.lineTo(this._isoWorld(n, 0, vf).x, this._isoWorld(n, 0, vf).y);
-                    ctx.lineTo(this._isoWorld(n, n, vf).x, this._isoWorld(n, n, vf).y);
-                    ctx.lineTo(this._isoWorld(0, n, vf).x, this._isoWorld(0, n, vf).y);
-                    ctx.closePath();
-                    ctx.fill();
+                    // In Play Mode, use atlas surface coordinates; otherwise use _isoWorld
+                    const atlasSurf = (isPlay || isGrid) && window.mapsAtlas ? window.mapsAtlas.find(s => s.kind === 'floor' && String(s.groupNum) === String(vf)) : null;
+                    
+                    if (atlasSurf) {
+                        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                        const oX = atlasSurf.origin_px.x * _bgo;
+                        const oY = atlasSurf.origin_px.y * _bgo;
+                        const cw = atlasSurf.cell.w || 64;
+                        const ch = atlasSurf.cell.h || 32;
+                        const cols = atlasSurf.cols;
+                        const rows = atlasSurf.rows;
+                        
+                        const matrix = new DOMMatrix([cw/2 * 0.5, -ch/2 * 0.5, cw/2 * 0.5, ch/2 * 0.5, oX, oY]);
+                        floorTex.pattern.setTransform(matrix);
+                        ctx.fillStyle = floorTex.pattern;
+                        
+                        // Draw diamond polygon from corners
+                        const pt = (gx, gy) => ({
+                            x: oX + (gx - gy) * (cw / 2),
+                            y: oY - (gx + gy) * (ch / 2)
+                        });
+                        ctx.beginPath();
+                        ctx.moveTo(pt(0, 0).x, pt(0, 0).y);
+                        ctx.lineTo(pt(cols, 0).x, pt(cols, 0).y);
+                        ctx.lineTo(pt(cols, rows).x, pt(cols, rows).y);
+                        ctx.lineTo(pt(0, rows).x, pt(0, rows).y);
+                        ctx.closePath();
+                        ctx.fill();
+                    } else {
+                        const matrix = new DOMMatrix().scale(1, 0.5).rotate(-45).scale(0.35, 0.35);
+                        floorTex.pattern.setTransform(matrix);
+                        ctx.fillStyle = floorTex.pattern;
+                        
+                        const n = Math.min(this._floorGridN, FLOOR_GRID_N);
+                        ctx.beginPath();
+                        ctx.moveTo(this._isoWorld(0, 0, vf).x, this._isoWorld(0, 0, vf).y);
+                        ctx.lineTo(this._isoWorld(n, 0, vf).x, this._isoWorld(n, 0, vf).y);
+                        ctx.lineTo(this._isoWorld(n, n, vf).x, this._isoWorld(n, n, vf).y);
+                        ctx.lineTo(this._isoWorld(0, n, vf).x, this._isoWorld(0, n, vf).y);
+                        ctx.closePath();
+                        ctx.fill();
+                    }
+                    
                     ctx.restore();
                 }
             }
 
             const showFloorGrids = (!isPlay && !isGrid) || (isPlay && this.isHammerMode && this.forceDrawGrid);
-            if (showFloorGrids) {
+            if (!isPlay && !isGrid) {
                 ctx.globalAlpha = 0.25;
                 const off0 = this.getFloorOffset(0);
                 for (let vf of visibleFloors) {
@@ -1275,74 +1350,85 @@ class IsometricMap {
                     const dy = off.y - off0.y;
                     ctx.drawImage(this._floorGridCache, this._floorGridOriginX + dx, this._floorGridOriginY + dy);
                 }
-            } else if (isGrid && this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1) {
-                const surf = window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex];
-                if (surf.kind === 'floor') {
-                    ctx.save();
-                    ctx.globalAlpha = 0.5;
-                    ctx.strokeStyle = 'rgba(100, 255, 100, 0.9)';
-                    ctx.lineWidth = 1;
-                    const w = surf.cell.w || 64;
-                    const h = surf.cell.h || 32;
-                    for (let x = 0; x < surf.cols; x++) {
-                        for (let y = 0; y < surf.rows; y++) {
-                            const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75); const oX = surf.origin_px.x * _bgo;
-                            const oY = surf.origin_px.y * _bgo;
-                            const ix = oX + (x - y) * (w / 2);
-                            const iy = oY - (x + y) * (h / 2);
-                            
-                            ctx.beginPath();
-                            ctx.moveTo(ix, iy);
-                            ctx.lineTo(ix + w/2, iy - h/2);
-                            ctx.lineTo(ix, iy - h);
-                            ctx.lineTo(ix - w/2, iy - h/2);
-                            ctx.closePath();
-                            ctx.stroke();
-                        }
-                    }
-                    ctx.restore();
-                } else if (surf.kind === 'wall') {
-                    ctx.save();
-                    ctx.globalAlpha = 0.5;
-                    ctx.strokeStyle = surf.flipped ? 'rgba(255, 100, 100, 0.9)' : 'rgba(100, 100, 255, 0.9)';
-                    ctx.lineWidth = 1;
-                    const w = surf.cell.w || 64;
-                    const h = surf.cell.h || 32;
-                    for (let x = 0; x < surf.cols; x++) {
-                        for (let y = 0; y < surf.rows; y++) {
-                            const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75); const oX = surf.origin_px.x * _bgo;
-                            const oY = surf.origin_px.y * _bgo;
-                            // Wall coordinates
-                            // In Tsuki, walls are drawn vertically. 
-                            let ix, iy;
-                            if (!surf.flipped) {
-                                // Right wall: starts at Right corner (wx=0), moves LEFT and UP towards Top corner
-                                ix = oX - x * (w / 2);
-                                iy = oY - x * (h / 2) - y * h;
-                            } else {
-                                // Left wall: starts at Left corner (wx=0), moves RIGHT and UP towards Top corner
-                                ix = oX + x * (w / 2);
-                                iy = oY - x * (h / 2) - y * h;
-                            }
-                            
-                            ctx.beginPath();
-                            ctx.moveTo(ix, iy);
-                            if (!surf.flipped) {
-                                // Right wall cells: move LEFT and UP to complete the diamond
-                                ctx.lineTo(ix - w/2, iy - h/2);
-                                ctx.lineTo(ix - w/2, iy - h/2 - h);
-                                ctx.lineTo(ix, iy - h);
-                            } else {
-                                // Left wall cells: move RIGHT and UP to complete the diamond
+            }
+            
+            const shouldDrawAtlasGridPlay = (isPlay && this.isHammerMode && this.forceDrawGrid);
+            const shouldDrawAtlasGridEdit = (isGrid && this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1);
+            
+            if (shouldDrawAtlasGridPlay || shouldDrawAtlasGridEdit) {
+                const surfaces = shouldDrawAtlasGridPlay 
+                    ? window.mapsAtlas.filter(s => visibleFloors.includes(String(s.groupNum))) 
+                    : [window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex]];
+                
+                for (const surf of surfaces) {
+                    if (surf.kind === 'floor') {
+                        // Note: ctx at this point has translate(offsetX,offsetY)+scale(scale) applied.
+                        // Atlas coords (origin_px * bgScale) are in world pixel space.
+                        // Since ctx already has scale/translate, just use atlas world coords directly.
+                        ctx.save();
+                        ctx.globalAlpha = 0.5;
+                        ctx.strokeStyle = 'rgba(100, 255, 100, 0.9)';
+                        ctx.lineWidth = 1;
+                        const w = surf.cell.w || 64;
+                        const h = surf.cell.h || 32;
+                        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                        const oX = surf.origin_px.x * _bgo;
+                        const oY = surf.origin_px.y * _bgo;
+                        for (let x = 0; x < surf.cols; x++) {
+                            for (let y = 0; y < surf.rows; y++) {
+                                const ix = oX + (x - y) * (w / 2);
+                                const iy = oY - (x + y) * (h / 2);
+                                
+                                ctx.beginPath();
+                                ctx.moveTo(ix, iy);
                                 ctx.lineTo(ix + w/2, iy - h/2);
-                                ctx.lineTo(ix + w/2, iy - h/2 - h);
                                 ctx.lineTo(ix, iy - h);
+                                ctx.lineTo(ix - w/2, iy - h/2);
+                                ctx.closePath();
+                                ctx.stroke();
                             }
-                            ctx.closePath();
-                            ctx.stroke();
+                        }
+                        ctx.restore();
+                    } else if (surf.kind === 'wall') {
+                        if (!isPlay) {
+                            // Same as floor: ctx has translate+scale, use raw atlas coords
+                            ctx.save();
+                            ctx.globalAlpha = 0.5;
+                            ctx.strokeStyle = surf.flipped ? 'rgba(255, 100, 100, 0.9)' : 'rgba(100, 100, 255, 0.9)';
+                            ctx.lineWidth = 1;
+                            const w = surf.cell.w || 64;
+                            const h = surf.cell.h || 32;
+                            const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                            const oX = surf.origin_px.x * _bgo;
+                            const oY = surf.origin_px.y * _bgo;
+                            for (let x = 0; x < surf.cols; x++) {
+                                for (let y = 0; y < surf.rows; y++) {
+                                    let ix, iy;
+                                    if (!surf.flipped) {
+                                        ix = oX - x * (w / 2);
+                                        iy = oY - x * (h / 2) - y * h;
+                                    } else {
+                                        ix = oX + x * (w / 2);
+                                        iy = oY - x * (h / 2) - y * h;
+                                    }
+                                    
+                                    ctx.beginPath();
+                                    ctx.moveTo(ix, iy);
+                                    ctx.lineTo(ix, iy - h);
+                                    if (!surf.flipped) {
+                                        ctx.lineTo(ix - w/2, iy - h - h/2);
+                                        ctx.lineTo(ix - w/2, iy - h/2);
+                                    } else {
+                                        ctx.lineTo(ix + w/2, iy - h - h/2);
+                                        ctx.lineTo(ix + w/2, iy - h/2);
+                                    }
+                                    ctx.closePath();
+                                    ctx.stroke();
+                                }
+                            }
+                            ctx.restore();
                         }
                     }
-                    ctx.restore();
                 }
             }
             ctx.restore();

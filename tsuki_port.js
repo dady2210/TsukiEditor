@@ -191,6 +191,7 @@ class TsukiPort {
             const imgObj = this.app.map ? this.app.map.getImage(item.item_id, 0) : null;
             if (true) {
                 div.addEventListener('dragstart', (e) => {
+                    if (this.app.map) this.app.map.draggedInventoryItem = { item_id: item.item_id };
                     e.dataTransfer.setData('application/json', JSON.stringify({
                         item_id: item.item_id,
                         invType: item.invType
@@ -223,6 +224,8 @@ class TsukiPort {
             } else {
                 div.textContent = item.item_id;
                 div.addEventListener('dragstart', (e) => {
+                    if (this.app.map) this.app.map.draggedInventoryItem = { item_id: item.item_id };
+                    if (this.app.map) this.app.map.draggedInventoryItem = { item_id: item.item_id };
                     e.dataTransfer.setData('application/json', JSON.stringify({ item_id: item.item_id }));
                 });
             }
@@ -234,6 +237,7 @@ class TsukiPort {
             
             div.addEventListener('dragend', () => {
                 div.style.opacity = '1';
+                if (this.app.map) this.app.map.draggedInventoryItem = null;
             });
             
             this.hammerInvPanel.appendChild(div);
