@@ -229,6 +229,14 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const content = document.querySelector('.content');
         if (content) content.style.display = isPlay ? 'none' : 'block';
         
+        if (!isPlay && !isGrid) {
+            if (this.parser && !this._inventoryRendered) {
+                this.updateInvDatalist();
+                this.renderInventory();
+                this._inventoryRendered = true;
+            }
+        }
+        
         if (isPlay) {
             document.body.classList.add('play-mode');
             document.getElementById('nav-play').className = 'btn-primary';
@@ -239,14 +247,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             if (this.map) {
                 const parser = this.parser;
                 if (parser && parser.wallpapers) {
-                    for (const locId in parser.wallpapers) {
-                        (parser.wallpapers[locId] || []).forEach(w => { if (w.id > 0) this.map._getTilesetTexture('wallpaper', w.id); });
-                    }
+                    const locId = 0; // Treehouse is the only one we need immediately
+                    (parser.wallpapers[locId] || []).forEach(w => { if (w.id > 0) this.map._getTilesetTexture('wallpaper', w.id); });
                 }
                 if (parser && parser.floors) {
-                    for (const locId in parser.floors) {
-                        (parser.floors[locId] || []).forEach(f => { if (f.id > 0) this.map._getTilesetTexture('floor', f.id); });
-                    }
+                    const locId = 0;
+                    (parser.floors[locId] || []).forEach(f => { if (f.id > 0) this.map._getTilesetTexture('floor', f.id); });
                 }
             }
             if (this.parser && this.map) {
