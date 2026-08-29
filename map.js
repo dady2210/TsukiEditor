@@ -1613,6 +1613,12 @@ class IsometricMap {
         // getWallIsoCoords returns screen coords including scale/offset
         const pt = this.getWallIsoCoords(p.x, p.y, p.flipped, bbox, p.floor);
         
+        // Frustum Culling
+        const pad = Math.max(500, 300 * this.scale);
+        if (pt.x < -pad || pt.x > this.canvas.width + pad || pt.y < -pad || pt.y > this.canvas.height + pad) {
+            return;
+        }
+        
         // sz in grid units
         const sz = this.getWallSize(p.item_id);
         const cellW = this.CELL_W;
@@ -1727,6 +1733,14 @@ class IsometricMap {
 
         const ctx = this.ctx;
         const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
+        
+        // Frustum Culling (Camera Viewport)
+        const center = this._tileCenter(p.x, p.y, w, l, p.floor);
+        const pad = Math.max(500, 300 * this.scale);
+        if (center.x < -pad || center.x > this.canvas.width + pad || center.y < -pad || center.y > this.canvas.height + pad) {
+            return;
+        }
+
         const stack = (this._stackInfo && this._stackInfo.get(p)) || null;
         const lift = stack ? stack.lift : 0;
 
@@ -2209,9 +2223,12 @@ class IsometricMap {
             const rect   = this.canvas.getBoundingClientRect();
             const mx = e.clientX - rect.left;
             const my = e.clientY - rect.top;
-            this.offsetX = mx - (mx - this.offsetX) * factor;
-            this.offsetY = my - (my - this.offsetY) * factor;
-            this.scale  *= factor;
+            let newScale = this.scale * factor;
+            newScale = Math.max(0.1, Math.min(newScale, 4.0));
+            const actualFactor = newScale / this.scale;
+            this.offsetX = mx - (mx - this.offsetX) * actualFactor;
+            this.offsetY = my - (my - this.offsetY) * actualFactor;
+            this.scale = newScale;
             this.draw();
         }, { passive: false });
 
