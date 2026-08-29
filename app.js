@@ -90,7 +90,7 @@ window.imageErrorFallback = function(img, id, originalPrefix) {
 
 window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     const prefix = hint === 'furn' || hint === 'placement' ? 'FURN' : 'ITEM';
-    return `<img src="images/items/${prefix}_${id}.png" onerror="window.imageErrorFallback(this, ${id}, '${prefix}')" ${extraAttrs}>`;
+    return `<img loading="lazy" src="images/items/${prefix}_${id}.png" onerror="window.imageErrorFallback(this, ${id}, '${prefix}')" ${extraAttrs}>`;
 };
 
 
@@ -1479,7 +1479,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>
-                    <img src="images/items/${prefix}_${item.item_id}.png" class="item-icon"
+                    <img loading="lazy" src="images/items/${prefix}_${item.item_id}.png" class="item-icon"
                          onerror="this.style.display='none'" alt="Icon">
                 </td>
                 <td>
