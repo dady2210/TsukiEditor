@@ -1347,8 +1347,8 @@ class IsometricMap {
                       this.maskCanvas = document.createElement('canvas');
                       this.maskCtx = this.maskCanvas.getContext('2d');
                   }
-                  this.maskCanvas.width = this.canvas.width;
-                  this.maskCanvas.height = this.canvas.height;
+                  if (this.maskCanvas.width !== this.canvas.width) this.maskCanvas.width = this.canvas.width;
+                  if (this.maskCanvas.height !== this.canvas.height) this.maskCanvas.height = this.canvas.height;
                   
                   const s = this.scale;
                   const bgScale = _bgo;
