@@ -1022,31 +1022,6 @@ class IsometricMap {
             this.ctx.globalAlpha = 1.0;
             
             let filledWithTex = false;
-            if (wps && wps.length > 0) {
-                // Determine wallpaper ID. Left wall (flipped=false), Right wall (flipped=true)
-                const wpEntry = wps[0]; // Currently game usually applies 1 wallpaper to both, or index based. Let's use the first one.
-                const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
-                if (wpTex && wpTex.img && wpTex.img.complete && wpTex.img.width > 0) {
-                    if (!wpTex.pattern) wpTex.pattern = this.ctx.createPattern(wpTex.img, 'repeat');
-                    
-                    this.ctx.save();
-                    // Shear for walls. 
-                    // Pared Derecha (flipped=true): slope up-right. Shear Y by X. 
-                    // Pared Izquierda (flipped=false): slope up-left. Shear Y by -X.
-                    // The _pathWallCell sets up the path. The pattern transform applies to the bounding box.
-                    const shearSlope = flipped ? -0.5 : 0.5;
-                    const scaleFactor = 0.35;
-                    const matrix = new DOMMatrix([scaleFactor, shearSlope * scaleFactor, 0, scaleFactor, 0, 0]);
-                    
-                    wpTex.pattern.setTransform(matrix);
-                    this.ctx.fillStyle = wpTex.pattern;
-                    this._pathWallCell(along0, 0, alongLen, wallH, flipped, bbox);
-                    this.ctx.fill();
-                    this.ctx.restore();
-                    filledWithTex = true;
-                }
-            }
-            
             if (!filledWithTex && !document.body.classList.contains('play-mode')) {
                 this.ctx.globalAlpha = 0.18;
                 this.ctx.fillStyle = flipped ? 'rgba(255, 160, 80, 1)' : 'rgba(110, 190, 255, 1)';
@@ -1360,13 +1335,27 @@ class IsometricMap {
                             if (!wpTex.pattern) wpTex.pattern = ctx.createPattern(wpTex.img, 'repeat');
 
                             const sc = this.scale;
-                            // Wall pattern transform (shear for isometric wall slope)
-                            const shear = flipped ? 0.5 : -0.5;
+                            // Wall pattern transform
+                            // u vector (along wall): Left(-cw/2, -ch/2), Right(+cw/2, -ch/2)
+                            // v vector (down wall): (0, ch)
+                            const u_x = (flipped ? 1 : -1) * (cw / 2);
+                            const u_y = -ch / 2;
+                            const v_x = 0;
+                            const v_y = ch;
+                            
+                            // We might also need to scale the texture so it fits nicely.
+                            // The game typically uses a scale factor of 0.35 for wallpapers
+                            const texScale = 0.35;
+                            
+                            // Adjust origin so texture tiles from top of the wall correctly
+                            // oX, oY is the bottom corner. Top corner is oY - rows * ch.
+                            const originY = oY - rows * ch;
+                            
                             wpTex.pattern.setTransform(new DOMMatrix([
-                                (cw / 2) * sc,  shear * ch * sc,
-                                0,               ch * sc,
+                                u_x * sc * texScale, u_y * sc * texScale,
+                                v_x * sc * texScale, v_y * sc * texScale,
                                 oX * sc + this.offsetX,
-                                oY * sc + this.offsetY
+                                originY * sc + this.offsetY
                             ]));
                             ctx.fillStyle = wpTex.pattern;
 
@@ -2108,8 +2097,9 @@ class IsometricMap {
                         this.app.parser.placements.push(newPlacement);
                         this.selectedPlacement = newPlacement;
                         this.draw();
-                        if (this.app._currentPlayInvType !== null) {
-                            this.app.renderPlayInventory(this.app._currentPlayInvType);
+                        if (this.app.tsukiPort) {
+                            if (this.isHammerMode && typeof this.app.tsukiPort.renderHammerInventory === 'function') this.app.tsukiPort.renderHammerInventory();
+                            if (!this.isHammerMode && typeof this.app.tsukiPort.renderBagInventory === 'function') this.app.tsukiPort.renderBagInventory();
                         }
                     }
                 }
