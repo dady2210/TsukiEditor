@@ -1327,18 +1327,22 @@ class IsometricMap {
                       }
                   }
 
-                  // WALL MASKS: check for L and R masks
+                  // WALL MASKS
                   const wpDict = this.app.parser && this.app.parser.wallpapers;
                   if (wpDict && wpDict[targetLoc]) {
-                      let wpIndex = 0;
-                      for (const wpEntry of wpDict[targetLoc]) {
-                          if (!wpEntry.id || wpEntry.id <= 0) { wpIndex++; continue; }
+                      const wpArr = wpDict[targetLoc];
+                      for (let wpIndex = 0; wpIndex < wpArr.length; wpIndex++) {
+                          const wpEntry = wpArr[wpIndex];
+                          if (!wpEntry || !wpEntry.id || wpEntry.id <= 0) continue;
+                          
+                          const floorNum = Math.floor(wpIndex / 2);
+                          const isRightWall = (wpIndex % 2) !== 0;
+                          const maskPrefix = isRightWall ? 'wallR' : 'wallL';
+                          const wallMask = this._getMaskImage(maskPrefix, floorNum, targetLoc);
+                          
+                          if (!wallMask || !wallMask.complete || wallMask.width <= 0) continue;
+                          
                           const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
-                          
-                          const wallMaskL = this._getMaskImage('wallL', wpIndex, targetLoc);
-                          const wallMaskR = this._getMaskImage('wallR', wpIndex, targetLoc);
-                          wpIndex++;
-                          
                           if (!wpTex || !wpTex.img || !wpTex.img.complete || wpTex.img.width <= 0) continue;
                           
                           const wallCacheKey = 'maskPat_wall_' + wpEntry.id;
@@ -1358,34 +1362,19 @@ class IsometricMap {
                               this._patternCache[wallCacheKey].patFlipped = this.maskCtx.createPattern(tmpCanvas, 'repeat');
                           }
                           
-                          if (wallMaskL && wallMaskL.complete && wallMaskL.width > 0) {
-                              const patFlipped = this._patternCache[wallCacheKey].patFlipped;
-                              this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                              this.maskCtx.globalCompositeOperation = 'source-over';
-                              patFlipped.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
-                              this.maskCtx.fillStyle = patFlipped;
-                              this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                              this.maskCtx.globalCompositeOperation = 'destination-in';
-                              this.maskCtx.drawImage(wallMaskL, this.offsetX, this.offsetY, wallMaskL.width * bgScale * s, wallMaskL.height * bgScale * s);
-                              this.maskCtx.globalCompositeOperation = 'source-over';
-                              this.ctx.drawImage(this.maskCanvas, 0, 0);
-                          }
+                          const pat = isRightWall ? this._patternCache[wallCacheKey].pat : this._patternCache[wallCacheKey].patFlipped;
                           
-                          if (wallMaskR && wallMaskR.complete && wallMaskR.width > 0) {
-                              const patNormal = this._patternCache[wallCacheKey].pat;
-                              this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                              this.maskCtx.globalCompositeOperation = 'source-over';
-                              patNormal.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
-                              this.maskCtx.fillStyle = patNormal;
-                              this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                              this.maskCtx.globalCompositeOperation = 'destination-in';
-                              this.maskCtx.drawImage(wallMaskR, this.offsetX, this.offsetY, wallMaskR.width * bgScale * s, wallMaskR.height * bgScale * s);
-                              this.maskCtx.globalCompositeOperation = 'source-over';
-                              this.ctx.drawImage(this.maskCanvas, 0, 0);
-                          }
+                          this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                          this.maskCtx.globalCompositeOperation = 'source-over';
+                          pat.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
+                          this.maskCtx.fillStyle = pat;
+                          this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                          this.maskCtx.globalCompositeOperation = 'destination-in';
+                          this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * bgScale * s, wallMask.height * bgScale * s);
+                          this.maskCtx.globalCompositeOperation = 'source-over';
+                          this.ctx.drawImage(this.maskCanvas, 0, 0);
                       }
                   }
-                  
                   // ?? 3. BACKGROUND IMAGE (alpha on floor/wall ? tilesets show through) ?
                 const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
                 if (bgImg && bgImg.complete && bgImg.width > 0) {
@@ -1523,6 +1512,10 @@ class IsometricMap {
             // ?? 5. WALL ITEMS + FLOOR FURNITURE ??????????????????????????????????????
             if (!isGrid && !isPlay) this._drawIsoWallGrids(targetLoc, targetFloor);
 
+            const allWalls = this.app.parser.placements.filter(
+                p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
+            );
+
             const all = this.app.parser.placements.filter(
                 p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && !p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
             );
@@ -1549,6 +1542,7 @@ class IsometricMap {
             for (const p of ground)  this._drawPlacement(p, 'ground');
             for (const p of seeds)   this._drawPlacement(p, 'seed');
             for (const p of regular) this._drawPlacement(p, 'regular');
+            for (const p of allWalls) this._drawWallPlacementIso(p);
             if (this.isItemDragging && this.selectedPlacement) this._drawSnapGhost(this.selectedPlacement);
             this._drawMapHud(targetLoc, false, targetWallGroup, targetFloor);
         }
@@ -1586,6 +1580,64 @@ class IsometricMap {
         // Update the label next to the dropdown
         const label = document.getElementById('location-label');
         if (label) label.textContent = friendlyName;
+    }
+
+
+    _drawWallPlacementIso(p) {
+        const img = this.getImage(p.item_id, 0);
+        if (!img || !img.complete || img.naturalWidth <= 0) return;
+        
+        const bbox = this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 16, ymax: 16 };
+        // getWallIsoCoords returns screen coords including scale/offset
+        const pt = this.getWallIsoCoords(p.x, p.y, p.flipped, bbox, p.floor);
+        
+        // sz in grid units
+        const sz = this.getWallSize(p.item_id);
+        const cellW = this.CELL_W;
+        const cellH = this.CELL_H;
+        
+        const isSel = (this.selectedPlacement === p);
+        const isHov = (this.hoveredPlacement === p);
+        
+        this.ctx.save();
+        
+        // Find atlas scale. Usually bgScale is 0.75 for level2
+        let _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        let dw = img.width * _bgo * this.scale;
+        let dh = img.height * _bgo * this.scale;
+        
+        // Depending on flipped, we might need to offset it correctly.
+        // The pivot of the wall cell is bottom-left? Or top-left?
+        // Let's just draw it centered on the grid point for now, or match it to the wall grid sizes.
+        // Actually, the wall cell pt returned by getWallIsoCoords is the TOP vertex of the wall tile? No, it's the top-left of the cell.
+        
+        // Since isometric wall images are drawn to match the wall perfectly:
+        // We just draw it so its bottom matches the cell.
+        // Actually, in Tsuki Odyssey, wall furniture pivot is often bottom-center or center.
+        // We'll approximate:
+        const dx = pt.x - dw / 2;
+        const dy = pt.y; // Or maybe offset by dh? We'll see.
+
+        if (p.flipped) {
+            this.ctx.translate(pt.x, pt.y);
+            this.ctx.scale(-1, 1);
+            this.ctx.translate(-pt.x, -pt.y);
+        }
+        
+        if (isSel) {
+            this.ctx.shadowColor = 'white';
+            this.ctx.shadowBlur = 10;
+        } else if (isHov) {
+            this.ctx.shadowColor = 'orange';
+            this.ctx.shadowBlur = 8;
+        }
+
+        // Draw image
+        // Tweak offsets so it looks right on the wall.
+        // For wall items, we can try to anchor bottom-center of the image to the bottom-center of the wall region.
+        // Or just draw it at the coordinate.
+        this.ctx.drawImage(img, pt.x - dw/2, pt.y - dh, dw, dh);
+        this.ctx.restore();
     }
 
     _drawPlacement(p, layer) {
@@ -2050,7 +2102,7 @@ class IsometricMap {
                         if (coveringType === 'floor' && hit.kind === 'floor') {
                             if (this.app.parser.setFloor(targetLoc, hit.floorNum, data.item_id) !== false) applied = true;
                         } else if (coveringType === 'wallpaper' && hit.kind === 'wall') {
-                            if (this.app.parser.setWallpaper(targetLoc, hit.floorNum, data.item_id) !== false) applied = true;
+                            if (this.app.parser.setWallpaper(targetLoc, hit.floorNum, hit.flipped, data.item_id) !== false) applied = true;
                         }
                         
                         if (applied) {

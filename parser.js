@@ -725,23 +725,24 @@ class SaveParser {
         return true;
     }
 
-    setWallpaper(sublocId, key, newId) {
+    setWallpaper(sublocId, floorNum, isRightWall, newId) {
         if (!this.wallpapers || !this.wallpapers[sublocId]) return false;
-        const entry = this.wallpapers[sublocId].find(w => w.key === Number(key));
-        if (entry && entry.node) {
-            entry.id = Number(newId);
-            entry.node.value = entry.id;
+        const arr = this.wallpapers[sublocId];
+        const idx = (floorNum * 2) + (isRightWall ? 1 : 0);
+        if (arr[idx] && arr[idx].node) {
+            arr[idx].id = Number(newId);
+            arr[idx].node.value = arr[idx].id;
             return true;
         }
         return false;
     }
 
-    setFloor(sublocId, key, newId) {
+    setFloor(sublocId, floorNum, newId) {
         if (!this.floors || !this.floors[sublocId]) return false;
-        const entry = this.floors[sublocId].find(f => f.key === Number(key));
-        if (entry && entry.node) {
-            entry.id = Number(newId);
-            entry.node.value = entry.id;
+        const arr = this.floors[sublocId];
+        if (arr[floorNum] && arr[floorNum].node) {
+            arr[floorNum].id = Number(newId);
+            arr[floorNum].node.value = arr[floorNum].id;
             return true;
         }
         return false;
