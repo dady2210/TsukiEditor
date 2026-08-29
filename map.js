@@ -133,7 +133,25 @@ class IsometricMap {
     }
 
     // Tileset Image Loader (for Wallpapers/Floors)
-        _getTilesetTexture(type, id) {
+        _getMaskImage(type, floorKey, loc) {
+        const cacheKey = `mask_${loc}_${type}_${floorKey}`;
+        if (this._imgCache[cacheKey] !== undefined) {
+            return this._imgCache[cacheKey];
+        }
+        this._imgCache[cacheKey] = false;
+        const img = new Image();
+        img.onload = () => {
+            this._imgCache[cacheKey] = img;
+            this.draw();
+        };
+        img.onerror = () => {
+            this._imgCache[cacheKey] = false;
+        };
+        img.src = `../maps/Exportado_level${loc}/mask_${type}_${floorKey}.png`;
+        return false;
+    }
+
+    _getTilesetTexture(type, id) {
         if (!id || id <= 0) return null;
         const cacheKey = `${type}_${id}`;
         
@@ -1268,119 +1286,77 @@ class IsometricMap {
 
             // ?? 1. FLOOR TILESETS (screen space, responds to zoom/pan) ???????????????
             if ((isPlay || isGrid) && window.mapsAtlas) {
-                for (const vf of visibleFloors) {
-                    let floorId = null;
-                    if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
-                        const entry = this.app.parser.floors[targetLoc].find(f => String(f.key) === String(vf));
-                        if (entry) floorId = entry.id;
-                    }
-                    const floorTex = this._getTilesetTexture('floor', floorId);
-                    if (!floorTex || !floorTex.img || !floorTex.img.complete || !floorTex.img.width) continue;
+                  // MASK SYSTEM
+                  if (!this.maskCanvas) {
+                      this.maskCanvas = document.createElement('canvas');
+                      this.maskCtx = this.maskCanvas.getContext('2d');
+                  }
+                  this.maskCanvas.width = this.canvas.width;
+                  this.maskCanvas.height = this.canvas.height;
+                  
+                  const s = this.scale;
+                  const bgScale = _bgo;
+                  
+                  for (const vf of visibleFloors) {
+                      let floorId = null;
+                      if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
+                          const entry = this.app.parser.floors[targetLoc].find(f => String(f.key) === String(vf));
+                          if (entry) floorId = entry.id;
+                      }
+                      const floorTex = this._getTilesetTexture('floor', floorId);
+                      const floorMask = this._getMaskImage('floor', vf, targetLoc);
+                      
+                      if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0 && floorMask && floorMask.complete && floorMask.width > 0) {
+                          if (!floorTex.pattern) floorTex.pattern = this.ctx.createPattern(floorTex.img, 'repeat');
+                          
+                          this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                          this.maskCtx.globalCompositeOperation = 'source-over';
+                          this.maskCtx.drawImage(floorMask, this.offsetX, this.offsetY, floorMask.width * bgScale * s, floorMask.height * bgScale * s);
+                          
+                          this.maskCtx.globalCompositeOperation = 'source-in';
+                          const floorMatrix = new DOMMatrix()
+                              .translate(this.offsetX, this.offsetY)
+                              .scale(s, s)
+                              .scale(1, 0.5)
+                              .rotate(-45)
+                              .scale(0.35, 0.35);
+                          floorTex.pattern.setTransform(floorMatrix);
+                          this.maskCtx.fillStyle = floorTex.pattern;
+                          this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                          
+                          this.ctx.drawImage(this.maskCanvas, 0, 0);
+                      }
+                  }
 
-                    const atlasSurf = window.mapsAtlas.find(s => s.kind === 'floor' && String(s.groupNum) === String(vf));
-                    if (!atlasSurf) continue;
-
-                    const oX = atlasSurf.origin_px.x * _bgo;
-                    const oY = atlasSurf.origin_px.y * _bgo;
-                    const cw = atlasSurf.cell.w || 64;
-                    const ch = atlasSurf.cell.h || 32;
-                    const cols = atlasSurf.cols;
-                    const rows = atlasSurf.rows;
-
-                    if (!floorTex.pattern) floorTex.pattern = ctx.createPattern(floorTex.img, 'repeat');
-
-                    // Pattern transform maps texture to isometric diamond on screen
-                    const sc = this.scale;
-                    const floorMatrix = new DOMMatrix()
-                            .translate(oX * sc + this.offsetX, oY * sc + this.offsetY)
-                            .scale(sc, sc)
-                            .scale(1, 0.5)
-                            .rotate(-45)
-                            .scale(0.35, 0.35);
-                        floorTex.pattern.setTransform(floorMatrix);
-                    ctx.fillStyle = floorTex.pattern;
-
-                    // Diamond polygon in screen coords
-                    const pt = (gx, gy) => atlasToScreen(
-                        oX + (gx - gy) * (cw / 2),
-                        oY - (gx + gy) * (ch / 2)
-                    );
-                    ctx.beginPath();
-                    ctx.moveTo(pt(0, 0).x, pt(0, 0).y);
-                    ctx.lineTo(pt(cols, 0).x, pt(cols, 0).y);
-                    ctx.lineTo(pt(cols, rows).x, pt(cols, rows).y);
-                    ctx.lineTo(pt(0, rows).x, pt(0, rows).y);
-                    ctx.closePath();
-                    ctx.fill();
-                }
-
-                // ?? 2. WALL TILESETS ?????????????????????????????????????????????????
-                const wpDict = this.app.parser && this.app.parser.wallpapers;
-                if (wpDict && wpDict[targetLoc]) {
-                    for (const wpEntry of wpDict[targetLoc]) {
-                        if (!wpEntry.id || wpEntry.id <= 0) continue;
-                        const floorNum = wpEntry.key;
-                        const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
-                        if (!wpTex || !wpTex.img || !wpTex.img.complete || !wpTex.img.width) continue;
-
-                        for (const flipped of [false, true]) {
-                            const wallSurf = window.mapsAtlas.find(s =>
-                                s.kind === 'wall' &&
-                                String(s.groupNum) === String(floorNum) &&
-                                !!s.flipped === flipped
-                            );
-                            if (!wallSurf) continue;
-
-                            const oX = wallSurf.origin_px.x * _bgo;
-                            const oY = wallSurf.origin_px.y * _bgo;
-                            const cw = wallSurf.cell.w || 64;
-                            const ch = wallSurf.cell.h || 32;
-                            const cols = wallSurf.cols;
-                            const rows = wallSurf.rows;
-
-                            if (!wpTex.pattern) wpTex.pattern = ctx.createPattern(wpTex.img, 'repeat');
-
-                            const sc = this.scale;
-                            const texScale = 0.35;
-                            const shearSlope = flipped ? -0.5 : 0.5;
-                            const originY = oY - rows * ch;
-                            
-                            // Transform coordinates based on screen space slope.
-                            wpTex.pattern.setTransform(new DOMMatrix([
-                                sc * texScale, 
-                                shearSlope * sc * texScale, 
-                                0, 
-                                sc * texScale, 
-                                oX * sc + this.offsetX, 
-                                originY * sc + this.offsetY
-                            ]));
-                            ctx.fillStyle = wpTex.pattern;
-
-                            // Wall polygon: left wall or right wall
-                            const wpt = (wx, wy) => {
-                                let px, py;
-                                if (!flipped) {
-                                    px = oX - wx * (cw / 2);
-                                    py = oY - wx * (ch / 2) - wy * ch;
-                                } else {
-                                    px = oX + wx * (cw / 2);
-                                    py = oY - wx * (ch / 2) - wy * ch;
-                                }
-                                return atlasToScreen(px, py);
-                            };
-
-                            ctx.beginPath();
-                            ctx.moveTo(wpt(0, 0).x, wpt(0, 0).y);
-                            ctx.lineTo(wpt(cols, 0).x, wpt(cols, 0).y);
-                            ctx.lineTo(wpt(cols, rows).x, wpt(cols, rows).y);
-                            ctx.lineTo(wpt(0, rows).x, wpt(0, rows).y);
-                            ctx.closePath();
-                            ctx.fill();
-                        }
-                    }
-                }
-
-                // ?? 3. BACKGROUND IMAGE (alpha on floor/wall ? tilesets show through) ?
+                  const wpDict = this.app.parser && this.app.parser.wallpapers;
+                  if (wpDict && wpDict[targetLoc]) {
+                      for (const wpEntry of wpDict[targetLoc]) {
+                          if (!wpEntry.id || wpEntry.id <= 0) continue;
+                          const floorNum = wpEntry.key;
+                          const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
+                          const wallMask = this._getMaskImage('wall', floorNum, targetLoc);
+                          
+                          if (wpTex && wpTex.img && wpTex.img.complete && wpTex.img.width > 0 && wallMask && wallMask.complete && wallMask.width > 0) {
+                              if (!wpTex.pattern) wpTex.pattern = this.ctx.createPattern(wpTex.img, 'repeat');
+                              
+                              this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                              this.maskCtx.globalCompositeOperation = 'source-over';
+                              this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * bgScale * s, wallMask.height * bgScale * s);
+                              
+                              this.maskCtx.globalCompositeOperation = 'source-in';
+                              wpTex.pattern.setTransform(new DOMMatrix([
+                                  s * 0.35, 0.5 * s * 0.35, 
+                                  0, s * 0.35, 
+                                  this.offsetX, this.offsetY
+                              ]));
+                              this.maskCtx.fillStyle = wpTex.pattern;
+                              this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                              
+                              this.ctx.drawImage(this.maskCanvas, 0, 0);
+                          }
+                      }
+                  }
+              // ?? 3. BACKGROUND IMAGE (alpha on floor/wall ? tilesets show through) ?
                 const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
                 if (bgImg && bgImg.complete && bgImg.width > 0) {
                     const bgScale = _bgo;
