@@ -889,7 +889,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const reader = new FileReader();
         reader.onload = e => {
             try {
-                this.parser = new SaveParser(e.target.result);
+                console.time("ParseData");
+            this.parser = new SaveParser(e.target.result);
                 
                 // Parse AST for structure-aware mapping
                 try {
