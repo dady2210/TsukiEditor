@@ -1311,9 +1311,7 @@ class IsometricMap {
                           
                           this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                           this.maskCtx.globalCompositeOperation = 'source-over';
-                          this.maskCtx.drawImage(floorMask, this.offsetX, this.offsetY, floorMask.width * bgScale * s, floorMask.height * bgScale * s);
                           
-                          this.maskCtx.globalCompositeOperation = 'source-in';
                           const floorMatrix = new DOMMatrix()
                               .translate(this.offsetX, this.offsetY)
                               .scale(s, s)
@@ -1324,26 +1322,30 @@ class IsometricMap {
                           this.maskCtx.fillStyle = floorTex.pattern;
                           this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                           
+                          this.maskCtx.globalCompositeOperation = 'destination-in';
+                          this.maskCtx.drawImage(floorMask, this.offsetX, this.offsetY, floorMask.width * bgScale * s, floorMask.height * bgScale * s);
+                          
                           this.ctx.drawImage(this.maskCanvas, 0, 0);
                       }
                   }
 
                   const wpDict = this.app.parser && this.app.parser.wallpapers;
                   if (wpDict && wpDict[targetLoc]) {
+                      let wpIndex = 0;
                       for (const wpEntry of wpDict[targetLoc]) {
                           if (!wpEntry.id || wpEntry.id <= 0) continue;
                           const floorNum = wpEntry.key;
                           const wpTex = this._getTilesetTexture('wallpaper', wpEntry.id);
-                          const wallMask = this._getMaskImage('wall', floorNum, targetLoc);
+                          // Use index 0, 1, 2 for the wall masks to make it easy for the user
+                          const wallMask = this._getMaskImage('wall', wpIndex, targetLoc);
+                          wpIndex++;
                           
                           if (wpTex && wpTex.img && wpTex.img.complete && wpTex.img.width > 0 && wallMask && wallMask.complete && wallMask.width > 0) {
                               if (!wpTex.pattern) wpTex.pattern = this.ctx.createPattern(wpTex.img, 'repeat');
                               
                               this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'source-over';
-                              this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * bgScale * s, wallMask.height * bgScale * s);
                               
-                              this.maskCtx.globalCompositeOperation = 'source-in';
                               wpTex.pattern.setTransform(new DOMMatrix([
                                   s * 0.35, 0.5 * s * 0.35, 
                                   0, s * 0.35, 
@@ -1351,6 +1353,9 @@ class IsometricMap {
                               ]));
                               this.maskCtx.fillStyle = wpTex.pattern;
                               this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
+                              
+                              this.maskCtx.globalCompositeOperation = 'destination-in';
+                              this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * bgScale * s, wallMask.height * bgScale * s);
                               
                               this.ctx.drawImage(this.maskCanvas, 0, 0);
                           }
