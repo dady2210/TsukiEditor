@@ -145,6 +145,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     // ─── Init ──────────────────────────────────────────────────────────
 
     resolveItemName(id, invType = null) {
+        if (window.ITEMS_DB && window.ITEMS_DB[id]) {
+            const e = window.ITEMS_DB[id];
+            if (invType === 1 && e.furn_name) return e.furn_name;
+            if (e.item_name) return e.item_name;
+            if (e.furn_name) return e.furn_name;
+        }
         if (!window.KNOWN_ITEMS) return "Desconocido";
         const typeMap = { 0:"ITEM", 1:"FURN", 2:"CROP", 3:"FISH" };
         if (invType !== null && typeMap[invType]) {
@@ -299,19 +305,29 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (!datalist || !this.addInvType) return;
         
         datalist.innerHTML = '';
-        if (!window.KNOWN_ITEMS) return;
-        
-        const typeMap = { 0:"ITEM", 1:"FURN", 2:"CROP", 3:"FISH" };
         const typ = parseInt(this.addInvType.value);
-        const prefix = typeMap[typ] || "ITEM";
         
-        for (const key in window.KNOWN_ITEMS) {
-            if (key.startsWith(prefix + '_')) {
-                const id = key.split('_')[1];
+        if (window.ITEMS_DB) {
+            for (const id in window.ITEMS_DB) {
+                const entry = window.ITEMS_DB[id];
+                const name = (typ === 1 && entry.furn_name) ? entry.furn_name : entry.item_name;
+                if (!name) continue;
                 const opt = document.createElement('option');
                 opt.value = id;
-                opt.textContent = `[${id}] ${window.KNOWN_ITEMS[key]}`;
+                opt.textContent = [] ;
                 datalist.appendChild(opt);
+            }
+        } else if (window.KNOWN_ITEMS) {
+            const typeMap = { 0:'ITEM', 1:'FURN', 2:'CROP', 3:'FISH' };
+            const prefix = typeMap[typ] || 'ITEM';
+            for (const key in window.KNOWN_ITEMS) {
+                if (key.startsWith(prefix + '_')) {
+                    const id = key.split('_')[1];
+                    const opt = document.createElement('option');
+                    opt.value = id;
+                    opt.textContent = [] ;
+                    datalist.appendChild(opt);
+                }
             }
         }
     }
