@@ -1306,6 +1306,10 @@ class IsometricMap {
                       const floorTex = this._getTilesetTexture('floor', floorId);
                       const floorMask = this._getMaskImage('floor', vf, targetLoc);
                       
+                      // Log the actual contents so we can see what key format is used
+                      if (this.app.parser.floors && this.app.parser.floors[targetLoc]) {
+                          console.log('[MASK DBG floors data]', JSON.stringify(this.app.parser.floors[targetLoc]));
+                      }
                       console.log('[MASK DBG] vf=' + vf + ' floorId=' + floorId + ' targetLoc=' + targetLoc,
                           'floorTex=', floorTex,
                           'floorMask=', floorMask,
