@@ -1306,13 +1306,17 @@ class IsometricMap {
                           const floorTex = this._getTilesetTexture('floor', entry.id);
                           const floorMask = this._getMaskImage('floor', fi, targetLoc);
                           if (floorTex && floorTex.img && floorTex.img.complete && floorTex.img.width > 0 && floorMask && floorMask.complete && floorMask.width > 0) {
-                              const floorPattern = this.maskCtx.createPattern(floorTex.img, 'repeat');
+                              // Simple tile repeat - PNG already has isometric perspective baked in
+                              const floorCacheKey = 'maskPat_floor_' + entry.id;
+                              if (!this._patternCache[floorCacheKey] || !this._patternCache[floorCacheKey].pat) {
+                                  if (!this._patternCache[floorCacheKey]) this._patternCache[floorCacheKey] = {};
+                                  this._patternCache[floorCacheKey].pat = this.maskCtx.createPattern(floorTex.img, 'repeat');
+                              }
+                              const floorPattern = this._patternCache[floorCacheKey].pat;
                               this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'source-over';
-                              const floorMatrix = new DOMMatrix()
-                                  .translate(this.offsetX, this.offsetY)
-                                  .scale(bgScale * s, bgScale * s).scale(1, 0.5).rotate(-45).scale(0.35, 0.35);
-                              floorPattern.setTransform(floorMatrix);
+                              // Simple translate only - no rotation/shear needed
+                              floorPattern.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
                               this.maskCtx.fillStyle = floorPattern;
                               this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'destination-in';
@@ -1333,10 +1337,16 @@ class IsometricMap {
                           const wallMask = this._getMaskImage('wall', wpIndex, targetLoc);
                           wpIndex++;
                           if (wpTex && wpTex.img && wpTex.img.complete && wpTex.img.width > 0 && wallMask && wallMask.complete && wallMask.width > 0) {
-                              const wallPattern = this.maskCtx.createPattern(wpTex.img, 'repeat');
+                              // Simple tile repeat - PNG already has isometric perspective baked in
+                              const wallCacheKey = 'maskPat_wall_' + wpEntry.id;
+                              if (!this._patternCache[wallCacheKey] || !this._patternCache[wallCacheKey].pat) {
+                                  if (!this._patternCache[wallCacheKey]) this._patternCache[wallCacheKey] = {};
+                                  this._patternCache[wallCacheKey].pat = this.maskCtx.createPattern(wpTex.img, 'repeat');
+                              }
+                              const wallPattern = this._patternCache[wallCacheKey].pat;
                               this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'source-over';
-                              wallPattern.setTransform(new DOMMatrix([bgScale*s*0.35, 0.5*bgScale*s*0.35, 0, bgScale*s*0.35, this.offsetX, this.offsetY]));
+                              wallPattern.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
                               this.maskCtx.fillStyle = wallPattern;
                               this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
                               this.maskCtx.globalCompositeOperation = 'destination-in';
