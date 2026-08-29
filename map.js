@@ -1318,16 +1318,26 @@ class IsometricMap {
                                   this._patternCache[floorCacheKey].pat = this.maskCtx.createPattern(floorTex.img, 'repeat');
                               }
                               const floorPattern = this._patternCache[floorCacheKey].pat;
-                              this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                              this.maskCtx.globalCompositeOperation = 'source-over';
-                              // Simple translate only - no rotation/shear needed
-                              floorPattern.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
-                              this.maskCtx.fillStyle = floorPattern;
-                              this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                              this.maskCtx.globalCompositeOperation = 'destination-in';
-                              this.maskCtx.drawImage(floorMask, this.offsetX, this.offsetY, floorMask.width * bgScale * s, floorMask.height * bgScale * s);
-                              this.maskCtx.globalCompositeOperation = 'source-over';
-                              this.ctx.drawImage(this.maskCanvas, 0, 0);
+                              const mW = floorMask.width * bgScale * s;
+                              const mH = floorMask.height * bgScale * s;
+                              const mX = this.offsetX;
+                              const mY = this.offsetY;
+                              if (mX <= this.canvas.width && mY <= this.canvas.height && mX + mW >= 0 && mY + mH >= 0) {
+                                  const drawX = Math.floor(Math.max(0, mX));
+                                  const drawY = Math.floor(Math.max(0, mY));
+                                  const drawW = Math.ceil(Math.min(this.canvas.width - drawX, mX + mW - drawX));
+                                  const drawH = Math.ceil(Math.min(this.canvas.height - drawY, mY + mH - drawY));
+                                  
+                                  this.maskCtx.clearRect(drawX, drawY, drawW, drawH);
+                                  this.maskCtx.globalCompositeOperation = 'source-over';
+                                  floorPattern.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
+                                  this.maskCtx.fillStyle = floorPattern;
+                                  this.maskCtx.fillRect(drawX, drawY, drawW, drawH);
+                                  this.maskCtx.globalCompositeOperation = 'destination-in';
+                                  this.maskCtx.drawImage(floorMask, mX, mY, mW, mH);
+                                  this.maskCtx.globalCompositeOperation = 'source-over';
+                                  this.ctx.drawImage(this.maskCanvas, drawX, drawY, drawW, drawH, drawX, drawY, drawW, drawH);
+                              }
                           }
                       }
                   }
@@ -1385,16 +1395,26 @@ class IsometricMap {
                           }
                           
                           const pat = isRightWall ? this._patternCache[wallCacheKey].pat : this._patternCache[wallCacheKey].patFlipped;
-                          
-                          this.maskCtx.clearRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                          this.maskCtx.globalCompositeOperation = 'source-over';
-                          pat.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
-                          this.maskCtx.fillStyle = pat;
-                          this.maskCtx.fillRect(0, 0, this.maskCanvas.width, this.maskCanvas.height);
-                          this.maskCtx.globalCompositeOperation = 'destination-in';
-                          this.maskCtx.drawImage(wallMask, this.offsetX, this.offsetY, wallMask.width * bgScale * s, wallMask.height * bgScale * s);
-                          this.maskCtx.globalCompositeOperation = 'source-over';
-                          this.ctx.drawImage(this.maskCanvas, 0, 0);
+                           const mW = wallMask.width * bgScale * s;
+                           const mH = wallMask.height * bgScale * s;
+                           const mX = this.offsetX;
+                           const mY = this.offsetY;
+                           if (mX <= this.canvas.width && mY <= this.canvas.height && mX + mW >= 0 && mY + mH >= 0) {
+                               const drawX = Math.floor(Math.max(0, mX));
+                               const drawY = Math.floor(Math.max(0, mY));
+                               const drawW = Math.ceil(Math.min(this.canvas.width - drawX, mX + mW - drawX));
+                               const drawH = Math.ceil(Math.min(this.canvas.height - drawY, mY + mH - drawY));
+                               
+                               this.maskCtx.clearRect(drawX, drawY, drawW, drawH);
+                               this.maskCtx.globalCompositeOperation = 'source-over';
+                               pat.setTransform(new DOMMatrix().translate(this.offsetX, this.offsetY).scale(bgScale * s));
+                               this.maskCtx.fillStyle = pat;
+                               this.maskCtx.fillRect(drawX, drawY, drawW, drawH);
+                               this.maskCtx.globalCompositeOperation = 'destination-in';
+                               this.maskCtx.drawImage(wallMask, mX, mY, mW, mH);
+                               this.maskCtx.globalCompositeOperation = 'source-over';
+                               this.ctx.drawImage(this.maskCanvas, drawX, drawY, drawW, drawH, drawX, drawY, drawW, drawH);
+                           }
                       }
                   }
                   // ?? 3. BACKGROUND IMAGE (alpha on floor/wall ? tilesets show through) ?
