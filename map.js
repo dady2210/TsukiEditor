@@ -936,11 +936,12 @@ class IsometricMap {
     }
 
     _drawMapHud(targetLoc, isWallLayer, targetWallGroup, targetFloor) {
+        if (document.body.classList.contains('play-mode')) return;
         const ctx = this.ctx;
         const wps = this._wallpaperEntries(targetLoc);
         const fls = this._floorCoveringEntries(targetLoc);
         const wallsAll = (this.app.parser.placements || []).filter(
-            p => p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0
+            p => p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0 && !this.isCovering(p.item_id)
         );
         const walls = isWallLayer
             ? wallsAll.filter(p => String(p.floor) === String(targetWallGroup))
@@ -987,7 +988,7 @@ class IsometricMap {
         const placements = this.app.parser.placements || [];
         const floorKey = String(targetFloor);
         const walls = placements.filter(
-            p => p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0
+            p => p.isWall && Number(p.cluster) === Number(targetLoc) && Number(p.item_id) > 0 && !this.isCovering(p.item_id)
                 && String(p.floor) === floorKey
         );
         const floors = placements.filter(
@@ -1139,11 +1140,13 @@ class IsometricMap {
         this.ctx.fillStyle = '#fff';
         this.ctx.font = `bold ${Math.max(9, Math.round(10 * this.scale))}px 'Quicksand', sans-serif`;
         this.ctx.textAlign = 'center';
-        this.ctx.textBaseline = 'top';
+        if (!document.body.classList.contains('play-mode')) {
+            this.ctx.textBaseline = 'top';
         this.ctx.shadowColor = 'rgba(0,0,0,0.8)';
         this.ctx.shadowBlur = 3;
         this.ctx.fillText(`ID ${p.item_id}${flipped ? ' der' : ' izq'}`, mid.x, mid.y + 6 * this.scale);
         this.ctx.restore();
+        }
     }
 
     // ── Draw (agendado) ──────────────────────────────────────────────────
@@ -1373,10 +1376,10 @@ class IsometricMap {
                             };
 
                             ctx.beginPath();
-                            ctx.moveTo(...Object.values(wpt(0, 0)));
-                            ctx.lineTo(...Object.values(wpt(cols, 0)));
-                            ctx.lineTo(...Object.values(wpt(cols, rows)));
-                            ctx.lineTo(...Object.values(wpt(0, rows)));
+                            ctx.moveTo(wpt(0, 0).x, wpt(0, 0).y);
+                            ctx.lineTo(wpt(cols, 0).x, wpt(cols, 0).y);
+                            ctx.lineTo(wpt(cols, rows).x, wpt(cols, rows).y);
+                            ctx.lineTo(wpt(0, rows).x, wpt(0, rows).y);
                             ctx.closePath();
                             ctx.fill();
                         }
@@ -1512,10 +1515,10 @@ class IsometricMap {
             }
 
             // ?? 5. WALL ITEMS + FLOOR FURNITURE ??????????????????????????????????????
-            if (!isGrid) this._drawIsoWallGrids(targetLoc, targetFloor);
+            if (!isGrid && !isPlay) this._drawIsoWallGrids(targetLoc, targetFloor);
 
             const all = this.app.parser.placements.filter(
-                p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && !p.isWall && p.item_id !== -1
+                p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && !p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
             );
 
             const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
@@ -1632,11 +1635,13 @@ class IsometricMap {
             this.ctx.fillStyle = 'white';
             this.ctx.font = 'bold 11px Quicksand, Arial';
             this.ctx.textAlign = 'center';
+            if (!document.body.classList.contains('play-mode')) {
             this.ctx.textBaseline = 'bottom';
             this.ctx.shadowColor = 'rgba(0,0,0,0.85)';
             this.ctx.shadowBlur = 3;
             this.ctx.fillText(`ID ${p.item_id}${p.flipped ? ' F' : ''}`, gx + gw / 2, gy + gh - 3);
             this.ctx.restore();
+        }
             return;
         }
 

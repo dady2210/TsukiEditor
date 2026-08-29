@@ -28,7 +28,7 @@ class TsukiPort {
     
     setupEvents() {
         if (this.btnBag) {
-            this.btnBag.addEventListener('click', () => this.enterBagMode());
+            this.btnBag.addEventListener('click', () => { if (this.bagUI && this.bagUI.classList.contains('active-ui')) { this.exitBagMode(); } else { this.enterBagMode(); } });
         }
         if (this.btnBagExit) {
             this.btnBagExit.addEventListener('click', () => this.exitBagMode());
@@ -63,15 +63,16 @@ class TsukiPort {
     
 
     enterBagMode() {
-        this.bottomBar.classList.remove('active-ui');
+        if (this.bottomBar) this.bottomBar.style.display = 'none';
         if (this.bagUI) this.bagUI.classList.add('active-ui');
+        if (this.btnBagExit) this.btnBagExit.style.display = 'none';
         this.renderBagInventory();
     }
     
     exitBagMode() {
         if (this.bagUI) this.bagUI.classList.remove('active-ui');
         if (document.body.classList.contains('play-mode') && !this.isHammerMode) {
-            if (this.bottomBar) this.bottomBar.classList.add('active-ui');
+            if (this.bottomBar) this.bottomBar.style.display = 'flex';
         }
     }
     
@@ -120,13 +121,13 @@ class TsukiPort {
     }
     
     exitPlayMode() {
-        this.bottomBar.classList.remove('active-ui');
+        if (this.bottomBar) this.bottomBar.style.display = 'none';
         this.exitHammerMode();
     }
     
     enterHammerMode() {
         this.isHammerMode = true;
-        this.bottomBar.classList.remove('active-ui');
+        if (this.bottomBar) this.bottomBar.style.display = 'none';
         this.hammerUI.classList.add('active-ui');
         
         if (this.app.map) {
@@ -143,7 +144,7 @@ class TsukiPort {
         this.isHammerMode = false;
         if (this.hammerUI) this.hammerUI.classList.remove('active-ui');
         if (document.body.classList.contains('play-mode')) {
-            if (this.bottomBar) this.bottomBar.classList.add('active-ui');
+            if (this.bottomBar) this.bottomBar.style.display = 'flex';
         }
         
         if (this.app.map) {
