@@ -1359,7 +1359,7 @@ class IsometricMap {
                     const bCtx = this._bakedBgCanvas.getContext('2d');
                     
                     // Draw base treehouse
-                    bCtx.drawImage(bgImg, 0, 0);
+                    // (treehouse will be drawn on top)
                     
                     let allLoaded = true;
                     // Helper to draw a mask layer
@@ -1430,6 +1430,10 @@ class IsometricMap {
                         }
                     }
                     
+                    // Draw base treehouse OVER the floors and walls!
+                    bCtx.globalCompositeOperation = 'source-over';
+                    bCtx.drawImage(bgImg, 0, 0);
+
                     if (allLoaded) {
                         this._bakedBgKey = bakeKey;
                     }
