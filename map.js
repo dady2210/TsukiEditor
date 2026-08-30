@@ -198,13 +198,13 @@ class IsometricMap {
     }
 
     getRotatedSize(item_id, orientation) {
-        // La orientación en este juego es frente/atrás + espejado horizontal
-        // (ver _drawSpriteOnTile: solo flipH + darken, nunca gira el sprite
-        // 90°; y los labels de la UI son "Frente Der/Izq" / "Atrás Izq/Der",
-        // no ángulos). El footprint en grilla es una propiedad física del
-        // objeto y no cambia según hacia dónde mire, así que siempre debe
-        // ser el tamaño base de sizes.js, sin intercambiar w/l.
-        return this.getSize(item_id);
+        const size = this.getSize(item_id);
+        // orientation 1 (SW) and 3 (NE) align the object along the opposite axis, 
+        // so we must swap width and length.
+        if (orientation === 1 || orientation === 3) {
+            return { w: size.l, l: size.w };
+        }
+        return size;
     }
 
     getImage(item_id, orientation) {
@@ -2126,7 +2126,8 @@ class IsometricMap {
                 }
             }
         }
-        if (!isWallLayer && !document.body.classList.contains('play-mode')) {
+        const isHammerMode = this.app.tsukiPort && this.app.tsukiPort.isHammerMode;
+        if (!isWallLayer && (!document.body.classList.contains('play-mode') || isHammerMode)) {
             const wallHits = this._hitTestIsoWalls(screenX, screenY, targetFloor, targetLoc);
             found = wallHits.concat(found);
         }
