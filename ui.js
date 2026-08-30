@@ -20,7 +20,7 @@ class GameUI {
         const canvas = this.app.map.canvas;
         
         canvas.addEventListener('pointerdown', (e) => {
-            if (!document.body.classList.contains('play-mode')) return;
+            if (!document.body.classList.contains('play-mode')) return;\n            if (!this.app.tsukiPort || !this.app.tsukiPort.isHammerMode) return;
             if (e.button !== 0) return;
             
             this.hideActionMenu();

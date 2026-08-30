@@ -2429,7 +2429,20 @@ class IsometricMap {
                 const targetFloor = document.getElementById('select-floor').value;
                 const locVal = document.getElementById('select-location').value;
                 const targetLoc = locVal !== "" ? parseInt(locVal, 10) : 1;
-                const hits        = this._hitTest(gridX, gridY, targetFloor, targetLoc, mouseX, mouseY);
+                
+                let hits = [];
+                if (document.body.classList.contains('play-mode')) {
+                    if (this.app.tsukiPort && this.app.tsukiPort.isHammerMode) {
+                        for (let g = 2; g >= 0; g--) {
+                            const cart = this.getCartesianCoords(mouseX, mouseY, g);
+                            const gx = Math.floor(cart.x + 0.5);
+                            const gy = Math.floor(cart.y + 0.5);
+                            hits = hits.concat(this._hitTest(gx, gy, g.toString(), targetLoc, mouseX, mouseY));
+                        }
+                    }
+                } else {
+                    hits = this._hitTest(gridX, gridY, targetFloor, targetLoc, mouseX, mouseY);
+                }
 
                 // Prefer higher floors, then wall items, then non-ground furniture
                         hits.sort((a, b) => {

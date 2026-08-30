@@ -1,4 +1,6 @@
-window.NEWSPAPER_DB = {};\n\nwindow.ITEMS_DB = {
+window.NEWSPAPER_DB = {};
+
+window.ITEMS_DB = {
   "0": {
     "id": 0,
     "item_name": "El Señor de las Zanahorias / Lord of the Carrots",
