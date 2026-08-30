@@ -1980,7 +1980,7 @@ window.ITEMS_DB = {
     "id": 115,
     "item_name": "Cabeza de Serpiente / Snake Head",
     "furn_name": "Banca Tatami / Tatami Bench",
-    "width": 3,
+    "width": 4,
     "length": 2,
     "rotations": {
       "B": 697
@@ -31871,8 +31871,8 @@ window.ITEMS_DB = {
   "2501": {
     "id": 2501,
     "furn_name": "Unknown Furniture 2501",
-    "width": 3,
-    "length": 4,
+    "width": 2,
+    "length": 2,
     "pivot": {
       "x": 0.5,
       "y": 0.5,
