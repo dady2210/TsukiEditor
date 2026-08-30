@@ -216,9 +216,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this.btnPlantSeed = document.getElementById('btn-plant-seed');
         this.editSeedSelect = document.getElementById('edit-seed-select');
 
-        // P1 TownClock ticker
+        // P1 TownClock — hora civil del device (sin timeScale)
         this._clockTimer = null;
-        this._clockTickMs = 30000; // 30s real = 1h game (stub, sin Date.now para cielo)
+        this._lastClockSig = null;
         this.bindEvents();
         window.addEventListener("hashchange", () => this.handleRouting());
         this.handleRouting();
@@ -226,6 +226,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
     _formatClock(c) {
         const hh = String(c.hour).padStart(2, '0') + ':00';
+        // season no se pisa salvo dump confirme calendario real — solo display
         const seasonNames = ['Primavera','Verano','Otoño','Invierno'];
         const sName = seasonNames[c.season] || `S${c.season}`;
         return `Día ${c.day} · ${hh} · ${sName} M${c.month}`;
@@ -238,15 +239,39 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         el.textContent = this._formatClock(c);
     }
 
+    _syncClockFromDevice() {
+        if (!this.parser || !this.parser.getClock || !this.parser.setClock) return false;
+        // Solo para leer hora civil — no usar para pintar cielo
+        const d = new Date();
+        const hour = d.getHours();
+        const day = d.getDate();
+        const month = d.getMonth() + 1; // 1..12
+        const cur = this.parser.getClock();
+        const sig = `${hour}|${day}|${month}`;
+        if (sig === this._lastClockSig) return false;
+        // No tocar season salvo dump confirme calendario real
+        const hourChanged = cur.hour !== hour;
+        const dayChanged = cur.day !== day;
+        if (!hourChanged && !dayChanged && cur.month === month) {
+            this._lastClockSig = sig;
+            return false;
+        }
+        this.parser.setClock({ hour, day, month });
+        const next = this.parser.getClock();
+        if (hourChanged && this.parser._onHourChanged) this.parser._onHourChanged.forEach(fn => { try { fn(next); } catch(e) {} });
+        if (dayChanged && this.parser._onDayChanged) this.parser._onDayChanged.forEach(fn => { try { fn(next); } catch(e) {} });
+        this._lastClockSig = sig;
+        this._refreshClockHUD();
+        return true;
+    }
+
     _startClockTick() {
         this._stopClockTick();
         if (!this.parser || !this.parser.getClock) return;
+        this._syncClockFromDevice();
         this._refreshClockHUD();
-        this._clockTimer = setInterval(() => {
-            if (!this.parser || !this.parser.advanceHour) return;
-            this.parser.advanceHour(1);
-            this._refreshClockHUD();
-        }, this._clockTickMs);
+        // Watcher: si la hora real cambió, setClock + hooks + persist (via writeInt32)
+        this._clockTimer = setInterval(() => this._syncClockFromDevice(), 30000);
     }
 
     _stopClockTick() {

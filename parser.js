@@ -1716,6 +1716,8 @@ class SaveParser {
     }
 
     advanceHour(delta = 1) {
+        // Legacy helper — no usado por P1 corregido (hora civil del device).
+        // Se mantiene para compatibilidad; no toca season salvo delta implique rollover.
         const c = this.getClock();
         let hour = (c.hour + delta) | 0;
         let day = c.day | 0;
@@ -1726,8 +1728,6 @@ class SaveParser {
         while (hour >= 24) { hour -= 24; day += 1; dayChanged = true; hourChanged = true; }
         while (hour < 0) { hour += 24; day -= 1; if (day < 1) day = 1; dayChanged = true; hourChanged = true; }
         if (!hourChanged && delta !== 0) hourChanged = true;
-        // Stub rollover: day 1..30 → month++, month 1..12 → season 0..3
-        // Offset Unity real month length unknown — documented stub, no byte guessing.
         while (day > 30) { day -= 30; month += 1; dayChanged = true; }
         while (day < 1) { day += 30; month -= 1; if (month < 1) month = 1; dayChanged = true; }
         while (month > 12) { month -= 12; season = (season + 1) % 4; }
