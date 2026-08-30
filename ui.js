@@ -217,20 +217,16 @@ class GameUI {
         let name = "Objeto desconocido";
         let desc = "Sin descripción";
         
-        if (this.app && this.app.resolveItemName) {
-            name = this.app.resolveItemName(item_id, 'furn');
+        if (window.ITEMS_DB && window.ITEMS_DB[item_id]) {
+            const data = window.ITEMS_DB[item_id];
+            // Since we merged ITEMS_DB, we can prioritize furn_name_es
+            name = data.furn_name_es || data.furn_name || data.name_es || data.item_name || name;
+            
             // Remove bilingual slash if present
             const slash = name.indexOf('/');
             if (slash !== -1) name = name.substring(0, slash).trim();
-        }
-        
-        if (window.ITEMS_DB && window.ITEMS_DB[item_id]) {
-            const data = window.ITEMS_DB[item_id];
-            // Only use ITEMS_DB name if resolveItemName didn't give us a good one
-            if (name === 'Objeto desconocido' || name.startsWith('#')) {
-                name = data.name_es || data.item_name || name;
-            }
-            // Description can only come from ITEMS_DB for now (which has the collision bug)
+            
+            // For description, we unfortunately only have the generic desc_es, which might be the item's
             desc = data.desc_es || desc;
         }
         

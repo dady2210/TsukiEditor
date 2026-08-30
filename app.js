@@ -64,10 +64,11 @@ class App {
 
 // --- Nombres e Iconos ---
 window.resolveItemName = function(id, invTypeHint) {
-    if (!window.KNOWN_ITEMS) return `#${id} (Sin nombre)`;
-    const furn = window.KNOWN_ITEMS[`FURN_${id}`];
-    const item = window.KNOWN_ITEMS[`ITEM_${id}`];
-    
+    if (!window.ITEMS_DB || !window.ITEMS_DB[id]) return `#${id} (Sin nombre)`;
+    const data = window.ITEMS_DB[id];
+    const furn = data.furn_name || data.furn_name_es;
+    const item = data.item_name || data.item_name_es || data.name_es;
+
     if (invTypeHint === 'furn' || invTypeHint === 'placement') {
         if (furn) return furn;
         if (item) return item;
@@ -179,6 +180,10 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
         const canvas = document.getElementById('map-canvas');
         this.map = new IsometricMap(canvas, this);
+        if (window.GameUI) {
+            this.gameUI = new window.GameUI(this);
+            this.gameUI.init();
+        }
         window.addEventListener('resize', () => this.map.resize());
 
         this.navItems   = document.querySelectorAll('.nav-item');
