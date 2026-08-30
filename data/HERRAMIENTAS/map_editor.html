@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor de Layout / Mapa (Tsuki Odyssey) - Engine Pixel-Perfect</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e1e; color: #d4d4d4; display: flex; height: 100vh; overflow: hidden; user-select: none; }
+        #left-panel { width: 310px; background-color: #252526; border-right: 1px solid #3c3c3c; display: flex; flex-direction: column; }
+        #center-panel { flex: 1; position: relative; background-color: #181818; overflow: hidden; }
+        #right-panel { width: 300px; background-color: #252526; border-left: 1px solid #3c3c3c; display: flex; flex-direction: column; padding: 10px; box-sizing: border-box; overflow-y: auto; }
+        
+        .section-title { padding: 8px 10px; background-color: #333333; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid #3c3c3c; border-top: 1px solid #3c3c3c; margin: 0; display: flex; justify-content: space-between; align-items: center; }
+        .toolbar { padding: 6px; display: flex; flex-wrap: wrap; gap: 4px; background-color: #202020; }
+        .btn { background-color: #3a3d41; color: #fff; border: 1px solid #555; padding: 5px 8px; cursor: pointer; border-radius: 3px; font-size: 11px; flex: 1 1 45%; text-align: center; transition: 0.15s ease; }
+        .btn:hover { background-color: #4a4d51; }
+        .btn.active { background-color: #007acc; border-color: #0098ff; }
+        .btn-sm { padding: 3px 6px; font-size: 10px; flex: none; }
+        #tool-settings { padding: 8px; background-color: #2a2a2c; border-bottom: 1px solid #3c3c3c; font-size: 11px; }
+
+        .batch-bar { padding: 6px 10px; background-color: #1e1e1e; border-bottom: 1px solid #3c3c3c; display: flex; gap: 4px; align-items: center; font-size: 11px; }
+        .batch-bar select { flex: 1; background: #333; color: #fff; border: 1px solid #555; border-radius: 3px; padding: 2px 4px; font-size: 11px; }
+
+        .layer-list { flex: 1; overflow-y: auto; padding: 0; margin: 0; list-style: none; }
+        .folder-item { background-color: #2d2d30; border-bottom: 1px solid #383838; margin-bottom: 2px; }
+        .folder-header { padding: 5px 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background-color: #333337; font-weight: 600; font-size: 11px; }
+        .folder-header:hover { background-color: #3e3e42; }
+        .folder-items { list-style: none; padding: 0 0 0 12px; margin: 0; }
+        .layer-item { padding: 4px 8px; font-size: 11px; border-bottom: 1px solid #2e2e2e; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background-color: #252526; }
+        .layer-item:hover { background-color: #2f3235; }
+        .layer-item.selected { background-color: #094771; color: #fff; }
+        .layer-controls button { background: none; border: none; cursor: pointer; padding: 1px 3px; font-size: 11px; color: #aaa; }
+        .layer-controls button:hover { color: #fff; }
+
+        canvas { display: block; width: 100%; height: 100%; cursor: crosshair; }
+        .prop-group { margin-bottom: 8px; }
+        .prop-group label { display: block; font-size: 10px; color: #aaa; margin-bottom: 2px; }
+        .prop-group input, .prop-group select { width: 100%; padding: 4px; background-color: #3c3c3c; color: #fff; border: 1px solid #555; border-radius: 3px; box-sizing: border-box; font-size: 11px; }
+        .prop-row { display: flex; gap: 6px; }
+        .io-buttons { margin-top: auto; display: flex; flex-direction: column; gap: 5px; padding-top: 10px; }
+        .io-row { display: flex; gap: 4px; }
+        .badge { background: #555; border-radius: 3px; padding: 1px 4px; font-size: 10px; }
+        #hud-info { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.6); padding: 4px 8px; border-radius: 4px; font-size: 11px; color: #aaa; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <div id="left-panel">
+        <h3 class="section-title">Directorio / Proyecto</h3>
+        <div style="padding:6px; background:#202020; border-bottom:1px solid #3c3c3c;">
+            <input type="file" id="dir-input" webkitdirectory directory multiple style="display:none" onchange="handleDirectoryLoad(event)">
+            <button class="btn" style="width:100%; background:#0e639c; font-weight:bold;" onclick="document.getElementById('dir-input').click()">📁 Cargar Carpeta del Proyecto</button>
+            <div id="loaded-assets-count" style="font-size:10px; color:#aaa; margin-top:4px; text-align:center;">Ninguna carpeta cargada</div>
+        </div>
+
+        <h3 class="section-title">Herramientas</h3>
+        <div class="toolbar">
+            <button class="btn active" id="tool-select" onclick="setTool('select')">Seleccionar (V)</button>
+            <button class="btn" id="tool-move" onclick="setTool('move')">Mover (M)</button>
+            <button class="btn" id="tool-paint" onclick="setTool('paint')">Pincel (B)</button>
+            <button class="btn" id="tool-poly" onclick="setTool('poly')">Patrón (P)</button>
+            <button class="btn" id="tool-erase" onclick="setTool('erase')">Borrador (E)</button>
+            <button class="btn" id="tool-ruler" onclick="setTool('ruler')">Regla (R)</button>
+        </div>
+
+        <div id="tool-settings">
+            <div id="paint-options" style="display: none; margin-bottom: 6px;">
+                <div class="prop-row" style="margin-bottom: 4px;">
+                    <div style="flex:1">
+                        <label style="font-size:10px; color:#aaa;">Color</label>
+                        <input type="color" id="brush-color" value="#ff0055" style="height:22px; padding:1px; cursor:pointer;" onchange="saveBrushPrefs()">
+                    </div>
+                    <div style="flex:1">
+                        <label style="font-size:10px; color:#aaa;">Punta</label>
+                        <select id="brush-cap" onchange="saveBrushPrefs()">
+                            <option value="round">Redonda</option>
+                            <option value="square">Cuadrada</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="prop-group">
+                    <label style="font-size:10px; color:#aaa;">Grosor: <span id="brush-size-val">12</span>px</label>
+                    <input type="range" id="brush-size" min="1" max="100" value="12" oninput="document.getElementById('brush-size-val').innerText = this.value; saveBrushPrefs()">
+                </div>
+            </div>
+
+            <div id="poly-options" style="display: none; margin-bottom: 6px;">
+                <div class="prop-group">
+                    <input type="file" id="pattern-file-input" accept="image/*" style="display:none" onchange="handlePatternUpload(event)">
+                    <button class="btn" style="width:100%; margin-bottom: 3px;" onclick="document.getElementById('pattern-file-input').click()">Cargar Textura...</button>
+                    <input type="text" id="pattern-name" placeholder="Nombre sprite (WP_Wood01)" value="WP_Wood01" onchange="savePatternPrefs()">
+                </div>
+                <div class="prop-group">
+                    <label style="font-size:10px; color:#aaa;">Escala Mosaico: <span id="pattern-scale-val">1.0</span>x</label>
+                    <input type="range" id="pattern-scale" min="0.1" max="5.0" step="0.1" value="1.0" oninput="document.getElementById('pattern-scale-val').innerText = this.value; savePatternPrefs()">
+                </div>
+                <div class="prop-row">
+                    <button class="btn" style="background:#dc3545;" onclick="resetCurrentPoly()">Reset (Esc)</button>
+                    <button class="btn" style="background:#28a745;" onclick="finishPoly()">Cerrar Polígono</button>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:4px;">
+                <button class="btn btn-sm" style="background-color: #28a745; flex:1;" onclick="addElement()">+ Sprite</button>
+                <button class="btn btn-sm" style="background-color: #d39e00; flex:1;" onclick="createFolder()">+ Carpeta</button>
+            </div>
+        </div>
+
+        <h3 class="section-title">
+            <span>Organizador de Capas</span>
+            <span class="badge" id="layer-count">0</span>
+        </h3>
+
+        <div class="batch-bar">
+            <span style="font-size:10px; color:#aaa;">Mover <span id="selected-count">(0)</span> a:</span>
+            <select id="target-folder-select">
+                <option value="">(Raíz / Sin carpeta)</option>
+            </select>
+            <button class="btn btn-sm" style="background:#007acc;" onclick="moveSelectedToFolder()">Mover</button>
+        </div>
+
+        <ul class="layer-list" id="layer-list"></ul>
+    </div>
+
+    <div id="center-panel">
+        <canvas id="render-canvas"></canvas>
+        <div id="hud-info">Zoom: 100% | Pos: 0.00, 0.00</div>
+    </div>
+
+    <div id="right-panel">
+        <h3 class="section-title">Propiedades</h3>
+        <div id="properties-panel" style="display: none;">
+            <div class="prop-group">
+                <label>GameObject (go)</label>
+                <input type="text" id="prop-go" onchange="updateProp('go', this.value)">
+            </div>
+            <div class="prop-group">
+                <label>Sprite / Textura (sp)</label>
+                <input type="text" id="prop-sp" onchange="updateProp('sp', this.value)">
+            </div>
+            <div class="prop-row">
+                <div class="prop-group" style="flex:1">
+                    <label>Posición X</label>
+                    <input type="number" step="0.05" id="prop-x" onchange="updateProp('x', parseFloat(this.value))">
+                </div>
+                <div class="prop-group" style="flex:1">
+                    <label>Posición Y</label>
+                    <input type="number" step="0.05" id="prop-y" onchange="updateProp('y', parseFloat(this.value))">
+                </div>
+            </div>
+            <div class="prop-row">
+                <div class="prop-group" style="flex:1">
+                    <label>Escala X (sx)</label>
+                    <input type="number" step="0.05" id="prop-sx" onchange="updateProp('sx', parseFloat(this.value))">
+                </div>
+                <div class="prop-group" style="flex:1">
+                    <label>Escala Y (sy)</label>
+                    <input type="number" step="0.05" id="prop-sy" onchange="updateProp('sy', parseFloat(this.value))">
+                </div>
+            </div>
+            <div class="prop-group">
+                <label>Ángulo (°)</label>
+                <input type="number" step="1" id="prop-angle" onchange="updateProp('angle', parseFloat(this.value))">
+            </div>
+            <div class="prop-row">
+                <div class="prop-group" style="flex:1">
+                    <label>Sorting Layer (sl)</label>
+                    <input type="number" step="1" id="prop-sl" onchange="updateProp('sl', parseInt(this.value))">
+                </div>
+                <div class="prop-group" style="flex:1">
+                    <label>Order (o)</label>
+                    <input type="number" step="1" id="prop-o" onchange="updateProp('o', parseInt(this.value))">
+                </div>
+            </div>
+            <div class="prop-group">
+                <label>Carpeta asignada</label>
+                <select id="prop-folder" onchange="updateProp('folderId', this.value || null)">
+                    <option value="">(Ninguna)</option>
+                </select>
+            </div>
+            
+            <div style="display:flex; gap:4px; margin-top:8px;">
+                <button class="btn btn-sm" style="flex:1;" onclick="updateProp('x', 0); updateProp('y', 0);">Centrar (0,0)</button>
+                <button class="btn btn-sm" style="flex:1;" onclick="updateProp('angle', 0);">Rotación 0°</button>
+            </div>
+
+            <div id="pattern-extra-props" style="display: none; margin-top:12px; border-top:1px solid #444; padding-top:8px;">
+                <strong style="font-size:11px; color:#00e5ff;">Propiedades de Patrón</strong>
+                <div class="prop-group" style="margin-top:8px;">
+                    <label>Inclinación Isométrica (Shear)</label>
+                    <select id="prop-pat-shear" onchange="updateProp('shear', parseFloat(this.value))">
+                        <option value="0">Plano / Piso (0)</option>
+                        <option value="0.5">Pared Izq / WallpaperL (0.5)</option>
+                        <option value="-0.5">Pared Der / WallpaperR (-0.5)</option>
+                    </select>
+                </div>
+                <div class="prop-group">
+                    <label>Escala del Patrón</label>
+                    <input type="number" step="0.1" id="prop-pat-scale" onchange="updateProp('pattern_scale', parseFloat(this.value))">
+                </div>
+            </div>
+
+            <div id="brush-extra-props" style="display: none; margin-top:12px; border-top:1px solid #444; padding-top:8px;">
+                <strong style="font-size:11px; color:#ff0055;">Propiedades de Trazo</strong>
+                <div class="prop-row" style="margin-top:8px;">
+                    <div class="prop-group" style="flex:1">
+                        <label>Color</label>
+                        <input type="color" id="prop-stroke-color" onchange="updateProp('color', this.value)">
+                    </div>
+                    <div class="prop-group" style="flex:1">
+                        <label>Grosor (px)</label>
+                        <input type="number" id="prop-stroke-size" min="1" onchange="updateProp('stroke_size', parseFloat(this.value))">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="no-selection" style="color:#777; font-size:11px; text-align:center; padding: 25px 0;">
+            Ningún elemento seleccionado
+        </div>
+
+        <div class="io-buttons">
+            <div class="io-row">
+                <button class="btn btn-sm" onclick="undo()" title="Ctrl+Z">↩ Deshacer</button>
+                <button class="btn btn-sm" onclick="redo()" title="Ctrl+Y">↪ Rehacer</button>
+            </div>
+            <div class="io-row">
+                <button class="btn btn-sm" onclick="document.getElementById('file-input').click()">Cargar JSON</button>
+                <input type="file" id="file-input" style="display:none" accept=".json" onchange="loadJSON(event)">
+                <button class="btn btn-sm" onclick="exportJSON()">Exportar JSON</button>
+            </div>
+            <div class="io-row" style="margin-top: 4px;">
+                <button class="btn" style="background-color: #6f42c1; border-color: #6f42c1; font-weight:bold; padding:8px; flex:1;" onclick="exportPNG(false)" title="Exporta todos los elementos y ajusta el tamaño del lienzo a ellos.">Exportar Todo</button>
+                <button class="btn" style="background-color: #e83e8c; border-color: #e83e8c; font-weight:bold; padding:8px; flex:1;" onclick="exportPNG(true)" title="Exporta solo lo que se ve actualmente en la cámara, ignorando todo lo demás.">Exportar Vista (Recorte)</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- ESTADO GLOBAL & ASSETS ---
+        let sceneData = [];
+        let folders = [];
+        let selectedIndices = new Set();
+        let primarySelectedIndex = -1;
+        let currentTool = 'select';
+
+        const historyStack = [];
+        let historyIndex = -1;
+
+        const assetBlobs = {};
+        const imageCache = {};
+
+        async function handleDirectoryLoad(event) {
+            const files = Array.from(event.target.files);
+            if (!files.length) return;
+            
+            let loadedImages = 0;
+            let jsonFiles = [];
+
+            for (let file of files) {
+                if (file.type.startsWith('image/')) {
+                    const cleanName = file.name.replace(/\.[^/.]+$/, "");
+                    const url = URL.createObjectURL(file);
+                    
+                    assetBlobs[cleanName] = url;
+                    assetBlobs[file.name] = url;
+                    
+                    if (file.webkitRelativePath) {
+                        const pathWithoutExt = file.webkitRelativePath.replace(/\.[^/.]+$/, "");
+                        assetBlobs[file.webkitRelativePath] = url;
+                        assetBlobs[pathWithoutExt] = url;
+                    }
+                    
+                    const img = new Image();
+                    img.src = url;
+                    imageCache[cleanName] = img;
+                    imageCache[file.name] = img;
+                    loadedImages++;
+                } else if (file.name.endsWith('.json')) {
+                    jsonFiles.push(file);
+                }
+            }
+
+            if (jsonFiles.length > 0) {
+                let targetJson = jsonFiles.find(f => f.name.toLowerCase().includes('map') || f.name.toLowerCase().includes('layout')) || jsonFiles[0];
+                try {
+                    const jsonText = await targetJson.text();
+                    const parsed = JSON.parse(jsonText);
+                    
+                    if (Array.isArray(parsed)) {
+                        sceneData = parsed;
+                        folders = [];
+                    } else {
+                        sceneData = parsed.sceneData || [];
+                        folders = parsed.folders || [];
+                    }
+                    
+                    selectedIndices.clear();
+                    primarySelectedIndex = -1;
+                    recordState();
+                    updateFolderDropdowns();
+                    updateLayerList();
+                    updatePropertiesPanel();
+                    fitCameraToScene();
+                    
+                    document.getElementById('loaded-assets-count').innerText = `JSON (${targetJson.name}) + ${loadedImages} texturas`;
+                } catch (err) {
+                    alert("Error al parsear el JSON de la carpeta: " + err.message);
+                }
+            } else {
+                document.getElementById('loaded-assets-count').innerText = `${loadedImages} texturas cargadas`;
+            }
+
+            draw();
+        }
+
+        function fitCameraToScene() {
+            if (sceneData.length === 0) return;
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            sceneData.forEach(obj => {
+                minX = Math.min(minX, obj.x || 0);
+                maxX = Math.max(maxX, obj.x || 0);
+                minY = Math.min(minY, obj.y || 0);
+                maxY = Math.max(maxY, obj.y || 0);
+            });
+            camera.x = -((minX + maxX) / 2) * camera.zoom;
+            camera.y = ((minY + maxY) / 2) * camera.zoom;
+            draw();
+        }
+
+        function getSpriteImage(sp) {
+            if (!sp) return null;
+            if (imageCache[sp]) return imageCache[sp];
+            if (assetBlobs[sp]) {
+                const img = new Image();
+                img.src = assetBlobs[sp];
+                img.onload = () => draw();
+                imageCache[sp] = img;
+                return img;
+            }
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = 'Exportado_level2/' + sp + '.png';
+            img.onload = () => draw();
+            imageCache[sp] = img;
+            return img;
+        }
+        
+        function getWallpaperImage(sp) {
+            if (!sp) return null;
+            const key = 'WP_' + sp;
+            if (imageCache[sp]) return imageCache[sp];
+            if (imageCache[key]) return imageCache[key];
+
+            if (assetBlobs[sp]) return getSpriteImage(sp);
+            if (assetBlobs[key]) return getSpriteImage(key);
+
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = 'Exportado_Revestimientos/' + sp + '.png';
+            img.onload = () => draw();
+            img.onerror = () => { img.src = 'Exportado_level2/' + sp + '.png'; };
+            imageCache[key] = img;
+            return img;
+        }
+
+        function recordState() {
+            if (historyIndex < historyStack.length - 1) historyStack.splice(historyIndex + 1);
+            historyStack.push(JSON.stringify({ sceneData, folders }));
+            if (historyStack.length > 30) historyStack.shift();
+            else historyIndex++;
+        }
+
+        function undo() {
+            if (historyIndex > 0) {
+                historyIndex--;
+                const state = JSON.parse(historyStack[historyIndex]);
+                sceneData = state.sceneData;
+                folders = state.folders || [];
+                selectedIndices.clear();
+                primarySelectedIndex = -1;
+                updateLayerList();
+                updatePropertiesPanel();
+                draw();
+            }
+        }
+
+        function redo() {
+            if (historyIndex < historyStack.length - 1) {
+                historyIndex++;
+                const state = JSON.parse(historyStack[historyIndex]);
+                sceneData = state.sceneData;
+                folders = state.folders || [];
+                selectedIndices.clear();
+                primarySelectedIndex = -1;
+                updateLayerList();
+                updatePropertiesPanel();
+                draw();
+            }
+        }
+
+        function getObjectHash(obj) {
+            return `${obj.sp}_${obj.sx}_${obj.sy}_${obj.angle}_${obj.draw_mode}_${obj.sz_x}_${obj.sz_y}_${obj.px}_${obj.py}_${obj.ox}_${obj.oy}_${obj.rw}_${obj.rh}_${obj.shear}_${obj.pattern_scale}_${JSON.stringify(obj.poly)}`;
+        }
+
+        // --- NUCLEO MATEMATICO CLONADO DE PILLOW ---
+        function generateObjectRaster(d) {
+            const isWallpaper = (d.draw_mode > 0 && d.sz_x > 0);
+            const sourceImg = isWallpaper ? getWallpaperImage(d.sp) : getSpriteImage(d.sp);
+            
+            if (!sourceImg || !sourceImg.complete || sourceImg.naturalWidth === 0) {
+                return null;
+            }
+
+            let imgW = sourceImg.naturalWidth;
+            let imgH = sourceImg.naturalHeight;
+
+            const sx = d.sx !== undefined ? d.sx : 1.0;
+            const sy = d.sy !== undefined ? d.sy : 1.0;
+            const PPU = d.ppu || 150.0;
+            let ox = d.ox || 0.0;
+            let oy = d.oy || 0.0;
+            const px = d.px !== undefined ? d.px : 0.5;
+            const py = d.py !== undefined ? d.py : 0.5;
+            let rw = d.rw || imgW;
+            let rh = d.rh || imgH;
+            
+            const drawMode = d.draw_mode || 0;
+            const szX = d.sz_x || 0.0;
+            const szY = d.sz_y || 0.0;
+
+            let processedCanvas = document.createElement('canvas');
+            let processedCtx = processedCanvas.getContext('2d');
+
+            if (isWallpaper) {
+                const targetWPx = Math.trunc(szX * PPU);
+                const targetHPx = Math.trunc(szY * PPU);
+                
+                const userScale = d.pattern_scale || 1.0;
+                const tileScale = 8.0 / userScale;
+                
+                const newImgW = Math.max(1, Math.trunc(imgW / tileScale));
+                const newImgH = Math.max(1, Math.trunc(imgH / tileScale));
+
+                const bufferW = targetWPx * 3;
+                const bufferH = targetHPx * 3;
+
+                const bufCanvas = document.createElement('canvas');
+                bufCanvas.width = bufferW;
+                bufCanvas.height = bufferH;
+                const bufCtx = bufCanvas.getContext('2d');
+
+                for (let tx = 0; tx < bufferW; tx += newImgW) {
+                    for (let ty = 0; ty < bufferH; ty += newImgH) {
+                        bufCtx.drawImage(sourceImg, tx, bufferH - ty - newImgH, newImgW, newImgH);
+                    }
+                }
+
+                let shearSlope = d.shear !== undefined ? d.shear : (d.go && d.go.includes('Wallpaper') ? (d.go.includes('R') ? -0.5 : 0.5) : 0);
+
+                const shearedCanvas = document.createElement('canvas');
+                shearedCanvas.width = bufferW;
+                shearedCanvas.height = bufferH;
+                const shearedCtx = shearedCanvas.getContext('2d');
+
+                if (shearSlope !== 0) {
+                    shearedCtx.transform(1, shearSlope, 0, 1, 0, -(bufferW / 2) * shearSlope);
+                }
+                shearedCtx.drawImage(bufCanvas, 0, 0);
+
+                const left = Math.trunc((bufferW - targetWPx) / 2);
+                const top = Math.trunc((bufferH - targetHPx) / 2);
+
+                processedCanvas.width = targetWPx;
+                processedCanvas.height = targetHPx;
+                processedCtx.drawImage(shearedCanvas, left, top, targetWPx, targetHPx, 0, 0, targetWPx, targetHPx);
+
+                if (d.poly && d.poly.length > 0) {
+                    processedCtx.globalCompositeOperation = 'destination-in';
+                    processedCtx.beginPath();
+                    d.poly.forEach(path => {
+                        path.forEach((pt, pIdx) => {
+                            const pxPixel = (pt.x + px * szX) * PPU;
+                            const pyPixel = targetHPx - (pt.y + py * szY) * PPU;
+                            if (pIdx === 0) processedCtx.moveTo(pxPixel, pyPixel);
+                            else processedCtx.lineTo(pxPixel, pyPixel);
+                        });
+                    });
+                    processedCtx.closePath();
+                    processedCtx.fill();
+                    processedCtx.globalCompositeOperation = 'source-over';
+                }
+
+                imgW = targetWPx;
+                imgH = targetHPx;
+                rw = targetWPx;
+                rh = targetHPx;
+                ox = 0;
+                oy = 0;
+            } else {
+                const newW = Math.max(1, Math.trunc(imgW * Math.abs(sx)));
+                const newH = Math.max(1, Math.trunc(imgH * Math.abs(sy)));
+
+                processedCanvas.width = newW;
+                processedCanvas.height = newH;
+
+                processedCtx.save();
+                if (sx < 0) { processedCtx.translate(newW, 0); processedCtx.scale(-1, 1); }
+                if (sy < 0) { processedCtx.translate(0, newH); processedCtx.scale(1, -1); }
+                processedCtx.drawImage(sourceImg, 0, 0, newW, newH);
+                processedCtx.restore();
+            }
+
+            const blX = ox - px * rw, blY = oy - py * rh;
+            const brX = ox + imgW - px * rw, brY = oy - py * rh;
+            const tlX = ox - px * rw, tlY = oy + imgH - py * rh;
+            const trX = ox + imgW - px * rw, trY = oy + imgH - py * rh;
+
+            const corners = [
+                { x: blX * sx / PPU, y: blY * sy / PPU },
+                { x: brX * sx / PPU, y: brY * sy / PPU },
+                { x: tlX * sx / PPU, y: tlY * sy / PPU },
+                { x: trX * sx / PPU, y: trY * sy / PPU }
+            ];
+
+            const angleDeg = d.angle || 0;
+            const angleRad = angleDeg * Math.PI / 180.0;
+            const cosA = Math.cos(angleRad);
+            const sinA = Math.sin(angleRad);
+
+            const rotCorners = corners.map(c => ({
+                x: c.x * cosA - c.y * sinA,
+                y: c.x * sinA + c.y * cosA
+            }));
+
+            const localMinX = Math.min(...rotCorners.map(c => c.x));
+            const localMaxY = Math.max(...rotCorners.map(c => c.y));
+
+            let finalJobCanvas = processedCanvas;
+
+            if (Math.abs(angleDeg) > 1) {
+                const absCos = Math.abs(cosA);
+                const absSin = Math.abs(sinA);
+                const rotW = Math.trunc(processedCanvas.width * absCos + processedCanvas.height * absSin);
+                const rotH = Math.trunc(processedCanvas.width * absSin + processedCanvas.height * absCos);
+
+                const rotCanvas = document.createElement('canvas');
+                rotCanvas.width = rotW;
+                rotCanvas.height = rotH;
+                const rotCtx = rotCanvas.getContext('2d');
+
+                rotCtx.translate(rotW / 2, rotH / 2);
+                rotCtx.rotate(-angleRad); 
+                rotCtx.drawImage(processedCanvas, -processedCanvas.width / 2, -processedCanvas.height / 2);
+
+                finalJobCanvas = rotCanvas;
+            }
+            
+            return { canvas: finalJobCanvas, localMinX: localMinX, localMaxY: localMaxY, PPU: PPU };
+        }
+
+        // --- GESTIÓN DE CARPETAS Y HERRAMIENTAS ---
+        function createFolder() {
+            const folderName = prompt("Nombre de la carpeta:", "Grupo " + (folders.length + 1));
+            if (!folderName) return;
+            const folder = { id: 'folder_' + Date.now(), name: folderName, visible: true, locked: false, collapsed: false };
+            folders.push(folder);
+            if (selectedIndices.size > 0) {
+                selectedIndices.forEach(idx => { sceneData[idx].folderId = folder.id; });
+            }
+            recordState(); updateLayerList(); updateFolderDropdowns();
+        }
+
+        function toggleFolderVisibility(fId) { const f = folders.find(x => x.id === fId); if (f) { f.visible = !f.visible; draw(); updateLayerList(); } }
+        function toggleFolderLock(fId) { const f = folders.find(x => x.id === fId); if (f) { f.locked = !f.locked; updateLayerList(); } }
+        function toggleFolderCollapse(fId) { const f = folders.find(x => x.id === fId); if (f) { f.collapsed = !f.collapsed; updateLayerList(); } }
+        function deleteFolder(fId) {
+            if (confirm("¿Eliminar carpeta? Los elementos volverán a la raíz.")) {
+                sceneData.forEach(obj => { if (obj.folderId === fId) obj.folderId = null; });
+                folders = folders.filter(x => x.id !== fId);
+                recordState(); updateLayerList(); updateFolderDropdowns();
+            }
+        }
+        function moveSelectedToFolder() {
+            const fId = document.getElementById('target-folder-select').value || null;
+            if (selectedIndices.size === 0) return;
+            selectedIndices.forEach(idx => { sceneData[idx].folderId = fId; });
+            recordState(); updateLayerList(); updatePropertiesPanel();
+        }
+        function updateFolderDropdowns() {
+            const selectTarget = document.getElementById('target-folder-select');
+            const selectProp = document.getElementById('prop-folder');
+            let html = '<option value="">(Raíz / Sin carpeta)</option>';
+            folders.forEach(f => { html += `<option value="${f.id}">📁 ${f.name}</option>`; });
+            selectTarget.innerHTML = html; selectProp.innerHTML = html;
+        }
+
+        let brushPrefs = { color: '#ff0055', size: 12, cap: 'round' };
+        let patternPrefs = { sp: 'WP_Wood01', scale: 1.0 };
+        function saveBrushPrefs() { brushPrefs.color = document.getElementById('brush-color').value; brushPrefs.size = parseFloat(document.getElementById('brush-size').value); brushPrefs.cap = document.getElementById('brush-cap').value; }
+        function savePatternPrefs() { patternPrefs.sp = document.getElementById('pattern-name').value; patternPrefs.scale = parseFloat(document.getElementById('pattern-scale').value); }
+        function handlePatternUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const img = new Image();
+                img.onload = function() {
+                    const customKey = 'CUSTOM_' + file.name.replace(/\.[^/.]+$/, "");
+                    imageCache[customKey] = img; patternPrefs.sp = customKey;
+                    document.getElementById('pattern-name').value = customKey; draw();
+                };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        let camera = { x: 0, y: 0, zoom: 40 };
+        let isPanning = false; let panStartX = 0, panStartY = 0;
+        let isDrawingStroke = false; let currentStrokePoints = []; let currentPolyPoints = [];
+        let rulerStart = null; let rulerEnd = null;
+
+        const canvas = document.getElementById('render-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() { canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight; draw(); }
+        window.addEventListener('resize', resizeCanvas);
+
+        function setTool(tool) {
+            currentTool = tool;
+            document.querySelectorAll('.toolbar .btn').forEach(b => b.classList.remove('active'));
+            const btn = document.getElementById('tool-' + tool);
+            if (btn) btn.classList.add('active');
+            document.getElementById('paint-options').style.display = (tool === 'paint') ? 'block' : 'none';
+            document.getElementById('poly-options').style.display = (tool === 'poly') ? 'block' : 'none';
+            if (tool !== 'poly') currentPolyPoints = [];
+            rulerStart = rulerEnd = null; isDrawingStroke = false; draw();
+        }
+
+        function getMouseWorldCoords(e) {
+            const rect = canvas.getBoundingClientRect();
+            const screenCenterX = canvas.width / 2; const screenCenterY = canvas.height / 2;
+            const worldX = (e.clientX - rect.left - screenCenterX - camera.x) / camera.zoom;
+            const worldY = -((e.clientY - rect.top) - screenCenterY - camera.y) / camera.zoom; 
+            return { x: worldX, y: worldY };
+        }
+
+        function isObjectEffectivelyVisible(obj) {
+            if (obj.visible === false) return false;
+            if (obj.folderId) { const f = folders.find(x => x.id === obj.folderId); if (f && f.visible === false) return false; }
+            return true;
+        }
+
+        function isObjectEffectivelyLocked(obj) {
+            if (obj.locked) return true;
+            if (obj.folderId) { const f = folders.find(x => x.id === obj.folderId); if (f && f.locked) return true; }
+            return false;
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            if (e.button === 1 || (e.button === 0 && e.altKey)) {
+                isPanning = true; panStartX = e.clientX - camera.x; panStartY = e.clientY - camera.y; return;
+            }
+            const world = getMouseWorldCoords(e);
+
+            if (currentTool === 'select' || currentTool === 'move') {
+                let hitIndex = -1; let sortedIndices = getSortedIndices();
+                for (let i = sortedIndices.length - 1; i >= 0; i--) {
+                    const obj = sceneData[sortedIndices[i]];
+                    if (!isObjectEffectivelyVisible(obj) || isObjectEffectivelyLocked(obj)) continue;
+                    if (hitTest(obj, world.x, world.y)) { hitIndex = sortedIndices[i]; break; }
+                }
+                if (e.ctrlKey) toggleSelectObject(hitIndex); else selectSingleObject(hitIndex);
+            }
+
+            if (currentTool === 'erase' && e.button === 0) {
+                let sortedIndices = getSortedIndices();
+                for (let i = sortedIndices.length - 1; i >= 0; i--) {
+                    const obj = sceneData[sortedIndices[i]];
+                    if (!isObjectEffectivelyVisible(obj) || isObjectEffectivelyLocked(obj)) continue;
+                    if (hitTest(obj, world.x, world.y)) {
+                        sceneData.splice(sortedIndices[i], 1); recordState(); updateLayerList(); updatePropertiesPanel(); draw(); break;
+                    }
+                }
+            }
+
+            if (currentTool === 'ruler' && e.button === 0) { rulerStart = world; rulerEnd = world; }
+            if (currentTool === 'paint' && e.button === 0) { isDrawingStroke = true; currentStrokePoints = [{ x: world.x, y: world.y }]; }
+            if (currentTool === 'poly' && e.button === 0) { currentPolyPoints.push({ x: world.x, y: world.y }); draw(); }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const world = getMouseWorldCoords(e);
+            document.getElementById('hud-info').innerText = `Zoom: ${Math.round(camera.zoom / 40 * 100)}% | X: ${world.x.toFixed(2)}, Y: ${world.y.toFixed(2)}`;
+
+            if (isPanning) { camera.x = e.clientX - panStartX; camera.y = e.clientY - panStartY; draw(); return; }
+            if (currentTool === 'ruler' && rulerStart) { rulerEnd = world; draw(); }
+
+            if (currentTool === 'move' && e.buttons === 1 && primarySelectedIndex !== -1) {
+                const primaryObj = sceneData[primarySelectedIndex];
+                if (!isObjectEffectivelyLocked(primaryObj)) {
+                    const dx = world.x - primaryObj.x; const dy = world.y - primaryObj.y;
+                    selectedIndices.forEach(idx => {
+                        const o = sceneData[idx];
+                        if (!isObjectEffectivelyLocked(o)) {
+                            o.x += dx; o.y += dy;
+                        }
+                    });
+                    updatePropertiesPanel(); draw();
+                }
+            }
+
+            if (currentTool === 'paint' && isDrawingStroke) { currentStrokePoints.push({ x: world.x, y: world.y }); draw(); }
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            if (isPanning) { isPanning = false; return; }
+            if (currentTool === 'move' && selectedIndices.size > 0) { recordState(); }
+            if (currentTool === 'paint' && isDrawingStroke) {
+                isDrawingStroke = false;
+                if (currentStrokePoints.length > 1) {
+                    const newStroke = {
+                        go: "Trazo_" + (sceneData.length + 1), sp: "Stroke", draw_mode: 3,
+                        x: 0, y: 0, angle: 0, sx: 1, sy: 1, o: sceneData.length, sl: 1,
+                        color: brushPrefs.color, stroke_size: brushPrefs.size, cap: brushPrefs.cap, points: [...currentStrokePoints], folderId: null
+                    };
+                    sceneData.push(newStroke); recordState(); updateLayerList(); selectSingleObject(sceneData.length - 1);
+                }
+                currentStrokePoints = []; draw();
+            }
+        });
+
+        canvas.addEventListener('contextmenu', (e) => { e.preventDefault(); if (currentTool === 'poly') finishPoly(); });
+
+        // --- SOLUCIÓN DEL BOUNDING BOX DEL POLÍGONO ---
+        function finishPoly() {
+            if (currentPolyPoints.length >= 3) {
+                
+                let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+                currentPolyPoints.forEach(p => {
+                    minX = Math.min(minX, p.x); maxX = Math.max(maxX, p.x);
+                    minY = Math.min(minY, p.y); maxY = Math.max(maxY, p.y);
+                });
+
+                const padding = 0.05; 
+                minX -= padding; maxX += padding;
+                minY -= padding; maxY += padding;
+
+                const szX = Math.max(0.1, maxX - minX);
+                const szY = Math.max(0.1, maxY - minY);
+                const centerX = minX + szX / 2;
+                const centerY = minY + szY / 2;
+
+                const localPoly = currentPolyPoints.map(p => ({
+                    x: p.x - centerX,
+                    y: p.y - centerY
+                }));
+
+                const newObj = {
+                    go: "Patron_" + (sceneData.length + 1), sp: patternPrefs.sp || "WP_Wood01", draw_mode: 2,
+                    x: centerX, y: centerY, angle: 0, sx: 1, sy: 1, o: 0, sl: 0, px: 0.5, py: 0.5, rw: 512, rh: 512, ppu: 150, 
+                    sz_x: szX, sz_y: szY,
+                    shear: 0, 
+                    pattern_scale: patternPrefs.scale || 1.0, 
+                    poly: [ localPoly ], 
+                    folderId: null
+                };
+                
+                sceneData.push(newObj); 
+                recordState(); 
+                currentPolyPoints = []; 
+                updateLayerList(); 
+                selectSingleObject(sceneData.length - 1); 
+                setTool('select');
+            }
+        }
+
+        function resetCurrentPoly() { currentPolyPoints = []; draw(); }
+        canvas.addEventListener('wheel', (e) => { e.preventDefault(); const factor = e.deltaY > 0 ? 0.9 : 1.1; camera.zoom = Math.max(5, Math.min(300, camera.zoom * factor)); draw(); });
+        window.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+            if (e.key === 'v' || e.key === 'V') setTool('select');
+            if (e.key === 'm' || e.key === 'M') setTool('move');
+            if (e.key === 'b' || e.key === 'B') setTool('paint');
+            if (e.key === 'p' || e.key === 'P') setTool('poly');
+            if (e.key === 'e' || e.key === 'E') setTool('erase');
+            if (e.key === 'r' || e.key === 'R') setTool('ruler');
+            if (e.key === 'Escape') resetCurrentPoly();
+            if (e.key === 'Delete' || e.key === 'Backspace') deleteSelected();
+            if (e.ctrlKey && (e.key === 'z' || e.key === 'Z')) { e.preventDefault(); undo(); }
+            if (e.ctrlKey && (e.key === 'y' || e.key === 'Y' || (e.shiftKey && e.key === 'Z'))) { e.preventDefault(); redo(); }
+            if (e.ctrlKey && (e.key === 'd' || e.key === 'D')) { e.preventDefault(); duplicateSelected(); }
+        });
+
+        function addElement() {
+            const newObj = { sp: "NuevoSprite", go: "Objeto_" + (sceneData.length + 1), x: -camera.x / camera.zoom, y: camera.y / camera.zoom, angle: 0, sx: 1, sy: 1, o: sceneData.length, sl: 0, draw_mode: 0, px: 0.5, py: 0.5, rw: 100, rh: 100, ppu: 150, ox: 0, oy: 0, sz_x: 1, sz_y: 1, poly: [], folderId: null };
+            sceneData.push(newObj); recordState(); updateLayerList(); selectSingleObject(sceneData.length - 1); setTool('move');
+        }
+
+        function duplicateSelected() {
+            if (selectedIndices.size === 0) return;
+            const newIndices = [];
+            selectedIndices.forEach(idx => {
+                const clone = JSON.parse(JSON.stringify(sceneData[idx])); clone.go += "_copia"; clone.x += 0.5; clone.y -= 0.5; clone.o = sceneData.length;
+                sceneData.push(clone); newIndices.push(sceneData.length - 1);
+            });
+            recordState(); selectedIndices.clear(); newIndices.forEach(i => selectedIndices.add(i)); primarySelectedIndex = newIndices[0]; updateLayerList(); updatePropertiesPanel(); draw();
+        }
+
+        function deleteSelected() {
+            if (selectedIndices.size === 0) return;
+            const sorted = Array.from(selectedIndices).sort((a, b) => b - a);
+            sorted.forEach(idx => sceneData.splice(idx, 1));
+            selectedIndices.clear(); primarySelectedIndex = -1; recordState(); updateLayerList(); updatePropertiesPanel(); draw();
+        }
+
+        function getSortedIndices() {
+            return sceneData.map((obj, i) => ({obj, i})).sort((a, b) => {
+                const slA = a.obj.sl || 0; const slB = b.obj.sl || 0;
+                if (slA !== slB) return slA - slB;
+                return (a.obj.o || 0) - (b.obj.o || 0);
+            }).map(x => x.i);
+        }
+
+        function hitTest(obj, wx, wy) {
+            if (obj.draw_mode === 3 && obj.points) {
+                for (let pt of obj.points) { if (Math.hypot(pt.x - wx, pt.y - wy) < (obj.stroke_size || 12) / camera.zoom) return true; }
+                return false;
+            }
+            const raster = obj._rasterCache;
+            if (raster) {
+                const w = raster.canvas.width / raster.PPU;
+                const h = raster.canvas.height / raster.PPU;
+                const minX = obj.x + raster.localMinX;
+                const maxY = obj.y + raster.localMaxY;
+                return (wx >= minX && wx <= minX + w && wy <= maxY && wy >= maxY - h);
+            }
+            return false;
+        }
+
+        // --- RENDERIZADO DEL VISOR ---
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(canvas.width / 2 + camera.x, canvas.height / 2 + camera.y);
+            
+            ctx.strokeStyle = '#2d2d2d'; ctx.lineWidth = 1;
+            const g = camera.zoom; const extX = Math.ceil(canvas.width / g / 2) + 5; const extY = Math.ceil(canvas.height / g / 2) + 5;
+            ctx.beginPath();
+            for(let i = -extX; i <= extX; i++) { ctx.moveTo(i * g, -extY * g); ctx.lineTo(i * g, extY * g); }
+            for(let j = -extY; j <= extY; j++) { ctx.moveTo(-extX * g, j * g); ctx.lineTo(extX * g, j * g); }
+            ctx.stroke();
+
+            ctx.strokeStyle = '#444'; ctx.lineWidth = 1.5; ctx.beginPath();
+            ctx.moveTo(0, -extY * g); ctx.lineTo(0, extY * g); ctx.moveTo(-extX * g, 0); ctx.lineTo(extX * g, 0);
+            ctx.stroke();
+
+            const sortedIndices = getSortedIndices();
+            for (let i of sortedIndices) {
+                const obj = sceneData[i];
+                if (!isObjectEffectivelyVisible(obj) || obj.sp === 'Square') continue;
+                drawObject(obj, selectedIndices.has(i));
+            }
+
+            if (currentTool === 'paint' && isDrawingStroke && currentStrokePoints.length > 1) {
+                ctx.strokeStyle = brushPrefs.color; ctx.lineWidth = brushPrefs.size; ctx.lineCap = brushPrefs.cap; ctx.lineJoin = 'round';
+                ctx.beginPath();
+                currentStrokePoints.forEach((p, index) => {
+                    const sx = p.x * camera.zoom; const sy = -p.y * camera.zoom;
+                    if (index === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy);
+                });
+                ctx.stroke();
+            }
+
+            if (currentTool === 'poly' && currentPolyPoints.length > 0) {
+                ctx.strokeStyle = '#00ffcc'; ctx.fillStyle = 'rgba(0, 255, 204, 0.2)'; ctx.lineWidth = 2;
+                ctx.beginPath();
+                currentPolyPoints.forEach((p, index) => {
+                    const sx = p.x * camera.zoom; const sy = -p.y * camera.zoom;
+                    if (index === 0) ctx.moveTo(sx, sy); else ctx.lineTo(sx, sy);
+                });
+                ctx.stroke();
+                currentPolyPoints.forEach(p => { ctx.fillStyle = '#00ffcc'; ctx.fillRect(p.x * camera.zoom - 3, -p.y * camera.zoom - 3, 6, 6); });
+            }
+
+            if (currentTool === 'ruler' && rulerStart && rulerEnd) {
+                const sx1 = rulerStart.x * camera.zoom, sy1 = -rulerStart.y * camera.zoom;
+                const sx2 = rulerEnd.x * camera.zoom, sy2 = -rulerEnd.y * camera.zoom;
+                ctx.strokeStyle = '#ffff00'; ctx.lineWidth = 2; ctx.setLineDash([4, 4]); ctx.beginPath();
+                ctx.moveTo(sx1, sy1); ctx.lineTo(sx2, sy2); ctx.stroke(); ctx.setLineDash([]);
+                const dist = Math.hypot(rulerEnd.x - rulerStart.x, rulerEnd.y - rulerStart.y);
+                ctx.fillStyle = '#ffff00'; ctx.font = '12px monospace'; ctx.fillText(` Dist: ${dist.toFixed(2)}u`, (sx1 + sx2) / 2, (sy1 + sy2) / 2 - 5);
+            }
+            ctx.restore();
+        }
+
+        function drawObject(obj, isSelected) {
+            if (obj.draw_mode === 3 && obj.points && obj.points.length > 0) {
+                ctx.save();
+                ctx.strokeStyle = obj.color || '#ff0055'; ctx.lineWidth = (obj.stroke_size || 12) * (camera.zoom / 40); ctx.lineCap = obj.cap || 'round'; ctx.lineJoin = 'round';
+                ctx.beginPath();
+                obj.points.forEach((p, idx) => {
+                    const px = p.x * camera.zoom; const py = -p.y * camera.zoom;
+                    if (idx === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                });
+                ctx.stroke();
+                if (isSelected) { ctx.strokeStyle = '#00e5ff'; ctx.lineWidth = 2; ctx.stroke(); }
+                ctx.restore();
+                return;
+            }
+
+            const hash = getObjectHash(obj);
+            if (obj._rasterHash !== hash || !obj._rasterCache) {
+                obj._rasterCache = generateObjectRaster(obj);
+                obj._rasterHash = hash;
+            }
+
+            const raster = obj._rasterCache;
+            if (!raster || !raster.canvas) {
+                const drawX = obj.x * camera.zoom; const drawY = -obj.y * camera.zoom;
+                ctx.fillStyle = isSelected ? 'rgba(0, 229, 255, 0.3)' : 'rgba(150, 150, 150, 0.2)';
+                ctx.strokeStyle = isSelected ? '#00e5ff' : '#888';
+                ctx.fillRect(drawX - 20, drawY - 20, 40, 40); ctx.strokeRect(drawX - 20, drawY - 20, 40, 40);
+                ctx.fillStyle = '#fff'; ctx.font = '10px Arial'; ctx.fillText(obj.sp ? obj.sp.substring(0,8) : "Wait", drawX, drawY);
+                return;
+            }
+
+            const screenX = (obj.x + raster.localMinX) * camera.zoom;
+            const screenY = -(obj.y + raster.localMaxY) * camera.zoom;
+            const drawW = raster.canvas.width * (camera.zoom / raster.PPU);
+            const drawH = raster.canvas.height * (camera.zoom / raster.PPU);
+
+            ctx.drawImage(raster.canvas, screenX, screenY, drawW, drawH);
+
+            if (isSelected) {
+                ctx.strokeStyle = '#00e5ff'; ctx.lineWidth = 2;
+                ctx.strokeRect(screenX, screenY, drawW, drawH);
+            }
+        }
+
+        // --- GESTIÓN DE CAPAS (UI) ---
+        function renderLayerItem(i) {
+            const obj = sceneData[i]; const isSelected = selectedIndices.has(i); const isVisible = obj.visible !== false; const isLocked = !!obj.locked;
+            const li = document.createElement('li'); li.className = 'layer-item' + (isSelected ? ' selected' : '');
+            li.innerHTML = `
+                <div style="display:flex; align-items:center; gap:5px; overflow:hidden;">
+                    <input type="checkbox" ${isSelected ? 'checked' : ''} onclick="event.stopPropagation(); toggleSelectObject(${i});" title="Seleccionar">
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${obj.go}">[SL:${obj.sl || 0}] ${obj.go}</span>
+                </div>
+                <div class="layer-controls">
+                    <button onclick="event.stopPropagation(); toggleVisibility(${i});" title="Visibilidad">${isVisible ? '👁' : '🚫'}</button>
+                    <button onclick="event.stopPropagation(); toggleLock(${i});" title="Bloqueo">${isLocked ? '🔒' : '🔓'}</button>
+                    <button onclick="event.stopPropagation(); changeOrder(${i}, 1)" title="Subir">▲</button>
+                    <button onclick="event.stopPropagation(); changeOrder(${i}, -1)" title="Bajar">▼</button>
+                </div>
+            `;
+            li.onclick = (e) => { if (e.ctrlKey) toggleSelectObject(i); else selectSingleObject(i); };
+            return li;
+        }
+
+        function updateLayerList() {
+            const ul = document.getElementById('layer-list'); ul.innerHTML = '';
+            document.getElementById('layer-count').innerText = sceneData.length; document.getElementById('selected-count').innerText = `(${selectedIndices.size})`;
+
+            folders.forEach(f => {
+                const folderLi = document.createElement('li'); folderLi.className = 'folder-item';
+                const header = document.createElement('div'); header.className = 'folder-header';
+                header.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:5px;"><span>${f.collapsed ? '▶' : '▼'}</span><span>📁 ${f.name}</span></div>
+                    <div class="layer-controls"><button onclick="event.stopPropagation(); toggleFolderVisibility('${f.id}')">${f.visible ? '👁' : '🚫'}</button><button onclick="event.stopPropagation(); toggleFolderLock('${f.id}')">${f.locked ? '🔒' : '🔓'}</button><button onclick="event.stopPropagation(); deleteFolder('${f.id}')" title="Eliminar Carpeta">✕</button></div>
+                `;
+                header.onclick = () => toggleFolderCollapse(f.id); folderLi.appendChild(header);
+                if (!f.collapsed) {
+                    const subUl = document.createElement('ul'); subUl.className = 'folder-items';
+                    const sorted = getSortedIndices(); for (let i of sorted) { if (sceneData[i].folderId === f.id) subUl.prepend(renderLayerItem(i)); }
+                    folderLi.appendChild(subUl);
+                }
+                ul.appendChild(folderLi);
+            });
+
+            const sorted = getSortedIndices(); for (let i of sorted) { if (!sceneData[i].folderId) ul.prepend(renderLayerItem(i)); }
+        }
+
+        function toggleVisibility(index) { sceneData[index].visible = !(sceneData[index].visible !== false); draw(); updateLayerList(); }
+        function toggleLock(index) { sceneData[index].locked = !sceneData[index].locked; updateLayerList(); }
+        function changeOrder(index, delta) { sceneData[index].o = (sceneData[index].o || 0) + delta; recordState(); updateLayerList(); updatePropertiesPanel(); draw(); }
+
+        function selectSingleObject(index) {
+            selectedIndices.clear(); if (index !== -1) { selectedIndices.add(index); primarySelectedIndex = index; } else { primarySelectedIndex = -1; }
+            updateLayerList(); updatePropertiesPanel(); draw();
+        }
+
+        function toggleSelectObject(index) {
+            if (index === -1) return;
+            if (selectedIndices.has(index)) { selectedIndices.delete(index); primarySelectedIndex = selectedIndices.size > 0 ? Array.from(selectedIndices)[0] : -1; }
+            else { selectedIndices.add(index); primarySelectedIndex = index; }
+            updateLayerList(); updatePropertiesPanel(); draw();
+        }
+
+        function updatePropertiesPanel() {
+            const panel = document.getElementById('properties-panel'); const noSel = document.getElementById('no-selection');
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) { panel.style.display = 'none'; noSel.style.display = 'block'; return; }
+            panel.style.display = 'block'; noSel.style.display = 'none';
+
+            const obj = sceneData[primarySelectedIndex];
+            document.getElementById('prop-go').value = obj.go || ''; document.getElementById('prop-sp').value = obj.sp || '';
+            document.getElementById('prop-x').value = (obj.x || 0).toFixed(2); document.getElementById('prop-y').value = (obj.y || 0).toFixed(2);
+            document.getElementById('prop-sx').value = (obj.sx || 1).toFixed(2); document.getElementById('prop-sy').value = (obj.sy || 1).toFixed(2);
+            document.getElementById('prop-angle').value = (obj.angle || 0).toFixed(1); document.getElementById('prop-sl').value = obj.sl || 0;
+            document.getElementById('prop-o').value = obj.o || 0; document.getElementById('prop-folder').value = obj.folderId || '';
+
+            document.getElementById('pattern-extra-props').style.display = (obj.draw_mode === 2) ? 'block' : 'none';
+            if (obj.draw_mode === 2) { 
+                document.getElementById('prop-pat-scale').value = obj.pattern_scale || 1.0; 
+                let shear = obj.shear !== undefined ? obj.shear : (obj.go && obj.go.includes('Wallpaper') ? (obj.go.includes('R') ? -0.5 : 0.5) : 0);
+                document.getElementById('prop-pat-shear').value = shear;
+            }
+
+            document.getElementById('brush-extra-props').style.display = (obj.draw_mode === 3) ? 'block' : 'none';
+            if (obj.draw_mode === 3) { document.getElementById('prop-stroke-color').value = obj.color || '#ff0055'; document.getElementById('prop-stroke-size').value = obj.stroke_size || 12; }
+        }
+
+        function updateProp(key, value) {
+            if (primarySelectedIndex !== -1) {
+                sceneData[primarySelectedIndex][key] = value;
+                if (key === 'sl' || key === 'o' || key === 'go' || key === 'folderId') { updateLayerList(); }
+                draw();
+            }
+        }
+
+        // --- I/O & EXPORTACIÓN ---
+        function loadJSON(event) {
+            const file = event.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (Array.isArray(parsed)) { sceneData = parsed; folders = []; } else { sceneData = parsed.sceneData || []; folders = parsed.folders || []; }
+                    selectedIndices.clear(); primarySelectedIndex = -1; recordState(); updateFolderDropdowns(); updateLayerList(); updatePropertiesPanel(); fitCameraToScene();
+                } catch (err) { alert("Error al parsear el JSON: " + err.message); }
+            };
+            reader.readAsText(file);
+        }
+
+        function exportJSON() {
+            const exportData = { folders, sceneData };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
+            const dlNode = document.createElement('a'); dlNode.setAttribute("href", dataStr); dlNode.setAttribute("download", "map_layout.json"); document.body.appendChild(dlNode); dlNode.click(); dlNode.remove();
+        }
+
+        function exportPNG(useCameraBounds = false) {
+            if (sceneData.length === 0) { alert("No hay elementos para exportar."); return; }
+
+            const missingAssets = [];
+            sceneData.forEach(obj => {
+                if (!isObjectEffectivelyVisible(obj) || obj.sp === 'Square' || obj.draw_mode === 3) return;
+                const isWallpaper = (obj.draw_mode > 0 && obj.sz_x > 0);
+                const img = isWallpaper ? getWallpaperImage(obj.sp) : getSpriteImage(obj.sp);
+                if (!img || !img.complete || img.naturalWidth === 0) { if (!missingAssets.includes(obj.sp)) missingAssets.push(obj.sp); }
+            });
+
+            if (missingAssets.length > 0) {
+                const msg = `Atención: Hay ${missingAssets.length} texturas faltantes:\n\n- ` + missingAssets.slice(0, 8).join('\n- ') + (missingAssets.length > 8 ? `\n...y ${missingAssets.length - 8} más.` : '') + `\n\n¿Continuar generando el PNG de todas formas?`;
+                if (!confirm(msg)) return;
+            }
+
+            const renderJobs = [];
+            let globalMinX = Infinity, globalMinY = Infinity;
+            let globalMaxX = -Infinity, globalMaxY = -Infinity;
+            const sortedIndices = getSortedIndices();
+            const exportPPU = 150.0;
+
+            for (let i of sortedIndices) {
+                const obj = sceneData[i];
+                if (!isObjectEffectivelyVisible(obj) || obj.sp === 'Square') continue;
+                if (obj.draw_mode === 3 && obj.points) continue; // Omitir trazos de pincel libres
+
+                const hash = getObjectHash(obj);
+                if (obj._rasterHash !== hash || !obj._rasterCache) {
+                    obj._rasterCache = generateObjectRaster(obj);
+                    obj._rasterHash = hash;
+                }
+
+                const raster = obj._rasterCache;
+                if (!raster || !raster.canvas) continue;
+
+                const worldMinX = obj.x + raster.localMinX;
+                const worldMaxY = obj.y + raster.localMaxY;
+                const pasteX = Math.trunc(worldMinX * exportPPU);
+                const pasteY = -Math.trunc(worldMaxY * exportPPU);
+
+                renderJobs.push({ canvas: raster.canvas, px: pasteX, py: pasteY });
+                globalMinX = Math.min(globalMinX, pasteX); globalMinY = Math.min(globalMinY, pasteY);
+                globalMaxX = Math.max(globalMaxX, pasteX + raster.canvas.width); globalMaxY = Math.max(globalMaxY, pasteY + raster.canvas.height);
+            }
+
+            if (renderJobs.length === 0) { alert("No hay elementos válidos para ensamblar."); return; }
+
+            let finalW, finalH, offsetX, offsetY;
+
+            if (useCameraBounds) {
+                const cMinX = -(canvas.width / 2 + camera.x) / camera.zoom;
+                const cMaxX = (canvas.width / 2 - camera.x) / camera.zoom;
+                const cMinY = -(canvas.height / 2 - camera.y) / camera.zoom;
+                const cMaxY = (canvas.height / 2 + camera.y) / camera.zoom;
+
+                offsetX = Math.trunc(cMinX * exportPPU);
+                offsetY = -Math.trunc(cMaxY * exportPPU); 
+                finalW = Math.trunc((cMaxX - cMinX) * exportPPU);
+                finalH = Math.trunc((cMaxY - cMinY) * exportPPU);
+            } else {
+                offsetX = globalMinX;
+                offsetY = globalMinY;
+                finalW = Math.trunc(globalMaxX - globalMinX);
+                finalH = Math.trunc(globalMaxY - globalMinY);
+            }
+
+            const finalCanvas = document.createElement('canvas');
+            finalCanvas.width = finalW; 
+            finalCanvas.height = finalH;
+            const finalCtx = finalCanvas.getContext('2d');
+
+            for (let job of renderJobs) { 
+                finalCtx.drawImage(job.canvas, Math.trunc(job.px - offsetX), Math.trunc(job.py - offsetY)); 
+            }
+
+            finalCanvas.toBlob((blob) => {
+                if (!blob) { alert("Error al exportar PNG."); return; }
+                const url = URL.createObjectURL(blob);
+                const dlNode = document.createElement('a'); dlNode.setAttribute("href", url); 
+                dlNode.setAttribute("download", useCameraBounds ? "mapa_recortado.png" : "mapa_ensamblado_exacto.png");
+                document.body.appendChild(dlNode); dlNode.click(); dlNode.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+            }, "image/png");
+        }
+
+        resizeCanvas(); updateFolderDropdowns(); recordState();
+    </script>
+</body>
+</html>
