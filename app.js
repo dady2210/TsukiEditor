@@ -242,7 +242,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const nxt = order[(order.indexOf(cur) + 1) % order.length];
             p._lightMode = nxt;
             this.showToast(`Lámpara: ${nxt.toUpperCase()}`, 'info');
-            if (window.Lighting) window.Lighting.apply(this.parser.getClock(), this.parser.currentSLocation || 0);
+            const now = window.GameTime ? window.GameTime.now() : this.parser.getClock();
+            if (window.Lighting) window.Lighting.apply(now, this.parser.currentSLocation || 0);
             // no persist csave — vuelve a auto al recargar (documentado)
         }, true);
     }
@@ -258,48 +259,43 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     _refreshClockHUD() {
         const el = document.getElementById('port-hud-clock');
         if (!el) return;
-        const c = this.parser && this.parser.getClock ? this.parser.getClock() : { hour: 0, day: 1, month: 1, season: 0 };
+        const c = (window.GameTime ? window.GameTime.now() : (this.parser && this.parser.getClock ? this.parser.getClock() : { hour: 0, day: 1, month: 1, season: 0 }));
         el.textContent = this._formatClock(c);
     }
 
     _syncClockFromDevice() {
-        if (!this.parser || !this.parser.getClock || !this.parser.setClock) return false;
-        const d = new Date();
-        const hour = d.getHours();
-        const day = d.getDate();
-        const month = d.getMonth() + 1;
-        const cur = this.parser.getClock();
-        const sig = `${hour}|${day}|${month}`;
-        if (sig === this._lastClockSig) return false;
-        const hourChanged = cur.hour !== hour;
-        const dayChanged = cur.day !== day;
-        if (!hourChanged && !dayChanged && cur.month === month) {
-            this._lastClockSig = sig;
-            return false;
+        // P3: única fuente GameTime — watcher 30s llama esto una vez
+        if (window.GameTime) {
+            if (this.parser && window.GameTime.bindParser) window.GameTime.bindParser(this.parser);
+            const changed = window.GameTime.syncFromDevice();
+            if (changed) this._refreshClockHUD();
+            return changed;
         }
-        this.parser.setClock({ hour, day, month });
-        const next = this.parser.getClock();
-        if (hourChanged && this.parser._onHourChanged) this.parser._onHourChanged.forEach(fn => { try { fn(next); } catch(e) {} });
-        if (dayChanged && this.parser._onDayChanged) this.parser._onDayChanged.forEach(fn => { try { fn(next); } catch(e) {} });
-        this._lastClockSig = sig;
-        this._refreshClockHUD();
-        if (window.Lighting) window.Lighting.apply(next, this.parser.currentSLocation || 0);
-        return true;
+        return false;
     }
 
     _startClockTick() {
         this._stopClockTick();
         if (!this.parser || !this.parser.getClock) return;
+        if (window.GameTime && window.GameTime.bindParser) window.GameTime.bindParser(this.parser);
         this._syncClockFromDevice();
         this._refreshClockHUD();
+        if (window.Timers) window.Timers.tick(window.GameTime ? window.GameTime.now() : this.parser.getClock());
         if (window.Lighting) {
-            if (window.Lighting.init) window.Lighting.init().then(() => window.Lighting.apply(this.parser.getClock(), this.parser.currentSLocation || 0));
-            else window.Lighting.apply(this.parser.getClock(), this.parser.currentSLocation || 0);
-            // suscribir hooks P1 para velo
-            if (this.parser.onHourChanged && !this._lightHooked) {
+            if (window.Lighting.init) window.Lighting.init().then(() => {
+                const now = window.GameTime ? window.GameTime.now() : this.parser.getClock();
+                window.Lighting.apply(now, this.parser.currentSLocation || 0);
+            });
+            else window.Lighting.apply(window.GameTime ? window.GameTime.now() : this.parser.getClock(), this.parser.currentSLocation || 0);
+            if (window.GameTime && !this._lightHooked) {
                 this._lightHooked = true;
-                this.parser.onHourChanged((c) => { if (window.Lighting) window.Lighting.apply(c, this.parser.currentSLocation || 0); });
-                this.parser.onDayChanged((c) => { if (window.Lighting) window.Lighting.apply(c, this.parser.currentSLocation || 0); });
+                // P2 se suscribe a GameTime — un solo apply por cambio
+                window.GameTime.onHourChanged((c) => { if (window.Lighting) window.Lighting.apply(c, this.parser.currentSLocation || 0); this._refreshClockHUD(); });
+                window.GameTime.onDayChanged((c) => {
+                    if (window.Lighting) window.Lighting.apply(c, this.parser.currentSLocation || 0);
+                    this._refreshClockHUD();
+                    if (window.Timers) window.Timers.tick(c);
+                });
             }
         }
         this._clockTimer = setInterval(() => this._syncClockFromDevice(), 30000);
@@ -308,6 +304,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     _stopClockTick() {
         if (this._clockTimer) { clearInterval(this._clockTimer); this._clockTimer = null; }
         if (window.Lighting) window.Lighting.hide();
+        // no desuscribir lighting a la fuerza — _stopClockTick ya oculta velo
     }
 
     handleRouting() {
