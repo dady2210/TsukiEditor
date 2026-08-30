@@ -1694,6 +1694,54 @@ class SaveParser {
         return true;
     }
 
+    // ─── Town Clock (P1) ─────────────────────────────────────────────────
+
+    getClock() {
+        const gv = this.generalVars || {};
+        return {
+            hour: gv.hour ? gv.hour.value | 0 : 0,
+            day: gv.day ? gv.day.value | 0 : 1,
+            month: gv.month ? gv.month.value | 0 : 1,
+            season: gv.season ? gv.season.value | 0 : 0
+        };
+    }
+
+    setClock({ hour, day, month, season }) {
+        let ok = true;
+        if (hour !== undefined) ok = this.writeGeneralVar('hour', hour | 0) && ok;
+        if (day !== undefined) ok = this.writeGeneralVar('day', day | 0) && ok;
+        if (month !== undefined) ok = this.writeGeneralVar('month', month | 0) && ok;
+        if (season !== undefined) ok = this.writeGeneralVar('season', season | 0) && ok;
+        return ok;
+    }
+
+    advanceHour(delta = 1) {
+        const c = this.getClock();
+        let hour = (c.hour + delta) | 0;
+        let day = c.day | 0;
+        let month = c.month | 0;
+        let season = c.season | 0;
+        let dayChanged = false;
+        let hourChanged = false;
+        while (hour >= 24) { hour -= 24; day += 1; dayChanged = true; hourChanged = true; }
+        while (hour < 0) { hour += 24; day -= 1; if (day < 1) day = 1; dayChanged = true; hourChanged = true; }
+        if (!hourChanged && delta !== 0) hourChanged = true;
+        // Stub rollover: day 1..30 → month++, month 1..12 → season 0..3
+        // Offset Unity real month length unknown — documented stub, no byte guessing.
+        while (day > 30) { day -= 30; month += 1; dayChanged = true; }
+        while (day < 1) { day += 30; month -= 1; if (month < 1) month = 1; dayChanged = true; }
+        while (month > 12) { month -= 12; season = (season + 1) % 4; }
+        while (month < 1) { month += 12; season = (season - 1 + 4) % 4; }
+        this.setClock({ hour, day, month, season });
+        if (hourChanged && this._onHourChanged) this._onHourChanged.forEach(fn => { try { fn({ hour, day, month, season }); } catch(e) {} });
+        if (dayChanged && this._onDayChanged) this._onDayChanged.forEach(fn => { try { fn({ hour, day, month, season }); } catch(e) {} });
+        return { hour, day, month, season, hourChanged, dayChanged };
+    }
+
+    // GameTime hooks (P3 no-op stubs, wired in P1)
+    onHourChanged(fn) { if (!this._onHourChanged) this._onHourChanged = []; this._onHourChanged.push(fn); }
+    onDayChanged(fn) { if (!this._onDayChanged) this._onDayChanged = []; this._onDayChanged.push(fn); }
+
     // ─── Train ───────────────────────────────────────────────────────────
 
 

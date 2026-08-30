@@ -216,9 +216,41 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this.btnPlantSeed = document.getElementById('btn-plant-seed');
         this.editSeedSelect = document.getElementById('edit-seed-select');
 
+        // P1 TownClock ticker
+        this._clockTimer = null;
+        this._clockTickMs = 30000; // 30s real = 1h game (stub, sin Date.now para cielo)
         this.bindEvents();
         window.addEventListener("hashchange", () => this.handleRouting());
         this.handleRouting();
+    }
+
+    _formatClock(c) {
+        const hh = String(c.hour).padStart(2, '0') + ':00';
+        const seasonNames = ['Primavera','Verano','Otoño','Invierno'];
+        const sName = seasonNames[c.season] || `S${c.season}`;
+        return `Día ${c.day} · ${hh} · ${sName} M${c.month}`;
+    }
+
+    _refreshClockHUD() {
+        const el = document.getElementById('port-hud-clock');
+        if (!el) return;
+        const c = this.parser && this.parser.getClock ? this.parser.getClock() : { hour: 0, day: 1, month: 1, season: 0 };
+        el.textContent = this._formatClock(c);
+    }
+
+    _startClockTick() {
+        this._stopClockTick();
+        if (!this.parser || !this.parser.getClock) return;
+        this._refreshClockHUD();
+        this._clockTimer = setInterval(() => {
+            if (!this.parser || !this.parser.advanceHour) return;
+            this.parser.advanceHour(1);
+            this._refreshClockHUD();
+        }, this._clockTickMs);
+    }
+
+    _stopClockTick() {
+        if (this._clockTimer) { clearInterval(this._clockTimer); this._clockTimer = null; }
     }
 
     handleRouting() {
@@ -227,6 +259,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const isGrid = hash.startsWith('#/grid-editor');
         
         document.body.classList.remove('play-mode', 'grid-mode');
+        this._stopClockTick();
         const hudTop = document.getElementById('port-hud-top');
         if (hudTop) hudTop.style.display = 'none';
         if (this.tsukiPort) this.tsukiPort.exitPlayMode();
@@ -275,6 +308,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const carrots = this.parser.generalVars && this.parser.generalVars.carrots ? this.parser.generalVars.carrots.value : 0;
                 const hc = document.getElementById('port-hud-carrots');
                 if (hc) hc.textContent = carrots;
+                this._refreshClockHUD();
+                this._startClockTick();
                 this.map.draw();
                 const mapBtn = document.querySelector('[data-target="tab-map"]');
                 if (mapBtn && !mapBtn.classList.contains('active')) {
