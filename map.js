@@ -702,7 +702,7 @@ class IsometricMap {
             let best = -1;
             for (const b of meta) {
                 if (a.p === b.p) continue;
-                const overlap = a.p.x < b.p.x + b.w && a.p.x + a.w > b.p.x
+                const overlap = a.p.floor === b.p.floor && a.p.x < b.p.x + b.w && a.p.x + a.w > b.p.x
                     && a.p.y < b.p.y + b.l && a.p.y + a.l > b.p.y;
                 if (!overlap) continue;
                 const aOnB = (b.role.surface && !a.role.surface)
@@ -2403,7 +2403,13 @@ class IsometricMap {
             const gridY = Math.floor(cart.y + 0.5);
 
             if (this.isItemDragging && this.selectedPlacement) {
-                const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
+                if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode) {
+    const surfaceHit = this._hitTestPlaySurface(mouseX, mouseY);
+    if (surfaceHit && surfaceHit.kind === 'floor') {
+        this.selectedPlacement.floor = surfaceHit.floorNum.toString();
+    }
+}
+const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
                 const floatedX = raw.x - (this.dragItemOffsetX || 0);
                 const floatedY = raw.y - (this.dragItemOffsetY || 0);
                 const snapped = this._snapMove(this.selectedPlacement, floatedX, floatedY);
@@ -2554,7 +2560,13 @@ class IsometricMap {
                 }
 
                 if (this.isItemDragging && this.selectedPlacement) {
-                    const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
+                    if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode) {
+    const surfaceHit = this._hitTestPlaySurface(mouseX, mouseY);
+    if (surfaceHit && surfaceHit.kind === 'floor') {
+        this.selectedPlacement.floor = surfaceHit.floorNum.toString();
+    }
+}
+const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
                     const floatedX = raw.x - (this.dragItemOffsetX || 0);
                     const floatedY = raw.y - (this.dragItemOffsetY || 0);
                     const snapped = this._snapMove(this.selectedPlacement, floatedX, floatedY);
