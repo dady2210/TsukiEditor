@@ -1986,31 +1986,28 @@ class IsometricMap {
         const flipH = (oriNum === 1 || oriNum === 2);
         const darken = (oriNum === 2 || oriNum === 3);
         
-        if (flipH) {
-            ctx.translate(cx, 0);
-            ctx.scale(-1, 1);
-            ctx.translate(-cx, 0);
-        }
-        
-        if (darken) {
-            ctx.filter = "brightness(0.75)";
-        }
+        const anchorX = top.x;
+const anchorY = top.y;
+const pivot = this._resolveSpritePivot(item_id, img, orientation);
+const pivotX = pivot.x;
+const pivotY = pivot.y;
 
+if (flipH) {
+ctx.translate(anchorX, 0);
+ctx.scale(-1, 1);
+ctx.translate(-anchorX, 0);
+}
 
-        // Punto de contacto = centro del diamante (el piso de la celda).
-        const anchorY = top.y;
-        const pivot = this._resolveSpritePivot(item_id, img, orientation);
-        const pivotX = pivot.x;
-        const pivotY = pivot.y;
+if (darken) {
+ctx.filter = "brightness(0.75)";
+}
 
-        // Unity's pivot Y is from the BOTTOM. Canvas Y is from the TOP.
-        // So the distance from the top of the image to the pivot is (1 - pivotY) * drawH
-        ctx.drawImage(img,
-            cx - (drawW * pivotX),
-            anchorY - (drawH * (1 - pivotY)),
-            drawW,
-            drawH
-        );
+ctx.drawImage(img,
+anchorX - (drawW * pivotX),
+anchorY - (drawH * (1 - pivotY)),
+drawW,
+drawH
+);
         
         ctx.restore();
     }
