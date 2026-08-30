@@ -201,7 +201,7 @@ class IsometricMap {
         const size = this.getSize(item_id);
         // orientation 1 (SW) and 3 (NE) align the object along the opposite axis, 
         // so we must swap width and length.
-        if (orientation === 1 || orientation === 3) {
+        if (orientation === 0 || orientation === 2) {
             return { w: size.l, l: size.w };
         }
         return size;
