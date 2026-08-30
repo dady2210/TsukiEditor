@@ -358,7 +358,7 @@ class IsometricMap {
         };
     }
 
-    getCartesianCoords(screenX, screenY) {
+    getCartesianCoords(screenX, screenY, floorNum = 0) {
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         if (layerRadio && layerRadio.value === 'wall') {
             return {
@@ -366,8 +366,9 @@ class IsometricMap {
                 y: Math.floor((screenY - 100) / this.gridSize)
             };
         }
-        const isoX = (screenX - this.offsetX) / this.scale;
-        const isoY = (screenY - this.offsetY) / this.scale;
+        const off = this.getFloorOffset(floorNum);
+        const isoX = (screenX - this.offsetX) / this.scale - (off ? off.x : 0);
+        const isoY = (screenY - this.offsetY) / this.scale - (off ? off.y : 0);
         const u = isoX / (this.CELL_W / 2);
         const v = -isoY / (this.CELL_H / 2);
         return { x: (u + v) / 2, y: (v - u) / 2 };
@@ -673,7 +674,7 @@ class IsometricMap {
                 y: (mouseY - 100) / this.gridSize
             };
         }
-        const cart = this.getCartesianCoords(mouseX, mouseY);
+        const cart = this.getCartesianCoords(mouseX, mouseY, placement ? placement.floor : 0);
         return { x: cart.x, y: cart.y };
     }
 
@@ -1823,6 +1824,27 @@ class IsometricMap {
 
         ctx.save();
         if (lift) ctx.translate(0, -lift * this.CELL_H * this.scale);
+        
+        // Draw grid footprint if in play mode and grid is active
+        if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.showGrid && !p.isWall && !isSelected) {
+            const pt1 = this.getIsoCoords(p.x, p.y, p.floor);
+            const pt2 = this.getIsoCoords(p.x + w, p.y, p.floor);
+            const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor);
+            const pt4 = this.getIsoCoords(p.x, p.y + l, p.floor);
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(pt1.x, pt1.y);
+            ctx.lineTo(pt2.x, pt2.y);
+            ctx.lineTo(pt3.x, pt3.y);
+            ctx.lineTo(pt4.x, pt4.y);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(120, 200, 255, 0.2)';
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(120, 200, 255, 0.8)';
+            ctx.lineWidth = 2 * this.scale;
+            ctx.stroke();
+            ctx.restore();
+        }
 
         // ── Tile fill color ──
         let fillColor;
@@ -2451,7 +2473,7 @@ class IsometricMap {
                 const mouseX = touch.clientX - rect.left;
                 const mouseY = touch.clientY - rect.top;
 
-                const cart = this.getCartesianCoords(mouseX, mouseY);
+                const cart = this.getCartesianCoords(mouseX, mouseY, placement ? placement.floor : 0);
                 const gridX = Math.floor(cart.x + 0.5);
                 const gridY = Math.floor(cart.y + 0.5);
 

@@ -86,7 +86,7 @@ class TsukiPort {
     
 
     enterBagMode() {
-        if (this.bottomBar) this.bottomBar.style.display = 'none';
+        // if (this.bottomBar) this.bottomBar.style.display = 'none';
         if (this.bagUI) this.bagUI.classList.add('active-ui');
         if (this.btnBagExit) this.btnBagExit.style.display = 'none';
         this.renderBagInventory();
@@ -170,13 +170,13 @@ class TsukiPort {
     exitPlayMode() {
         this.triggerAutosave();
 
-        if (this.bottomBar) this.bottomBar.style.display = 'none';
+        // if (this.bottomBar) this.bottomBar.style.display = 'none';
         this.exitHammerMode();
     }
     
     enterHammerMode() {
         this.isHammerMode = true;
-        if (this.bottomBar) this.bottomBar.style.display = 'none';
+        // if (this.bottomBar) this.bottomBar.style.display = 'none';
         this.hammerUI.classList.add('active-ui');
         
         if (this.app.map) {
