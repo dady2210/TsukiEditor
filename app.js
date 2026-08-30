@@ -228,10 +228,21 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     }
 
     _bindFarmButtons() {
-        const go = (id) => {
+        const ensureOption = (id, label) => {
             const sel = document.getElementById('select-location');
+            if (!sel) return sel;
+            if (!Array.from(sel.options).some(o => o.value === String(id))) {
+                const opt = document.createElement('option');
+                opt.value = String(id);
+                opt.textContent = label;
+                sel.appendChild(opt);
+            }
+            return sel;
+        };
+        const go = (id) => {
+            const label = id === 6 ? (typeof SUBLOC_NAMES !== 'undefined' && SUBLOC_NAMES[6] ? SUBLOC_NAMES[6] : 'Granja') : (typeof SUBLOC_NAMES !== 'undefined' && SUBLOC_NAMES[0] ? SUBLOC_NAMES[0] : 'Casa');
+            const sel = ensureOption(id, label);
             if (sel) { sel.value = String(id); sel.dispatchEvent(new Event('change')); }
-            // currentSLocation para Lighting exterior/interior
             if (this.parser) this.parser.currentSLocation = id;
             if (window.GameTime && this.parser) {
                 const now = window.GameTime.now();
@@ -388,7 +399,16 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             if (this.parser && this.map) {
                 const locSelect = document.getElementById('select-location');
                 if (locSelect) {
-                    locSelect.value = "0";
+                    // P4a: respetar currentSLocation si ya se eligió Granja (6)
+                    const cur = this.parser.currentSLocation != null ? String(this.parser.currentSLocation) : "0";
+                    // asegurar opción existe (save sin cluster 6)
+                    if (!Array.from(locSelect.options).some(o => o.value === cur)) {
+                        const opt = document.createElement('option');
+                        opt.value = cur;
+                        opt.textContent = cur === "6" && typeof SUBLOC_NAMES !== 'undefined' && SUBLOC_NAMES[6] ? SUBLOC_NAMES[6] : `Ubicación ${cur}`;
+                        locSelect.appendChild(opt);
+                    }
+                    locSelect.value = cur;
                     locSelect.dispatchEvent(new Event('change'));
                 }
                 const carrots = this.parser.generalVars && this.parser.generalVars.carrots ? this.parser.generalVars.carrots.value : 0;
@@ -1056,7 +1076,10 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this.parser.parseMap();
         this.selectLocation.innerHTML = '';
         // Friendly location names from SUBLOC_NAMES defined in map.js
-        Array.from(this.parser.clusters).sort((a,b) => a-b).forEach(c => {
+        const locSet = new Set(Array.from(this.parser.clusters));
+        // P4a: siempre ofrecer Casa (0) y Granja (6) aunque el save no tenga placements allí
+        locSet.add(0); locSet.add(6);
+        Array.from(locSet).sort((a,b) => a-b).forEach(c => {
             const opt = document.createElement('option');
             opt.value = c;
             const friendlyName = (typeof SUBLOC_NAMES !== 'undefined' && SUBLOC_NAMES[c])
