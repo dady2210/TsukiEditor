@@ -217,9 +217,20 @@ class GameUI {
         let name = "Objeto desconocido";
         let desc = "Sin descripción";
         
+        if (this.app && this.app.resolveItemName) {
+            name = this.app.resolveItemName(item_id, 'furn');
+            // Remove bilingual slash if present
+            const slash = name.indexOf('/');
+            if (slash !== -1) name = name.substring(0, slash).trim();
+        }
+        
         if (window.ITEMS_DB && window.ITEMS_DB[item_id]) {
             const data = window.ITEMS_DB[item_id];
-            name = data.name_es || data.item_name || name;
+            // Only use ITEMS_DB name if resolveItemName didn't give us a good one
+            if (name === 'Objeto desconocido' || name.startsWith('#')) {
+                name = data.name_es || data.item_name || name;
+            }
+            // Description can only come from ITEMS_DB for now (which has the collision bug)
             desc = data.desc_es || desc;
         }
         

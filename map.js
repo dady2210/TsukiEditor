@@ -1826,7 +1826,7 @@ class IsometricMap {
         if (lift) ctx.translate(0, -lift * this.CELL_H * this.scale);
         
         // Draw grid footprint if in play mode and grid is active
-        if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.showGrid && !p.isWall && !isSelected) {
+        if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode && this.app.tsukiPort.showGrid && !p.isWall && !isSelected) {
             const pt1 = this.getIsoCoords(p.x, p.y, p.floor);
             const pt2 = this.getIsoCoords(p.x + w, p.y, p.floor);
             const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor);
@@ -2431,16 +2431,20 @@ class IsometricMap {
                 const targetLoc = locVal !== "" ? parseInt(locVal, 10) : 1;
                 const hits        = this._hitTest(gridX, gridY, targetFloor, targetLoc, mouseX, mouseY);
 
-                // Prefer wall items, then non-ground furniture
-                hits.sort((a, b) => {
-                    const score = (p) => {
-                        if (p.isWall) return 3;
-                        const lift = (this._stackInfo && this._stackInfo.get(p) || {}).lift || 0;
-                        if (lift) return 2;
-                        return GROUND_IDS.has(p.item_id) ? 0 : 1;
-                    };
-                    return score(b) - score(a);
-                });
+                // Prefer higher floors, then wall items, then non-ground furniture
+                        hits.sort((a, b) => {
+                            const score = (p) => {
+                                let s = (p.floor || 0) * 10;
+                                if (p.isWall) s += 3;
+                                else {
+                                    const lift = (this._stackInfo && this._stackInfo.get(p) || {}).lift || 0;
+                                    if (lift) s += 2;
+                                    else if (!GROUND_IDS.has(p.item_id)) s += 1;
+                                }
+                                return s;
+                            };
+                            return score(b) - score(a);
+                        });
 
                 const top = hits[0] || null;
                 if (this.hoveredPlacement !== top) {
