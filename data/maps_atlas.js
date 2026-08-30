@@ -113,5 +113,73 @@ window.mapsAtlas = [
       "w": 64,
       "h": 32
     }
+  },
+  // P4a Farm SLocation 6 — Exportado_level4 — lighting exterior
+  // TODO alinear en grid editor: origins provisionales del atlas Godot viejo
+  {
+    "mapId": 6,
+    "kind": "floor",
+    "groupNum": 0,
+    "flipped": false,
+    "rows": 26,
+    "cols": 26,
+    "lighting": "exterior",
+    "origin_px": { "x": 500, "y": 300 },
+    "cell": { "w": 64, "h": 32 }
+  },
+  {
+    "mapId": 6,
+    "kind": "floor",
+    "groupNum": 3,
+    "flipped": false,
+    "rows": 8,
+    "cols": 8,
+    "lighting": "exterior",
+    "origin_px": { "x": 200, "y": -150 },
+    "cell": { "w": 64, "h": 32 }
+  },
+  {
+    "mapId": 6,
+    "kind": "wall",
+    "groupNum": 0,
+    "flipped": true,
+    "rows": 26,
+    "cols": 12,
+    "lighting": "exterior",
+    "origin_px": { "x": 220, "y": 120 },
+    "cell": { "w": 64, "h": 32 }
+  },
+  {
+    "mapId": 6,
+    "kind": "wall",
+    "groupNum": 0,
+    "flipped": false,
+    "rows": 12,
+    "cols": 26,
+    "lighting": "exterior",
+    "origin_px": { "x": 780, "y": 120 },
+    "cell": { "w": 64, "h": 32 }
+  },
+  {
+    "mapId": 6,
+    "kind": "wall",
+    "groupNum": 3,
+    "flipped": true,
+    "rows": 8,
+    "cols": 8,
+    "lighting": "exterior",
+    "origin_px": { "x": 150, "y": -80 },
+    "cell": { "w": 64, "h": 32 }
+  },
+  {
+    "mapId": 6,
+    "kind": "wall",
+    "groupNum": 3,
+    "flipped": false,
+    "rows": 8,
+    "cols": 8,
+    "lighting": "exterior",
+    "origin_px": { "x": 380, "y": -80 },
+    "cell": { "w": 64, "h": 32 }
   }
 ];

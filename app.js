@@ -223,7 +223,39 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         window.addEventListener("hashchange", () => this.handleRouting());
         // P2 lamp click en play (no hammer): ciclar auto→on→off, no recoger
         this._bindLampClick();
+        this._bindFarmButtons();
         this.handleRouting();
+    }
+
+    _bindFarmButtons() {
+        const go = (id) => {
+            const sel = document.getElementById('select-location');
+            if (sel) { sel.value = String(id); sel.dispatchEvent(new Event('change')); }
+            // currentSLocation para Lighting exterior/interior
+            if (this.parser) this.parser.currentSLocation = id;
+            if (window.GameTime && this.parser) {
+                const now = window.GameTime.now();
+                if (window.Lighting) window.Lighting.apply(now, id);
+            } else if (window.Lighting && this.parser) {
+                window.Lighting.apply(this.parser.getClock(), id);
+            }
+            if (this.map) this.map.draw();
+        };
+        const bHome = document.getElementById('btn-map-home');
+        const bFarm = document.getElementById('btn-map-farm');
+        if (bHome) bHome.addEventListener('click', () => go(0));
+        if (bFarm) bFarm.addEventListener('click', () => go(6));
+        // select-location change también actualiza currentSLocation + lighting
+        const sel = document.getElementById('select-location');
+        if (sel && !sel._p4aHooked) {
+            sel._p4aHooked = true;
+            sel.addEventListener('change', () => {
+                const v = parseInt(sel.value, 10);
+                if (this.parser) this.parser.currentSLocation = isNaN(v) ? 0 : v;
+                const now = window.GameTime ? window.GameTime.now() : (this.parser ? this.parser.getClock() : { hour: 12 });
+                if (window.Lighting) window.Lighting.apply(now, v);
+            });
+        }
     }
 
     _bindLampClick() {

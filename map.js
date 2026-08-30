@@ -1348,9 +1348,10 @@ class IsometricMap {
             });
 
             if ((isPlay || isGrid) && window.mapsAtlas) {
-            // 1, 2, 3: BAKED BACKGROUND (Treehouse + Walls + Floors)
+            // 1, 2, 3: BAKED BACKGROUND (House level2 / Farm level4)
             const targetLoc = document.getElementById('select-location') ? parseInt(document.getElementById('select-location').value) : 0;
-            const bgImg = this.getBackgroundImage('../maps/Exportado_level2/level2_Ensamblado.png');
+            const bgPath = targetLoc === 6 ? '../maps/Exportado_level4/level4_Ensamblado.png' : '../maps/Exportado_level2/level2_Ensamblado.png';
+            const bgImg = this.getBackgroundImage(bgPath);
             
             // Only bake if bgImg is loaded and we haven't baked this combination yet
             const wpDict = this.app.parser && this.app.parser.wallpapers;
@@ -1471,7 +1472,16 @@ class IsometricMap {
                     const sh = destDrawH / s;
                     ctx.drawImage(this._bakedBgCanvas, sx, sy, sw, sh, destX, destY, destDrawW, destDrawH);
                 }
-            }
+                } else if (targetLoc === 6) {
+                    ctx.save();
+                    ctx.fillStyle = '#8d6e63';
+                    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                    ctx.fillStyle = 'white';
+                    ctx.font = '20px Quicksand';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('falta ensamblado level4', this.canvas.width/2, this.canvas.height/2);
+                    ctx.restore();
+                }
             } else {
                 // ?? Editor mode: draw floor tilesets inside scaled ctx ????????????????
                 ctx.save();
