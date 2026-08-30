@@ -655,7 +655,7 @@ class SaveParser {
         this.astPlacements = [...this.placements]; // keeping for compatibility
     }
 
-    applyMapChange(placement, newId, newX, newY, newOrientation) {
+    applyMapChange(placement, newId, newX, newY, newOrientation, newFloor) {
         if (!placement.furnNode) return;
         
         placement.item_id = newId;

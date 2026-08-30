@@ -787,7 +787,7 @@ class IsometricMap {
             this.ctx.stroke();
         } else {
             const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
-            this._drawDiamondPath(x, y, w, l, 0);
+            this._drawDiamondPath(x, y, w, l, 0, p.floor);
             this.ctx.fill();
             this.ctx.stroke();
         }
