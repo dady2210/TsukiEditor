@@ -819,6 +819,7 @@ body.play-mode #play-hud {
     gap: 10px; z-index: 9999; font-size: 24px; font-weight: bold; color: white;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.8); pointer-events: none;
 }
+.port-hud-top button { pointer-events: auto; cursor: pointer; }
 body.play-mode #shell-nav { display: none !important; }
 body.play-mode { margin: 0; padding: 0; overflow: hidden; }
 body.play-mode .main-layout { margin: 0; padding: 0; height: 100vh; width: 100vw; }
