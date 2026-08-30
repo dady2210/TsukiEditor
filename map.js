@@ -1998,7 +1998,7 @@ class IsometricMap {
 
 
         // Punto de contacto = centro del diamante (el piso de la celda).
-        const anchorY = cy;
+        const anchorY = top.y;
         const pivot = this._resolveSpritePivot(item_id, img, orientation);
         const pivotX = pivot.x;
         const pivotY = pivot.y;
