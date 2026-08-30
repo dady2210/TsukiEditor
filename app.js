@@ -221,7 +221,30 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this._lastClockSig = null;
         this.bindEvents();
         window.addEventListener("hashchange", () => this.handleRouting());
+        // P2 lamp click en play (no hammer): ciclar auto→on→off, no recoger
+        this._bindLampClick();
         this.handleRouting();
+    }
+
+    _bindLampClick() {
+        const canvas = document.getElementById('map-canvas');
+        if (!canvas) return;
+        canvas.addEventListener('click', (e) => {
+            if (!document.body.classList.contains('play-mode')) return;
+            if (this.tsukiPort && this.tsukiPort.isHammerMode) return;
+            const p = this.map && this.map.hoveredPlacement;
+            if (!p) return;
+            const beh = window.BEHAVIORS && window.BEHAVIORS[String(p.item_id)];
+            if (!beh || beh.interact !== 'light_toggle') return;
+            e.stopPropagation(); e.preventDefault();
+            const order = ['auto','on','off'];
+            const cur = p._lightMode || 'auto';
+            const nxt = order[(order.indexOf(cur) + 1) % order.length];
+            p._lightMode = nxt;
+            this.showToast(`Lámpara: ${nxt.toUpperCase()}`, 'info');
+            if (window.Lighting) window.Lighting.apply(this.parser.getClock(), this.parser.currentSLocation || 0);
+            // no persist csave — vuelve a auto al recargar (documentado)
+        }, true);
     }
 
     _formatClock(c) {
@@ -241,15 +264,13 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
     _syncClockFromDevice() {
         if (!this.parser || !this.parser.getClock || !this.parser.setClock) return false;
-        // Solo para leer hora civil — no usar para pintar cielo
         const d = new Date();
         const hour = d.getHours();
         const day = d.getDate();
-        const month = d.getMonth() + 1; // 1..12
+        const month = d.getMonth() + 1;
         const cur = this.parser.getClock();
         const sig = `${hour}|${day}|${month}`;
         if (sig === this._lastClockSig) return false;
-        // No tocar season salvo dump confirme calendario real
         const hourChanged = cur.hour !== hour;
         const dayChanged = cur.day !== day;
         if (!hourChanged && !dayChanged && cur.month === month) {
@@ -262,6 +283,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (dayChanged && this.parser._onDayChanged) this.parser._onDayChanged.forEach(fn => { try { fn(next); } catch(e) {} });
         this._lastClockSig = sig;
         this._refreshClockHUD();
+        if (window.Lighting) window.Lighting.apply(next, this.parser.currentSLocation || 0);
         return true;
     }
 
@@ -270,12 +292,22 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (!this.parser || !this.parser.getClock) return;
         this._syncClockFromDevice();
         this._refreshClockHUD();
-        // Watcher: si la hora real cambió, setClock + hooks + persist (via writeInt32)
+        if (window.Lighting) {
+            if (window.Lighting.init) window.Lighting.init().then(() => window.Lighting.apply(this.parser.getClock(), this.parser.currentSLocation || 0));
+            else window.Lighting.apply(this.parser.getClock(), this.parser.currentSLocation || 0);
+            // suscribir hooks P1 para velo
+            if (this.parser.onHourChanged && !this._lightHooked) {
+                this._lightHooked = true;
+                this.parser.onHourChanged((c) => { if (window.Lighting) window.Lighting.apply(c, this.parser.currentSLocation || 0); });
+                this.parser.onDayChanged((c) => { if (window.Lighting) window.Lighting.apply(c, this.parser.currentSLocation || 0); });
+            }
+        }
         this._clockTimer = setInterval(() => this._syncClockFromDevice(), 30000);
     }
 
     _stopClockTick() {
         if (this._clockTimer) { clearInterval(this._clockTimer); this._clockTimer = null; }
+        if (window.Lighting) window.Lighting.hide();
     }
 
     handleRouting() {
