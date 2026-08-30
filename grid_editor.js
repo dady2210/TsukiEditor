@@ -2,6 +2,7 @@ class GridEditor {
     constructor(app) {
         this.app = app;
         this.surfaceSelect = document.getElementById('grid-surface-select');
+        this.mapSelect = document.getElementById('grid-map-select');
         this.cols     = document.getElementById('grid-cols');
         this.rows     = document.getElementById('grid-rows');
         this.groupNum = document.getElementById('grid-groupnum');
@@ -15,12 +16,37 @@ class GridEditor {
         if (!window.atlasConfig) window.atlasConfig = { bgScale: 0.75 };
 
         this.activeSurfaceIndex = -1;
+        this.currentMapId = this.mapSelect ? parseInt(this.mapSelect.value, 10) : 0;
         this.bindEvents();
+    }
+
+    _filteredIndices() {
+        return window.mapsAtlas.map((s, i) => ({ s, i })).filter(x => String(x.s.mapId) === String(this.currentMapId)).map(x => x.i);
     }
 
     bindEvents() {
         document.getElementById('btn-add-floor').onclick = () => this.addSurface('floor');
         document.getElementById('btn-add-wall').onclick  = () => this.addSurface('wall');
+
+        if (this.mapSelect) {
+            this.mapSelect.onchange = () => {
+                this.currentMapId = parseInt(this.mapSelect.value, 10);
+                // sincronizar select-location para que map.js dibuje el fondo correcto
+                const sel = document.getElementById('select-location');
+                if (sel) {
+                    if (!Array.from(sel.options).some(o => o.value === String(this.currentMapId))) {
+                        const opt = document.createElement('option');
+                        opt.value = String(this.currentMapId);
+                        opt.textContent = this.mapSelect.options[this.mapSelect.selectedIndex].textContent;
+                        sel.appendChild(opt);
+                    }
+                    sel.value = String(this.currentMapId);
+                }
+                this.activeSurfaceIndex = -1;
+                this.refreshSelect();
+                this.app.map.draw();
+            };
+        }
 
         this.surfaceSelect.onchange = () => {
             this.activeSurfaceIndex = parseInt(this.surfaceSelect.value);
@@ -94,19 +120,23 @@ class GridEditor {
 
     refreshSelect() {
         this.surfaceSelect.innerHTML = '';
-        window.mapsAtlas.forEach((s, i) => {
+        const indices = this._filteredIndices();
+        indices.forEach(i => {
+            const s = window.mapsAtlas[i];
             const opt = document.createElement('option');
             opt.value = i;
             let name = s.kind === 'floor' ? 'Piso' : (s.flipped ? 'Pared Izq' : 'Pared Der');
             opt.textContent = `[Grp ${s.groupNum}] ${name} (${s.cols}x${s.rows})`;
             this.surfaceSelect.appendChild(opt);
         });
-        if (this.activeSurfaceIndex !== -1) {
+        if (this.activeSurfaceIndex !== -1 && indices.includes(this.activeSurfaceIndex)) {
             this.surfaceSelect.value = this.activeSurfaceIndex;
-        } else if (window.mapsAtlas.length > 0) {
-            this.surfaceSelect.value = 0;
-            this.activeSurfaceIndex  = 0;
+        } else if (indices.length > 0) {
+            this.surfaceSelect.value = indices[0];
+            this.activeSurfaceIndex  = indices[0];
             this.updateForm();
+        } else {
+            this.activeSurfaceIndex = -1;
         }
     }
 
@@ -125,10 +155,11 @@ class GridEditor {
     }
 
     addSurface(kind) {
+        const curMap = this.currentMapId != null ? this.currentMapId : 0;
         const newSurf = {
-            mapId: 0, kind, groupNum: window.mapsAtlas.length,
-            flipped: false, rows: 16, cols: 16,
-            origin_px: { x: 329, y: 926 }, cell: { w: 64, h: 32 }
+            mapId: curMap, kind, groupNum: window.mapsAtlas.filter(s => String(s.mapId) === String(curMap)).length,
+            flipped: false, rows: curMap === 6 ? 26 : 16, cols: curMap === 6 ? 26 : 16,
+            origin_px: { x: curMap === 6 ? 500 : 329, y: curMap === 6 ? 300 : 926 }, cell: { w: 64, h: 32 }
         };
         window.mapsAtlas.push(newSurf);
         this.activeSurfaceIndex = window.mapsAtlas.length - 1;
