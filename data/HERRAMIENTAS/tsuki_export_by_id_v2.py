@@ -39,6 +39,27 @@ def load_env(bundles_dir, assemblies_dir=None):
                     env.load_file(str(f))
                     loaded_any = True
                 except Exception: pass
+    # Fallback MEGAMINER: hash-named files sin extensión .bundle (ej. 000...f000...) + AssetPack/aa
+    if not loaded_any:
+        for f in p.iterdir():
+            if f.is_file() and f.stat().st_size > 1024:
+                # heurística: Unity bundle / serialized file por header "UnityFS" o "UnityWeb"
+                try:
+                    with open(f, 'rb') as fh: head = fh.read(8)
+                    if head.startswith(b'UnityFS') or head.startswith(b'UnityWeb') or f.suffix=='':
+                        try:
+                            env.load_file(str(f))
+                            loaded_any = True
+                        except Exception: pass
+                except Exception: pass
+        # también probar subcarpeta aa/Android si existe junto a MEGAMINER
+        alt_aa = Path(r"C:\Users\Andres\Desktop\Tsuki_Odyssey\AssetPack\assets\aa\Android")
+        if not loaded_any and alt_aa.exists():
+            for f in alt_aa.glob("*.bundle"):
+                try:
+                    env.load_file(str(f))
+                    loaded_any = True
+                except Exception: pass
     if not loaded_any: sys.exit(1)
     if assemblies_dir and assemblies_dir.exists() and hasattr(env, "register_assembly_folder"):
         env.register_assembly_folder(str(assemblies_dir))
