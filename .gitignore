@@ -30,3 +30,5 @@
 !tsuki_port.js
 !play_lighting.js
 !game_time.js
+!scripts/
+!scripts/**
