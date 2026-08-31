@@ -657,8 +657,46 @@ class SaveParser {
             }
         }
 
+        // extraFurnitureSaves — placements con source:'extra'
+        try {
+            const extraNode = findChildRecursive(this.ast, ['extraFurnitureSaves','ExtraFurnitureSaves']);
+            if (extraNode) {
+                const list = extraNode.children ? extraNode.children.find(c=>c.constructor.name==='OdinList') : null;
+                const els = list ? list.elements : (extraNode.elements||[]);
+                els.forEach(e=>{
+                    const v=e.value||e;
+                    // intentar parsear como placement entry
+                    const before=this.placements.length;
+                    this._parsePlacementEntry({ value: v }, 'extra');
+                    if (this.placements.length>before) this.placements[this.placements.length-1].source='extra';
+                });
+            }
+        } catch(e){}
+
         this.astPlacements = [...this.placements]; // keeping for compatibility
     }
+
+    getExtraFurnitureSaves(){ return (this.placements||[]).filter(p=>p.source==='extra'); }
+    setParentPlacementID(placement, newParentID){
+        if(!placement||!placement.furnNode) return false;
+        let n=findChildRecursive(placement.furnNode,['parentPlacementID','ParentPlacementID']);
+        if(!n) return false;
+        n.value = newParentID|0; placement.parentPlacementID=newParentID|0; return true;
+    }
+    // Raíz FALTA — helpers genéricos
+    _rootNode(name){ return findChildRecursive(this.ast, [name, name.charAt(0).toUpperCase()+name.slice(1)]); }
+    getLocation(){ const n=this._rootNode('location'); return n? n.value : undefined; }
+    setLocation(v){ const n=this._rootNode('location'); if(!n) return false; n.value=v|0; return true; }
+    getPotGuyStorage(){ const n=this._rootNode('potGuyStorage'); if(!n) return []; const list=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; return list? list.elements.map(e=>e.value||e):[]; }
+    getSavedValues(){ const n=this._rootNode('savedValues'); if(!n) return {}; const dict=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; const out={}; (dict?dict.elements:[]).forEach(e=>{ const k=e.key?e.key.value:e.value?.key; const v=e.value?e.value.value:e.value; if(k!=null) out[k]=v; }); return out; }
+    setSavedValue(k,v){ const n=this._rootNode('savedValues'); if(!n) return false; let dict=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; if(!dict) return false; let entry=dict.elements.find(e=>(e.key?e.key.value:e.value?.key)==k); if(entry){ const valNode=entry.value?entry.value:entry; if(valNode.value!==undefined) valNode.value=v|0; else if(entry.value) entry.value.value=v|0; } return !!entry; }
+    getPlayerStrings(){ const n=this._rootNode('PlayerStrings')||this._rootNode('playerStrings'); if(!n) return {}; const dict=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; const out={}; (dict?dict.elements:[]).forEach(e=>{ const k=e.key?e.key.value:e.value?.key; const v=e.value?e.value.value:e.value; if(k!=null) out[k]=v; }); return out; }
+    setPlayerString(id,str){ const n=this._rootNode('PlayerStrings')||this._rootNode('playerStrings'); if(!n) return false; return false; }
+    getCollection(){ const n=this._rootNode('collection'); if(!n) return []; const list=n.children? n.children.find(c=>c.constructor.name==='OdinList' || c.elements):n; const els=list? (list.elements||[]):[]; return els.map(e=>e.value??e); }
+    getApartmentSaves(){ const n=this._rootNode('apartmentSaves'); if(!n||n.constructor.name==='OdinNull') return []; const list=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; return list? list.elements:[]; }
+    getSettings(){ const keys=['conserveBattery','reduceMotion','hapticsEnabled','forceMusic','bypassBackup','cloudDisabled']; const out={}; keys.forEach(k=>{ const n=this._rootNode(k); if(n) out[k]=!!n.value; }); return out; }
+    setSetting(k,v){ const n=this._rootNode(k); if(!n) return false; n.value=!!v; return true; }
+    getSpEventSavesExtended(){ const n=this._rootNode('spEventSaves'); if(!n) return []; const list=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; return list? list.elements.map(e=>e.value||e):[]; }
 
     applyMapChange(placement, newId, newX, newY, newOrientation, newFloor) {
         if (!placement.furnNode) return;
@@ -2862,10 +2900,71 @@ class SaveParser {
         if (!node) node = this._findNodesInAST('ParsnapSave')[0];
         return { present: !!node, message: node ? 'Presente' : 'No presente en este save.', node };
     }
+    // Fase 1: CropBoxSave (id 1301 / CropBox+CropBoxSave) — slots[{cropID,quantity}], carrots caja, OA, LastHarvest 0x2D
+    _findCropBoxNode() {
+        // buscar placement 1301 primero
+        const p = (this.placements || []).find(x => x.item_id === 1301);
+        if (p && p.furnNode) {
+            const cand = findChildRecursive(p.furnNode, ['CropBoxSave','cropBoxSave','CropBox']);
+            if (cand) return cand;
+            // typeName contiene CropBox
+            if (p.furnNode.typeName && p.furnNode.typeName.includes('CropBox')) return p.furnNode;
+        }
+        let node = findChildRecursive(this.ast, ['cropBoxSave','CropBox']);
+        if (node) return node;
+        const nodes = this._findNodesInAST('CropBox');
+        if (nodes && nodes[0]) return nodes[0];
+        return null;
+    }
     getCropBoxSave() {
-        let node = findChildRecursive(this.ast, ['cropBox', 'CropBox', 'cropBoxSave']);
-        if (!node) node = this._findNodesInAST('CropBox')[0];
-        return { present: !!node, message: node ? 'Presente' : 'No presente en este save.', node };
+        const node = this._findCropBoxNode();
+        if (!node) return { present: false, message: 'No presente en este save.', node: null };
+        const slotsNode = findChildRecursive(node, ['slots','Slots']);
+        const carrotsNode = findChildRecursive(node, ['carrots','Carrots']);
+        const startNode = findChildRecursive(node, ['startHarvestTimeOA','StartHarvestTimeOA']);
+        const endNode = findChildRecursive(node, ['endHarvestTimeOA','EndHarvestTimeOA']);
+        const lastNode = findChildRecursive(node, ['LastHarvest','lastHarvest']);
+        const slots = [];
+        if (slotsNode) {
+            const list = slotsNode.children ? slotsNode.children.find(c => c.constructor.name === 'OdinList') : null;
+            const els = list ? list.elements : (slotsNode.elements || []);
+            els.forEach(el => {
+                const v = el.value || el;
+                const cropID = findChildRecursive(v, ['cropID','CropID','id'])?.value ?? null;
+                const qty = findChildRecursive(v, ['quantity','Quantity','qty'])?.value ?? null;
+                slots.push({ node: v, cropID, quantity: qty });
+            });
+        }
+        return { present: true, node, slots, carrots: carrotsNode?.value, startHarvestTimeOA: startNode?.value, endHarvestTimeOA: endNode?.value, lastHarvest: lastNode ? (lastNode.constructor.name==='OdinNull'? null : lastNode.value) : undefined, _nodes: { slotsNode, carrotsNode, startNode, endNode, lastNode } };
+    }
+    setCropBoxCarrots(val) {
+        const info = this.getCropBoxSave(); if (!info.present) return false;
+        const n = info._nodes.carrotsNode; if (!n) return false; n.value = val|0; return true;
+    }
+    setCropBoxSlot(idx, cropID, quantity) {
+        const info = this.getCropBoxSave(); if (!info.present || !info.slots[idx]) return false;
+        const s = info.slots[idx]; if (cropID!=null) { const c=findChildRecursive(s.node,['cropID','CropID','id']); if(c) c.value=cropID|0; } if (quantity!=null){ const q=findChildRecursive(s.node,['quantity','Quantity']); if(q) q.value=quantity|0; } return true;
+    }
+    setCropBoxOA(field, oa) {
+        const info=this.getCropBoxSave(); if(!info.present) return false;
+        const map={start:'startNode',end:'endNode',last:'lastNode'}; const n=info._nodes[map[field]||field]; if(!n) return false;
+        if (oa==null) { // set to null 0x2D — reemplazar por OdinNull si es posible
+            if (n.constructor.name==='OdinNull') return true;
+            // convertir a null: cambiar marker y limpiar
+            n.constructor = { name:'OdinNull' }; n.value=null; n.marker=0x2d; return true;
+        }
+        n.value = Number(oa); return true;
+    }
+    // lampToggle en placement (FurnitureSave subsclase LampSave)
+    getLampToggle(placement) {
+        const node = placement && placement.furnNode ? findChildRecursive(placement.furnNode, ['lampToggle','LampToggle','LampState']) : null;
+        return node ? node.value : undefined;
+    }
+    setLampToggle(placement, val) {
+        if (!placement || !placement.furnNode) return false;
+        let node = findChildRecursive(placement.furnNode, ['lampToggle','LampToggle','LampState']);
+        if (!node) return false;
+        node.value = val|0; return true;
     }
     getDeliverySave() {
         const dNode = findChildRecursive(this.ast, ['deliverySave']);
