@@ -42,25 +42,25 @@ slocs=34
 
 sloc 7 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
-sloc 0 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 0 furn detail: 1301=0 lampToggle=17 parent!=0=0 CropType=0
 
 sloc 1 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
-sloc 2 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 2 furn detail: 1301=0 lampToggle=4 parent!=0=0 CropType=0
 
-sloc 3 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 3 furn detail: 1301=0 lampToggle=11 parent!=0=0 CropType=0
 
-sloc 4 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 4 furn detail: 1301=0 lampToggle=3 parent!=0=0 CropType=0
 
 sloc 5 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
-sloc 6 furn detail: 1301=1 lampToggle=0 parent!=0=0 CropType=0
+sloc 6 furn detail: 1301=1 lampToggle=22 parent!=0=0 CropType=61
   1301 furnSave typeName=FurniturePlacement, Odyssey children=placedOA:21, LastHarvest:2d, slots:System.Collections.Generic.List`1[[CropBox+CropBoxSave+CropSlot, Odyssey]], mscorlib, carrots:17, startHarvestTimeOA:21, endHarvestTimeOA:21
     slots elements=3
     carrots=99145 marker=0x17
     LastHarvest marker=0x2d value=undefined type=OdinNull
 
-sloc 8 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 8 furn detail: 1301=0 lampToggle=2 parent!=0=0 CropType=0
 
 sloc 9 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
@@ -175,7 +175,7 @@ sloc 4 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
 sloc 5 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
-sloc 6 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 6 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=25
 
 sloc 8 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
@@ -280,19 +280,19 @@ slocs=34
 
 sloc 7 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
-sloc 0 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 0 furn detail: 1301=0 lampToggle=7 parent!=0=0 CropType=0
 
 sloc 1 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
-sloc 2 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 2 furn detail: 1301=0 lampToggle=2 parent!=0=0 CropType=0
 
-sloc 3 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 3 furn detail: 1301=0 lampToggle=6 parent!=0=0 CropType=0
 
-sloc 4 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 4 furn detail: 1301=0 lampToggle=4 parent!=0=0 CropType=0
 
 sloc 5 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
-sloc 6 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 6 furn detail: 1301=0 lampToggle=4 parent!=0=0 CropType=42
 
 sloc 8 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
@@ -404,13 +404,13 @@ sloc 1 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
 sloc 2 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
-sloc 3 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 3 furn detail: 1301=0 lampToggle=1 parent!=0=0 CropType=0
 
 sloc 4 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
 sloc 5 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 
-sloc 6 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
+sloc 6 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=25
 
 sloc 8 furn detail: 1301=0 lampToggle=0 parent!=0=0 CropType=0
 

@@ -39,17 +39,37 @@ for(const f of saves){
    const list=furn.children.find(c=>c.elements);
    if(!list) return;
    let cnt1301=0, cntLamp=0, cntParent=0, cntCrop=0;
+   function deepFind(n,names){
+     if(!n) return null;
+     for(const nm of names){ const f=findChild(n,nm); if(f) return f; }
+     // search inside furnSave child
+     const fs=findChild(n,'furnSave')||findChild(n,'FurnSave');
+     if(fs){ for(const nm of names){ const f=findChild(fs,nm); if(f) return f; } }
+     // deeper recursive
+     const all=[]; (n.children||[]).forEach(c=>{ if(names.includes(c.name)) all.push(c); });
+     return all[0]||null;
+   }
+   function deepFindAll(n,names){
+     const res=[]; if(!n) return res;
+     (n.children||[]).forEach(c=>{ if(names.includes(c.name)) res.push(c); });
+     const fs=findChild(n,'furnSave')||findChild(n,'FurnSave');
+     if(fs) (fs.children||[]).forEach(c=>{ if(names.includes(c.name)) res.push(c); });
+     return res;
+   }
    list.elements.forEach(e=>{
      const node=e.value;
      const ref=findChild(node, 'reference');
      const idNode=ref? findChild(ref,'id'):null;
      const iid=idNode? idNode.value : null;
      if(iid===1301) cnt1301++;
-     const lamp=findChild(node,'lampToggle')||findChild(node,'LampToggle');
+     const lamp=deepFind(node,['lampToggle','LampToggle','LampState','lampState']);
      if(lamp) cntLamp++;
-     const par=findChild(node,'parentPlacementID')||findChild(node,'ParentPlacementID');
+     const par=deepFind(node,['parentPlacementID','ParentPlacementID','parentPlacementId']);
      if(par && par.value!==0 && par.value!==-1) cntParent++;
-     if(node.typeName && node.typeName.includes('Crop')) cntCrop++;
+     const harvest=deepFind(node,['harvestTimeOA','HarvestTimeOA','harvestTime','ripe','Ripe']);
+     const slot=deepFind(node,['slots','Slots']);
+     if(harvest||slot) cntCrop++;
+     else if(node.typeName && node.typeName.includes('Crop')) cntCrop++;
    });
    out+=`\nsloc ${id} furn detail: 1301=${cnt1301} lampToggle=${cntLamp} parent!=0=${cntParent} CropType=${cntCrop}\n`;
    // drill 1301
