@@ -1122,6 +1122,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 // Train
         this.parser.parseTrainSave();
         this.renderTrainTab();
+        if (this.refreshAdvancedSave) this.refreshAdvancedSave();
 
         if (this.renderNewsTab) this.renderNewsTab();
         if (this.renderMailUniqueOrders) this.renderMailUniqueOrders();
@@ -1242,6 +1243,20 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
 
         this.showToast("✅ Variables generales aplicadas");
+    }
+    refreshAdvancedSave(){
+        const loc = this.parser.getLocation ? this.parser.getLocation() : undefined;
+        const el=document.getElementById('adv-location'); if(el) el.value=loc??'';
+        const s=this.parser.getSettings? this.parser.getSettings():{}; ['conserve','reduce','haptics','force'].forEach(k=>{ const id={conserve:'adv-conserve',reduce:'adv-reduce',haptics:'adv-haptics',force:'adv-force'}[k]; const e=document.getElementById(id); if(e) e.checked=!!s[k==='conserve'?'conserveBattery':k==='reduce'?'reduceMotion':k==='haptics'?'hapticsEnabled':'forceMusic']; });
+        const sv=document.getElementById('adv-savedvalues'); if(sv) sv.value=JSON.stringify(this.parser.getSavedValues? this.parser.getSavedValues():{},null,2);
+        const col=document.getElementById('adv-collection'); if(col) col.value=(this.parser.getCollection? this.parser.getCollection().length:0);
+        const extra=document.getElementById('adv-extra-list'); if(extra) extra.textContent=`extraFurnitureSaves: ${(this.parser.getExtraFurnitureSaves? this.parser.getExtraFurnitureSaves().length:0)} | potGuyStorage: ${(this.parser.getPotGuyStorage? this.parser.getPotGuyStorage().length:0)} | apartmentSaves: ${(this.parser.getApartmentSaves? this.parser.getApartmentSaves().length:0)}`;
+    }
+    applyAdvancedSave(){
+        const locEl=document.getElementById('adv-location'); if(locEl && locEl.value!=='') this.parser.setLocation && this.parser.setLocation(parseInt(locEl.value));
+        const map={ 'adv-conserve':'conserveBattery','adv-reduce':'reduceMotion','adv-haptics':'hapticsEnabled','adv-force':'forceMusic'}; Object.entries(map).forEach(([id,key])=>{ const e=document.getElementById(id); if(e) this.parser.setSetting && this.parser.setSetting(key,e.checked); });
+        const sv=document.getElementById('adv-savedvalues'); if(sv){ try{ const obj=JSON.parse(sv.value||'{}'); Object.entries(obj).forEach(([k,v])=> this.parser.setSavedValue && this.parser.setSavedValue(k,v)); }catch(e){} }
+        this.showToast('Avanzado aplicado');
     }
 
     // ─── NPC Tab ──────────────────────────────────────────────────────
@@ -2177,6 +2192,32 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             }
         }
         
+        // CropBox 1301 + lampToggle
+        const cropboxUI = document.getElementById('cropbox-ui');
+        const lampSel = document.getElementById('lamp-toggle');
+        if (cropboxUI) {
+            if (placement.item_id === 1301) {
+                cropboxUI.classList.remove('hidden');
+                const info = this.parser.getCropBoxSave ? this.parser.getCropBoxSave() : null;
+                const slotsDiv = document.getElementById('cropbox-slots');
+                if (slotsDiv && info && info.slots) {
+                    slotsDiv.innerHTML = info.slots.map((s,i)=> `<div style="display:flex; gap:6px; margin:4px 0;"><span>Slot ${i}</span><input data-idx="${i}" data-field="cropID" value="${s.cropID??''}" placeholder="cropID" style="width:70px;"><input data-idx="${i}" data-field="qty" value="${s.quantity??''}" placeholder="qty" style="width:60px;"></div>`).join('');
+                    slotsDiv.querySelectorAll('input').forEach(inp=> inp.onchange = e=>{ const idx=parseInt(e.target.dataset.idx), field=e.target.dataset.field; const v=parseInt(e.target.value)||0; if(field==='cropID') this.parser.setCropBoxSlot(idx,v,null); else this.parser.setCropBoxSlot(idx,null,v); });
+                }
+                const cc=document.getElementById('cropbox-carrots'); if(cc && info) cc.value=info.carrots??'';
+                const cs=document.getElementById('cropbox-start'); if(cs && info) cs.value=info.startHarvestTimeOA??'';
+                const ce=document.getElementById('cropbox-end'); if(ce && info) ce.value=info.endHarvestTimeOA??'';
+                const cl=document.getElementById('cropbox-last'); if(cl) cl.value=info && info.lastHarvest!=null ? info.lastHarvest : '';
+                const btn=document.getElementById('btn-apply-cropbox'); if(btn) btn.onclick=()=>{ const v=parseInt(document.getElementById('cropbox-carrots').value)||0; this.parser.setCropBoxCarrots(v); const s=document.getElementById('cropbox-start').value; const e2=document.getElementById('cropbox-end').value; const l=document.getElementById('cropbox-last').value; if(s) this.parser.setCropBoxOA('start', parseFloat(s)); if(e2) this.parser.setCropBoxOA('end', parseFloat(e2)); this.parser.setCropBoxOA('last', l? parseFloat(l):null); this.showToast('Caja aplicada'); };
+            } else cropboxUI.classList.add('hidden');
+        }
+        if (lampSel) {
+            const v = this.parser.getLampToggle ? this.parser.getLampToggle(placement) : undefined;
+            lampSel.value = v!==undefined ? String(v) : '';
+            lampSel.onchange = e=>{ if(e.target.value!=='') this.parser.setLampToggle(placement, parseInt(e.target.value)); };
+            lampSel.parentElement.style.display = (v!==undefined || (window.BEHAVIORS && window.BEHAVIORS[placement.item_id] && window.BEHAVIORS[placement.item_id].interact==='light_toggle')) ? '' : 'none';
+        }
+
         this.itemEditor.classList.remove('hidden');
 
         const flipGroup = document.querySelector('.wall-flipped-group');
