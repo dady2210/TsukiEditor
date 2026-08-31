@@ -2192,16 +2192,27 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             }
         }
         
-        // CropBox 1301 + lampToggle
+        // CropBox 1301 + lampToggle + parent + extra badge
         const cropboxUI = document.getElementById('cropbox-ui');
         const lampSel = document.getElementById('lamp-toggle');
+        const parentInput = document.getElementById('edit-parent-id');
+        const extraBadge = document.getElementById('extra-badge');
+        if (extraBadge) { extraBadge.textContent = placement.source==='extra' ? '★ extraFurnitureSaves' : ''; extraBadge.style.display = placement.source==='extra'? 'block':'none'; }
+        if (parentInput) {
+            const pv = placement.parentPlacementID ?? (placement.furnNode ? (this.parser._findParentVal?.(placement) ?? '') : '');
+            // fallback via find
+            let pv2 = '';
+            try { const n = placement.furnNode ? (placement.furnNode.children||[]).find(c=>c.name==='parentPlacementID') : null; pv2 = n? n.value : pv; } catch(e){}
+            parentInput.value = pv2 !== undefined && pv2 !== null ? pv2 : '';
+            parentInput.onchange = e=>{ const v=parseInt(e.target.value); if(!isNaN(v)) this.parser.setParentPlacementID && this.parser.setParentPlacementID(placement, v); };
+        }
         if (cropboxUI) {
             if (placement.item_id === 1301) {
                 cropboxUI.classList.remove('hidden');
                 const info = this.parser.getCropBoxSave ? this.parser.getCropBoxSave() : null;
                 const slotsDiv = document.getElementById('cropbox-slots');
                 if (slotsDiv && info && info.slots) {
-                    slotsDiv.innerHTML = info.slots.map((s,i)=> `<div style="display:flex; gap:6px; margin:4px 0;"><span>Slot ${i}</span><input data-idx="${i}" data-field="cropID" value="${s.cropID??''}" placeholder="cropID" style="width:70px;"><input data-idx="${i}" data-field="qty" value="${s.quantity??''}" placeholder="qty" style="width:60px;"></div>`).join('');
+                    slotsDiv.innerHTML = info.slots.map((s,i)=> `<div style="display:flex; gap:6px; margin:4px 0;"><span>Slot ${i}</span><input data-idx="${i}" data-field="cropID" value="${s.cropID??''}" placeholder="cropID 230=Uvas" style="width:70px;"><input data-idx="${i}" data-field="qty" value="${s.quantity??''}" placeholder="qty" style="width:60px;"></div>`).join('');
                     slotsDiv.querySelectorAll('input').forEach(inp=> inp.onchange = e=>{ const idx=parseInt(e.target.dataset.idx), field=e.target.dataset.field; const v=parseInt(e.target.value)||0; if(field==='cropID') this.parser.setCropBoxSlot(idx,v,null); else this.parser.setCropBoxSlot(idx,null,v); });
                 }
                 const cc=document.getElementById('cropbox-carrots'); if(cc && info) cc.value=info.carrots??'';
@@ -2215,7 +2226,6 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const v = this.parser.getLampToggle ? this.parser.getLampToggle(placement) : undefined;
             lampSel.value = v!==undefined ? String(v) : '';
             lampSel.onchange = e=>{ if(e.target.value!=='') this.parser.setLampToggle(placement, parseInt(e.target.value)); };
-            lampSel.parentElement.style.display = (v!==undefined || (window.BEHAVIORS && window.BEHAVIORS[placement.item_id] && window.BEHAVIORS[placement.item_id].interact==='light_toggle')) ? '' : 'none';
         }
 
         this.itemEditor.classList.remove('hidden');

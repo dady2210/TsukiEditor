@@ -1554,6 +1554,11 @@
                                 </div>
                             </div>
 
+                            <div class="input-group" id="extra-badge" style="display:none; margin-top:8px; font-size:0.8em; color:#e67e22;"></div>
+                            <div class="input-group" style="display:flex; gap:8px;">
+                                <div style="flex:1;"><label>parentPlacementID</label><input type="number" id="edit-parent-id" placeholder="0 = ninguno"></div>
+                                <div style="flex:1;"><label>lámpara lampToggle <select id="lamp-toggle"><option value="">(no lamp)</option><option value="0">Auto</option><option value="1">On</option><option value="2">Off</option></select></label></div>
+                            </div>
                             <!-- CropBox 1301 -->
                             <div id="cropbox-ui" class="hidden" style="margin: 1rem 0; padding:10px; border:1px solid rgba(0,0,0,0.1); border-radius:8px;">
                                 <label style="font-weight:bold;">📦 Caja 1301 — Slots/Carrots/OA</label>
@@ -1567,9 +1572,7 @@
                                     <input type="text" id="cropbox-last" placeholder="LastHarvest OA o vacío=null" style="flex:1;">
                                 </div>
                                 <button id="btn-apply-cropbox" class="btn-primary" style="width:100%; margin-top:8px;">Aplicar caja</button>
-                                <div style="margin-top:6px;">
-                                    <label>lámpara lampToggle <select id="lamp-toggle"><option value="">(no lamp)</option><option value="0">Auto</option><option value="1">On</option><option value="2">Off</option></select></label>
-                                </div>
+
                             </div>
 
                             <button id="btn-apply-item" class="btn-primary w-full" style="margin-bottom:0.5rem;">Aplicar</button>
