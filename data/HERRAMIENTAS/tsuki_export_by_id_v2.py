@@ -19,7 +19,7 @@ except ImportError as e:
     sys.exit(1)
 
 UnityPy.config.FALLBACK_UNITY_VERSION = '2022.3.0f1'
-UnityPy.config.FALLBACK_ASSEMBLY_FOLDER = r'C:\Users\Andres\Desktop\Tsuki_Odyssey\TSUKI MOVIL\Dumper\DummyDll'.3.0f1"
+UnityPy.config.FALLBACK_ASSEMBLY_FOLDER = r'C:\Users\Andres\Desktop\Tsuki_Odyssey\TSUKI MOVIL\Dumper\DummyDll'
 
 def load_env(bundles_dir, assemblies_dir=None):
     if assemblies_dir and assemblies_dir.exists():
@@ -313,7 +313,7 @@ def export_id(env, obj_map, target_id, out_dir, with_activity=False, include_fx=
                     safe_sp_name = safe_name(sname)
                     part.save(item_dir / f"{safe_sp_name}.png")
 
-                    # --- INYECCIÓN DE SHADERS Y COLORES PARA EL EDITOR WEB ---
+                    # --- INYECCIï¿½N DE SHADERS Y COLORES PARA EL EDITOR WEB ---
                     mat_names = []
                     for m_ptr in getattr(sr_data, 'm_Materials', []):
                         if m_ptr.path_id and m_ptr.path_id in obj_map:
@@ -356,6 +356,7 @@ def main():
     ap.add_argument("--bundles", type=Path, default=Path(__file__).parent)
     ap.add_argument("--with-activity", action="store_true")
     ap.add_argument("--include-fx", action="store_true")
+    ap.add_argument("--assemblies", type=Path, default=None)
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     local_dummy = Path(__file__).parent / "DummyDll"
