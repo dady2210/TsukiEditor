@@ -1,0 +1,606 @@
+{
+  "id": 1301,
+  "name": "Crop Box",
+  "raw_properties": {
+    "m_Enabled": 1,
+    "m_Name": "",
+    "transform": {
+      "m_FileID": 0,
+      "m_PathID": -3921372813444048381
+    },
+    "coll": {
+      "m_FileID": 0,
+      "m_PathID": 227527192779758083
+    },
+    "coll3D": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    },
+    "ID": 1301,
+    "numColors": 0,
+    "debugSort": 0,
+    "inShop": 0,
+    "placementID": 0,
+    "orientation": 0,
+    "polyColliderType": 0,
+    "colliderPoints": [],
+    "flippedColliderPoints": [],
+    "gridCollScale": 0.7710000276565552,
+    "gridHeightOffset": 0.0,
+    "gridOffset": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "uiPosition": 0.9800000190734863,
+    "Save": {
+      "rid": -2
+    },
+    "animator": {
+      "m_FileID": 0,
+      "m_PathID": -6146892596523755005
+    },
+    "cropAnims": [
+      {
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "renderer": {
+          "m_FileID": 0,
+          "m_PathID": -7790244367483987453
+        },
+        "timer": 0.0
+      }
+    ],
+    "references": {
+      "version": 2,
+      "RefIds": [
+        {
+          "rid": -2,
+          "type": {
+            "class": "",
+            "ns": "",
+            "asm": ""
+          }
+        }
+      ]
+    }
+  },
+  "layer_definitions": [
+    {
+      "renderer": "ScriptableObject: SpriteObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "ScriptableObject: AnimObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "ScriptableObject: SpriteObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "ScriptableObject: SpriteObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "ScriptableObject: SpriteObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    }
+  ],
+  "store_data": {},
+  "nodes": [
+    {
+      "path": "Crop Box",
+      "name": "Crop Box",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": 0.0,
+        "y": 0.0,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "CropBox",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": -3921372813444048381
+            },
+            "coll": {
+              "m_FileID": 0,
+              "m_PathID": 227527192779758083
+            },
+            "coll3D": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "ID": 1301,
+            "numColors": 0,
+            "debugSort": 0,
+            "sprites": [
+              {
+                "renderer": "ScriptableObject: SpriteObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              },
+              {
+                "renderer": "ScriptableObject: AnimObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              },
+              {
+                "renderer": "ScriptableObject: SpriteObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              },
+              {
+                "renderer": "ScriptableObject: SpriteObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              },
+              {
+                "renderer": "ScriptableObject: SpriteObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              }
+            ],
+            "inShop": 0,
+            "placementID": 0,
+            "orientation": 0,
+            "polyColliderType": 0,
+            "colliderPoints": [],
+            "flippedColliderPoints": [],
+            "gridCollScale": 0.7710000276565552,
+            "gridHeightOffset": 0.0,
+            "gridOffset": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "uiPosition": 0.9800000190734863,
+            "Save": {
+              "rid": -2
+            },
+            "animator": {
+              "m_FileID": 0,
+              "m_PathID": -6146892596523755005
+            },
+            "cropAnims": [
+              {
+                "offset": {
+                  "x": 0.0,
+                  "y": 0.0
+                },
+                "renderer": {
+                  "m_FileID": 0,
+                  "m_PathID": -7790244367483987453
+                },
+                "timer": 0.0
+              }
+            ],
+            "references": {
+              "version": 2,
+              "RefIds": [
+                {
+                  "rid": -2,
+                  "type": {
+                    "class": "",
+                    "ns": "",
+                    "asm": ""
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Crop Box/GameObject",
+      "name": "GameObject",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": 0.0,
+        "y": 0.0,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "AnimObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 0,
+            "anim": {
+              "m_FileID": 0,
+              "m_PathID": -6146892596523755005
+            },
+            "animEvents": [],
+            "tapAnimSFX": -1,
+            "flags": 0,
+            "traditionalScaleFlip": 1
+          }
+        }
+      ]
+    },
+    {
+      "path": "Crop Box/GameObject/Interior",
+      "name": "Interior",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": 0.0,
+        "y": 0.0,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "cropBox_1",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        },
+        {
+          "type": "SpriteObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 1,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": -6309148639010350589
+            },
+            "spriteFlipLogic": 0,
+            "normal": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "flipped": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Crop Box/GameObject/Exterior",
+      "name": "Exterior",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": 0.0,
+        "y": 0.0,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "cropBox_0",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        },
+        {
+          "type": "SpriteObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 1,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": -7570166501856699901
+            },
+            "spriteFlipLogic": 0,
+            "normal": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "flipped": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Crop Box/GameObject/Lid",
+      "name": "Lid",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.6930000185966492,
+        "y": 0.7329999804496765
+      },
+      "world_pos": {
+        "x": -0.6930000185966492,
+        "y": 0.7329999804496765,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "cropBox_2",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        },
+        {
+          "type": "SpriteObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": 852785986958662147
+            },
+            "overrideInvisible": 0,
+            "xPos": -0.6930000185966492,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 1,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": 1427429075348298243
+            },
+            "spriteFlipLogic": 0,
+            "normal": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "flipped": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Crop Box/Square",
+      "name": "Square",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 2.0
+      },
+      "world_pos": {
+        "x": 0.0,
+        "y": 2.0,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "None",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        },
+        {
+          "type": "SpriteObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 0,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": -7790244367483987453
+            },
+            "spriteFlipLogic": 0,
+            "normal": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "flipped": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "colliders": [],
+  "audio": [],
+  "animators": [],
+  "special_scripts": []
+}

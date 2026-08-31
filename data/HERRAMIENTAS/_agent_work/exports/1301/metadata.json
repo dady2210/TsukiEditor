@@ -1,0 +1,9 @@
+﻿{
+  \"id\": 1301,
+  \"name\": \"Crop Box\",
+  \"raw_properties\": {\"ID\":1301,\"gridCollScale\":{\"x\":2,\"y\":1},\"gridOffset\":{\"x\":0,\"y\":0}},
+  \"nodes\": [{\"path\":\"Crop Box/Exterior\",\"name\":\"Exterior\"},{\"path\":\"Crop Box/Interior\",\"name\":\"Interior\"},{\"path\":\"Crop Box/Lid\",\"name\":\"Lid\"}],
+  \"colliders\": [{\"type\":\"PolygonCollider2D\",\"node\":\"Crop Box\",\"paths\":[[{\"x\":-1,\"y\":-1},{\"x\":1,\"y\":-1},{\"x\":1,\"y\":1},{\"x\":-1,\"y\":1}]]}],
+  \"animators\": [{\"node\":\"Crop Box\",\"controller\":\"CropBoxController\",\"clips\":[{\"clip_name\":\"Open\",\"fps\":60,\"length\":0.25,\"loop\":false,\"curves\":[]}]}],
+  \"audio\": []
+}
