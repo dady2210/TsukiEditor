@@ -87,9 +87,9 @@ window.mapsAtlas = [
 
 window.MAP_META = {
   0: { name: "Home", exportDir: 2, export: "Exportado_level2", assembled: "level2_Ensamblado.png", lighting: "interior" },
-  2: { name: "ChisHouse", exportDir: 2, lighting: "interior" },
-  3: { name: "MocasHouse", exportDir: 3, lighting: "interior" },
-  4: { name: "Pier", exportDir: 4, lighting: "exterior" },
+  2: { name: "ChisHouse", exportDir: null, assembled: null, lighting: "interior", comment: "humano completa exportDir+assembled tras ingest_map" },
+  3: { name: "MocasHouse", exportDir: null, assembled: null, lighting: "interior", comment: "humano completa exportDir+assembled tras ingest_map" },
+  4: { name: "Pier", exportDir: null, assembled: null, lighting: "exterior", comment: "humano completa exportDir+assembled tras ingest_map" },
   6: { name: "Farm", exportDir: 4, export: "Exportado_level4", assembled: "level4_Ensamblado.png", lighting: "exterior" },
-  8: { name: "TownHall", exportDir: 8, lighting: "interior" }
+  8: { name: "TownHall", exportDir: null, assembled: null, lighting: "interior", comment: "humano completa exportDir+assembled tras ingest_map" }
 };
