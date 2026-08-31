@@ -582,7 +582,7 @@ class SaveParser {
                     p.y = Number(parentItem.y) + localY;
                     p.linkedParent = parentItem;
                 } else {
-                    if (localStorage.tsukiDebugGrid === '1') console.debug('[parent miss]', { id: p.item_id, placementID: p.placementID, parentId: parentIdNum, cluster: p.cluster });
+                    if (typeof localStorage !== 'undefined' && localStorage.tsukiDebugGrid === '1') console.debug('[parent miss]', { id: p.item_id, placementID: p.placementID, parentId: parentIdNum, cluster: p.cluster });
                     // skip silencioso: no dibujar en (0,0) del living — mantener x,y local pero no en origen global
                 }
             }
@@ -2902,12 +2902,13 @@ class SaveParser {
     }
     // Fase 1: CropBoxSave (id 1301 / CropBox+CropBoxSave) — slots[{cropID,quantity}], carrots caja, OA, LastHarvest 0x2D
     _findCropBoxNode() {
-        // buscar placement 1301 primero
         const p = (this.placements || []).find(x => x.item_id === 1301);
         if (p && p.furnNode) {
+            const hasSlots = findChildRecursive(p.furnNode, ['slots','Slots']);
+            const hasCarrots = findChildRecursive(p.furnNode, ['carrots','Carrots']);
+            if (hasSlots || hasCarrots) return p.furnNode;
             const cand = findChildRecursive(p.furnNode, ['CropBoxSave','cropBoxSave','CropBox']);
             if (cand) return cand;
-            // typeName contiene CropBox
             if (p.furnNode.typeName && p.furnNode.typeName.includes('CropBox')) return p.furnNode;
         }
         let node = findChildRecursive(this.ast, ['cropBoxSave','CropBox']);
