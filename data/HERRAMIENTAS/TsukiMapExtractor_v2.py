@@ -359,6 +359,40 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
     with open(meta_path, 'w', encoding='utf-8') as f:
         json.dump(map_metadata, f, indent=2, ensure_ascii=False)
     print(f"    [+] map_metadata.json generado exitosamente.")
+    # --- scene_full.json unificado ---
+    try:
+        hierarchy = [{"path": go.m_Name, "components": [env.objects[c.path_id].type.name for c in go.m_Components]} for go in gameobjects.values()]
+        # colliders clasificados
+        colliders = []
+        for go_id, go in gameobjects.items():
+            cpid = next((c.path_id for c in go.m_Components if env.objects[c.path_id].type.name in ['PolygonCollider2D','BoxCollider2D','EdgeCollider2D','CompositeCollider2D']), None)
+            if not cpid: continue
+            try:
+                ct = env.objects[cpid].type.name
+                tree = env.objects[cpid].read_typetree()
+                role = "unknown"
+                if "Camera" in go.m_Name or "Confine" in go.m_Name: role="camera"
+                elif "Wallpaper" in go.m_Name: role="wallpaper"
+                elif tree.get("m_IsTrigger"): role="trigger"
+                elif any(k in go.m_Name for k in ["Floor","Walk","Nav","Ground"]): role="walkable"
+                else: role="blocker"
+                c_path = next((c.path_id for c in go.m_Components if env.objects[c.path_id].type.name=='Transform'), None)
+                wx,wy,ang,sx,sy = get_world_matrix(c_path, transforms) if c_path else (0,0,0,1,1)
+                colliders.append({"go":go.m_Name, "path": go.m_Name, "type":ct, "x":wx, "y":wy, "sx":sx, "sy":sy, "angle": math.degrees(ang), "role": role, "is_trigger": bool(tree.get("m_IsTrigger")), "properties": safe_serialize(obj_map, tree)})
+            except: pass
+        scene_full = {
+            "kind":"map", "id": base_name, "name": base_name, "source": level_path,
+            "layout": {"front": layout_data, "back": [], "fx": []},
+            "hierarchy": hierarchy,
+            "colliders": colliders,
+            "logic": {"walkable": [c for c in colliders if c["role"]=="walkable"], "blockers": [c for c in colliders if c["role"]=="blocker"], "triggers": [c for c in colliders if c["role"]=="trigger"], "interaction_nodes": map_metadata.get("interaction_nodes",[]), "grids": map_metadata.get("grid_system",[]), "camera_confines": map_metadata.get("camera_confines",[]), "lights": map_metadata.get("lighting_volumes",[]), "scripts": map_metadata.get("special_scripts",[])},
+            "animation": {"controllers": []}, "catalog": {}, "raw": map_metadata
+        }
+        with open(os.path.join(output_dir, 'scene_full.json'), 'w', encoding='utf-8') as f:
+            json.dump(scene_full, f, indent=2, ensure_ascii=False)
+        print(f"    [+] scene_full.json unificado.")
+    except Exception as e:
+        print(f"    [!] scene_full falló: {e}")
     # --- FIN EXTRACCIÓN DE METADATA ---
 
     assemble_map(layout_data, output_dir, base_name)
