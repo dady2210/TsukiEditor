@@ -378,32 +378,50 @@ class IsometricMap {
     }
 
     // ─── Coordinate transforms ───────────────────────────────────────────────
-    getAtlasSurface(kind, groupNum) {
+    surfaceFor(mapId, groupNum, isWall, flipped) {
         if (!window.mapsAtlas) return null;
-        return window.mapsAtlas.find(s => s.kind === kind && Number(s.groupNum) === Number(groupNum));
+        return window.mapsAtlas.find(s => String(s.mapId) === String(mapId) && Number(s.groupNum) === Number(groupNum) && s.kind === (isWall ? 'wall' : 'floor') && (isWall ? !!s.flipped === !!flipped : true)) || null;
+    }
+    getAtlasSurface(kind, groupNum, mapId, flipped) {
+        if (mapId == null) {
+            const sel = document.getElementById('select-location');
+            mapId = sel ? sel.value : 0;
+        }
+        if (kind === 'wall') return this.surfaceFor(mapId, groupNum, true, flipped);
+        return this.surfaceFor(mapId, groupNum, false, false);
     }
     
-    getFloorOffset(floorNum) {
+    getFloorOffset(floorNum, mapId) {
         let isPlay = document.body.classList.contains('play-mode');
         let isGrid = document.body.classList.contains('grid-mode');
         if (!isPlay && !isGrid) return { x: 0, y: 0 };
-        const surf = this.getAtlasSurface('floor', floorNum);
-        if (surf) {
-            // Convert PNG pixel coordinate to unscaled isometric coordinate
+        if (mapId == null) {
+            const sel = document.getElementById('select-location');
+            mapId = sel ? parseInt(sel.value, 10) : 0;
+        }
+        const surf = this.surfaceFor(mapId, floorNum, false, false);
+        if (surf && surf.origin_px) {
             return { x: surf.origin_px.x * (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75), y: surf.origin_px.y * (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) };
         }
+        if (window.tsukiDebugGrid === '1' || localStorage.tsukiDebugGrid === '1') console.debug('[surfaceFor miss floor]', { mapId, floorNum });
         return { x: 0, y: 0 };
     }
 
-    getIsoCoords(x, y, floorNum = 0) {
-        const off = this.getFloorOffset(floorNum);
+    getIsoCoords(x, y, floorNum = 0, mapId) {
+        if (mapId == null) {
+            const sel = document.getElementById('select-location');
+            mapId = sel ? parseInt(sel.value, 10) : 0;
+        }
+        const off = this.getFloorOffset(floorNum, mapId);
         let cellW = this.CELL_W;
         let cellH = this.CELL_H;
         if (window.mapsAtlas) {
-            const surf = window.mapsAtlas.find(s => s.kind === 'floor' && String(s.groupNum) === String(floorNum));
+            const surf = this.surfaceFor(mapId, floorNum, false, false);
             if (surf && surf.cell) {
                 cellW = surf.cell.w || this.CELL_W;
                 cellH = surf.cell.h || this.CELL_H;
+            } else if (window.tsukiDebugGrid === '1' || localStorage.tsukiDebugGrid === '1') {
+                console.debug('[surfaceFor miss iso]', { mapId, floorNum });
             }
         }
         
@@ -579,28 +597,24 @@ class IsometricMap {
     //   flipped=true  → pared IZQUIERDA, a lo largo de X, anclada en y = ymax
     //   flipped=false → pared DERECHA,  a lo largo de Y, anclada en x = xmax
     // wx del save es coordenada de piso en ese eje; wy es altura sobre el piso.
-    getWallOffset(floorNum, flipped) {
+    getWallOffset(floorNum, flipped, mapId) {
         let isPlay = document.body.classList.contains('play-mode');
         let isGrid = document.body.classList.contains('grid-mode');
         if (!isPlay && !isGrid) return null;
-        
-        if (window.mapsAtlas) {
-            const surf = window.mapsAtlas.find(s => s.kind === 'wall' && Number(s.groupNum) === Number(floorNum) && !!s.flipped === !!flipped);
-            if (surf) {
-                return { x: surf.origin_px.x * (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75), y: surf.origin_px.y * (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) };
-            }
+        if (mapId == null) { const sel=document.getElementById('select-location'); mapId = sel ? parseInt(sel.value,10):0; }
+        const surf = this.surfaceFor(mapId, floorNum, true, flipped);
+        if (surf && surf.origin_px) {
+            return { x: surf.origin_px.x * (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75), y: surf.origin_px.y * (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) };
         }
         return null;
     }
 
-    getWallIsoCoords(wx, wy, flipped, bbox, floorNum = 0) {
+    getWallIsoCoords(wx, wy, flipped, bbox, floorNum = 0, mapId) {
         let isPlay = document.body.classList.contains('play-mode');
         let isGrid = document.body.classList.contains('grid-mode');
-        
-        // Si tenemos config en atlas, usamos ESA l�gica directamente para que los muebles
-        // sigan 100% a la grilla roja del editor de atlas.
+        if (mapId == null) { const sel=document.getElementById('select-location'); mapId = sel ? parseInt(sel.value,10):0; }
         if (window.mapsAtlas && (isPlay || isGrid)) {
-            const surf = window.mapsAtlas.find(s => s.kind === 'wall' && String(s.groupNum) === String(floorNum) && !!s.flipped === !!flipped);
+            const surf = this.surfaceFor(mapId, floorNum, true, flipped);
             if (surf) {
                 const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
                 const oX = surf.origin_px.x * _bgo;
@@ -1318,7 +1332,16 @@ class IsometricMap {
         let bgActive = (isPlay || isGrid) && targetLoc === 0;
         
         if (isPlay) {
-            visibleFloors = ['0', '1', '2'];
+            // B: visible = floors del atlas para ese mapId, respetar homecoming_only
+            const allFloors = (window.mapsAtlas || []).filter(s => String(s.mapId) === String(targetLoc) && s.kind === 'floor');
+            const showHC = (() => {
+                try { if (window.Flags) return window.Flags.get('homecomingUpdates') === 1; } catch(e) {}
+                if (this.app && this.app.parser && this.app.parser.generalVars && this.app.parser.generalVars.homecomingUpdates) return this.app.parser.generalVars.homecomingUpdates.value === 1;
+                if (this.app && this.app.parser && typeof this.app.parser.getHomeCurrSLocData === 'function') return this.app.parser.getHomeCurrSLocData() === 1;
+                return false;
+            })();
+            visibleFloors = allFloors.filter(s => !s.homecoming_only || showHC).map(s => String(s.groupNum));
+            if (visibleFloors.length === 0) visibleFloors = ['0', '1', '2'];
         } else if (isGrid) {
             if (this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1) {
                 const surf = window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex];
@@ -1679,8 +1702,9 @@ class IsometricMap {
             }
             const cacheKey = this.app.parser.placements.length + '_' + targetLoc + '_' + targetFloor + '_' + visibleFloors.join(',') + '_' + isPlay + '_' + isGrid + '_' + itemHash;
             if (!this._renderCache || this._renderCache.key !== cacheKey || this.isItemDragging) {
+                // D: paredes usan surface wall del mismo groupNum, no filtrar por visibleFloors de piso
                 const allWalls = this.app.parser.placements.filter(
-                    p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
+                    p => p.cluster === targetLoc && p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
                 );
                 const all = this.app.parser.placements.filter(
                     p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && !p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
@@ -2294,8 +2318,14 @@ drawH
                 
                 const hit = this._hitTestPlaySurface(mouseX, mouseY);
                 if (hit) {
-                    const targetLocStr = document.getElementById('select-location')?.value;
-                    const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
+        const targetLocStr = document.getElementById('select-location')?.value;
+        const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
+        if ((window.tsukiDebugGrid === '1' || localStorage.tsukiDebugGrid === '1') && !this._debugLoggedLoc) {
+            const plist = (this.app.parser.placements || []).filter(p => p.cluster === targetLoc).slice(0, 20);
+            console.debug('[play placements]', targetLoc, plist.map(p => ({ id:p.item_id, floor:p.floor, x:p.x, y:p.y, isWall:!!p.isWall, parent:p.parentPlacementID })));
+            this._debugLoggedLoc = targetLoc;
+        }
+        if (localStorage.tsukiDebugGrid !== '1' && window.tsukiDebugGrid !== '1') this._debugLoggedLoc = null;
                     
                     const coveringType = this.isCovering(data.item_id);
                     if (coveringType) {

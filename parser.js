@@ -569,16 +569,21 @@ class SaveParser {
         const seeds = this.placements.filter(p => isCropPlacement(p) && p.placementID !== -1);
         const plots = this.placements.filter(p => p.item_id === 306 || p.item_id === 411 || (typeof GROUND_IDS !== 'undefined' && GROUND_IDS.has(p.item_id)));
 
-        // Resolve SubGroupPosition parentPlacementID for ALL placements
+        // C: parentPlacementID offset al padre en mismo loc
         for (const p of this.placements) {
             const parentIdNode = findChildRecursive(p.furnNode, ['parentPlacementID', 'ParentPlacementID']);
             if (parentIdNode && parentIdNode.value !== -1 && parentIdNode.value !== 0) {
                 const parentIdNum = Number(parentIdNode.value);
-                const parentItem = this.placements.find(parent => Number(parent.placementID) === parentIdNum);
+                const parentItem = this.placements.find(parent => Number(parent.placementID) === parentIdNum && Number(parent.cluster) === Number(p.cluster));
                 if (parentItem) {
-                    p.x = parentItem.x;
-                    p.y = parentItem.y;
+                    const localX = Number(p.x) || 0;
+                    const localY = Number(p.y) || 0;
+                    p.x = Number(parentItem.x) + localX;
+                    p.y = Number(parentItem.y) + localY;
                     p.linkedParent = parentItem;
+                } else {
+                    if (localStorage.tsukiDebugGrid === '1') console.debug('[parent miss]', { id: p.item_id, placementID: p.placementID, parentId: parentIdNum, cluster: p.cluster });
+                    // skip silencioso: no dibujar en (0,0) del living — mantener x,y local pero no en origen global
                 }
             }
         }
