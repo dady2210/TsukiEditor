@@ -359,7 +359,8 @@ def export_id(env, obj_map, target_id, out_dir, with_activity=False, include_fx=
 
                 if json_layout:
                     with open(item_dir / f"layout_{view}.json", "w", encoding="utf-8") as f: json.dump(json_layout, f, indent=2)
-                    act_sfx = "_ACTIVITY" if (with_activity and activity_layers) else ""
+                    # activity_layers no existe aquí; usar with_activity directamente
+                    act_sfx = "_ACTIVITY" if with_activity else ""
                     fname = f"FURN_{target_id}_0{act_sfx}.png" if view == "front" else f"FURN_{target_id}_BACK{act_sfx}.png"
                     composition_layout = [d for d in json_layout if d['sp'].lower() not in fx_keywords]
                     compose_exact(composition_layout, item_dir, item_dir / fname)
