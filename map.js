@@ -234,17 +234,25 @@ class IsometricMap {
         return size;
     }
 
-    getImage(item_id, orientation) {
-        // 0: SE (Front Right)
-        // 1: SW (Front Left)
-        // 2: NW (Back Left)
-        // 3: NE (Back Right)
+    getImage(item_id, orientation, placement) {
+        // U4: si BEHAVIORS render.on y placement _lightMode on/auto-on, intentar ON
+        let tryOn = false;
+        if (placement && window.BEHAVIORS && window.BEHAVIORS[String(item_id)] && window.BEHAVIORS[String(item_id)].render && window.BEHAVIORS[String(item_id)].render.on) {
+            const beh = window.BEHAVIORS[String(item_id)];
+            if (beh.interact === 'light_toggle') {
+                const mode = placement._lightMode || 'auto';
+                const minutes = (window.GameTime ? window.GameTime.now().minutes : (this.app && this.app.parser ? this.app.parser.getClock().hour * 60 : 0));
+                const on = window.Lighting ? window.Lighting.lampOn(mode, minutes) : (mode === 'on');
+                if (on) tryOn = true;
+            }
+        }
+        // 0: SE (Front Right) 1: SW 2: NW 3: NE
         const ori = Number(orientation);
         const isBack = ori === 2 || ori === 3;
-        const frontKey = `${item_id}`;
-        const backKey = `${item_id}_BACK`;
+        const frontKey = tryOn ? `${item_id}_ON` : `${item_id}`;
+        const backKey = tryOn ? `${item_id}_ON_BACK` : `${item_id}_BACK`;
         
-        const cacheKey = isBack ? backKey : frontKey;
+        const cacheKey = (tryOn ? 'ON_' : '') + (isBack ? backKey : frontKey);
         
         if (this._imgCache[cacheKey] !== undefined) {
             return this._imgCache[cacheKey];
@@ -264,7 +272,29 @@ class IsometricMap {
             img.src = `images/items/FURN_${keyToLoad}_0.png?v=5`;
         };
 
-        if (isBack) {
+        if (tryOn) {
+            // U4: ON first, fallback a normal
+            loadImg(frontKey, () => {
+                // fallback normal _0
+                const normalKey = isBack ? `${item_id}_BACK` : `${item_id}`;
+                const normalCache = normalKey;
+                // reutilizar cache normal si ya existe
+                if (this._imgCache[normalCache] && this._imgCache[normalCache] !== false) {
+                    this._imgCache[cacheKey] = this._imgCache[normalCache];
+                    this.draw();
+                } else {
+                    loadImg(normalKey.replace('_BACK','_BACK').replace('_ON',''), () => {
+                        // último fallback: intentar sin _0
+                        const img2 = new Image();
+                        img2.onload = () => { this._imgCache[cacheKey] = img2; this.draw(); };
+                        img2.onerror = () => { this._imgCache[cacheKey] = null; this.draw(); };
+                        img2.src = `images/items/FURN_${normalKey}.png?v=5`;
+                    });
+                }
+            });
+            // para ON no usar back/front complejo en este paso
+            if (isBack) { /* already handled via frontKey ON_BACK */ }
+        } else if (isBack) {
             // Try loading back image, if it fails, load front image instead
             loadImg(backKey, () => {
                 // Back image failed completely, fallback to front image
