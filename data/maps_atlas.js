@@ -30,17 +30,17 @@ function W(mapId, groupNum, flipped, rows, cols, origin, extra) {
 window.mapsAtlas = [
   // ── 0 HOME  Exportado_level2  lighting interior ──
   // origins medidos (no tocar)
-  F(0, 0, 16, 16, { x: 1241.8627766640973, y: 1976.5599626258365 }),
-  F(0, 1, 14, 14, { x: 1241.3778650761362, y: 1377.8195246607497 }),
+  F(0, 0, 16, 16, { x: 1241.8627766640973, y: 1976.5599626258365 }, { mask: "mask_floor_0.png", exportDir: 2, assembled: "level2_Ensamblado.png" }),
+  F(0, 1, 14, 14, { x: 1241.3778650761362, y: 1377.8195246607497 }, { mask: "mask_floor_1.png", exportDir: 2, assembled: "level2_Ensamblado.png" }),
   F(0, 2, 14, 14, { x: 329, y: 86 }, { cell: { w: 64, h: 32 }, homecoming_only: true }),
   // exterior árbol / jardín (save tenía items en g4 y g5)
   F(0, 4, 16, 16, { x: 900, y: 2200 }, { outdoor: true, comment: "TODO alinear exterior g4" }),
   F(0, 5, 12, 12, { x: 1600, y: 2200 }, { outdoor: true, comment: "TODO alinear exterior g5" }),
 
-  W(0, 0, true,  16, 16, { x: 517.586070316604,  y: 1736.7251352113876 }),
-  W(0, 0, false, 16, 16, { x: 1900.8886116872663, y: 1709.2945966576285 }),
-  W(0, 1, true,  14, 16, { x: 695.5865991721795, y: 1121.399760052171 }),
-  W(0, 1, false, 14, 16, { x: 1878.8955153318568, y: 1174.4446804489417 }),
+  W(0, 0, true,  16, 16, { x: 517.586070316604,  y: 1736.7251352113876 }, { mask: "mask_wallL_0.png", exportDir: 2, assembled: "level2_Ensamblado.png" }),
+  W(0, 0, false, 16, 16, { x: 1900.8886116872663, y: 1709.2945966576285 }, { mask: "mask_wallR_0.png", exportDir: 2, assembled: "level2_Ensamblado.png" }),
+  W(0, 1, true,  14, 16, { x: 695.5865991721795, y: 1121.399760052171 }, { mask: "mask_wallL_1.png", exportDir: 2, assembled: "level2_Ensamblado.png" }),
+  W(0, 1, false, 14, 16, { x: 1878.8955153318568, y: 1174.4446804489417 }, { mask: "mask_wallR_1.png", exportDir: 2, assembled: "level2_Ensamblado.png" }),
   W(0, 2, true,  14, 14, { x: 80, y: 40 }, { homecoming_only: true, comment: "TODO pared HC izq" }),
   W(0, 2, false, 14, 14, { x: 580, y: 40 }, { homecoming_only: true, comment: "TODO pared HC der" }),
 
@@ -86,10 +86,10 @@ window.mapsAtlas = [
 ];
 
 window.MAP_META = {
-  0: { name: "Home", export: "Exportado_level2", lighting: "interior" },
-  2: { name: "ChisHouse", lighting: "interior" },
-  3: { name: "MocasHouse", lighting: "interior" },
-  4: { name: "Pier", lighting: "exterior" },
-  6: { name: "Farm", export: "Exportado_level4", lighting: "exterior" },
-  8: { name: "TownHall", lighting: "interior" }
+  0: { name: "Home", exportDir: 2, export: "Exportado_level2", assembled: "level2_Ensamblado.png", lighting: "interior" },
+  2: { name: "ChisHouse", exportDir: 2, lighting: "interior" },
+  3: { name: "MocasHouse", exportDir: 3, lighting: "interior" },
+  4: { name: "Pier", exportDir: 4, lighting: "exterior" },
+  6: { name: "Farm", exportDir: 4, export: "Exportado_level4", assembled: "level4_Ensamblado.png", lighting: "exterior" },
+  8: { name: "TownHall", exportDir: 8, lighting: "interior" }
 };

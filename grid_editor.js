@@ -11,6 +11,9 @@ class GridEditor {
         this.cellHInput = document.getElementById('grid-cell-h');
         this.cellWRange = document.getElementById('grid-cell-w-range');
         this.cellHRange = document.getElementById('grid-cell-h-range');
+        this.maskInput = document.getElementById('grid-mask');
+        this.defaultCoverInput = document.getElementById('grid-default-cover');
+        this.commentInput = document.getElementById('grid-comment');
 
         // Ensure atlasConfig exists
         if (!window.atlasConfig) window.atlasConfig = { bgScale: 0.75 };
@@ -61,6 +64,18 @@ class GridEditor {
             surf.rows     = parseInt(this.rows.value);
             surf.groupNum = parseInt(this.groupNum.value);
             surf.flipped  = this.flipped.checked;
+            if (this.maskInput) {
+                const m = this.maskInput.value.trim();
+                if (m) surf.mask = m; else delete surf.mask;
+            }
+            if (this.defaultCoverInput) {
+                const v = this.defaultCoverInput.value.trim();
+                if (v !== '') surf.defaultCoverId = parseInt(v, 10); else delete surf.defaultCoverId;
+            }
+            if (this.commentInput) {
+                const c = this.commentInput.value.trim();
+                if (c) surf.comment = c; else delete surf.comment;
+            }
             this.refreshSelect();
             this.app.map.draw();
         };
@@ -69,6 +84,9 @@ class GridEditor {
         this.rows.onchange     = updateAtlas;
         this.groupNum.onchange = updateAtlas;
         this.flipped.onchange  = updateAtlas;
+        if (this.maskInput) this.maskInput.onchange = updateAtlas;
+        if (this.defaultCoverInput) this.defaultCoverInput.onchange = updateAtlas;
+        if (this.commentInput) this.commentInput.onchange = updateAtlas;
 
         // ── Cell size (w/h) ────────────────────────────────────────────────
         const updateCellSize = () => {
@@ -152,6 +170,9 @@ class GridEditor {
         const ch = (surf.cell && surf.cell.h) || 32;
         this.cellWInput.value = cw; this.cellWRange.value = cw;
         this.cellHInput.value = ch; this.cellHRange.value = ch;
+        if (this.maskInput) this.maskInput.value = surf.mask || '';
+        if (this.defaultCoverInput) this.defaultCoverInput.value = surf.defaultCoverId != null ? surf.defaultCoverId : '';
+        if (this.commentInput) this.commentInput.value = surf.comment || '';
     }
 
     addSurface(kind) {
@@ -169,9 +190,12 @@ class GridEditor {
     }
 
     saveAtlas() {
+        // Preserve F()/W() format compatible con <script src> legacy — emit JSON but keep MAP_META header
         const cfg   = JSON.stringify(window.atlasConfig || { bgScale: 0.75 }, null, 2);
         const atlas = JSON.stringify(window.mapsAtlas, null, 2);
-        const content = `window.atlasConfig = ${cfg};\nwindow.mapsAtlas = ${atlas};\n`;
+        const meta = window.MAP_META ? `\nwindow.MAP_META = ${JSON.stringify(window.MAP_META, null, 2)};\n` : '';
+        const header = `/* maps_atlas.js origin_px medidos casa 0 g0/g1 KEEP */\n`;
+        const content = header + `window.atlasConfig = ${cfg};\nwindow.mapsAtlas = ${atlas};\n` + meta;
         const blob = new Blob([content], { type: 'application/javascript' });
         const url  = URL.createObjectURL(blob);
         const a    = document.createElement('a');

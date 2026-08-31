@@ -134,9 +134,38 @@ class IsometricMap {
 
     // Tileset Image Loader (for Wallpapers/Floors)
         _getMaskImage(type, floorKey, loc) {
-        let exportDir = loc;
-        // Tsuki Odyssey loc 0 (Treehouse) is exported as level2
-        if (loc === 0) exportDir = 2;
+        // U1: resolver exportDir/assembled/mask via MAP_META y surface.mask si existe, fallback viejo
+        const META = (window.MAP_META && window.MAP_META[loc]) || {};
+        let exportDir = META.exportDir != null ? META.exportDir : (loc === 0 ? 2 : loc);
+        // buscar surface para este loc/type/floorKey
+        let surface = null;
+        if (window.mapsAtlas) {
+            // heuristic: floorKey mapea a groupNum para floor; para wall usa fNum
+            surface = window.mapsAtlas.find(s => {
+                if (String(s.mapId) !== String(loc)) return false;
+                if (type === 'floor' && s.kind === 'floor' && s.groupNum === floorKey) return true;
+                if (type === 'wall') {
+                    const fNum = Math.floor(floorKey / 2);
+                    const expectFlipped = (floorKey % 2) === 0; // wallL is flipped true, wallR false; floorKey even->L, odd->R
+                    // Para loc 0 usamos lógica wallL/R, para farm group 3 ambos walls
+                    if (s.kind === 'wall' && s.groupNum === fNum && s.flipped === expectFlipped) return true;
+                    // fallback group 3 farm exact
+                    if (String(loc) === '6' && s.kind === 'wall' && s.groupNum === 3) return true;
+                }
+                return false;
+            }) || null;
+            if (surface && surface.exportDir != null) exportDir = surface.exportDir;
+            if (surface && surface.mask) {
+                const cacheKey2 = 'mask_' + exportDir + '_' + surface.mask;
+                if (this._imgCache[cacheKey2] !== undefined) return this._imgCache[cacheKey2];
+                this._imgCache[cacheKey2] = false;
+                const img2 = new Image();
+                img2.onload = () => { this._imgCache[cacheKey2] = img2; this.draw(); };
+                img2.onerror = () => { this._imgCache[cacheKey2] = false; };
+                img2.src = 'images/maps/Exportado_level' + exportDir + '/' + surface.mask;
+                return false;
+            }
+        }
         const cacheKey = 'mask_' + exportDir + '_' + type + '_' + floorKey;
         if (this._imgCache[cacheKey] !== undefined) {
             return this._imgCache[cacheKey];
@@ -150,14 +179,12 @@ class IsometricMap {
         img.onerror = () => {
             this._imgCache[cacheKey] = false;
         };
-        
         let maskName = 'mask_' + type + '_' + floorKey;
-        if (type === 'wall' && loc === 0) {
+        if (type === 'wall' && String(loc) === '0') {
             const isRight = (floorKey % 2) !== 0;
             const fNum = Math.floor(floorKey / 2);
             maskName = 'mask_wall' + (isRight ? 'R' : 'L') + '_' + fNum;
         }
-        
         img.src = 'images/maps/Exportado_level' + exportDir + '/' + maskName + '.png';
         return false;
     }
@@ -1350,7 +1377,10 @@ class IsometricMap {
             if ((isPlay || isGrid) && window.mapsAtlas) {
             // 1, 2, 3: BAKED BACKGROUND (House level2 / Farm level4)
             const targetLoc = document.getElementById('select-location') ? parseInt(document.getElementById('select-location').value) : 0;
-            const bgPath = targetLoc === 6 ? '../maps/Exportado_level4/level4_Ensamblado.png' : '../maps/Exportado_level2/level2_Ensamblado.png';
+            const META2 = (window.MAP_META && window.MAP_META[targetLoc]) || {};
+            const bgExportDir2 = META2.exportDir != null ? META2.exportDir : (targetLoc === 0 ? 2 : targetLoc);
+            const bgAssembled2 = META2.assembled || ('level' + bgExportDir2 + '_Ensamblado.png');
+            const bgPath = '../maps/Exportado_level' + bgExportDir2 + '/' + bgAssembled2;
             const bgImg = this.getBackgroundImage(bgPath);
             
             // Only bake if bgImg is loaded and we haven't baked this combination yet

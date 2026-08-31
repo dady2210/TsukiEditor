@@ -233,6 +233,33 @@
                 <button class="btn" style="background-color: #e83e8c; border-color: #e83e8c; font-weight:bold; padding:8px; flex:1;" onclick="exportPNG(true)" title="Exporta solo lo que se ve actualmente en la cámara, ignorando todo lo demás.">Exportar Vista (Recorte)</button>
             </div>
         </div>
+        <!-- U2 Superficies de juego (standalone, no rompe capas/polígonos) -->
+        <div style="margin-top:10px; padding:8px; background:#1e1e1e; border:1px solid #3c3c3c; border-radius:4px;">
+            <div style="font-size:11px; font-weight:bold; margin-bottom:6px;">Superficies de juego</div>
+            <div style="display:flex; gap:4px; margin-bottom:6px;">
+                <input type="file" id="atlas-input" accept=".js,.json" style="display:none" onchange="importAtlas(event)">
+                <button class="btn btn-sm" onclick="document.getElementById('atlas-input').click()">Importar maps_atlas.js</button>
+                <button class="btn btn-sm" onclick="fetchAtlas()">Fetch ../../data/maps_atlas.js</button>
+            </div>
+            <select id="atlas-surface-list" style="width:100%; background:#333; color:#fff; border:1px solid #555; padding:4px; font-size:11px; margin-bottom:6px;"></select>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:11px;">
+                <label>Kind <select id="surf-kind" style="width:100%"><option value="floor">piso</option><option value="wall">pared izq</option><option value="wallR">pared der</option></select></label>
+                <label>groupNum <input id="surf-group" type="number" value="0" style="width:100%"></label>
+                <label>rows <input id="surf-rows" type="number" value="16" style="width:100%"></label>
+                <label>cols <input id="surf-cols" type="number" value="16" style="width:100%"></label>
+                <label>defaultCoverId <input id="surf-cover" type="number" placeholder="null" style="width:100%"></label>
+                <label>lighting <select id="surf-lighting" style="width:100%"><option value="">(default)</option><option value="interior">interior</option><option value="exterior">exterior</option></select></label>
+            </div>
+            <label style="font-size:10px; display:block; margin-top:6px;"><input type="checkbox" id="surf-homecoming"> homecoming_only</label>
+            <label style="font-size:10px; display:block;"><input type="checkbox" id="surf-outdoor"> outdoor</label>
+            <label style="font-size:10px; display:block; margin-bottom:6px;"><input type="checkbox" id="surf-allow-origin"> permitir mover origen (medido casa g0/g1)</label>
+            <div style="display:flex; gap:4px; margin-top:6px;">
+                <button class="btn btn-sm" onclick="bindPolyToSurface()">Vincular poly</button>
+                <button class="btn btn-sm" onclick="generateMaskPNG()">Generar máscara PNG</button>
+            </div>
+            <button class="btn" style="width:100%; margin-top:6px; background:#0e639c;" onclick="mergeAndDownloadAtlas()">Merge atlas → descargar</button>
+            <div id="surf-preview" style="margin-top:6px; font-size:10px; color:#aaa;"></div>
+        </div>
     </div>
 
     <script>
@@ -1133,6 +1160,72 @@
         }
 
         resizeCanvas(); updateFolderDropdowns(); recordState();
+    // ── U2 Superficies (no rompe capas/polígonos) ──
+    let importedAtlas = null; let importedMeta = null;
+    async function fetchAtlas(){
+        try{ const r=await fetch('../../data/maps_atlas.js'); const t=await r.text(); eval(t); importedAtlas=window.mapsAtlas.slice(); importedMeta=window.MAP_META; populateAtlasList(); }catch(e){ alert(e.message); }
+    }
+    function importAtlas(e){
+        const f=e.target.files[0]; if(!f)return;
+        const rd=new FileReader(); rd.onload=()=>{ try{ eval(rd.result); importedAtlas=window.mapsAtlas.slice(); importedMeta=window.MAP_META; populateAtlasList(); }catch(err){ alert(err.message);} }; rd.readAsText(f);
+    }
+    function populateAtlasList(){
+        const sel=document.getElementById('atlas-surface-list'); sel.innerHTML='';
+        const curMap = window.currentMapId!=null? window.currentMapId : 0;
+        (importedAtlas||window.mapsAtlas||[]).forEach((s,i)=>{
+            const o=document.createElement('option'); o.value=i; o.textContent=`[${s.mapId}] ${s.kind} g${s.groupNum} ${s.flipped?'L':'R'} ${s.rows}x${s.cols} ${s.mask||''}`; sel.appendChild(o);
+        });
+    }
+    function currentPoly(){
+        if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex] && sceneData[primarySelectedIndex].poly) return sceneData[primarySelectedIndex].poly;
+        return null;
+    }
+    function bindPolyToSurface(){
+        const idx=parseInt(document.getElementById('atlas-surface-list').value);
+        if(isNaN(idx)) return alert('Elegí surface');
+        const poly=currentPoly(); if(!poly) return alert('Seleccioná un objeto con poly (draw_mode 2)');
+        const kindSel=document.getElementById('surf-kind').value;
+        const surf=importedAtlas?importedAtlas[idx]:window.mapsAtlas[idx];
+        surf.poly=poly;
+        if(document.getElementById('surf-cover').value) surf.defaultCoverId=parseInt(document.getElementById('surf-cover').value);
+        if(document.getElementById('surf-lighting').value) surf.lighting=document.getElementById('surf-lighting').value;
+        surf.homecoming_only=document.getElementById('surf-homecoming').checked ? true : undefined;
+        surf.outdoor=document.getElementById('surf-outdoor').checked ? true : undefined;
+        // Nunca tocar origin medido casa g0/g1 salvo permitir
+        const allow=document.getElementById('surf-allow-origin').checked;
+        if(!allow && surf.mapId===0 && (surf.groupNum===0||surf.groupNum===1)){
+            // no mover
+        }
+        document.getElementById('surf-preview').textContent='poly vinculado ('+poly.length+' pts)';
+    }
+    function generateMaskPNG(){
+        const idx=parseInt(document.getElementById('atlas-surface-list').value);
+        if(isNaN(idx)) return alert('Elegí surface');
+        const poly=currentPoly(); if(!poly) return alert('Sin poly');
+        // canvas del tamaño del ensamblado (estimado por bbox)
+        let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+        poly.forEach(([x,y])=>{minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);});
+        const w=Math.ceil(maxX-minX)+20, h=Math.ceil(maxY-minY)+20;
+        const c=document.createElement('canvas'); c.width=w; c.height=h;
+        const ctx=c.getContext('2d'); ctx.fillStyle='transparent'; ctx.clearRect(0,0,w,h);
+        ctx.fillStyle='white'; ctx.beginPath(); poly.forEach(([x,y],i)=>{ if(i===0)ctx.moveTo(x-minX+10,y-minY+10); else ctx.lineTo(x-minX+10,y-minY+10);}); ctx.closePath(); ctx.fill();
+        const surf=(importedAtlas?importedAtlas[idx]:window.mapsAtlas[idx]);
+        const kind=surf.kind==='floor'?'floor':'wall';
+        const fname=`mask_${kind}_${surf.groupNum}${surf.kind==='wall'?(surf.flipped?'L':'R'):''}.png`;
+        surf.mask=fname;
+        const a=document.createElement('a'); a.href=c.toDataURL('image/png'); a.download=fname; a.click();
+        document.getElementById('surf-preview').textContent='Máscara '+fname+' descargada';
+    }
+    function mergeAndDownloadAtlas(){
+        const base = importedAtlas || window.mapsAtlas;
+        // merge por (mapId,kind,groupNum,flipped)
+        const key = s=>`${s.mapId}|${s.kind}|${s.groupNum}|${s.flipped}`;
+        const map=new Map(); base.forEach(s=>map.set(key(s), Object.assign({},s)));
+        // si hay edición local en importedAtlas, ya está en base; si no, usar window.mapsAtlas actual
+        const atlas=[...map.values()];
+        const content=`window.atlasConfig = ${JSON.stringify(window.atlasConfig||{bgScale:0.75},null,2)};\nwindow.mapsAtlas = ${JSON.stringify(atlas,null,2)};\n`+(window.MAP_META?`window.MAP_META = ${JSON.stringify(window.MAP_META,null,2)};\n`:'');
+        const blob=new Blob([content],{type:'application/javascript'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='maps_atlas.js'; a.click(); URL.revokeObjectURL(url);
+    }
     </script>
 </body>
 </html>
