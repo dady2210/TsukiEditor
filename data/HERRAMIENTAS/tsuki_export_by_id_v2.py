@@ -116,9 +116,13 @@ def safe_serialize(obj_map, obj, extra_sprites_pids=None):
 def find_dict_with_id(data, target_id, target_name):
     target_str = str(target_id)
     if isinstance(data, dict):
-        for key in ["id", "ID", "itemId", "itemID", "item_id", "Id", "furnitureID", "furnID", "guid", "uid"]:
+        for key in ["id", "ID", "itemId", "itemID", "item_id", "Id", "furnitureID", "furnID", "guid", "uid", "m_ID", "m_Id", "m_id", "m_itemId", "m_FurnitureID", "furnitureId", "m_furnitureID"]:
             val = data.get(key)
             if val is not None and str(val) == target_str: return data
+        # fallback: any key containing 'id' case-insensitive
+        for k, v in data.items():
+            if 'id' in k.lower() and str(v) == target_str:
+                return data
         if target_name and data.get("name") == target_name: return data
         for k, v in data.items():
             res = find_dict_with_id(v, target_id, target_name)
@@ -266,6 +270,7 @@ def extract_metadata(obj_map, env, d, tree, target_id, go_name, extra_sprites_pi
 
 def export_id(env, obj_map, target_id, out_dir, with_activity=False, include_fx=False):
     fx_keywords = ['white', 'shadow', 'glow', 'conelightdown', 'conelightup', 'pointlight', 'mask', 'stronglight']
+    print(f"[DEBUG] env.objects={len(env.objects)}")
     found = False
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour": continue
@@ -276,6 +281,7 @@ def export_id(env, obj_map, target_id, out_dir, with_activity=False, include_fx=
             d = obj.read()
             go_name = d.m_GameObject.read().m_Name
             print(f"\n{'='*60}\n  ID={target_id}  |  {go_name}\n{'='*60}")
+            found = True
             item_dir = out_dir / str(target_id)
             item_dir.mkdir(parents=True, exist_ok=True)
 
@@ -367,7 +373,9 @@ def export_id(env, obj_map, target_id, out_dir, with_activity=False, include_fx=
 
             found = True
             break
-        except Exception: pass
+        except Exception as e:
+            import traceback; traceback.print_exc()
+            pass
     if not found: print(f"\n[WARN] ID={target_id} no encontrado.")
 
 def main():
