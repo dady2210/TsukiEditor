@@ -279,6 +279,10 @@
                             <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="adv-reduce"> reduceMotion</label>
                             <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="adv-haptics"> hapticsEnabled</label>
                             <label style="display:flex; align-items:center; gap:6px;"><input type="checkbox" id="adv-force"> forceMusic</label>
+                            <div class="input-group"><label>unluckiness</label><input type="number" id="adv-unluck" step="0.01"></div>
+                            <div class="input-group"><label>bagTransmog/hoeTransmog</label><input type="text" id="adv-transmog" placeholder="bag,hoe"></div>
+                            <div class="input-group" style="grid-column:1/-1;"><label>phoneSave skin/bgPattern/bgColor</label><input type="text" id="adv-phone" placeholder="skin,pattern,color"></div>
+                            <div class="input-group" style="grid-column:1/-1;"><label>punchcard weekStartOA/season</label><input type="text" id="adv-punch" placeholder="weekStartOA,season"></div>
                         </div>
                         <div style="display:flex; gap:8px; margin-top:10px;">
                             <button class="btn-primary" onclick="window.app.applyAdvancedSave()">Aplicar avanzado</button>
