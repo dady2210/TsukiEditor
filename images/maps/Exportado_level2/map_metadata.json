@@ -1,0 +1,640 @@
+{
+  "grid_system": [],
+  "interaction_nodes": [],
+  "walkable_bounds": [
+    {
+      "go": "FloorL2 (1)",
+      "type": "PolygonCollider2D",
+      "x": -0.3059999942779541,
+      "y": 0.8569999933242798,
+      "sx": 1.0,
+      "sy": 1.0,
+      "angle": 0.0,
+      "properties": {
+        "m_GameObject": "Sprite: CarriageInterior_3",
+        "m_Enabled": 1,
+        "m_Density": 1.0,
+        "m_Material": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_IncludeLayers": {
+          "m_Bits": 0
+        },
+        "m_ExcludeLayers": {
+          "m_Bits": 0
+        },
+        "m_LayerOverridePriority": 0,
+        "m_ForceSendLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ForceReceiveLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ContactCaptureLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_CallbackLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_IsTrigger": false,
+        "m_UsedByEffector": false,
+        "m_CompositeOperation": 0,
+        "m_CompositeOrder": 0,
+        "m_Offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "m_SpriteTilingProperty": {
+          "border": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "pivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "oldSize": {
+            "x": 4.0,
+            "y": 4.0
+          },
+          "newSize": {
+            "x": 2.2255802154541016,
+            "y": 2.043862819671631
+          },
+          "adaptiveTilingThreshold": 0.5,
+          "drawMode": 2,
+          "adaptiveTiling": false
+        },
+        "m_AutoTiling": false,
+        "m_Points": {
+          "m_Paths": [
+            [
+              {
+                "x": -0.2809903621673584,
+                "y": 0.8956276178359985
+              },
+              {
+                "x": -1.0902276039123535,
+                "y": 0.472928524017334
+              },
+              {
+                "x": -0.8897216320037842,
+                "y": -0.15787577629089355
+              },
+              {
+                "x": 0.8496203422546387,
+                "y": -1.0401010513305664
+              },
+              {
+                "x": 1.0385582447052002,
+                "y": -0.07114404439926147
+              },
+              {
+                "x": 0.5989880561828613,
+                "y": 0.8395955562591553
+              }
+            ]
+          ]
+        },
+        "m_UseDelaunayMesh": false
+      }
+    },
+    {
+      "go": "WallpaperBR",
+      "type": "PolygonCollider2D",
+      "x": 1.8489999771118164,
+      "y": -1.1180000305175781,
+      "sx": 1.0,
+      "sy": 1.0,
+      "angle": 0.0,
+      "properties": {
+        "m_GameObject": "Sprite: T2 Train Station_2",
+        "m_Enabled": 1,
+        "m_Density": 1.0,
+        "m_Material": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_IncludeLayers": {
+          "m_Bits": 0
+        },
+        "m_ExcludeLayers": {
+          "m_Bits": 0
+        },
+        "m_LayerOverridePriority": 0,
+        "m_ForceSendLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ForceReceiveLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ContactCaptureLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_CallbackLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_IsTrigger": false,
+        "m_UsedByEffector": false,
+        "m_CompositeOperation": 0,
+        "m_CompositeOrder": 0,
+        "m_Offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "m_SpriteTilingProperty": {
+          "border": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "pivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "oldSize": {
+            "x": 2.0,
+            "y": 2.0
+          },
+          "newSize": {
+            "x": 2.915515422821045,
+            "y": 2.826374053955078
+          },
+          "adaptiveTilingThreshold": 0.5,
+          "drawMode": 2,
+          "adaptiveTiling": false
+        },
+        "m_AutoTiling": false,
+        "m_Points": {
+          "m_Paths": [
+            [
+              {
+                "x": -0.528810977935791,
+                "y": 1.3508846759796143
+              },
+              {
+                "x": -1.0284109115600586,
+                "y": 0.9003573656082153
+              },
+              {
+                "x": -1.2305817604064941,
+                "y": -1.3709356784820557
+              },
+              {
+                "x": 1.2506321668624878,
+                "y": -0.1679011583328247
+              },
+              {
+                "x": 1.390986442565918,
+                "y": 0.5989882946014404
+              }
+            ]
+          ]
+        },
+        "m_UseDelaunayMesh": false
+      }
+    },
+    {
+      "go": "WallpaperBL",
+      "type": "PolygonCollider2D",
+      "x": -2.226300001144409,
+      "y": -1.1409000158309937,
+      "sx": 1.0,
+      "sy": 1.0,
+      "angle": 0.0,
+      "properties": {
+        "m_GameObject": "Sprite: 4b",
+        "m_Enabled": 1,
+        "m_Density": 1.0,
+        "m_Material": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_IncludeLayers": {
+          "m_Bits": 0
+        },
+        "m_ExcludeLayers": {
+          "m_Bits": 0
+        },
+        "m_LayerOverridePriority": 0,
+        "m_ForceSendLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ForceReceiveLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ContactCaptureLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_CallbackLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_IsTrigger": false,
+        "m_UsedByEffector": false,
+        "m_CompositeOperation": 0,
+        "m_CompositeOrder": 0,
+        "m_Offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "m_SpriteTilingProperty": {
+          "border": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "pivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "oldSize": {
+            "x": 4.0,
+            "y": 4.0
+          },
+          "newSize": {
+            "x": 2.5584425926208496,
+            "y": 2.363680362701416
+          },
+          "adaptiveTilingThreshold": 0.5,
+          "drawMode": 2,
+          "adaptiveTiling": false
+        },
+        "m_AutoTiling": false,
+        "m_Points": {
+          "m_Paths": [
+            [
+              {
+                "x": 0.8288687467575073,
+                "y": 0.5718355178833008
+              },
+              {
+                "x": -0.7819706201553345,
+                "y": 1.1683392524719238
+              },
+              {
+                "x": -1.1936436891555786,
+                "y": 0.9008889198303223
+              },
+              {
+                "x": -1.254348874092102,
+                "y": 0.36823105812072754
+              },
+              {
+                "x": -0.7128322124481201,
+                "y": -0.3354116678237915
+              },
+              {
+                "x": 1.0164098739624023,
+                "y": -1.180505633354187
+              },
+              {
+                "x": 1.2297346591949463,
+                "y": -0.017394542694091797
+              }
+            ]
+          ]
+        },
+        "m_UseDelaunayMesh": false
+      }
+    },
+    {
+      "go": "WallpaperTR",
+      "type": "PolygonCollider2D",
+      "x": 1.6859999895095825,
+      "y": 2.5566999912261963,
+      "sx": 1.0,
+      "sy": 1.0,
+      "angle": 0.0,
+      "properties": {
+        "m_GameObject": "Sprite: 4h",
+        "m_Enabled": 1,
+        "m_Density": 1.0,
+        "m_Material": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_IncludeLayers": {
+          "m_Bits": 0
+        },
+        "m_ExcludeLayers": {
+          "m_Bits": 0
+        },
+        "m_LayerOverridePriority": 0,
+        "m_ForceSendLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ForceReceiveLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ContactCaptureLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_CallbackLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_IsTrigger": false,
+        "m_UsedByEffector": false,
+        "m_CompositeOperation": 0,
+        "m_CompositeOrder": 0,
+        "m_Offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "m_SpriteTilingProperty": {
+          "border": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "pivot": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "oldSize": {
+            "x": 2.0,
+            "y": 2.0
+          },
+          "newSize": {
+            "x": 2.508937120437622,
+            "y": 2.4881293773651123
+          },
+          "adaptiveTilingThreshold": 0.5,
+          "drawMode": 2,
+          "adaptiveTiling": false
+        },
+        "m_AutoTiling": false,
+        "m_Points": {
+          "m_Paths": [
+            [
+              {
+                "x": 0.7711094617843628,
+                "y": 1.1803643703460693
+              },
+              {
+                "x": -0.5386171340942383,
+                "y": 0.6496386528015137
+              },
+              {
+                "x": -1.0114407539367676,
+                "y": -0.14405179023742676
+              },
+              {
+                "x": -1.1372861862182617,
+                "y": -1.240250825881958
+              },
+              {
+                "x": 1.1601673364639282,
+                "y": -0.13052034378051758
+              },
+              {
+                "x": 1.1029646396636963,
+                "y": 1.0
+              }
+            ]
+          ]
+        },
+        "m_UseDelaunayMesh": false
+      }
+    },
+    {
+      "go": "WallpaperTL",
+      "type": "PolygonCollider2D",
+      "x": -2.114000082015991,
+      "y": 2.339600086212158,
+      "sx": 1.0,
+      "sy": 1.0,
+      "angle": 0.0,
+      "properties": {
+        "m_GameObject": "Sprite: 13a",
+        "m_Enabled": 1,
+        "m_Density": 1.0,
+        "m_Material": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_IncludeLayers": {
+          "m_Bits": 0
+        },
+        "m_ExcludeLayers": {
+          "m_Bits": 0
+        },
+        "m_LayerOverridePriority": 0,
+        "m_ForceSendLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ForceReceiveLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ContactCaptureLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_CallbackLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_IsTrigger": false,
+        "m_UsedByEffector": false,
+        "m_CompositeOperation": 0,
+        "m_CompositeOrder": 0,
+        "m_Offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "m_SpriteTilingProperty": {
+          "border": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "pivot": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "oldSize": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "newSize": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "adaptiveTilingThreshold": 0.0,
+          "drawMode": 0,
+          "adaptiveTiling": false
+        },
+        "m_AutoTiling": false,
+        "m_Points": {
+          "m_Paths": [
+            [
+              {
+                "x": 1.1937801837921143,
+                "y": 1.6927154064178467
+              },
+              {
+                "x": -0.7753815650939941,
+                "y": 1.6917701959609985
+              },
+              {
+                "x": -3.2769153118133545,
+                "y": 0.4423251152038574
+              },
+              {
+                "x": -3.204169273376465,
+                "y": -0.1125175952911377
+              },
+              {
+                "x": -0.4020683169364929,
+                "y": -1.523625373840332
+              },
+              {
+                "x": 0.7364952564239502,
+                "y": -1.5793540477752686
+              },
+              {
+                "x": 2.696136713027954,
+                "y": -0.5941653847694397
+              },
+              {
+                "x": 2.15964937210083,
+                "y": 0.12513571977615356
+              },
+              {
+                "x": 2.9888570308685303,
+                "y": 0.7713712453842163
+              }
+            ]
+          ]
+        },
+        "m_UseDelaunayMesh": false
+      }
+    },
+    {
+      "go": "TreeProp",
+      "type": "PolygonCollider2D",
+      "x": -6.71999979019165,
+      "y": -7.0960001945495605,
+      "sx": 1.0,
+      "sy": 1.0,
+      "angle": 0.0,
+      "properties": {
+        "m_GameObject": "Texture2D: birchfloorboards",
+        "m_Enabled": 1,
+        "m_Density": 1.0,
+        "m_Material": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_IncludeLayers": {
+          "m_Bits": 0
+        },
+        "m_ExcludeLayers": {
+          "m_Bits": 0
+        },
+        "m_LayerOverridePriority": 0,
+        "m_ForceSendLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ForceReceiveLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_ContactCaptureLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_CallbackLayers": {
+          "m_Bits": 4294967295
+        },
+        "m_IsTrigger": false,
+        "m_UsedByEffector": false,
+        "m_CompositeOperation": 0,
+        "m_CompositeOrder": 0,
+        "m_Offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "m_SpriteTilingProperty": {
+          "border": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.0
+          },
+          "pivot": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "oldSize": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "newSize": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "adaptiveTilingThreshold": 0.0,
+          "drawMode": 0,
+          "adaptiveTiling": false
+        },
+        "m_AutoTiling": false,
+        "m_Points": {
+          "m_Paths": [
+            [
+              {
+                "x": -0.17271769046783447,
+                "y": 1.1747267246246338
+              },
+              {
+                "x": -0.6769198775291443,
+                "y": 1.362322449684143
+              },
+              {
+                "x": -2.9206721782684326,
+                "y": 0.2443460077047348
+              },
+              {
+                "x": -2.6836800575256348,
+                "y": -0.1651751548051834
+              },
+              {
+                "x": -0.15646356344223022,
+                "y": -1.4057103395462036
+              },
+              {
+                "x": 0.8242390155792236,
+                "y": -1.4103631973266602
+              },
+              {
+                "x": 2.559979200363159,
+                "y": -0.5374876260757446
+              },
+              {
+                "x": 1.9837907552719116,
+                "y": -0.20695729553699493
+              },
+              {
+                "x": 3.069653034210205,
+                "y": 0.46201348304748535
+              },
+              {
+                "x": 1.2625458240509033,
+                "y": 1.3930836915969849
+              }
+            ]
+          ]
+        },
+        "m_UseDelaunayMesh": false
+      }
+    }
+  ],
+  "camera_confines": [],
+  "lighting_volumes": [],
+  "special_scripts": [],
+  "animator_nodes": [],
+  "audio_sources": [],
+  "particle_systems": []
+}
