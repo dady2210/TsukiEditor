@@ -14,16 +14,19 @@
     return [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t), lerp(a[3], b[3], t)];
   }
 
+  const EMBEDDED_CURVE = {
+    interior: [{ minutes: 0, rgba: [40,50,90,0.45] },{ minutes: 300, rgba: [40,50,90,0.45] },{ minutes: 480, rgba: [255,160,80,0.20] },{ minutes: 620, rgba: [255,255,255,0.00] },{ minutes: 1020, rgba: [255,255,255,0.00] },{ minutes: 1170, rgba: [255,120,60,0.22] },{ minutes: 1440, rgba: [40,50,90,0.45] }],
+    exterior: [{ minutes: 0, rgba: [30,40,80,0.55] },{ minutes: 300, rgba: [30,40,80,0.55] },{ minutes: 480, rgba: [255,140,70,0.28] },{ minutes: 620, rgba: [255,255,255,0.00] },{ minutes: 1020, rgba: [255,255,255,0.00] },{ minutes: 1170, rgba: [255,110,50,0.32] },{ minutes: 1440, rgba: [30,40,80,0.55] }]
+  };
   async function loadCurve() {
     if (curve) return curve;
+    if (location.protocol === 'file:') { curve = EMBEDDED_CURVE; return curve; }
     try {
       const r = await fetch('data/day_night.json');
+      if (!r.ok) throw new Error('no ok');
       curve = await r.json();
     } catch (e) {
-      curve = {
-        interior: [{ minutes: 0, rgba: [40,50,90,0.45] },{ minutes: 1440, rgba: [40,50,90,0.45] }],
-        exterior: [{ minutes: 0, rgba: [30,40,80,0.55] },{ minutes: 1440, rgba: [30,40,80,0.55] }]
-      };
+      curve = EMBEDDED_CURVE;
     }
     return curve;
   }

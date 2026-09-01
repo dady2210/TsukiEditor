@@ -1470,10 +1470,13 @@ class IsometricMap {
                     };
                     if (!this._sceneFullCache) this._sceneFullCache = {};
                     if (this._sceneFullCache[targetLoc] === undefined) {
-                        const META = (window.MAP_META && window.MAP_META[targetLoc]) || {};
-                        let exportDir = META.exportDir != null ? META.exportDir : (targetLoc === 0 ? 2 : targetLoc);
-                        fetch(`images/maps/Exportado_level${exportDir}/scene_full.json`).then(r=>r.ok?r.json():null).then(j=>{ this._sceneFullCache[targetLoc]=j; if(j) this.draw(); }).catch(()=>{ this._sceneFullCache[targetLoc]=null; });
-                        this._sceneFullCache[targetLoc]=null;
+                        if (location.protocol === 'file:') { this._sceneFullCache[targetLoc]=null; }
+                        else {
+                            const META = (window.MAP_META && window.MAP_META[targetLoc]) || {};
+                            let exportDir = META.exportDir != null ? META.exportDir : (targetLoc === 0 ? 2 : targetLoc);
+                            fetch(`images/maps/Exportado_level${exportDir}/scene_full.json`).then(r=>r.ok?r.json():null).then(j=>{ this._sceneFullCache[targetLoc]=j; if(j) this.draw(); }).catch(()=>{ this._sceneFullCache[targetLoc]=null; });
+                            this._sceneFullCache[targetLoc]=null;
+                        }
                     }
                     // Helper to draw a mask layer — vector clip si poly existe, sino PNG fallback
                     const drawMaskLayer = (type, id, maskImg, isFlipped) => {
