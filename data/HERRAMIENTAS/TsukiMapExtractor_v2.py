@@ -27,6 +27,8 @@ def resolve_pptr(obj_map, pptr):
         elif o_type == "Texture2D": return f"Texture2D: {ref_obj.read().m_Name}"
         elif o_type == "MonoScript": return f"MonoScript: {ref_obj.read().m_ClassName}"
         elif o_type == "GameObject": return f"GameObject: {ref_obj.read().m_Name}"
+        elif o_type in ("AnimatorController", "AnimatorOverrideController"): return f"AnimatorController: {ref_obj.read().m_Name}"
+        elif o_type == "AudioClip": return f"AudioClip: {ref_obj.read().m_Name}"
     except: pass
     return pptr
 
@@ -281,14 +283,17 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
         json.dump(layout_data, f, indent=2)
 
     # --- INICIO DE EXTRACCIÓN DE METADATA (NODOS, NAVMESH, GRIDS, LUCES) ---
-    print("[3.5] Extrayendo Lógica Profunda del Mapa (Nodos, NavMesh, Luces)...")
+    print("[3.5] Extrayendo Lógica Profunda del Mapa (Nodos, NavMesh, Luces, Animators, Audio, Partículas)...")
     map_metadata = {
         "grid_system": [],
         "interaction_nodes": [],
         "walkable_bounds": [],
         "camera_confines": [],
         "lighting_volumes": [],
-        "special_scripts": []
+        "special_scripts": [],
+        "animator_nodes": [],
+        "audio_sources": [],
+        "particle_systems": []
     }
 
     for go_id, go in gameobjects.items():
@@ -326,7 +331,46 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
                         "go": go_name, "type": "Grid", "x": wx, "y": wy,
                         "properties": safe_serialize(obj_map, grid_tree)
                     })
-                    
+
+                # 3.A Animator (animaciones nativas: sway, idle, puertas, etc.)
+                elif c_type == 'Animator':
+                    try:
+                        an_tree = c_obj.read_typetree()
+                        controller_ptr = an_tree.get('m_Controller', {})
+                        controller_name = resolve_pptr(obj_map, controller_ptr) if isinstance(controller_ptr, dict) else controller_ptr
+                        map_metadata["animator_nodes"].append({
+                            "go": go_name, "x": wx, "y": wy,
+                            "controller": controller_name if isinstance(controller_name, str) else "Unknown",
+                            "properties": safe_serialize(obj_map, an_tree)
+                        })
+                    except: pass
+
+                # 3.B AudioSource (sonidos ambiente / triggers de audio posicionados)
+                elif c_type == 'AudioSource':
+                    try:
+                        au_tree = c_obj.read_typetree()
+                        clip_ptr = au_tree.get('m_audioClip', {})
+                        clip_name = resolve_pptr(obj_map, clip_ptr) if isinstance(clip_ptr, dict) else clip_ptr
+                        map_metadata["audio_sources"].append({
+                            "go": go_name, "x": wx, "y": wy,
+                            "clip": clip_name if isinstance(clip_name, str) else "Unknown",
+                            "volume": au_tree.get('m_Volume', 1.0),
+                            "loop": bool(au_tree.get('Loop', au_tree.get('m_Loop', False))),
+                            "playOnAwake": bool(au_tree.get('m_PlayOnAwake', True)),
+                            "properties": safe_serialize(obj_map, au_tree)
+                        })
+                    except: pass
+
+                # 3.C ParticleSystem (polvo, luciérnagas, hojas, efectos ambiente)
+                elif c_type == 'ParticleSystem':
+                    try:
+                        ps_tree = c_obj.read_typetree()
+                        map_metadata["particle_systems"].append({
+                            "go": go_name, "x": wx, "y": wy,
+                            "properties": safe_serialize(obj_map, ps_tree)
+                        })
+                    except: pass
+
                 # 4 & 5. Scripts de Interacción, Luces y Custom Grids
                 elif c_type == 'MonoBehaviour':
                     mb = c_obj.read()
@@ -359,6 +403,7 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
     with open(meta_path, 'w', encoding='utf-8') as f:
         json.dump(map_metadata, f, indent=2, ensure_ascii=False)
     print(f"    [+] map_metadata.json generado exitosamente.")
+    print(f"    [+] {len(map_metadata['animator_nodes'])} animators, {len(map_metadata['audio_sources'])} audio sources, {len(map_metadata['particle_systems'])} particle systems.")
     # --- scene_full.json unificado ---
     try:
         hierarchy = [{"path": go.m_Name, "components": [env.objects[c.path_id].type.name for c in go.m_Components]} for go in gameobjects.values()]
@@ -385,8 +430,11 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
             "layout": {"front": layout_data, "back": [], "fx": []},
             "hierarchy": hierarchy,
             "colliders": colliders,
-            "logic": {"walkable": [c for c in colliders if c["role"]=="walkable"], "blockers": [c for c in colliders if c["role"]=="blocker"], "triggers": [c for c in colliders if c["role"]=="trigger"], "interaction_nodes": map_metadata.get("interaction_nodes",[]), "grids": map_metadata.get("grid_system",[]), "camera_confines": map_metadata.get("camera_confines",[]), "lights": map_metadata.get("lighting_volumes",[]), "scripts": map_metadata.get("special_scripts",[])},
-            "animation": {"controllers": []}, "catalog": {}, "raw": map_metadata
+            "logic": {"walkable": [c for c in colliders if c["role"]=="walkable"], "blockers": [c for c in colliders if c["role"]=="blocker"], "triggers": [c for c in colliders if c["role"]=="trigger"], "interaction_nodes": map_metadata.get("interaction_nodes",[]), "grids": map_metadata.get("grid_system",[]), "camera_confines": map_metadata.get("camera_confines",[]), "lights": map_metadata.get("lighting_volumes",[]), "scripts": map_metadata.get("special_scripts",[]), "animators": map_metadata.get("animator_nodes",[]), "audio": map_metadata.get("audio_sources",[]), "particles": map_metadata.get("particle_systems",[])},
+            "animation": {"controllers": map_metadata.get("animator_nodes",[])},
+            "audio": map_metadata.get("audio_sources",[]),
+            "particles": map_metadata.get("particle_systems",[]),
+            "catalog": {}, "raw": map_metadata
         }
         with open(os.path.join(output_dir, 'scene_full.json'), 'w', encoding='utf-8') as f:
             json.dump(scene_full, f, indent=2, ensure_ascii=False)

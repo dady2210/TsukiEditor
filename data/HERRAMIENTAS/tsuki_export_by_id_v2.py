@@ -1,13 +1,13 @@
 """
-tsuki_export_by_id.py  v20.0 (Data Miner Definitivo + Shaders Layout)
-Inyecta Colors (RGBA) y Materiales en el layout para que el Editor Web 
-pueda recrear las luces y transparencias de Unity nativamente.
+tsuki_export_by_id.py  v23.0 (Native Animation Decoder)
+Extrae las curvas matemáticas (Keyframes) de los AnimatorControllers nativos de Unity.
 """
 
 import argparse
 import sys
 import json
 import math
+import traceback
 from pathlib import Path
 
 try:
@@ -19,7 +19,6 @@ except ImportError as e:
     sys.exit(1)
 
 UnityPy.config.FALLBACK_UNITY_VERSION = '2022.3.0f1'
-UnityPy.config.FALLBACK_ASSEMBLY_FOLDER = r'C:\Users\Andres\Desktop\Tsuki_Odyssey\TSUKI MOVIL\Dumper\DummyDll'
 
 def load_env(bundles_dir, assemblies_dir=None):
     if assemblies_dir and assemblies_dir.exists():
@@ -28,6 +27,7 @@ def load_env(bundles_dir, assemblies_dir=None):
             UnityPy.config.ASSEMBLY_FOLDER = str(assemblies_dir)
     env = UnityPy.Environment()
     p = Path(bundles_dir)
+    
     patterns = ["*furniture*.bundle", "*duplicateassetisolation*.bundle", "*icons*.bundle", "*monoscripts*", "*activities*", "sharedassets*", "globalgamemanagers*"]
     loaded_any = False
     for pat in patterns:
@@ -39,28 +39,11 @@ def load_env(bundles_dir, assemblies_dir=None):
                     env.load_file(str(f))
                     loaded_any = True
                 except Exception: pass
-    # Fallback MEGAMINER: hash-named files sin extensión .bundle (ej. 000...f000...) + AssetPack/aa
-    if not loaded_any:
-        for f in p.iterdir():
-            if f.is_file() and f.stat().st_size > 1024:
-                # heurística: Unity bundle / serialized file por header "UnityFS" o "UnityWeb"
-                try:
-                    with open(f, 'rb') as fh: head = fh.read(8)
-                    if head.startswith(b'UnityFS') or head.startswith(b'UnityWeb') or f.suffix=='':
-                        try:
-                            env.load_file(str(f))
-                            loaded_any = True
-                        except Exception: pass
-                except Exception: pass
-        # también probar subcarpeta aa/Android si existe junto a MEGAMINER
-        alt_aa = Path(r"C:\Users\Andres\Desktop\Tsuki_Odyssey\AssetPack\assets\aa\Android")
-        if not loaded_any and alt_aa.exists():
-            for f in alt_aa.glob("*.bundle"):
-                try:
-                    env.load_file(str(f))
-                    loaded_any = True
-                except Exception: pass
-    if not loaded_any: sys.exit(1)
+
+    if not loaded_any: 
+        print(f"[ERROR] No se detectaron bundles válidos en {bundles_dir}.")
+        sys.exit(1)
+        
     if assemblies_dir and assemblies_dir.exists() and hasattr(env, "register_assembly_folder"):
         env.register_assembly_folder(str(assemblies_dir))
     return env
@@ -116,13 +99,9 @@ def safe_serialize(obj_map, obj, extra_sprites_pids=None):
 def find_dict_with_id(data, target_id, target_name):
     target_str = str(target_id)
     if isinstance(data, dict):
-        for key in ["id", "ID", "itemId", "itemID", "item_id", "Id", "furnitureID", "furnID", "guid", "uid", "m_ID", "m_Id", "m_id", "m_itemId", "m_FurnitureID", "furnitureId", "m_furnitureID"]:
+        for key in ["id", "ID", "itemId", "itemID", "item_id", "Id", "furnitureID", "furnID", "guid", "uid", "m_ID", "m_Id"]:
             val = data.get(key)
             if val is not None and str(val) == target_str: return data
-        # fallback: any key containing 'id' case-insensitive
-        for k, v in data.items():
-            if 'id' in k.lower() and str(v) == target_str:
-                return data
         if target_name and data.get("name") == target_name: return data
         for k, v in data.items():
             res = find_dict_with_id(v, target_id, target_name)
@@ -213,17 +192,19 @@ def extract_metadata(obj_map, env, d, tree, target_id, go_name, extra_sprites_pi
     for k, v in tree.items():
         if k not in ["sprites", "m_GameObject", "m_Script"]: metadata["raw_properties"][k] = safe_serialize(obj_map, v, extra_sprites_pids)
     if "sprites" in tree: metadata["layer_definitions"] = safe_serialize(obj_map, tree["sprites"], extra_sprites_pids)
+    
     for o in env.objects:
         if o.type.name in ["MonoBehaviour", "ScriptableObject", "TextAsset"]:
             try:
                 tree_so = o.read_typetree()
                 if isinstance(tree_so, dict):
                     mb = o.read()
-                    name = getattr(mb, 'm_Name', '')
                     found_dict = find_dict_with_id(tree_so, target_id, go_name)
                     if found_dict and o.path_id != d.path_id:
                         class_name = "CatalogItem"
-                        if hasattr(mb, "m_Script") and getattr(mb, "m_Script", None): class_name = obj_map.get(mb.m_Script.path_id).read().m_ClassName if obj_map.get(mb.m_Script.path_id) else class_name
+                        if hasattr(mb, "m_Script") and getattr(mb, "m_Script", None):
+                            if mb.m_Script.path_id in obj_map:
+                                class_name = obj_map[mb.m_Script.path_id].read().m_ClassName
                         metadata["store_data"][class_name] = safe_serialize(obj_map, found_dict, extra_sprites_pids)
             except: pass
 
@@ -231,8 +212,9 @@ def extract_metadata(obj_map, env, d, tree, target_id, go_name, extra_sprites_pi
         if not tr_pid or tr_pid not in obj_map: return
         tr = obj_map[tr_pid].read()
         go_pid = getattr(tr, 'm_GameObject', None)
-        if not go_pid: return
-        go = obj_map.get(go_pid.path_id).read()
+        if not go_pid or getattr(go_pid, 'path_id', 0) not in obj_map: return
+        
+        go = obj_map[go_pid.path_id].read()
         current_path = f"{path}/{go.m_Name}" if path else go.m_Name
         wx, wy, w_angle, wsx, wsy = get_world_matrix(obj_map, tr_pid)
         node_data = {"path": current_path, "name": go.m_Name, "layer": getattr(go, 'm_Layer', 0), "tag": getattr(go, 'm_Tag', 0), "local_pos": {"x": tr.m_LocalPosition.x, "y": tr.m_LocalPosition.y}, "world_pos": {"x": wx, "y": wy, "angle": math.degrees(w_angle)}, "scale": {"x": wsx, "y": wsy}, "components": []}
@@ -245,51 +227,132 @@ def extract_metadata(obj_map, env, d, tree, target_id, go_name, extra_sprites_pi
             if c_type == "SpriteRenderer":
                 try:
                     sr = comp_obj.read()
-                    sp_name = obj_map.get(sr.m_Sprite.path_id).read().m_Name if getattr(sr, "m_Sprite", None) and sr.m_Sprite.path_id else "None"
-                    mat_names = [obj_map.get(m.path_id).read().m_Name for m in getattr(sr, 'm_Materials', []) if m.path_id and obj_map.get(m.path_id)]
+                    sp_name = "None"
+                    if getattr(sr, "m_Sprite", None) and sr.m_Sprite.path_id in obj_map:
+                        sp_name = obj_map[sr.m_Sprite.path_id].read().m_Name
+                    
+                    mat_names = [obj_map[m.path_id].read().m_Name for m in getattr(sr, 'm_Materials', []) if m.path_id and m.path_id in obj_map]
                     color = getattr(sr, 'm_Color', None)
                     node_data["components"].append({"type": "SpriteRenderer", "sprite": sp_name, "color": {"r": color.r, "g": color.g, "b": color.b, "a": color.a} if color else {}, "sorting_layer": getattr(sr, 'm_SortingLayer', 0), "sorting_order": getattr(sr, 'm_SortingOrder', 0), "materials": mat_names})
                 except: pass
+            
             elif c_type == "MonoBehaviour":
                 try:
                     mb = comp_obj.read()
-                    s_name = obj_map.get(mb.m_Script.path_id).read().m_ClassName if hasattr(mb, 'm_Script') and mb.m_Script else "UnknownScript"
+                    s_name = "UnknownScript"
+                    if hasattr(mb, 'm_Script') and mb.m_Script and mb.m_Script.path_id in obj_map:
+                        s_name = obj_map[mb.m_Script.path_id].read().m_ClassName
+                    
                     tree_script = comp_obj.read_typetree()
                     tree_script.pop("m_GameObject", None); tree_script.pop("m_Script", None)
                     node_data["components"].append({"type": s_name, "properties": safe_serialize(obj_map, tree_script, extra_sprites_pids)})
                 except: pass
+            
+# --- DECODIFICADOR NATIVO DE ANIMACIONES ---
+            elif c_type == "Animator":
+                try:
+                    anim_tree = comp_obj.read_typetree()
+                    controller_ptr = anim_tree.get("m_Controller", {})
+                    ctrl_pid = controller_ptr.get("m_PathID", 0)
+                    clips_data = []
+                    ctrl_name = "UnknownController"
+                    
+                    if ctrl_pid and ctrl_pid in obj_map:
+                        ctrl_obj = obj_map[ctrl_pid]
+                        ctrl_tree = ctrl_obj.read_typetree()
+                        ctrl_name = ctrl_tree.get("m_Name", "UnnamedController")
+                        
+                        for clip_ptr in ctrl_tree.get("m_AnimationClips", []):
+                            clip_pid = clip_ptr.get("m_PathID", 0)
+                            if clip_pid and clip_pid in obj_map:
+                                clip_tree = obj_map[clip_pid].read_typetree()
+                                
+                                def parse_generic_curves(clip_dict):
+                                    # Fallback para extraer curvas genéricas si las específicas están vacías
+                                    curves = clip_dict.get("m_EulerCurves", []) + \
+                                             clip_dict.get("m_PositionCurves", []) + \
+                                             clip_dict.get("m_ScaleCurves", []) + \
+                                             clip_dict.get("m_FloatCurves", []) + \
+                                             clip_dict.get("m_GenericBindings", []) # A veces Unity lo guarda aquí
+                                    res = []
+                                    for c in curves:
+                                        path_target = c.get("path", "")
+                                        keys = []
+                                        # Soporte para diferentes formatos de curva en Unity
+                                        curve_data = c.get("curve", {}).get("m_Curve", [])
+                                        for k in curve_data:
+                                            val = k.get("value")
+                                            # Extraer el ángulo si es un quaternion (w, x, y, z)
+                                            if isinstance(val, dict) and 'w' in val:
+                                                # Convertir quaternion a euler simple para el eje Z (Canvas)
+                                                euler_z = math.degrees(math.atan2(2 * val['w'] * val['z'], 1 - 2 * val['z'] * val['z']))
+                                                val = {"z": euler_z}
+                                            keys.append({"time": k.get("time", 0), "value": val})
+                                        if keys: res.append({"path": path_target, "keyframes": keys})
+                                    return res
+
+                                clips_data.append({
+                                    "name": clip_tree.get("m_Name", "UnnamedClip"),
+                                    "length": clip_tree.get("m_AnimationClipSettings", {}).get("m_StopTime", 1.0),
+                                    "curves": parse_generic_curves(clip_tree)
+                                })
+                                
+                    metadata["animators"].append({
+                        "node_path": current_path,
+                        "controller": ctrl_name,
+                        "clips": clips_data
+                    })
+                except Exception as e:
+                    pass
+            # --------------------------------------------
+
         metadata["nodes"].append(node_data)
         for child in getattr(tr, 'm_Children', []): traverse_hierarchy(child.path_id, current_path)
 
-    go_obj = obj_map.get(d.m_GameObject.path_id)
-    if go_obj:
-        tr_comp = next((c for c in go_obj.read().m_Components if c.type.name == "Transform"), None)
+    go_ptr = getattr(d, 'm_GameObject', None)
+    if go_ptr and getattr(go_ptr, 'path_id', 0) in obj_map:
+        go_obj = obj_map[go_ptr.path_id].read()
+        tr_comp = next((c for c in go_obj.m_Components if c.type.name == "Transform"), None)
         if tr_comp: traverse_hierarchy(tr_comp.path_id)
 
     return metadata
 
 def export_id(env, obj_map, target_id, out_dir, with_activity=False, include_fx=False):
     fx_keywords = ['white', 'shadow', 'glow', 'conelightdown', 'conelightup', 'pointlight', 'mask', 'stronglight']
-    print(f"[DEBUG] env.objects={len(env.objects)}")
     found = False
+    
     for obj in env.objects:
         if obj.type.name != "MonoBehaviour": continue
         try:
             tree = obj.read_typetree()
-            if not isinstance(tree, dict) or str(tree.get("ID")) != str(target_id): continue
+            if not isinstance(tree, dict): continue
+            
+            is_match = False
+            for k in ["ID", "id", "itemId", "itemID", "furnitureID", "furnID", "m_ID", "m_Id"]:
+                if str(tree.get(k)) == str(target_id):
+                    is_match = True
+                    break
+                    
+            if not is_match: continue
             
             d = obj.read()
-            go_name = d.m_GameObject.read().m_Name
+            go_ptr = getattr(d, 'm_GameObject', None)
+            if not go_ptr or getattr(go_ptr, 'path_id', 0) not in obj_map: continue
+            
+            go_name = obj_map[go_ptr.path_id].read().m_Name
             print(f"\n{'='*60}\n  ID={target_id}  |  {go_name}\n{'='*60}")
+            
             found = True
             item_dir = out_dir / str(target_id)
             item_dir.mkdir(parents=True, exist_ok=True)
 
+            print("  [+] Extrayendo metadata y curvas de animación...")
             extra_sprites_pids = set()
             metadata = extract_metadata(obj_map, env, d, tree, target_id, go_name, extra_sprites_pids)
             with open(item_dir / "metadata.json", "w", encoding="utf-8") as f:
                 json.dump(metadata, f, indent=2, ensure_ascii=False)
 
+            print("  [+] Evaluando Layout Visual...")
             sprites = tree.get("sprites") or []
             base_layers = [(i, s) for i, s in enumerate(sprites) if s.get("onlyVisibleWithActivity") == 0]
             layers_to_use = [(i, s) for i, s in enumerate(sprites)] if with_activity else base_layers
@@ -308,6 +371,7 @@ def export_id(env, obj_map, target_id, out_dir, with_activity=False, include_fx=
                     sr_data = obj_map[sr_pid].read()
                     
                     go_pid = getattr(sr_data, 'm_GameObject', None)
+                    if not go_pid or getattr(go_pid, 'path_id', 0) not in obj_map: continue
                     go_data = obj_map[go_pid.path_id].read()
                     
                     tr_pid = next((c.path_id for c in go_data.m_Components if c.type.name == "Transform"), None)
@@ -340,7 +404,6 @@ def export_id(env, obj_map, target_id, out_dir, with_activity=False, include_fx=
                     safe_sp_name = safe_name(sname)
                     part.save(item_dir / f"{safe_sp_name}.png")
 
-                    # --- INYECCI�N DE SHADERS Y COLORES PARA EL EDITOR WEB ---
                     mat_names = []
                     for m_ptr in getattr(sr_data, 'm_Materials', []):
                         if m_ptr.path_id and m_ptr.path_id in obj_map:
@@ -359,7 +422,6 @@ def export_id(env, obj_map, target_id, out_dir, with_activity=False, include_fx=
 
                 if json_layout:
                     with open(item_dir / f"layout_{view}.json", "w", encoding="utf-8") as f: json.dump(json_layout, f, indent=2)
-                    # activity_layers no existe aquí; usar with_activity directamente
                     act_sfx = "_ACTIVITY" if with_activity else ""
                     fname = f"FURN_{target_id}_0{act_sfx}.png" if view == "front" else f"FURN_{target_id}_BACK{act_sfx}.png"
                     composition_layout = [d for d in json_layout if d['sp'].lower() not in fx_keywords]
@@ -371,13 +433,16 @@ def export_id(env, obj_map, target_id, out_dir, with_activity=False, include_fx=
                     safe_sp_name = safe_name(sname)
                     out_png = item_dir / f"{safe_sp_name}.png"
                     if not out_png.exists(): part.save(out_png)
-
-            found = True
+            
+            print("  [+] Proceso finalizado con éxito.")
             break
+            
         except Exception as e:
-            import traceback; traceback.print_exc()
-            pass
-    if not found: print(f"\n[WARN] ID={target_id} no encontrado.")
+            print(f"\n[ERROR CRITICO] Hubo un fallo interno en Python procesando el ID {target_id}:")
+            traceback.print_exc()
+            continue
+
+    if not found: print(f"\n[WARN] ID={target_id} no encontrado en el bundle.")
 
 def main():
     ap = argparse.ArgumentParser()
@@ -389,9 +454,12 @@ def main():
     ap.add_argument("--assemblies", type=Path, default=None)
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
-    local_dummy = Path(__file__).parent / "DummyDll"
+    
+    local_dummy = args.assemblies if args.assemblies else Path(__file__).parent / "DummyDll"
     env = load_env(args.bundles, local_dummy if local_dummy.exists() else None)
     obj_map = get_obj_map(env)
-    for fid in args.ids: export_id(env, obj_map, fid, args.out, with_activity=args.with_activity, include_fx=args.include_fx)
+    
+    for fid in args.ids: 
+        export_id(env, obj_map, fid, args.out, with_activity=args.with_activity, include_fx=args.include_fx)
 
 if __name__ == "__main__": main()
