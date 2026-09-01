@@ -1455,9 +1455,64 @@ class IsometricMap {
                     // (treehouse will be drawn on top)
                     
                     let allLoaded = true;
-                    // Helper to draw a mask layer
+                    // Vector clip helper (Fase Refactor): usa poly de scene_full/layout si existe
+                    const getPolyForMask = (type, floorKey, loc) => {
+                        if (this._sceneFullCache && this._sceneFullCache[loc] && this._sceneFullCache[loc].colliders) {
+                            // buscar collider cuyo poly no vacío y role wallpaper/walkable
+                            for (const c of this._sceneFullCache[loc].colliders) {
+                                if (c.poly && c.poly.length) return c.poly;
+                            }
+                        }
+                        if (this._lastLayoutData) {
+                            for (const el of this._lastLayoutData) if (el.poly && el.poly.length && el.draw_mode>0) return el.poly;
+                        }
+                        return null;
+                    };
+                    if (!this._sceneFullCache) this._sceneFullCache = {};
+                    if (this._sceneFullCache[targetLoc] === undefined) {
+                        const META = (window.MAP_META && window.MAP_META[targetLoc]) || {};
+                        let exportDir = META.exportDir != null ? META.exportDir : (targetLoc === 0 ? 2 : targetLoc);
+                        fetch(`images/maps/Exportado_level${exportDir}/scene_full.json`).then(r=>r.ok?r.json():null).then(j=>{ this._sceneFullCache[targetLoc]=j; if(j) this.draw(); }).catch(()=>{ this._sceneFullCache[targetLoc]=null; });
+                        this._sceneFullCache[targetLoc]=null;
+                    }
+                    // Helper to draw a mask layer — vector clip si poly existe, sino PNG fallback
                     const drawMaskLayer = (type, id, maskImg, isFlipped) => {
                         const tex = this._getTilesetTexture(type, id);
+                        if (!tex || !tex.img || !tex.img.complete || tex.img.width===0) { allLoaded=false; return; }
+                        const poly = getPolyForMask(type, isFlipped?1:0, targetLoc);
+                        if (poly && poly.length) {
+                            const tmp = document.createElement('canvas');
+                            tmp.width = bgImg.width; tmp.height = bgImg.height;
+                            const tCtx = tmp.getContext('2d');
+                            const tmpPat = document.createElement('canvas');
+                            tmpPat.width = tex.img.width; tmpPat.height = tex.img.height;
+                            const pCtx = tmpPat.getContext('2d');
+                            if (isFlipped) { pCtx.translate(tmpPat.width,0); pCtx.scale(-1,1); }
+                            pCtx.drawImage(tex.img,0,0);
+                            const pat = tCtx.createPattern(tmpPat,'repeat');
+                            tCtx.fillStyle = pat;
+                            tCtx.save();
+                            tCtx.beginPath();
+                            // poly en espacio baked (0..bgImg.width); si poly en unidades Unity pequeñas, escalar por PPU
+                            const isBaked = poly[0].x !== undefined && Math.abs(poly[0].x) < 50 && Math.abs(poly[0].y) < 50;
+                            poly.forEach((pt,i)=>{
+                                const px = (pt.x!==undefined? pt.x : pt[0]);
+                                const py = (pt.y!==undefined? pt.y : pt[1]);
+                                const bx = isBaked ? (px*10 + bgImg.width/2) : px;
+                                const by = isBaked ? (-py*10 + bgImg.height/2) : py;
+                                if(i===0) tCtx.moveTo(bx,by); else tCtx.lineTo(bx,by);
+                            });
+                            // fallback si poly en coords baked directos
+                            if (!isBaked) { tCtx.closePath(); tCtx.clip(); }
+                            else { // reconstruir con coords baked directos si detectamos rango grande
+                                tCtx.closePath(); tCtx.clip();
+                            }
+                            tCtx.fillRect(0,0,tmp.width,tmp.height);
+                            tCtx.restore();
+                            bCtx.globalCompositeOperation='source-over';
+                            bCtx.drawImage(tmp,0,0);
+                            return;
+                        }
                         if (tex && tex.img && tex.img.complete && tex.img.width > 0 && maskImg && maskImg.complete && maskImg.width > 0) {
                             const tmp = document.createElement('canvas');
                             tmp.width = bgImg.width;
