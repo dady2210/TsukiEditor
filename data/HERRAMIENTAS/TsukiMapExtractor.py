@@ -12,6 +12,43 @@ import UnityPy
 
 UnityPy.config.FALLBACK_UNITY_VERSION = '2022.3.0f1'
 
+# --- FUNCIONES AUXILIARES PARA METADATA PROFUNDA ---
+def get_obj_map(env): return {o.path_id: o for o in env.objects}
+
+def resolve_pptr(obj_map, pptr):
+    if not isinstance(pptr, dict) or "m_PathID" not in pptr: return pptr
+    pid = pptr["m_PathID"]
+    if pid == 0 or pid not in obj_map: return pptr
+    try:
+        ref_obj = obj_map[pid]
+        o_type = ref_obj.type.name
+        if o_type == "Sprite": return f"Sprite: {ref_obj.read().m_Name}"
+        elif o_type == "Texture2D": return f"Texture2D: {ref_obj.read().m_Name}"
+        elif o_type == "MonoScript": return f"MonoScript: {ref_obj.read().m_ClassName}"
+        elif o_type == "GameObject": return f"GameObject: {ref_obj.read().m_Name}"
+    except: pass
+    return pptr
+
+def deep_resolve(obj_map, data):
+    if isinstance(data, dict):
+        if "m_PathID" in data and "m_FileID" in data:
+            resolved = resolve_pptr(obj_map, data)
+            if isinstance(resolved, str): return resolved
+        return {k: deep_resolve(obj_map, v) for k, v in data.items()}
+    elif isinstance(data, list): return [deep_resolve(obj_map, v) for v in data]
+    return data
+
+def safe_serialize(obj_map, obj):
+    resolved = deep_resolve(obj_map, obj)
+    def _serialize(o):
+        if isinstance(o, dict): return {str(k): _serialize(v) for k, v in o.items()}
+        elif isinstance(o, list): return [_serialize(v) for v in o]
+        elif isinstance(o, (int, float, str, bool, type(None))): return o
+        return str(o)
+    return _serialize(resolved)
+# ---------------------------------------------------
+
+
 def get_world_matrix(tr_path_id, transforms):
     if tr_path_id not in transforms:
         return 0, 0, 0, 1, 1
@@ -48,16 +85,16 @@ def is_active_in_hierarchy(tr_path_id, transforms, gameobjects):
 def extract_map(level_path, load_addressables=False, addressables_dir=""):
     base_name = os.path.basename(level_path).replace('.split0', '')
     
-    # Definir directorio de salida de la misma forma que más adelante
     output_dir = os.path.join(os.path.dirname(os.path.abspath(level_path)), f"Exportado_{base_name}")
     if not os.path.exists(output_dir):
         output_dir = f"Exportado_{base_name}"
         
     json_path = os.path.join(output_dir, 'layout.json')
+    meta_path = os.path.join(output_dir, 'map_metadata.json')
     
-    # NUEVA VERIFICACIÓN: Si ya existe el json, asumimos que ya se extrajo todo y salteamos al ensamblaje
-    if os.path.exists(json_path) and os.path.exists(output_dir):
-        print(f"[!] Ya se encontraron los recursos extraídos en '{output_dir}'. Omitiendo carga de Unity y saltando directamente al ensamblaje...")
+    # Se modificó para que reconstruya si falta el map_metadata.json
+    if os.path.exists(json_path) and os.path.exists(meta_path):
+        print(f"[!] Ya se encontraron los recursos extraídos en '{output_dir}'. Saltando al ensamblaje...")
         with open(json_path, 'r') as f:
             layout_data = json.load(f)
         assemble_map(layout_data, output_dir, base_name)
@@ -68,7 +105,6 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
     env.load_file(level_path)
     
     dir_name = os.path.dirname(level_path)
-    
     print(f"    Cargando dependencias compartidas...")
     for f in glob.glob(os.path.join(dir_name, "sharedassets*")):
         env.load_file(f)
@@ -85,6 +121,8 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
     gameobjects = {}
     sprite_renderers = []
     
+    obj_map = get_obj_map(env) # Diccionario de resolución para la metadata
+    
     for obj in env.objects:
         if obj.type.name == 'Transform':
             transforms[obj.path_id] = obj.read()
@@ -93,7 +131,7 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
         elif obj.type.name == 'SpriteRenderer':
             sprite_renderers.append(obj.read())
 
-    print("[3] Extrayendo y calculando Layout Matemático...")
+    print("[3] Extrayendo y calculando Layout Visual...")
     layout_data = []
     os.makedirs(output_dir, exist_ok=True)
     
@@ -102,17 +140,14 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
         
         c_path_id = next((c.path_id for c in gameobjects[sr.m_GameObject.path_id].m_Components if c.type.name == 'Transform'), None)
         if not c_path_id: continue
-        tr_comp = transforms.get(c_path_id)
         
         if not is_active_in_hierarchy(c_path_id, transforms, gameobjects):
             continue
             
         if not getattr(sr, 'm_Sprite', None) or sr.m_Sprite.path_id == 0: continue
         
-        try:
-            sp = sr.m_Sprite.read()
-        except:
-            continue
+        try: sp = sr.m_Sprite.read()
+        except: continue
             
         wx, wy, w_angle, wsx, wsy = get_world_matrix(c_path_id, transforms)
         
@@ -149,11 +184,8 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
         
         png_path = os.path.join(output_dir, f"{sp.m_Name}.png")
         if not os.path.exists(png_path):
-            try:
-                img = sp.image
-                img.save(png_path)
-            except Exception as e:
-                pass
+            try: sp.image.save(png_path)
+            except Exception as e: pass
                 
         layout_data.append({
             "sp": sp.m_Name, "go": gameobjects[sr.m_GameObject.path_id].m_Name,
@@ -166,7 +198,6 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
             "poly": poly_paths
         })
 
-    # Add missing wallpapers (BL, TL)
     for go_id, go in gameobjects.items():
         if 'Wallpaper' in go.m_Name:
             has_sr = any(env.objects[c.path_id].type.name == 'SpriteRenderer' for c in go.m_Components)
@@ -205,6 +236,87 @@ def extract_map(level_path, load_addressables=False, addressables_dir=""):
     with open(json_path, 'w') as f:
         json.dump(layout_data, f, indent=2)
 
+    # --- INICIO DE EXTRACCIÓN DE METADATA (NODOS, NAVMESH, GRIDS, LUCES) ---
+    print("[3.5] Extrayendo Lógica Profunda del Mapa (Nodos, NavMesh, Luces)...")
+    map_metadata = {
+        "grid_system": [],
+        "interaction_nodes": [],
+        "walkable_bounds": [],
+        "camera_confines": [],
+        "lighting_volumes": [],
+        "special_scripts": []
+    }
+
+    for go_id, go in gameobjects.items():
+        go_name = go.m_Name
+        c_path_id = next((c.path_id for c in go.m_Components if env.objects[c.path_id].type.name == 'Transform'), None)
+        if not c_path_id: continue
+        
+        wx, wy, w_angle, wsx, wsy = get_world_matrix(c_path_id, transforms)
+        
+        # Bandera para saber si el objeto es puramente lógico (sin gráficos)
+        has_sr = any(env.objects[c.path_id].type.name == 'SpriteRenderer' for c in go.m_Components)
+        
+        for comp_ptr in go.m_Components:
+            try:
+                c_obj = env.objects[comp_ptr.path_id]
+                c_type = c_obj.type.name
+                
+                # 1 & 2. Walkable Bounds y Camera Confines (Colliders invisibles)
+                if c_type in ['PolygonCollider2D', 'EdgeCollider2D', 'BoxCollider2D']:
+                    col_tree = c_obj.read_typetree()
+                    col_data = {
+                        "go": go_name, "type": c_type, "x": wx, "y": wy, 
+                        "sx": wsx, "sy": wsy, "angle": math.degrees(w_angle),
+                        "properties": safe_serialize(obj_map, col_tree)
+                    }
+                    if "Camera" in go_name or "Confine" in go_name:
+                        map_metadata["camera_confines"].append(col_data)
+                    else:
+                        map_metadata["walkable_bounds"].append(col_data)
+                        
+                # 3. Componentes de Grid nativos
+                elif c_type == 'Grid':
+                    grid_tree = c_obj.read_typetree()
+                    map_metadata["grid_system"].append({
+                        "go": go_name, "type": "Grid", "x": wx, "y": wy,
+                        "properties": safe_serialize(obj_map, grid_tree)
+                    })
+                    
+                # 4 & 5. Scripts de Interacción, Luces y Custom Grids
+                elif c_type == 'MonoBehaviour':
+                    mb = c_obj.read()
+                    script_name = "UnknownScript"
+                    if hasattr(mb, 'm_Script') and mb.m_Script and mb.m_Script.path_id in obj_map:
+                        script_name = obj_map[mb.m_Script.path_id].read().m_ClassName
+                    
+                    tree = c_obj.read_typetree()
+                    tree.pop("m_GameObject", None)
+                    tree.pop("m_Script", None)
+                    prop_data = safe_serialize(obj_map, tree)
+                    
+                    node_info = {
+                        "go": go_name, "script": script_name, "x": wx, "y": wy,
+                        "properties": prop_data
+                    }
+                    
+                    if script_name in ['ActionNode', 'TsukiInteraction', 'ItemSocket', 'SpawnPoint', 'SeatNode', 'FishingNode']:
+                        map_metadata["interaction_nodes"].append(node_info)
+                    elif 'Light' in script_name or 'DayNight' in script_name or 'Volume' in script_name or 'Color' in script_name:
+                        map_metadata["lighting_volumes"].append(node_info)
+                    elif 'Grid' in script_name or 'Placement' in script_name:
+                        map_metadata["grid_system"].append(node_info)
+                    elif not has_sr:
+                        # Scripts generales que regulan el entorno
+                        map_metadata["special_scripts"].append(node_info)
+            except Exception as e:
+                pass
+
+    with open(meta_path, 'w', encoding='utf-8') as f:
+        json.dump(map_metadata, f, indent=2, ensure_ascii=False)
+    print(f"    [+] map_metadata.json generado exitosamente.")
+    # --- FIN EXTRACCIÓN DE METADATA ---
+
     assemble_map(layout_data, output_dir, base_name)
 
 def assemble_map(layout_data, output_dir, base_name):
@@ -215,7 +327,6 @@ def assemble_map(layout_data, output_dir, base_name):
 
     layout_data.sort(key=lambda d: (d.get('sl', 0), d['o']))
     
-    # Pass 1: Compute bounds
     render_jobs = []
     global_min_x, global_min_y = float('inf'), float('inf')
     global_max_x, global_max_y = float('-inf'), float('-inf')

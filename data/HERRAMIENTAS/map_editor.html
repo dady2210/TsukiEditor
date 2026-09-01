@@ -42,7 +42,7 @@
         #hud-info { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.6); padding: 4px 8px; border-radius: 4px; font-size: 11px; color: #aaa; pointer-events: none; display: flex; gap: 10px; align-items: center;}
         
         #metadata-panel { padding: 10px; font-size: 11px; color: #aaa; background: #2a2a2c; border-bottom: 1px solid #3c3c3c; display: none; }
-        #meta-raw { margin-top: 5px; max-height: 90px; overflow-y: auto; background: #1e1e1e; padding: 6px; border: 1px solid #444; font-family: monospace; font-size: 10px; white-space: pre-wrap; }
+        #meta-raw { margin-top: 5px; max-height: 350px; overflow-y: auto; background: #1e1e1e; padding: 6px; border: 1px solid #444; font-family: monospace; font-size: 10px; white-space: pre-wrap; }
     </style>
 </head>
 <body>
@@ -139,22 +139,14 @@
             <strong id="meta-name" style="color: #fff; font-size: 13px;">-</strong><br>
             ID Global: <span id="meta-id">-</span><br>
             <div id="meta-raw"></div>
-            <div style="margin-top: 10px;">
-                <label style="color: #00e5ff; cursor:pointer; font-weight: bold;">
-                    <input type="checkbox" id="toggle-colliders" onchange="showColliders = this.checked; draw();"> 
-                    Ver Nodos y Colliders
+            <div style="margin-top: 10px; display:flex; flex-direction:column; gap:3px; font-size:10px;">
+                <label style="color:#00e5ff; cursor:pointer; font-weight:bold;">
+                    <input type="checkbox" id="toggle-colliders" checked onchange="overlayFlags.colliders = this.checked; showColliders = this.checked; draw();"> Overlays de lógica
                 </label>
-            </div>
-            <div style="margin-top:8px; display:grid; grid-template-columns:1fr 1fr; gap:4px; font-size:10px;">
-                <label><input type="checkbox" id="tog-walkable" checked onchange="overlay.walkable=this.checked; draw();"> Walkable</label>
-                <label><input type="checkbox" id="tog-blocker" checked onchange="overlay.blocker=this.checked; draw();"> Blockers</label>
-                <label><input type="checkbox" id="tog-trigger" checked onchange="overlay.trigger=this.checked; draw();"> Triggers</label>
-                <label><input type="checkbox" id="tog-wallpaper" checked onchange="overlay.wallpaper=this.checked; draw();"> Wallpaper</label>
-                <label><input type="checkbox" id="tog-camera" checked onchange="overlay.camera=this.checked; draw();"> Camera</label>
-                <label><input type="checkbox" id="tog-interact" checked onchange="overlay.interact=this.checked; draw();"> Nodes</label>
-                <label><input type="checkbox" id="tog-lights" checked onchange="overlay.lights=this.checked; draw();"> Lights</label>
-                <label><input type="checkbox" id="tog-fx" checked onchange="overlay.fx=this.checked; draw();"> FX/Activity</label>
-                <label><input type="checkbox" id="tog-hierarchy" onchange="overlay.hierarchy=this.checked; draw();"> Hierarchy</label>
+                <label><input type="checkbox" checked onchange="overlayFlags.walkable=this.checked; draw();"> Walkable</label>
+                <label><input type="checkbox" checked onchange="overlayFlags.blocker=this.checked; draw();"> Blockers</label>
+                <label><input type="checkbox" checked onchange="overlayFlags.wallpaper=this.checked; draw();"> Wallpaper colliders</label>
+                <label><input type="checkbox" checked onchange="overlayFlags.nodes=this.checked; draw();"> Nodos / scripts</label>
             </div>
             
             <!-- NUEVO: SECCIÓN DE SMART LOGIC (ANIMACIONES Y ESTADOS) -->
@@ -257,15 +249,15 @@
         // --- ESTADO GLOBAL & ASSETS ---
         let sceneData = [];
         let folders = [];
+		window.metaEditRefs = [];
         let selectedIndices = new Set();
         let primarySelectedIndex = -1;
         let currentTool = 'select';
 
         let currentMetadata = null;
         let currentMapMeta = null;
-        let currentItemMeta = null;
-        let showColliders = false;
-        const overlay = { walkable:true, blocker:true, trigger:true, wallpaper:true, camera:true, interact:true, lights:true, fx:true, hierarchy:false };
+        let showColliders = true;
+        const overlayFlags = { colliders: true, walkable: true, blocker: true, wallpaper: true, nodes: true };
 
         const historyStack = [];
         let historyIndex = -1;
@@ -304,44 +296,67 @@
             }
 
             if (jsonFiles.length > 0) {
-                // Acepta ambos formatos de metadata de manera universal
-                const metaFile = jsonFiles.find(f => f.name.toLowerCase() === 'metadata.json' || f.name.toLowerCase() === 'map_metadata.json');
-                if (metaFile) {
-                    try { currentMetadata = JSON.parse(await metaFile.text()); } 
-                    catch(e) { console.error("Error leyendo metadata", e); currentMetadata = null; }
-                } else { currentMetadata = null; }
+                const byName = {};
+                jsonFiles.forEach(f => { byName[f.name.toLowerCase()] = f; });
 
-                const layoutFiles = jsonFiles.filter(f => f.name.toLowerCase().includes('layout') && f.name.toLowerCase() !== 'metadata.json' && f.name.toLowerCase() !== 'map_metadata.json');
-                
-                if (layoutFiles.length > 0) {
-                    sceneData = []; folders = [];
+                currentMetadata = null;
+                currentMapMeta = null;
+                const metaFile = byName['metadata.json'] || byName['map_metadata.json'];
+                if (metaFile) {
+                    try { currentMetadata = JSON.parse(await metaFile.text()); }
+                    catch(e) { currentMetadata = null; }
+                }
+                if (byName['map_metadata.json']) {
+                    try { currentMapMeta = JSON.parse(await byName['map_metadata.json'].text()); }
+                    catch(e) {}
+                }
+
+                sceneData = []; folders = [];
+                let usedSceneFull = false;
+                if (byName['scene_full.json']) {
+                    try {
+                        const full = JSON.parse(await byName['scene_full.json'].text());
+                        if (full.kind === 'map' && full.layout && Array.isArray(full.layout.front)) {
+                            usedSceneFull = true;
+                            currentMapMeta = Object.assign({}, full.logic || {}, { raw: full.raw, colliders: full.colliders || [] });
+                            if (!currentMetadata) currentMetadata = full.raw || currentMapMeta;
+                            const folderId = 'folder_layout';
+                            folders.push({ id: folderId, name: 'LAYOUT', visible: true, locked: false, collapsed: false });
+                            full.layout.front.forEach(obj => { obj.folderId = folderId; sceneData.push(obj); });
+                        }
+                    } catch(e) { console.error('scene_full', e); }
+                }
+
+                if (!usedSceneFull) {
+                    const layoutFiles = jsonFiles.filter(f => {
+                        const n = f.name.toLowerCase();
+                        return n.includes('layout') && n !== 'metadata.json' && n !== 'map_metadata.json' && n !== 'scene_full.json';
+                    });
                     for (let lf of layoutFiles) {
                         try {
                             const parsed = JSON.parse(await lf.text());
                             const folderName = lf.name.replace('.json', '').toUpperCase();
                             const folderId = 'folder_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
-                            
                             const isVisible = !folderName.includes('BACK');
                             folders.push({ id: folderId, name: folderName, visible: isVisible, locked: false, collapsed: false });
-                            
-                            const dataArray = Array.isArray(parsed) ? parsed : (parsed.sceneData || []);
-                            dataArray.forEach(obj => {
-                                obj.folderId = folderId;
-                                sceneData.push(obj);
-                            });
+                            const dataArray = Array.isArray(parsed) ? parsed : (parsed.sceneData || parsed.layout?.front || []);
+                            dataArray.forEach(obj => { obj.folderId = folderId; sceneData.push(obj); });
                         } catch(e) { console.error(`Error procesando ${lf.name}`, e); }
                     }
-
-                    selectedIndices.clear(); primarySelectedIndex = -1;
-                    recordState(); updateFolderDropdowns(); updateLayerList(); updatePropertiesPanel(); updateMetadataPanel(); fitCameraToScene();
-                    document.getElementById('loaded-assets-count').innerText = `${layoutFiles.length} Layouts + Metadata + ${loadedImages} texturas`;
                 }
+
+                selectedIndices.clear(); primarySelectedIndex = -1;
+                recordState(); updateFolderDropdowns(); updateLayerList(); updatePropertiesPanel(); updateMetadataPanel();
+                resizeCanvas();
+                fitCameraToScene();
+                document.getElementById('loaded-assets-count').innerText = `${sceneData.length} sprites + ${loadedImages} texturas`;
+                requestAnimationFrame(() => { fitCameraToScene(); setTimeout(fitCameraToScene, 250); });
             } else {
                 document.getElementById('loaded-assets-count').innerText = `${loadedImages} texturas cargadas`;
             }
             draw();
         }
-
+		
 		function updateMetadataPanel() {
             const panel = document.getElementById('metadata-panel');
             if (!currentMetadata) { panel.style.display = 'none'; return; }
@@ -350,26 +365,73 @@
             document.getElementById('meta-id').innerText = currentMetadata.id || 'N/A';
             
             let rawHtml = '';
+            window.metaEditRefs = []; // Reiniciar referencias en cada carga
             
-            // Indicadores de Mueble
-            if(currentMetadata.animators && currentMetadata.animators.length > 0) {
-                rawHtml += `<span style="color:#28a745;">[MUEBLE] Controlador de animación detectado.</span>\n`;
-            }
-            
-            // Indicadores de Mapa
-            if(currentMetadata.walkable_bounds && currentMetadata.walkable_bounds.length > 0) {
-                rawHtml += `<span style="color:#ffaa00;">[MAPA] ${currentMetadata.walkable_bounds.length} límites caminables.</span>\n`;
-            }
-            if(currentMetadata.interaction_nodes && currentMetadata.interaction_nodes.length > 0) {
-                rawHtml += `<span style="color:#00ffcc;">[MAPA] ${currentMetadata.interaction_nodes.length} nodos de interacción.</span>\n`;
+            // Indicadores básicos
+            if(currentMetadata.animators && currentMetadata.animators.length > 0) rawHtml += `<span style="color:#28a745;">[MUEBLE] Animators detectados.</span><br>`;
+            if(currentMetadata.walkable_bounds && currentMetadata.walkable_bounds.length > 0) rawHtml += `<span style="color:#ffaa00;">[MAPA] Límites caminables.</span><br>`;
+
+            // --- MOTOR DEL INSPECTOR INTELIGENTE ---
+            // Esta función lee CUALQUIER objeto JSON y genera inputs dinámicos sin importar cómo se llamen las variables.
+            function renderEditableProps(title, targetObj, color) {
+                if (!targetObj || Object.keys(targetObj).length === 0) return '';
+                let html = `<div style="margin-top:8px; padding:4px; background:#222; border-left:3px solid ${color};">`;
+                html += `<strong style="color:${color}; font-size:11px;">${title}</strong><div style="display:flex; flex-direction:column; gap:4px; margin-top:4px;">`;
+
+                const refIndex = window.metaEditRefs.length;
+                window.metaEditRefs.push(targetObj);
+
+                for (let k in targetObj) {
+                    // Omitimos listas masivas de vértices para no congelar el panel
+                    if (k === 'colliderPoints' || k === 'flippedColliderPoints' || k === 'sprites') continue;
+                    
+                    const v = targetObj[k];
+                    if (v === null || typeof v === 'object') {
+                         let str = JSON.stringify(v);
+                         if(str && str.length > 30) str = str.substring(0,30)+'...';
+                         html += `<div style="display:flex; justify-content:space-between; font-size:10px; border-bottom:1px solid #333; padding-bottom:2px;">
+                                    <span style="color:#aaa;">${k}</span>
+                                    <span style="color:#777;" title='${JSON.stringify(v)}'>${str}</span>
+                                 </div>`;
+                    } else {
+                         const isNum = typeof v === 'number';
+                         const isBool = typeof v === 'boolean';
+                         
+                         // Tratamos los booleanos reales como checkboxes
+                         if(isBool) {
+                             html += `<div style="display:flex; justify-content:space-between; font-size:10px; align-items:center; border-bottom:1px solid #333; padding-bottom:2px;">
+                                        <span style="color:#ddd;">${k}</span>
+                                        <input type="checkbox" ${v ? 'checked' : ''} onchange="window.metaEditRefs[${refIndex}]['${k}'] = this.checked;">
+                                      </div>`;
+                         } else {
+                             // Texto y Números interactivos (ej: gridCollScale)
+                             html += `<div style="display:flex; justify-content:space-between; font-size:10px; align-items:center; border-bottom:1px solid #333; padding-bottom:2px;">
+                                        <span style="color:#ddd;">${k}</span>
+                                        <input type="${isNum?'number':'text'}" step="any" value="${v}" style="width:70px; padding:1px; font-size:10px; background:#333; color:#fff; border:1px solid #555;" onchange="window.metaEditRefs[${refIndex}]['${k}'] = ${isNum ? 'parseFloat(this.value)' : 'this.value'};">
+                                      </div>`;
+                         }
+                    }
+                }
+                html += `</div></div>`;
+                return html;
             }
 
-            if(currentMetadata.raw_properties) {
-                for (let k in currentMetadata.raw_properties) {
-                    rawHtml += `<span style="color:#00e5ff;">${k}:</span> ${JSON.stringify(currentMetadata.raw_properties[k])}\n`;
-                }
+            // 1. Escanear y renderizar Propiedades Globales (raw_properties)
+            rawHtml += renderEditableProps("⚙️ Global Properties", currentMetadata.raw_properties, "#00e5ff");
+
+            // 2. Escanear y renderizar Componentes Especiales (MonoBehaviours)
+            if (currentMetadata.nodes) {
+                currentMetadata.nodes.forEach(node => {
+                    node.components.forEach(comp => {
+                        // Ignoramos componentes visuales estándar para no saturar, nos enfocamos en lógica
+                        if (comp.type !== "SpriteRenderer" && comp.type !== "Transform" && comp.type !== "SpriteObject" && comp.type !== "AnimObject") {
+                            rawHtml += renderEditableProps(`📜 Script: ${comp.type} (${node.name})`, comp.properties, "#ffaa00");
+                        }
+                    });
+                });
             }
-            document.getElementById('meta-raw').innerHTML = rawHtml || 'Estructura procesada.';
+
+            document.getElementById('meta-raw').innerHTML = rawHtml || 'Estructura procesada sin propiedades editables.';
         }
 
         // --- SISTEMA DE SMART LOGIC (ANIMATION & FLIP SIMULATOR) ---
@@ -416,34 +478,85 @@
 
         function toggleInteraction() {
             if (sceneData.length === 0) return;
-            
+            isFurnitureOpen = !isFurnitureOpen;
             let interacted = false;
-            isFurnitureOpen = !isFurnitureOpen; // Cambiamos el estado global
-            
+
+            // 1. Extraer reglas lógicas (Scripts y Animators)
+            const swapRules = {}; 
+            let hasAnimator = false;
+
+            if (currentMetadata) {
+                // Verificar si existe un componente Animator en toda la estructura
+                hasAnimator = (currentMetadata.animators && currentMetadata.animators.length > 0) || 
+                              (currentMetadata.raw_properties && currentMetadata.raw_properties.animator);
+
+                // Leer reglas de Swap desde cualquier script (MusicPlayer, etc)
+                (currentMetadata.nodes || []).forEach(node => {
+                    (node.components || []).forEach(comp => {
+                        const p = comp.properties || {};
+                        
+                        // Detectar propiedades de intercambio de sprites
+                        let sOn = p.onSprite || p.openSprite || p.on || p.open;
+                        let sOff = p.offSprite || p.closeSprite || p.off || p.close;
+                        
+                        const clean = (s) => (typeof s === 'string' && s.startsWith('Sprite: ')) ? s.replace('Sprite: ', '').trim() : null;
+                        sOn = clean(sOn); sOff = clean(sOff);
+                        
+                        // Crear la regla bidireccional si ambos existen
+                        if (sOn && sOff) {
+                            swapRules[sOff.replace(/ /g, '_')] = sOn.replace(/ /g, '_');
+                            swapRules[sOn.replace(/ /g, '_')] = sOff.replace(/ /g, '_');
+                        }
+                    });
+                });
+            }
+
+            // 2. Aplicar la lógica inferida a la escena
             sceneData.forEach(o => {
                 const nodeName = (o.go || "").toLowerCase();
-                
-                // 1. Lógica de Puertas y Tapas (Rotación para el Crop Box)
-                if (nodeName.includes('lid') || nodeName.includes('door') || nodeName.includes('tapa')) {
-                    o.angle = isFurnitureOpen ? -45 : 0;
+                const spriteName = (o.sp || "");
+
+                // A. Lógica de Cambio de Estado Visual (Ej: Casetera, Lámparas complejas)
+                // Si el sprite actual está en nuestras reglas extraídas, lo cambiamos.
+                if (swapRules[spriteName]) {
+                    o.sp = swapRules[spriteName];
                     interacted = true;
-                }
+                } 
                 
-                // 2. Lógica de Lámparas (Cambio de Sprite de _0 a _1)
-                // Si la imagen termina en _0 o _1, la intercambiamos
-                if (o.sp && (o.sp.endsWith('_0') || o.sp.endsWith('_1'))) {
-                    o.sp = isFurnitureOpen ? o.sp.replace('_0', '_1') : o.sp.replace('_1', '_0');
-                    interacted = true;
+                // B. Lógica de Lámparas Simples (Fallback)
+                // Si es una luz pero no tenía script de Swap, intercambiamos _0 y _1
+                else if (nodeName.includes('lamp') || nodeName.includes('light')) {
+                    if (spriteName.endsWith('_0') || spriteName.endsWith('_1')) {
+                        o.sp = isFurnitureOpen ? spriteName.replace('_0', '_1') : spriteName.replace('_1', '_0');
+                        interacted = true;
+                    }
                 }
 
-                // 3. Lógica del Halo de Luz (Square con material Radial)
-                // Encendemos o apagamos el resplandor de la lámpara
-                if (nodeName === 'square' && o.sp === 'white') {
+                // C. Lógica Articulada basada en física (Ej: Crop Box)
+                // Si el objeto tiene un Animator y detectamos una parte móvil, la rotamos.
+                if (hasAnimator) {
+                    if (['lid', 'door', 'tapa', 'cover'].some(n => nodeName.includes(n))) {
+                        // Rota 45 grados hacia arriba (sentido antihorario en Canvas)
+                        o.angle = isFurnitureOpen ? 45 : 0;
+                        interacted = true;
+                    }
+                } 
+                // D. Lógica Articulada de Visibilidad (Si es una tapa pero NO tiene Animator)
+                else {
+                    if (['lid', 'door', 'tapa', 'cover'].some(n => nodeName.includes(n)) && !swapRules[spriteName]) {
+                         o.visible = !isFurnitureOpen;
+                         interacted = true;
+                    }
+                }
+
+                // E. Encendido del Halo Radial para todas las luces
+                if (nodeName === 'square' && spriteName === 'white') {
                     o.visible = isFurnitureOpen;
                     interacted = true;
                 }
             });
 
+            // 3. Actualizar la Interfaz
             if (interacted) {
                 const btn = document.getElementById('btn-animate');
                 btn.innerHTML = isFurnitureOpen ? '⏸ Interacción (Cerrar / Apagar)' : '▶ Interacción (Abrir / Encender)';
@@ -452,39 +565,54 @@
                 
                 recordState(); updateLayerList(); updatePropertiesPanel(); draw();
             } else {
-                // Revertimos el estado si no se encontró nada interactivo
                 isFurnitureOpen = !isFurnitureOpen; 
-                alert("No se detectaron partes articuladas ni lámparas en este mueble.");
+                alert("No se detectó lógica dinámica de animación (Animator o scripts de estado) en este ítem.");
             }
         }
 
         // --- ENCUADRE DE CÁMARA INTELIGENTE ---
+        function objectWorldBounds(obj) {
+            const raster = obj._rasterCache;
+            if (raster && raster.canvas && raster.PPU) {
+                const w = raster.canvas.width / raster.PPU;
+                const h = raster.canvas.height / raster.PPU;
+                const minX = obj.x + raster.localMinX;
+                const maxY = obj.y + raster.localMaxY;
+                return { minX, maxX: minX + w, minY: maxY - h, maxY };
+            }
+            const PPU = obj.ppu || 150.0;
+            const sx = Math.abs(obj.sx !== undefined ? obj.sx : 1);
+            const sy = Math.abs(obj.sy !== undefined ? obj.sy : 1);
+            const w = (obj.draw_mode > 0 && obj.sz_x > 0) ? obj.sz_x * sx : ((obj.rw || 1) / PPU) * sx;
+            const h = (obj.draw_mode > 0 && obj.sz_y > 0) ? obj.sz_y * sy : ((obj.rh || 1) / PPU) * sy;
+            const px = obj.x || 0, py = obj.y || 0;
+            return { minX: px - w * (obj.px !== undefined ? obj.px : 0.5), maxX: px + w * (1 - (obj.px !== undefined ? obj.px : 0.5)),
+                     minY: py - h * (obj.py !== undefined ? obj.py : 0.5), maxY: py + h * (1 - (obj.py !== undefined ? obj.py : 0.5)) };
+        }
+
         function fitCameraToScene() {
             if (sceneData.length === 0) return;
+            if (!canvas.width || !canvas.height) { resizeCanvas(); }
             let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
             let hasVisible = false;
-
             sceneData.forEach(obj => {
                 if (!isObjectEffectivelyVisible(obj) || obj.sp === 'Square') return;
                 hasVisible = true;
-                const PPU = obj.ppu || 150.0;
-                let w = ((obj.rw || 100) / PPU) * Math.abs(obj.sx !== undefined ? obj.sx : 1);
-                let h = ((obj.rh || 100) / PPU) * Math.abs(obj.sy !== undefined ? obj.sy : 1);
-                const px = obj.x || 0; const py = obj.y || 0;
-                minX = Math.min(minX, px - w); maxX = Math.max(maxX, px + w);
-                minY = Math.min(minY, py - h); maxY = Math.max(maxY, py + h);
+                const b = objectWorldBounds(obj);
+                minX = Math.min(minX, b.minX); maxX = Math.max(maxX, b.maxX);
+                minY = Math.min(minY, b.minY); maxY = Math.max(maxY, b.maxY);
             });
-
-            if (!hasVisible) return;
-            const sceneW = Math.max(0.1, maxX - minX); const sceneH = Math.max(0.1, maxY - minY);
-            const targetRatio = 0.75;
-            const zoomX = (canvas.width * targetRatio) / sceneW;
-            const zoomY = (canvas.height * targetRatio) / sceneH;
-            
-            camera.zoom = Math.max(1, Math.min(5000, Math.min(zoomX, zoomY)));
-            const centerX = (minX + maxX) / 2; const centerY = (minY + maxY) / 2;
-            camera.x = -centerX * camera.zoom; camera.y = centerY * camera.zoom;
-
+            if (!hasVisible || !isFinite(minX)) return;
+            const sceneW = Math.max(0.5, maxX - minX);
+            const sceneH = Math.max(0.5, maxY - minY);
+            const pad = 0.82;
+            const zoomX = (canvas.width * pad) / sceneW;
+            const zoomY = (canvas.height * pad) / sceneH;
+            camera.zoom = Math.max(4, Math.min(800, Math.min(zoomX, zoomY)));
+            const centerX = (minX + maxX) / 2;
+            const centerY = (minY + maxY) / 2;
+            camera.x = -centerX * camera.zoom;
+            camera.y = centerY * camera.zoom;
             updateHudDisplay(); draw();
         }
 
@@ -500,19 +628,16 @@
         }
 		// --- INSERTA ESTA FUNCIÓN FALTANTE ---
         function getWallpaperImage(sp) {
-            if (!sp) return null;
-            const key = 'WP_' + sp;
-            if (imageCache[sp]) return imageCache[sp];
-            if (imageCache[key]) return imageCache[key];
-            if (assetBlobs[sp]) return getSpriteImage(sp);
-            if (assetBlobs[key]) return getSpriteImage(key);
-
-            const img = new Image(); img.crossOrigin = "anonymous"; 
-            img.src = 'Exportado_Revestimientos/' + sp + '.png';
-            img.onload = () => draw(); 
-            img.onerror = () => { img.src = 'Exportado_level2/' + sp + '.png'; };
-            imageCache[key] = img; 
-            return img;
+            const candidates = [
+                sp, 'WP_' + (sp || ''), 'WoodBark', 'WP_WoodBark',
+                'birchfloorboards', 'WoodBark01', 'WP_Wood01'
+            ].filter(Boolean);
+            for (const key of candidates) {
+                if (imageCache[key] && imageCache[key].complete && imageCache[key].naturalWidth)
+                    return imageCache[key];
+                if (assetBlobs[key]) return getSpriteImage(key);
+            }
+            return getSpriteImage(sp || 'WoodBark');
         }
         // -------------------------------------
         function recordState() {
@@ -539,7 +664,7 @@
             }
         }
 
-        function getObjectHash(obj) { return `${obj.sp}_${obj.sx}_${obj.sy}_${obj.angle}_${obj.draw_mode}_${obj.sz_x}_${obj.sz_y}_${obj.px}_${obj.py}_${obj.ox}_${obj.oy}_${obj.rw}_${obj.rh}_${obj.shear}_${obj.pattern_scale}_${JSON.stringify(obj.poly)}`; }
+        function getObjectHash(obj) { return `${obj.sp}_${obj.sx}_${obj.sy}_${obj.angle}_${obj.draw_mode}_${obj.sz_x}_${obj.sz_y}_${obj.px}_${obj.py}_${obj.ox}_${obj.oy}_${obj.rw}_${obj.rh}_${obj.shear}_${obj.pattern_scale}_${JSON.stringify(obj.poly)}_${JSON.stringify(obj.color)}_${obj.go}`; }
 
         function generateObjectRaster(d) {
             const isWallpaper = (d.draw_mode > 0 && d.sz_x > 0);
@@ -555,7 +680,59 @@
             let processedCanvas = document.createElement('canvas'); let processedCtx = processedCanvas.getContext('2d');
 
             if (isWallpaper) {
-                // Lógica de wallpapers omitida por brevedad
+                const targetW = Math.max(1, Math.round((d.sz_x || 1) * PPU));
+                const targetH = Math.max(1, Math.round((d.sz_y || 1) * PPU));
+                const tileScale = 8.0;
+                const tileW = Math.max(1, Math.round(imgW / tileScale));
+                const tileH = Math.max(1, Math.round(imgH / tileScale));
+                const tileCanvas = document.createElement('canvas');
+                tileCanvas.width = tileW; tileCanvas.height = tileH;
+                tileCanvas.getContext('2d').drawImage(sourceImg, 0, 0, tileW, tileH);
+
+                const bufferW = targetW * 3, bufferH = targetH * 3;
+                const tiled = document.createElement('canvas');
+                tiled.width = bufferW; tiled.height = bufferH;
+                const tctx = tiled.getContext('2d');
+                for (let tx = 0; tx < bufferW; tx += tileW) {
+                    for (let ty = 0; ty < bufferH; ty += tileH) {
+                        tctx.drawImage(tileCanvas, tx, ty);
+                    }
+                }
+                const goName = d.go || '';
+                const shearSlope = goName.indexOf('R') >= 0 ? -0.5 : 0.5;
+                const sheared = document.createElement('canvas');
+                sheared.width = bufferW; sheared.height = bufferH;
+                const sctx = sheared.getContext('2d');
+                sctx.setTransform(1, shearSlope, 0, 1, -(bufferW / 2) * shearSlope, 0);
+                sctx.drawImage(tiled, 0, 0);
+
+                processedCanvas.width = targetW;
+                processedCanvas.height = targetH;
+                const left = Math.floor((bufferW - targetW) / 2);
+                const top = Math.floor((bufferH - targetH) / 2);
+                processedCtx.drawImage(sheared, left, top, targetW, targetH, 0, 0, targetW, targetH);
+
+                const polyPaths = d.poly || [];
+                if (polyPaths.length) {
+                    const mask = document.createElement('canvas');
+                    mask.width = targetW; mask.height = targetH;
+                    const mctx = mask.getContext('2d');
+                    mctx.fillStyle = '#fff';
+                    polyPaths.forEach(path => {
+                        mctx.beginPath();
+                        path.forEach((pt, idx) => {
+                            const mx = (pt.x + px * (d.sz_x || 1)) * PPU;
+                            const my = targetH - (pt.y + py * (d.sz_y || 1)) * PPU;
+                            if (idx === 0) mctx.moveTo(mx, my); else mctx.lineTo(mx, my);
+                        });
+                        mctx.closePath();
+                        mctx.fill();
+                    });
+                    processedCtx.globalCompositeOperation = 'destination-in';
+                    processedCtx.drawImage(mask, 0, 0);
+                    processedCtx.globalCompositeOperation = 'source-over';
+                }
+                rw = targetW; rh = targetH; ox = 0; oy = 0; imgW = targetW; imgH = targetH;
             } else {
                 const newW = Math.max(1, Math.trunc(imgW * Math.abs(sx))); const newH = Math.max(1, Math.trunc(imgH * Math.abs(sy)));
                 processedCanvas.width = newW; processedCanvas.height = newH;
@@ -717,42 +894,98 @@
             return false;
         }
 
+        function extractPaths(bound) {
+            if (!bound) return [];
+            if (Array.isArray(bound.paths) && bound.paths.length) return bound.paths;
+            if (Array.isArray(bound.poly) && bound.poly.length) return bound.poly;
+            const props = bound.properties || {};
+            if (props.m_Points && Array.isArray(props.m_Points.m_Paths)) return props.m_Points.m_Paths;
+            if (props.m_Points && Array.isArray(props.m_Points)) return [props.m_Points];
+            return [];
+        }
+
+        function drawColliderPoly(ctx, bound, colorStroke, colorFill, label) {
+            const paths = extractPaths(bound);
+            if (!paths.length) return;
+            ctx.save();
+            const wx = (bound.x || 0) * camera.zoom;
+            const wy = -(bound.y || 0) * camera.zoom;
+            ctx.translate(wx, wy);
+            ctx.rotate(-((bound.angle || 0) * Math.PI / 180));
+            ctx.scale(bound.sx || 1, bound.sy || 1);
+            ctx.strokeStyle = colorStroke;
+            ctx.fillStyle = colorFill;
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 4]);
+            paths.forEach(path => {
+                if (!path || !path.length) return;
+                ctx.beginPath();
+                path.forEach((pt, idx) => {
+                    const px = (pt.x || 0) * camera.zoom;
+                    const py = -(pt.y || 0) * camera.zoom;
+                    if (idx === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                });
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            });
+            if (label) {
+                ctx.setLineDash([]);
+                ctx.fillStyle = colorStroke;
+                ctx.font = '11px Segoe UI, sans-serif';
+                ctx.fillText(label, 6, -6);
+            }
+            ctx.restore();
+        }
+
+        function inferRole(bound) {
+            if (bound.role) return bound.role;
+            const n = (bound.go || bound.name || '').toLowerCase();
+            if (n.includes('wallpaper')) return 'wallpaper';
+            if (n.includes('floor') || n.includes('walk') || n.includes('ground') || n.includes('nav')) return 'walkable';
+            if (n.includes('camera') || n.includes('confine')) return 'camera';
+            return 'blocker';
+        }
+
         function drawMetadataVisuals(ctx) {
-            if (!currentMetadata) return;
+            const meta = currentMapMeta || currentMetadata || {};
+            const seen = new Set();
 
-            // --- LÓGICA DE MAPAS (Walkable Bounds y Nodos de Interacción) ---
-            if (currentMetadata.walkable_bounds) {
-                currentMetadata.walkable_bounds.forEach(bound => {
-                    ctx.save();
-                    const PPU = 150.0; // PPU estándar del juego
-                    const wx = bound.x * camera.zoom;
-                    const wy = -bound.y * camera.zoom;
-                    ctx.translate(wx, wy);
-                    ctx.rotate(-bound.angle * Math.PI / 180);
-                    ctx.scale(bound.sx, bound.sy);
+            function drawBound(bound, fallbackRole) {
+                if (!bound) return;
+                const key = (bound.go || '') + '|' + (bound.x || 0) + '|' + (bound.y || 0) + '|' + inferRole(bound);
+                if (seen.has(key)) return;
+                seen.add(key);
+                const role = inferRole(bound) || fallbackRole;
+                if (role === 'walkable' && overlayFlags.walkable)
+                    drawColliderPoly(ctx, bound, '#ffcc33', 'rgba(255,180,0,0.22)', bound.go || 'Floor');
+                else if (role === 'wallpaper' && overlayFlags.wallpaper)
+                    drawColliderPoly(ctx, bound, '#66d9ff', 'rgba(80,180,255,0.16)', bound.go || 'Wall');
+                else if (role === 'blocker' && overlayFlags.blocker)
+                    drawColliderPoly(ctx, bound, '#ff6666', 'rgba(255,70,70,0.14)', bound.go || 'Block');
+                else if ((role === 'trigger' || role === 'camera') && overlayFlags.nodes)
+                    drawColliderPoly(ctx, bound, '#00ffcc', 'rgba(0,255,200,0.12)', bound.go || role);
+            }
 
-                    ctx.strokeStyle = '#ffaa00';
-                    ctx.fillStyle = 'rgba(255, 170, 0, 0.15)';
-                    ctx.lineWidth = 1.5;
-                    ctx.setLineDash([5, 5]);
+            (meta.colliders || []).forEach(c => drawBound(c));
+            (meta.walkable || []).forEach(c => drawBound(c, 'walkable'));
+            (meta.blockers || []).forEach(c => drawBound(c, 'blocker'));
+            (currentMetadata && currentMetadata.walkable_bounds || []).forEach(c => drawBound(c));
+            (currentMetadata && currentMetadata.camera_confines || []).forEach(c => drawBound(c, 'camera'));
+            (meta.raw && meta.raw.walkable_bounds || []).forEach(c => drawBound(c));
 
-                    ctx.beginPath();
-                    if (bound.properties && bound.properties.m_Points && bound.properties.m_Points.m_Paths) {
-                        bound.properties.m_Points.m_Paths.forEach(path => {
-                            path.forEach((pt, idx) => {
-                                // Multiplicamos los puntos locales por PPU
-                                const px = pt.x * PPU * (camera.zoom / PPU);
-                                const py = -pt.y * PPU * (camera.zoom / PPU);
-                                if (idx === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-                            });
-                            ctx.closePath();
-                        });
-                    }
-                    ctx.fill(); ctx.stroke(); ctx.restore();
+            if (overlayFlags.wallpaper) {
+                sceneData.forEach(obj => {
+                    if (!obj.poly || !obj.poly.length) return;
+                    drawBound({
+                        go: obj.go,
+                        x: obj.x, y: obj.y, angle: obj.angle, sx: obj.sx, sy: obj.sy,
+                        paths: obj.poly, role: 'wallpaper'
+                    });
                 });
             }
 
-            if (currentMetadata.interaction_nodes) {
+            if (currentMetadata && currentMetadata.interaction_nodes) {
                 currentMetadata.interaction_nodes.forEach(node => {
                     const wx = node.x * camera.zoom;
                     const wy = -node.y * camera.zoom;
@@ -805,19 +1038,53 @@
             }
         }
 
+        function niceGridStep(zoom) {
+            const targetPx = 72;
+            const raw = targetPx / Math.max(1e-6, zoom);
+            const pow = Math.pow(10, Math.floor(Math.log10(raw)));
+            const n = raw / pow;
+            if (n < 1.5) return pow;
+            if (n < 3.5) return 2 * pow;
+            if (n < 7.5) return 5 * pow;
+            return 10 * pow;
+        }
+
         function draw() {
+            if (canvas.width !== canvas.parentElement.clientWidth || canvas.height !== canvas.parentElement.clientHeight) {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
             ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.save();
             ctx.translate(canvas.width / 2 + camera.x, canvas.height / 2 + camera.y);
-            
-            ctx.strokeStyle = '#2d2d2d'; ctx.lineWidth = 1;
-            const g = camera.zoom; const extX = Math.ceil(canvas.width / g / 2) + 5; const extY = Math.ceil(canvas.height / g / 2) + 5;
+
+            const step = niceGridStep(camera.zoom);
+            const worldLeft = (-canvas.width / 2 - camera.x) / camera.zoom;
+            const worldRight = (canvas.width / 2 - camera.x) / camera.zoom;
+            const worldTop = (canvas.height / 2 + camera.y) / camera.zoom;
+            const worldBottom = (-canvas.height / 2 + camera.y) / camera.zoom;
+            const x0 = Math.floor(worldLeft / step) * step;
+            const x1 = Math.ceil(worldRight / step) * step;
+            const y0 = Math.floor(worldBottom / step) * step;
+            const y1 = Math.ceil(worldTop / step) * step;
+
+            ctx.lineWidth = 1;
             ctx.beginPath();
-            for(let i = -extX; i <= extX; i++) { ctx.moveTo(i * g, -extY * g); ctx.lineTo(i * g, extY * g); }
-            for(let j = -extY; j <= extY; j++) { ctx.moveTo(-extX * g, j * g); ctx.lineTo(extX * g, j * g); }
+            ctx.strokeStyle = '#2a2a2a';
+            for (let x = x0; x <= x1 + 1e-9; x += step) {
+                ctx.moveTo(x * camera.zoom, -y1 * camera.zoom);
+                ctx.lineTo(x * camera.zoom, -y0 * camera.zoom);
+            }
+            for (let y = y0; y <= y1 + 1e-9; y += step) {
+                ctx.moveTo(x0 * camera.zoom, -y * camera.zoom);
+                ctx.lineTo(x1 * camera.zoom, -y * camera.zoom);
+            }
             ctx.stroke();
 
-            ctx.strokeStyle = '#444'; ctx.lineWidth = 1.5; ctx.beginPath();
-            ctx.moveTo(0, -extY * g); ctx.lineTo(0, extY * g); ctx.moveTo(-extX * g, 0); ctx.lineTo(extX * g, 0);
+            ctx.strokeStyle = '#4a4a4a';
+            ctx.lineWidth = 1.25;
+            ctx.beginPath();
+            ctx.moveTo(0, -y1 * camera.zoom); ctx.lineTo(0, -y0 * camera.zoom);
+            ctx.moveTo(x0 * camera.zoom, 0); ctx.lineTo(x1 * camera.zoom, 0);
             ctx.stroke();
 
             const sortedIndices = getSortedIndices();
@@ -827,7 +1094,7 @@
                 drawObject(obj, selectedIndices.has(i));
             }
 
-            if (showColliders && currentMetadata) drawMetadataVisuals(ctx);
+            if (showColliders || overlayFlags.colliders) drawMetadataVisuals(ctx);
             ctx.restore();
         }
 
@@ -948,9 +1215,46 @@
             if (primarySelectedIndex !== -1) {
                 sceneData[primarySelectedIndex][key] = value;
                 if (key === 'sl' || key === 'o' || key === 'go' || key === 'folderId') { updateLayerList(); }
+                sceneData[primarySelectedIndex]._rasterCache = null;
                 draw();
             }
         }
+
+        function saveBrushPrefs() {}
+        function handlePatternUpload() {}
+        function resetCurrentPoly() {}
+        function finishPoly() {}
+        function addElement() {
+            sceneData.push({ go: 'Sprite', sp: 'WoodBark', x: 0, y: 0, angle: 0, sx: 1, sy: 1, o: 0, sl: 0, px: 0.5, py: 0.5, rw: 64, rh: 64, ox: 0, oy: 0, ppu: 150, draw_mode: 0, sz_x: 0, sz_y: 0, poly: [] });
+            recordState(); updateLayerList(); draw();
+        }
+        function createFolder() {
+            const name = prompt('Nombre de carpeta', 'GRUPO') || 'GRUPO';
+            folders.push({ id: 'folder_' + Date.now(), name, visible: true, locked: false, collapsed: false });
+            updateFolderDropdowns(); updateLayerList();
+        }
+        function moveSelectedToFolder() {
+            const fid = document.getElementById('target-folder-select').value || null;
+            selectedIndices.forEach(i => { sceneData[i].folderId = fid; });
+            recordState(); updateLayerList();
+        }
+        function exportJSON() {
+            const blob = new Blob([JSON.stringify(sceneData, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'layout.json'; a.click();
+        }
+        function loadJSON(ev) {
+            const f = ev.target.files[0]; if (!f) return;
+            const r = new FileReader();
+            r.onload = () => {
+                try {
+                    const parsed = JSON.parse(r.result);
+                    const arr = Array.isArray(parsed) ? parsed : (parsed.layout && parsed.layout.front) || parsed.sceneData || [];
+                    sceneData = arr; folders = []; recordState(); updateLayerList(); fitCameraToScene(); draw();
+                } catch (e) { alert('JSON inválido'); }
+            };
+            r.readAsText(f);
+        }
+        function exportPNG() { alert('Usá el PNG ensamblado del extractor, o capturá el canvas.'); }
 
         resizeCanvas(); updateFolderDropdowns(); recordState();
     </script>
