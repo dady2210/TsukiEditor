@@ -856,7 +856,7 @@
         let isPanning = false; let panStartX = 0, panStartY = 0;
         const canvas = document.getElementById('render-canvas'); const ctx = canvas.getContext('2d');
         
-        function resizeCanvas() { canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight; draw(); }
+        function resizeCanvas() { canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight; if (sceneData.length || currentMetadata || currentMapMeta) draw(); }
         window.addEventListener('resize', resizeCanvas);
 
         function setTool(tool) {
@@ -1025,7 +1025,9 @@
         }
 
         function drawMetadataVisuals(ctx) {
+            if (!currentMetadata && !currentMapMeta) return;
             const meta = currentMapMeta || currentMetadata || {};
+            if (!meta || (!meta.nodes && !meta.colliders && !meta.walkable_bounds && !meta.camera_confines && !meta.interaction_nodes)) return;
             const seen = new Set();
 
             function drawBound(bound, fallbackRole) {
@@ -1583,7 +1585,7 @@
         }
         function exportPNG() { alert('Usá el PNG ensamblado del extractor, o capturá el canvas.'); }
 
-        resizeCanvas(); updateFolderDropdowns(); recordState();
+        updateFolderDropdowns(); recordState();
     </script>
 </body>
 </html>
