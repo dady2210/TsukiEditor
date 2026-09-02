@@ -44,9 +44,9 @@
         #metadata-panel { padding: 10px; font-size: 11px; color: #aaa; background: #2a2a2c; border-bottom: 1px solid #3c3c3c; display: none; }
         #meta-raw { margin-top: 5px; max-height: 350px; overflow-y: auto; background: #1e1e1e; padding: 6px; border: 1px solid #444; font-family: monospace; font-size: 10px; white-space: pre-wrap; }
     </style>
-    <script src="../../Odin/odin_ast.js"></script>
-    <script src="../../Odin/odin_reader.js"></script>
+    <script src="../../odin_browser.js"></script>
     <script src="../../parser.js"></script>
+    <script src="../../data/items_db.js"></script>
 </head>
 <body>
 
@@ -1064,6 +1064,7 @@
 
             if (currentMetadata && currentMetadata.interaction_nodes) {
                 currentMetadata.interaction_nodes.forEach(node => {
+                    if (!node || node.x==null || node.y==null) return;
                     const wx = node.x * camera.zoom;
                     const wy = -node.y * camera.zoom;
                     
@@ -1428,8 +1429,20 @@
         let catalogItems=[], filteredCatalog=[], catalogStart=0, catalogPage=80, lastScatterPos=null, heatmap=false, clipboard=null, lastMouseWorld={x:0,y:0};
         const SLOCATION_NAMES = {0:"Casa del Arbol de Tsuki", 1:"Casa Yori", 2:"Casa Chi", 3:"Casa Moca", 6:"Granja", 8:"TownHall"};
         async function initCatalog(){
+            // file:// bloquea fetch -> usar window.ITEMS_DB si está cargado por <script>
+            if (window.ITEMS_DB) {
+                const j = window.ITEMS_DB;
+                catalogItems = Object.entries(j).map(([id,info])=>({id, name: info.furn_name||info.item_name||id, w: info.width||1, l: info.length||1, pivot: info.pivot||{x:0.5,y:0.5}}));
+                filteredCatalog=catalogItems.slice(); renderCatalog();
+                const search=document.getElementById('catalog-search');
+                if(search) search.addEventListener('input', e=>{ const q=e.target.value.toLowerCase(); filteredCatalog = catalogItems.filter(c=> c.name.toLowerCase().includes(q) || String(c.id).includes(q)).slice(0,500); catalogStart=0; renderCatalog(); });
+                const grid=document.getElementById('catalog-grid');
+                if(grid) grid.addEventListener('scroll', ()=>{ if(grid.scrollTop + grid.clientHeight >= grid.scrollHeight - 40){ catalogStart+=catalogPage; renderCatalog(true); } });
+                return;
+            }
             try{
                 const r=await fetch('../../data/items_db.json');
+                if(!r.ok) throw new Error('no ok');
                 const j=await r.json();
                 catalogItems = Object.entries(j).map(([id,info])=>({id, name: info.furn_name||info.item_name||id, w: info.width||1, l: info.length||1, pivot: info.pivot||{x:0.5,y:0.5}}));
                 filteredCatalog=catalogItems.slice();
