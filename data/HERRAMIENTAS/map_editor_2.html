@@ -249,7 +249,17 @@
                     <label>defaultCoverId (preview)</label>
                     <input type="number" id="prop-coverId" onchange="updatePolySurfaceCover(this.value)">
                 </div>
+                <div class="prop-group" style="display:flex; gap:6px;">
+                    <div style="flex:1;"><label>Cell W</label><input type="number" id="prop-cell-w" step="1" onchange="updatePolyCell(this.value,'w')"></div>
+                    <div style="flex:1;"><label>Cell H</label><input type="number" id="prop-cell-h" step="1" onchange="updatePolyCell(this.value,'h')"></div>
+                </div>
+                <div class="prop-group" style="display:flex; gap:6px;">
+                    <div style="flex:1;"><label>Rows (auto)</label><input type="number" id="prop-rows" step="1" onchange="updatePolyRowsCols(this.value,'rows')"></div>
+                    <div style="flex:1;"><label>Cols (auto)</label><input type="number" id="prop-cols" step="1" onchange="updatePolyRowsCols(this.value,'cols')"></div>
+                </div>
                 <div id="poly-cover-preview" style="font-size:9px; color:#aaa; margin-top:4px;"></div>
+                <button class="btn btn-sm" style="width:100%; margin-top:6px;" onclick="verifyCsaveTextures()">🔍 Verificar texturas csave vs play</button>
+                <div id="verify-result" style="font-size:9px; color:#aaa; margin-top:4px; max-height:100px; overflow-y:auto;"></div>
             </div>
             <div id="pattern-extra-props" style="display: none; margin-top:12px; border-top:1px solid #444; padding-top:8px;">
                 <!-- Propiedades de Patrón Omitidas por brevedad -->
@@ -287,6 +297,7 @@
 		window.metaEditRefs = [];
         let selectedIndices = new Set();
         let primarySelectedIndex = -1;
+        let editingPolyIndex = -1, editingVertex = -1;
         let currentTool = 'select';
 
         let currentMetadata = null;
@@ -922,6 +933,20 @@
         canvas.addEventListener('mousedown', (e) => {
             if (e.button === 1 || (e.button === 0 && e.altKey)) { isPanning = true; panStartX = e.clientX - camera.x; panStartY = e.clientY - camera.y; return; }
             const ptr = getMouseWorldCoords(e);
+            if (editingPolyIndex!==-1) {
+                const obj=sceneData[editingPolyIndex];
+                if(obj && obj.poly){
+                    const ang=(obj.angle||0)*Math.PI/180, cos=Math.cos(ang), sin=Math.sin(ang);
+                    for(let vi=0; vi<obj.poly.length; vi++){
+                        const pt=obj.poly[vi];
+                        const lx=pt.x||pt[0], ly=pt.y||pt[1];
+                        const wx=obj.x + (lx*cos - ly*sin)*(obj.sx||1);
+                        const wy=obj.y + (lx*sin + ly*cos)*(obj.sy||1);
+                        const dx=ptr.x-wx, dy=ptr.y-wy;
+                        if(Math.hypot(dx,dy) < 1.5){ editingVertex=vi; return; }
+                    }
+                }
+            }
             if (currentTool === 'select' || currentTool === 'move') {
                 let hitIndex = -1; let sortedIndices = getSortedIndices();
                 for (let i = sortedIndices.length - 1; i >= 0; i--) {
@@ -935,18 +960,63 @@
 
         canvas.addEventListener('mousemove', (e) => {
             const ptr = getMouseWorldCoords(e); updateHudDisplay(ptr.x, ptr.y);
+            if (editingVertex!==-1 && editingPolyIndex!==-1) {
+                const obj=sceneData[editingPolyIndex];
+                const ang=(obj.angle||0)*Math.PI/180, cos=Math.cos(-ang), sin=Math.sin(-ang);
+                const lx=((ptr.x - obj.x)*cos - (ptr.y - obj.y)*sin)/(obj.sx||1);
+                const ly=((ptr.x - obj.x)*sin + (ptr.y - obj.y)*cos)/(obj.sy||1);
+                obj.poly[editingVertex]={x:lx, y:ly};
+                draw(); return;
+            }
             if (isPanning) { camera.x = e.clientX - panStartX; camera.y = e.clientY - panStartY; draw(); return; }
             if (currentTool === 'move' && e.buttons === 1 && primarySelectedIndex !== -1) {
                 const primaryObj = sceneData[primarySelectedIndex];
                 if (!isObjectEffectivelyLocked(primaryObj)) {
                     const dx = ptr.x - primaryObj.x; const dy = ptr.y - primaryObj.y;
-                    selectedIndices.forEach(idx => { const o = sceneData[idx]; if (!isObjectEffectivelyLocked(o)) { o.x += dx; o.y += dy; } });
+                    const moved=new Set();
+                    selectedIndices.forEach(idx => {
+                        const o = sceneData[idx];
+                        if (!isObjectEffectivelyLocked(o) && !moved.has(idx)) { o.x += dx; o.y += dy; moved.add(idx); }
+                        // hijos
+                        if(o.childrenIds) o.childrenIds.forEach(cid=>{
+                            const child=sceneData[cid];
+                            if(child && !moved.has(cid) && !isObjectEffectivelyLocked(child)){ child.x += dx; child.y += dy; child.angle = (child.angle||0) + (primaryObj.angle - (primaryObj._prevAngle||primaryObj.angle)); moved.add(cid); }
+                        });
+                    });
+                    primaryObj._prevAngle = primaryObj.angle;
                     updatePropertiesPanel(); draw();
                 }
             }
         });
 
+        canvas.addEventListener('dblclick', (e)=>{
+            const w=getMouseWorldCoords(e);
+            for(let i of getSortedIndices().reverse()){
+                const obj=sceneData[i];
+                if(obj.is_poly_object && hitTest(obj,w.x,w.y)){ editingPolyIndex=i; editingVertex=-1; primarySelectedIndex=i; selectedIndices.clear(); selectedIndices.add(i); updatePropertiesPanel(); draw(); break; }
+            }
+        });
+        canvas.addEventListener('click', (e)=>{
+            if(editingPolyIndex!==-1){
+                const w=getMouseWorldCoords(e);
+                const obj=sceneData[editingPolyIndex];
+                if(obj && !hitTest(obj,w.x,w.y)){ editingPolyIndex=-1; editingVertex=-1; draw(); }
+            }
+        });
         canvas.addEventListener('mouseup', (e) => {
+            if(editingVertex!==-1){
+                // recalcular rows/cols auto tras drag vértice
+                const obj=sceneData[editingPolyIndex];
+                if(obj && obj.poly){
+                    const xs=obj.poly.map(p=>p.x||p[0]), ys=obj.poly.map(p=>p.y||p[1]);
+                    const bboxW=Math.max(...xs)-Math.min(...xs), bboxH=Math.max(...ys)-Math.min(...ys);
+                    const cw=obj.cell?.w||64, ch=obj.cell?.h||32;
+                    obj.cols=Math.ceil(bboxW/cw)||16;
+                    obj.rows=Math.ceil(bboxH/ch)||16;
+                    updatePropertiesPanel();
+                }
+                editingVertex=-1; recordState(); draw();
+            }
             if (isPanning) { isPanning = false; return; }
             if (currentTool === 'move' && selectedIndices.size > 0) { recordState(); }
         });
@@ -1401,6 +1471,18 @@
                     if(agl) agl.textContent = `${sName}`;
                     const agd=document.getElementById('auto-group-detail');
                     if(agd) agd.textContent = `${sName} (${obj.mapId||0}) → ${obj.kind|| (obj.role==='walkable'?'floor':'wall')} auto`;
+                    document.getElementById('prop-cell-w').value = obj.cell?.w || obj.cellW || 64;
+                    document.getElementById('prop-cell-h').value = obj.cell?.h || obj.cellH || 32;
+                    // auto rows/cols desde bbox poly
+                    if (obj.poly && obj.poly.length) {
+                        const xs=obj.poly.map(p=>p.x||p[0]), ys=obj.poly.map(p=>p.y||p[1]);
+                        const bboxW=Math.max(...xs)-Math.min(...xs), bboxH=Math.max(...ys)-Math.min(...ys);
+                        const cw=parseInt(document.getElementById('prop-cell-w').value)||64, ch=parseInt(document.getElementById('prop-cell-h').value)||32;
+                        if(!obj.rows) obj.rows=Math.ceil(bboxH/ch)||16;
+                        if(!obj.cols) obj.cols=Math.ceil(bboxW/cw)||16;
+                    }
+                    document.getElementById('prop-rows').value = obj.rows || 16;
+                    document.getElementById('prop-cols').value = obj.cols || 16;
                     document.getElementById('prop-coverId').value = obj.defaultCoverId ?? '';
                     const preview=document.getElementById('poly-cover-preview');
                     if (preview) {
@@ -1433,6 +1515,52 @@
             draw(); updatePropertiesPanel();
         }
         document.addEventListener('change', e=>{ if(e.target.id==='chk-manual-group'){ const inp=document.getElementById('prop-groupNum'); const sel=document.getElementById('prop-group-select'); if(e.target.checked){ inp.style.display='block'; inp.disabled=false; sel.style.display='none'; } else { inp.style.display='none'; sel.style.display='block'; } } });
+        function updatePolyCell(v,axis){
+            if(primarySelectedIndex===-1) return;
+            const obj=sceneData[primarySelectedIndex];
+            if(!obj.is_poly_object) return;
+            if(!obj.cell) obj.cell={w:64,h:32};
+            if(axis==='w') obj.cell.w=parseInt(v)||64; else obj.cell.h=parseInt(v)||32;
+            // recalcular rows/cols auto
+            if(obj.poly && obj.poly.length){
+                const xs=obj.poly.map(p=>p.x||p[0]), ys=obj.poly.map(p=>p.y||p[1]);
+                const bboxW=Math.max(...xs)-Math.min(...xs), bboxH=Math.max(...ys)-Math.min(...ys);
+                obj.cols=Math.ceil(bboxW/(obj.cell.w||64))||16;
+                obj.rows=Math.ceil(bboxH/(obj.cell.h||32))||16;
+                document.getElementById('prop-cols').value=obj.cols;
+                document.getElementById('prop-rows').value=obj.rows;
+            }
+            draw();
+        }
+        function updatePolyRowsCols(v,axis){
+            if(primarySelectedIndex===-1) return;
+            const obj=sceneData[primarySelectedIndex];
+            if(!obj.is_poly_object) return;
+            if(axis==='rows') obj.rows=parseInt(v)||16; else obj.cols=parseInt(v)||16;
+            draw();
+        }
+        function verifyCsaveTextures(){
+            const res=document.getElementById('verify-result');
+            if(!res) return;
+            if(!currentCsaveWallpapers){ res.textContent='Sin csave cargado — carga un .csave arriba'; return; }
+            const mapId = sceneData[primarySelectedIndex]?.mapId ?? 0;
+            const wp = currentCsaveWallpapers[mapId] || currentCsaveWallpapers[Object.keys(currentCsaveWallpapers)[0]] || [];
+            let html = `SLocation ${mapId} — wallpapers del csave: ${wp.length}<br>`;
+            // verificar que play cargaría textures para cada surface del atlas
+            const atlas = window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
+            const surfaces = atlas.filter(s=>String(s.mapId)===String(mapId));
+            surfaces.forEach(s=>{
+                const hasCover = wp.find(w=> String(w.key)===String(s.groupNum) || String(w.id)===String(s.groupNum));
+                const texId = hasCover ? hasCover.id : s.defaultCoverId;
+                const status = texId ? `✔ id ${texId} ${hasCover?' (csave)':' (default)'}` : '✘ sin textura';
+                html += `${s.kind} g${s.groupNum} ${s.flipped?'L':'R'}: ${status}<br>`;
+            });
+            // play verification: check if images exist
+            html += '<br>Verificación play: al abrir #/play con este csave, map.js hará createPattern para cada id listado.<br>';
+            res.innerHTML = html;
+            // también log para play
+            console.log('[verify] wallpapers', wp, 'atlas surfaces', surfaces);
+        }
         function toggleHomecoming(v){ updatePropertiesPanel(); draw(); }
         function updatePolySurfaceGroup(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ sceneData[primarySelectedIndex].groupNum=parseInt(v)||0; draw(); } }
         function updatePolySurfaceCover(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ const n=parseInt(v); if(!isNaN(n)) sceneData[primarySelectedIndex].defaultCoverId=n; else delete sceneData[primarySelectedIndex].defaultCoverId; draw(); } }
