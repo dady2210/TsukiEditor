@@ -1395,23 +1395,25 @@
             const r=new FileReader();
             r.onload=()=>{
                 try{
-                    // intentar usar parser.js si está disponible vía parent
                     const buf=new Uint8Array(r.result);
-                    // fallback: solo guardar que hay csave y mostrar IDs si parser existe en opener
                     document.getElementById('csave-status').textContent = `csave cargado: ${f.name} (${buf.length} bytes)`;
-                    // si el editor es standalone sin parser, solo guarda flag para relleno por default
                     window._csaveBuf = buf;
-                    // intentar parsear si OdinReader está cargado
-                    if (window.OdinReader && window.SaveParser) {
-                        const reader=new OdinReader(buf);
+                    const OdinR = window.OdinReader || (typeof OdinReader!=='undefined' ? OdinReader : null);
+                    const SParser = window.SaveParser || (typeof SaveParser!=='undefined' ? SaveParser : null);
+                    if (OdinR && SParser) {
+                        const reader=new OdinR(buf);
                         const ast=reader.parse()[0];
-                        const parser=new SaveParser(buf);
-                        parser.ast=ast; parser.parseMap();
+                        const parser=new SParser(buf.buffer);
+                        parser.ast=ast; parser.buffer=buf; parser.view=new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
+                        parser.parseMap();
                         currentCsaveWallpapers = parser.wallpapers;
-                        document.getElementById('csave-status').textContent += ` — wallpapers: ${JSON.stringify(Object.keys(currentCsaveWallpapers))}`;
+                        document.getElementById('csave-status').textContent += ` — wallpapers: ${JSON.stringify(Object.keys(currentCsaveWallpapers))} floors: ${JSON.stringify(Object.keys(parser.floors||{}))}`;
                         draw();
+                    } else {
+                        currentCsaveWallpapers = {};
+                        document.getElementById('csave-status').textContent += ' — parser no disponible, usando default';
                     }
-                }catch(e){ document.getElementById('csave-status').textContent='Error csave: '+e.message; }
+                }catch(e){ document.getElementById('csave-status').textContent='Error csave: '+e.message; console.error(e); }
             };
             r.readAsArrayBuffer(f);
         }
