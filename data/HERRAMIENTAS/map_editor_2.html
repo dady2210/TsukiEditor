@@ -69,6 +69,11 @@
             <button class="btn" style="background:#5a5a5a; flex: 1 1 100%;" onclick="fitCameraToScene()" title="Auto-ajusta el zoom y centra la cámara en los elementos">🖼️ Encuadrar Vista</button>
         </div>
 
+        <div id="catalog-panel" style="padding:6px; background:#1a1a1a; border-bottom:1px solid #333; max-height:220px; display:flex; flex-direction:column;">
+            <strong style="font-size:11px; color:#fff;">Catálogo Visual</strong>
+            <input type="text" id="catalog-search" placeholder="Buscar item..." style="width:100%; margin:4px 0; padding:4px; background:#333; color:#fff; border:1px solid #555; font-size:11px;">
+            <div id="catalog-grid" style="flex:1; overflow-y:auto; display:grid; grid-template-columns:repeat(auto-fill, 48px); gap:4px; max-height:180px; align-content:start;"></div>
+        </div>
         <div id="tool-settings">
             <!-- Settings de herramientas omitidas visualmente aquí por brevedad, igual que tu código original -->
             <div id="paint-options" style="display: none; margin-bottom: 6px;">
@@ -1405,6 +1410,138 @@
                 const a2=document.createElement('a'); a2.href=URL.createObjectURL(b2); a2.download='atlas_patch.json'; setTimeout(()=>a2.click(), 300);
             }
         }
+        // 8 herramientas avanzadas — catálogo, snapping, jerarquía, scatter, heatmap, playtest, clonación, auto groupNum
+        let catalogItems=[], filteredCatalog=[], catalogStart=0, catalogPage=80, lastScatterPos=null, heatmap=false, clipboard=null, lastMouseWorld={x:0,y:0};
+        const SLOCATION_NAMES = {0:"Casa del Arbol de Tsuki", 1:"Casa Yori", 2:"Casa Chi", 3:"Casa Moca", 6:"Granja", 8:"TownHall"};
+        async function initCatalog(){
+            try{
+                const r=await fetch('../../data/items_db.json');
+                const j=await r.json();
+                catalogItems = Object.entries(j).map(([id,info])=>({id, name: info.furn_name||info.item_name||id, w: info.width||1, l: info.length||1, pivot: info.pivot||{x:0.5,y:0.5}}));
+                filteredCatalog=catalogItems.slice();
+                renderCatalog();
+                const search=document.getElementById('catalog-search');
+                if(search) search.addEventListener('input', e=>{
+                    const q=e.target.value.toLowerCase();
+                    filteredCatalog = catalogItems.filter(c=> c.name.toLowerCase().includes(q) || String(c.id).includes(q)).slice(0,500);
+                    catalogStart=0; renderCatalog();
+                });
+                const grid=document.getElementById('catalog-grid');
+                if(grid) grid.addEventListener('scroll', ()=>{
+                    if(grid.scrollTop + grid.clientHeight >= grid.scrollHeight - 40){ catalogStart+=catalogPage; renderCatalog(true); }
+                });
+            }catch(e){ console.warn('catalog',e); }
+        }
+        function renderCatalog(append=false){
+            const grid=document.getElementById('catalog-grid'); if(!grid) return;
+            if(!append) grid.innerHTML='';
+            const slice=filteredCatalog.slice(catalogStart, catalogStart+catalogPage);
+            slice.forEach(it=>{
+                const div=document.createElement('div');
+                div.draggable=true; div.title=`${it.id}: ${it.name}`;
+                div.style.cssText='width:48px;height:48px;background:#2a2a2a;border:1px solid #444;display:flex;align-items:center;justify-content:center;cursor:grab;';
+                div.innerHTML=`<img src="../../images/items/FURN_${it.id}_0.png" style="max-width:44px;max-height:44px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"><span style="display:none;font-size:8px;color:#aaa;">${it.id}</span>`;
+                div.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', JSON.stringify(it)); });
+                grid.appendChild(div);
+            });
+        }
+        function getMouseWorldCoords(e){
+            const rect=document.getElementById('render-canvas').getBoundingClientRect();
+            const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+            const wx=(mx - canvas.width/2 - camera.x)/camera.zoom;
+            const wy= -((my - canvas.height/2 - camera.y)/camera.zoom);
+            return {x:wx, y:wy};
+        }
+        // drop catálogo
+        (function(){
+            const c=document.getElementById('render-canvas');
+            if(c){
+                c.addEventListener('dragover', e=> e.preventDefault());
+                c.addEventListener('drop', e=>{
+                    e.preventDefault();
+                    try{
+                        const it=JSON.parse(e.dataTransfer.getData('text/plain'));
+                        if(!it||!it.id) return;
+                        const w=getMouseWorldCoords(e);
+                        // auto groupNum por SLocation seleccionada
+                        const selMap=document.getElementById('grid-map-select');
+                        const mapId=selMap? parseInt(selMap.value):0;
+                        const groupNum = Math.max(0, ...window.mapsAtlas.filter(s=>String(s.mapId)===String(mapId) && s.kind==='floor').map(s=>s.groupNum), -1)+1;
+                        sceneData.push({go: SLOCATION_NAMES[mapId]||'Casa', sp:`FURN_${it.id}`, x:w.x, y:w.y, angle:0, sx:1, sy:1, o:0, sl:0, px:it.pivot.x, py:it.pivot.y, rw:it.w*64, rh:it.l*64, ppu:150, width:it.w, length:it.l, is_poly_object:false});
+                        recordState(); updateLayerList(); draw();
+                    }catch(err){}
+                });
+            }
+        })();
+        // snapping
+        let snapEnabled=false;
+        const snapBtn=document.createElement('button'); snapBtn.textContent='Snap: OFF'; snapBtn.className='btn btn-sm'; snapBtn.style.cssText='flex:1 1 100%; background:#333; margin-top:4px;';
+        snapBtn.onclick=()=>{ snapEnabled=!snapEnabled; snapBtn.textContent=snapEnabled?'Snap: ON':'Snap: OFF'; snapBtn.style.background=snapEnabled?'#007acc':'#333'; };
+        document.querySelector('.toolbar').appendChild(snapBtn);
+        const origMoveHandler = window.handleMove || null;
+        // jerarquía Ctrl+G
+        document.addEventListener('keydown', e=>{
+            if(e.ctrlKey && e.key.toLowerCase()==='g' && selectedIndices.size>=2){
+                const arr=[...selectedIndices]; const parent=arr[0];
+                arr.slice(1).forEach(child=>{ sceneData[child].parentId=parent; if(!sceneData[parent].childrenIds) sceneData[parent].childrenIds=[]; if(!sceneData[parent].childrenIds.includes(child)) sceneData[parent].childrenIds.push(child); });
+                draw(); e.preventDefault();
+            }
+            if(e.ctrlKey && e.key.toLowerCase()==='c' && primarySelectedIndex!==-1){ clipboard=JSON.parse(JSON.stringify(sceneData[primarySelectedIndex])); }
+            if(e.ctrlKey && e.key.toLowerCase()==='v' && clipboard){ const pos=lastMouseWorld; const clone=JSON.parse(JSON.stringify(clipboard)); clone.x=(pos.x||0)+1; clone.y=(pos.y||0)+1; clone._rasterCache=null; sceneData.push(clone); recordState(); draw(); }
+        });
+        document.addEventListener('mousemove', e=>{ const w=getMouseWorldCoords(e); lastMouseWorld=w; });
+        // Alt+drag clonación
+        let altCloned=false;
+        document.getElementById('render-canvas').addEventListener('mousedown', e=>{
+            if(e.altKey && primarySelectedIndex!==-1){
+                const clone=JSON.parse(JSON.stringify(sceneData[primarySelectedIndex])); clone.x+=1; clone.y+=1; clone._rasterCache=null; sceneData.push(clone); selectedIndices.clear(); selectedIndices.add(sceneData.length-1); primarySelectedIndex=sceneData.length-1; altCloned=true; recordState();
+            }
+        });
+        // scatter
+        let isPaintDown=false;
+        document.getElementById('render-canvas').addEventListener('mousedown', e=>{ if(currentTool==='paint') isPaintDown=true; });
+        document.getElementById('render-canvas').addEventListener('mouseup', ()=>{ isPaintDown=false; lastScatterPos=null; });
+        document.getElementById('render-canvas').addEventListener('mousemove', e=>{
+            if(currentTool==='paint' && isPaintDown){
+                const cur=getMouseWorldCoords(e);
+                if(!lastScatterPos || Math.hypot(cur.x-lastScatterPos.x, cur.y-lastScatterPos.y) > 20){
+                    const tpl=sceneData[primarySelectedIndex]; if(!tpl) return;
+                    const scaleVar=0.2, rotVar=15;
+                    const clone=JSON.parse(JSON.stringify(tpl));
+                    clone.x=cur.x + (Math.random()-0.5)*2;
+                    clone.y=cur.y + (Math.random()-0.5)*2;
+                    clone.sx*= (1 + (Math.random()-0.5)*scaleVar);
+                    clone.sy*= (1 + (Math.random()-0.5)*scaleVar);
+                    clone.angle+= (Math.random()-0.5)*rotVar;
+                    clone._rasterCache=null;
+                    sceneData.push(clone);
+                    lastScatterPos=cur; draw();
+                }
+            }
+            // snapping en move
+            if(snapEnabled && currentTool==='move' && selectedIndices.size===1){
+                const obj=sceneData[primarySelectedIndex];
+                if(obj && !obj.is_poly_object){
+                    const step=0.5;
+                    obj.x=Math.round(obj.x/step)*step;
+                    obj.y=Math.round(obj.y/step)*step;
+                }
+            }
+        });
+        // heatmap toggle
+        const heatBtn=document.createElement('button'); heatBtn.textContent='Heatmap OFF'; heatBtn.className='btn btn-sm'; heatBtn.style.cssText='flex:1; background:#333;';
+        heatBtn.onclick=()=>{ heatmap=!heatmap; heatBtn.textContent=heatmap?'Heatmap ON':'Heatmap OFF'; heatBtn.style.background=heatmap?'#ff5722':'#333'; draw(); };
+        document.querySelector('.toolbar').appendChild(heatBtn);
+        const origDrawObject=window.drawObject;
+        // playtest
+        const playBtn=document.createElement('button'); playBtn.textContent='▶ Playtest'; playBtn.className='btn btn-sm'; playBtn.style.cssText='flex:1; background:#28a745;';
+        playBtn.onclick=()=>{
+            const payload={kind:'map', layout:{front: sceneData.filter(o=>!o.is_poly_object)}, logic:{walkable: sceneData.filter(o=>o.is_poly_object && o.role==='walkable')}};
+            sessionStorage.setItem('dev_active_layout', JSON.stringify(payload));
+            window.open('../../index.html?test=true#play','_blank');
+        };
+        document.querySelector('.toolbar').appendChild(playBtn);
+        initCatalog();
         function loadJSON(ev) {
             const f = ev.target.files[0]; if (!f) return;
             const r = new FileReader();
