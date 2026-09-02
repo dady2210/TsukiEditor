@@ -250,6 +250,8 @@
                     <label>groupNum — <span id="auto-group-detail" style="color:#888;"></span> <label style="font-size:9px; margin-left:8px;"><input type="checkbox" id="chk-manual-group"> permitir sobreescritura manual</label></label>
                     <select id="prop-group-select" style="width:100%;" onchange="updatePolySurfaceGroupSelect(this.value)"></select>
                     <input type="number" id="prop-groupNum" step="1" style="display:none; margin-top:4px; background:#333; color:#fff;" onchange="updatePolySurfaceGroup(this.value)">
+                    <button class="btn btn-sm" style="width:100%; margin-top:6px; background:#a33; color:#fff;" onclick="harcodearSurface()">🔒 Harcodear (POST a maps_unified.json)</button>
+                    <div style="font-size:9px; color:#888; margin-top:4px;">Los items con floor=g0 de este sloc caerán aquí. Disposición wallpapers/floors del csave + grilla = mismo poly.</div>
                 </div>
                 <div class="prop-group">
                     <label>defaultCoverId (preview)</label>
@@ -1561,6 +1563,25 @@
             else if (kind==='wallR') { obj.role='wallpaper'; obj.flipped=false; }
             obj.kind = kind==='floor' ? 'floor' : 'wall';
             draw(); updateLayerList();
+        }
+        function harcodearSurface(){
+            if(primarySelectedIndex===-1) return;
+            const obj=sceneData[primarySelectedIndex];
+            if(!obj.is_poly_object) return;
+            const atlas = window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
+            const existing = atlas.find(s=> String(s.mapId)===String(obj.mapId) && String(s.groupNum)===String(obj.groupNum) && s.kind===(obj.role==='walkable'?'floor':'wall') && (!obj.role.includes('wall') || !!s.flipped===!!obj.flipped));
+            const bbox = obj.poly ? (()=>{ const xs=obj.poly.map(p=>p.x||p[0]), ys=obj.poly.map(p=>p.y||p[1]); return {minX:Math.min(...xs), maxX:Math.max(...xs), minY:Math.min(...ys), maxY:Math.max(...ys)}; })() : {minX:obj.x, maxX:obj.x+10, minY:obj.y, maxY:obj.y+10};
+            const cw=obj.cell?.w||64, ch=obj.cell?.h||32;
+            const rows=Math.ceil((bbox.maxY-bbox.minY)/ch)||16, cols=Math.ceil((bbox.maxX-bbox.minX)/cw)||16;
+            const entry = {
+                mapId: obj.mapId||0, kind: obj.role==='walkable'?'floor':'wall', groupNum: obj.groupNum||0, flipped: !!obj.flipped,
+                rows, cols, origin_px:{x: bbox.minX, y: bbox.minY}, cell:{w:cw,h:ch},
+                poly: obj.poly, defaultCoverId: obj.defaultCoverId||null, comment: `harcodeado desde poly ${obj.go}`
+            };
+            if(existing){ Object.assign(existing, entry); } else { (window.mapsAtlas||window.MAPS_UNIFIED.atlas).push(entry); if(window.MAPS_UNIFIED) window.MAPS_UNIFIED.atlas.push(entry); }
+            // POST a maps_unified.json
+            const payload = window.MAPS_UNIFIED || {atlas: window.mapsAtlas, meta: window.MAP_META, atlasConfig: window.atlasConfig};
+            fetch('/api/save/maps',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)}).then(r=>r.ok?r.json():null).then(j=>{ alert('Harcodeado g'+obj.groupNum+' en maps_unified.json — items con floor=g'+obj.groupNum+' caerán aquí en play'); }).catch(e=> alert('Harcodear falló (¿server localhost:8000 corriendo?) '+e.message));
         }
         function updatePolySurfaceSloc(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ sceneData[primarySelectedIndex].mapId=parseInt(v); updatePropertiesPanel(); draw(); } }
         function updatePolySurfaceGroupSelect(v){
