@@ -134,6 +134,11 @@
     </div>
 
     <div id="right-panel">
+        <div style="padding:6px; background:#1a1a1a; border-bottom:1px solid #333;">
+            <label style="font-size:10px; color:#00e5ff;">Cargar .csave para wallpapers/floors del juego:</label>
+            <input type="file" id="csave-input" accept=".csave" style="width:100%; margin-top:4px; font-size:10px;" onchange="handleCsaveLoad(event)">
+            <div id="csave-status" style="font-size:9px; color:#888; margin-top:4px;">Sin csave — usará defaultCoverId</div>
+        </div>
         <h3 class="section-title">Metadata de Item</h3>
         <div id="metadata-panel">
             <strong id="meta-name" style="color: #fff; font-size: 13px;">-</strong><br>
@@ -216,6 +221,23 @@
                 <button class="btn btn-sm" style="flex:1;" onclick="updateProp('angle', 0);">Rotación 0°</button>
             </div>
 
+            <div id="poly-surface-props" style="display:none; margin-top:12px; border-top:1px solid #444; padding-top:8px;">
+                <strong style="color:#00e5ff; font-size:11px;">Superficie (collider → piso/pared)</strong>
+                <div style="margin-top:6px; display:flex; gap:4px;">
+                    <label style="flex:1; font-size:10px;"><input type="radio" name="surf-kind" value="floor" onchange="updatePolySurface('floor')"> Piso</label>
+                    <label style="flex:1; font-size:10px;"><input type="radio" name="surf-kind" value="wallL" onchange="updatePolySurface('wallL')"> Pared Izq</label>
+                    <label style="flex:1; font-size:10px;"><input type="radio" name="surf-kind" value="wallR" onchange="updatePolySurface('wallR')"> Pared Der</label>
+                </div>
+                <div class="prop-group" style="margin-top:6px;">
+                    <label>groupNum (elige manualmente)</label>
+                    <input type="number" id="prop-groupNum" step="1" onchange="updatePolySurfaceGroup(this.value)">
+                </div>
+                <div class="prop-group">
+                    <label>defaultCoverId (preview)</label>
+                    <input type="number" id="prop-coverId" onchange="updatePolySurfaceCover(this.value)">
+                </div>
+                <div id="poly-cover-preview" style="font-size:9px; color:#aaa; margin-top:4px;"></div>
+            </div>
             <div id="pattern-extra-props" style="display: none; margin-top:12px; border-top:1px solid #444; padding-top:8px;">
                 <!-- Propiedades de Patrón Omitidas por brevedad -->
             </div>
@@ -1256,6 +1278,32 @@
         function selectSingleObject(index) { selectedIndices.clear(); if (index !== -1) { selectedIndices.add(index); primarySelectedIndex = index; } else { primarySelectedIndex = -1; } updateLayerList(); updatePropertiesPanel(); draw(); }
         function toggleSelectObject(index) { if (index === -1) return; if (selectedIndices.has(index)) { selectedIndices.delete(index); primarySelectedIndex = selectedIndices.size > 0 ? Array.from(selectedIndices)[0] : -1; } else { selectedIndices.add(index); primarySelectedIndex = index; } updateLayerList(); updatePropertiesPanel(); draw(); }
 
+        let currentCsaveWallpapers = null;
+        function handleCsaveLoad(ev){
+            const f=ev.target.files[0]; if(!f) return;
+            const r=new FileReader();
+            r.onload=()=>{
+                try{
+                    // intentar usar parser.js si está disponible vía parent
+                    const buf=new Uint8Array(r.result);
+                    // fallback: solo guardar que hay csave y mostrar IDs si parser existe en opener
+                    document.getElementById('csave-status').textContent = `csave cargado: ${f.name} (${buf.length} bytes)`;
+                    // si el editor es standalone sin parser, solo guarda flag para relleno por default
+                    window._csaveBuf = buf;
+                    // intentar parsear si OdinReader está cargado
+                    if (window.OdinReader && window.SaveParser) {
+                        const reader=new OdinReader(buf);
+                        const ast=reader.parse()[0];
+                        const parser=new SaveParser(buf);
+                        parser.ast=ast; parser.parseMap();
+                        currentCsaveWallpapers = parser.wallpapers;
+                        document.getElementById('csave-status').textContent += ` — wallpapers: ${JSON.stringify(Object.keys(currentCsaveWallpapers))}`;
+                        draw();
+                    }
+                }catch(e){ document.getElementById('csave-status').textContent='Error csave: '+e.message; }
+            };
+            r.readAsArrayBuffer(f);
+        }
         function updatePropertiesPanel() {
             const panel = document.getElementById('properties-panel'); const noSel = document.getElementById('no-selection');
             if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) { panel.style.display = 'none'; noSel.style.display = 'block'; return; }
@@ -1267,7 +1315,36 @@
             document.getElementById('prop-sx').value = (obj.sx || 1).toFixed(2); document.getElementById('prop-sy').value = (obj.sy || 1).toFixed(2);
             document.getElementById('prop-angle').value = (obj.angle || 0).toFixed(1); document.getElementById('prop-sl').value = obj.sl || 0;
             document.getElementById('prop-o').value = obj.o || 0; document.getElementById('prop-folder').value = obj.folderId || '';
+            const polyPanel=document.getElementById('poly-surface-props');
+            if (polyPanel) {
+                if (obj.is_poly_object) {
+                    polyPanel.style.display='block';
+                    const kind = obj.role==='walkable' ? 'floor' : (obj.flipped ? 'wallL' : (obj.role==='wallpaper'?'wallL':'wallR'));
+                    document.querySelectorAll('input[name=\"surf-kind\"]').forEach(r=> r.checked = ( (r.value==='floor' && obj.role==='walkable') || (r.value==='wallL' && obj.role!=='walkable' && obj.flipped) || (r.value==='wallR' && obj.role!=='walkable' && !obj.flipped) ));
+                    document.getElementById('prop-groupNum').value = obj.groupNum ?? '';
+                    document.getElementById('prop-coverId').value = obj.defaultCoverId ?? '';
+                    const preview=document.getElementById('poly-cover-preview');
+                    if (preview) {
+                        let src='default';
+                        if (currentCsaveWallpapers && currentCsaveWallpapers[obj.groupNum] !== undefined) src='csave';
+                        else if (obj.defaultCoverId) src='default';
+                        preview.textContent = src==='csave' ? 'Usando csave' : (obj.defaultCoverId ? `Usando defaultCoverId ${obj.defaultCoverId}` : 'Sin cover');
+                    }
+                } else polyPanel.style.display='none';
+            }
         }
+        function updatePolySurface(kind){
+            if (primarySelectedIndex===-1) return;
+            const obj=sceneData[primarySelectedIndex];
+            if (!obj.is_poly_object) return;
+            if (kind==='floor') { obj.role='walkable'; obj.flipped=false; }
+            else if (kind==='wallL') { obj.role='wallpaper'; obj.flipped=true; }
+            else if (kind==='wallR') { obj.role='wallpaper'; obj.flipped=false; }
+            obj.kind = kind==='floor' ? 'floor' : 'wall';
+            draw(); updateLayerList();
+        }
+        function updatePolySurfaceGroup(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ sceneData[primarySelectedIndex].groupNum=parseInt(v)||0; draw(); } }
+        function updatePolySurfaceCover(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ const n=parseInt(v); if(!isNaN(n)) sceneData[primarySelectedIndex].defaultCoverId=n; else delete sceneData[primarySelectedIndex].defaultCoverId; draw(); } }
 
         function updateProp(key, value) {
             if (primarySelectedIndex !== -1) {
@@ -1305,6 +1382,16 @@
             const out = { kind: 'map', layout: { front: visuals }, logic: { walkable, blockers, triggers, interaction_nodes: virtuals.filter(o=>o.role==='unknown') } };
             const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'scene_full.json'; a.click();
+            // también generar patch atlas desde polígonos con groupNum manual
+            const atlasPatch = virtuals.filter(v=> v.groupNum!==undefined && v.groupNum!=='' ).map(v=>{
+                const isFloor = v.role==='walkable';
+                const mapId = currentMapMeta ? currentMapMeta.mapId || 0 : 0;
+                return { mapId, kind: isFloor?'floor':'wall', groupNum: parseInt(v.groupNum), flipped: !!v.flipped, rows: 16, cols: 16, origin_px: {x: v.x, y: v.y}, poly: v.poly, defaultCoverId: v.defaultCoverId || null };
+            });
+            if (atlasPatch.length) {
+                const b2 = new Blob([JSON.stringify(atlasPatch, null, 2)], {type:'application/json'});
+                const a2=document.createElement('a'); a2.href=URL.createObjectURL(b2); a2.download='atlas_patch.json'; setTimeout(()=>a2.click(), 300);
+            }
         }
         function loadJSON(ev) {
             const f = ev.target.files[0]; if (!f) return;
