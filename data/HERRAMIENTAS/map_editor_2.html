@@ -237,9 +237,13 @@
                     <label style="flex:1; font-size:10px;"><input type="radio" name="surf-kind" value="wallR" onchange="updatePolySurface('wallR')"> Pared Der</label>
                 </div>
                 <div class="prop-group" style="margin-top:6px;">
-                    <label>groupNum — auto por SLocation <span id="auto-group-label" style="color:#00e5ff; font-weight:bold;"></span> <label style="font-size:9px; margin-left:8px;"><input type="checkbox" id="chk-manual-group"> permitir sobreescritura manual</label></label>
-                    <input type="number" id="prop-groupNum" step="1" disabled style="background:#333; color:#888;" onchange="updatePolySurfaceGroup(this.value)">
-                    <div style="font-size:9px; color:#888;">Se asigna solo: <span id="auto-group-detail"></span> (Casa del Arbol de Tsuki + Slocation)</div>
+                    <label>SLocation <span id="auto-group-label" style="color:#00e5ff; font-weight:bold;"></span></label>
+                    <select id="prop-slocation" style="width:100%;" onchange="updatePolySurfaceSloc(this.value)"></select>
+                </div>
+                <div class="prop-group" style="margin-top:6px;">
+                    <label>groupNum — <span id="auto-group-detail" style="color:#888;"></span> <label style="font-size:9px; margin-left:8px;"><input type="checkbox" id="chk-manual-group"> permitir sobreescritura manual</label></label>
+                    <select id="prop-group-select" style="width:100%;" onchange="updatePolySurfaceGroupSelect(this.value)"></select>
+                    <input type="number" id="prop-groupNum" step="1" style="display:none; margin-top:4px; background:#333; color:#fff;" onchange="updatePolySurfaceGroup(this.value)">
                 </div>
                 <div class="prop-group">
                     <label>defaultCoverId (preview)</label>
@@ -1342,10 +1346,40 @@
                     polyPanel.style.display='block';
                     const kind = obj.role==='walkable' ? 'floor' : (obj.flipped ? 'wallL' : (obj.role==='wallpaper'?'wallL':'wallR'));
                     document.querySelectorAll('input[name=\"surf-kind\"]').forEach(r=> r.checked = ( (r.value==='floor' && obj.role==='walkable') || (r.value==='wallL' && obj.role!=='walkable' && obj.flipped) || (r.value==='wallR' && obj.role!=='walkable' && !obj.flipped) ));
-                    document.getElementById('prop-groupNum').value = obj.groupNum ?? '';
+                    // poblar selects SLocation / groupNum
+                    const slSel=document.getElementById('prop-slocation');
+                    if (slSel && slSel.options.length===0) {
+                        const atlas = window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
+                        const slocs=[...new Set(atlas.filter(s=>s.origin_px && s.origin_px.x!=null).map(s=>s.mapId))].sort((a,b)=>a-b);
+                        slSel.innerHTML='';
+                        slocs.forEach(id=>{
+                            const name=(typeof SLOCATION_NAMES!=='undefined' && SLOCATION_NAMES[id]) || `SLocation ${id}`;
+                            const opt=document.createElement('option'); opt.value=id; opt.textContent=`${id} — ${name}`; slSel.appendChild(opt);
+                        });
+                        // si no hay atlas, al menos mostrar 0
+                        if(slSel.options.length===0){ const opt=document.createElement('option'); opt.value=obj.mapId||0; opt.textContent=`${obj.mapId||0} — SLocation ${obj.mapId||0}`; slSel.appendChild(opt); }
+                    }
+                    if (slSel) slSel.value = obj.mapId ?? 0;
+                    const gSel=document.getElementById('prop-group-select');
+                    if (gSel) {
+                        const atlas = window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
+                        const curMap = parseInt(slSel ? slSel.value : obj.mapId||0);
+                        const floors = atlas.filter(s=>String(s.mapId)===String(curMap) && s.kind==='floor' && s.origin_px && s.origin_px.x!=null);
+                        const walls = atlas.filter(s=>String(s.mapId)===String(curMap) && s.kind==='wall' && s.origin_px && s.origin_px.x!=null);
+                        gSel.innerHTML='';
+                        const ogF=document.createElement('optgroup'); ogF.label='Pisos'; floors.forEach(s=>{ const o=document.createElement('option'); o.value=`floor|${s.groupNum}`; o.textContent=`Piso g${s.groupNum} — ${s.rows}x${s.cols}`; if(String(s.groupNum)===String(obj.groupNum) && obj.role==='walkable') o.selected=true; ogF.appendChild(o); });
+                        const ogW=document.createElement('optgroup'); ogW.label='Paredes'; walls.forEach(s=>{ const o=document.createElement('option'); o.value=`wall|${s.groupNum}|${s.flipped?1:0}`; o.textContent=`Pared g${s.groupNum} ${s.flipped?'Izq':'Der'} — ${s.rows}x${s.cols}`; if(String(s.groupNum)===String(obj.groupNum) && s.flipped===!!obj.flipped && obj.role!=='walkable') o.selected=true; ogW.appendChild(o); });
+                        gSel.appendChild(ogF); gSel.appendChild(ogW);
+                        // si es mapa nuevo sin atlas, mostrar solo el actual
+                        if(gSel.options.length===0){ const o=document.createElement('option'); o.value=`${obj.kind||'floor'}|${obj.groupNum||0}`; o.textContent=`g${obj.groupNum||0} (nuevo)`; o.selected=true; gSel.appendChild(o); }
+                    }
+                    const manualChk=document.getElementById('chk-manual-group');
+                    const gNumInput=document.getElementById('prop-groupNum');
+                    if(manualChk) { gNumInput.style.display = manualChk.checked ? 'block' : 'none'; gNumInput.disabled = !manualChk.checked; if(!manualChk.checked) gNumInput.value = obj.groupNum ?? ''; }
+                    else document.getElementById('prop-groupNum').value = obj.groupNum ?? '';
                     const sName = (typeof SLOCATION_NAMES !== 'undefined' && SLOCATION_NAMES[obj.mapId||0]) || `SLocation ${obj.mapId||0}`;
                     const agl=document.getElementById('auto-group-label');
-                    if(agl) agl.textContent = `${sName} — groupNum ${obj.groupNum ?? ''}`;
+                    if(agl) agl.textContent = `${sName}`;
                     const agd=document.getElementById('auto-group-detail');
                     if(agd) agd.textContent = `${sName} (${obj.mapId||0}) → ${obj.kind|| (obj.role==='walkable'?'floor':'wall')} auto`;
                     document.getElementById('prop-coverId').value = obj.defaultCoverId ?? '';
@@ -1369,6 +1403,17 @@
             obj.kind = kind==='floor' ? 'floor' : 'wall';
             draw(); updateLayerList();
         }
+        function updatePolySurfaceSloc(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ sceneData[primarySelectedIndex].mapId=parseInt(v); updatePropertiesPanel(); draw(); } }
+        function updatePolySurfaceGroupSelect(v){
+            if(primarySelectedIndex===-1) return;
+            const obj=sceneData[primarySelectedIndex];
+            if(!obj.is_poly_object) return;
+            const parts=v.split('|');
+            if(parts[0]==='floor'){ obj.kind='floor'; obj.role='walkable'; obj.groupNum=parseInt(parts[1]); obj.flipped=false; }
+            else { obj.kind='wall'; obj.role='wallpaper'; obj.groupNum=parseInt(parts[1]); obj.flipped=parts[2]==='1'; }
+            draw(); updatePropertiesPanel();
+        }
+        document.addEventListener('change', e=>{ if(e.target.id==='chk-manual-group'){ const inp=document.getElementById('prop-groupNum'); const sel=document.getElementById('prop-group-select'); if(e.target.checked){ inp.style.display='block'; inp.disabled=false; sel.style.display='none'; } else { inp.style.display='none'; sel.style.display='block'; } } });
         function updatePolySurfaceGroup(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ sceneData[primarySelectedIndex].groupNum=parseInt(v)||0; draw(); } }
         function updatePolySurfaceCover(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ const n=parseInt(v); if(!isNaN(n)) sceneData[primarySelectedIndex].defaultCoverId=n; else delete sceneData[primarySelectedIndex].defaultCoverId; draw(); } }
 
