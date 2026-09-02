@@ -237,7 +237,7 @@
                     <label style="flex:1; font-size:10px;"><input type="radio" name="surf-kind" value="wallR" onchange="updatePolySurface('wallR')"> Pared Der</label>
                 </div>
                 <div class="prop-group" style="margin-top:6px;">
-                    <label>SLocation <span id="auto-group-label" style="color:#00e5ff; font-weight:bold;"></span></label>
+                    <label>SLocation <span id="auto-group-label" style="color:#00e5ff; font-weight:bold;"></span> <label style="font-size:9px; margin-left:8px;"><input type="checkbox" id="chk-show-homecoming" onchange="toggleHomecoming(this.checked)"> mostrar Homecoming</label></label>
                     <select id="prop-slocation" style="width:100%;" onchange="updatePolySurfaceSloc(this.value)"></select>
                 </div>
                 <div class="prop-group" style="margin-top:6px;">
@@ -1364,8 +1364,9 @@
                     if (gSel) {
                         const atlas = window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
                         const curMap = parseInt(slSel ? slSel.value : obj.mapId||0);
-                        const floors = atlas.filter(s=>String(s.mapId)===String(curMap) && s.kind==='floor' && s.origin_px && s.origin_px.x!=null);
-                        const walls = atlas.filter(s=>String(s.mapId)===String(curMap) && s.kind==='wall' && s.origin_px && s.origin_px.x!=null);
+                        const showHC = document.getElementById('chk-show-homecoming')?.checked;
+                        const floors = atlas.filter(s=>String(s.mapId)===String(curMap) && s.kind==='floor' && s.origin_px && s.origin_px.x!=null && (!s.homecoming_only || showHC));
+                        const walls = atlas.filter(s=>String(s.mapId)===String(curMap) && s.kind==='wall' && s.origin_px && s.origin_px.x!=null && (!s.homecoming_only || showHC));
                         const floorNames = {0:{'0':'Planta Baja','1':'Primer Piso','2':'Segundo Piso (Homecoming)','4':'Patio','5':'Jardín'}, 6:{'0':'Campo Principal','3':'Cobertizo'}};
                         const getFloorLabel = (mid,g)=> (floorNames[mid] && floorNames[mid][String(g)]) || `Piso ${g}`;
                         gSel.innerHTML='';
@@ -1416,6 +1417,7 @@
             draw(); updatePropertiesPanel();
         }
         document.addEventListener('change', e=>{ if(e.target.id==='chk-manual-group'){ const inp=document.getElementById('prop-groupNum'); const sel=document.getElementById('prop-group-select'); if(e.target.checked){ inp.style.display='block'; inp.disabled=false; sel.style.display='none'; } else { inp.style.display='none'; sel.style.display='block'; } } });
+        function toggleHomecoming(v){ updatePropertiesPanel(); draw(); }
         function updatePolySurfaceGroup(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ sceneData[primarySelectedIndex].groupNum=parseInt(v)||0; draw(); } }
         function updatePolySurfaceCover(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ const n=parseInt(v); if(!isNaN(n)) sceneData[primarySelectedIndex].defaultCoverId=n; else delete sceneData[primarySelectedIndex].defaultCoverId; draw(); } }
 
