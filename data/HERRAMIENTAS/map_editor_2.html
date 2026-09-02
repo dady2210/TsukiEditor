@@ -237,8 +237,9 @@
                     <label style="flex:1; font-size:10px;"><input type="radio" name="surf-kind" value="wallR" onchange="updatePolySurface('wallR')"> Pared Der</label>
                 </div>
                 <div class="prop-group" style="margin-top:6px;">
-                    <label>groupNum (elige manualmente)</label>
-                    <input type="number" id="prop-groupNum" step="1" onchange="updatePolySurfaceGroup(this.value)">
+                    <label>groupNum — auto por SLocation <span id="auto-group-label" style="color:#00e5ff; font-weight:bold;"></span></label>
+                    <input type="number" id="prop-groupNum" step="1" disabled style="background:#333; color:#888;">
+                    <div style="font-size:9px; color:#888;">Se asigna solo: <span id="auto-group-detail"></span> (Casa del Arbol de Tsuki + Slocation)</div>
                 </div>
                 <div class="prop-group">
                     <label>defaultCoverId (preview)</label>
@@ -382,10 +383,18 @@
                     let collidersFolder = folders.find(f=>f.name==='COLLIDERS');
                     if (!collidersFolder) { collidersFolder = {id: Date.now(), name:'COLLIDERS', collapsed:true, items:[]}; folders.push(collidersFolder); }
                     else collidersFolder.collapsed = true;
+                    const getNextGroupNum = (mapId, kind)=>{
+                        const list = window.mapsAtlas.filter(s=>String(s.mapId)===String(mapId) && s.kind===kind);
+                        const max = list.length ? Math.max(...list.map(s=>s.groupNum)) : -1;
+                        return max+1;
+                    };
+                    const mapIdForInject = (currentMapMeta && (currentMapMeta.mapId ?? currentMapMeta.id)) || (currentMetadata && (currentMetadata.mapId ?? currentMetadata.id)) || 0;
                     const inject = (arr, role) => (arr||[]).forEach(b=>{
                         const paths = extractPaths(b);
                         paths.forEach(path=>{
-                            sceneData.push({go: b.go||'Polygon', sp:'VirtualPolygon', is_poly_object:true, role: role||'unknown', x: b.x||0, y: b.y||0, angle: b.angle||0, sx: b.sx||1, sy: b.sy||1, poly: path, paths:[path], folderId: collidersFolder.id, o:999});
+                            const kind = role==='walkable' ? 'floor' : 'wall';
+                            const autoG = getNextGroupNum(mapIdForInject, kind);
+                            sceneData.push({go: b.go||'Polygon', sp:'VirtualPolygon', is_poly_object:true, role: role||'unknown', kind, mapId: mapIdForInject, groupNum: autoG, x: b.x||0, y: b.y||0, angle: b.angle||0, sx: b.sx||1, sy: b.sy||1, poly: path, paths:[path], folderId: collidersFolder.id, o:999, defaultCoverId: null});
                         });
                     });
                     const infer = b=>{ if(/Camera|Confine/i.test(b.go)) return 'camera'; if(/Wallpaper/i.test(b.go)) return 'wallpaper'; if(b.is_trigger) return 'trigger'; if(/Floor|Walk|Nav|Ground/i.test(b.go)) return 'walkable'; return 'blocker'; };
@@ -1330,6 +1339,11 @@
                     const kind = obj.role==='walkable' ? 'floor' : (obj.flipped ? 'wallL' : (obj.role==='wallpaper'?'wallL':'wallR'));
                     document.querySelectorAll('input[name=\"surf-kind\"]').forEach(r=> r.checked = ( (r.value==='floor' && obj.role==='walkable') || (r.value==='wallL' && obj.role!=='walkable' && obj.flipped) || (r.value==='wallR' && obj.role!=='walkable' && !obj.flipped) ));
                     document.getElementById('prop-groupNum').value = obj.groupNum ?? '';
+                    const sName = (typeof SLOCATION_NAMES !== 'undefined' && SLOCATION_NAMES[obj.mapId||0]) || `SLocation ${obj.mapId||0}`;
+                    const agl=document.getElementById('auto-group-label');
+                    if(agl) agl.textContent = `${sName} — groupNum ${obj.groupNum ?? ''}`;
+                    const agd=document.getElementById('auto-group-detail');
+                    if(agd) agd.textContent = `${sName} (${obj.mapId||0}) → ${obj.kind|| (obj.role==='walkable'?'floor':'wall')} auto`;
                     document.getElementById('prop-coverId').value = obj.defaultCoverId ?? '';
                     const preview=document.getElementById('poly-cover-preview');
                     if (preview) {
