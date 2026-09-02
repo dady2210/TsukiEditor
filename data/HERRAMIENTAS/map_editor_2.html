@@ -1645,6 +1645,7 @@
                 obj.kind=first.kind;
                 obj.flipped=!!first.flipped;
                 obj.role= first.kind==='floor' ? 'walkable' : 'wallpaper';
+                if(first.origin_px){ obj.x=first.origin_px.x/64; obj.y=first.origin_px.y/32; obj.cell={...first.cell}; obj.rows=first.rows; obj.cols=first.cols; }
             } else {
                 obj.groupNum=0;
             }
@@ -1657,6 +1658,15 @@
             const parts=v.split('|');
             if(parts[0]==='floor'){ obj.kind='floor'; obj.role='walkable'; obj.groupNum=parseInt(parts[1]); obj.flipped=false; }
             else { obj.kind='wall'; obj.role='wallpaper'; obj.groupNum=parseInt(parts[1]); obj.flipped=parts[2]==='1'; }
+            // mover polígono a la posición del atlas seleccionado
+            const atlas=window.mapsAtlas||window.MAPS_UNIFIED?.atlas||[];
+            const surf=atlas.find(s=> String(s.mapId)===String(obj.mapId) && String(s.groupNum)===String(obj.groupNum) && s.kind===obj.kind && (obj.kind==='floor' || !!s.flipped===!!obj.flipped));
+            if(surf && surf.origin_px){
+                obj.x = surf.origin_px.x/64;
+                obj.y = surf.origin_px.y/32;
+                obj.cell = {...surf.cell};
+                obj.rows = surf.rows; obj.cols = surf.cols;
+            }
             draw(); updatePropertiesPanel();
         }
         document.addEventListener('change', e=>{ if(e.target.id==='chk-manual-group'){ const inp=document.getElementById('prop-groupNum'); const sel=document.getElementById('prop-group-select'); if(e.target.checked){ inp.style.display='block'; inp.disabled=false; sel.style.display='none'; } else { inp.style.display='none'; sel.style.display='block'; } } });
