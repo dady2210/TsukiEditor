@@ -147,6 +147,12 @@
             <input type="file" id="csave-input" accept=".csave" style="width:100%; margin-top:4px; font-size:10px;" onchange="handleCsaveLoad(event)">
             <div id="csave-status" style="font-size:9px; color:#888; margin-top:4px;">Sin csave — usará defaultCoverId</div>
         </div>
+        <div id="debug-panel" style="padding:6px; background:#2a1a1a; border:1px solid #a33; margin:6px; border-radius:4px;">
+            <label style="font-size:11px; color:#ff6666; font-weight:bold;"><input type="checkbox" id="chk-debug-mode" onchange="toggleDebugMode(this.checked)"> Modo Debug (visor tipo Play)</label>
+            <div style="font-size:9px; color:#aaa; margin-top:4px;">Carga csave → lista items huérfanos → crea grilla default</div>
+            <div id="debug-items-list" style="max-height:120px; overflow-y:auto; margin-top:6px; font-size:9px; background:#1a1a1a; padding:4px; border:1px solid #333;"></div>
+            <div id="debug-status" style="font-size:9px; color:#ffcc33; margin-top:4px;"></div>
+        </div>
         <h3 class="section-title">Metadata de Item</h3>
         <div id="metadata-panel">
             <strong id="meta-name" style="color: #fff; font-size: 13px;">-</strong><br>
@@ -1413,9 +1419,59 @@
                         currentCsaveWallpapers = {};
                         document.getElementById('csave-status').textContent += ' — parser no disponible, usando default';
                     }
+                    // auto debug si Modo Debug activo
+                    if(document.getElementById('chk-debug-mode')?.checked) autoCreateDefaultGrids();
                 }catch(e){ document.getElementById('csave-status').textContent='Error csave: '+e.message; console.error(e); }
             };
             r.readAsArrayBuffer(f);
+        }
+        let debugMode=false;
+        function toggleDebugMode(v){
+            debugMode=v;
+            document.getElementById('debug-panel').style.borderColor = v?'#0f0':'#a33';
+            if(v && window._csaveBuf) autoCreateDefaultGrids();
+            draw();
+        }
+        function autoCreateDefaultGrids(){
+            if(!window._csaveBuf || !window.SaveParser || !window.OdinReader) return;
+            try{
+                const buf=window._csaveBuf;
+                const reader=new OdinReader(buf);
+                const ast=reader.parse()[0];
+                const parser=new SaveParser(buf.buffer);
+                parser.ast=ast; parser.buffer=buf; parser.view=new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
+                parser.parseMap();
+                const dbgList=document.getElementById('debug-items-list');
+                const dbgStatus=document.getElementById('debug-status');
+                if(dbgList) dbgList.innerHTML='';
+                let created=0;
+                const atlas=window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
+                parser.placements.forEach(p=>{
+                    const surf = (window.mapsAtlas || window.MAPS_UNIFIED?.atlas || []).find(s=> String(s.mapId)===String(p.cluster) && String(s.groupNum)===String(p.floor) && (p.isWall ? s.kind==='wall' && !!s.flipped===!!p.flipped : s.kind==='floor'));
+                    if(!surf){
+                        // crear grilla default 1:1 con p.floor
+                        const isWall=!!p.isWall;
+                        const kind=isWall?'wall':'floor';
+                        const mapId=p.cluster;
+                        // deducir rows/cols por max en ese group
+                        const sameGroup=parser.placements.filter(q=> String(q.cluster)===String(mapId) && String(q.floor)===String(p.floor) && !!q.isWall===isWall);
+                        const xs=sameGroup.map(q=>q.x), ys=sameGroup.map(q=>q.y);
+                        const maxX=Math.max(...xs), maxY=Math.max(...ys), minX=Math.min(...xs), minY=Math.min(...ys);
+                        const w=Math.ceil((maxX-minX+2)/2)*2 || 16, h=Math.ceil((maxY-minY+2)/2)*2 || 16;
+                        const newSurf={ mapId, kind, groupNum: parseInt(p.floor), flipped: !!p.flipped, rows: h, cols: w, origin_px:{x: p.x*64, y: p.y*32}, cell:{w:64,h:32}, comment:"grilla default (csave g"+p.floor+") ⚠ default", defaultCoverId: null};
+                        // evitar duplicado
+                        if(!atlas.find(s=> String(s.mapId)===String(mapId) && String(s.groupNum)===String(p.floor) && s.kind===kind && !!s.flipped===!!p.flipped)){
+                            atlas.push(newSurf);
+                            created++;
+                            if(dbgList) dbgList.innerHTML+=`<div style="color:#ff6666;">${p.isWall?'Pared':'Piso'} g${p.floor} — id ${p.item_id} @${p.x},${p.y} → creada grilla default ${w}×${h}</div>`;
+                        }
+                    } else {
+                        if(dbgList && dbgList.children.length<20) dbgList.innerHTML+=`<div style="color:#888;">${p.isWall?'Pared':'Piso'} g${p.floor} id ${p.item_id} ✔</div>`;
+                    }
+                });
+                if(dbgStatus) dbgStatus.textContent = created? `Creadas ${created} grillas default (etiqueta ⚠ default)` : 'Todas las grillas existen';
+                if(created) { window.MAPS_UNIFIED = { atlas, meta: window.MAP_META, atlasConfig: window.atlasConfig }; if(location.protocol!=='file:') fetch('/api/save/maps',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({atlas, meta:window.MAP_META, atlasConfig:window.atlasConfig})}); draw(); }
+            }catch(e){ console.error('autoCreate',e); }
         }
         function updatePropertiesPanel() {
             const panel = document.getElementById('properties-panel'); const noSel = document.getElementById('no-selection');
