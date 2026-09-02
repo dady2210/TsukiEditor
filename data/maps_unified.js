@@ -1,0 +1,764 @@
+window.MAPS_UNIFIED = {
+  "atlas": [
+    {
+      "mapId": 0,
+      "kind": "floor",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin_px": {
+        "x": 1241.8627766640973,
+        "y": 1976.5599626258365
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "mask": "mask_floor_0.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "kind": "floor",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 14,
+      "cols": 14,
+      "origin_px": {
+        "x": 1241.3778650761362,
+        "y": 1377.8195246607497
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "mask": "mask_floor_1.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "kind": "floor",
+      "groupNum": 2,
+      "flipped": false,
+      "rows": 14,
+      "cols": 14,
+      "origin_px": {
+        "x": 329,
+        "y": 86
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      },
+      "homecoming_only": true
+    },
+    {
+      "mapId": 0,
+      "kind": "floor",
+      "groupNum": 4,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin_px": {
+        "x": 900,
+        "y": 2200
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "outdoor": true,
+      "comment": "TODO alinear exterior g4"
+    },
+    {
+      "mapId": 0,
+      "kind": "floor",
+      "groupNum": 5,
+      "flipped": false,
+      "rows": 12,
+      "cols": 12,
+      "origin_px": {
+        "x": 1600,
+        "y": 2200
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "outdoor": true,
+      "comment": "TODO alinear exterior g5"
+    },
+    {
+      "mapId": 0,
+      "kind": "wall",
+      "groupNum": 0,
+      "flipped": true,
+      "rows": 16,
+      "cols": 16,
+      "origin_px": {
+        "x": 517.586070316604,
+        "y": 1736.7251352113876
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      },
+      "mask": "mask_wallL_0.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "kind": "wall",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin_px": {
+        "x": 1900.8886116872663,
+        "y": 1709.2945966576285
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      },
+      "mask": "mask_wallR_0.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "kind": "wall",
+      "groupNum": 1,
+      "flipped": true,
+      "rows": 14,
+      "cols": 16,
+      "origin_px": {
+        "x": 695.5865991721795,
+        "y": 1121.399760052171
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      },
+      "mask": "mask_wallL_1.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "kind": "wall",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 14,
+      "cols": 16,
+      "origin_px": {
+        "x": 1878.8955153318568,
+        "y": 1174.4446804489417
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      },
+      "mask": "mask_wallR_1.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "kind": "wall",
+      "groupNum": 2,
+      "flipped": true,
+      "rows": 14,
+      "cols": 14,
+      "origin_px": {
+        "x": 80,
+        "y": 40
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      },
+      "homecoming_only": true,
+      "comment": "TODO pared HC izq"
+    },
+    {
+      "mapId": 0,
+      "kind": "wall",
+      "groupNum": 2,
+      "flipped": false,
+      "rows": 14,
+      "cols": 14,
+      "origin_px": {
+        "x": 580,
+        "y": 40
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      },
+      "homecoming_only": true,
+      "comment": "TODO pared HC der"
+    },
+    {
+      "mapId": 6,
+      "kind": "floor",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 26,
+      "cols": 26,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "lighting": "exterior"
+    },
+    {
+      "mapId": 6,
+      "kind": "floor",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 12,
+      "cols": 12,
+      "origin_px": {
+        "x": 200,
+        "y": 800
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "lighting": "exterior",
+      "comment": "TODO zona farm g1"
+    },
+    {
+      "mapId": 6,
+      "kind": "floor",
+      "groupNum": 2,
+      "flipped": false,
+      "rows": 12,
+      "cols": 12,
+      "origin_px": {
+        "x": 900,
+        "y": 800
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "lighting": "exterior",
+      "comment": "TODO zona farm g2"
+    },
+    {
+      "mapId": 6,
+      "kind": "floor",
+      "groupNum": 3,
+      "flipped": false,
+      "rows": 8,
+      "cols": 8,
+      "origin_px": {
+        "x": 200,
+        "y": -150
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "lighting": "exterior",
+      "comment": "cobertizo"
+    },
+    {
+      "mapId": 6,
+      "kind": "floor",
+      "groupNum": 4,
+      "flipped": false,
+      "rows": 12,
+      "cols": 12,
+      "origin_px": {
+        "x": 900,
+        "y": -100
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "lighting": "exterior",
+      "comment": "TODO zona farm g4"
+    },
+    {
+      "mapId": 6,
+      "kind": "floor",
+      "groupNum": 5,
+      "flipped": false,
+      "rows": 8,
+      "cols": 8,
+      "origin_px": {
+        "x": 50,
+        "y": 50
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "lighting": "exterior",
+      "comment": "TODO zona farm g5"
+    },
+    {
+      "mapId": 6,
+      "kind": "wall",
+      "groupNum": 3,
+      "flipped": true,
+      "rows": 12,
+      "cols": 8,
+      "origin_px": {
+        "x": 150,
+        "y": -80
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      },
+      "lighting": "exterior"
+    },
+    {
+      "mapId": 6,
+      "kind": "wall",
+      "groupNum": 3,
+      "flipped": false,
+      "rows": 12,
+      "cols": 8,
+      "origin_px": {
+        "x": 380,
+        "y": -80
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      },
+      "lighting": "exterior"
+    },
+    {
+      "mapId": 2,
+      "kind": "floor",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "comment": "TODO Chi Piso0"
+    },
+    {
+      "mapId": 2,
+      "kind": "floor",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 14,
+      "cols": 14,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "comment": "TODO Chi Piso1"
+    },
+    {
+      "mapId": 2,
+      "kind": "floor",
+      "groupNum": 2,
+      "flipped": false,
+      "rows": 14,
+      "cols": 14,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "comment": "TODO Chi Piso2"
+    },
+    {
+      "mapId": 2,
+      "kind": "wall",
+      "groupNum": 0,
+      "flipped": true,
+      "rows": 12,
+      "cols": 16,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      }
+    },
+    {
+      "mapId": 2,
+      "kind": "wall",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 12,
+      "cols": 16,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      }
+    },
+    {
+      "mapId": 2,
+      "kind": "wall",
+      "groupNum": 1,
+      "flipped": true,
+      "rows": 12,
+      "cols": 14,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      }
+    },
+    {
+      "mapId": 2,
+      "kind": "wall",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 12,
+      "cols": 14,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      }
+    },
+    {
+      "mapId": 3,
+      "kind": "floor",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "comment": "TODO Moca Piso0"
+    },
+    {
+      "mapId": 3,
+      "kind": "floor",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 14,
+      "cols": 14,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "comment": "TODO Moca Piso1"
+    },
+    {
+      "mapId": 3,
+      "kind": "floor",
+      "groupNum": 2,
+      "flipped": false,
+      "rows": 14,
+      "cols": 14,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "comment": "TODO Moca Piso2"
+    },
+    {
+      "mapId": 3,
+      "kind": "floor",
+      "groupNum": 3,
+      "flipped": false,
+      "rows": 10,
+      "cols": 10,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "comment": "TODO Moca g3"
+    },
+    {
+      "mapId": 3,
+      "kind": "floor",
+      "groupNum": 4,
+      "flipped": false,
+      "rows": 10,
+      "cols": 10,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "comment": "TODO Moca g4"
+    },
+    {
+      "mapId": 3,
+      "kind": "wall",
+      "groupNum": 0,
+      "flipped": true,
+      "rows": 12,
+      "cols": 16,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      }
+    },
+    {
+      "mapId": 3,
+      "kind": "wall",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 12,
+      "cols": 16,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      }
+    },
+    {
+      "mapId": 3,
+      "kind": "wall",
+      "groupNum": 1,
+      "flipped": true,
+      "rows": 12,
+      "cols": 14,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      }
+    },
+    {
+      "mapId": 3,
+      "kind": "wall",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 12,
+      "cols": 14,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      }
+    },
+    {
+      "mapId": 4,
+      "kind": "floor",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "lighting": "exterior",
+      "comment": "TODO Pier g1"
+    },
+    {
+      "mapId": 4,
+      "kind": "floor",
+      "groupNum": 2,
+      "flipped": false,
+      "rows": 12,
+      "cols": 12,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "lighting": "exterior",
+      "comment": "TODO Pier g2"
+    },
+    {
+      "mapId": 8,
+      "kind": "floor",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "comment": "TODO TH Piso0"
+    },
+    {
+      "mapId": 8,
+      "kind": "floor",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 12,
+      "cols": 12,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "comment": "TODO TH Piso1"
+    },
+    {
+      "mapId": 8,
+      "kind": "wall",
+      "groupNum": 0,
+      "flipped": true,
+      "rows": 12,
+      "cols": 16,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      }
+    },
+    {
+      "mapId": 8,
+      "kind": "wall",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 12,
+      "cols": 16,
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 64,
+        "h": 32
+      }
+    }
+  ],
+  "meta": {
+    "0": {
+      "name": "Home",
+      "exportDir": 2,
+      "export": "Exportado_level2",
+      "assembled": "level2_Ensamblado.png",
+      "lighting": "interior"
+    },
+    "2": {
+      "name": "ChisHouse",
+      "exportDir": null,
+      "assembled": null,
+      "lighting": "interior",
+      "comment": "humano completa exportDir+assembled tras ingest_map"
+    },
+    "3": {
+      "name": "MocasHouse",
+      "exportDir": null,
+      "assembled": null,
+      "lighting": "interior",
+      "comment": "humano completa exportDir+assembled tras ingest_map"
+    },
+    "4": {
+      "name": "Pier",
+      "exportDir": null,
+      "assembled": null,
+      "lighting": "exterior",
+      "comment": "humano completa exportDir+assembled tras ingest_map"
+    },
+    "6": {
+      "name": "Farm",
+      "exportDir": 4,
+      "export": "Exportado_level4",
+      "assembled": "level4_Ensamblado.png",
+      "lighting": "exterior"
+    },
+    "8": {
+      "name": "TownHall",
+      "exportDir": null,
+      "assembled": null,
+      "lighting": "interior",
+      "comment": "humano completa exportDir+assembled tras ingest_map"
+    }
+  },
+  "atlasConfig": {
+    "bgScale": 0.75
+  }
+};
+window.mapsAtlas = window.MAPS_UNIFIED.atlas;
+window.MAP_META = window.MAPS_UNIFIED.meta;
+window.atlasConfig = window.MAPS_UNIFIED.atlasConfig;

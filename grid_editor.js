@@ -189,7 +189,13 @@ class GridEditor {
         this.app.map.draw();
     }
 
+    _autoSave(){
+        if(location.protocol==='file:') return;
+        const payload={ atlas: window.mapsAtlas, meta: window.MAP_META, atlasConfig: window.atlasConfig };
+        fetch('/api/save/maps', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)}).catch(()=>{});
+    }
     saveAtlas() {
+        this._autoSave();
         // Preserve F()/W() format compatible con <script src> legacy — emit JSON but keep MAP_META header
         const cfg   = JSON.stringify(window.atlasConfig || { bgScale: 0.75 }, null, 2);
         const atlas = JSON.stringify(window.mapsAtlas, null, 2);

@@ -237,8 +237,8 @@
                     <label style="flex:1; font-size:10px;"><input type="radio" name="surf-kind" value="wallR" onchange="updatePolySurface('wallR')"> Pared Der</label>
                 </div>
                 <div class="prop-group" style="margin-top:6px;">
-                    <label>groupNum — auto por SLocation <span id="auto-group-label" style="color:#00e5ff; font-weight:bold;"></span></label>
-                    <input type="number" id="prop-groupNum" step="1" disabled style="background:#333; color:#888;">
+                    <label>groupNum — auto por SLocation <span id="auto-group-label" style="color:#00e5ff; font-weight:bold;"></span> <label style="font-size:9px; margin-left:8px;"><input type="checkbox" id="chk-manual-group"> permitir sobreescritura manual</label></label>
+                    <input type="number" id="prop-groupNum" step="1" disabled style="background:#333; color:#888;" onchange="updatePolySurfaceGroup(this.value)">
                     <div style="font-size:9px; color:#888;">Se asigna solo: <span id="auto-group-detail"></span> (Casa del Arbol de Tsuki + Slocation)</div>
                 </div>
                 <div class="prop-group">
