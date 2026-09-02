@@ -924,11 +924,11 @@
         function hitTest(obj, wx, wy) {
             if (obj.is_poly_object) {
                 // respetar toggles
-                if (obj.role==='walkable' && !overlay.walkable) return false;
-                if (obj.role==='blocker' && !overlay.blocker) return false;
-                if (obj.role==='trigger' && !overlay.trigger) return false;
-                if (obj.role==='wallpaper' && !overlay.wallpaper) return false;
-                if (obj.role==='camera' && !overlay.camera) return false;
+                if (obj.role==='walkable' && !overlayFlags.walkable) return false;
+                if (obj.role==='blocker' && !overlayFlags.blocker) return false;
+                if (obj.role==='trigger' && !overlayFlags.trigger) return false;
+                if (obj.role==='wallpaper' && !overlayFlags.wallpaper) return false;
+                if (obj.role==='camera' && !overlayFlags.nodes) return false;
                 const poly = obj.poly || (obj.paths && obj.paths[0]) || [];
                 if (!poly.length) return false;
                 // transformar punto mundo a local del polígono
@@ -1346,6 +1346,15 @@
         function updatePolySurfaceGroup(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ sceneData[primarySelectedIndex].groupNum=parseInt(v)||0; draw(); } }
         function updatePolySurfaceCover(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ const n=parseInt(v); if(!isNaN(n)) sceneData[primarySelectedIndex].defaultCoverId=n; else delete sceneData[primarySelectedIndex].defaultCoverId; draw(); } }
 
+        document.addEventListener('keydown', (e)=>{
+            if ((e.key==='Delete' || e.key==='Supr' || e.key==='Del') && selectedIndices.size>0) {
+                const toDel = Array.from(selectedIndices).sort((a,b)=>b-a);
+                toDel.forEach(idx=> sceneData.splice(idx,1));
+                selectedIndices.clear(); primarySelectedIndex=-1;
+                recordState(); updateLayerList(); updatePropertiesPanel(); draw();
+                e.preventDefault();
+            }
+        });
         function updateProp(key, value) {
             if (primarySelectedIndex !== -1) {
                 sceneData[primarySelectedIndex][key] = value;
