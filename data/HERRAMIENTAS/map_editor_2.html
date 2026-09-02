@@ -1438,6 +1438,14 @@
             debugMode=v; window.debugMode=v;
             document.getElementById('debug-panel').style.borderColor = v?'#0f0':'#a33';
             if(v && window._csaveBuf) autoCreateDefaultGrids();
+            else if(!v){
+                // quitar debug items y grillas default no harcodeadas
+                sceneData = sceneData.filter(o=> !o.isDebugItem);
+                folders = folders.filter(f=> f.name!=='DEBUG_ITEMS');
+                updateLayerList(); draw();
+                const dbgList=document.getElementById('debug-items-list');
+                if(dbgList) dbgList.innerHTML='';
+            }
             draw();
         }
         function autoCreateDefaultGrids(){
@@ -1479,7 +1487,28 @@
                     }
                 });
                 if(dbgStatus) dbgStatus.textContent = created? `Creadas ${created} grillas default (etiqueta ⚠ default)` : 'Todas las grillas existen';
-                if(created) { window.MAPS_UNIFIED = { atlas, meta: window.MAP_META, atlasConfig: window.atlasConfig }; if(location.protocol!=='file:') fetch('/api/save/maps',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({atlas, meta:window.MAP_META, atlasConfig:window.atlasConfig})}); draw(); }
+                if(created) { window.MAPS_UNIFIED = { atlas, meta: window.MAP_META, atlasConfig: window.atlasConfig }; if(location.protocol!=='file:') fetch('/api/save/maps',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({atlas, meta:window.MAP_META, atlasConfig:window.atlasConfig})}); }
+                // inyectar items del csave como sprites fantasma para verlos (modo debug)
+                try{
+                    // limpiar debug items previos
+                    sceneData = sceneData.filter(o=> !o.isDebugItem);
+                    folders = folders.filter(f=> f.name!=='DEBUG_ITEMS');
+                    let dbgFolder = folders.find(f=>f.name==='DEBUG_ITEMS');
+                    if(!dbgFolder){ dbgFolder={id: 'dbg_'+Date.now(), name:'DEBUG_ITEMS', collapsed:false}; folders.push(dbgFolder); }
+                    const targetMap = parseInt(document.getElementById('grid-map-select')?.value || document.getElementById('prop-slocation')?.value || 0);
+                    const toShow = parser.placements.filter(p=> String(p.cluster)===String(targetMap));
+                    toShow.forEach(p=>{
+                        const surfExists = atlas.some(s=> String(s.mapId)===String(p.cluster) && String(s.groupNum)===String(p.floor) && (p.isWall ? s.kind==='wall' : s.kind==='floor'));
+                        sceneData.push({
+                            go: `Item ${p.item_id}`, sp: `FURN_${p.item_id}`, x: p.x, y: p.y, angle: 0, sx:1, sy:1, o: 10, sl:0,
+                            px:0.5, py:0.5, rw:64, rh:64, ppu:150, draw_mode:0, isDebugItem:true, is_poly_object:false,
+                            folderId: dbgFolder.id, debugGroup: p.floor, debugHasSurface: !!surfExists, itemId: p.item_id, floor: p.floor, isWall: p.isWall
+                        });
+                    });
+                    updateLayerList(); draw();
+                    if(dbgList) dbgList.innerHTML += `<div style="color:#0f0; margin-top:6px;">${toShow.length} items del csave inyectados (rojo = sin grilla)</div>`;
+                }catch(e){ console.error('inject debug items',e); }
+                draw();
             }catch(e){ console.error('autoCreate',e); }
         }
         function updatePropertiesPanel() {
