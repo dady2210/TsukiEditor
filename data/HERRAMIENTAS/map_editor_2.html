@@ -47,6 +47,8 @@
     <script src="../../odin_browser.js"></script>
     <script src="../../parser.js"></script>
     <script src="../../data/items_db.js"></script>
+    <script src="../../data/maps_unified.js"></script>
+    <script>if(window.MAPS_UNIFIED && !window.mapsAtlas) { window.mapsAtlas = window.MAPS_UNIFIED.atlas; window.MAP_META = window.MAPS_UNIFIED.meta; window.atlasConfig = window.MAPS_UNIFIED.atlasConfig; }</script>
 </head>
 <body>
 
@@ -1567,8 +1569,9 @@
                     if(agl) agl.textContent = `${sName}`;
                     const agd=document.getElementById('auto-group-detail');
                     if(agd) agd.textContent = `${sName} (${obj.mapId||0}) → ${obj.kind|| (obj.role==='walkable'?'floor':'wall')} auto`;
-                    document.getElementById('prop-cell-w').value = obj.cell?.w || obj.cellW || 64;
-                    document.getElementById('prop-cell-h').value = obj.cell?.h || obj.cellH || 32;
+                    const atlasForCell = (window.mapsAtlas||window.MAPS_UNIFIED?.atlas||[]).find(s=> String(s.mapId)===String(obj.mapId) && String(s.groupNum)===String(obj.groupNum) && s.kind===(obj.role==='walkable'?'floor':'wall'));
+                    document.getElementById('prop-cell-w').value = obj.cell?.w || atlasForCell?.cell?.w || 64;
+                    document.getElementById('prop-cell-h').value = obj.cell?.h || atlasForCell?.cell?.h || 32;
                     // auto rows/cols desde bbox poly
                     if (obj.poly && obj.poly.length) {
                         const xs=obj.poly.map(p=>p.x||p[0]), ys=obj.poly.map(p=>p.y||p[1]);
