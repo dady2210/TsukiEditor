@@ -393,6 +393,7 @@
 
                 selectedIndices.clear(); primarySelectedIndex = -1;
                 recordState(); updateFolderDropdowns(); updateLayerList(); updatePropertiesPanel(); updateMetadataPanel();
+                const mapIdForInject = (currentMapMeta && (currentMapMeta.mapId ?? currentMapMeta.id)) || (currentMetadata && (currentMetadata.mapId ?? currentMetadata.id)) || 0;
                 // Inyección sceneData is_poly_object desde metadata
                 try {
                     let collidersFolder = folders.find(f=>f.name==='COLLIDERS');
@@ -404,7 +405,6 @@
                         const max = list.length ? Math.max(...list.map(s=>s.groupNum)) : -1;
                         return max+1;
                     };
-                    const mapIdForInject = (currentMapMeta && (currentMapMeta.mapId ?? currentMapMeta.id)) || (currentMetadata && (currentMetadata.mapId ?? currentMetadata.id)) || 0;
                     const seenPoly = new Set();
                     const inject = (arr, role) => (arr||[]).forEach(b=>{
                         const paths = extractPaths(b);
