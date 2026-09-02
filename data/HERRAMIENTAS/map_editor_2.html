@@ -1194,7 +1194,8 @@
                 drawObject(obj, selectedIndices.has(i));
             }
 
-            if (showColliders || overlayFlags.colliders) drawMetadataVisuals(ctx);
+            const hasVirtualColliders = sceneData.some(o=>o.is_poly_object);
+            if (!hasVirtualColliders && (showColliders || overlayFlags.colliders)) drawMetadataVisuals(ctx);
             ctx.restore();
         }
 
