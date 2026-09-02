@@ -1279,7 +1279,12 @@
 
         function drawObject(obj, isSelected) {
             if (obj.is_poly_object) {
-                const col = {walkable:'rgba(0,255,0,0.35)', blocker:'rgba(255,0,0,0.35)', trigger:'rgba(255,165,0,0.35)', wallpaper:'rgba(0,180,255,0.25)', camera:'rgba(180,0,255,0.25)', unknown:'rgba(255,255,0,0.3)'}[obj.role]||'rgba(255,255,0,0.3)';
+                const atlas = window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
+                const hasSurface = atlas.some(s=> String(s.mapId)===String(obj.mapId) && String(s.groupNum)===String(obj.groupNum) && s.kind===(obj.role==='walkable'?'floor':'wall') && (!obj.role.includes('wall') || !!s.flipped===!!obj.flipped));
+                let col = {walkable:'rgba(0,255,0,0.35)', blocker:'rgba(255,0,0,0.35)', trigger:'rgba(255,165,0,0.35)', wallpaper:'rgba(0,180,255,0.25)', camera:'rgba(180,0,255,0.25)', unknown:'rgba(255,255,0,0.3)'}[obj.role]||'rgba(255,255,0,0.3)';
+                if (!hasSurface) col = 'rgba(255,0,0,0.55)'; // rojo fantasma hasta harcodear
+                // etiqueta default
+                if (!hasSurface && !obj._warned) { obj._warned=true; }
                 const poly = obj.poly || (obj.paths&&obj.paths[0])||[];
                 if (!poly.length) return;
                 ctx.save();
@@ -1583,7 +1588,26 @@
             const payload = window.MAPS_UNIFIED || {atlas: window.mapsAtlas, meta: window.MAP_META, atlasConfig: window.atlasConfig};
             fetch('/api/save/maps',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)}).then(r=>r.ok?r.json():null).then(j=>{ alert('Harcodeado g'+obj.groupNum+' en maps_unified.json — items con floor=g'+obj.groupNum+' caerán aquí en play'); }).catch(e=> alert('Harcodear falló (¿server localhost:8000 corriendo?) '+e.message));
         }
-        function updatePolySurfaceSloc(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ sceneData[primarySelectedIndex].mapId=parseInt(v); updatePropertiesPanel(); draw(); } }
+        function updatePolySurfaceSloc(v){
+            if(primarySelectedIndex===-1) return;
+            const obj=sceneData[primarySelectedIndex];
+            if(!obj.is_poly_object) return;
+            const newMap=parseInt(v);
+            obj.mapId=newMap;
+            // reset groupNum al primero de ese SLocation (cada sloc tiene sus propios groupNum)
+            const atlas=window.mapsAtlas||window.MAPS_UNIFIED?.atlas||[];
+            const candidates=atlas.filter(s=>String(s.mapId)===String(newMap) && !s.homecoming_only && s.origin_px);
+            if(candidates.length){
+                const first=candidates[0];
+                obj.groupNum=first.groupNum;
+                obj.kind=first.kind;
+                obj.flipped=!!first.flipped;
+                obj.role= first.kind==='floor' ? 'walkable' : 'wallpaper';
+            } else {
+                obj.groupNum=0;
+            }
+            updatePropertiesPanel(); draw();
+        }
         function updatePolySurfaceGroupSelect(v){
             if(primarySelectedIndex===-1) return;
             const obj=sceneData[primarySelectedIndex];
