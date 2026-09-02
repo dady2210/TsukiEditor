@@ -384,7 +384,8 @@
                     if (!collidersFolder) { collidersFolder = {id: Date.now(), name:'COLLIDERS', collapsed:true, items:[]}; folders.push(collidersFolder); }
                     else collidersFolder.collapsed = true;
                     const getNextGroupNum = (mapId, kind)=>{
-                        const list = window.mapsAtlas.filter(s=>String(s.mapId)===String(mapId) && s.kind===kind);
+                        const atlas = window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
+                        const list = atlas.filter(s=>String(s.mapId)===String(mapId) && s.kind===kind);
                         const max = list.length ? Math.max(...list.map(s=>s.groupNum)) : -1;
                         return max+1;
                     };
