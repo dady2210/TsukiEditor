@@ -1,0 +1,11 @@
+const fs=require('fs'), vm=require('vm'), path=require('path');
+const root='C:\\Users\\Andres\\Desktop\\Tsuki_Odyssey\\Tsuky_WebEditor';
+const atlasCode=fs.readFileSync(path.join(root,'data/maps_atlas.js'),'utf8');
+const sandbox={window:{}}; vm.createContext(sandbox); vm.runInContext(atlasCode,sandbox);
+const atlas=sandbox.window.mapsAtlas;
+const meta=sandbox.window.MAP_META;
+const atlasConfig=sandbox.window.atlasConfig;
+const out={ atlas, meta, atlasConfig };
+fs.writeFileSync(path.join(root,'data/maps_unified.json'), JSON.stringify(out,null,2),'utf8');
+fs.writeFileSync(path.join(root,'data/maps_unified.js'), 'window.MAPS_UNIFIED = '+JSON.stringify(out,null,2)+';\nwindow.mapsAtlas = window.MAPS_UNIFIED.atlas;\nwindow.MAP_META = window.MAPS_UNIFIED.meta;\nwindow.atlasConfig = window.MAPS_UNIFIED.atlasConfig;\n','utf8');
+console.log('maps_unified', atlas.length, 'meta', Object.keys(meta).length);
