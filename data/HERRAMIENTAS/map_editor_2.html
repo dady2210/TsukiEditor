@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor de Layout / Mapa (Tsuki Odyssey) - Engine Pixel-Perfect</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e1e; color: #d4d4d4; display: flex; height: 100vh; overflow: hidden; user-select: none; }
+        #left-panel { width: 310px; background-color: #252526; border-right: 1px solid #3c3c3c; display: flex; flex-direction: column; }
+        #center-panel { flex: 1; position: relative; background-color: #181818; overflow: hidden; }
+        #right-panel { width: 300px; background-color: #252526; border-left: 1px solid #3c3c3c; display: flex; flex-direction: column; padding: 10px; box-sizing: border-box; overflow-y: auto; }
+        
+        .section-title { padding: 8px 10px; background-color: #333333; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid #3c3c3c; border-top: 1px solid #3c3c3c; margin: 0; display: flex; justify-content: space-between; align-items: center; }
+        .toolbar { padding: 6px; display: flex; flex-wrap: wrap; gap: 4px; background-color: #202020; }
+        .btn { background-color: #3a3d41; color: #fff; border: 1px solid #555; padding: 5px 8px; cursor: pointer; border-radius: 3px; font-size: 11px; flex: 1 1 45%; text-align: center; transition: 0.15s ease; }
+        .btn:hover { background-color: #4a4d51; }
+        .btn.active { background-color: #007acc; border-color: #0098ff; }
+        .btn-sm { padding: 3px 6px; font-size: 10px; flex: none; }
+        #tool-settings { padding: 8px; background-color: #2a2a2c; border-bottom: 1px solid #3c3c3c; font-size: 11px; }
+
+        .batch-bar { padding: 6px 10px; background-color: #1e1e1e; border-bottom: 1px solid #3c3c3c; display: flex; gap: 4px; align-items: center; font-size: 11px; }
+        .batch-bar select { flex: 1; background: #333; color: #fff; border: 1px solid #555; border-radius: 3px; padding: 2px 4px; font-size: 11px; }
+
+        .layer-list { flex: 1; overflow-y: auto; padding: 0; margin: 0; list-style: none; }
+        .folder-item { background-color: #2d2d30; border-bottom: 1px solid #383838; margin-bottom: 2px; }
+        .folder-header { padding: 5px 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background-color: #333337; font-weight: 600; font-size: 11px; }
+        .folder-header:hover { background-color: #3e3e42; }
+        .folder-items { list-style: none; padding: 0 0 0 12px; margin: 0; }
+        .layer-item { padding: 4px 8px; font-size: 11px; border-bottom: 1px solid #2e2e2e; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background-color: #252526; }
+        .layer-item:hover { background-color: #2f3235; }
+        .layer-item.selected { background-color: #094771; color: #fff; }
+        .layer-controls button { background: none; border: none; cursor: pointer; padding: 1px 3px; font-size: 11px; color: #aaa; }
+        .layer-controls button:hover { color: #fff; }
+
+        canvas { display: block; width: 100%; height: 100%; cursor: crosshair; }
+        .prop-group { margin-bottom: 8px; }
+        .prop-group label { display: block; font-size: 10px; color: #aaa; margin-bottom: 2px; }
+        .prop-group input, .prop-group select { width: 100%; padding: 4px; background-color: #3c3c3c; color: #fff; border: 1px solid #555; border-radius: 3px; box-sizing: border-box; font-size: 11px; }
+        .prop-row { display: flex; gap: 6px; }
+        .io-buttons { margin-top: auto; display: flex; flex-direction: column; gap: 5px; padding-top: 10px; }
+        .io-row { display: flex; gap: 4px; }
+        .badge { background: #555; border-radius: 3px; padding: 1px 4px; font-size: 10px; }
+        #hud-info { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.6); padding: 4px 8px; border-radius: 4px; font-size: 11px; color: #aaa; pointer-events: none; display: flex; gap: 10px; align-items: center;}
+        
+        #metadata-panel { padding: 10px; font-size: 11px; color: #aaa; background: #2a2a2c; border-bottom: 1px solid #3c3c3c; display: none; }
+        #meta-raw { margin-top: 5px; max-height: 350px; overflow-y: auto; background: #1e1e1e; padding: 6px; border: 1px solid #444; font-family: monospace; font-size: 10px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+    <div id="left-panel">
+        <h3 class="section-title">Directorio / Proyecto</h3>
+        <div style="padding:6px; background:#202020; border-bottom:1px solid #3c3c3c;">
+            <input type="file" id="dir-input" webkitdirectory directory multiple style="display:none" onchange="handleDirectoryLoad(event)">
+            <button class="btn" style="width:100%; background:#0e639c; font-weight:bold;" onclick="document.getElementById('dir-input').click()">📁 Cargar Carpeta</button>
+            <div id="loaded-assets-count" style="font-size:10px; color:#aaa; margin-top:4px; text-align:center;">Ninguna carpeta cargada</div>
+        </div>
+
+        <h3 class="section-title">Herramientas</h3>
+        <div class="toolbar">
+            <button class="btn active" id="tool-select" onclick="setTool('select')">Select (V)</button>
+            <button class="btn" id="tool-move" onclick="setTool('move')">Mover (M)</button>
+            <button class="btn" id="tool-paint" onclick="setTool('paint')">Pincel (B)</button>
+            <button class="btn" id="tool-poly" onclick="setTool('poly')">Patrón (P)</button>
+            <button class="btn" id="tool-erase" onclick="setTool('erase')">Borrar (E)</button>
+            <button class="btn" id="tool-ruler" onclick="setTool('ruler')">Regla (R)</button>
+            <button class="btn" style="background:#5a5a5a; flex: 1 1 100%;" onclick="fitCameraToScene()" title="Auto-ajusta el zoom y centra la cámara en los elementos">🖼️ Encuadrar Vista</button>
+        </div>
+
+        <div id="tool-settings">
+            <!-- Settings de herramientas omitidas visualmente aquí por brevedad, igual que tu código original -->
+            <div id="paint-options" style="display: none; margin-bottom: 6px;">
+                <div class="prop-row" style="margin-bottom: 4px;">
+                    <div style="flex:1">
+                        <label style="font-size:10px; color:#aaa;">Color</label>
+                        <input type="color" id="brush-color" value="#ff0055" style="height:22px; padding:1px; cursor:pointer;" onchange="saveBrushPrefs()">
+                    </div>
+                    <div style="flex:1">
+                        <label style="font-size:10px; color:#aaa;">Punta</label>
+                        <select id="brush-cap" onchange="saveBrushPrefs()">
+                            <option value="round">Redonda</option>
+                            <option value="square">Cuadrada</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="prop-group">
+                    <label style="font-size:10px; color:#aaa;">Grosor: <span id="brush-size-val">12</span>px</label>
+                    <input type="range" id="brush-size" min="1" max="100" value="12" oninput="document.getElementById('brush-size-val').innerText = this.value; saveBrushPrefs()">
+                </div>
+            </div>
+
+            <div id="poly-options" style="display: none; margin-bottom: 6px;">
+                <div class="prop-group">
+                    <input type="file" id="pattern-file-input" accept="image/*" style="display:none" onchange="handlePatternUpload(event)">
+                    <button class="btn" style="width:100%; margin-bottom: 3px;" onclick="document.getElementById('pattern-file-input').click()">Cargar Textura...</button>
+                    <input type="text" id="pattern-name" placeholder="Sprite (WP_Wood01)" value="WP_Wood01" onchange="savePatternPrefs()">
+                </div>
+                <div class="prop-group">
+                    <label style="font-size:10px; color:#aaa;">Escala Mosaico: <span id="pattern-scale-val">1.0</span>x</label>
+                    <input type="range" id="pattern-scale" min="0.1" max="5.0" step="0.1" value="1.0" oninput="document.getElementById('pattern-scale-val').innerText = this.value; savePatternPrefs()">
+                </div>
+                <div class="prop-row">
+                    <button class="btn" style="background:#dc3545;" onclick="resetCurrentPoly()">Reset (Esc)</button>
+                    <button class="btn" style="background:#28a745;" onclick="finishPoly()">Cerrar Polígono</button>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:4px;">
+                <button class="btn btn-sm" style="background-color: #28a745; flex:1;" onclick="addElement()">+ Sprite</button>
+                <button class="btn btn-sm" style="background-color: #d39e00; flex:1;" onclick="createFolder()">+ Carpeta</button>
+            </div>
+        </div>
+
+        <h3 class="section-title">
+            <span>Organizador de Capas</span>
+            <span class="badge" id="layer-count">0</span>
+        </h3>
+
+        <div class="batch-bar">
+            <span style="font-size:10px; color:#aaa;">Mover <span id="selected-count">(0)</span> a:</span>
+            <select id="target-folder-select">
+                <option value="">(Raíz / Sin carpeta)</option>
+            </select>
+            <button class="btn btn-sm" style="background:#007acc;" onclick="moveSelectedToFolder()">Mover</button>
+        </div>
+
+        <ul class="layer-list" id="layer-list"></ul>
+    </div>
+
+    <div id="center-panel">
+        <canvas id="render-canvas"></canvas>
+        <div id="hud-info">
+            <span id="hud-zoom">Zoom: 100%</span> | <span id="hud-pos">X: 0.00, Y: 0.00</span>
+        </div>
+    </div>
+
+    <div id="right-panel">
+        <h3 class="section-title">Metadata de Item</h3>
+        <div id="metadata-panel">
+            <strong id="meta-name" style="color: #fff; font-size: 13px;">-</strong><br>
+            ID Global: <span id="meta-id">-</span><br>
+            <div id="meta-raw"></div>
+            <div style="margin-top: 10px; display:flex; flex-direction:column; gap:3px; font-size:10px;">
+                <label style="color:#00e5ff; cursor:pointer; font-weight:bold;">
+                    <input type="checkbox" id="toggle-colliders" checked onchange="overlayFlags.colliders = this.checked; showColliders = this.checked; draw();"> Overlays de lógica
+                </label>
+                <label><input type="checkbox" checked onchange="overlayFlags.walkable=this.checked; draw();"> Walkable</label>
+                <label><input type="checkbox" checked onchange="overlayFlags.blocker=this.checked; draw();"> Blockers</label>
+                <label><input type="checkbox" checked onchange="overlayFlags.wallpaper=this.checked; draw();"> Wallpaper colliders</label>
+                <label><input type="checkbox" checked onchange="overlayFlags.nodes=this.checked; draw();"> Nodos / scripts</label>
+            </div>
+            
+            <!-- NUEVO: SECCIÓN DE SMART LOGIC (ANIMACIONES Y ESTADOS) -->
+            <div id="interaction-panel" style="margin-top: 12px; border-top: 1px solid #444; padding-top: 10px;">
+                <strong style="color: #fff; font-size: 12px;">⚡ Interacciones Nativas</strong>
+                <div style="display:flex; gap:4px; margin-top: 6px;">
+                    <button class="btn btn-sm" style="flex:1; background:#007acc;" onclick="flipFurniture()" title="Intercambia automáticamente entre las carpetas _FRONT y _BACK del layout cargado.">🔄 Voltear (Front/Back)</button>
+                    <button class="btn btn-sm" id="btn-animate" style="flex:1; background:#28a745;" onclick="toggleInteraction()" title="Simula el AnimatorController rotando partes articuladas como la Tapa (Lid).">▶ Animar (Abrir)</button>
+                </div>
+                <div id="anim-status" style="font-size: 9px; color: #888; margin-top: 4px; text-align: center;">Mueble inactivo.</div>
+            </div>
+        </div>
+
+        <h3 class="section-title">Propiedades Visuales</h3>
+        <div id="properties-panel" style="display: none;">
+            <div class="prop-group">
+                <label>GameObject (go)</label>
+                <input type="text" id="prop-go" onchange="updateProp('go', this.value)">
+            </div>
+            <div class="prop-group">
+                <label>Sprite / Textura (sp)</label>
+                <input type="text" id="prop-sp" onchange="updateProp('sp', this.value)">
+            </div>
+            <div class="prop-row">
+                <div class="prop-group" style="flex:1">
+                    <label>Posición X</label>
+                    <input type="number" step="0.05" id="prop-x" onchange="updateProp('x', parseFloat(this.value))">
+                </div>
+                <div class="prop-group" style="flex:1">
+                    <label>Posición Y</label>
+                    <input type="number" step="0.05" id="prop-y" onchange="updateProp('y', parseFloat(this.value))">
+                </div>
+            </div>
+            <div class="prop-row">
+                <div class="prop-group" style="flex:1">
+                    <label>Escala X (sx)</label>
+                    <input type="number" step="0.05" id="prop-sx" onchange="updateProp('sx', parseFloat(this.value))">
+                </div>
+                <div class="prop-group" style="flex:1">
+                    <label>Escala Y (sy)</label>
+                    <input type="number" step="0.05" id="prop-sy" onchange="updateProp('sy', parseFloat(this.value))">
+                </div>
+            </div>
+            <div class="prop-group">
+                <label>Ángulo (°)</label>
+                <input type="number" step="1" id="prop-angle" onchange="updateProp('angle', parseFloat(this.value))">
+            </div>
+            <div class="prop-row">
+                <div class="prop-group" style="flex:1">
+                    <label>Sorting Layer (sl)</label>
+                    <input type="number" step="1" id="prop-sl" onchange="updateProp('sl', parseInt(this.value))">
+                </div>
+                <div class="prop-group" style="flex:1">
+                    <label>Order (o)</label>
+                    <input type="number" step="1" id="prop-o" onchange="updateProp('o', parseInt(this.value))">
+                </div>
+            </div>
+            <div class="prop-group">
+                <label>Carpeta asignada</label>
+                <select id="prop-folder" onchange="updateProp('folderId', this.value || null)">
+                    <option value="">(Ninguna)</option>
+                </select>
+            </div>
+            
+            <div style="display:flex; gap:4px; margin-top:8px;">
+                <button class="btn btn-sm" style="flex:1;" onclick="updateProp('x', 0); updateProp('y', 0);">Centrar (0,0)</button>
+                <button class="btn btn-sm" style="flex:1;" onclick="updateProp('angle', 0);">Rotación 0°</button>
+            </div>
+
+            <div id="pattern-extra-props" style="display: none; margin-top:12px; border-top:1px solid #444; padding-top:8px;">
+                <!-- Propiedades de Patrón Omitidas por brevedad -->
+            </div>
+            <div id="brush-extra-props" style="display: none; margin-top:12px; border-top:1px solid #444; padding-top:8px;">
+                <!-- Propiedades de Trazo Omitidas por brevedad -->
+            </div>
+        </div>
+        
+        <div id="no-selection" style="color:#777; font-size:11px; text-align:center; padding: 25px 0;">
+            Ningún elemento seleccionado
+        </div>
+
+        <div class="io-buttons">
+            <div class="io-row">
+                <button class="btn btn-sm" onclick="undo()" title="Ctrl+Z">↩ Deshacer</button>
+                <button class="btn btn-sm" onclick="redo()" title="Ctrl+Y">↪ Rehacer</button>
+            </div>
+            <div class="io-row">
+                <button class="btn btn-sm" onclick="document.getElementById('file-input').click()">Cargar JSON</button>
+                <input type="file" id="file-input" style="display:none" accept=".json" onchange="loadJSON(event)">
+                <button class="btn btn-sm" onclick="exportJSON()">Exportar JSON</button>
+            </div>
+            <div class="io-row" style="margin-top: 4px;">
+                <button class="btn" style="background-color: #6f42c1; border-color: #6f42c1; font-weight:bold; padding:8px; flex:1;" onclick="exportPNG(false)">Exportar Todo</button>
+                <button class="btn" style="background-color: #e83e8c; border-color: #e83e8c; font-weight:bold; padding:8px; flex:1;" onclick="exportPNG(true)">Exportar Vista</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- ESTADO GLOBAL & ASSETS ---
+        let sceneData = [];
+        let folders = [];
+		window.metaEditRefs = [];
+        let selectedIndices = new Set();
+        let primarySelectedIndex = -1;
+        let currentTool = 'select';
+
+        let currentMetadata = null;
+        let currentMapMeta = null;
+        let showColliders = true;
+        const overlayFlags = { colliders: true, walkable: true, blocker: true, wallpaper: true, nodes: true };
+
+        const historyStack = [];
+        let historyIndex = -1;
+
+        const assetBlobs = {};
+        const imageCache = {};
+
+        function updateHudDisplay(worldX = null, worldY = null) {
+            document.getElementById('hud-zoom').innerText = `Zoom: ${Math.round(camera.zoom / 40 * 100)}%`;
+            if (worldX !== null && worldY !== null) {
+                document.getElementById('hud-pos').innerText = `X: ${worldX.toFixed(2)}, Y: ${worldY.toFixed(2)}`;
+            }
+        }
+
+        async function handleDirectoryLoad(event) {
+            const files = Array.from(event.target.files);
+            if (!files.length) return;
+            
+            let loadedImages = 0;
+            let jsonFiles = [];
+
+            for (let file of files) {
+                if (file.type.startsWith('image/')) {
+                    const cleanName = file.name.replace(/\.[^/.]+$/, "");
+                    const url = URL.createObjectURL(file);
+                    assetBlobs[cleanName] = url; assetBlobs[file.name] = url;
+                    if (file.webkitRelativePath) {
+                        const pathWithoutExt = file.webkitRelativePath.replace(/\.[^/.]+$/, "");
+                        assetBlobs[file.webkitRelativePath] = url; assetBlobs[pathWithoutExt] = url;
+                    }
+                    const img = new Image(); img.src = url;
+                    imageCache[cleanName] = img; imageCache[file.name] = img; loadedImages++;
+                } else if (file.name.endsWith('.json')) {
+                    jsonFiles.push(file);
+                }
+            }
+
+            if (jsonFiles.length > 0) {
+                const byName = {};
+                jsonFiles.forEach(f => { byName[f.name.toLowerCase()] = f; });
+
+                currentMetadata = null;
+                currentMapMeta = null;
+                const metaFile = byName['metadata.json'] || byName['map_metadata.json'];
+                if (metaFile) {
+                    try { currentMetadata = JSON.parse(await metaFile.text()); }
+                    catch(e) { currentMetadata = null; }
+                }
+                if (byName['map_metadata.json']) {
+                    try { currentMapMeta = JSON.parse(await byName['map_metadata.json'].text()); }
+                    catch(e) {}
+                }
+
+                sceneData = []; folders = [];
+                let usedSceneFull = false;
+                if (byName['scene_full.json']) {
+                    try {
+                        const full = JSON.parse(await byName['scene_full.json'].text());
+                        if (full.kind === 'map' && full.layout && Array.isArray(full.layout.front)) {
+                            usedSceneFull = true;
+                            currentMapMeta = Object.assign({}, full.logic || {}, { raw: full.raw, colliders: full.colliders || [] });
+                            if (!currentMetadata) currentMetadata = full.raw || currentMapMeta;
+                            const folderId = 'folder_layout';
+                            folders.push({ id: folderId, name: 'LAYOUT', visible: true, locked: false, collapsed: false });
+                            full.layout.front.forEach(obj => { obj.folderId = folderId; sceneData.push(obj); });
+                        }
+                    } catch(e) { console.error('scene_full', e); }
+                }
+
+                if (!usedSceneFull) {
+                    const layoutFiles = jsonFiles.filter(f => {
+                        const n = f.name.toLowerCase();
+                        return n.includes('layout') && n !== 'metadata.json' && n !== 'map_metadata.json' && n !== 'scene_full.json';
+                    });
+                    for (let lf of layoutFiles) {
+                        try {
+                            const parsed = JSON.parse(await lf.text());
+                            const folderName = lf.name.replace('.json', '').toUpperCase();
+                            const folderId = 'folder_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+                            const isVisible = !folderName.includes('BACK');
+                            folders.push({ id: folderId, name: folderName, visible: isVisible, locked: false, collapsed: false });
+                            const dataArray = Array.isArray(parsed) ? parsed : (parsed.sceneData || parsed.layout?.front || []);
+                            dataArray.forEach(obj => { obj.folderId = folderId; sceneData.push(obj); });
+                        } catch(e) { console.error(`Error procesando ${lf.name}`, e); }
+                    }
+                }
+
+                selectedIndices.clear(); primarySelectedIndex = -1;
+                recordState(); updateFolderDropdowns(); updateLayerList(); updatePropertiesPanel(); updateMetadataPanel();
+                // Inyección sceneData is_poly_object desde metadata
+                try {
+                    let collidersFolder = folders.find(f=>f.name==='COLLIDERS');
+                    if (!collidersFolder) { collidersFolder = {id: Date.now(), name:'COLLIDERS', collapsed:true, items:[]}; folders.push(collidersFolder); }
+                    else collidersFolder.collapsed = true;
+                    const inject = (arr, role) => (arr||[]).forEach(b=>{
+                        const paths = extractPaths(b);
+                        paths.forEach(path=>{
+                            sceneData.push({go: b.go||'Polygon', sp:'VirtualPolygon', is_poly_object:true, role: role||'unknown', x: b.x||0, y: b.y||0, angle: b.angle||0, sx: b.sx||1, sy: b.sy||1, poly: path, paths:[path], folderId: collidersFolder.id, o:999});
+                        });
+                    });
+                    const infer = b=>{ if(/Camera|Confine/i.test(b.go)) return 'camera'; if(/Wallpaper/i.test(b.go)) return 'wallpaper'; if(b.is_trigger) return 'trigger'; if(/Floor|Walk|Nav|Ground/i.test(b.go)) return 'walkable'; return 'blocker'; };
+                    if (currentMetadata) { inject(currentMetadata.colliders||[], null); (currentMetadata.walkable_bounds||[]).forEach(b=> inject([b], infer(b))); (currentMetadata.camera_confines||[]).forEach(b=> inject([b],'camera')); }
+                    if (currentMapMeta) { inject(currentMapMeta.colliders||[], null); }
+                } catch(e){ console.warn('inject colliders', e); }
+                resizeCanvas();
+                fitCameraToScene();
+                document.getElementById('loaded-assets-count').innerText = `${sceneData.length} sprites + ${loadedImages} texturas (incl. ${sceneData.filter(o=>o.is_poly_object).length} polígonos)`;
+                requestAnimationFrame(() => { fitCameraToScene(); setTimeout(fitCameraToScene, 250); });
+            } else {
+                document.getElementById('loaded-assets-count').innerText = `${loadedImages} texturas cargadas`;
+            }
+            draw();
+        }
+		
+		function updateMetadataPanel() {
+            const panel = document.getElementById('metadata-panel');
+            if (!currentMetadata) { panel.style.display = 'none'; return; }
+            panel.style.display = 'block';
+            document.getElementById('meta-name').innerText = currentMetadata.name || 'Mapa / Escena';
+            document.getElementById('meta-id').innerText = currentMetadata.id || 'N/A';
+            
+            let rawHtml = '';
+            window.metaEditRefs = []; // Reiniciar referencias en cada carga
+            
+            // Indicadores básicos
+            if(currentMetadata.animators && currentMetadata.animators.length > 0) rawHtml += `<span style="color:#28a745;">[MUEBLE] Animators detectados.</span><br>`;
+            if(currentMetadata.walkable_bounds && currentMetadata.walkable_bounds.length > 0) rawHtml += `<span style="color:#ffaa00;">[MAPA] Límites caminables.</span><br>`;
+
+            // --- MOTOR DEL INSPECTOR INTELIGENTE ---
+            // Esta función lee CUALQUIER objeto JSON y genera inputs dinámicos sin importar cómo se llamen las variables.
+            function renderEditableProps(title, targetObj, color) {
+                if (!targetObj || Object.keys(targetObj).length === 0) return '';
+                let html = `<div style="margin-top:8px; padding:4px; background:#222; border-left:3px solid ${color};">`;
+                html += `<strong style="color:${color}; font-size:11px;">${title}</strong><div style="display:flex; flex-direction:column; gap:4px; margin-top:4px;">`;
+
+                const refIndex = window.metaEditRefs.length;
+                window.metaEditRefs.push(targetObj);
+
+                for (let k in targetObj) {
+                    // Omitimos listas masivas de vértices para no congelar el panel
+                    if (k === 'colliderPoints' || k === 'flippedColliderPoints' || k === 'sprites') continue;
+                    
+                    const v = targetObj[k];
+                    if (v === null || typeof v === 'object') {
+                         let str = JSON.stringify(v);
+                         if(str && str.length > 30) str = str.substring(0,30)+'...';
+                         html += `<div style="display:flex; justify-content:space-between; font-size:10px; border-bottom:1px solid #333; padding-bottom:2px;">
+                                    <span style="color:#aaa;">${k}</span>
+                                    <span style="color:#777;" title='${JSON.stringify(v)}'>${str}</span>
+                                 </div>`;
+                    } else {
+                         const isNum = typeof v === 'number';
+                         const isBool = typeof v === 'boolean';
+                         
+                         // Tratamos los booleanos reales como checkboxes
+                         if(isBool) {
+                             html += `<div style="display:flex; justify-content:space-between; font-size:10px; align-items:center; border-bottom:1px solid #333; padding-bottom:2px;">
+                                        <span style="color:#ddd;">${k}</span>
+                                        <input type="checkbox" ${v ? 'checked' : ''} onchange="window.metaEditRefs[${refIndex}]['${k}'] = this.checked;">
+                                      </div>`;
+                         } else {
+                             // Texto y Números interactivos (ej: gridCollScale)
+                             html += `<div style="display:flex; justify-content:space-between; font-size:10px; align-items:center; border-bottom:1px solid #333; padding-bottom:2px;">
+                                        <span style="color:#ddd;">${k}</span>
+                                        <input type="${isNum?'number':'text'}" step="any" value="${v}" style="width:70px; padding:1px; font-size:10px; background:#333; color:#fff; border:1px solid #555;" onchange="window.metaEditRefs[${refIndex}]['${k}'] = ${isNum ? 'parseFloat(this.value)' : 'this.value'};">
+                                      </div>`;
+                         }
+                    }
+                }
+                html += `</div></div>`;
+                return html;
+            }
+
+            // 1. Escanear y renderizar Propiedades Globales (raw_properties)
+            rawHtml += renderEditableProps("⚙️ Global Properties", currentMetadata.raw_properties, "#00e5ff");
+
+            // 2. Escanear y renderizar Componentes Especiales (MonoBehaviours)
+            if (currentMetadata.nodes) {
+                currentMetadata.nodes.forEach(node => {
+                    node.components.forEach(comp => {
+                        // Ignoramos componentes visuales estándar para no saturar, nos enfocamos en lógica
+                        if (comp.type !== "SpriteRenderer" && comp.type !== "Transform" && comp.type !== "SpriteObject" && comp.type !== "AnimObject") {
+                            rawHtml += renderEditableProps(`📜 Script: ${comp.type} (${node.name})`, comp.properties, "#ffaa00");
+                        }
+                    });
+                });
+            }
+
+            document.getElementById('meta-raw').innerHTML = rawHtml || 'Estructura procesada sin propiedades editables.';
+        }
+
+        // --- SISTEMA DE SMART LOGIC (ANIMATION & FLIP SIMULATOR) ---
+
+        function flipFurniture() {
+            if (folders.length === 0) {
+                alert("No se detectaron carpetas de layout para voltear.");
+                return;
+            }
+            
+            // Buscar la carpeta que está visible actualmente
+            let currentActive = folders.find(f => f.visible && (f.name.includes('FRONT') || f.name.includes('BACK')));
+            
+            if (!currentActive) {
+                // Si no hay ninguna obvia visible, asumimos la primera
+                currentActive = folders[0];
+            }
+
+            let targetName = "";
+            if (currentActive.name.includes("FRONT")) targetName = currentActive.name.replace("FRONT", "BACK");
+            else if (currentActive.name.includes("BACK")) targetName = currentActive.name.replace("BACK", "FRONT");
+            else {
+                alert("El nombre de la carpeta no contiene 'FRONT' o 'BACK'.");
+                return;
+            }
+
+            const targetFolder = folders.find(f => f.name === targetName);
+            if (targetFolder) {
+                currentActive.visible = false;
+                targetFolder.visible = true;
+                
+                // Deseleccionar para evitar modificar nodos ocultos
+                selectedIndices.clear(); primarySelectedIndex = -1;
+                
+                updateLayerList(); updatePropertiesPanel(); draw();
+                document.getElementById('anim-status').innerText = `Rotado a: ${targetName}`;
+            } else {
+                alert(`No se encontró el layout reverso: ${targetName}`);
+            }
+        }
+
+        // Variable global para rastrear el estado de la animación
+        let isFurnitureOpen = false;
+
+        function toggleInteraction() {
+            if (sceneData.length === 0) return;
+            isFurnitureOpen = !isFurnitureOpen;
+            let interacted = false;
+
+            // 1. Extraer reglas lógicas (Scripts y Animators)
+            const swapRules = {}; 
+            let hasAnimator = false;
+
+            if (currentMetadata) {
+                // Verificar si existe un componente Animator en toda la estructura
+                hasAnimator = (currentMetadata.animators && currentMetadata.animators.length > 0) || 
+                              (currentMetadata.raw_properties && currentMetadata.raw_properties.animator);
+
+                // Leer reglas de Swap desde cualquier script (MusicPlayer, etc)
+                (currentMetadata.nodes || []).forEach(node => {
+                    (node.components || []).forEach(comp => {
+                        const p = comp.properties || {};
+                        
+                        // Detectar propiedades de intercambio de sprites
+                        let sOn = p.onSprite || p.openSprite || p.on || p.open;
+                        let sOff = p.offSprite || p.closeSprite || p.off || p.close;
+                        
+                        const clean = (s) => (typeof s === 'string' && s.startsWith('Sprite: ')) ? s.replace('Sprite: ', '').trim() : null;
+                        sOn = clean(sOn); sOff = clean(sOff);
+                        
+                        // Crear la regla bidireccional si ambos existen
+                        if (sOn && sOff) {
+                            swapRules[sOff.replace(/ /g, '_')] = sOn.replace(/ /g, '_');
+                            swapRules[sOn.replace(/ /g, '_')] = sOff.replace(/ /g, '_');
+                        }
+                    });
+                });
+            }
+
+            // 2. Aplicar la lógica inferida a la escena
+            sceneData.forEach(o => {
+                const nodeName = (o.go || "").toLowerCase();
+                const spriteName = (o.sp || "");
+
+                // A. Lógica de Cambio de Estado Visual (Ej: Casetera, Lámparas complejas)
+                // Si el sprite actual está en nuestras reglas extraídas, lo cambiamos.
+                if (swapRules[spriteName]) {
+                    o.sp = swapRules[spriteName];
+                    interacted = true;
+                } 
+                
+                // B. Lógica de Lámparas Simples (Fallback)
+                // Si es una luz pero no tenía script de Swap, intercambiamos _0 y _1
+                else if (nodeName.includes('lamp') || nodeName.includes('light')) {
+                    if (spriteName.endsWith('_0') || spriteName.endsWith('_1')) {
+                        o.sp = isFurnitureOpen ? spriteName.replace('_0', '_1') : spriteName.replace('_1', '_0');
+                        interacted = true;
+                    }
+                }
+
+                // C. Lógica Articulada basada en física (Ej: Crop Box)
+                // Si el objeto tiene un Animator y detectamos una parte móvil, la rotamos.
+                if (hasAnimator) {
+                    if (['lid', 'door', 'tapa', 'cover'].some(n => nodeName.includes(n))) {
+                        // Rota 45 grados hacia arriba (sentido antihorario en Canvas)
+                        o.angle = isFurnitureOpen ? 45 : 0;
+                        interacted = true;
+                    }
+                } 
+                // D. Lógica Articulada de Visibilidad (Si es una tapa pero NO tiene Animator)
+                else {
+                    if (['lid', 'door', 'tapa', 'cover'].some(n => nodeName.includes(n)) && !swapRules[spriteName]) {
+                         o.visible = !isFurnitureOpen;
+                         interacted = true;
+                    }
+                }
+
+                // E. Encendido del Halo Radial para todas las luces
+                if (nodeName === 'square' && spriteName === 'white') {
+                    o.visible = isFurnitureOpen;
+                    interacted = true;
+                }
+            });
+
+            // 3. Actualizar la Interfaz
+            if (interacted) {
+                const btn = document.getElementById('btn-animate');
+                btn.innerHTML = isFurnitureOpen ? '⏸ Interacción (Cerrar / Apagar)' : '▶ Interacción (Abrir / Encender)';
+                btn.style.background = isFurnitureOpen ? '#dc3545' : '#28a745';
+                document.getElementById('anim-status').innerText = isFurnitureOpen ? "Estado: ABIERTO / ENCENDIDO" : "Estado: CERRADO / APAGADO";
+                
+                recordState(); updateLayerList(); updatePropertiesPanel(); draw();
+            } else {
+                isFurnitureOpen = !isFurnitureOpen; 
+                alert("No se detectó lógica dinámica de animación (Animator o scripts de estado) en este ítem.");
+            }
+        }
+
+        // --- ENCUADRE DE CÁMARA INTELIGENTE ---
+        function objectWorldBounds(obj) {
+            const raster = obj._rasterCache;
+            if (raster && raster.canvas && raster.PPU) {
+                const w = raster.canvas.width / raster.PPU;
+                const h = raster.canvas.height / raster.PPU;
+                const minX = obj.x + raster.localMinX;
+                const maxY = obj.y + raster.localMaxY;
+                return { minX, maxX: minX + w, minY: maxY - h, maxY };
+            }
+            const PPU = obj.ppu || 150.0;
+            const sx = Math.abs(obj.sx !== undefined ? obj.sx : 1);
+            const sy = Math.abs(obj.sy !== undefined ? obj.sy : 1);
+            const w = (obj.draw_mode > 0 && obj.sz_x > 0) ? obj.sz_x * sx : ((obj.rw || 1) / PPU) * sx;
+            const h = (obj.draw_mode > 0 && obj.sz_y > 0) ? obj.sz_y * sy : ((obj.rh || 1) / PPU) * sy;
+            const px = obj.x || 0, py = obj.y || 0;
+            return { minX: px - w * (obj.px !== undefined ? obj.px : 0.5), maxX: px + w * (1 - (obj.px !== undefined ? obj.px : 0.5)),
+                     minY: py - h * (obj.py !== undefined ? obj.py : 0.5), maxY: py + h * (1 - (obj.py !== undefined ? obj.py : 0.5)) };
+        }
+
+        function fitCameraToScene() {
+            if (sceneData.length === 0) return;
+            if (!canvas.width || !canvas.height) { resizeCanvas(); }
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            let hasVisible = false;
+            sceneData.forEach(obj => {
+                if (!isObjectEffectivelyVisible(obj) || obj.sp === 'Square') return;
+                hasVisible = true;
+                const b = objectWorldBounds(obj);
+                minX = Math.min(minX, b.minX); maxX = Math.max(maxX, b.maxX);
+                minY = Math.min(minY, b.minY); maxY = Math.max(maxY, b.maxY);
+            });
+            if (!hasVisible || !isFinite(minX)) return;
+            const sceneW = Math.max(0.5, maxX - minX);
+            const sceneH = Math.max(0.5, maxY - minY);
+            const pad = 0.82;
+            const zoomX = (canvas.width * pad) / sceneW;
+            const zoomY = (canvas.height * pad) / sceneH;
+            camera.zoom = Math.max(4, Math.min(800, Math.min(zoomX, zoomY)));
+            const centerX = (minX + maxX) / 2;
+            const centerY = (minY + maxY) / 2;
+            camera.x = -centerX * camera.zoom;
+            camera.y = centerY * camera.zoom;
+            updateHudDisplay(); draw();
+        }
+
+        function getSpriteImage(sp) {
+            if (!sp) return null;
+            if (imageCache[sp]) return imageCache[sp];
+            if (assetBlobs[sp]) {
+                const img = new Image(); img.src = assetBlobs[sp]; img.onload = () => draw();
+                imageCache[sp] = img; return img;
+            }
+            const img = new Image(); img.crossOrigin = "anonymous"; img.src = 'Exportado_level2/' + sp + '.png';
+            img.onload = () => draw(); imageCache[sp] = img; return img;
+        }
+		// --- INSERTA ESTA FUNCIÓN FALTANTE ---
+        function getWallpaperImage(sp) {
+            const candidates = [
+                sp, 'WP_' + (sp || ''), 'WoodBark', 'WP_WoodBark',
+                'birchfloorboards', 'WoodBark01', 'WP_Wood01'
+            ].filter(Boolean);
+            for (const key of candidates) {
+                if (imageCache[key] && imageCache[key].complete && imageCache[key].naturalWidth)
+                    return imageCache[key];
+                if (assetBlobs[key]) return getSpriteImage(key);
+            }
+            return getSpriteImage(sp || 'WoodBark');
+        }
+        // -------------------------------------
+        function recordState() {
+            if (historyIndex < historyStack.length - 1) historyStack.splice(historyIndex + 1);
+            historyStack.push(JSON.stringify({ sceneData, folders }));
+            if (historyStack.length > 30) historyStack.shift(); else historyIndex++;
+        }
+
+        function undo() {
+            if (historyIndex > 0) {
+                historyIndex--; const state = JSON.parse(historyStack[historyIndex]);
+                sceneData = state.sceneData; folders = state.folders || [];
+                selectedIndices.clear(); primarySelectedIndex = -1;
+                updateLayerList(); updatePropertiesPanel(); draw();
+            }
+        }
+
+        function redo() {
+            if (historyIndex < historyStack.length - 1) {
+                historyIndex++; const state = JSON.parse(historyStack[historyIndex]);
+                sceneData = state.sceneData; folders = state.folders || [];
+                selectedIndices.clear(); primarySelectedIndex = -1;
+                updateLayerList(); updatePropertiesPanel(); draw();
+            }
+        }
+
+        function getObjectHash(obj) { return `${obj.sp}_${obj.sx}_${obj.sy}_${obj.angle}_${obj.draw_mode}_${obj.sz_x}_${obj.sz_y}_${obj.px}_${obj.py}_${obj.ox}_${obj.oy}_${obj.rw}_${obj.rh}_${obj.shear}_${obj.pattern_scale}_${JSON.stringify(obj.poly)}_${JSON.stringify(obj.color)}_${obj.go}`; }
+
+        function generateObjectRaster(d) {
+            const isWallpaper = (d.draw_mode > 0 && d.sz_x > 0);
+            const sourceImg = isWallpaper ? getWallpaperImage(d.sp) : getSpriteImage(d.sp);
+            if (!sourceImg || !sourceImg.complete || sourceImg.naturalWidth === 0) return null;
+
+            let imgW = sourceImg.naturalWidth; let imgH = sourceImg.naturalHeight;
+            const sx = d.sx !== undefined ? d.sx : 1.0; const sy = d.sy !== undefined ? d.sy : 1.0;
+            const PPU = d.ppu || 150.0; let ox = d.ox || 0.0; let oy = d.oy || 0.0;
+            const px = d.px !== undefined ? d.px : 0.5; const py = d.py !== undefined ? d.py : 0.5;
+            let rw = d.rw || imgW; let rh = d.rh || imgH;
+            
+            let processedCanvas = document.createElement('canvas'); let processedCtx = processedCanvas.getContext('2d');
+
+            if (isWallpaper) {
+                const targetW = Math.max(1, Math.round((d.sz_x || 1) * PPU));
+                const targetH = Math.max(1, Math.round((d.sz_y || 1) * PPU));
+                const tileScale = 8.0;
+                const tileW = Math.max(1, Math.round(imgW / tileScale));
+                const tileH = Math.max(1, Math.round(imgH / tileScale));
+                const tileCanvas = document.createElement('canvas');
+                tileCanvas.width = tileW; tileCanvas.height = tileH;
+                tileCanvas.getContext('2d').drawImage(sourceImg, 0, 0, tileW, tileH);
+
+                const bufferW = targetW * 3, bufferH = targetH * 3;
+                const tiled = document.createElement('canvas');
+                tiled.width = bufferW; tiled.height = bufferH;
+                const tctx = tiled.getContext('2d');
+                for (let tx = 0; tx < bufferW; tx += tileW) {
+                    for (let ty = 0; ty < bufferH; ty += tileH) {
+                        tctx.drawImage(tileCanvas, tx, ty);
+                    }
+                }
+                const goName = d.go || '';
+                const shearSlope = goName.indexOf('R') >= 0 ? -0.5 : 0.5;
+                const sheared = document.createElement('canvas');
+                sheared.width = bufferW; sheared.height = bufferH;
+                const sctx = sheared.getContext('2d');
+                sctx.setTransform(1, shearSlope, 0, 1, -(bufferW / 2) * shearSlope, 0);
+                sctx.drawImage(tiled, 0, 0);
+
+                processedCanvas.width = targetW;
+                processedCanvas.height = targetH;
+                const left = Math.floor((bufferW - targetW) / 2);
+                const top = Math.floor((bufferH - targetH) / 2);
+                processedCtx.drawImage(sheared, left, top, targetW, targetH, 0, 0, targetW, targetH);
+
+                const polyPaths = d.poly || [];
+                if (polyPaths.length) {
+                    const mask = document.createElement('canvas');
+                    mask.width = targetW; mask.height = targetH;
+                    const mctx = mask.getContext('2d');
+                    mctx.fillStyle = '#fff';
+                    polyPaths.forEach(path => {
+                        mctx.beginPath();
+                        path.forEach((pt, idx) => {
+                            const mx = (pt.x + px * (d.sz_x || 1)) * PPU;
+                            const my = targetH - (pt.y + py * (d.sz_y || 1)) * PPU;
+                            if (idx === 0) mctx.moveTo(mx, my); else mctx.lineTo(mx, my);
+                        });
+                        mctx.closePath();
+                        mctx.fill();
+                    });
+                    processedCtx.globalCompositeOperation = 'destination-in';
+                    processedCtx.drawImage(mask, 0, 0);
+                    processedCtx.globalCompositeOperation = 'source-over';
+                }
+                rw = targetW; rh = targetH; ox = 0; oy = 0; imgW = targetW; imgH = targetH;
+            } else {
+                const newW = Math.max(1, Math.trunc(imgW * Math.abs(sx))); const newH = Math.max(1, Math.trunc(imgH * Math.abs(sy)));
+                processedCanvas.width = newW; processedCanvas.height = newH;
+                processedCtx.save();
+                if (sx < 0) { processedCtx.translate(newW, 0); processedCtx.scale(-1, 1); }
+                if (sy < 0) { processedCtx.translate(0, newH); processedCtx.scale(1, -1); }
+
+                // --- TRUCO DEL SHADER (LUCES) ---
+                if (d.sp === 'white' || (d.materials && d.materials.includes("Radial"))) {
+                    // Si el color no existe, usamos blanco puro por defecto
+                    const c = d.color || { r: 1.0, g: 1.0, b: 1.0, a: 0.5 };
+                    const r = Math.round(c.r * 255), g = Math.round(c.g * 255), b = Math.round(c.b * 255);
+                    
+                    // Reemplazamos el PNG cuadrado por un degradado circular nativo de Canvas
+                    const grad = processedCtx.createRadialGradient(newW/2, newH/2, 0, newW/2, newH/2, newW/2);
+                    grad.addColorStop(0, `rgba(${r},${g},${b}, 1)`);   // Centro brillante
+                    grad.addColorStop(1, `rgba(${r},${g},${b}, 0)`);   // Borde invisible
+                    processedCtx.fillStyle = grad;
+                    processedCtx.fillRect(0, 0, newW, newH);
+                } else {
+                    processedCtx.drawImage(sourceImg, 0, 0, newW, newH);
+                    
+                    // Tinte básico para sprites normales
+                    if (d.color && (d.color.r !== 1 || d.color.g !== 1 || d.color.b !== 1)) {
+                        processedCtx.globalCompositeOperation = 'source-in';
+                        const r = Math.round(d.color.r * 255), g = Math.round(d.color.g * 255), b = Math.round(d.color.b * 255);
+                        processedCtx.fillStyle = `rgb(${r},${g},${b})`;
+                        processedCtx.fillRect(0, 0, newW, newH);
+                    }
+                }
+                processedCtx.restore();
+            }
+
+            const blX = ox - px * rw, blY = oy - py * rh; const brX = ox + imgW - px * rw, brY = oy - py * rh;
+            const tlX = ox - px * rw, tlY = oy + imgH - py * rh; const trX = ox + imgW - px * rw, trY = oy + imgH - py * rh;
+
+            const corners = [ { x: blX * sx / PPU, y: blY * sy / PPU }, { x: brX * sx / PPU, y: brY * sy / PPU }, { x: tlX * sx / PPU, y: tlY * sy / PPU }, { x: trX * sx / PPU, y: trY * sy / PPU } ];
+            const angleRad = (d.angle || 0) * Math.PI / 180.0;
+            const cosA = Math.cos(angleRad); const sinA = Math.sin(angleRad);
+
+            const rotCorners = corners.map(c => ({ x: c.x * cosA - c.y * sinA, y: c.x * sinA + c.y * cosA }));
+            const localMinX = Math.min(...rotCorners.map(c => c.x)); const localMaxY = Math.max(...rotCorners.map(c => c.y));
+
+            let finalJobCanvas = processedCanvas;
+            if (Math.abs(d.angle || 0) > 1) {
+                const absCos = Math.abs(cosA); const absSin = Math.abs(sinA);
+                const rotW = Math.trunc(processedCanvas.width * absCos + processedCanvas.height * absSin);
+                const rotH = Math.trunc(processedCanvas.width * absSin + processedCanvas.height * absCos);
+                const rotCanvas = document.createElement('canvas'); rotCanvas.width = rotW; rotCanvas.height = rotH;
+                const rotCtx = rotCanvas.getContext('2d');
+                rotCtx.translate(rotW / 2, rotH / 2); rotCtx.rotate(-angleRad); 
+                rotCtx.drawImage(processedCanvas, -processedCanvas.width / 2, -processedCanvas.height / 2);
+                finalJobCanvas = rotCanvas;
+            }
+            return { canvas: finalJobCanvas, localMinX: localMinX, localMaxY: localMaxY, PPU: PPU };
+        }
+
+        // --- UI Y EVENTOS BÁSICOS ---
+        function updateFolderDropdowns() {
+            const selectTarget = document.getElementById('target-folder-select'); const selectProp = document.getElementById('prop-folder');
+            let html = '<option value="">(Raíz / Sin carpeta)</option>';
+            folders.forEach(f => { html += `<option value="${f.id}">📁 ${f.name}</option>`; });
+            selectTarget.innerHTML = html; selectProp.innerHTML = html;
+        }
+
+        let camera = { x: 0, y: 0, zoom: 40 }; 
+        let isPanning = false; let panStartX = 0, panStartY = 0;
+        const canvas = document.getElementById('render-canvas'); const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() { canvas.width = canvas.parentElement.clientWidth; canvas.height = canvas.parentElement.clientHeight; draw(); }
+        window.addEventListener('resize', resizeCanvas);
+
+        function setTool(tool) {
+            currentTool = tool; document.querySelectorAll('.toolbar .btn').forEach(b => b.classList.remove('active'));
+            const btn = document.getElementById('tool-' + tool); if (btn) btn.classList.add('active');
+            draw();
+        }
+
+        function getMouseWorldCoords(e) {
+            const rect = canvas.getBoundingClientRect(); 
+            const mouseX = e.clientX - rect.left - canvas.width / 2;
+            const mouseY = e.clientY - rect.top - canvas.height / 2;
+            const worldX = (mouseX - camera.x) / camera.zoom;
+            const worldY = -(mouseY - camera.y) / camera.zoom; 
+            return { x: worldX, y: worldY, rawX: mouseX, rawY: mouseY };
+        }
+
+        function isObjectEffectivelyVisible(obj) {
+            if (obj.visible === false) return false;
+            if (obj.folderId) { const f = folders.find(x => x.id === obj.folderId); if (f && f.visible === false) return false; }
+            return true;
+        }
+
+        function isObjectEffectivelyLocked(obj) {
+            if (obj.locked) return true;
+            if (obj.folderId) { const f = folders.find(x => x.id === obj.folderId); if (f && f.locked) return true; }
+            return false;
+        }
+
+        canvas.addEventListener('wheel', (e) => { 
+            e.preventDefault(); 
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left - canvas.width / 2;
+            const mouseY = e.clientY - rect.top - canvas.height / 2;
+            const factor = e.deltaY > 0 ? 0.85 : 1.15; 
+            const oldZoom = camera.zoom;
+            const newZoom = Math.max(1, Math.min(5000, oldZoom * factor));
+            const worldX = (mouseX - camera.x) / oldZoom; const worldY = (mouseY - camera.y) / oldZoom;
+            camera.zoom = newZoom; camera.x = mouseX - worldX * newZoom; camera.y = mouseY - worldY * newZoom;
+            updateHudDisplay(); draw(); 
+        });
+
+        canvas.addEventListener('mousedown', (e) => {
+            if (e.button === 1 || (e.button === 0 && e.altKey)) { isPanning = true; panStartX = e.clientX - camera.x; panStartY = e.clientY - camera.y; return; }
+            const ptr = getMouseWorldCoords(e);
+            if (currentTool === 'select' || currentTool === 'move') {
+                let hitIndex = -1; let sortedIndices = getSortedIndices();
+                for (let i = sortedIndices.length - 1; i >= 0; i--) {
+                    const obj = sceneData[sortedIndices[i]];
+                    if (!isObjectEffectivelyVisible(obj) || isObjectEffectivelyLocked(obj)) continue;
+                    if (hitTest(obj, ptr.x, ptr.y)) { hitIndex = sortedIndices[i]; break; }
+                }
+                if (e.ctrlKey) toggleSelectObject(hitIndex); else selectSingleObject(hitIndex);
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const ptr = getMouseWorldCoords(e); updateHudDisplay(ptr.x, ptr.y);
+            if (isPanning) { camera.x = e.clientX - panStartX; camera.y = e.clientY - panStartY; draw(); return; }
+            if (currentTool === 'move' && e.buttons === 1 && primarySelectedIndex !== -1) {
+                const primaryObj = sceneData[primarySelectedIndex];
+                if (!isObjectEffectivelyLocked(primaryObj)) {
+                    const dx = ptr.x - primaryObj.x; const dy = ptr.y - primaryObj.y;
+                    selectedIndices.forEach(idx => { const o = sceneData[idx]; if (!isObjectEffectivelyLocked(o)) { o.x += dx; o.y += dy; } });
+                    updatePropertiesPanel(); draw();
+                }
+            }
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            if (isPanning) { isPanning = false; return; }
+            if (currentTool === 'move' && selectedIndices.size > 0) { recordState(); }
+        });
+
+        function getSortedIndices() {
+            return sceneData.map((obj, i) => ({obj, i})).sort((a, b) => {
+                const slA = a.obj.sl || 0; const slB = b.obj.sl || 0;
+                if (slA !== slB) return slA - slB; return (a.obj.o || 0) - (b.obj.o || 0);
+            }).map(x => x.i);
+        }
+
+        function hitTest(obj, wx, wy) {
+            if (obj.is_poly_object) {
+                // respetar toggles
+                if (obj.role==='walkable' && !overlay.walkable) return false;
+                if (obj.role==='blocker' && !overlay.blocker) return false;
+                if (obj.role==='trigger' && !overlay.trigger) return false;
+                if (obj.role==='wallpaper' && !overlay.wallpaper) return false;
+                if (obj.role==='camera' && !overlay.camera) return false;
+                const poly = obj.poly || (obj.paths && obj.paths[0]) || [];
+                if (!poly.length) return false;
+                // transformar punto mundo a local del polígono
+                const ang = (obj.angle||0)*Math.PI/180;
+                const cos = Math.cos(-ang), sin = Math.sin(-ang);
+                const sx = obj.sx||1, sy = obj.sy||1;
+                const lx = ((wx - obj.x)*cos - (wy - obj.y)*sin)/sx;
+                const ly = ((wx - obj.x)*sin + (wy - obj.y)*cos)/sy;
+                let inside=false;
+                for(let i=0,j=poly.length-1;i<poly.length;j=i++){
+                    const xi=poly[i].x||poly[i][0], yi=poly[i].y||poly[i][1];
+                    const xj=poly[j].x||poly[j][0], yj=poly[j].y||poly[j][1];
+                    if(((yi>ly)!==(yj>ly)) && (lx < (xj-xi)*(ly-yi)/(yj-yi)+xi)) inside=!inside;
+                }
+                return inside;
+            }
+            const raster = obj._rasterCache;
+            if (raster) {
+                const w = raster.canvas.width / raster.PPU; const h = raster.canvas.height / raster.PPU;
+                const minX = obj.x + raster.localMinX; const maxY = obj.y + raster.localMaxY;
+                return (wx >= minX && wx <= minX + w && wy <= maxY && wy >= maxY - h);
+            }
+            return false;
+        }
+
+        function extractPaths(bound) {
+            if (!bound) return [];
+            if (Array.isArray(bound.paths) && bound.paths.length) return bound.paths;
+            if (Array.isArray(bound.poly) && bound.poly.length) return bound.poly;
+            const props = bound.properties || {};
+            if (props.m_Points && Array.isArray(props.m_Points.m_Paths)) return props.m_Points.m_Paths;
+            if (props.m_Points && Array.isArray(props.m_Points)) return [props.m_Points];
+            return [];
+        }
+
+        function drawColliderPoly(ctx, bound, colorStroke, colorFill, label) {
+            const paths = extractPaths(bound);
+            if (!paths.length) return;
+            ctx.save();
+            const wx = (bound.x || 0) * camera.zoom;
+            const wy = -(bound.y || 0) * camera.zoom;
+            ctx.translate(wx, wy);
+            ctx.rotate(-((bound.angle || 0) * Math.PI / 180));
+            ctx.scale(bound.sx || 1, bound.sy || 1);
+            ctx.strokeStyle = colorStroke;
+            ctx.fillStyle = colorFill;
+            ctx.lineWidth = 2;
+            ctx.setLineDash([6, 4]);
+            paths.forEach(path => {
+                if (!path || !path.length) return;
+                ctx.beginPath();
+                path.forEach((pt, idx) => {
+                    const px = (pt.x || 0) * camera.zoom;
+                    const py = -(pt.y || 0) * camera.zoom;
+                    if (idx === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                });
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            });
+            if (label) {
+                ctx.setLineDash([]);
+                ctx.fillStyle = colorStroke;
+                ctx.font = '11px Segoe UI, sans-serif';
+                ctx.fillText(label, 6, -6);
+            }
+            ctx.restore();
+        }
+
+        function inferRole(bound) {
+            if (bound.role) return bound.role;
+            const n = (bound.go || bound.name || '').toLowerCase();
+            if (n.includes('wallpaper')) return 'wallpaper';
+            if (n.includes('floor') || n.includes('walk') || n.includes('ground') || n.includes('nav')) return 'walkable';
+            if (n.includes('camera') || n.includes('confine')) return 'camera';
+            return 'blocker';
+        }
+
+        function drawMetadataVisuals(ctx) {
+            const meta = currentMapMeta || currentMetadata || {};
+            const seen = new Set();
+
+            function drawBound(bound, fallbackRole) {
+                if (!bound) return;
+                const key = (bound.go || '') + '|' + (bound.x || 0) + '|' + (bound.y || 0) + '|' + inferRole(bound);
+                if (seen.has(key)) return;
+                seen.add(key);
+                const role = inferRole(bound) || fallbackRole;
+                if (role === 'walkable' && overlayFlags.walkable)
+                    drawColliderPoly(ctx, bound, '#ffcc33', 'rgba(255,180,0,0.22)', bound.go || 'Floor');
+                else if (role === 'wallpaper' && overlayFlags.wallpaper)
+                    drawColliderPoly(ctx, bound, '#66d9ff', 'rgba(80,180,255,0.16)', bound.go || 'Wall');
+                else if (role === 'blocker' && overlayFlags.blocker)
+                    drawColliderPoly(ctx, bound, '#ff6666', 'rgba(255,70,70,0.14)', bound.go || 'Block');
+                else if ((role === 'trigger' || role === 'camera') && overlayFlags.nodes)
+                    drawColliderPoly(ctx, bound, '#00ffcc', 'rgba(0,255,200,0.12)', bound.go || role);
+            }
+
+            (meta.colliders || []).forEach(c => drawBound(c));
+            (meta.walkable || []).forEach(c => drawBound(c, 'walkable'));
+            (meta.blockers || []).forEach(c => drawBound(c, 'blocker'));
+            (currentMetadata && currentMetadata.walkable_bounds || []).forEach(c => drawBound(c));
+            (currentMetadata && currentMetadata.camera_confines || []).forEach(c => drawBound(c, 'camera'));
+            (meta.raw && meta.raw.walkable_bounds || []).forEach(c => drawBound(c));
+
+            if (overlayFlags.wallpaper) {
+                sceneData.forEach(obj => {
+                    if (!obj.poly || !obj.poly.length) return;
+                    drawBound({
+                        go: obj.go,
+                        x: obj.x, y: obj.y, angle: obj.angle, sx: obj.sx, sy: obj.sy,
+                        paths: obj.poly, role: 'wallpaper'
+                    });
+                });
+            }
+
+            if (currentMetadata && currentMetadata.interaction_nodes) {
+                currentMetadata.interaction_nodes.forEach(node => {
+                    const wx = node.x * camera.zoom;
+                    const wy = -node.y * camera.zoom;
+                    
+                    ctx.fillStyle = '#00ffcc';
+                    ctx.beginPath();
+                    ctx.arc(wx, wy, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.font = '10px Arial';
+                    ctx.fillText(node.script, wx + 6, wy - 6);
+                });
+            }
+
+            // --- LÓGICA DE MUEBLES (Nodos y Colliders individuales) ---
+            if (currentMetadata.nodes) {
+                const nodeMap = {}; currentMetadata.nodes.forEach(n => nodeMap[n.path] = n);
+                if (currentMetadata.colliders) {
+                    currentMetadata.colliders.forEach(col => {
+                        const node = nodeMap[col.node]; if (!node) return;
+                        ctx.save();
+                        const PPU = 150.0;
+                        const wx = node.world_pos.x * camera.zoom; const wy = -node.world_pos.y * camera.zoom;
+                        ctx.translate(wx, wy); ctx.rotate(-node.world_pos.angle * Math.PI / 180); ctx.scale(node.scale.x, node.scale.y);
+                        const ox = (col.offset?.x || 0) * camera.zoom; const oy = -(col.offset?.y || 0) * camera.zoom;
+                        
+                        ctx.strokeStyle = '#00ff00'; ctx.fillStyle = 'rgba(0, 255, 0, 0.2)'; ctx.lineWidth = 1.5;
+                        ctx.beginPath();
+                        if (col.type === "BoxCollider2D") {
+                            const w = col.size.x * camera.zoom; const h = col.size.y * camera.zoom;
+                            ctx.rect(ox - w/2, oy - h/2, w, h);
+                        } else if (col.type === "PolygonCollider2D" && col.paths) {
+                            col.paths.forEach(path => {
+                                path.forEach((pt, idx) => {
+                                    const px = pt.x * PPU * (camera.zoom / PPU) + ox; 
+                                    const py = -pt.y * PPU * (camera.zoom / PPU) + oy;
+                                    if (idx === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                                });
+                                ctx.closePath();
+                            });
+                        }
+                        ctx.fill(); ctx.stroke(); ctx.restore();
+                    });
+                }
+                currentMetadata.nodes.forEach(node => {
+                    const wx = node.world_pos.x * camera.zoom; const wy = -node.world_pos.y * camera.zoom;
+                    ctx.fillStyle = '#ff00ff'; ctx.beginPath(); ctx.arc(wx, wy, 3, 0, Math.PI * 2); ctx.fill();
+                    ctx.font = '10px Arial'; ctx.fillText(node.name, wx + 5, wy - 5);
+                });
+            }
+        }
+
+        function niceGridStep(zoom) {
+            const targetPx = 72;
+            const raw = targetPx / Math.max(1e-6, zoom);
+            const pow = Math.pow(10, Math.floor(Math.log10(raw)));
+            const n = raw / pow;
+            if (n < 1.5) return pow;
+            if (n < 3.5) return 2 * pow;
+            if (n < 7.5) return 5 * pow;
+            return 10 * pow;
+        }
+
+        function draw() {
+            if (canvas.width !== canvas.parentElement.clientWidth || canvas.height !== canvas.parentElement.clientHeight) {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
+            ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.save();
+            ctx.translate(canvas.width / 2 + camera.x, canvas.height / 2 + camera.y);
+
+            const step = niceGridStep(camera.zoom);
+            const worldLeft = (-canvas.width / 2 - camera.x) / camera.zoom;
+            const worldRight = (canvas.width / 2 - camera.x) / camera.zoom;
+            const worldTop = (canvas.height / 2 + camera.y) / camera.zoom;
+            const worldBottom = (-canvas.height / 2 + camera.y) / camera.zoom;
+            const x0 = Math.floor(worldLeft / step) * step;
+            const x1 = Math.ceil(worldRight / step) * step;
+            const y0 = Math.floor(worldBottom / step) * step;
+            const y1 = Math.ceil(worldTop / step) * step;
+
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.strokeStyle = '#2a2a2a';
+            for (let x = x0; x <= x1 + 1e-9; x += step) {
+                ctx.moveTo(x * camera.zoom, -y1 * camera.zoom);
+                ctx.lineTo(x * camera.zoom, -y0 * camera.zoom);
+            }
+            for (let y = y0; y <= y1 + 1e-9; y += step) {
+                ctx.moveTo(x0 * camera.zoom, -y * camera.zoom);
+                ctx.lineTo(x1 * camera.zoom, -y * camera.zoom);
+            }
+            ctx.stroke();
+
+            ctx.strokeStyle = '#4a4a4a';
+            ctx.lineWidth = 1.25;
+            ctx.beginPath();
+            ctx.moveTo(0, -y1 * camera.zoom); ctx.lineTo(0, -y0 * camera.zoom);
+            ctx.moveTo(x0 * camera.zoom, 0); ctx.lineTo(x1 * camera.zoom, 0);
+            ctx.stroke();
+
+            const sortedIndices = getSortedIndices();
+            for (let i of sortedIndices) {
+                const obj = sceneData[i];
+                if (!isObjectEffectivelyVisible(obj) || obj.sp === 'Square') continue;
+                drawObject(obj, selectedIndices.has(i));
+            }
+
+            if (showColliders || overlayFlags.colliders) drawMetadataVisuals(ctx);
+            ctx.restore();
+        }
+
+        function drawObject(obj, isSelected) {
+            if (obj.is_poly_object) {
+                const col = {walkable:'rgba(0,255,0,0.35)', blocker:'rgba(255,0,0,0.35)', trigger:'rgba(255,165,0,0.35)', wallpaper:'rgba(0,180,255,0.25)', camera:'rgba(180,0,255,0.25)', unknown:'rgba(255,255,0,0.3)'}[obj.role]||'rgba(255,255,0,0.3)';
+                const poly = obj.poly || (obj.paths&&obj.paths[0])||[];
+                if (!poly.length) return;
+                ctx.save();
+                ctx.translate(obj.x*camera.zoom, -obj.y*camera.zoom);
+                ctx.rotate(-obj.angle*Math.PI/180);
+                ctx.scale((obj.sx||1)*camera.zoom, (obj.sy||1)*camera.zoom);
+                // poly en espacio local, escalar por 1/camera.zoom ya que ya aplicamos zoom arriba? No, ya está en transform, dibujar directo
+                ctx.scale(1/camera.zoom, 1/camera.zoom);
+                ctx.fillStyle = col;
+                ctx.strokeStyle = isSelected ? '#00ffff' : col.replace('0.35','0.9');
+                ctx.lineWidth = isSelected ? 2.5 : 1.2;
+                ctx.beginPath();
+                poly.forEach((pt,i)=>{ const x=pt.x||pt[0], y=pt.y||pt[1]; if(i===0) ctx.moveTo(x*camera.zoom, -y*camera.zoom); else ctx.lineTo(x*camera.zoom, -y*camera.zoom); });
+                ctx.closePath(); ctx.fill(); ctx.stroke();
+                if (isSelected) { ctx.fillStyle='#fff'; poly.forEach(pt=>{ const x=pt.x||pt[0], y=pt.y||pt[1]; ctx.beginPath(); ctx.arc(x*camera.zoom, -y*camera.zoom, 3,0,Math.PI*2); ctx.fill(); }); }
+                ctx.restore();
+                return;
+            }
+            if (obj.draw_mode === 3 && obj.points && obj.points.length > 0) { /* Lógica de trazos */ return; }
+
+            const hash = getObjectHash(obj);
+            if (obj._rasterHash !== hash || !obj._rasterCache) {
+                obj._rasterCache = generateObjectRaster(obj); obj._rasterHash = hash;
+            }
+            const raster = obj._rasterCache;
+            if (!raster || !raster.canvas) {
+                const drawX = obj.x * camera.zoom; 
+                const drawY = -obj.y * camera.zoom;
+                ctx.save();
+                ctx.fillStyle = isSelected ? 'rgba(0, 229, 255, 0.3)' : 'rgba(150, 150, 150, 0.2)';
+                ctx.strokeStyle = isSelected ? '#00e5ff' : '#888';
+                ctx.fillRect(drawX - 20, drawY - 20, 40, 40); 
+                ctx.strokeRect(drawX - 20, drawY - 20, 40, 40);
+                ctx.fillStyle = '#fff'; ctx.font = '10px Arial'; 
+                ctx.fillText(obj.sp ? obj.sp.substring(0,8) : "Wait", drawX - 15, drawY + 3);
+                ctx.restore();
+                return;
+            }
+
+            const screenX = (obj.x + raster.localMinX) * camera.zoom;
+            const screenY = -(obj.y + raster.localMaxY) * camera.zoom;
+            const drawW = raster.canvas.width * (camera.zoom / raster.PPU);
+            const drawH = raster.canvas.height * (camera.zoom / raster.PPU);
+
+            ctx.save();
+            
+            // --- APLICACIÓN DE MODOS DE FUSIÓN (BLEND MODES) ---
+            if (obj.sp === 'white' || (obj.materials && obj.materials.includes("Radial"))) {
+                ctx.globalCompositeOperation = "screen"; // Mezcla aditiva para que actúe como luz
+                ctx.globalAlpha = (obj.color && obj.color.a !== undefined) ? obj.color.a : 0.6;
+            } else {
+                ctx.globalCompositeOperation = "source-over"; // Renderizado normal
+                if (obj.color && obj.color.a < 1.0) {
+                    ctx.globalAlpha = obj.color.a;
+                } else {
+                    ctx.globalAlpha = 1.0;
+                }
+            }
+
+            ctx.drawImage(raster.canvas, screenX, screenY, drawW, drawH);
+            
+            if (isSelected) { 
+                ctx.strokeStyle = '#00e5ff'; ctx.lineWidth = 2; 
+                ctx.strokeRect(screenX, screenY, drawW, drawH); 
+            }
+            
+            ctx.restore();
+        }
+
+        function renderLayerItem(i) {
+            const obj = sceneData[i]; const isSelected = selectedIndices.has(i); const isVisible = obj.visible !== false; const isLocked = !!obj.locked;
+            const li = document.createElement('li'); li.className = 'layer-item' + (isSelected ? ' selected' : '');
+            li.innerHTML = `
+                <div style="display:flex; align-items:center; gap:5px; overflow:hidden;">
+                    <input type="checkbox" ${isSelected ? 'checked' : ''} onclick="event.stopPropagation(); toggleSelectObject(${i});" title="Seleccionar">
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${obj.go}">[SL:${obj.sl || 0}] ${obj.go}</span>
+                </div>
+                <div class="layer-controls">
+                    <button onclick="event.stopPropagation(); toggleVisibility(${i});" title="Visibilidad">${isVisible ? '👁' : '🚫'}</button>
+                    <button onclick="event.stopPropagation(); changeOrder(${i}, 1)" title="Subir">▲</button>
+                    <button onclick="event.stopPropagation(); changeOrder(${i}, -1)" title="Bajar">▼</button>
+                </div>
+            `;
+            li.onclick = (e) => { if (e.ctrlKey) toggleSelectObject(i); else selectSingleObject(i); };
+            return li;
+        }
+
+        function updateLayerList() {
+            const ul = document.getElementById('layer-list'); ul.innerHTML = '';
+            document.getElementById('layer-count').innerText = sceneData.length; document.getElementById('selected-count').innerText = `(${selectedIndices.size})`;
+
+            folders.forEach(f => {
+                const folderLi = document.createElement('li'); folderLi.className = 'folder-item';
+                const header = document.createElement('div'); header.className = 'folder-header';
+                header.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:5px;"><span>${f.collapsed ? '▶' : '▼'}</span><span>📁 ${f.name}</span></div>
+                    <div class="layer-controls"><button onclick="event.stopPropagation(); toggleFolderVisibility('${f.id}')">${f.visible ? '👁' : '🚫'}</button></div>
+                `;
+                header.onclick = () => toggleFolderCollapse(f.id); folderLi.appendChild(header);
+                if (!f.collapsed) {
+                    const subUl = document.createElement('ul'); subUl.className = 'folder-items';
+                    const sorted = getSortedIndices(); for (let i of sorted) { if (sceneData[i].folderId === f.id) subUl.prepend(renderLayerItem(i)); }
+                    folderLi.appendChild(subUl);
+                }
+                ul.appendChild(folderLi);
+            });
+            const sorted = getSortedIndices(); for (let i of sorted) { if (!sceneData[i].folderId) ul.prepend(renderLayerItem(i)); }
+        }
+
+        function toggleFolderVisibility(fId) { const f = folders.find(x => x.id === fId); if (f) { f.visible = !f.visible; draw(); updateLayerList(); } }
+        function toggleFolderCollapse(fId) { const f = folders.find(x => x.id === fId); if (f) { f.collapsed = !f.collapsed; updateLayerList(); } }
+        function toggleVisibility(index) { sceneData[index].visible = !(sceneData[index].visible !== false); draw(); updateLayerList(); }
+        function changeOrder(index, delta) { sceneData[index].o = (sceneData[index].o || 0) + delta; recordState(); updateLayerList(); updatePropertiesPanel(); draw(); }
+
+        function selectSingleObject(index) { selectedIndices.clear(); if (index !== -1) { selectedIndices.add(index); primarySelectedIndex = index; } else { primarySelectedIndex = -1; } updateLayerList(); updatePropertiesPanel(); draw(); }
+        function toggleSelectObject(index) { if (index === -1) return; if (selectedIndices.has(index)) { selectedIndices.delete(index); primarySelectedIndex = selectedIndices.size > 0 ? Array.from(selectedIndices)[0] : -1; } else { selectedIndices.add(index); primarySelectedIndex = index; } updateLayerList(); updatePropertiesPanel(); draw(); }
+
+        function updatePropertiesPanel() {
+            const panel = document.getElementById('properties-panel'); const noSel = document.getElementById('no-selection');
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) { panel.style.display = 'none'; noSel.style.display = 'block'; return; }
+            panel.style.display = 'block'; noSel.style.display = 'none';
+
+            const obj = sceneData[primarySelectedIndex];
+            document.getElementById('prop-go').value = obj.go || ''; document.getElementById('prop-sp').value = obj.sp || '';
+            document.getElementById('prop-x').value = (obj.x || 0).toFixed(2); document.getElementById('prop-y').value = (obj.y || 0).toFixed(2);
+            document.getElementById('prop-sx').value = (obj.sx || 1).toFixed(2); document.getElementById('prop-sy').value = (obj.sy || 1).toFixed(2);
+            document.getElementById('prop-angle').value = (obj.angle || 0).toFixed(1); document.getElementById('prop-sl').value = obj.sl || 0;
+            document.getElementById('prop-o').value = obj.o || 0; document.getElementById('prop-folder').value = obj.folderId || '';
+        }
+
+        function updateProp(key, value) {
+            if (primarySelectedIndex !== -1) {
+                sceneData[primarySelectedIndex][key] = value;
+                if (key === 'sl' || key === 'o' || key === 'go' || key === 'folderId') { updateLayerList(); }
+                sceneData[primarySelectedIndex]._rasterCache = null;
+                draw();
+            }
+        }
+
+        function saveBrushPrefs() {}
+        function handlePatternUpload() {}
+        function resetCurrentPoly() {}
+        function finishPoly() {}
+        function addElement() {
+            sceneData.push({ go: 'Sprite', sp: 'WoodBark', x: 0, y: 0, angle: 0, sx: 1, sy: 1, o: 0, sl: 0, px: 0.5, py: 0.5, rw: 64, rh: 64, ox: 0, oy: 0, ppu: 150, draw_mode: 0, sz_x: 0, sz_y: 0, poly: [] });
+            recordState(); updateLayerList(); draw();
+        }
+        function createFolder() {
+            const name = prompt('Nombre de carpeta', 'GRUPO') || 'GRUPO';
+            folders.push({ id: 'folder_' + Date.now(), name, visible: true, locked: false, collapsed: false });
+            updateFolderDropdowns(); updateLayerList();
+        }
+        function moveSelectedToFolder() {
+            const fid = document.getElementById('target-folder-select').value || null;
+            selectedIndices.forEach(i => { sceneData[i].folderId = fid; });
+            recordState(); updateLayerList();
+        }
+        function exportJSON() {
+            const virtuals = sceneData.filter(o=>o.is_poly_object);
+            const visuals = sceneData.filter(o=>!o.is_poly_object);
+            const walkable = virtuals.filter(o=>o.role==='walkable');
+            const blockers = virtuals.filter(o=>o.role==='blocker');
+            const triggers = virtuals.filter(o=>o.role==='trigger');
+            const out = { kind: 'map', layout: { front: visuals }, logic: { walkable, blockers, triggers, interaction_nodes: virtuals.filter(o=>o.role==='unknown') } };
+            const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'scene_full.json'; a.click();
+        }
+        function loadJSON(ev) {
+            const f = ev.target.files[0]; if (!f) return;
+            const r = new FileReader();
+            r.onload = () => {
+                try {
+                    const parsed = JSON.parse(r.result);
+                    const arr = Array.isArray(parsed) ? parsed : (parsed.layout && parsed.layout.front) || parsed.sceneData || [];
+                    sceneData = arr; folders = []; recordState(); updateLayerList(); fitCameraToScene(); draw();
+                } catch (e) { alert('JSON inválido'); }
+            };
+            r.readAsText(f);
+        }
+        function exportPNG() { alert('Usá el PNG ensamblado del extractor, o capturá el canvas.'); }
+
+        resizeCanvas(); updateFolderDropdowns(); recordState();
+    </script>
+</body>
+</html>
