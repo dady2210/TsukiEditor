@@ -1281,6 +1281,7 @@
             if (obj.is_poly_object) {
                 const atlas = window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
                 const hasSurface = atlas.some(s=> String(s.mapId)===String(obj.mapId) && String(s.groupNum)===String(obj.groupNum) && s.kind===(obj.role==='walkable'?'floor':'wall') && (!obj.role.includes('wall') || !!s.flipped===!!obj.flipped));
+                if (!hasSurface && !debugMode) return; // huérfanos solo en modo debug
                 let col = {walkable:'rgba(0,255,0,0.35)', blocker:'rgba(255,0,0,0.35)', trigger:'rgba(255,165,0,0.35)', wallpaper:'rgba(0,180,255,0.25)', camera:'rgba(180,0,255,0.25)', unknown:'rgba(255,255,0,0.3)'}[obj.role]||'rgba(255,255,0,0.3)';
                 if (!hasSurface) col = 'rgba(255,0,0,0.55)'; // rojo fantasma hasta harcodear
                 // etiqueta default
@@ -1434,7 +1435,7 @@
         }
         let debugMode=false;
         function toggleDebugMode(v){
-            debugMode=v;
+            debugMode=v; window.debugMode=v;
             document.getElementById('debug-panel').style.borderColor = v?'#0f0':'#a33';
             if(v && window._csaveBuf) autoCreateDefaultGrids();
             draw();
@@ -1465,7 +1466,8 @@
                         const xs=sameGroup.map(q=>q.x), ys=sameGroup.map(q=>q.y);
                         const maxX=Math.max(...xs), maxY=Math.max(...ys), minX=Math.min(...xs), minY=Math.min(...ys);
                         const w=Math.ceil((maxX-minX+2)/2)*2 || 16, h=Math.ceil((maxY-minY+2)/2)*2 || 16;
-                        const newSurf={ mapId, kind, groupNum: parseInt(p.floor), flipped: !!p.flipped, rows: h, cols: w, origin_px:{x: p.x*64, y: p.y*32}, cell:{w:64,h:32}, comment:"grilla default (csave g"+p.floor+") ⚠ default", defaultCoverId: null};
+                        const first = sameGroup[0];
+                        const newSurf={ mapId, kind, groupNum: parseInt(p.floor), flipped: !!p.flipped, rows: h, cols: w, origin_px:{x: first.x*64, y: first.y*32}, cell:{w:64,h:32}, comment:"grilla default (csave g"+p.floor+") ⚠ default", defaultCoverId: null};
                         // evitar duplicado
                         if(!atlas.find(s=> String(s.mapId)===String(mapId) && String(s.groupNum)===String(p.floor) && s.kind===kind && !!s.flipped===!!p.flipped)){
                             atlas.push(newSurf);
