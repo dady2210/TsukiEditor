@@ -1585,7 +1585,15 @@
                 rows, cols, origin_px:{x: bbox.minX, y: bbox.minY}, cell:{w:cw,h:ch},
                 poly: obj.poly, defaultCoverId: obj.defaultCoverId||null, comment: `harcodeado desde poly ${obj.go}`
             };
-            if(existing){ Object.assign(existing, entry); } else { (window.mapsAtlas||window.MAPS_UNIFIED.atlas).push(entry); if(window.MAPS_UNIFIED) window.MAPS_UNIFIED.atlas.push(entry); }
+            if(!window.MAPS_UNIFIED) window.MAPS_UNIFIED = { atlas: window.mapsAtlas || [], meta: window.MAP_META || {}, atlasConfig: window.atlasConfig || {} };
+            if(!window.mapsAtlas) window.mapsAtlas = window.MAPS_UNIFIED.atlas;
+            // evitar doble push si son misma referencia
+            if(existing){ Object.assign(existing, entry); } else {
+                const targetAtlas = window.MAPS_UNIFIED?.atlas || window.mapsAtlas;
+                if(targetAtlas) targetAtlas.push(entry);
+                // sincronizar ambas referencias si son distintas
+                if(window.mapsAtlas && window.MAPS_UNIFIED && window.mapsAtlas !== window.MAPS_UNIFIED.atlas) window.mapsAtlas.push(entry);
+            }
             // POST a maps_unified.json
             const payload = window.MAPS_UNIFIED || {atlas: window.mapsAtlas, meta: window.MAP_META, atlasConfig: window.atlasConfig};
             fetch('/api/save/maps',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)}).then(r=>r.ok?r.json():null).then(j=>{ alert('Harcodeado g'+obj.groupNum+' en maps_unified.json — items con floor=g'+obj.groupNum+' caerán aquí en play'); }).catch(e=> alert('Harcodear falló (¿server localhost:8000 corriendo?) '+e.message));
