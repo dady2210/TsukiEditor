@@ -1534,13 +1534,18 @@
                     const slSel=document.getElementById('prop-slocation');
                     if (slSel && slSel.options.length===0) {
                         const atlas = window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
-                        const slocs=[...new Set(atlas.filter(s=>s.origin_px && s.origin_px.x!=null).map(s=>s.mapId))].sort((a,b)=>a-b);
+                        let slocs=[...new Set(atlas.filter(s=>s.origin_px && s.origin_px.x!=null).map(s=>s.mapId))].sort((a,b)=>a-b);
+                        if(slocs.length===0){
+                            // fallback: mostrar todos los SLocation conocidos + los del csave
+                            const known = (typeof SLOCATION_NAMES!=='undefined' ? Object.keys(SLOCATION_NAMES).map(k=>parseInt(k)) : []);
+                            const fromCsave = currentCsaveWallpapers ? Object.keys(currentCsaveWallpapers).map(k=>parseInt(k)) : [];
+                            slocs=[...new Set([...known, ...fromCsave, obj.mapId||0])].sort((a,b)=>a-b);
+                        }
                         slSel.innerHTML='';
                         slocs.forEach(id=>{
                             const name=(typeof SLOCATION_NAMES!=='undefined' && SLOCATION_NAMES[id]) || `SLocation ${id}`;
                             const opt=document.createElement('option'); opt.value=id; opt.textContent=`${id} — ${name}`; slSel.appendChild(opt);
                         });
-                        // si no hay atlas, al menos mostrar 0
                         if(slSel.options.length===0){ const opt=document.createElement('option'); opt.value=obj.mapId||0; opt.textContent=`${obj.mapId||0} — SLocation ${obj.mapId||0}`; slSel.appendChild(opt); }
                     }
                     if (slSel) slSel.value = obj.mapId ?? 0;
@@ -1549,8 +1554,16 @@
                         const atlas = window.mapsAtlas || window.MAPS_UNIFIED?.atlas || [];
                         const curMap = parseInt(slSel ? slSel.value : obj.mapId||0);
                         const showHC = document.getElementById('chk-show-homecoming')?.checked;
-                        const floors = atlas.filter(s=>String(s.mapId)===String(curMap) && s.kind==='floor' && s.origin_px && s.origin_px.x!=null && (!s.homecoming_only || showHC));
-                        const walls = atlas.filter(s=>String(s.mapId)===String(curMap) && s.kind==='wall' && s.origin_px && s.origin_px.x!=null && (!s.homecoming_only || showHC));
+                        let floors = atlas.filter(s=>String(s.mapId)===String(curMap) && s.kind==='floor' && s.origin_px && s.origin_px.x!=null && (!s.homecoming_only || showHC));
+                        let walls = atlas.filter(s=>String(s.mapId)===String(curMap) && s.kind==='wall' && s.origin_px && s.origin_px.x!=null && (!s.homecoming_only || showHC));
+                        // fallback: si atlas vacío pero hay csave o es mapa nuevo, mostrar g0,g1 genéricos para poder elegir
+                        if(floors.length===0 && walls.length===0){
+                            const isNewMap = !atlas.some(s=>String(s.mapId)===String(curMap));
+                            if(isNewMap || (currentCsaveWallpapers && currentCsaveWallpapers[curMap])){
+                                floors = [{groupNum:0, rows:16, cols:16}, {groupNum:1, rows:14, cols:14}];
+                                walls = [{groupNum:0, flipped:true, rows:16, cols:16}, {groupNum:0, flipped:false, rows:16, cols:16}, {groupNum:1, flipped:true, rows:14, cols:16}, {groupNum:1, flipped:false, rows:14, cols:16}];
+                            }
+                        }
                         const floorNames = {0:{'0':'Planta Baja','1':'Primer Piso','2':'Segundo Piso (Homecoming)','4':'Patio','5':'Jardín'}, 6:{'0':'Campo Principal','3':'Cobertizo'}};
                         const getFloorLabel = (mid,g)=> (floorNames[mid] && floorNames[mid][String(g)]) || `Piso ${g}`;
                         gSel.innerHTML='';
