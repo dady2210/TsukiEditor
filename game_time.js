@@ -19,7 +19,10 @@
       return { hour: c.hour|0, minute, day: c.day|0, month: c.month|0, season: c.season|0, minutes: (c.hour|0)*60 + minute };
     },
 
-    syncFromDevice() {
+    syncWithDevice: false, // Default false: do NOT overwrite in-game/saved clock with PC local time (per AGENTE_CONTEXTO_PORT.md: "No usar Date.now() para el cielo")
+
+    syncFromDevice(force = false) {
+      if (!this.syncWithDevice && !force) return false;
       if (!parserRef || !parserRef.getClock || !parserRef.setClock) return false;
       const d = new Date(); // solo para leer hora civil
       const hour = d.getHours();

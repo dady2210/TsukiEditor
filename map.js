@@ -677,9 +677,43 @@ class IsometricMap {
     getWallSize(item_id) {
         if (typeof window.getFurnitureSize === 'function') {
             const s = window.getFurnitureSize(String(item_id));
-            if (s && s.width > 0) return { w: s.width, h: (s.height || s.length || 1) };
+            if (s) {
+                const w = s.width !== undefined ? s.width : (s.w !== undefined ? s.w : 1);
+                const h = s.height !== undefined ? s.height : (s.length !== undefined ? s.length : (s.l !== undefined ? s.l : 1));
+                return {
+                    w: Math.max(1, Number(w) || 1),
+                    h: Math.max(1, Number(h) || 1)
+                };
+            }
         }
         return { w: 1, h: 1 };
+    }
+
+    _getPlacementRenderOffset(p) {
+        if (!p || p.isWall || !this.app || !this.app.parser || !this.app.parser.placements) return { x: 0, y: 0 };
+        if (!this._cellColocationGroups) {
+            this._cellColocationGroups = new Map();
+            for (const item of this.app.parser.placements) {
+                if (!item.isWall && item.item_id > 0 && item.x >= 0 && item.y >= 0) {
+                    const key = `${item.cluster != null ? item.cluster : 0}_${item.floor != null ? item.floor : 0}_${item.x}_${item.y}`;
+                    if (!this._cellColocationGroups.has(key)) this._cellColocationGroups.set(key, []);
+                    this._cellColocationGroups.get(key).push(item);
+                }
+            }
+        }
+        const key = `${p.cluster != null ? p.cluster : 0}_${p.floor != null ? p.floor : 0}_${p.x}_${p.y}`;
+        const group = this._cellColocationGroups.get(key);
+        if (!group || group.length <= 1) return { x: 0, y: 0 };
+        const idx = group.indexOf(p);
+        if (idx === -1) return { x: 0, y: 0 };
+        const surf = this.surfaceFor(p.cluster != null ? p.cluster : 0, p.floor != null ? p.floor : 0, false, false);
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+        const cellW = (((surf && surf.cell && surf.cell.w) || 58)) * u;
+        const cellH = (((surf && surf.cell && surf.cell.h) || 28)) * u;
+        const count = group.length;
+        const angle = (idx * 2 * Math.PI) / count + (count % 2 === 0 ? Math.PI / 4 : 0);
+        return { x: Math.cos(angle) * 0.25 * cellW, y: Math.sin(angle) * 0.25 * cellH };
     }
 
     _wallpaperEntries(loc) {
@@ -960,6 +994,30 @@ class IsometricMap {
         };
     }
 
+    _isWallCellInSurfacePoly(surf, wx, wy, w = 1, h = 1) {
+        if (!surf || !surf.poly || surf.poly.length < 3) return true;
+        const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
+        const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+        const corners = [
+            [wx, wy],
+            [wx + w, wy],
+            [wx, wy + h],
+            [wx + w, wy + h],
+            [wx + w / 2, wy + h / 2]
+        ];
+        const centerRelX = (wx + w / 2) * (cw_u / 2);
+        const centerRelY = - (wx + w / 2) * (ch_u / 2) - (wy + h / 2) * ch_u;
+        if (!this._pointInPoly(centerRelX, centerRelY, surf.poly)) return false;
+
+        let insideCount = 0;
+        for (const [x, y] of corners) {
+            const relX = x * (cw_u / 2);
+            const relY = - x * (ch_u / 2) - y * ch_u;
+            if (this._pointInPoly(relX, relY, surf.poly)) insideCount++;
+        }
+        return insideCount >= 3;
+    }
+
     _clampWallGrid(p, x, y) {
         const sz = this.getWallSize(p.item_id);
         const w = sz.w || 1, h = sz.h || 1;
@@ -970,12 +1028,28 @@ class IsometricMap {
             const locVal = document.getElementById('select-location')?.value;
             const targetLoc = p.cluster != null ? p.cluster : (locVal !== '' && locVal != null ? parseInt(locVal, 10) : 0);
             const surf = this.surfaceFor(targetLoc, p.floor, true, p.flipped);
-            const maxCols = (surf && surf.cols) || 16;
-            const maxRows = (surf && surf.rows) || 16;
-            return {
-                x: Math.max(0, Math.min(maxCols - w, x)),
-                y: Math.max(0, Math.min(maxRows - h, y))
-            };
+            if (surf) {
+                const maxCols = surf.cols || 16;
+                const maxRows = surf.rows || 16;
+                const cx = Math.max(0, Math.min(maxCols - w, x));
+                const cy = Math.max(0, Math.min(maxRows - h, y));
+                if (surf.poly && surf.poly.length > 2) {
+                    if (this._isWallCellInSurfacePoly(surf, cx, cy, w, h)) {
+                        return { x: cx, y: cy };
+                    }
+                    const last = this._dragSnap || { x: p.x, y: p.y };
+                    if (this._isWallCellInSurfacePoly(surf, cx, last.y, w, h)) {
+                        return { x: cx, y: last.y };
+                    }
+                    if (this._isWallCellInSurfacePoly(surf, last.x, cy, w, h)) {
+                        return { x: last.x, y: cy };
+                    }
+                    if (this._isWallCellInSurfacePoly(surf, last.x, last.y, w, h)) {
+                        return { x: last.x, y: last.y };
+                    }
+                }
+                return { x: cx, y: cy };
+            }
         }
 
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
@@ -1124,6 +1198,13 @@ class IsometricMap {
                 const cols = wSurf.cols || 16;
                 const rows = wSurf.rows || 16;
                 if (wx >= -0.25 && wx <= cols + 0.25 && wy >= -0.25 && wy <= rows + 0.25) {
+                    const cw_u = ((wSurf.cell && wSurf.cell.w) || 58) / 150;
+                    const ch_u = ((wSurf.cell && wSurf.cell.h) || 28) / 150;
+                    const relX = wx * (cw_u / 2);
+                    const relY = - wx * (ch_u / 2) - wy * ch_u;
+                    if (wSurf.poly && wSurf.poly.length > 2) {
+                        if (!this._pointInPoly(relX, relY, wSurf.poly)) continue;
+                    }
                     return {
                         kind: 'wall',
                         floorNum: g,
@@ -1636,6 +1717,7 @@ class IsometricMap {
 
     _drawImmediate() {
         if (!this.app || !this.app.parser || !this.app.parser.placements) return;
+        this._cellColocationGroups = null;
 
         const ctx = this.ctx;
         const targetLocStr = document.getElementById('select-location')?.value;
@@ -2188,6 +2270,10 @@ class IsometricMap {
                 floatUI.style.display = 'none';
             }
         }
+
+        if (document.body.classList.contains('play-mode') && window.Lighting && typeof window.Lighting.renderHalos === 'function') {
+            window.Lighting.renderHalos(null, targetLoc);
+        }
     }
     _updateLocationLabel(locId) {
         const sel = document.getElementById('select-location');
@@ -2200,7 +2286,7 @@ class IsometricMap {
 
 
     _drawWallPlacementIso(p) {
-        const img = this.getImage(p.item_id, 0);
+        const img = this.getImage(p.item_id, 0, p);
         if (!img || !img.complete || img.naturalWidth <= 0) return;
         
         const bbox = this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 16, ymax: 16 };
@@ -2328,6 +2414,8 @@ class IsometricMap {
 
         ctx.save();
         if (lift) ctx.translate(0, -lift * this.CELL_H * this.scale);
+        const off = this._getPlacementRenderOffset(p);
+        if (off.x || off.y) ctx.translate(off.x, off.y);
         
         // Draw grid footprint if in play mode and hammer mode
         if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode && !p.isWall && (this.app.tsukiPort.showGrid || isSelected)) {
@@ -2535,7 +2623,10 @@ class IsometricMap {
             center = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, !!p.flipped, this._wallRoomBBox, p.floor);
         } else {
             const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
-            center = this._tileCenter(p.x, p.y, w, l);
+            center = this._tileCenter(p.x, p.y, w, l, p.floor);
+            const off = this._getPlacementRenderOffset(p);
+            center.x += off.x;
+            center.y += off.y;
         }
 
         const name  = this.app.resolveItemName(p.item_id, 1);
@@ -2601,12 +2692,12 @@ class IsometricMap {
     }
 
     // ── Hit detection ─────────────────────────────────────────────────────
-    _findPlacementAtScreen(screenX, screenY) {
+    _findPlacementAtScreen(screenX, screenY, allowPlayWithoutHammer = false) {
         if (!this.app || !this.app.parser || !this.app.parser.placements) return null;
 
         const isPlay = document.body.classList.contains('play-mode');
         const isHammer = this.app.tsukiPort && this.app.tsukiPort.isHammerMode;
-        if (isPlay && !isHammer) return null;
+        if (isPlay && !isHammer && !allowPlayWithoutHammer) return null;
 
         const locVal = document.getElementById('select-location')?.value;
         const targetLoc = locVal !== "" && locVal != null ? parseInt(locVal, 10) : 0;
@@ -2705,6 +2796,9 @@ class IsometricMap {
                 const lift = stack ? stack.lift : 0;
                 const liftShift = lift * this.CELL_H * this.scale;
                 const center = this._tileCenter(p.x, p.y, w, l, p.floor);
+                const off = this._getPlacementRenderOffset(p);
+                center.x += off.x;
+                center.y += off.y;
 
                 let hit = false;
                 const img = this.getImage(p.item_id, p.orientation);
@@ -2729,6 +2823,12 @@ class IsometricMap {
                     const pt2 = this.getIsoCoords(p.x + w, p.y, p.floor);
                     const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor);
                     const pt4 = this.getIsoCoords(p.x, p.y + l, p.floor);
+                    if (off.x || off.y) {
+                        pt1.x += off.x; pt1.y += off.y;
+                        pt2.x += off.x; pt2.y += off.y;
+                        pt3.x += off.x; pt3.y += off.y;
+                        pt4.x += off.x; pt4.y += off.y;
+                    }
                     if (liftShift) {
                         pt1.y -= liftShift; pt2.y -= liftShift; pt3.y -= liftShift; pt4.y -= liftShift;
                     }

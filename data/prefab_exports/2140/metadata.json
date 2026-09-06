@@ -1,0 +1,317 @@
+{
+  "id": 2140,
+  "name": "Frooty Grape Wall Lamp",
+  "raw_properties": {
+    "m_Enabled": 1,
+    "m_Name": "",
+    "transform": {
+      "m_FileID": 0,
+      "m_PathID": 2152026279771555846
+    },
+    "coll": {
+      "m_FileID": 0,
+      "m_PathID": -6594416743655684090
+    },
+    "coll3D": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    },
+    "ID": 2140,
+    "numColors": 0,
+    "debugSort": 0,
+    "inShop": 0,
+    "placementID": 0,
+    "protruding": 0,
+    "length": 0,
+    "polyColliderType": 0,
+    "colliderPoints": [],
+    "flippedColliderPoints": [],
+    "useCustomFlippedPoints": 0,
+    "gridCollScale": 1.0,
+    "gridHeightOffset": 0.0,
+    "Save": {
+      "rid": -2
+    },
+    "references": {
+      "version": 2,
+      "RefIds": [
+        {
+          "rid": -2,
+          "type": {
+            "class": "",
+            "ns": "",
+            "asm": ""
+          }
+        }
+      ]
+    }
+  },
+  "layer_definitions": [
+    {
+      "renderer": "ScriptableObject: LightSpriteObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "ScriptableObject: LightObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    }
+  ],
+  "store_data": {},
+  "nodes": [
+    {
+      "path": "Frooty Grape Wall Lamp",
+      "name": "Frooty Grape Wall Lamp",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 790.1602783203125,
+        "y": -133.08041381835938
+      },
+      "world_pos": {
+        "x": 790.1602783203125,
+        "y": -133.08041381835938,
+        "angle": -0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "WallLamp",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": 2152026279771555846
+            },
+            "coll": {
+              "m_FileID": 0,
+              "m_PathID": -6594416743655684090
+            },
+            "coll3D": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "ID": 2140,
+            "numColors": 0,
+            "debugSort": 0,
+            "sprites": [
+              {
+                "renderer": "ScriptableObject: LightSpriteObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              },
+              {
+                "renderer": "ScriptableObject: LightObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              }
+            ],
+            "inShop": 0,
+            "placementID": 0,
+            "protruding": 0,
+            "length": 0,
+            "polyColliderType": 0,
+            "colliderPoints": [],
+            "flippedColliderPoints": [],
+            "useCustomFlippedPoints": 0,
+            "gridCollScale": 1.0,
+            "gridHeightOffset": 0.0,
+            "Save": {
+              "rid": -2
+            },
+            "references": {
+              "version": 2,
+              "RefIds": [
+                {
+                  "rid": -2,
+                  "type": {
+                    "class": "",
+                    "ns": "",
+                    "asm": ""
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Frooty Grape Wall Lamp/Grapes_Lamp_0",
+      "name": "Grapes_Lamp_0",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": 790.1602783203125,
+        "y": -133.08041381835938,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Grapes_Lamp_0",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        },
+        {
+          "type": "LightSpriteObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": -8928568214398711802
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 2,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": -4532033549399504890
+            },
+            "spriteFlipLogic": 0,
+            "normal": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "flipped": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "on": "Sprite: Grapes_Lamp_1",
+            "off": "Sprite: Grapes_Lamp_0"
+          }
+        }
+      ]
+    },
+    {
+      "path": "Frooty Grape Wall Lamp/Square",
+      "name": "Square",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": -0.1899999976158142
+      },
+      "world_pos": {
+        "x": 790.1602783203125,
+        "y": -133.2704138159752,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 8.0,
+        "y": 8.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.689257800579071,
+            "g": 0.6207725405693054,
+            "b": 0.849056601524353,
+            "a": 0.47058823704719543
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        },
+        {
+          "type": "LightObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": -5822770879492536314
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 2,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": 1287363184058353670
+            },
+            "spriteFlipLogic": 0,
+            "normal": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "flipped": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "colliders": [],
+  "audio": [],
+  "animators": [],
+  "special_scripts": []
+}

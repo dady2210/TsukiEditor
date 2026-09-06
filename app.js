@@ -224,6 +224,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         // P2 lamp click en play (no hammer): ciclar auto→on→off, no recoger
         this._bindLampClick();
         this._bindFarmButtons();
+        this._bindClockControls();
         // Soporte Playtest desde Web Editor / map_editor_2
         window.addEventListener('storage', (e) => {
             if (e.key === 'dev_deleted_placements' || e.key === 'dev_active_layout') {
@@ -299,6 +300,60 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
     }
 
+    _bindClockControls() {
+        const btnPrev = document.getElementById('btn-clock-prev');
+        const btnNext = document.getElementById('btn-clock-next');
+        const clkSpan = document.getElementById('port-hud-clock');
+
+        const stepHour = (delta) => {
+            if (!this.parser || typeof this.parser.advanceHour !== 'function') return;
+            const clk = this.parser.advanceHour(delta);
+            const now = window.GameTime ? window.GameTime.now() : clk;
+            if (window.Lighting) window.Lighting.apply(now, this.parser.currentSLocation || 0);
+            if (this.map) this.map.draw();
+            this._refreshClockHUD();
+            const inpHour = document.getElementById('input-hour');
+            if (inpHour) inpHour.value = clk.hour;
+            this.showToast(`Hora: ${String(clk.hour).padStart(2, '0')}:00`, 'info');
+        };
+
+        if (btnPrev && !btnPrev._bound) {
+            btnPrev._bound = true;
+            btnPrev.addEventListener('click', (e) => {
+                e.stopPropagation();
+                stepHour(-1);
+            });
+        }
+        if (btnNext && !btnNext._bound) {
+            btnNext._bound = true;
+            btnNext.addEventListener('click', (e) => {
+                e.stopPropagation();
+                stepHour(1);
+            });
+        }
+        if (clkSpan && !clkSpan._bound) {
+            clkSpan._bound = true;
+            const keyHours = [1, 6, 8, 12, 17, 18, 20, 22];
+            clkSpan.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!this.parser || typeof this.parser.setClock !== 'function') return;
+                const cur = this.parser.getClock();
+                const curH = cur.hour | 0;
+                let nxtH = keyHours.find(h => h > curH);
+                if (nxtH === undefined) nxtH = keyHours[0];
+                this.parser.setClock({ hour: nxtH });
+                const nextClk = this.parser.getClock();
+                const now = window.GameTime ? window.GameTime.now() : nextClk;
+                if (window.Lighting) window.Lighting.apply(now, this.parser.currentSLocation || 0);
+                if (this.map) this.map.draw();
+                this._refreshClockHUD();
+                const inpHour = document.getElementById('input-hour');
+                if (inpHour) inpHour.value = nxtH;
+                this.showToast(`Hora: ${String(nxtH).padStart(2, '0')}:00`, 'info');
+            });
+        }
+    }
+
     _bindLampClick() {
         const canvas = document.getElementById('map-canvas');
         if (!canvas) return;
@@ -309,7 +364,10 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             if (this.map && typeof this.map.isQuickTap === 'function') {
                 if (!this.map.isQuickTap(e.clientX, e.clientY)) return;
             }
-            const p = this.map && this.map.hoveredPlacement;
+            const rect = canvas.getBoundingClientRect();
+            const cx = (e.clientX - rect.left) * (canvas.width / rect.width);
+            const cy = (e.clientY - rect.top) * (canvas.height / rect.height);
+            const p = (this.map && (this.map.hoveredPlacement || this.map._findPlacementAtScreen(cx, cy, true))) || null;
             if (!p) return;
             const beh = window.BEHAVIORS && window.BEHAVIORS[String(p.item_id)];
             if (!beh || beh.interact !== 'light_toggle') return;
@@ -318,10 +376,18 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const cur = p._lightMode || 'auto';
             const nxt = order[(order.indexOf(cur) + 1) % order.length];
             p._lightMode = nxt;
+            const toggleInt = nxt === 'on' ? 1 : (nxt === 'off' ? 2 : 0);
+            p._lampToggle = toggleInt;
+            if (this.parser && typeof this.parser.setLampToggle === 'function') {
+                this.parser.setLampToggle(p, toggleInt);
+            }
             this.showToast(`Lámpara: ${nxt.toUpperCase()}`, 'info');
-            const now = window.GameTime ? window.GameTime.now() : this.parser.getClock();
+            const now = window.GameTime ? window.GameTime.now() : (this.parser && this.parser.getClock ? this.parser.getClock() : { hour: 0, day: 1 });
             if (window.Lighting) window.Lighting.apply(now, this.parser.currentSLocation || 0);
-            // no persist csave — vuelve a auto al recargar (documentado)
+            if (this.map) this.map.draw();
+            if (this.tsukiPort && typeof this.tsukiPort.triggerAutosave === 'function') {
+                this.tsukiPort.triggerAutosave();
+            }
         }, true);
     }
 
@@ -542,9 +608,16 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         
         window.getFurnitureSize = function(id) {
             const e = window.ITEMS_DB && window.ITEMS_DB[String(id)];
-            if (e && e.width > 0 && e.length > 0) return { width: e.width, length: e.length };
-            if (window.furnitureSizes && window.furnitureSizes[String(id)])
-                return window.furnitureSizes[String(id)];
+            if (e && e.width > 0 && (e.length > 0 || e.height > 0)) {
+                const len = e.length || e.height || 1;
+                return { width: e.width, length: len, w: e.width, l: len };
+            }
+            if (window.furnitureSizes && window.furnitureSizes[String(id)]) {
+                const fs = window.furnitureSizes[String(id)];
+                const w = Math.max(1, (fs.width !== undefined ? fs.width : fs.w) || 1);
+                const l = Math.max(1, (fs.length !== undefined ? fs.length : (fs.height !== undefined ? fs.height : fs.l)) || 1);
+                return { width: w, length: l, w: w, l: l };
+            }
             return null;
         };
 

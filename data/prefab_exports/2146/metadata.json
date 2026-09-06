@@ -1,0 +1,665 @@
+{
+  "id": 2146,
+  "name": "Frooty Cherry Wall Lamp",
+  "raw_properties": {
+    "m_Enabled": 1,
+    "m_Name": "",
+    "transform": {
+      "m_FileID": 0,
+      "m_PathID": -1822393849639527779
+    },
+    "coll": {
+      "m_FileID": 0,
+      "m_PathID": -6730398771988981091
+    },
+    "coll3D": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    },
+    "ID": 2146,
+    "numColors": 0,
+    "debugSort": 0,
+    "inShop": 0,
+    "placementID": 0,
+    "protruding": 0,
+    "length": 0,
+    "polyColliderType": 1,
+    "colliderPoints": [
+      {
+        "x": -0.01507568359375,
+        "y": 0.295196533203125
+      },
+      {
+        "x": -0.08807373046875,
+        "y": 0.2603912353515625
+      },
+      {
+        "x": -0.25811767578125,
+        "y": -0.03173828125
+      },
+      {
+        "x": -0.2638617157936096,
+        "y": -0.14155980944633484
+      },
+      {
+        "x": -0.18731689453125,
+        "y": -0.2300567626953125
+      },
+      {
+        "x": 0.07926803827285767,
+        "y": -0.3508871793746948
+      },
+      {
+        "x": 0.17755126953125,
+        "y": -0.324920654296875
+      },
+      {
+        "x": 0.23787081241607666,
+        "y": -0.22503256797790527
+      },
+      {
+        "x": 0.2791748046875,
+        "y": 0.2865447998046875
+      },
+      {
+        "x": 0.15064144134521484,
+        "y": 0.3543204665184021
+      }
+    ],
+    "flippedColliderPoints": [
+      {
+        "x": 0.01507568359375,
+        "y": 0.295196533203125
+      },
+      {
+        "x": 0.08807373046875,
+        "y": 0.2603912353515625
+      },
+      {
+        "x": 0.25811767578125,
+        "y": -0.03173828125
+      },
+      {
+        "x": 0.2638617157936096,
+        "y": -0.14155980944633484
+      },
+      {
+        "x": 0.18731689453125,
+        "y": -0.2300567626953125
+      },
+      {
+        "x": -0.07926803827285767,
+        "y": -0.3508871793746948
+      },
+      {
+        "x": -0.17755126953125,
+        "y": -0.324920654296875
+      },
+      {
+        "x": -0.23787081241607666,
+        "y": -0.22503256797790527
+      },
+      {
+        "x": -0.2791748046875,
+        "y": 0.2865447998046875
+      },
+      {
+        "x": -0.15064144134521484,
+        "y": 0.3543204665184021
+      }
+    ],
+    "useCustomFlippedPoints": 0,
+    "gridCollScale": 1.0,
+    "gridHeightOffset": 0.0,
+    "Save": {
+      "rid": -2
+    },
+    "references": {
+      "version": 2,
+      "RefIds": [
+        {
+          "rid": -2,
+          "type": {
+            "class": "",
+            "ns": "",
+            "asm": ""
+          }
+        }
+      ]
+    }
+  },
+  "layer_definitions": [
+    {
+      "renderer": "ScriptableObject: SpriteObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "ScriptableObject: LightObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "ScriptableObject: LightObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "ScriptableObject: LightObject",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    }
+  ],
+  "store_data": {},
+  "nodes": [
+    {
+      "path": "Frooty Cherry Wall Lamp",
+      "name": "Frooty Cherry Wall Lamp",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 790.1602783203125,
+        "y": -133.08041381835938
+      },
+      "world_pos": {
+        "x": 790.1602783203125,
+        "y": -133.08041381835938,
+        "angle": -0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "WallLamp",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": -1822393849639527779
+            },
+            "coll": {
+              "m_FileID": 0,
+              "m_PathID": -6730398771988981091
+            },
+            "coll3D": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "ID": 2146,
+            "numColors": 0,
+            "debugSort": 0,
+            "sprites": [
+              {
+                "renderer": "ScriptableObject: SpriteObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              },
+              {
+                "renderer": "ScriptableObject: LightObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              },
+              {
+                "renderer": "ScriptableObject: LightObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              },
+              {
+                "renderer": "ScriptableObject: LightObject",
+                "activitySorting": 0,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              }
+            ],
+            "inShop": 0,
+            "placementID": 0,
+            "protruding": 0,
+            "length": 0,
+            "polyColliderType": 1,
+            "colliderPoints": [
+              {
+                "x": -0.01507568359375,
+                "y": 0.295196533203125
+              },
+              {
+                "x": -0.08807373046875,
+                "y": 0.2603912353515625
+              },
+              {
+                "x": -0.25811767578125,
+                "y": -0.03173828125
+              },
+              {
+                "x": -0.2638617157936096,
+                "y": -0.14155980944633484
+              },
+              {
+                "x": -0.18731689453125,
+                "y": -0.2300567626953125
+              },
+              {
+                "x": 0.07926803827285767,
+                "y": -0.3508871793746948
+              },
+              {
+                "x": 0.17755126953125,
+                "y": -0.324920654296875
+              },
+              {
+                "x": 0.23787081241607666,
+                "y": -0.22503256797790527
+              },
+              {
+                "x": 0.2791748046875,
+                "y": 0.2865447998046875
+              },
+              {
+                "x": 0.15064144134521484,
+                "y": 0.3543204665184021
+              }
+            ],
+            "flippedColliderPoints": [
+              {
+                "x": 0.01507568359375,
+                "y": 0.295196533203125
+              },
+              {
+                "x": 0.08807373046875,
+                "y": 0.2603912353515625
+              },
+              {
+                "x": 0.25811767578125,
+                "y": -0.03173828125
+              },
+              {
+                "x": 0.2638617157936096,
+                "y": -0.14155980944633484
+              },
+              {
+                "x": 0.18731689453125,
+                "y": -0.2300567626953125
+              },
+              {
+                "x": -0.07926803827285767,
+                "y": -0.3508871793746948
+              },
+              {
+                "x": -0.17755126953125,
+                "y": -0.324920654296875
+              },
+              {
+                "x": -0.23787081241607666,
+                "y": -0.22503256797790527
+              },
+              {
+                "x": -0.2791748046875,
+                "y": 0.2865447998046875
+              },
+              {
+                "x": -0.15064144134521484,
+                "y": 0.3543204665184021
+              }
+            ],
+            "useCustomFlippedPoints": 0,
+            "gridCollScale": 1.0,
+            "gridHeightOffset": 0.0,
+            "Save": {
+              "rid": -2
+            },
+            "references": {
+              "version": 2,
+              "RefIds": [
+                {
+                  "rid": -2,
+                  "type": {
+                    "class": "",
+                    "ns": "",
+                    "asm": ""
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Frooty Cherry Wall Lamp/Cherry_Lamp_1",
+      "name": "Cherry_Lamp_1",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": 790.1602783203125,
+        "y": -133.08041381835938,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Cherry_Lamp_1",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        },
+        {
+          "type": "SpriteObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": -9199782302127285603
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 2,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": 7572448158561933981
+            },
+            "spriteFlipLogic": 0,
+            "normal": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "flipped": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Frooty Cherry Wall Lamp/Sprite (5)",
+      "name": "Sprite (5)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": -0.14300000667572021
+      },
+      "world_pos": {
+        "x": 790.1602783203125,
+        "y": -133.2234138250351,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 4.0,
+        "y": 4.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.9960784316062927,
+            "g": 0.6509804129600525,
+            "b": 0.5686274766921997,
+            "a": 0.47058823704719543
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        },
+        {
+          "type": "LightObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": -7264423707108042083
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 2,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": -6988810722914198883
+            },
+            "spriteFlipLogic": 0,
+            "normal": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "flipped": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Frooty Cherry Wall Lamp/Sprite (6)",
+      "name": "Sprite (6)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.11299999803304672,
+        "y": -0.10100000351667404
+      },
+      "world_pos": {
+        "x": 790.0472783222795,
+        "y": -133.18141382187605,
+        "angle": -18.788227993129137
+      },
+      "scale": {
+        "x": 0.30000001192092896,
+        "y": 0.30000001192092896
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.3921568691730499
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        },
+        {
+          "type": "LightObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": 3817404753874524829
+            },
+            "overrideInvisible": 0,
+            "xPos": -0.11299999803304672,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 2,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": 4404835893644827293
+            },
+            "spriteFlipLogic": 0,
+            "normal": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "flipped": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Frooty Cherry Wall Lamp/Sprite (7)",
+      "name": "Sprite (7)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0820000022649765,
+        "y": -0.19300000369548798
+      },
+      "world_pos": {
+        "x": 790.2422783225775,
+        "y": -133.27341382205486,
+        "angle": -18.788227993129137
+      },
+      "scale": {
+        "x": 0.30000001192092896,
+        "y": 0.30000001192092896
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.3921568691730499
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        },
+        {
+          "type": "LightObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": 9207070801856043677
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0820000022649765,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 2,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": -4906898133831902563
+            },
+            "spriteFlipLogic": 0,
+            "normal": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "flipped": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "colliders": [],
+  "audio": [],
+  "animators": [],
+  "special_scripts": []
+}

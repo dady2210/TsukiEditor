@@ -456,6 +456,10 @@ class SaveParser {
                             }
                         }
 
+                        const floorLampVal = this.getLampToggle({ furnNode });
+                        const floorLampToggle = floorLampVal !== undefined ? Number(floorLampVal) : undefined;
+                        const floorLightMode = floorLampToggle === 1 ? 'on' : (floorLampToggle === 2 ? 'off' : 'auto');
+
                         this.placements.push({
                             placementID,
                             subloc_id: sublocId,
@@ -467,6 +471,8 @@ class SaveParser {
                             verify,
                             planted_id,
                             furnNode,
+                            _lampToggle: floorLampToggle,
+                            _lightMode: floorLightMode,
                             isWall: false
                         });
                     }
@@ -502,6 +508,10 @@ class SaveParser {
                             if (gNumNode) floor = gNumNode.value;
                         }
 
+                        const wallLampVal = this.getLampToggle({ furnNode: wallNode });
+                        const wallLampToggle = wallLampVal !== undefined ? Number(wallLampVal) : undefined;
+                        const wallLightMode = wallLampToggle === 1 ? 'on' : (wallLampToggle === 2 ? 'off' : 'auto');
+
                         this.placements.push({
                             placementID,
                             subloc_id: sublocId,
@@ -514,6 +524,8 @@ class SaveParser {
                             planted_id: -1,
                             furnNode: wallNode,
                             flipped: !!flipped,
+                            _lampToggle: wallLampToggle,
+                            _lightMode: wallLightMode,
                             isWall: true
                         });
                     }
@@ -2966,9 +2978,34 @@ class SaveParser {
     }
     setLampToggle(placement, val) {
         if (!placement || !placement.furnNode) return false;
+        const targetVal = Number(val) | 0;
+        placement._lampToggle = targetVal;
+        placement._lightMode = targetVal === 1 ? 'on' : (targetVal === 2 ? 'off' : 'auto');
+
         let node = findChildRecursive(placement.furnNode, ['lampToggle','LampToggle','LampState']);
-        if (!node) return false;
-        node.value = val|0; return true;
+        if (node) {
+            node.value = typeof node.value === 'bigint' ? BigInt(targetVal) : targetVal;
+            return true;
+        }
+
+        // Si no existe, buscar furnSave en placement.furnNode o crearlo
+        let furnSave = placement.furnNode.children ? placement.furnNode.children.find(c => c.name === 'furnSave') : null;
+        if (!furnSave) {
+            const NodeClass = (typeof OdinNode !== 'undefined') ? OdinNode : (placement.furnNode.constructor || Object);
+            const PrimClass = (typeof OdinPrimitive !== 'undefined') ? OdinPrimitive : Object;
+            furnSave = new NodeClass(0x01, 'furnSave');
+            const lampPrim = new PrimClass(0x1d, 'lampToggle', typeof BigInt !== 'undefined' ? BigInt(targetVal) : targetVal);
+            furnSave.children = [lampPrim];
+            if (!placement.furnNode.children) placement.furnNode.children = [];
+            placement.furnNode.children.push(furnSave);
+            return true;
+        }
+
+        const PrimClass = (typeof OdinPrimitive !== 'undefined') ? OdinPrimitive : ((furnSave.children && furnSave.children[0]?.constructor) || Object);
+        const lampPrim = new PrimClass(0x1d, 'lampToggle', typeof BigInt !== 'undefined' ? BigInt(targetVal) : targetVal);
+        if (!furnSave.children) furnSave.children = [];
+        furnSave.children.push(lampPrim);
+        return true;
     }
     getDeliverySave() {
         const dNode = findChildRecursive(this.ast, ['deliverySave']);
