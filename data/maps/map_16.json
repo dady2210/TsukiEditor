@@ -1,0 +1,48 @@
+{
+  "mapId": 16,
+  "name": "Ayuntamiento de la Gran Ciudad",
+  "englishName": "City Hall (Great City)",
+  "zone": "Gran Ciudad",
+  "version": 2,
+  "config": {
+    "ppu": 150,
+    "bgScale": 0.75,
+    "assetsDir": null,
+    "assembled": null,
+    "lighting": "interior",
+    "camera": {
+      "zoom": 40,
+      "minZoom": 15,
+      "maxZoom": 80
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor_0",
+      "kind": "floor",
+      "groupNum": 0,
+      "anchorID": null,
+      "flipped": false,
+      "name": "Piso Principal - Ayuntamiento de la Gran Ciudad",
+      "origin": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "origin_px": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "cell": {
+        "w": 58,
+        "h": 28
+      },
+      "rows": 16,
+      "cols": 16,
+      "defaultCoverId": null,
+      "poly": []
+    }
+  ],
+  "visuals": [],
+  "colliders": [],
+  "logic": {}
+}

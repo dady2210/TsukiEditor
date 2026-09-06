@@ -224,6 +224,36 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         // P2 lamp click en play (no hammer): ciclar auto→on→off, no recoger
         this._bindLampClick();
         this._bindFarmButtons();
+        // Soporte Playtest desde Web Editor / map_editor_2
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'dev_deleted_placements' || e.key === 'dev_active_layout') {
+                this._syncDeletedPlacements();
+            }
+        });
+        window.addEventListener('focus', () => {
+            this._syncDeletedPlacements();
+            if (this.map) {
+                this.map._bakedBgKey = null;
+                this.map.draw();
+            }
+        });
+        try {
+            const devSave = sessionStorage.getItem('dev_active_csave') || localStorage.getItem('dev_active_csave');
+            if (devSave && !this.parser) {
+                const binStr = atob(devSave);
+                const len = binStr.length;
+                const bytes = new Uint8Array(len);
+                for (let i = 0; i < len; i++) {
+                    bytes[i] = binStr.charCodeAt(i);
+                }
+                const f = new File([bytes.buffer], "playtest.csave");
+                this.loadFile(f);
+            } else if (!this.parser) {
+                this._checkCachedSession();
+            }
+        } catch (e) {
+            console.warn("[Playtest] No se pudo autocargar dev_active_csave:", e);
+        }
         this.handleRouting();
     }
 
@@ -275,6 +305,10 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         canvas.addEventListener('click', (e) => {
             if (!document.body.classList.contains('play-mode')) return;
             if (this.tsukiPort && this.tsukiPort.isHammerMode) return;
+            // P5 / CastleManager gesture discrimination: ignore if it was a drag/pan
+            if (this.map && typeof this.map.isQuickTap === 'function') {
+                if (!this.map.isQuickTap(e.clientX, e.clientY)) return;
+            }
             const p = this.map && this.map.hoveredPlacement;
             if (!p) return;
             const beh = window.BEHAVIORS && window.BEHAVIORS[String(p.item_id)];
@@ -352,7 +386,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
     handleRouting() {
         const hash = window.location.hash || '#/editor';
-        const isPlay = hash.startsWith('#/play');
+        const isPlay = hash.startsWith('#/play') || hash.startsWith('#play');
         const isGrid = hash.startsWith('#/grid-editor');
         
         document.body.classList.remove('play-mode', 'grid-mode');
@@ -561,8 +595,32 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             e.preventDefault(); this.dropZone.classList.remove('dragover');
             if (e.dataTransfer.files.length) this.loadFile(e.dataTransfer.files[0]);
         });
-        this.dropZone.addEventListener('click', () => this.fileInput.click());
+        this.dropZone.addEventListener('click', (e) => {
+            if (e.target.closest('#cache-resume-banner') || e.target.closest('#btn-direct-file') || e.target.closest('#btn-new-game')) {
+                return;
+            }
+            this.fileInput.click();
+        });
         this.fileInput.addEventListener('change', e => { if (e.target.files.length) this.loadFile(e.target.files[0]); });
+
+        // Cache resume, discard & direct file buttons
+        document.getElementById('btn-resume-cache')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.loadSessionFromCache();
+        });
+        document.getElementById('btn-discard-cache')?.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            if (window.SaveStorage) await window.SaveStorage.clearCache();
+            document.getElementById('cache-resume-banner')?.classList.add('hidden');
+            this.showToast('Caché local descartada.');
+        });
+        document.getElementById('btn-direct-file')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.openDirectFile();
+        });
+        document.getElementById('btn-save-cache')?.addEventListener('click', () => {
+            this.saveSession({ silent: false });
+        });
 
         // Export/Import Parcial (modal) — los botones existían en el HTML y la
         // lógica ya estaba escrita, pero no había ningún listener conectándolos.
@@ -872,6 +930,55 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     this.parser.applyMapChange(this.map.selectedPlacement, newId, newX, newY, newOri);
                     this.showToast("✅ Mueble actualizado");
                     this.map.draw();
+                    if (document.body.classList.contains('play-mode') && this.tsukiPort && typeof this.tsukiPort.triggerAutosave === 'function') {
+                        this.tsukiPort.triggerAutosave();
+                    }
+                }
+            }
+        });
+        document.getElementById('btn-delete-item')?.addEventListener('click', () => {
+            if (this.map && this.map.selectedPlacement) {
+                const p = this.map.selectedPlacement;
+                const isPlay = document.body.classList.contains('play-mode');
+                
+                // En modo juego, devolver el mueble a la mochila
+                if (isPlay && p.item_id > 0) {
+                    try {
+                        let targetInvType = 1;
+                        if (this.map.SEED_IDS && this.map.SEED_IDS.has(p.item_id)) targetInvType = 4;
+                        this.parser.injectInventoryItem(p.item_id, 1, false, targetInvType);
+                    } catch (e) {
+                        console.warn("Could not return item to inventory:", e);
+                    }
+                    if (this.tsukiPort && this.tsukiPort.isHammerMode && typeof this.tsukiPort.renderHammerInventory === 'function') {
+                        this.tsukiPort.renderHammerInventory();
+                    }
+                }
+
+                this.parser.applyMapChange(p, -1, p.x, p.y, p.orientation);
+                const idx = this.parser.placements.indexOf(p);
+                if (idx !== -1) {
+                    this.parser.placements.splice(idx, 1);
+                }
+                this.map.selectedPlacement = null;
+                this.closeItemEditor();
+                this.showToast(isPlay ? "📦 Mueble guardado en la mochila" : "🗑️ Mueble eliminado", "info");
+                this.map.draw();
+                if (isPlay && this.tsukiPort && typeof this.tsukiPort.triggerAutosave === 'function') {
+                    this.tsukiPort.triggerAutosave();
+                }
+            }
+        });
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Delete' || e.key === 'Del' || (e.key === 'Backspace' && !document.body.classList.contains('play-mode'))) {
+                const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+                if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+                if (this.map && this.map.selectedPlacement) {
+                    const btn = document.getElementById('btn-delete-item');
+                    if (btn) {
+                        btn.click();
+                        e.preventDefault();
+                    }
                 }
             }
         });
@@ -1015,8 +1122,13 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
         // Audio
         document.addEventListener("DOMContentLoaded", () => {
+            if (window.Castle && window.Castle.BGM && window.Castle.BGM.currentAudio) return; // index.html playlist already initialized
             const bgMusic = new Audio("https://files.catbox.moe/gkji45.mp3");
             bgMusic.volume = 0.25; bgMusic.loop = true;
+            if (window.Castle && window.Castle.BGM) {
+                window.Castle.BGM.currentAudio = bgMusic;
+                window.Castle.BGM.masterVolume = 0.25;
+            }
             const startAudio = () => bgMusic.play().then(() => {
                 document.removeEventListener("click", startAudio);
                 document.removeEventListener("keydown", startAudio);
@@ -1025,18 +1137,27 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             document.addEventListener("click", startAudio);
             document.addEventListener("keydown", startAudio);
         });
+
+        // Autoguardado silencioso al cerrar o refrescar la pestaña
+        window.addEventListener('beforeunload', () => {
+            if (this.parser && typeof this.saveSession === 'function') {
+                this.saveSession({ silent: true });
+            }
+        });
     }
 
     // ─── File Load ────────────────────────────────────────────────────
 
-    loadFile(file) {
+    loadFile(file, fileHandle = null) {
         this.fileName = file.name;
+        this.fileHandle = fileHandle;
+        if (window.SaveStorage) window.SaveStorage.fileHandle = fileHandle;
         this.fileNameDisplay.textContent = this.fileName;
         const reader = new FileReader();
         reader.onload = e => {
             try {
                 console.time("ParseData");
-            this.parser = new SaveParser(e.target.result);
+                this.parser = new SaveParser(e.target.result);
                 
                 // Parse AST for structure-aware mapping
                 try {
@@ -1051,6 +1172,14 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 this.parseData();
                 this.dropZone.classList.add('hidden');
                 this.appContainer.classList.remove('hidden');
+
+                // Respaldo inicial en caché persistente IndexedDB
+                if (window.SaveStorage) {
+                    window.SaveStorage.saveToCache(e.target.result, this.fileName, {
+                        carrots: this.parser.generalVars?.carrots?.value,
+                        version: this.parser.generalVars?.lastSavedVersion?.value
+                    });
+                }
                 
                 setTimeout(() => {
                     this.map.resize();
@@ -1066,6 +1195,127 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         reader.readAsArrayBuffer(file);
     }
 
+    async _checkCachedSession() {
+        if (!window.SaveStorage) return;
+        try {
+            const hasCache = await window.SaveStorage.hasCachedSave();
+            if (!hasCache) return;
+            const summary = window.SaveStorage.getCacheSummary();
+            const banner = document.getElementById('cache-resume-banner');
+            const info = document.getElementById('cache-resume-info');
+            if (banner && info && summary) {
+                const relTime = window.SaveStorage.formatRelativeTime(summary.timestamp);
+                const kb = Math.round((summary.size || 0) / 1024);
+                const carrotsText = summary.carrots != null ? ` · 🥕 ${summary.carrots}` : '';
+                info.textContent = `${summary.fileName || 'save.csave'} — guardado ${relTime} (${kb} KB${carrotsText})`;
+                banner.classList.remove('hidden');
+            }
+        } catch (e) {
+            console.warn('[SaveStorage] Error checking cached session:', e);
+        }
+    }
+
+    async saveSession({ silent = false } = {}) {
+        if (!this.parser) return false;
+        try {
+            this.applyGeneralVars();
+            const buffer = this.parser.getBuffer();
+            const meta = {
+                carrots: this.parser.generalVars?.carrots?.value,
+                version: this.parser.generalVars?.lastSavedVersion?.value,
+                placementsCount: this.parser.placements?.length || 0
+            };
+
+            let directSaved = false;
+            if (window.SaveStorage && window.SaveStorage.fileHandle) {
+                directSaved = await window.SaveStorage.writeDirectFile(buffer);
+            }
+
+            let cacheSaved = false;
+            if (window.SaveStorage) {
+                cacheSaved = await window.SaveStorage.saveToCache(buffer, this.fileName, meta);
+            }
+
+            if (!silent) {
+                if (directSaved) {
+                    this.showToast(`💾 Guardado directamente en ${this.fileName}`);
+                } else if (cacheSaved) {
+                    this.showToast('💾 Partida guardada en caché local.');
+                }
+            } else {
+                const badge = document.getElementById('port-hud-autosave');
+                if (badge) {
+                    badge.style.opacity = '1';
+                    setTimeout(() => { badge.style.opacity = '0'; }, 1800);
+                }
+            }
+            return true;
+        } catch (err) {
+            console.error('[saveSession] Error:', err);
+            return false;
+        }
+    }
+
+    async loadSessionFromCache() {
+        if (!window.SaveStorage) return false;
+        try {
+            const data = await window.SaveStorage.loadFromCache();
+            if (!data || !data.buffer) {
+                this.showToast('No se encontró partida en caché.', 'warning');
+                return false;
+            }
+            const file = new File([data.buffer], data.fileName || 'cached_save.csave', { type: 'application/octet-stream' });
+            this.loadFile(file);
+            this.showToast(`✅ Partida restaurada (${data.fileName || 'guardado'})`);
+            return true;
+        } catch (err) {
+            console.error('[loadSessionFromCache] Error:', err);
+            this.showToast('Error cargando la partida desde caché: ' + err.message, 'error');
+            return false;
+        }
+    }
+
+    async openDirectFile() {
+        if (!window.SaveStorage || !window.SaveStorage.supportsFileSystemAccess) {
+            this.showToast('La escritura directa no está soportada en este navegador. Usa el selector normal.', 'warning');
+            return;
+        }
+        try {
+            const res = await window.SaveStorage.openDirectFile();
+            if (res && res.file) {
+                this.loadFile(res.file, res.fileHandle);
+                this.showToast(`🔗 Archivo vinculado: ${res.file.name} (Auto-escritura en disco activa)`);
+            }
+        } catch (err) {
+            if (err.name !== 'AbortError') {
+                console.error('[openDirectFile] Error:', err);
+                this.showToast('Error abriendo archivo directo: ' + err.message, 'error');
+            }
+        }
+    }
+
+    _syncDeletedPlacements() {
+        if (!this.parser || !this.parser.placements) return;
+        try {
+            const delStr = sessionStorage.getItem('dev_deleted_placements') || localStorage.getItem('dev_deleted_placements');
+            if (!delStr) return;
+            const deletedIds = JSON.parse(delStr);
+            if (!Array.isArray(deletedIds) || deletedIds.length === 0) return;
+            let changed = false;
+            this.parser.placements.forEach(p => {
+                if (p.placementID !== undefined && deletedIds.includes(p.placementID) && p.item_id !== -1) {
+                    p.item_id = -1;
+                    changed = true;
+                }
+            });
+            if (changed && this.map) {
+                this.map.draw();
+            }
+        } catch (e) {
+            console.warn("[Playtest] Error sincronizando placements eliminados:", e);
+        }
+    }
+
     parseData() {
         // General vars
         this.parser.parseGeneralVars();
@@ -1074,6 +1324,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         // Map
         const prevLoc = this.selectLocation.value;
         this.parser.parseMap();
+        this._syncDeletedPlacements();
         this.selectLocation.innerHTML = '';
         // Friendly location names from SUBLOC_NAMES defined in map.js
         const locSet = new Set(Array.from(this.parser.clusters));
@@ -1183,6 +1434,56 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 hcTierSelect.value = homeTier.toString();
             }
         }
+
+        // P1 / CastleSave metadata population
+        if (typeof this.parser.getCastleSaveMeta === 'function') {
+            const meta = this.parser.getCastleSaveMeta();
+            const vInput = document.getElementById('input-castle-version');
+            const vFmt = document.getElementById('label-castle-version-fmt');
+            if (vInput) {
+                vInput.value = meta.lastSavedVersion != null ? meta.lastSavedVersion : '';
+                vInput.oninput = () => {
+                    const raw = parseInt(vInput.value, 10);
+                    if (!isNaN(raw) && window.Castle && window.Castle.Save) {
+                        const dec = window.Castle.Save.decodeVersion(raw);
+                        vFmt.textContent = `(Versión: ${dec.major}.${dec.minor}.${dec.patch})`;
+                    } else {
+                        vFmt.textContent = '';
+                    }
+                };
+            }
+            if (vFmt) vFmt.textContent = meta.versionFormatted ? `(Versión: ${meta.versionFormatted})` : '';
+
+            const ptInput = document.getElementById('input-castle-playtime');
+            if (ptInput) ptInput.value = meta.playTimeFormatted || '0s';
+
+            const moonInput = document.getElementById('input-castle-moon');
+            if (moonInput && window.Castle && window.Castle.Moon) {
+                const pInfo = window.Castle.Moon.getPhase();
+                const name = window.Castle.Moon.getPhaseName();
+                moonInput.value = `${name} (${Math.round(pInfo.cyclePercent * 100)}%)`;
+            }
+
+            const cloudInput = document.getElementById('input-castle-cloudid');
+            if (cloudInput) cloudInput.value = meta.cloudSaveID || '';
+
+            const mVolInput = document.getElementById('input-castle-musicvol');
+            if (mVolInput && meta.musicVolume !== undefined) {
+                mVolInput.value = meta.musicVolume;
+                if (window.Castle && window.Castle.BGM && typeof window.Castle.BGM.setMusicVolume === 'function') {
+                    window.Castle.BGM.setMusicVolume(meta.musicVolume);
+                }
+            }
+
+            const sVolInput = document.getElementById('input-castle-sfxvol');
+            if (sVolInput && meta.sfxVolume !== undefined) sVolInput.value = meta.sfxVolume;
+
+            const fsInput = document.getElementById('input-castle-firstsaved');
+            if (fsInput) fsInput.value = meta.firstSavedDate ? meta.firstSavedDate.toLocaleString() : (meta.firstSavedOA ? meta.firstSavedOA.toString() : 'No registrado');
+
+            const lsInput = document.getElementById('input-castle-lastsaved');
+            if (lsInput) lsInput.value = meta.lastSavedDate ? meta.lastSavedDate.toLocaleString() : (meta.lastSavedOA ? meta.lastSavedOA.toString() : 'No registrado');
+        }
     }
 
     applyGeneralVars() {
@@ -1240,6 +1541,32 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             } else if (tier === 1 && !(hcAnd?.checked || hcIOS?.checked)) {
                 this.showToast('Casa ampliada aplicada, pero Homecoming está off: el juego puede no mostrar el 2º piso', 'warning');
             }
+        }
+
+        // P1 / CastleSave metadata writing
+        const cVer = document.getElementById('input-castle-version');
+        if (cVer && cVer.value.trim() !== '') {
+            const vNum = parseInt(cVer.value, 10);
+            if (!isNaN(vNum)) this.parser.writeGeneralVar('lastSavedVersion', vNum);
+        }
+        const cCloud = document.getElementById('input-castle-cloudid');
+        if (cCloud && cCloud.value !== undefined) {
+            this.parser.writeGeneralVar('cloudSaveID', cCloud.value.trim());
+        }
+        const cMVol = document.getElementById('input-castle-musicvol');
+        if (cMVol && cMVol.value.trim() !== '') {
+            const vol = parseFloat(cMVol.value);
+            if (!isNaN(vol)) {
+                this.parser.writeGeneralVar('musicVolume', vol);
+                if (window.Castle && window.Castle.BGM && typeof window.Castle.BGM.setMusicVolume === 'function') {
+                    window.Castle.BGM.setMusicVolume(vol);
+                }
+            }
+        }
+        const cSVol = document.getElementById('input-castle-sfxvol');
+        if (cSVol && cSVol.value.trim() !== '') {
+            const vol = parseFloat(cSVol.value);
+            if (!isNaN(vol)) this.parser.writeGeneralVar('sfxVolume', vol);
         }
 
         this.showToast("✅ Variables generales aplicadas");
@@ -1851,6 +2178,88 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
     }
 
+    createFurniturePlacement({ itemId, x = 0, y = 0, floor = 0, cluster = 0, isWall = false, flipped = false, orientation = 0 }) {
+        if (!this.parser || !this.parser.ast) return null;
+        const root = this.parser.ast;
+        let locData = null;
+        const locId = parseInt(cluster, 10) || 0;
+
+        const sublocations = root.children.find(c => c.name === 'sublocations');
+        if (sublocations) {
+            const sublocationsList = sublocations.children.find(c => c.constructor.name === 'OdinList');
+            if (sublocationsList && sublocationsList.elements) {
+                const locEntry = sublocationsList.elements.find(e => e.key && e.key.value === locId);
+                if (locEntry) locData = locEntry.value;
+            }
+        }
+        if (!locData && sublocations) {
+            const sublocationsList = sublocations.children.find(c => c.constructor.name === 'OdinList');
+            if (sublocationsList && sublocationsList.elements && sublocationsList.elements.length > 0) {
+                locData = sublocationsList.elements[0].value;
+            }
+        }
+        if (!locData) return null;
+
+        const listName = isWall ? 'wallFurniture' : 'furniture';
+        let furnitureListWrapper = locData.children.find(c => c.name === listName);
+        if (!furnitureListWrapper) return null;
+        let listNode = furnitureListWrapper.children.find(c => c.constructor.name === 'OdinList');
+        if (!listNode) return null;
+
+        let template = null;
+        const globalSubList = root.children.find(c => c.name === 'sublocations')?.children.find(c => c.constructor.name === 'OdinList');
+        if (globalSubList && globalSubList.elements) {
+            for (const sub of globalSubList.elements) {
+                const sData = sub.value;
+                const fWrap = sData.children.find(c => c.name === listName);
+                if (fWrap) {
+                    const lN = fWrap.children.find(c => c.constructor.name === 'OdinList');
+                    if (lN && lN.elements.length > 0) {
+                        template = lN.elements[0];
+                        break;
+                    }
+                }
+            }
+        }
+        if (!template) return null;
+
+        const clone = this.deepCloneNode(template);
+        const maxIdObj = { max: this.getMaxNodeId([root]) };
+        this.assignNewNodeIds(clone, maxIdObj);
+
+        const furnNode = clone.value;
+
+        const existingPids = new Set();
+        (this.parser.placements || []).forEach(p => {
+            if (p.placementID) existingPids.add(Number(p.placementID));
+        });
+        let newPlacementID = Math.floor(Math.random() * 1000000000) + 1000000000;
+        while (existingPids.has(newPlacementID)) {
+            newPlacementID++;
+        }
+        const pIdNode = furnNode.children.find(c => c.name === 'placementID');
+        if (pIdNode) pIdNode.value = newPlacementID;
+
+        const dummyPlacement = { furnNode: furnNode, isWall: isWall };
+        this.parser.applyMapChange(dummyPlacement, itemId, x, y, orientation);
+
+        const groupPos = furnNode.children.find(c => c.name === 'groupPosition');
+        const gNumNode = groupPos && (groupPos.children || []).find(c => c.name === 'groupNum');
+        if (isWall) {
+            if (gNumNode) gNumNode.value = parseInt(floor, 10) || 0;
+            const flipNode = groupPos && (groupPos.children || []).find(c => c.name === 'flipped');
+            if (flipNode) flipNode.value = !!flipped;
+        } else if (gNumNode) {
+            gNumNode.value = parseInt(floor, 10) || 0;
+        }
+
+        listNode.elements.push(clone);
+        this.parser.parseMap();
+
+        const created = (this.parser.placements || []).find(p => p.placementID === newPlacementID);
+        return created || null;
+    }
+
     executeAddFurniture() {
         const furnId = parseInt(this.addItemSelect.value);
         const x = parseInt(this.addItemX.value) || 0;
@@ -1865,103 +2274,29 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             return;
         }
 
-
         const locIdRaw = this.selectLocation.value;
-        const locId = parseInt(locIdRaw);
-        
+        const locId = parseInt(locIdRaw) || 0;
+        const isWallLayer = document.querySelector('input[name="map-layer"]:checked')?.value === 'wall';
+        const floor = isWallLayer
+            ? parseInt(document.getElementById('select-wall-group')?.value, 10) || 0
+            : parseInt(this.selectFloor.value, 10) || 0;
+
         try {
-            const root = this.parser.ast;
-            let locData = null;
-            
-            if (typeof locIdRaw === 'string' && locIdRaw.startsWith('train_vagon_')) {
-                const vagonIdx = parseInt(locIdRaw.split('_')[2]) - 1;
-                const trainSave = root.children.find(c => c.name === 'trainSave');
-                if (!trainSave) throw new Error('No se encontró trainSave');
-                const carriages = trainSave.children.find(c => c.name === 'carriages');
-                const carrList = carriages.children.find(c => c.constructor.name === 'OdinList');
-                locData = carrList.elements[vagonIdx];
-            } else {
-                if (isNaN(locId)) {
-                    this.showToast('Selecciona una ubicación válida', 'error');
-                    return;
-                }
-                const sublocations = root.children.find(c => c.name === 'sublocations');
-                if (!sublocations) throw new Error('No se encontró sublocations en el AST');
-                const sublocationsList = sublocations.children.find(c => c.constructor.name === 'OdinList');
-                const locEntry = sublocationsList.elements.find(e => e.key.value === locId);
-                if (!locEntry) throw new Error('Ubicación no encontrada en el AST');
-                locData = locEntry.value;
-            }
-
-            const isWallLayer = document.querySelector('input[name="map-layer"]:checked')?.value === 'wall';
-            const listName = isWallLayer ? 'wallFurniture' : 'furniture';
-
-            const furnitureListWrapper = locData.children.find(c => c.name === listName);
-            if (!furnitureListWrapper) throw new Error(isWallLayer
-                ? 'Esta ubicación no tiene lista de wallFurniture (pared).'
-                : 'No se encontró lista de furniture');
-            const listNode = furnitureListWrapper.children.find(c => c.constructor.name === 'OdinList');
-            if (!listNode) throw new Error('Lista de muebles vacía o ilegible');
-            
-            // Find a clone template from ANY sublocation (same list type)
-            let template = null;
-            const globalSublocationsList = root.children.find(c => c.name === 'sublocations')?.children.find(c => c.constructor.name === 'OdinList');
-            if (globalSublocationsList && globalSublocationsList.elements) {
-                for (const sub of globalSublocationsList.elements) {
-                    const subLocData = sub.value;
-                const furnListWrap = subLocData.children.find(c => c.name === listName);
-                if (furnListWrap) {
-                    const lNode = furnListWrap.children.find(c => c.constructor.name === 'OdinList');
-                    if (lNode && lNode.elements.length > 0) {
-                        template = lNode.elements[0];
-                        break;
-                                        }
-                }
-            }
-            }
-            if (!template) throw new Error(isWallLayer
-                ? 'No hay un mueble de pared en el save para usar de molde. Colocá uno en el juego primero.'
-                : 'No se encontró ningún mueble en todo el mapa para usar como molde.');
-
-            // Clone and Modify
-            const clone = this.deepCloneNode(template);
-            
-            const maxIdObj = { max: this.getMaxNodeId([root]) };
-            this.assignNewNodeIds(clone, maxIdObj);
-            
-            const furnNode = clone.value;
-            
-            // Generate unique placementID
-            let maxPlacementID = 0;
-            this.parser.placements.forEach(p => {
-                if (p.placementID > maxPlacementID) maxPlacementID = p.placementID;
+            const placement = this.createFurniturePlacement({
+                itemId: furnId,
+                x,
+                y,
+                floor,
+                cluster: locId,
+                isWall: isWallLayer,
+                flipped: isWallLayer
             });
-            const newPlacementID = maxPlacementID + 1;
-            const pIdNode = furnNode.children.find(c => c.name === 'placementID');
-            if (pIdNode) pIdNode.value = newPlacementID;
-            
-            const dummyPlacement = { furnNode: furnNode, isWall: isWallLayer };
-            this.parser.applyMapChange(dummyPlacement, furnId, x, y, 0);
+            if (!placement) throw new Error('No se pudo crear el mueble en la estructura de guardado');
 
-            const groupPos = furnNode.children.find(c => c.name === 'groupPosition');
-            const gNumNode = groupPos && (groupPos.children || []).find(c => c.name === 'groupNum');
-            if (isWallLayer) {
-                const wallGroup = document.getElementById('select-wall-group')?.value;
-                if (gNumNode) gNumNode.value = parseInt(wallGroup, 10) || 0;
-                const flipNode = groupPos && (groupPos.children || []).find(c => c.name === 'flipped');
-                if (flipNode && flipNode.value === undefined) flipNode.value = true;
-            } else if (gNumNode) {
-                gNumNode.value = parseInt(this.selectFloor.value) || 0;
-            }
-            
-            listNode.elements.push(clone);
-            this.parser.parseMap();
             this.map.selectedPlacement = null;
             this.map.draw();
             this.addItemEditor.classList.add('hidden');
-            
             this.showToast('✅ Mueble inyectado con éxito!');
-            
         } catch (err) {
             console.error(err);
             this.showToast('Error al inyectar mueble: ' + err.message, 'error');

@@ -133,7 +133,30 @@ class IsometricMap {
     }
 
     // Tileset Image Loader (for Wallpapers/Floors)
-        _getMaskImage(type, floorKey, loc) {
+    _getMaskByName(maskFilename, loc) {
+        if (!maskFilename) return null;
+        if (!maskFilename.endsWith('.png')) maskFilename += '.png';
+        const META = (window.MAP_META && window.MAP_META[loc]) || {};
+        let exportDir = META.exportDir != null ? META.exportDir : (loc === 0 ? 2 : loc);
+        const cacheKey = 'mask_' + exportDir + '_' + maskFilename;
+        if (this._imgCache[cacheKey] !== undefined) {
+            return this._imgCache[cacheKey];
+        }
+        this._imgCache[cacheKey] = false;
+        const img = new Image();
+        img.onload = () => {
+            this._imgCache[cacheKey] = img;
+            this._bakedBgKey = null;
+            this.draw();
+        };
+        img.onerror = () => {
+            this._imgCache[cacheKey] = false;
+        };
+        img.src = 'images/maps/Exportado_level' + exportDir + '/' + maskFilename;
+        return false;
+    }
+
+    _getMaskImage(type, floorKey, loc) {
         // U1: resolver exportDir/assembled/mask via MAP_META y surface.mask si existe, fallback viejo
         const META = (window.MAP_META && window.MAP_META[loc]) || {};
         let exportDir = META.exportDir != null ? META.exportDir : (loc === 0 ? 2 : loc);
@@ -154,39 +177,17 @@ class IsometricMap {
                 }
                 return false;
             }) || null;
-            if (surface && surface.exportDir != null) exportDir = surface.exportDir;
             if (surface && surface.mask) {
-                const cacheKey2 = 'mask_' + exportDir + '_' + surface.mask;
-                if (this._imgCache[cacheKey2] !== undefined) return this._imgCache[cacheKey2];
-                this._imgCache[cacheKey2] = false;
-                const img2 = new Image();
-                img2.onload = () => { this._imgCache[cacheKey2] = img2; this.draw(); };
-                img2.onerror = () => { this._imgCache[cacheKey2] = false; };
-                img2.src = 'images/maps/Exportado_level' + exportDir + '/' + surface.mask;
-                return false;
+                return this._getMaskByName(surface.mask, loc);
             }
         }
-        const cacheKey = 'mask_' + exportDir + '_' + type + '_' + floorKey;
-        if (this._imgCache[cacheKey] !== undefined) {
-            return this._imgCache[cacheKey];
-        }
-        this._imgCache[cacheKey] = false;
-        const img = new Image();
-        img.onload = () => {
-            this._imgCache[cacheKey] = img;
-            this.draw();
-        };
-        img.onerror = () => {
-            this._imgCache[cacheKey] = false;
-        };
         let maskName = 'mask_' + type + '_' + floorKey;
         if (type === 'wall' && String(loc) === '0') {
             const isRight = (floorKey % 2) !== 0;
             const fNum = Math.floor(floorKey / 2);
             maskName = 'mask_wall' + (isRight ? 'R' : 'L') + '_' + fNum;
         }
-        img.src = 'images/maps/Exportado_level' + exportDir + '/' + maskName + '.png';
-        return false;
+        return this._getMaskByName(maskName, loc);
     }
 
     _getTilesetTexture(type, id) {
@@ -203,12 +204,56 @@ class IsometricMap {
         img.src = `images/tilesets/${type === 'wall' ? 'wallpapers' : type + 's'}/${id}.png`;
         img.onload = () => {
             this._patternCache[cacheKey] = { img: img, pattern: null };
+            this._bakedBgKey = null;
             this.draw(); // Redraw map once the tileset loads
         };
         img.onerror = () => {
             this._patternCache[cacheKey] = { error: true };
         }
         return null;
+    }
+
+    getSurfaceCoveringId(surf, targetLoc) {
+        if (!surf) return null;
+        const isFloor = surf.kind === 'floor';
+        if (isFloor) {
+            const floorDict = this.app && this.app.parser && this.app.parser.floors;
+            if (floorDict && floorDict[targetLoc] && floorDict[targetLoc].length) {
+                const fList = floorDict[targetLoc];
+                const match = fList.find(f => (surf.anchorID != null && Number(f.key) === Number(surf.anchorID)) || Number(f.key) === Number(surf.groupNum));
+                if (match && match.id > 0) return match.id;
+                if (fList[surf.groupNum] && fList[surf.groupNum].id > 0) return fList[surf.groupNum].id;
+            }
+            if (surf.defaultCoverId !== undefined) return surf.defaultCoverId;
+            return (surf.groupNum < 2) ? (surf.groupNum === 0 ? 69 : 750) : null;
+        } else {
+            const wpDict = this.app && this.app.parser && this.app.parser.wallpapers;
+            if (wpDict && wpDict[targetLoc] && wpDict[targetLoc].length) {
+                const wList = wpDict[targetLoc];
+                if (surf.anchorID != null) {
+                    const match = wList.find(w => Number(w.key) === Number(surf.anchorID));
+                    if (match && match.id > 0) return match.id;
+                }
+                // Unity Treehouse ordering:
+                // 0: Floor 0 Left (flipped=true)
+                // 1: Floor 1 Left (flipped=true)
+                // 2: Floor 1 Right (flipped=false)
+                // 3: Floor 0 Right (flipped=false)
+                if (Number(targetLoc) === 0 && wList.length >= 4) {
+                    const idx = surf.flipped ? (surf.groupNum === 0 ? 0 : 1) : (surf.groupNum === 0 ? 3 : 2);
+                    if (wList[idx] && wList[idx].id > 0) return wList[idx].id;
+                } else {
+                    const idx = (surf.groupNum * 2) + (surf.flipped ? 0 : 1);
+                    if (wList[idx] && wList[idx].id > 0) return wList[idx].id;
+                }
+            }
+            if (surf.defaultCoverId !== undefined) return surf.defaultCoverId;
+            if (Number(targetLoc) === 0) {
+                if (surf.groupNum === 0) return surf.flipped ? 755 : 2127;
+                if (surf.groupNum === 1) return surf.flipped ? 752 : 418;
+            }
+            return null;
+        }
     }
 
     // ── Size helpers ──────────────────────────────────────────────────────
@@ -258,33 +303,43 @@ class IsometricMap {
             return this._imgCache[cacheKey];
         }
 
-        this._imgCache[cacheKey] = false;
+        // Si es una imagen trasera y ya tenemos la frontal en caché, usarla temporalmente
+        // de fallback para que el mueble NUNCA desaparezca mientras carga el sprite trasero.
+        const cachedFront = this._imgCache[frontKey];
+        if (isBack && cachedFront && cachedFront !== false) {
+            this._imgCache[cacheKey] = cachedFront;
+        } else {
+            this._imgCache[cacheKey] = false;
+        }
         
         const loadImg = (keyToLoad, fallbackCb) => {
+            const isBackImage = String(keyToLoad).includes('_BACK');
+            // La gran mayoría de imágenes _BACK (2515 de ellas) se llaman FURN_xxx_BACK.png (sin _0).
+            // Para las frontales, se llaman FURN_xxx_0.png.
+            const firstSrc = isBackImage ? `images/items/FURN_${keyToLoad}.png?v=5` : `images/items/FURN_${keyToLoad}_0.png?v=5`;
+            const secondSrc = isBackImage ? `images/items/FURN_${keyToLoad}_0.png?v=5` : `images/items/FURN_${keyToLoad}.png?v=5`;
+
             const img = new Image();
             img.onload = () => { this._imgCache[cacheKey] = img; this.draw(); };
             img.onerror = () => {
                 const img2 = new Image();
                 img2.onload = () => { this._imgCache[cacheKey] = img2; this.draw(); };
                 img2.onerror = fallbackCb;
-                img2.src = `images/items/FURN_${keyToLoad}.png?v=5`;
+                img2.src = secondSrc;
             };
-            img.src = `images/items/FURN_${keyToLoad}_0.png?v=5`;
+            img.src = firstSrc;
         };
 
         if (tryOn) {
             // U4: ON first, fallback a normal
             loadImg(frontKey, () => {
-                // fallback normal _0
                 const normalKey = isBack ? `${item_id}_BACK` : `${item_id}`;
                 const normalCache = normalKey;
-                // reutilizar cache normal si ya existe
                 if (this._imgCache[normalCache] && this._imgCache[normalCache] !== false) {
                     this._imgCache[cacheKey] = this._imgCache[normalCache];
                     this.draw();
                 } else {
                     loadImg(normalKey.replace('_BACK','_BACK').replace('_ON',''), () => {
-                        // último fallback: intentar sin _0
                         const img2 = new Image();
                         img2.onload = () => { this._imgCache[cacheKey] = img2; this.draw(); };
                         img2.onerror = () => { this._imgCache[cacheKey] = null; this.draw(); };
@@ -292,17 +347,19 @@ class IsometricMap {
                     });
                 }
             });
-            // para ON no usar back/front complejo en este paso
             if (isBack) { /* already handled via frontKey ON_BACK */ }
         } else if (isBack) {
-            // Try loading back image, if it fails, load front image instead
+            // Intentar cargar la imagen trasera; si no existe, usar la frontal con oscurecido
             loadImg(backKey, () => {
-                // Back image failed completely, fallback to front image
-                // The draw logic will apply the darken filter for orientation 2/3
-                loadImg(frontKey, () => {
-                    this._imgCache[cacheKey] = null;
+                if (this._imgCache[frontKey] && this._imgCache[frontKey] !== false) {
+                    this._imgCache[cacheKey] = this._imgCache[frontKey];
                     this.draw();
-                });
+                } else {
+                    loadImg(frontKey, () => {
+                        this._imgCache[cacheKey] = null;
+                        this.draw();
+                    });
+                }
             });
         } else {
             // Normal front load
@@ -312,7 +369,7 @@ class IsometricMap {
             });
         }
         
-        return false;
+        return this._imgCache[cacheKey];
     }
 
     _contentPivot(img) {
@@ -412,34 +469,74 @@ class IsometricMap {
             const sel = document.getElementById('select-location');
             mapId = sel ? parseInt(sel.value, 10) : 0;
         }
-        const off = this.getFloorOffset(floorNum, mapId);
-        let cellW = this.CELL_W;
-        let cellH = this.CELL_H;
-        if (window.mapsAtlas) {
-            const surf = this.surfaceFor(mapId, floorNum, false, false);
-            if (surf && surf.cell) {
-                cellW = surf.cell.w || this.CELL_W;
-                cellH = surf.cell.h || this.CELL_H;
-            } else if (window.tsukiDebugGrid === '1' || localStorage.tsukiDebugGrid === '1') {
-                console.debug('[surfaceFor miss iso]', { mapId, floorNum });
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+        const surf = this.surfaceFor(mapId, floorNum, false, false);
+        if (surf) {
+            let ox = 0, oy = 0;
+            if (surf.origin) {
+                ox = surf.origin.x;
+                oy = surf.origin.y;
+            } else if (surf.origin_px) {
+                ox = (surf.origin_px.x - 1235) / 150;
+                oy = (1257 - surf.origin_px.y) / 150;
             }
+            const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
+            const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+            
+            const worldX = ox + (x - y) * (cw_u / 2);
+            const worldY = oy - (x + y) * (ch_u / 2);
+            
+            return {
+                x: this.offsetX + worldX * 150 * u,
+                y: this.offsetY - worldY * 150 * u
+            };
         }
         
-        const isoX = (x - y) * (cellW / 2) + off.x;
-        const isoY = -(x + y) * (cellH / 2) + off.y; // Negative so it goes UP the screen
+        const cellW = this.CELL_W;
+        const cellH = this.CELL_H;
+        const isoX = (x - y) * (cellW / 2);
+        const isoY = (x + y) * (cellH / 2);
         return {
             x: isoX * this.scale + this.offsetX,
-            y: isoY * this.scale + this.offsetY,
+            y: isoY * this.scale + this.offsetY
         };
     }
 
-    getCartesianCoords(screenX, screenY, floorNum = 0) {
+    getCartesianCoords(screenX, screenY, floorNum = 0, mapId) {
+        if (mapId == null) {
+            const sel = document.getElementById('select-location');
+            mapId = sel ? parseInt(sel.value, 10) : 0;
+        }
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         if (layerRadio && layerRadio.value === 'wall') {
             return {
                 x: Math.floor((screenX - 100) / this.gridSize),
                 y: Math.floor((screenY - 100) / this.gridSize)
             };
+        }
+        const surf = this.surfaceFor(mapId, floorNum, false, false);
+        if (surf) {
+            const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+            const u = _bgo * this.scale;
+            let ox = 0, oy = 0;
+            if (surf.origin) {
+                ox = surf.origin.x;
+                oy = surf.origin.y;
+            } else if (surf.origin_px) {
+                ox = (surf.origin_px.x - 1235) / 150;
+                oy = (1257 - surf.origin_px.y) / 150;
+            }
+            const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
+            const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+
+            const worldX = (screenX - this.offsetX) / (150 * u);
+            const worldY = (this.offsetY - screenY) / (150 * u);
+            const wx = worldX - ox;
+            const wy = worldY - oy;
+            const U = wx / (cw_u / 2);
+            const V = -wy / (ch_u / 2);
+            return { x: (U + V) / 2, y: (V - U) / 2 };
         }
         const off = this.getFloorOffset(floorNum);
         const isoX = (screenX - this.offsetX) / this.scale - (off ? off.x : 0);
@@ -454,9 +551,9 @@ class IsometricMap {
         const rect = this.canvas.parentElement.getBoundingClientRect();
         this.canvas.width  = rect.width;
         this.canvas.height = rect.height;
-        // Center camera
+        // Center camera on level origin (0, 0)
         this.offsetX = this.canvas.width  / 2;
-        this.offsetY = this.canvas.height * 0.65;
+        this.offsetY = this.canvas.height / 2;
         this.draw();
     }
 
@@ -469,7 +566,13 @@ class IsometricMap {
         this._bgCache[imgName] = false;
         img.onload = () => { this._bgCache[imgName] = img; this.draw(); };
         img.onerror = () => { this._bgCache[imgName] = null; };
-        img.src = `images/all_sprites/${imgName}`;
+        if (imgName.startsWith('images/') || imgName.startsWith('data/')) {
+            img.src = imgName;
+        } else if (imgName.startsWith('../maps/')) {
+            img.src = imgName.replace('../maps/', 'images/maps/');
+        } else {
+            img.src = `images/all_sprites/${imgName}`;
+        }
         return false;
     }
 
@@ -610,46 +713,42 @@ class IsometricMap {
     }
 
     getWallIsoCoords(wx, wy, flipped, bbox, floorNum = 0, mapId) {
-        let isPlay = document.body.classList.contains('play-mode');
-        let isGrid = document.body.classList.contains('grid-mode');
         if (mapId == null) { const sel=document.getElementById('select-location'); mapId = sel ? parseInt(sel.value,10):0; }
-        if (window.mapsAtlas && (isPlay || isGrid)) {
-            const surf = this.surfaceFor(mapId, floorNum, true, flipped);
-            if (surf) {
-                const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
-                const oX = surf.origin_px.x * _bgo;
-                const oY = surf.origin_px.y * _bgo;
-                const cellW = surf.cell && surf.cell.w ? surf.cell.w : this.CELL_W;
-                const cellH = surf.cell && surf.cell.h ? surf.cell.h : this.CELL_H;
-                
-                let ix, iy;
-                if (!flipped) {
-                    ix = oX - wx * (cellW / 2);
-                    iy = oY - wx * (cellH / 2) - wy * cellH;
-                } else {
-                    ix = oX + wx * (cellW / 2);
-                    iy = oY - wx * (cellH / 2) - wy * cellH;
-                }
-                
-                return {
-                    x: ix * this.scale + this.offsetX,
-                    y: iy * this.scale + this.offsetY
-                };
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+        const surf = this.surfaceFor(mapId, floorNum, true, flipped);
+        if (surf) {
+            let ox = 0, oy = 0;
+            if (surf.origin) {
+                ox = surf.origin.x;
+                oy = surf.origin.y;
+            } else if (surf.origin_px) {
+                ox = (surf.origin_px.x - 1235) / 150;
+                oy = (1257 - surf.origin_px.y) / 150;
             }
+            const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
+            const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+            
+            let worldX, worldY;
+            if (!flipped) {
+                worldX = ox + wx * (cw_u / 2);
+                worldY = oy - wx * (ch_u / 2) - wy * ch_u;
+            } else {
+                worldX = ox + wx * (cw_u / 2);
+                worldY = oy - wx * (ch_u / 2) - wy * ch_u;
+            }
+            
+            return {
+                x: this.offsetX + worldX * 150 * u,
+                y: this.offsetY - worldY * 150 * u
+            };
         }
         
-        // Fallback al motor original 3D de _drawIsoWallRoom
+        // Fallback al motor original
         const box = bbox || this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 16, ymax: 16 };
-        const dummyFloorOffset = this.getFloorOffset(floorNum);
         const base = flipped
             ? this.getIsoCoords(wx, box.ymax, floorNum)
             : this.getIsoCoords(box.xmax, wx, floorNum);
-            
-        const customWallOffset = this.getWallOffset(floorNum, flipped);
-        if (customWallOffset) {
-            base.x = base.x - (dummyFloorOffset.x * this.scale) + (customWallOffset.x * this.scale);
-            base.y = base.y - (dummyFloorOffset.y * this.scale) + (customWallOffset.y * this.scale);
-        }
         return { x: base.x, y: base.y - wy * this.CELL_H * this.scale };
     }
 
@@ -669,38 +768,34 @@ class IsometricMap {
     }
 
     // Inversa de getWallIsoCoords. flipped elige la cara (izq/der).
-    screenToWallGrid(screenX, screenY, flipped, bbox, floorNum = 0) {
+    screenToWallGrid(screenX, screenY, flipped, bbox, floorNum = 0, mapId) {
         let isPlay = document.body.classList.contains('play-mode');
         let isGrid = document.body.classList.contains('grid-mode');
+        if (mapId == null) { const sel = document.getElementById('select-location'); mapId = sel ? parseInt(sel.value, 10) : 0; }
         
         if (window.mapsAtlas && (isPlay || isGrid)) {
-            const surf = window.mapsAtlas.find(s => s.kind === 'wall' && String(s.groupNum) === String(floorNum) && !!s.flipped === !!flipped);
+            const surf = this.surfaceFor(mapId, floorNum, true, flipped);
             if (surf) {
-                const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
-                const oX = surf.origin_px.x * _bgo;
-                const oY = surf.origin_px.y * _bgo;
-                const cellW = surf.cell && surf.cell.w ? surf.cell.w : this.CELL_W;
-                const cellH = surf.cell && surf.cell.h ? surf.cell.h : this.CELL_H;
-                
-                const ix = (screenX - this.offsetX) / this.scale;
-                const iy = (screenY - this.offsetY) / this.scale;
-                
-                // if !flipped:
-                // ix = oX - wx * cellW/2 => wx = (oX - ix) / (cellW/2)
-                // iy = oY - wx * cellH/2 - wy * cellH => wy = (oY - iy - wx * cellH/2) / cellH
-                
-                // if flipped:
-                // ix = oX + wx * cellW/2 => wx = (ix - oX) / (cellW/2)
-                
-                if (!flipped) {
-                    const wx = (oX - ix) / (cellW / 2);
-                    const wy = (oY - iy - wx * (cellH / 2)) / cellH;
-                    return { x: wx, y: wy };
-                } else {
-                    const wx = (ix - oX) / (cellW / 2);
-                    const wy = (oY - iy - wx * (cellH / 2)) / cellH;
-                    return { x: wx, y: wy };
+                let ox = 0, oy = 0;
+                if (surf.origin) {
+                    ox = surf.origin.x;
+                    oy = surf.origin.y;
+                } else if (surf.origin_px) {
+                    ox = (surf.origin_px.x - 1235) / 150;
+                    oy = (1257 - surf.origin_px.y) / 150;
                 }
+                const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
+                const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+                const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                const u = _bgo * this.scale;
+                const factor = 150 * u;
+
+                const worldX = (screenX - this.offsetX) / factor;
+                const worldY = (this.offsetY - screenY) / factor;
+
+                const wx = (worldX - ox) / (cw_u / 2);
+                const wy = (oy - worldY - wx * (ch_u / 2)) / ch_u;
+                return { x: wx, y: wy };
             }
         }
         
@@ -792,12 +887,73 @@ class IsometricMap {
         return info;
     }
 
+    _isCellInSurfacePoly(surf, gx, gy, w = 1, l = 1) {
+        if (!surf || !surf.poly || surf.poly.length < 3) return true;
+        const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
+        const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+        
+        // Check center of the item
+        const cx = gx + w / 2;
+        const cy = gy + l / 2;
+        const cwx = (cx - cy) * (cw_u / 2);
+        const cwy = -(cx + cy) * (ch_u / 2);
+        if (this._pointInPoly(cwx, cwy, surf.poly)) return true;
+
+        // Check origin of the tile
+        const owx = (gx - gy) * (cw_u / 2);
+        const owy = -(gx + gy) * (ch_u / 2);
+        if (this._pointInPoly(owx, owy, surf.poly)) return true;
+
+        // Check the remaining corners
+        const corners = [
+            [gx + w, gy],
+            [gx, gy + l],
+            [gx + w, gy + l]
+        ];
+        for (const [px, py] of corners) {
+            const wx = (px - py) * (cw_u / 2);
+            const wy = -(px + py) * (ch_u / 2);
+            if (this._pointInPoly(wx, wy, surf.poly)) return true;
+        }
+
+        return false;
+    }
+
     _clampFloorGrid(p, x, y) {
+        const isPlay = document.body.classList.contains('play-mode');
+        const isGrid = document.body.classList.contains('grid-mode');
         const locVal = document.getElementById('select-location')?.value;
-        const loc = locVal !== '' && locVal != null ? parseInt(locVal, 10) : 0;
-        const n = this._floorExtentForLoc(loc) || FLOOR_GRID_N;
+        const targetLoc = p.cluster != null ? p.cluster : (locVal !== '' && locVal != null ? parseInt(locVal, 10) : 0);
         const sz = this.getRotatedSize(p.item_id, p.orientation);
         const w = sz.w || 1, l = sz.l || 1;
+        
+        if (window.mapsAtlas && (isPlay || isGrid)) {
+            const surf = this.surfaceFor(targetLoc, p.floor, false, false);
+            if (surf && surf.poly && surf.poly.length > 2) {
+                // Free movement inside the surface polygon limits
+                if (this._isCellInSurfacePoly(surf, x, y, w, l)) {
+                    return { x, y };
+                }
+                const last = this._dragSnap || { x: p.x, y: p.y };
+                if (this._isCellInSurfacePoly(surf, x, last.y, w, l)) {
+                    return { x, y: last.y };
+                }
+                if (this._isCellInSurfacePoly(surf, last.x, y, w, l)) {
+                    return { x: last.x, y };
+                }
+                if (this._isCellInSurfacePoly(surf, last.x, last.y, w, l)) {
+                    return { x: last.x, y: last.y };
+                }
+                return { x, y };
+            }
+            const maxCols = (surf && surf.cols) || 16;
+            const maxRows = (surf && surf.rows) || 16;
+            return {
+                x: Math.max(0, Math.min(maxCols - w, x)),
+                y: Math.max(0, Math.min(maxRows - l, y))
+            };
+        }
+        const n = this._floorExtentForLoc(targetLoc) || FLOOR_GRID_N;
         return {
             x: Math.max(0, Math.min(n - w, x)),
             y: Math.max(0, Math.min(n - l, y))
@@ -807,6 +963,21 @@ class IsometricMap {
     _clampWallGrid(p, x, y) {
         const sz = this.getWallSize(p.item_id);
         const w = sz.w || 1, h = sz.h || 1;
+        const isPlay = document.body.classList.contains('play-mode');
+        const isGrid = document.body.classList.contains('grid-mode');
+        
+        if (window.mapsAtlas && (isPlay || isGrid)) {
+            const locVal = document.getElementById('select-location')?.value;
+            const targetLoc = p.cluster != null ? p.cluster : (locVal !== '' && locVal != null ? parseInt(locVal, 10) : 0);
+            const surf = this.surfaceFor(targetLoc, p.floor, true, p.flipped);
+            const maxCols = (surf && surf.cols) || 16;
+            const maxRows = (surf && surf.rows) || 16;
+            return {
+                x: Math.max(0, Math.min(maxCols - w, x)),
+                y: Math.max(0, Math.min(maxRows - h, y))
+            };
+        }
+
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
         if (isWallLayer) {
@@ -866,42 +1037,135 @@ class IsometricMap {
     }
 
 
-    _hitTestPlaySurface(screenX, screenY) {
+    _hitTestPlaySurface(screenX, screenY, preferredKind = null) {
         if (!window.mapsAtlas) return null;
         if (!document.body.classList.contains('play-mode')) return null;
-        
-        for (let g = 2; g >= 0; g--) {
-            // Check walls first (they occlude floors)
-            const walls = window.mapsAtlas.filter(s => s.kind === 'wall' && String(s.groupNum) === String(g));
-            // We check both left (flipped=false) and right (flipped=true) walls
-            for (let wSurf of walls) {
-                const isRightWall = !!wSurf.flipped;
-                const dummyBbox = this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 16, ymax: 16 };
-                const wCoords = this.screenToWallGrid(screenX, screenY, isRightWall, dummyBbox, g);
-                const wx = Math.floor(wCoords.x);
-                const wy = Math.floor(wCoords.y);
-                if (wx >= 0 && wx < wSurf.cols && wy >= 0 && wy < wSurf.rows) {
-                    return { kind: 'wall', floorNum: g, x: wx, y: wy, flipped: isRightWall };
-                }
-            }
-            
-            // Check floors
-            const surf = window.mapsAtlas.find(s => s.kind === 'floor' && String(s.groupNum) === String(g));
-            if (surf) {
-                const off = this.getFloorOffset(g);
-                const dx = (screenX - this.offsetX) / this.scale - off.x;
-                const dy = (screenY - this.offsetY) / this.scale - off.y;
-                const cellW = surf.cell && surf.cell.w ? surf.cell.w : this.CELL_W;
-                const cellH = surf.cell && surf.cell.h ? surf.cell.h : this.CELL_H;
-                const cx = (dx / (cellW / 2) - dy / (cellH / 2)) / 2;
-                const cy = -(dy / (cellH / 2) + dx / (cellW / 2)) / 2;
-                const gridX = Math.floor(cx);
-                const gridY = Math.floor(cy);
-                if (gridX >= 0 && gridX < surf.cols && gridY >= 0 && gridY < surf.rows) {
-                    return { kind: 'floor', floorNum: g, x: gridX, y: gridY };
-                }
+        const sel = document.getElementById('select-location');
+        const targetLoc = sel && sel.value !== "" ? parseInt(sel.value, 10) : 0;
+
+        const showHC = (() => {
+            try { if (window.Flags) return window.Flags.get('homecomingUpdates') === 1; } catch(e) {}
+            if (this.app && this.app.parser && this.app.parser.generalVars && this.app.parser.generalVars.homecomingUpdates) return this.app.parser.generalVars.homecomingUpdates.value === 1;
+            if (this.app && this.app.parser && typeof this.app.parser.getHomeCurrSLocData === 'function') return this.app.parser.getHomeCurrSLocData() === 1;
+            return false;
+        })();
+
+        // Infer preferredKind if not explicitly given
+        if (!preferredKind) {
+            if (this.draggedInventoryItem && this.draggedInventoryItem.item_id) {
+                const isW = this.isWallFurniture(this.draggedInventoryItem.item_id);
+                const isC = this.isCovering(this.draggedInventoryItem.item_id);
+                preferredKind = (isW || isC === 'wallpaper') ? 'wall' : 'floor';
+            } else if (this.selectedPlacement) {
+                preferredKind = this.selectedPlacement.isWall ? 'wall' : 'floor';
             }
         }
+
+        const floorOrder = [4, 1, 0, 2, 3];
+
+        const testFloor = (g) => {
+            const surf = this.surfaceFor(targetLoc, g, false, false);
+            if (!surf) return null;
+            const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+            const u = _bgo * this.scale;
+            let ox = 0, oy = 0;
+            if (surf.origin) {
+                ox = surf.origin.x;
+                oy = surf.origin.y;
+            } else if (surf.origin_px) {
+                ox = (surf.origin_px.x - 1235) / 150;
+                oy = (1257 - surf.origin_px.y) / 150;
+            }
+            const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
+            const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+
+            const worldX = (screenX - this.offsetX) / (150 * u);
+            const worldY = (this.offsetY - screenY) / (150 * u);
+            const wx = worldX - ox;
+            const wy = worldY - oy;
+            const U = wx / (cw_u / 2);
+            const V = -wy / (ch_u / 2);
+            const cx = (U + V) / 2;
+            const cy = (V - U) / 2;
+            const gridX = Math.round(cx);
+            const gridY = Math.round(cy);
+
+            let isInside = false;
+            if (surf.poly && surf.poly.length > 2) {
+                isInside = this._pointInPoly(wx, wy, surf.poly);
+            } else {
+                const cols = surf.cols || 16;
+                const rows = surf.rows || 16;
+                isInside = (gridX >= 0 && gridX < cols && gridY >= 0 && gridY < rows);
+            }
+
+            if (isInside) {
+                return {
+                    kind: 'floor',
+                    floorNum: g,
+                    x: gridX,
+                    y: gridY,
+                    rawX: cx,
+                    rawY: cy,
+                    surf: surf
+                };
+            }
+            return null;
+        };
+
+        const testWall = (g) => {
+            const walls = window.mapsAtlas.filter(s => s.kind === 'wall' && Number(s.groupNum) === g && String(s.mapId) === String(targetLoc));
+            for (let wSurf of walls) {
+                const isFlipped = !!wSurf.flipped;
+                const dummyBbox = this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 16, ymax: 16 };
+                const wCoords = this.screenToWallGrid(screenX, screenY, isFlipped, dummyBbox, g, targetLoc);
+                const wx = wCoords.x;
+                const wy = wCoords.y;
+                const cols = wSurf.cols || 16;
+                const rows = wSurf.rows || 16;
+                if (wx >= -0.25 && wx <= cols + 0.25 && wy >= -0.25 && wy <= rows + 0.25) {
+                    return {
+                        kind: 'wall',
+                        floorNum: g,
+                        x: Math.max(0, Math.min(cols, Math.round(wx))),
+                        y: Math.max(0, Math.min(rows, Math.round(wy))),
+                        rawX: wx,
+                        rawY: wy,
+                        flipped: isFlipped,
+                        surf: wSurf
+                    };
+                }
+            }
+            return null;
+        };
+
+        if (preferredKind === 'floor') {
+            for (const g of floorOrder) {
+                if (g === 4 && !showHC) continue;
+                const hit = testFloor(g);
+                if (hit) return hit;
+            }
+            return null;
+        }
+
+        if (preferredKind === 'wall') {
+            for (const g of floorOrder) {
+                if (g === 4 && !showHC) continue;
+                const hit = testWall(g);
+                if (hit) return hit;
+            }
+            return null;
+        }
+
+        // Neutral: prioritize floors, then walls
+        for (const g of floorOrder) {
+            if (g === 4 && !showHC) continue;
+            const fHit = testFloor(g);
+            if (fHit) return fHit;
+            const wHit = testWall(g);
+            if (wHit) return wHit;
+        }
+
         return null;
     }
 
@@ -936,12 +1200,12 @@ class IsometricMap {
     _isAreaOccupied(floor, x, y, w, l) {
         if (!this.app || !this.app.parser) return false;
         const targetLocStr = document.getElementById('select-location')?.value;
-        const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
+        const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 0;
         
         for (const p of this.app.parser.placements) {
             if (p.cluster !== targetLoc || p.isWall || p.item_id === -1) continue;
             if (Number(p.floor) !== Number(floor)) continue;
-            if (p === this.isItemDragging) continue; // Si estamos arrastrando uno existente
+            if (p === this.isItemDragging || (this.isItemDragging && p === this.selectedPlacement)) continue; // Si estamos arrastrando uno existente
             
             const sz = this.getRotatedSize(p.item_id, p.orientation);
             // Footprint de p: p.x hasta p.x + sz.w, p.y hasta p.y + sz.l
@@ -951,6 +1215,44 @@ class IsometricMap {
             }
         }
         return false;
+    }
+
+    // P4 / CastleGrid integration: find the nearest free placement footprint using spiral search
+    findNearestFreeSpot(floor, startX, startY, w, l, maxRings = 15) {
+        if (!this._isAreaOccupied(floor, startX, startY, w, l)) {
+            return { x: startX, y: startY };
+        }
+        if (!window.Castle || !window.Castle.Grid) return null;
+        const total = (2 * maxRings + 1) * (2 * maxRings + 1);
+        for (let i = 1; i < total; i++) {
+            const offset = window.Castle.Grid.spiral(i);
+            const candX = startX + offset.x;
+            const candY = startY + offset.y;
+            if (!this._isAreaOccupied(floor, candX, candY, w, l)) {
+                return { x: candX, y: candY };
+            }
+        }
+        return null;
+    }
+
+    // P4 / CastleGrid integration: get exterior perimeter grids around placed furniture
+    getFurniturePerimeter(placement) {
+        if (!placement) return [];
+        const sz = this.getRotatedSize(placement.item_id, placement.orientation || 0);
+        if (window.Castle && window.Castle.Grid) {
+            return window.Castle.Grid.getGridsAround({ x: placement.x, y: placement.y }, sz.w, sz.l);
+        }
+        return [];
+    }
+
+    // P4 / CastleGrid integration: Bresenham line between two grid cells
+    getGridLine(startX, startY, endX, endY) {
+        if (window.Castle && window.Castle.Grid) {
+            const diff = window.Castle.Grid.subtract({ x: endX, y: endY }, { x: startX, y: startY });
+            const relLine = window.Castle.Grid.line(diff);
+            return relLine.map(pt => ({ x: startX + pt.x, y: startY + pt.y }));
+        }
+        return [{ x: startX, y: startY }, { x: endX, y: endY }];
     }
 
     _hitTestIsoWalls(screenX, screenY, targetFloor, targetLoc) {
@@ -971,7 +1273,24 @@ class IsometricMap {
                 this.getWallIsoCoords(p.x + sz.w, p.y + sz.h, f, bbox, p.floor),
                 this.getWallIsoCoords(p.x, p.y + sz.h, f, bbox, p.floor)
             ];
-            if (this._pointInPoly(screenX, screenY, pts)) found.push(p);
+            let hit = this._pointInPoly(screenX, screenY, pts);
+            if (!hit) {
+                const img = this.getImage(p.item_id, 0);
+                if (img && img.complete && img.naturalWidth > 0) {
+                    const pt = this.getWallIsoCoords(p.x, p.y, f, bbox, p.floor);
+                    const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                    const u = _bgo * this.scale;
+                    const dw = img.width * u;
+                    const dh = img.height * u;
+                    const pivot = this._resolveSpritePivot(p.item_id, img, p.orientation || 0) || { x: 0.5, y: 0.5 };
+                    const left = pt.x - dw * pivot.x;
+                    const top = pt.y - dh * (1 - pivot.y);
+                    if (screenX >= left && screenX <= left + dw && screenY >= top && screenY <= top + dh) {
+                        hit = true;
+                    }
+                }
+            }
+            if (hit) found.push(p);
         }
         return found;
     }
@@ -1306,30 +1625,33 @@ class IsometricMap {
         // Clampeamos el paneo al 10% (0.1) como pidió el usuario.
         // Usamos min/max dinámicos para centrar si la imagen es pequeña,
         // pero manteniendo el margen de 10% de tope.
-        const marginW = cw * 0.1;
-        const minX = Math.min(cw - drawnW - marginW, marginW);
-        const maxX = Math.max(cw - drawnW - marginW, marginW);
-        this.offsetX = Math.max(minX, Math.min(this.offsetX, maxX));
-        
-        const marginH = ch * 0.1;
-        const minY = Math.min(ch - drawnH - marginH, marginH);
-        const maxY = Math.max(ch - drawnH - marginH, marginH);
-        this.offsetY = Math.max(minY, Math.min(this.offsetY, maxY));
+        // Mantener el centro (0, 0) del nivel dentro de la vista con margen cómodo
+        const maxPanX = drawnW * 0.35;
+        const maxPanY = drawnH * 0.35;
+        const defaultCenterX = cw / 2;
+        const defaultCenterY = ch / 2;
+        this.offsetX = Math.max(defaultCenterX - maxPanX, Math.min(this.offsetX, defaultCenterX + maxPanX));
+        this.offsetY = Math.max(defaultCenterY - maxPanY, Math.min(this.offsetY, defaultCenterY + maxPanY));
     }
 
     _drawImmediate() {
         if (!this.app || !this.app.parser || !this.app.parser.placements) return;
 
         const ctx = this.ctx;
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         const targetLocStr = document.getElementById('select-location')?.value;
-        const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
+        const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 0;
         
         let visibleFloors = [document.getElementById('select-floor')?.value || '0'];
         let isPlay = document.body.classList.contains('play-mode');
         let isGrid = document.body.classList.contains('grid-mode');
         let bgActive = (isPlay || isGrid) && targetLoc === 0;
+
+        if (bgActive) {
+            ctx.fillStyle = '#c1cba6';
+            ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        } else {
+            ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
         
         if (isPlay) {
             // B: visible = floors del atlas para ese mapId, respetar homecoming_only
@@ -1340,8 +1662,11 @@ class IsometricMap {
                 if (this.app && this.app.parser && typeof this.app.parser.getHomeCurrSLocData === 'function') return this.app.parser.getHomeCurrSLocData() === 1;
                 return false;
             })();
-            visibleFloors = allFloors.filter(s => !s.homecoming_only || showHC).map(s => String(s.groupNum));
-            if (visibleFloors.length === 0) visibleFloors = ['0', '1', '2'];
+            visibleFloors = allFloors.filter(s => {
+                if ((s.homecoming_only || s.groupNum === 4) && !showHC) return false;
+                return true;
+            }).map(s => String(s.groupNum));
+            if (visibleFloors.length === 0) visibleFloors = ['0', '1', '2', '3'];
         } else if (isGrid) {
             if (this.app.gridEditor && this.app.gridEditor.activeSurfaceIndex !== -1) {
                 const surf = window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex];
@@ -1436,192 +1761,198 @@ class IsometricMap {
             const bgPath = '../maps/Exportado_level' + bgExportDir2 + '/' + bgAssembled2;
             const bgImg = this.getBackgroundImage(bgPath);
             
+            const grassPath = '../maps/Exportado_level2/SpringGrass.png';
+            const grassImg = (targetLoc === 0) ? this.getBackgroundImage(grassPath) : null;
+            const grassLoaded = (!grassImg || (grassImg.complete && grassImg.width > 0)) ? '1' : '0';
+            
             // Only bake if bgImg is loaded and we haven't baked this combination yet
             const wpDict = this.app.parser && this.app.parser.wallpapers;
             const floorDict = this.app.parser && this.app.parser.floors;
             const wpStr = wpDict && wpDict[targetLoc] ? wpDict[targetLoc].map(x => x.id).join(',') : '';
             const flStr = floorDict && floorDict[targetLoc] ? floorDict[targetLoc].map(x => x.id).join(',') : '';
-            const bakeKey = targetLoc + '_' + wpStr + '_' + flStr;
+            const atlasCount = (window.mapsAtlas || []).filter(s => String(s.mapId) === String(targetLoc)).length;
+            const bakeKey = targetLoc + '_' + wpStr + '_' + flStr + '_' + atlasCount + '_g' + grassLoaded;
             
             if (bgImg && bgImg.complete && bgImg.width > 0) {
+                // En level2 (árbol), el centro (0, 0) de Unity está en el píxel (1235, 1257) de la imagen ensamblada
+                const originPxX = (targetLoc === 0 ? 1235 : bgImg.width / 2);
+                const originPxY = (targetLoc === 0 ? 1257 : bgImg.height / 2);
+
                 if (!this._bakedBgCanvas || this._bakedBgKey !== bakeKey) {
-                    // Bake the background
-                    this._bakedBgCanvas = document.createElement('canvas');
-                    this._bakedBgCanvas.width = bgImg.width;
-                    this._bakedBgCanvas.height = bgImg.height;
-                    const bCtx = this._bakedBgCanvas.getContext('2d');
-                    
-                    // Draw base treehouse
-                    // (treehouse will be drawn on top)
+                    // Bake the background to a temporary offscreen canvas
+                    const tempBaked = document.createElement('canvas');
+                    tempBaked.width = bgImg.width;
+                    tempBaked.height = bgImg.height;
+                    const bCtx = tempBaked.getContext('2d');
                     
                     let allLoaded = true;
-                    // Vector clip helper (Fase Refactor): usa poly de scene_full/layout si existe
-                    const getPolyForMask = (type, floorKey, loc) => {
-                        if (this._sceneFullCache && this._sceneFullCache[loc] && this._sceneFullCache[loc].colliders) {
-                            // buscar collider cuyo poly no vacío y role wallpaper/walkable
-                            for (const c of this._sceneFullCache[loc].colliders) {
-                                if (c.poly && c.poly.length) return c.poly;
+
+                    // Fill background with spring grass pattern for Treehouse (level2)
+                    if (targetLoc === 0) {
+                        if (grassImg && grassImg.complete && grassImg.width > 0) {
+                            const grassPattern = bCtx.createPattern(grassImg, 'repeat');
+                            if (grassPattern) {
+                                bCtx.fillStyle = grassPattern;
+                                bCtx.fillRect(0, 0, tempBaked.width, tempBaked.height);
                             }
+                        } else {
+                            allLoaded = false;
                         }
-                        if (this._lastLayoutData) {
-                            for (const el of this._lastLayoutData) if (el.poly && el.poly.length && el.draw_mode>0) return el.poly;
-                        }
-                        return null;
-                    };
+                    }
                     if (!this._sceneFullCache) this._sceneFullCache = {};
                     if (this._sceneFullCache[targetLoc] === undefined) {
                         if (location.protocol === 'file:') { this._sceneFullCache[targetLoc]=null; }
                         else {
                             const META = (window.MAP_META && window.MAP_META[targetLoc]) || {};
                             let exportDir = META.exportDir != null ? META.exportDir : (targetLoc === 0 ? 2 : targetLoc);
-                            fetch(`images/maps/Exportado_level${exportDir}/scene_full.json`).then(r=>r.ok?r.json():null).then(j=>{ this._sceneFullCache[targetLoc]=j; if(j) this.draw(); }).catch(()=>{ this._sceneFullCache[targetLoc]=null; });
+                            fetch(`data/maps/map_${targetLoc}.json`).then(r=>r.ok?r.json():null).then(unifiedMap=>{
+                                if(unifiedMap){
+                                    this._sceneFullCache[targetLoc]=unifiedMap;
+                                    if(unifiedMap.surfaces && unifiedMap.surfaces.length){
+                                        if(!window.mapsAtlas) window.mapsAtlas=[];
+                                        unifiedMap.surfaces.forEach(s=>{
+                                            const isFloor = s.kind==='floor';
+                                            const existing = window.mapsAtlas.find(a=>String(a.mapId)===String(targetLoc) && String(a.groupNum)===String(s.groupNum) && a.kind===s.kind && (isFloor || !!a.flipped===!!s.flipped));
+                                            let originPx = s.origin_px;
+                                            if (!originPx || (Math.abs(originPx.x) < 500 && Math.abs(originPx.y) < 500)) {
+                                                if (existing && existing.origin_px && Math.abs(existing.origin_px.x) > 500) {
+                                                    originPx = { ...existing.origin_px };
+                                                } else if (s.origin) {
+                                                    originPx = {
+                                                        x: 1235 + s.origin.x * 150,
+                                                        y: 1257 - s.origin.y * 150
+                                                    };
+                                                }
+                                            }
+                                            const originUnity = s.origin || (originPx ? { x: (originPx.x - 1235) / 150, y: (1257 - originPx.y) / 150 } : { x: 0, y: 0 });
+                                            const atlasEntry = {
+                                                mapId: targetLoc,
+                                                id: s.id,
+                                                name: s.name,
+                                                kind: s.kind,
+                                                groupNum: s.groupNum,
+                                                flipped: !!s.flipped,
+                                                rows: s.rows || 16,
+                                                cols: s.cols || 16,
+                                                cell: s.cell || { w: 58, h: 28 },
+                                                origin: originUnity,
+                                                origin_px: originPx,
+                                                defaultCoverId: s.defaultCoverId !== undefined ? s.defaultCoverId : (existing ? existing.defaultCoverId : null),
+                                                poly: s.poly || [],
+                                                mask: s.mask || (existing ? existing.mask : null),
+                                                anchorID: s.anchorID != null ? s.anchorID : (existing ? existing.anchorID : null)
+                                            };
+                                            if(existing) Object.assign(existing, atlasEntry);
+                                            else window.mapsAtlas.push(atlasEntry);
+                                        });
+                                    }
+                                    this._bakedBgKey = null;
+                                    this.draw();
+                                } else {
+                                    fetch(`images/maps/Exportado_level${exportDir}/scene_full.json`).then(r=>r.ok?r.json():null).then(j=>{ this._sceneFullCache[targetLoc]=j; this._bakedBgKey = null; if(j) this.draw(); }).catch(()=>{ this._sceneFullCache[targetLoc]=null; });
+                                }
+                            }).catch(()=>{
+                                fetch(`images/maps/Exportado_level${exportDir}/scene_full.json`).then(r=>r.ok?r.json():null).then(j=>{ this._sceneFullCache[targetLoc]=j; this._bakedBgKey = null; if(j) this.draw(); }).catch(()=>{ this._sceneFullCache[targetLoc]=null; });
+                            });
                             this._sceneFullCache[targetLoc]=null;
                         }
                     }
-                    // Helper to draw a mask layer — vector clip si poly existe, sino PNG fallback
-                    const drawMaskLayer = (type, id, maskImg, isFlipped) => {
-                        const tex = this._getTilesetTexture(type, id);
-                        if (!tex || !tex.img || !tex.img.complete || tex.img.width===0) { allLoaded=false; return; }
-                        const poly = getPolyForMask(type, isFlipped?1:0, targetLoc);
-                        if (poly && poly.length) {
-                            const tmp = document.createElement('canvas');
-                            tmp.width = bgImg.width; tmp.height = bgImg.height;
-                            const tCtx = tmp.getContext('2d');
-                            const tmpPat = document.createElement('canvas');
-                            tmpPat.width = tex.img.width; tmpPat.height = tex.img.height;
-                            const pCtx = tmpPat.getContext('2d');
-                            if (isFlipped) { pCtx.translate(tmpPat.width,0); pCtx.scale(-1,1); }
-                            pCtx.drawImage(tex.img,0,0);
-                            const pat = tCtx.createPattern(tmpPat,'repeat');
-                            tCtx.fillStyle = pat;
-                            tCtx.save();
-                            tCtx.beginPath();
-                            // poly en espacio baked (0..bgImg.width); si poly en unidades Unity pequeñas, escalar por PPU
-                            const isBaked = poly[0].x !== undefined && Math.abs(poly[0].x) < 50 && Math.abs(poly[0].y) < 50;
-                            poly.forEach((pt,i)=>{
-                                const px = (pt.x!==undefined? pt.x : pt[0]);
-                                const py = (pt.y!==undefined? pt.y : pt[1]);
-                                const bx = isBaked ? (px*10 + bgImg.width/2) : px;
-                                const by = isBaked ? (-py*10 + bgImg.height/2) : py;
-                                if(i===0) tCtx.moveTo(bx,by); else tCtx.lineTo(bx,by);
-                            });
-                            // fallback si poly en coords baked directos
-                            if (!isBaked) { tCtx.closePath(); tCtx.clip(); }
-                            else { // reconstruir con coords baked directos si detectamos rango grande
-                                tCtx.closePath(); tCtx.clip();
-                            }
-                            tCtx.fillRect(0,0,tmp.width,tmp.height);
-                            tCtx.restore();
-                            bCtx.globalCompositeOperation='source-over';
-                            bCtx.drawImage(tmp,0,0);
+
+                    // Draw floors and wallpapers behind the treehouse structure
+                    const drawSurfaceCovering = (surf) => {
+                        if (!surf) return;
+                        const isFloor = surf.kind === 'floor';
+                        const coverId = this.getSurfaceCoveringId(surf, targetLoc);
+                        if (!coverId || coverId <= 0) return;
+
+                        const tex = this._getTilesetTexture(isFloor ? 'floor' : 'wall', coverId);
+                        if (!tex || !tex.img || !tex.img.complete || tex.img.width === 0) {
+                            allLoaded = false;
                             return;
                         }
-                        if (tex && tex.img && tex.img.complete && tex.img.width > 0 && maskImg && maskImg.complete && maskImg.width > 0) {
-                            const tmp = document.createElement('canvas');
-                            tmp.width = bgImg.width;
-                            tmp.height = bgImg.height;
-                            const tCtx = tmp.getContext('2d');
-                            
-                            // Fill with pattern
-                            const tmpPat = document.createElement('canvas');
-                            tmpPat.width = tex.img.width;
-                            tmpPat.height = tex.img.height;
-                            const pCtx = tmpPat.getContext('2d');
-                            if (isFlipped) {
-                                pCtx.translate(tmpPat.width, 0);
-                                pCtx.scale(-1, 1);
-                            }
-                            pCtx.drawImage(tex.img, 0, 0);
-                            
-                            const pat = tCtx.createPattern(tmpPat, 'repeat');
-                            tCtx.fillStyle = pat;
-                            tCtx.fillRect(0, 0, tmp.width, tmp.height);
-                            
-                            // Mask
-                            tCtx.globalCompositeOperation = 'destination-in';
-                            tCtx.drawImage(maskImg, 0, 0, tmp.width, tmp.height);
-                            
-                            // Draw to baked
-                            bCtx.globalCompositeOperation = 'source-over';
-                            bCtx.drawImage(tmp, 0, 0);
+
+                        // Determine mask image cleanly
+                        let maskImg = null;
+                        if (surf.mask) {
+                            maskImg = this._getMaskByName(surf.mask, targetLoc);
+                        } else if (isFloor) {
+                            maskImg = this._getMaskByName(`mask_floor_${surf.groupNum}.png`, targetLoc);
                         } else {
+                            maskImg = this._getMaskByName(`mask_wall${surf.flipped ? 'L' : 'R'}_${surf.groupNum}.png`, targetLoc);
+                        }
+
+                        const hasMask = (maskImg && maskImg.complete && maskImg.width > 0);
+                        if (!hasMask && maskImg === false) {
                             allLoaded = false;
                         }
+
+                        // Scratch canvas for pattern masking
+                        if (!this._maskScratchCanvas) {
+                            this._maskScratchCanvas = document.createElement('canvas');
+                        }
+                        if (this._maskScratchCanvas.width !== bgImg.width || this._maskScratchCanvas.height !== bgImg.height) {
+                            this._maskScratchCanvas.width = bgImg.width;
+                            this._maskScratchCanvas.height = bgImg.height;
+                        }
+                        const mCtx = this._maskScratchCanvas.getContext('2d');
+                        mCtx.globalCompositeOperation = 'source-over';
+                        mCtx.clearRect(0, 0, bgImg.width, bgImg.height);
+
+                        // Fill with pattern directly (image already has perspective)
+                        const pat = mCtx.createPattern(tex.img, 'repeat');
+                        mCtx.fillStyle = pat;
+                        mCtx.fillRect(0, 0, bgImg.width, bgImg.height);
+
+                        if (hasMask) {
+                            mCtx.globalCompositeOperation = 'destination-in';
+                            mCtx.drawImage(maskImg, 0, 0, bgImg.width, bgImg.height);
+                            bCtx.globalCompositeOperation = 'source-over';
+                            bCtx.drawImage(this._maskScratchCanvas, 0, 0);
+                            mCtx.globalCompositeOperation = 'source-over';
+                        } else if (surf.poly && surf.poly.length > 0) {
+                            bCtx.save();
+                            bCtx.beginPath();
+                            const wOx = surf.origin ? surf.origin.x : (surf.origin_px ? (surf.origin_px.x - 1235) / 150 : 0);
+                            const wOy = surf.origin ? surf.origin.y : (surf.origin_px ? (1257 - surf.origin_px.y) / 150 : 0);
+                            surf.poly.forEach((pt, i) => {
+                                const px = (pt.x !== undefined ? pt.x : pt[0]);
+                                const py = (pt.y !== undefined ? pt.y : pt[1]);
+                                const bx = originPxX + (wOx + px) * 150;
+                                const by = originPxY - (wOy + py) * 150;
+                                if (i === 0) bCtx.moveTo(bx, by);
+                                else bCtx.lineTo(bx, by);
+                            });
+                            bCtx.closePath();
+                            bCtx.clip();
+                            bCtx.drawImage(this._maskScratchCanvas, 0, 0);
+                            bCtx.restore();
+                        }
                     };
-                    
-                    // Floors
-                    if (floorDict && floorDict[targetLoc]) {
-                        for (let fi = 0; fi < floorDict[targetLoc].length; fi++) {
-                            const entry = floorDict[targetLoc][fi];
-                            if (!entry || !entry.id || entry.id <= 0) continue;
-                            const floorMask = this._getMaskImage('floor', fi, targetLoc);
-                            drawMaskLayer('floor', entry.id, floorMask, false);
-                        }
-                    }
-                    
-                    // Walls
-                    if (wpDict && wpDict[targetLoc]) {
-                        for (let wpIndex = 0; wpIndex < wpDict[targetLoc].length; wpIndex++) {
-                            const entry = wpDict[targetLoc][wpIndex];
-                            if (!entry || !entry.id || entry.id <= 0) continue;
-                            let floorNum, isRightWall;
-                            if (targetLoc === 0 && wpDict[targetLoc].length >= 4) {
-                                if (wpIndex === 0) { floorNum = 0; isRightWall = false; }
-                                else if (wpIndex === 1) { floorNum = 1; isRightWall = false; }
-                                else if (wpIndex === 2) { floorNum = 1; isRightWall = true; }
-                                else if (wpIndex === 3) { floorNum = 0; isRightWall = true; }
-                                else continue;
-                            } else {
-                                floorNum = Math.floor(wpIndex / 2);
-                                isRightWall = (wpIndex % 2) !== 0;
-                            }
-                            if (floorNum >= 2) continue; // Only 2 floors supported for now
-                            const wallMask = this._getMaskImage('wall', (floorNum * 2) + (isRightWall ? 1 : 0), targetLoc);
-                            drawMaskLayer('wall', entry.id, wallMask, !isRightWall);
-                        }
-                    }
+
+                    const currentSurfaces = (window.mapsAtlas || []).filter(s => String(s.mapId) === String(targetLoc));
+                    // Draw floors first, then walls
+                    currentSurfaces.filter(s => s.kind === 'floor').forEach(s => drawSurfaceCovering(s));
+                    currentSurfaces.filter(s => s.kind === 'wall').forEach(s => drawSurfaceCovering(s));
                     
                     // Draw base treehouse OVER the floors and walls!
                     bCtx.globalCompositeOperation = 'source-over';
                     bCtx.drawImage(bgImg, 0, 0);
 
+                    this._bakedBgCanvas = tempBaked;
                     if (allLoaded) {
                         this._bakedBgKey = bakeKey;
                     }
                 }
                 
-                // Draw the baked background directly to screen
+                // Draw the baked background directly to screen centered on (0, 0)
                 const bgScale = _bgo;
                 const s = bgScale * this.scale;
                 const drawW = this._bakedBgCanvas.width * s;
                 const drawH = this._bakedBgCanvas.height * s;
-                const dx = this.offsetX;
-                const dy = this.offsetY;
+                const dx = this.offsetX - originPxX * s;
+                const dy = this.offsetY - originPxY * s;
                 
-                // Optimized clipping
-                const destX = Math.floor(Math.max(0, dx));
-                const destY = Math.floor(Math.max(0, dy));
-                const destRight = Math.ceil(Math.min(this.canvas.width, dx + drawW));
-                const destBottom = Math.ceil(Math.min(this.canvas.height, dy + drawH));
-                const destDrawW = destRight - destX;
-                const destDrawH = destBottom - destY;
-                
-                if (destDrawW > 0 && destDrawH > 0) {
-                    const sx = (destX - dx) / s;
-                    const sy = (destY - dy) / s;
-                    const sw = destDrawW / s;
-                    const sh = destDrawH / s;
-                    ctx.drawImage(this._bakedBgCanvas, sx, sy, sw, sh, destX, destY, destDrawW, destDrawH);
-                }
-                } else if (targetLoc === 6) {
-                    ctx.save();
-                    ctx.fillStyle = '#8d6e63';
-                    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-                    ctx.fillStyle = 'white';
-                    ctx.font = '20px Quicksand';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('falta ensamblado level4', this.canvas.width/2, this.canvas.height/2);
-                    ctx.restore();
+                ctx.drawImage(this._bakedBgCanvas, dx, dy, drawW, drawH);
                 }
             } else {
                 // ?? Editor mode: draw floor tilesets inside scaled ctx ????????????????
@@ -1681,70 +2012,93 @@ class IsometricMap {
 
             if (shouldDrawAtlasGridPlay || shouldDrawAtlasGridEdit) {
                 const surfaces = shouldDrawAtlasGridPlay
-                    ? window.mapsAtlas.filter(s => visibleFloors.includes(String(s.groupNum)))
+                    ? window.mapsAtlas.filter(s => visibleFloors.includes(String(s.groupNum)) && String(s.mapId) === String(targetLoc))
                     : [window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex]];
 
                 for (const surf of surfaces) {
-                    const oX = surf.origin_px.x * _bgo;
-                    const oY = surf.origin_px.y * _bgo;
-                    const cw = surf.cell.w || 64;
-                    const ch = surf.cell.h || 32;
+                    if (!surf) continue;
+                    const u = _bgo * this.scale;
+                    let worldOx = 0, worldOy = 0;
+                    if (surf.origin) {
+                        worldOx = surf.origin.x;
+                        worldOy = surf.origin.y;
+                    } else if (surf.origin_px) {
+                        worldOx = (surf.origin_px.x - 1235) / 150;
+                        worldOy = (1257 - surf.origin_px.y) / 150;
+                    }
+                    const sScreenX = this.offsetX + worldOx * 150 * u;
+                    const sScreenY = this.offsetY - worldOy * 150 * u;
+                    const isFloor = surf.kind === 'floor';
+                    const poly = surf.poly || [];
 
                     ctx.save();
-                    ctx.globalAlpha = 0.5;
-                    ctx.lineWidth = 1;
+                    ctx.translate(sScreenX, sScreenY);
 
-                    if (surf.kind === 'floor') {
-                        ctx.strokeStyle = 'rgba(100, 255, 100, 0.9)';
-                        for (let x = 0; x < surf.cols; x++) {
-                            for (let y = 0; y < surf.rows; y++) {
-                                // Atlas world ? screen
-                                const ix = oX + (x - y) * (cw / 2);
-                                const iy = oY - (x + y) * (ch / 2);
-                                const sx = ix * this.scale + this.offsetX;
-                                const sy = iy * this.scale + this.offsetY;
-                                const scw = (cw / 2) * this.scale;
-                                const sch = (ch / 2) * this.scale;
-                                ctx.beginPath();
-                                ctx.moveTo(sx, sy);
-                                ctx.lineTo(sx + scw, sy - sch);
-                                ctx.lineTo(sx, sy - 2 * sch);
-                                ctx.lineTo(sx - scw, sy - sch);
-                                ctx.closePath();
-                                ctx.stroke();
-                            }
-                        }
-                    } else if (surf.kind === 'wall') {
-                        ctx.strokeStyle = surf.flipped ? 'rgba(255, 100, 100, 0.9)' : 'rgba(100, 100, 255, 0.9)';
-                        for (let x = 0; x < surf.cols; x++) {
-                            for (let y = 0; y < surf.rows; y++) {
-                                let ix, iy;
-                                if (!surf.flipped) {
-                                    ix = oX - x * (cw / 2);
-                                    iy = oY - x * (ch / 2) - y * ch;
-                                } else {
-                                    ix = oX + x * (cw / 2);
-                                    iy = oY - x * (ch / 2) - y * ch;
-                                }
-                                const sx = ix * this.scale + this.offsetX;
-                                const sy = iy * this.scale + this.offsetY;
-                                const scw2 = (cw / 2) * this.scale;
-                                const sch2 = ch * this.scale;
-                                ctx.beginPath();
-                                ctx.moveTo(sx, sy);
-                                ctx.lineTo(sx, sy - sch2);
-                                if (!surf.flipped) {
-                                    ctx.lineTo(sx - scw2, sy - sch2 - sch2 / 2);
-                                    ctx.lineTo(sx - scw2, sy - sch2 / 2);
-                                } else {
-                                    ctx.lineTo(sx + scw2, sy - sch2 - sch2 / 2);
-                                    ctx.lineTo(sx + scw2, sy - sch2 / 2);
-                                }
-                                ctx.closePath();
-                                ctx.stroke();
-                            }
-                        }
+                    // 1. Polígono de la superficie con fondo traslúcido y contorno
+                    if (poly && poly.length > 0) {
+                        ctx.beginPath();
+                        poly.forEach((pt, i) => {
+                            const px = (pt.x !== undefined ? pt.x : pt[0]) * 150 * u;
+                            const py = -(pt.y !== undefined ? pt.y : pt[1]) * 150 * u;
+                            if (i === 0) ctx.moveTo(px, py);
+                            else ctx.lineTo(px, py);
+                        });
+                        ctx.closePath();
+
+                        ctx.fillStyle = isFloor ? 'rgba(0, 255, 120, 0.20)' : (surf.flipped ? 'rgba(255, 100, 100, 0.15)' : 'rgba(100, 180, 255, 0.15)');
+                        ctx.strokeStyle = isFloor ? 'rgba(0, 255, 120, 0.75)' : (surf.flipped ? 'rgba(255, 100, 100, 0.75)' : 'rgba(100, 180, 255, 0.75)');
+                        ctx.lineWidth = 1.5;
+                        ctx.fill();
+                        ctx.stroke();
+
+                        // 2. RECORTAR dentro de la superficie (idéntico a map_editor_2.html)
+                        ctx.clip();
                     }
+
+                    // 3. Grilla isométrica calibrada y optimizada (renderizado por lotes)
+                    const cols = Math.max(16, surf.cols || 16);
+                    const rows = Math.max(16, surf.rows || 16);
+                    const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
+                    const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+                    const halfW = (cw_u / 2) * 150 * u;
+                    const halfH = (ch_u / 2) * 150 * u;
+
+                    const minGx = -cols;
+                    const maxGx = cols * 2;
+                    const minGy = -rows;
+                    const maxGy = rows * 2;
+
+                    ctx.lineWidth = 1;
+                    if (isFloor) {
+                        ctx.strokeStyle = 'rgba(0, 255, 120, 0.45)';
+                        ctx.beginPath();
+                        for (let gx = minGx; gx <= maxGx; gx++) {
+                            ctx.moveTo((gx - minGy) * halfW, (gx + minGy) * halfH);
+                            ctx.lineTo((gx - maxGy) * halfW, (gx + maxGy) * halfH);
+                        }
+                        for (let gy = minGy; gy <= maxGy; gy++) {
+                            ctx.moveTo((minGx - gy) * halfW, (minGx + gy) * halfH);
+                            ctx.lineTo((maxGx - gy) * halfW, (maxGx + gy) * halfH);
+                        }
+                        ctx.stroke();
+                    } else {
+                        ctx.strokeStyle = surf.flipped ? 'rgba(255, 100, 100, 0.45)' : 'rgba(100, 180, 255, 0.45)';
+                        const fullH = ch_u * 2 * 150 * u;
+                        ctx.beginPath();
+                        for (let gx = minGx; gx <= maxGx; gx++) {
+                            const ix = (surf.flipped ? -gx : gx) * halfW;
+                            const iy = gx * halfH;
+                            ctx.moveTo(ix, iy + minGy * fullH);
+                            ctx.lineTo(ix, iy + maxGy * fullH);
+                        }
+                        for (let gy = minGy; gy <= maxGy; gy++) {
+                            const iy = gy * fullH;
+                            ctx.moveTo((surf.flipped ? -minGx : minGx) * halfW, minGx * halfH + iy);
+                            ctx.lineTo((surf.flipped ? -maxGx : maxGx) * halfW, maxGx * halfH + iy);
+                        }
+                        ctx.stroke();
+                    }
+
                     ctx.restore();
                 }
             }
@@ -1774,7 +2128,7 @@ class IsometricMap {
                 const sortByZ = (a, b) => {
                     const fb = Number(b.floor||0), fa = Number(a.floor||0);
                     if (fa !== fb) return fa - fb;
-                    const z = (b.x + b.y) - (a.x + a.y);
+                    const z = (a.x + a.y) - (b.x + b.y);
                     if (z) return z;
                     const la = (this._stackInfo.get(a) || {}).lift || 0;
                     const lb = (this._stackInfo.get(b) || {}).lift || 0;
@@ -1792,7 +2146,20 @@ class IsometricMap {
             for (const p of seeds)   this._drawPlacement(p, 'seed');
             for (const p of regular) this._drawPlacement(p, 'regular');
             for (const p of allWalls) this._drawWallPlacementIso(p);
-            if (this.isItemDragging && this.selectedPlacement) this._drawSnapGhost(this.selectedPlacement);
+            const dragGhost = (this.isItemDragging && this.selectedPlacement) ? this.selectedPlacement : (typeof this.isItemDragging === 'object' ? this.isItemDragging : null);
+            if (dragGhost) {
+                this._drawSnapGhost(dragGhost);
+                if (typeof this.isItemDragging === 'object' && this.isItemDragging && this.isItemDragging.item_id) {
+                    this.ctx.save();
+                    this.ctx.globalAlpha = 0.75;
+                    if (this.isItemDragging.isWall) {
+                        this._drawWallPlacementIso(this.isItemDragging);
+                    } else if (!this.isCovering(this.isItemDragging.item_id)) {
+                        this._drawPlacement(this.isItemDragging, 'regular');
+                    }
+                    this.ctx.restore();
+                }
+            }
             this._drawMapHud(targetLoc, false, targetWallGroup, targetFloor);
         }
 
@@ -1856,28 +2223,11 @@ class IsometricMap {
         
         this.ctx.save();
         
-        // Find atlas scale. Usually bgScale is 0.75 for level2
-        let _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
-        let dw = img.width * _bgo * this.scale;
-        let dh = img.height * _bgo * this.scale;
-        
-        // Depending on flipped, we might need to offset it correctly.
-        // The pivot of the wall cell is bottom-left? Or top-left?
-        // Let's just draw it centered on the grid point for now, or match it to the wall grid sizes.
-        // Actually, the wall cell pt returned by getWallIsoCoords is the TOP vertex of the wall tile? No, it's the top-left of the cell.
-        
-        // Since isometric wall images are drawn to match the wall perfectly:
-        // We just draw it so its bottom matches the cell.
-        // Actually, in Tsuki Odyssey, wall furniture pivot is often bottom-center or center.
-        // We'll approximate:
-        const dx = pt.x - dw / 2;
-        const dy = pt.y; // Or maybe offset by dh? We'll see.
-
-        if (p.flipped) {
-            this.ctx.translate(pt.x, pt.y);
-            this.ctx.scale(-1, 1);
-            this.ctx.translate(-pt.x, -pt.y);
-        }
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+        const dw = img.width * u;
+        const dh = img.height * u;
+        const pivot = this._resolveSpritePivot(p.item_id, img, p.orientation || 0) || { x: 0.5, y: 0.5 };
         
         if (isSel) {
             this.ctx.shadowColor = 'white';
@@ -1887,11 +2237,13 @@ class IsometricMap {
             this.ctx.shadowBlur = 8;
         }
 
-        // Draw image
-        // Tweak offsets so it looks right on the wall.
-        // For wall items, we can try to anchor bottom-center of the image to the bottom-center of the wall region.
-        // Or just draw it at the coordinate.
-        this.ctx.drawImage(img, pt.x - dw/2, pt.y - dh, dw, dh);
+        if (p.flipped) {
+            this.ctx.translate(pt.x, 0);
+            this.ctx.scale(-1, 1);
+            this.ctx.translate(-pt.x, 0);
+        }
+        
+        this.ctx.drawImage(img, pt.x - dw * pivot.x, pt.y - dh * (1 - pivot.y), dw, dh);
         this.ctx.restore();
     }
 
@@ -1977,8 +2329,8 @@ class IsometricMap {
         ctx.save();
         if (lift) ctx.translate(0, -lift * this.CELL_H * this.scale);
         
-        // Draw grid footprint if in play mode and grid is active
-        if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode && this.app.tsukiPort.showGrid && !p.isWall && !isSelected) {
+        // Draw grid footprint if in play mode and hammer mode
+        if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode && !p.isWall && (this.app.tsukiPort.showGrid || isSelected)) {
             const pt1 = this.getIsoCoords(p.x, p.y, p.floor);
             const pt2 = this.getIsoCoords(p.x + w, p.y, p.floor);
             const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor);
@@ -1990,11 +2342,20 @@ class IsometricMap {
             ctx.lineTo(pt3.x, pt3.y);
             ctx.lineTo(pt4.x, pt4.y);
             ctx.closePath();
-            ctx.fillStyle = 'rgba(120, 200, 255, 0.2)';
-            ctx.fill();
-            ctx.strokeStyle = 'rgba(120, 200, 255, 0.8)';
-            ctx.lineWidth = 2 * this.scale;
-            ctx.stroke();
+            if (isSelected) {
+                // Highlighted selection: gentle cyan/blue footprint, not alarming red
+                ctx.fillStyle = 'rgba(66, 165, 245, 0.45)';
+                ctx.fill();
+                ctx.strokeStyle = '#2196f3';
+                ctx.lineWidth = 2.5 * this.scale;
+                ctx.stroke();
+            } else {
+                ctx.fillStyle = 'rgba(120, 200, 255, 0.2)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(120, 200, 255, 0.8)';
+                ctx.lineWidth = 1.5 * this.scale;
+                ctx.stroke();
+            }
             ctx.restore();
         }
 
@@ -2011,7 +2372,7 @@ class IsometricMap {
         }
 
         let hideBox = false;
-        if (document.body.classList.contains('play-mode') && !isSelected && !isHovered && layer !== 'ground') {
+        if (document.body.classList.contains('play-mode') && layer !== 'ground') {
             const _imgCheck = this.getImage(p.item_id, p.orientation);
             if (_imgCheck) hideBox = true;
         }
@@ -2112,54 +2473,47 @@ class IsometricMap {
 
     _drawSpriteOnTile(img, gx, gy, w, l, orientation = 0, item_id = null, floorNum = 0) {
         const ctx = this.ctx;
-        const top   = this.getIsoCoords(gx,   gy, floorNum);
-        const right = this.getIsoCoords(gx+w, gy, floorNum);
-        const bot   = this.getIsoCoords(gx+w, gy+l, floorNum);
-        const left  = this.getIsoCoords(gx,   gy+l, floorNum);
-
-        const cx = (top.x + bot.x) / 2;
-        const cy = (top.y + bot.y) / 2;
+        const center = this._tileCenter(gx, gy, w, l, floorNum);
         
-        // Fixed scale factor to map Unity sprite pixels to Canvas pixels.
-        // Mathematically 0.8533, but reducing to 0.75 so items fit better visually within the grid bounds.
-        const sizeFactor = 0.75 * this.scale;
-        const drawW = img.width * sizeFactor;
-        const drawH = img.height * sizeFactor;
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+        const drawW = img.width * u;
+        const drawH = img.height * u;
 
         ctx.save();
         
         // ── Rotation transformations ──
-        // 0: SE (Front Right)
-        // 1: SW (Front Left, Mirrored horizontally)
-        // 2: NW (Back Left, Mirrored horizontally, darker)
-        // 3: NE (Back Right, darker)
+        // 0: SE (Front Right, eje w,l)
+        // 1: SW (Front Left, Reflejado horizontalmente, eje l,w)
+        // 2: NW (Back Left, Sprite Back o frontal oscurecido, eje w,l)
+        // 3: NE (Back Right, Reflejado horizontalmente, eje l,w)
         
         const oriNum = Number(orientation);
-        const flipH = (oriNum === 1 || oriNum === 2);
+        const flipH = (oriNum === 1 || oriNum === 3);
         const darken = (oriNum === 2 || oriNum === 3);
         
-        const anchorX = top.x;
-const anchorY = top.y;
-const pivot = this._resolveSpritePivot(item_id, img, orientation);
-const pivotX = pivot.x;
-const pivotY = pivot.y;
+        const anchorX = center.x;
+        const anchorY = center.y;
+        const pivot = this._resolveSpritePivot(item_id, img, orientation);
+        const pivotX = pivot.x;
+        const pivotY = pivot.y;
 
-if (flipH) {
-ctx.translate(anchorX, 0);
-ctx.scale(-1, 1);
-ctx.translate(-anchorX, 0);
-}
+        if (flipH) {
+            ctx.translate(anchorX, 0);
+            ctx.scale(-1, 1);
+            ctx.translate(-anchorX, 0);
+        }
 
-if (darken) {
-ctx.filter = "brightness(0.75)";
-}
+        if (darken) {
+            ctx.filter = "brightness(0.75)";
+        }
 
-ctx.drawImage(img,
-anchorX - (drawW * pivotX),
-anchorY - (drawH * (1 - pivotY)),
-drawW,
-drawH
-);
+        ctx.drawImage(img,
+            anchorX - (drawW * pivotX),
+            anchorY - (drawH * (1 - pivotY)),
+            drawW,
+            drawH
+        );
         
         ctx.restore();
     }
@@ -2247,6 +2601,159 @@ drawH
     }
 
     // ── Hit detection ─────────────────────────────────────────────────────
+    _findPlacementAtScreen(screenX, screenY) {
+        if (!this.app || !this.app.parser || !this.app.parser.placements) return null;
+
+        const isPlay = document.body.classList.contains('play-mode');
+        const isHammer = this.app.tsukiPort && this.app.tsukiPort.isHammerMode;
+        if (isPlay && !isHammer) return null;
+
+        const locVal = document.getElementById('select-location')?.value;
+        const targetLoc = locVal !== "" && locVal != null ? parseInt(locVal, 10) : 0;
+
+        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const isWallLayer = !isPlay && layerRadio && layerRadio.value === 'wall';
+
+        let visibleFloors = ['0', '1', '2', '3'];
+        if (isPlay) {
+            if (window.mapsAtlas) {
+                const allFloors = window.mapsAtlas.filter(s => s.kind === 'floor' && String(s.mapId) === String(targetLoc));
+                const showHC = (() => {
+                    try { if (window.Flags) return window.Flags.get('homecomingUpdates') === 1; } catch(e) {}
+                    if (this.app && this.app.parser && this.app.parser.generalVars && this.app.parser.generalVars.homecomingUpdates) return this.app.parser.generalVars.homecomingUpdates.value === 1;
+                    if (this.app && this.app.parser && typeof this.app.parser.getHomeCurrSLocData === 'function') return this.app.parser.getHomeCurrSLocData() === 1;
+                    return false;
+                })();
+                const vf = allFloors.filter(s => !((s.homecoming_only || s.groupNum === 4) && !showHC)).map(s => String(s.groupNum));
+                if (vf.length > 0) visibleFloors = vf;
+            }
+        } else {
+            visibleFloors = [document.getElementById('select-floor')?.value || '0'];
+        }
+
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+        const bbox = this._wallRoomBBox || { xmin: 0, ymin: 0, xmax: 16, ymax: 16 };
+
+        const candidates = [];
+
+        for (let i = 0; i < this.app.parser.placements.length; i++) {
+            const p = this.app.parser.placements[i];
+            if (p.cluster !== targetLoc || p.item_id === -1 || this.isCovering(p.item_id)) continue;
+
+            if (p.isWall) {
+                if (isWallLayer) {
+                    let targetWallGroup = document.getElementById('select-wall-group')?.value || '0';
+                    if (String(p.floor) !== String(targetWallGroup)) continue;
+                    const sz = this.getWallSize(p.item_id);
+                    const gx = 100 + p.x * this.gridSize;
+                    const gy = 100 + p.y * this.gridSize;
+                    const gw = sz.w * this.gridSize;
+                    const gh = sz.h * this.gridSize;
+                    if (screenX >= gx && screenX <= gx + gw && screenY >= gy && screenY <= gy + gh) {
+                        candidates.push({ placement: p, score: 1000 + i });
+                    }
+                    continue;
+                }
+
+                // Isometric wall item
+                if (visibleFloors && !visibleFloors.includes(String(p.floor))) continue;
+
+                const f = !!p.flipped;
+                const pt = this.getWallIsoCoords(p.x, p.y, f, bbox, p.floor);
+                let hit = false;
+
+                const img = this.getImage(p.item_id, 0);
+                if (img && img.complete && img.naturalWidth > 0) {
+                    const dw = img.width * u;
+                    const dh = img.height * u;
+                    const pivot = this._resolveSpritePivot(p.item_id, img, 0) || { x: 0.5, y: 0.5 };
+                    const pivotX = f ? (1 - pivot.x) : pivot.x;
+                    const pivotY = pivot.y;
+
+                    const left = pt.x - dw * pivotX;
+                    const top = pt.y - dh * (1 - pivotY);
+                    if (screenX >= left && screenX <= left + dw && screenY >= top && screenY <= top + dh) {
+                        hit = true;
+                    }
+                }
+
+                if (!hit) {
+                    const sz = this.getWallSize(p.item_id);
+                    const pts = [
+                        this.getWallIsoCoords(p.x, p.y, f, bbox, p.floor),
+                        this.getWallIsoCoords(p.x + sz.w, p.y, f, bbox, p.floor),
+                        this.getWallIsoCoords(p.x + sz.w, p.y + sz.h, f, bbox, p.floor),
+                        this.getWallIsoCoords(p.x, p.y + sz.h, f, bbox, p.floor)
+                    ];
+                    if (this._pointInPoly(screenX, screenY, pts)) {
+                        hit = true;
+                    }
+                }
+
+                if (hit) {
+                    const floorNum = Number(p.floor || 0);
+                    const score = floorNum * 10000 + 1500 + (p.y || 0) * 10 + (p.x || 0);
+                    candidates.push({ placement: p, score });
+                }
+            } else {
+                if (isWallLayer) continue;
+                if (visibleFloors && !visibleFloors.includes(String(p.floor))) continue;
+
+                const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
+                const stack = (this._stackInfo && this._stackInfo.get(p)) || null;
+                const lift = stack ? stack.lift : 0;
+                const liftShift = lift * this.CELL_H * this.scale;
+                const center = this._tileCenter(p.x, p.y, w, l, p.floor);
+
+                let hit = false;
+                const img = this.getImage(p.item_id, p.orientation);
+                if (img && img.complete && img.naturalWidth > 0) {
+                    const drawW = img.width * u;
+                    const drawH = img.height * u;
+                    const pivot = this._resolveSpritePivot(p.item_id, img, p.orientation || 0) || { x: 0.5, y: 0.5 };
+                    const oriNum = Number(p.orientation || 0);
+                    const flipH = (oriNum === 1 || oriNum === 3);
+                    const pivotX = flipH ? (1 - pivot.x) : pivot.x;
+                    const pivotY = pivot.y;
+
+                    const left = center.x - drawW * pivotX;
+                    const boxTop = center.y - liftShift - drawH * (1 - pivotY);
+                    if (screenX >= left && screenX <= left + drawW && screenY >= boxTop && screenY <= boxTop + drawH) {
+                        hit = true;
+                    }
+                }
+
+                if (!hit) {
+                    const pt1 = this.getIsoCoords(p.x, p.y, p.floor);
+                    const pt2 = this.getIsoCoords(p.x + w, p.y, p.floor);
+                    const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor);
+                    const pt4 = this.getIsoCoords(p.x, p.y + l, p.floor);
+                    if (liftShift) {
+                        pt1.y -= liftShift; pt2.y -= liftShift; pt3.y -= liftShift; pt4.y -= liftShift;
+                    }
+                    if (this._pointInPoly(screenX, screenY, [pt1, pt2, pt3, pt4])) {
+                        hit = true;
+                    }
+                }
+
+                if (hit) {
+                    const floorNum = Number(p.floor || 0);
+                    let baseScore = 2000;
+                    if (GROUND_IDS.has(p.item_id)) baseScore = 100;
+                    else if (SEED_IDS.has(p.item_id)) baseScore = 200;
+
+                    const score = floorNum * 10000 + baseScore + (p.x + p.y) * 10 + (lift || 0) * 5;
+                    candidates.push({ placement: p, score });
+                }
+            }
+        }
+
+        if (candidates.length === 0) return null;
+        candidates.sort((a, b) => b.score - a.score);
+        return candidates[0].placement;
+    }
+
     _hitTest(gridX, gridY, targetFloor, targetLoc, screenX, screenY) {
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
@@ -2295,8 +2802,17 @@ drawH
         window.addEventListener('keydown', e => {
             if (!this.selectedPlacement) return;
             // Ignore if typing in an input
-            if (e.target.tagName === 'INPUT') return;
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
             
+            if (e.key === 'Delete' || e.key === 'Del') {
+                const btn = document.getElementById('btn-delete-item');
+                if (btn) {
+                    btn.click();
+                    e.preventDefault();
+                }
+                return;
+            }
+
             if (e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'r') {
                 this.rotateSelected(1);
                 e.preventDefault();
@@ -2315,16 +2831,14 @@ drawH
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
             
-            const hit = this._hitTestPlaySurface(mouseX, mouseY);
-            if (hit) {
-                // Leer datos arrastrados, pero dataTransfer no est� disponible en dragover para leer el JSON completo en Chrome a veces.
-                // Usaremos un hack local si es necesario, pero por ahora solo mostraremos un snap gen�rico o no mostraremos fantasma si no sabemos el tama�o.
-                // Como workaround, guardaremos el item arrastrado en la instancia si viene de la mochila.
-                if (this.draggedInventoryItem) {
-                    const item_id = this.draggedInventoryItem.item_id;
-                    const coveringType = this.isCovering(item_id);
-                    const isWallItem = this.isWallFurniture(item_id);
+            const item_id = this.draggedInventoryItem ? this.draggedInventoryItem.item_id : null;
+            const coveringType = item_id ? this.isCovering(item_id) : null;
+            const isWallItem = item_id ? this.isWallFurniture(item_id) : false;
+            const prefKind = (isWallItem || coveringType === 'wallpaper') ? 'wall' : 'floor';
 
+            const hit = this._hitTestPlaySurface(mouseX, mouseY, prefKind);
+            if (hit) {
+                if (this.draggedInventoryItem) {
                     if (coveringType) {
                         const valid = (coveringType === 'floor' && hit.kind === 'floor') || (coveringType === 'wallpaper' && hit.kind === 'wall');
                         this.isItemDragging = valid ? {
@@ -2364,98 +2878,161 @@ drawH
             if (!document.body.classList.contains('play-mode')) return;
             e.preventDefault();
             this.isItemDragging = null;
-            this.draw();
             
             try {
-                const data = JSON.parse(e.dataTransfer.getData('application/json'));
-                if (!data || !data.item_id) return;
+                let data = null;
+                try {
+                    const raw = e.dataTransfer.getData('application/json') || e.dataTransfer.getData('text/plain');
+                    if (raw) data = JSON.parse(raw);
+                } catch (err) {}
+                if (!data && this.draggedInventoryItem) {
+                    data = { ...this.draggedInventoryItem };
+                }
+                this.draggedInventoryItem = null;
+                if (!data || !data.item_id) {
+                    this.draw();
+                    return;
+                }
                 
                 const rect = this.canvas.getBoundingClientRect();
                 const mouseX = e.clientX - rect.left;
                 const mouseY = e.clientY - rect.top;
                 
-                const hit = this._hitTestPlaySurface(mouseX, mouseY);
+                const isWallItem = this.isWallFurniture(data.item_id);
+                const coveringType = this.isCovering(data.item_id);
+                const prefKind = (isWallItem || coveringType === 'wallpaper') ? 'wall' : 'floor';
+
+                const hit = this._hitTestPlaySurface(mouseX, mouseY, prefKind);
                 if (hit) {
-        const targetLocStr = document.getElementById('select-location')?.value;
-        const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 1;
-        if ((window.tsukiDebugGrid === '1' || localStorage.tsukiDebugGrid === '1') && !this._debugLoggedLoc) {
-            const plist = (this.app.parser.placements || []).filter(p => p.cluster === targetLoc).slice(0, 20);
-            console.debug('[play placements]', targetLoc, plist.map(p => ({ id:p.item_id, floor:p.floor, x:p.x, y:p.y, isWall:!!p.isWall, parent:p.parentPlacementID })));
-            this._debugLoggedLoc = targetLoc;
-        }
-        if (localStorage.tsukiDebugGrid !== '1' && window.tsukiDebugGrid !== '1') this._debugLoggedLoc = null;
+                    const targetLocStr = document.getElementById('select-location')?.value;
+                    const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 0;
+                    if ((window.tsukiDebugGrid === '1' || localStorage.tsukiDebugGrid === '1') && !this._debugLoggedLoc) {
+                        const plist = (this.app.parser.placements || []).filter(p => p.cluster === targetLoc).slice(0, 20);
+                        console.debug('[play placements]', targetLoc, plist.map(p => ({ id:p.item_id, floor:p.floor, x:p.x, y:p.y, isWall:!!p.isWall, parent:p.parentPlacementID })));
+                        this._debugLoggedLoc = targetLoc;
+                    }
+                    if (localStorage.tsukiDebugGrid !== '1' && window.tsukiDebugGrid !== '1') this._debugLoggedLoc = null;
                     
                     const coveringType = this.isCovering(data.item_id);
                     if (coveringType) {
                         let applied = false;
+                        const oldCoverId = this.getSurfaceCoveringId(hit.surf, targetLoc);
                         if (coveringType === 'floor' && hit.kind === 'floor') {
                             if (this.app.parser.setFloor(targetLoc, hit.floorNum, data.item_id) !== false) applied = true;
                         } else if (coveringType === 'wallpaper' && hit.kind === 'wall') {
                             if (this.app.parser.setWallpaper(targetLoc, hit.floorNum, hit.flipped, data.item_id) !== false) applied = true;
+                        } else {
+                            if (coveringType === 'wallpaper' && hit.kind !== 'wall') {
+                                if (this.app && typeof this.app.showToast === 'function') this.app.showToast("Papel tapiz: colócalo en una pared", "warning");
+                            } else if (coveringType === 'floor' && hit.kind !== 'floor') {
+                                if (this.app && typeof this.app.showToast === 'function') this.app.showToast("Suelo: colócalo en el piso", "warning");
+                            }
+                            this.draw();
+                            return;
                         }
                         
                         if (applied) {
-                            const invArray = this.app.parser.inventory;
-                            const slotIdx = invArray.findIndex(i => i.item_id === data.item_id && i.invType == data.invType && i.qty > 0);
-                            if (slotIdx !== -1) {
-                                this.app.parser.updateInventoryItem('inventory', slotIdx, data.item_id, invArray[slotIdx].qty - 1, data.invType);
+                            if (oldCoverId && oldCoverId > 0 && oldCoverId !== data.item_id) {
+                                try {
+                                    this.app.parser.injectInventoryItem(oldCoverId, 1, false, 1);
+                                } catch (e) {
+                                    console.warn('[drop covering] Could not return old cover to inventory:', e);
+                                }
                             }
-                            // Important: force refresh tileset texture cache
+                            const invArray = this.app.parser.inventory;
+                            const slotIdx = invArray.findIndex(i => i.item_id === data.item_id && (data.invType === undefined || i.invType == data.invType) && i.qty > 0);
+                            if (slotIdx !== -1) {
+                                this.app.parser.updateInventoryItem('inventory', slotIdx, data.item_id, invArray[slotIdx].qty - 1, invArray[slotIdx].invType);
+                            }
+                            // Force refresh tileset texture cache & re-bake background immediately
                             const typeName = coveringType === 'wallpaper' ? 'wallpaper' : 'floor';
                             const cacheKey = `${typeName}_${data.item_id}`;
                             if (!this._patternCache[cacheKey]) this._getTilesetTexture(typeName, data.item_id);
                             
+                            this._bakedBgKey = null;
                             this.draw();
-                            if (this.app.tsukiPort && typeof this.app.tsukiPort.renderBagInventory === 'function') this.app.tsukiPort.renderBagInventory();
-                            if (this.app.tsukiPort && typeof this.app.tsukiPort.renderHammerInventory === 'function') this.app.tsukiPort.renderHammerInventory();
-                            if (this.app.tsukiPort && typeof this.app.tsukiPort.triggerAutosave === 'function') this.app.tsukiPort.triggerAutosave();
+                            setTimeout(() => {
+                                if (this.app.tsukiPort && typeof this.app.tsukiPort.renderBagInventory === 'function') this.app.tsukiPort.renderBagInventory();
+                                if (this.app.tsukiPort && typeof this.app.tsukiPort.renderHammerInventory === 'function') this.app.tsukiPort.renderHammerInventory();
+                                if (this.app.tsukiPort && typeof this.app.tsukiPort.triggerAutosave === 'function') this.app.tsukiPort.triggerAutosave();
+                            }, 50);
                         }
                         return;
                     }
                     
                     const isWallItem = this.isWallFurniture(data.item_id);
                     if (isWallItem && hit.kind !== 'wall') {
-                        console.warn("Item de pared no puede ir en piso");
+                        if (this.app && typeof this.app.showToast === 'function') this.app.showToast("Mueble de pared: colócalo en una pared", "warning");
+                        this.draw();
                         return;
                     }
                     if (!isWallItem && hit.kind === 'wall') {
-                        console.warn("Item de piso no puede ir en pared");
+                        if (this.app && typeof this.app.showToast === 'function') this.app.showToast("Mueble de piso: colócalo en el suelo", "warning");
+                        this.draw();
                         return;
                     }
                     
-                    const { w, l } = this.getRotatedSize(data.item_id, 0);
-                    // For walls, maybe w,l don't apply the same way, but let's keep _isAreaOccupied checking simple for now.
-                    if (this._isAreaOccupied(hit.floorNum, hit.x, hit.y, w, l)) {
-                        console.warn("Posici�n ocupada.");
-                        return; // Ocupado
+                    if (!isWallItem) {
+                        const { w, l } = this.getRotatedSize(data.item_id, 0);
+                        if (this._isAreaOccupied(hit.floorNum, hit.x, hit.y, w, l)) {
+                            const free = this.findNearestFreeSpot(hit.floorNum, hit.x, hit.y, w, l);
+                            if (free) {
+                                hit.x = free.x;
+                                hit.y = free.y;
+                            } else {
+                                if (this.app && typeof this.app.showToast === 'function') this.app.showToast("Posición ocupada por otro mueble", "warning");
+                                this.draw();
+                                return;
+                            }
+                        }
                     }
                     
-                    // Colocar!
-                    const newPlacement = {
-                        item_id: data.item_id,
-                        x: hit.x,
-                        y: hit.y,
-                        floor: hit.floorNum,
-                        orientation: 0,
-                        cluster: targetLoc,
-                        isWall: hit.kind === 'wall',
-                        flipped: hit.kind === 'wall' ? hit.flipped : false
-                    };
+                    // Colocar con integración AST completa
+                    let newPlacement = null;
+                    if (this.app && typeof this.app.createFurniturePlacement === 'function') {
+                        newPlacement = this.app.createFurniturePlacement({
+                            itemId: data.item_id,
+                            x: hit.x,
+                            y: hit.y,
+                            floor: hit.floorNum,
+                            cluster: targetLoc,
+                            isWall: hit.kind === 'wall',
+                            flipped: hit.kind === 'wall' ? hit.flipped : false,
+                            orientation: 0
+                        });
+                    }
+                    if (!newPlacement) {
+                        newPlacement = {
+                            item_id: data.item_id,
+                            x: hit.x,
+                            y: hit.y,
+                            floor: hit.floorNum.toString(),
+                            orientation: 0,
+                            cluster: targetLoc,
+                            isWall: hit.kind === 'wall',
+                            flipped: hit.kind === 'wall' ? hit.flipped : false
+                        };
+                        this.app.parser.placements.push(newPlacement);
+                    }
                     
                     // Descontar del inventario
                     const invArray = this.app.parser.inventory;
-                    const slotIdx = invArray.findIndex(i => i.item_id === data.item_id && i.invType == data.invType && i.qty > 0);
+                    const slotIdx = invArray.findIndex(i => i.item_id === data.item_id && (data.invType === undefined || i.invType == data.invType) && i.qty > 0);
                     if (slotIdx !== -1) {
-                        this.app.parser.updateInventoryItem('inventory', slotIdx, data.item_id, invArray[slotIdx].qty - 1, data.invType);
-                        this.app.parser.placements.push(newPlacement);
-                        this.selectedPlacement = newPlacement;
-                        this.draw();
+                        this.app.parser.updateInventoryItem('inventory', slotIdx, data.item_id, invArray[slotIdx].qty - 1, invArray[slotIdx].invType);
+                    }
+                    
+                    this.selectedPlacement = newPlacement;
+                    this.draw();
+                    
+                    // Defer re-rendering so the native drag session concludes cleanly in browser
+                    setTimeout(() => {
                         if (this.app.tsukiPort) {
                             if (this.isHammerMode && typeof this.app.tsukiPort.renderHammerInventory === 'function') this.app.tsukiPort.renderHammerInventory();
                             if (!this.isHammerMode && typeof this.app.tsukiPort.renderBagInventory === 'function') this.app.tsukiPort.renderBagInventory();
                             if (typeof this.app.tsukiPort.triggerAutosave === 'function') this.app.tsukiPort.triggerAutosave();
                         }
-                    }
+                    }, 50);
                 }
             } catch (err) {
                 console.error("Error on drop", err);
@@ -2485,6 +3062,8 @@ drawH
         }, { passive: false });
 
         this.canvas.addEventListener('mousedown', e => {
+            this.pointerDownTime = performance.now();
+            this.pointerDownPos = { x: e.clientX, y: e.clientY };
             let isGrid = document.body.classList.contains('grid-mode');
             
             if (e.button === 1 || e.shiftKey || e.button === 2) {
@@ -2502,20 +3081,23 @@ drawH
                     return;
                 }
 
-                  if (this.hoveredPlacement) {
-                      this.selectedPlacement = this.hoveredPlacement;
-                      this.app.openItemEditor(this.selectedPlacement);
-                      this.isItemDragging = true;
-                      
-                      const rect   = this.canvas.getBoundingClientRect();
-                      const mouseX = e.clientX - rect.left;
-                      const mouseY = e.clientY - rect.top;
-                      const g = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
-                      this.dragItemOffsetX = g.x - this.selectedPlacement.x;
-                      this.dragItemOffsetY = g.y - this.selectedPlacement.y;
-                      this._dragSnap = { x: this.selectedPlacement.x, y: this.selectedPlacement.y };
+                const rect   = this.canvas.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                const clickedPlacement = this._findPlacementAtScreen(mouseX, mouseY) || this.hoveredPlacement;
 
-                      this.draw();
+                if (clickedPlacement) {
+                    this.selectedPlacement = clickedPlacement;
+                    this.hoveredPlacement = clickedPlacement;
+                    this.app.openItemEditor(this.selectedPlacement);
+                    this.isItemDragging = true;
+                    
+                    const g = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
+                    this.dragItemOffsetX = g.x - this.selectedPlacement.x;
+                    this.dragItemOffsetY = g.y - this.selectedPlacement.y;
+                    this._dragSnap = { x: this.selectedPlacement.x, y: this.selectedPlacement.y };
+
+                    this.draw();
                 } else {
                     this.isPanDragging  = true;
                     this.dragStartX     = e.clientX - this.offsetX;
@@ -2559,16 +3141,50 @@ drawH
             const gridY = Math.floor(cart.y + 0.5);
 
             if (this.isItemDragging && this.selectedPlacement) {
-                if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode) {
-    const surfaceHit = this._hitTestPlaySurface(mouseX, mouseY);
-    if (surfaceHit && surfaceHit.kind === 'floor') {
-        this.selectedPlacement.floor = surfaceHit.floorNum.toString();
-    }
-}
-const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
+                const isPlayHammer = document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode;
+                const isWallItem = !!this.selectedPlacement.isWall;
+
+                if (isPlayHammer) {
+                    const surfaceHit = this._hitTestPlaySurface(mouseX, mouseY, isWallItem ? 'wall' : 'floor');
+                    if (isWallItem) {
+                        if (surfaceHit && surfaceHit.kind === 'wall') {
+                            const oldFlipped = !!this.selectedPlacement.flipped;
+                            this.selectedPlacement.floor = surfaceHit.floorNum.toString();
+                            this.selectedPlacement.flipped = surfaceHit.flipped;
+                            if (oldFlipped !== !!surfaceHit.flipped) {
+                                this.dragItemOffsetX = 0;
+                                this.dragItemOffsetY = 0;
+                            }
+                        }
+                    } else {
+                        if (surfaceHit && surfaceHit.kind === 'floor') {
+                            const oldFloor = this.selectedPlacement.floor;
+                            this.selectedPlacement.floor = surfaceHit.floorNum.toString();
+                            if (oldFloor !== this.selectedPlacement.floor) {
+                                this.dragItemOffsetX = 0;
+                                this.dragItemOffsetY = 0;
+                            }
+                        }
+                    }
+                }
+
+                const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
                 const floatedX = raw.x - (this.dragItemOffsetX || 0);
                 const floatedY = raw.y - (this.dragItemOffsetY || 0);
-                const snapped = this._snapMove(this.selectedPlacement, floatedX, floatedY);
+
+                let snapped;
+                if (isWallItem) {
+                    const roundX = Math.round(floatedX);
+                    const roundY = Math.round(floatedY);
+                    const distX = floatedX - roundX;
+                    const distY = floatedY - roundY;
+                    const snapThreshold = 0.35;
+                    const snapX = Math.abs(distX) < snapThreshold ? roundX : Math.round(floatedX);
+                    const snapY = Math.abs(distY) < snapThreshold ? roundY : Math.round(floatedY);
+                    snapped = this._clampWallGrid(this.selectedPlacement, snapX, snapY);
+                } else {
+                    snapped = this._snapMove(this.selectedPlacement, floatedX, floatedY);
+                }
 
                 if (this.selectedPlacement.x !== snapped.x || this.selectedPlacement.y !== snapped.y) {
                     try {
@@ -2577,8 +3193,8 @@ const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
                             this.selectedPlacement.item_id, snapped.x, snapped.y,
                             this.selectedPlacement.orientation
                         );
-                        this.app.editItemX.value = snapped.x;
-                        this.app.editItemY.value = snapped.y;
+                        if (this.app.editItemX) this.app.editItemX.value = snapped.x;
+                        if (this.app.editItemY) this.app.editItemY.value = snapped.y;
                     } catch (err) {
                         console.error('Error applying map change:', err);
                     }
@@ -2588,40 +3204,7 @@ const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
             }
 
             if (this.app.parser) {
-                const targetFloor = document.getElementById('select-floor').value;
-                const locVal = document.getElementById('select-location').value;
-                const targetLoc = locVal !== "" ? parseInt(locVal, 10) : 1;
-                
-                let hits = [];
-                if (document.body.classList.contains('play-mode')) {
-                    if (this.app.tsukiPort && this.app.tsukiPort.isHammerMode) {
-                        for (let g = 2; g >= 0; g--) {
-                            const cart = this.getCartesianCoords(mouseX, mouseY, g);
-                            const gx = Math.floor(cart.x + 0.5);
-                            const gy = Math.floor(cart.y + 0.5);
-                            hits = hits.concat(this._hitTest(gx, gy, g.toString(), targetLoc, mouseX, mouseY));
-                        }
-                    }
-                } else {
-                    hits = this._hitTest(gridX, gridY, targetFloor, targetLoc, mouseX, mouseY);
-                }
-
-                // Prefer higher floors, then wall items, then non-ground furniture
-                        hits.sort((a, b) => {
-                            const score = (p) => {
-                                let s = (p.floor || 0) * 10;
-                                if (p.isWall) s += 3;
-                                else {
-                                    const lift = (this._stackInfo && this._stackInfo.get(p) || {}).lift || 0;
-                                    if (lift) s += 2;
-                                    else if (!GROUND_IDS.has(p.item_id)) s += 1;
-                                }
-                                return s;
-                            };
-                            return score(b) - score(a);
-                        });
-
-                const top = hits[0] || null;
+                const top = this._findPlacementAtScreen(mouseX, mouseY);
                 if (this.hoveredPlacement !== top) {
                     this.hoveredPlacement = top;
                     this.draw();
@@ -2630,10 +3213,14 @@ const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
         });
 
         this.canvas.addEventListener('mouseup', () => {
+            const wasItemDragging = this.isItemDragging;
             this.isPanDragging  = false;
             this.isItemDragging = false;
             this.isGridDragging = false;
             this._dragSnap = null;
+            if (wasItemDragging && document.body.classList.contains('play-mode') && this.app.tsukiPort && typeof this.app.tsukiPort.triggerAutosave === 'function') {
+                this.app.tsukiPort.triggerAutosave();
+            }
         });
 
         this.canvas.addEventListener('mouseleave', () => {
@@ -2648,31 +3235,15 @@ const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
         this.canvas.addEventListener('touchstart', e => {
             if (e.touches.length === 1) {
                 const touch = e.touches[0];
+                this.pointerDownTime = performance.now();
+                this.pointerDownPos = { x: touch.clientX, y: touch.clientY };
                 const rect = this.canvas.getBoundingClientRect();
                 const mouseX = touch.clientX - rect.left;
                 const mouseY = touch.clientY - rect.top;
 
-                const cart = this.getCartesianCoords(mouseX, mouseY, placement ? placement.floor : 0);
-                const gridX = Math.floor(cart.x + 0.5);
-                const gridY = Math.floor(cart.y + 0.5);
+                const top = this._findPlacementAtScreen(mouseX, mouseY) || this.hoveredPlacement;
 
-                const targetFloor = document.getElementById('select-floor').value;
-                const locVal = document.getElementById('select-location').value;
-                const targetLoc = locVal !== "" ? parseInt(locVal, 10) : 0;
-                const hits        = this.app.parser ? this._hitTest(gridX, gridY, targetFloor, targetLoc, mouseX, mouseY) : [];
-
-                hits.sort((a, b) => {
-                    const score = (p) => {
-                        if (p.isWall) return 3;
-                        const lift = (this._stackInfo && this._stackInfo.get(p) || {}).lift || 0;
-                        if (lift) return 2;
-                        return GROUND_IDS.has(p.item_id) ? 0 : 1;
-                    };
-                    return score(a) - score(b);
-                });
-                const top = hits[hits.length - 1] || null;
-
-                  if (top) {
+                if (top) {
                       this.selectedPlacement = top;
                       this.app.openItemEditor(this.selectedPlacement);
                       this.isItemDragging = true;
@@ -2716,16 +3287,50 @@ const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
                 }
 
                 if (this.isItemDragging && this.selectedPlacement) {
-                    if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode) {
-    const surfaceHit = this._hitTestPlaySurface(mouseX, mouseY);
-    if (surfaceHit && surfaceHit.kind === 'floor') {
-        this.selectedPlacement.floor = surfaceHit.floorNum.toString();
-    }
-}
-const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
+                    const isPlayHammer = document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode;
+                    const isWallItem = !!this.selectedPlacement.isWall;
+
+                    if (isPlayHammer) {
+                        const surfaceHit = this._hitTestPlaySurface(mouseX, mouseY, isWallItem ? 'wall' : 'floor');
+                        if (isWallItem) {
+                            if (surfaceHit && surfaceHit.kind === 'wall') {
+                                const oldFlipped = !!this.selectedPlacement.flipped;
+                                this.selectedPlacement.floor = surfaceHit.floorNum.toString();
+                                this.selectedPlacement.flipped = surfaceHit.flipped;
+                                if (oldFlipped !== !!surfaceHit.flipped) {
+                                    this.dragItemOffsetX = 0;
+                                    this.dragItemOffsetY = 0;
+                                }
+                            }
+                        } else {
+                            if (surfaceHit && surfaceHit.kind === 'floor') {
+                                const oldFloor = this.selectedPlacement.floor;
+                                this.selectedPlacement.floor = surfaceHit.floorNum.toString();
+                                if (oldFloor !== this.selectedPlacement.floor) {
+                                    this.dragItemOffsetX = 0;
+                                    this.dragItemOffsetY = 0;
+                                }
+                            }
+                        }
+                    }
+
+                    const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
                     const floatedX = raw.x - (this.dragItemOffsetX || 0);
                     const floatedY = raw.y - (this.dragItemOffsetY || 0);
-                    const snapped = this._snapMove(this.selectedPlacement, floatedX, floatedY);
+
+                    let snapped;
+                    if (isWallItem) {
+                        const roundX = Math.round(floatedX);
+                        const roundY = Math.round(floatedY);
+                        const distX = floatedX - roundX;
+                        const distY = floatedY - roundY;
+                        const snapThreshold = 0.35;
+                        const snapX = Math.abs(distX) < snapThreshold ? roundX : Math.round(floatedX);
+                        const snapY = Math.abs(distY) < snapThreshold ? roundY : Math.round(floatedY);
+                        snapped = this._clampWallGrid(this.selectedPlacement, snapX, snapY);
+                    } else {
+                        snapped = this._snapMove(this.selectedPlacement, floatedX, floatedY);
+                    }
 
                     if (this.selectedPlacement.x !== snapped.x || this.selectedPlacement.y !== snapped.y) {
                         try {
@@ -2734,8 +3339,8 @@ const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
                                 this.selectedPlacement.item_id, snapped.x, snapped.y,
                                 this.selectedPlacement.orientation
                             );
-                            this.app.editItemX.value = snapped.x;
-                            this.app.editItemY.value = snapped.y;
+                            if (this.app.editItemX) this.app.editItemX.value = snapped.x;
+                            if (this.app.editItemY) this.app.editItemY.value = snapped.y;
                         } catch (err) {
                             console.error('Error applying map change:', err);
                         }
@@ -2780,9 +3385,13 @@ const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
                 this.initialPinchDistance = null;
             }
             if (e.touches.length === 0) {
+                const wasItemDragging = this.isItemDragging;
                 this.isPanDragging  = false;
                 this.isItemDragging = false;
                 this._dragSnap = null;
+                if (wasItemDragging && document.body.classList.contains('play-mode') && this.app.tsukiPort && typeof this.app.tsukiPort.triggerAutosave === 'function') {
+                    this.app.tsukiPort.triggerAutosave();
+                }
             }
         });
 
@@ -2805,23 +3414,34 @@ const raw = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
         // cuadrados al rotarlos.
         const oldSize = this.getRotatedSize(p.item_id, p.orientation);
         const newSize = this.getRotatedSize(p.item_id, newOri);
-        const newX = p.x + roundAwayFromZero((oldSize.w - newSize.w) / 2);
-        const newY = p.y + roundAwayFromZero((oldSize.l - newSize.l) / 2);
+        let newX = p.x + roundAwayFromZero((oldSize.w - newSize.w) / 2);
+        let newY = p.y + roundAwayFromZero((oldSize.l - newSize.l) / 2);
 
-        // Persistir en el AST. El writeInt32(p.o_off, ...) anterior era código
-        // muerto (p.o_off nunca se asigna en ningún placement, y getBuffer()
-        // serializa desde el AST vía OdinWriter, no desde el buffer crudo), por
-        // lo que la rotación nunca llegaba a guardarse en el .csave exportado.
+        // Clampear para que no se salga de los límites del piso/polígono
+        const clamped = this._clampFloorGrid({ ...p, orientation: newOri }, newX, newY);
+        newX = clamped.x;
+        newY = clamped.y;
+
+        // Persistir en el AST
         this.app.parser.applyMapChange(p, p.item_id, newX, newY, newOri);
 
         this.app.openItemEditor(p);
         
-        // Force reload from cache if needed
-        const key = newOri > 0 ? `${p.item_id}_${newOri}` : String(p.item_id);
-        if (this._imgCache[key] === undefined) {
-            this.getImage(p.item_id, newOri);
-        }
+        // Asegurar que la imagen para la nueva orientación esté cargada
+        this.getImage(p.item_id, newOri);
         
         this.draw();
+    }
+
+    // P5 / CastleManager integration: discriminate between quick tap and drag gesture
+    isQuickTap(clientX, clientY) {
+        if (!this.pointerDownTime || !this.pointerDownPos) return true;
+        const elapsed = (performance.now() - this.pointerDownTime) / 1000;
+        const dx = (clientX !== undefined ? clientX : this.pointerDownPos.x) - this.pointerDownPos.x;
+        const dy = (clientY !== undefined ? clientY : this.pointerDownPos.y) - this.pointerDownPos.y;
+        if (window.Castle && window.Castle.Manager) {
+            return window.Castle.Manager.isQuickTap(elapsed, dx, dy);
+        }
+        return elapsed < 0.20 && (dx * dx + dy * dy) < 3.5;
     }
 }

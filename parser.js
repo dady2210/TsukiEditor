@@ -699,12 +699,15 @@ class SaveParser {
     getSpEventSavesExtended(){ const n=this._rootNode('spEventSaves'); if(!n) return []; const list=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; return list? list.elements.map(e=>e.value||e):[]; }
 
     applyMapChange(placement, newId, newX, newY, newOrientation, newFloor) {
-        if (!placement.furnNode) return;
+        if (!placement) return;
         
-        placement.item_id = newId;
-        placement.x = newX;
-        placement.y = newY;
-        if (newOrientation !== undefined) placement.orientation = newOrientation;
+        if (newId !== undefined && newId !== null) placement.item_id = newId;
+        if (newX !== undefined && newX !== null) placement.x = newX;
+        if (newY !== undefined && newY !== null) placement.y = newY;
+        if (newOrientation !== undefined && newOrientation !== null) placement.orientation = newOrientation;
+        if (newFloor !== undefined && newFloor !== null) placement.floor = String(newFloor);
+        
+        if (!placement.furnNode) return;
         
         const node = placement.furnNode;
 

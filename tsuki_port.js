@@ -22,7 +22,7 @@ class TsukiPort {
         
         this.currentCategory = 1; // 1 = Furniture (default)
         this.showGrid = true;
-        this.autosaveEnabled = false;
+        this.autosaveEnabled = true; // Por defecto activado guardando en caché local silenciosa
         this.autosaveTimer = null;
         this.playTime = 0;
         this.lastWrite = Date.now();
@@ -65,20 +65,24 @@ class TsukiPort {
         }
         
         if (this.btnSettings) {
+            this.btnSettings.style.color = this.autosaveEnabled ? '#4caf50' : '#9e9e9e';
+            this.btnSettings.title = this.autosaveEnabled ? 'Autoguardado en caché activo (cada 30s)' : 'Autoguardado desactivado';
             this.btnSettings.addEventListener('click', () => {
-                if (!this.autosaveEnabled) {
-                    if (confirm('¿Activar Autosave? El csave del celular se va a parchear.')) {
-                        this.autosaveEnabled = true;
-                        this.btnSettings.style.color = '#4caf50';
-                        this.app.showToast('Autosave activado (cada 30s).');
-                        this.triggerAutosave();
+                this.autosaveEnabled = !this.autosaveEnabled;
+                this.btnSettings.style.color = this.autosaveEnabled ? '#4caf50' : '#9e9e9e';
+                this.btnSettings.title = this.autosaveEnabled ? 'Autoguardado en caché activo (cada 30s)' : 'Autoguardado desactivado';
+                if (this.autosaveEnabled) {
+                    this.app.showToast('💾 Autoguardado en caché activado.');
+                    this.triggerAutosave();
+                    if (!this.autosaveTimer) {
                         this.autosaveTimer = setInterval(() => this.triggerAutosave(), 30000);
                     }
                 } else {
-                    this.autosaveEnabled = false;
-                    this.btnSettings.style.color = '#9e9e9e';
-                    clearInterval(this.autosaveTimer);
-                    this.app.showToast('Autosave desactivado.');
+                    if (this.autosaveTimer) {
+                        clearInterval(this.autosaveTimer);
+                        this.autosaveTimer = null;
+                    }
+                    this.app.showToast('Autoguardado desactivado.');
                 }
             });
         }
@@ -136,18 +140,23 @@ class TsukiPort {
         this.bottomBar.classList.add('active-ui');
         this.exitHammerMode();
         
+        // Iniciar timer de autosave si está activo
+        if (this.autosaveEnabled && !this.autosaveTimer) {
+            this.autosaveTimer = setInterval(() => this.triggerAutosave(), 30000);
+        }
+
         // Set up the carrots display
         const hudCarrots = document.getElementById('port-hud-carrots');
         if (hudCarrots && this.app.parser && this.app.parser.generalVars) {
-            hudCarrots.textContent = this.app.parser.generalVars.carrots || 0;
+            hudCarrots.textContent = this.app.parser.generalVars.carrots ? (this.app.parser.generalVars.carrots.value ?? this.app.parser.generalVars.carrots) : 0;
         }
     }
     
 
     
     
-    triggerAutosave() {
-        if (!this.autosaveEnabled || !this.app.parser) return;
+    async triggerAutosave() {
+        if (!this.autosaveEnabled || !this.app || !this.app.parser) return;
         
         const now = Date.now();
         this.playTime += Math.floor((now - this.lastWrite) / 1000);
@@ -157,13 +166,14 @@ class TsukiPort {
             this.app.parser.generalVars.playTime = { type: 'Int32', value: this.playTime, _stub: true };
         }
         
-        // El Autosave simplemente fuerza la descarga del csave
-        // Si el usuario est? en un entorno (ej: WebView Android o script) que intercepta
-        // la descarga, esto autom?ticamente parchar? su save real.
-        if (typeof this.app.downloadFile === 'function') {
-            this.app.applyGeneralVars();
-            this.app.downloadFile();
-            this.app.showToast('Autosave generado.', 'info');
+        // Guardar silenciosamente en la caché local persistente (IndexedDB) y/o File System Access API
+        if (typeof this.app.saveSession === 'function') {
+            await this.app.saveSession({ silent: true });
+            const badge = document.getElementById('port-hud-autosave');
+            if (badge) {
+                badge.style.opacity = '1';
+                setTimeout(() => { badge.style.opacity = '0'; }, 1800);
+            }
         }
     }
 
@@ -176,7 +186,7 @@ class TsukiPort {
     
     enterHammerMode() {
         this.isHammerMode = true;
-        // if (this.bottomBar) this.bottomBar.style.display = 'none';
+        if (this.bottomBar) this.bottomBar.style.display = 'none';
         this.hammerUI.classList.add('active-ui');
         
         if (this.app.map) {
@@ -200,11 +210,16 @@ class TsukiPort {
             this.app.map.isHammerMode = false;
             this.app.map.forceDrawGrid = false;
             
-            // Re-inject picked up item if we are holding something
-            if (this.app.map.selectedPlacement) {
-                this.pickupSelectedPlacement();
+            // Deselect and close editor without deleting placed item
+            this.app.map.selectedPlacement = null;
+            if (typeof this.app.closeItemEditor === 'function') {
+                this.app.closeItemEditor();
             }
             this.app.map.draw();
+        }
+        
+        if (typeof this.triggerAutosave === 'function') {
+            this.triggerAutosave();
         }
     }
     
@@ -219,10 +234,12 @@ class TsukiPort {
             }
         }
         
-        // Filter: invType 1, 2, 3 are all "furniture" categories roughly.
+        // Filter: invType 1, 2, 3 are all "furniture" categories, plus any floor/wall coverings.
         const items = (this.app.parser.inventory || []).filter(i => {
             if (i.qty <= 0 || i.item_id === -1) return false;
-            return [1, 2, 3].includes(Number(i.invType));
+            if ([1, 2, 3].includes(Number(i.invType))) return true;
+            if (this.app.map && this.app.map.isCovering(i.item_id)) return true;
+            return false;
         });
         
         if (items.length === 0) {
@@ -234,51 +251,26 @@ class TsukiPort {
             const div = document.createElement('div');
             div.className = 'hammer-inv-slot';
             div.draggable = true;
-            const typeStr = item.invType === 0 ? 'item' : 'furn';
+            const isCover = this.app.map ? this.app.map.isCovering(item.item_id) : null;
+            const typeStr = (item.invType === 0 && !isCover) ? 'item' : 'furn';
             div.innerHTML = window.getSafeImageHTML(item.item_id, typeStr, 'style="max-width:80%; max-height:80%;"');
             
-            // Allow dragging (keep existing imgObj logic for dragImage)
-            const imgObj = this.app.map ? this.app.map.getImage(item.item_id, 0) : null;
-            if (true) {
-                div.addEventListener('dragstart', (e) => {
-                    if (this.app.map) this.app.map.draggedInventoryItem = { item_id: item.item_id };
-                    e.dataTransfer.setData('application/json', JSON.stringify({
-                        item_id: item.item_id,
-                        invType: item.invType
-                    }));
-                    
-                    // BIG DRAG IMAGE
-                    const dragImg = new Image();
-                    dragImg.src = imgObj.src;
-                    dragImg.style.position = 'absolute';
-                    dragImg.style.top = '-9999px';
-                    dragImg.style.opacity = '1';
-                    // We need it in the DOM temporarily for setDragImage in some browsers
-                    document.body.appendChild(dragImg);
-                    
-                    // We use native width/height to make it look full size
-                    // Since isometric items scale, we might want to scale it by `map.scale` 
-                    const s = 0.75 * (this.app.map ? this.app.map.scale : 1);
-                    const dw = imgObj.width * s;
-                    const dh = imgObj.height * s;
-                    
-                    dragImg.width = dw;
-                    dragImg.height = dh;
-                    
-                    e.dataTransfer.setDragImage(dragImg, dw / 2, dh);
-                    
-                    setTimeout(() => dragImg.remove(), 100);
-                    div.style.opacity = '0.5';
+            // Use transparent dragImage so only custom canvas ghost is shown (avoids double mouse)
+            const blankDragImg = new Image();
+            blankDragImg.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+            div.addEventListener('dragstart', (e) => {
+                const payload = JSON.stringify({
+                    item_id: item.item_id,
+                    invType: item.invType
                 });
-                
-            } else {
-                div.textContent = item.item_id;
-                div.addEventListener('dragstart', (e) => {
-                    if (this.app.map) this.app.map.draggedInventoryItem = { item_id: item.item_id };
-                    if (this.app.map) this.app.map.draggedInventoryItem = { item_id: item.item_id };
-                    e.dataTransfer.setData('application/json', JSON.stringify({ item_id: item.item_id }));
-                });
-            }
+                if (this.app.map) this.app.map.draggedInventoryItem = { item_id: item.item_id };
+                e.dataTransfer.setData('application/json', payload);
+                e.dataTransfer.setData('text/plain', payload);
+                try {
+                    e.dataTransfer.setDragImage(blankDragImg, 0, 0);
+                } catch (err) {}
+                div.style.opacity = '0.5';
+            });
             
             const qty = document.createElement('div');
             qty.className = 'hammer-inv-qty';
@@ -287,7 +279,11 @@ class TsukiPort {
             
             div.addEventListener('dragend', () => {
                 div.style.opacity = '1';
-                if (this.app.map) this.app.map.draggedInventoryItem = null;
+                if (this.app.map) {
+                    this.app.map.draggedInventoryItem = null;
+                    this.app.map.isItemDragging = null;
+                    this.app.map.draw();
+                }
             });
             
             this.hammerInvPanel.appendChild(div);

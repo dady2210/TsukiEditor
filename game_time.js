@@ -52,6 +52,40 @@
       const arr = listeners[key];
       const i = arr.indexOf(cb);
       if (i !== -1) arr.splice(i, 1);
+    },
+
+    // ── Castle Framework Time & Moon Extensions ──────────────────────────
+    moonPhase() {
+      if (typeof window !== 'undefined' && window.Castle && window.Castle.Moon) {
+        return window.Castle.Moon.getPhase(new Date());
+      }
+      return { phase: 0, id: 'NewMoon', nameEs: 'Luna Nueva' };
+    },
+
+    simpleTime() {
+      const n = this.now();
+      if (typeof window !== 'undefined' && window.Castle && window.Castle.SimpleTime) {
+        return new window.Castle.SimpleTime(n.minutes);
+      }
+      return { minutes: n.minutes, hour: n.hour, minute: n.minute, toString: () => `${n.hour}:${n.minute}` };
+    },
+
+    simpleDate() {
+      const n = this.now();
+      if (typeof window !== 'undefined' && window.Castle && window.Castle.SimpleDate) {
+        return new window.Castle.SimpleDate(n.month, n.day);
+      }
+      return { day: n.day, month: n.month, toString: () => `${n.day}/${n.month}` };
+    },
+
+    inTimeRange(fromMinutes, toMinutes) {
+      const m = this.now().minutes;
+      if (typeof window !== 'undefined' && window.Castle && window.Castle.TimeRange) {
+        return new window.Castle.TimeRange(fromMinutes, toMinutes).check(m);
+      }
+      if (fromMinutes < toMinutes) return m >= fromMinutes && m < toMinutes;
+      if (fromMinutes === toMinutes) return m === fromMinutes;
+      return m < toMinutes || m >= fromMinutes;
     }
   };
 

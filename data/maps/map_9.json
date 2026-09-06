@@ -1,0 +1,46 @@
+{
+  "mapId": 9,
+  "name": "Casa de Té de Momo",
+  "englishName": "Momo's Tea House",
+  "zone": "Aldea Hongo",
+  "version": 2,
+  "config": {
+    "ppu": 150,
+    "bgScale": 0.75,
+    "assetsDir": null,
+    "assembled": null,
+    "lighting": "exterior",
+    "camera": {
+      "zoom": 40,
+      "minZoom": 15,
+      "maxZoom": 80
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor_0",
+      "kind": "floor",
+      "groupNum": 0,
+      "flipped": false,
+      "name": "Terraza de Té",
+      "origin": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "cell": {
+        "w": 58,
+        "h": 28
+      },
+      "rows": 12,
+      "cols": 12,
+      "poly": [],
+      "origin_px": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    }
+  ],
+  "visuals": [],
+  "colliders": [],
+  "logic": {}
+}

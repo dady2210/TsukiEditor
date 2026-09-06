@@ -2923,8 +2923,8 @@ window.ITEMS_UNIFIED = {
     "name_es": "Cabeza de Serpiente",
     "desc_en": "It'll bite ya when your back is turned! What a snake.",
     "desc_es": "Te morderá cuando te voltees como el buen víbora que es.",
-    "width": 4,
-    "length": 2,
+    "width": 2,
+    "length": 4,
     "pivot": {
       "x": 0.3121,
       "y": 0.0155
@@ -55605,8 +55605,8 @@ window.ITEMS_UNIFIED = {
     "name_es": "Mesa Sandía Buendía",
     "desc_en": "A table like this is truly one in a melon.",
     "desc_es": "Una mesa como esta es realmente una en un melón.",
-    "width": 3,
-    "length": 3,
+    "width": 4,
+    "length": 4,
     "pivot": {
       "x": 0.4977,
       "y": 0.0294

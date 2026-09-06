@@ -1,0 +1,72 @@
+{
+  "mapId": 4,
+  "name": "Muelle de Yori / Costa",
+  "englishName": "Pier (Yori's Dock / Coast)",
+  "zone": "Aldea Hongo",
+  "version": 2,
+  "config": {
+    "ppu": 150,
+    "bgScale": 0.75,
+    "assetsDir": null,
+    "assembled": null,
+    "lighting": "exterior",
+    "camera": {
+      "zoom": 40,
+      "minZoom": 15,
+      "maxZoom": 80
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor_1",
+      "kind": "floor",
+      "groupNum": 1,
+      "anchorID": null,
+      "flipped": false,
+      "name": "Piso g1",
+      "origin": {
+        "x": 2.5,
+        "y": 1.5
+      },
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "rows": 16,
+      "cols": 16,
+      "defaultCoverId": null,
+      "poly": []
+    },
+    {
+      "id": "floor_2",
+      "kind": "floor",
+      "groupNum": 2,
+      "anchorID": null,
+      "flipped": false,
+      "name": "Piso g2",
+      "origin": {
+        "x": 2.5,
+        "y": 1.5
+      },
+      "origin_px": {
+        "x": 500,
+        "y": 300
+      },
+      "cell": {
+        "w": 56,
+        "h": 28
+      },
+      "rows": 12,
+      "cols": 12,
+      "defaultCoverId": null,
+      "poly": []
+    }
+  ],
+  "visuals": [],
+  "colliders": [],
+  "logic": {}
+}

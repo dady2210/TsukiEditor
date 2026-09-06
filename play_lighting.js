@@ -35,14 +35,31 @@
     const c = curve ? (exterior ? curve.exterior : curve.interior) : null;
     if (!c) return [0,0,0,0];
     let m = ((minutes % 1440) + 1440) % 1440;
+    let baseRgba = null;
     for (let i = 0; i < c.length - 1; i++) {
       const a = c[i], b = c[i+1];
       if (m >= a.minutes && m <= b.minutes) {
         const t = (b.minutes === a.minutes) ? 0 : (m - a.minutes) / (b.minutes - a.minutes);
-        return lerpRgba(a.rgba, b.rgba, t);
+        baseRgba = lerpRgba(a.rgba, b.rgba, t);
+        break;
       }
     }
-    return c[c.length-1].rgba;
+    if (!baseRgba) baseRgba = c[c.length-1].rgba.slice();
+    else baseRgba = baseRgba.slice();
+
+    // P3 / Castle Moon integration: modulate night darkness on exterior maps
+    const isNight = (window.Castle && window.Castle.TimeRange && typeof window.Castle.TimeRange.inRange === 'function')
+      ? window.Castle.TimeRange.inRange(m, AUTO_ON, AUTO_OFF)
+      : (m >= AUTO_ON || m < AUTO_OFF);
+
+    if (exterior && isNight && window.Castle && window.Castle.Moon) {
+      const moonMult = window.Castle.Moon.getNightLightMultiplier();
+      // On Full Moon night (moonMult ~ 1.0), veil alpha is slightly softer (brighter night)
+      // On New Moon night (moonMult ~ 0.35), veil alpha is darker
+      const moonFactor = 1.15 - (0.28 * moonMult);
+      baseRgba[3] = Math.max(0, Math.min(1, baseRgba[3] * moonFactor));
+    }
+    return baseRgba;
   }
 
   function ensureVeil() {
@@ -90,8 +107,22 @@
     lampOn(mode, minutes) {
       if (mode === 'on') return true;
       if (mode === 'off') return false;
-      // auto
+      // auto: using Castle.TimeRange (handles wrap-around midnight canonically)
+      if (window.Castle && window.Castle.TimeRange && typeof window.Castle.TimeRange.inRange === 'function') {
+        return window.Castle.TimeRange.inRange(minutes, AUTO_ON, AUTO_OFF);
+      }
       return minutes >= AUTO_ON || minutes < AUTO_OFF;
+    },
+
+    getMoonInfo(date) {
+      if (window.Castle && window.Castle.Moon) {
+        return {
+          phase: window.Castle.Moon.getPhase(date),
+          phaseName: window.Castle.Moon.getPhaseName(date),
+          multiplier: window.Castle.Moon.getNightLightMultiplier(window.Castle.Moon.getPhase(date))
+        };
+      }
+      return null;
     },
 
     getVeilRgba(minutes, exterior) {

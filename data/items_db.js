@@ -1980,8 +1980,8 @@ window.ITEMS_DB = {
     "id": 115,
     "item_name": "Cabeza de Serpiente / Snake Head",
     "furn_name": "Banca Tatami / Tatami Bench",
-    "width": 4,
-    "length": 2,
+    "width": 2,
+    "length": 4,
     "rotations": {
       "B": 697
     },
@@ -26830,8 +26830,8 @@ window.ITEMS_DB = {
     "id": 2130,
     "item_name": "Unknown Item 2130",
     "furn_name": "Mesa Sandía Buendía / Frooty Watermelon Table",
-    "width": 3,
-    "length": 3,
+    "width": 4,
+    "length": 4,
     "rotations": {
       "B": 2131
     },

@@ -1,0 +1,68 @@
+{
+  "mapId": 1,
+  "name": "Tienda de Yori",
+  "englishName": "Yori's General Store",
+  "zone": "Aldea Hongo",
+  "version": 2,
+  "config": {
+    "ppu": 150,
+    "bgScale": 0.75,
+    "assetsDir": null,
+    "assembled": null,
+    "lighting": "interior",
+    "camera": {
+      "zoom": 40,
+      "minZoom": 15,
+      "maxZoom": 80
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor_0",
+      "kind": "floor",
+      "groupNum": 0,
+      "flipped": false,
+      "name": "Tienda de Yori - Planta Baja",
+      "origin": {
+        "x": 0.0,
+        "y": -1.5
+      },
+      "cell": {
+        "w": 58,
+        "h": 28
+      },
+      "rows": 14,
+      "cols": 14,
+      "poly": [],
+      "origin_px": {
+        "x": 0.0,
+        "y": -300.0
+      }
+    },
+    {
+      "id": "floor_1",
+      "kind": "floor",
+      "groupNum": 1,
+      "flipped": false,
+      "name": "Tienda de Yori - Piso Superior (Pipi)",
+      "origin": {
+        "x": 0.0,
+        "y": 1.5
+      },
+      "cell": {
+        "w": 58,
+        "h": 28
+      },
+      "rows": 12,
+      "cols": 12,
+      "poly": [],
+      "origin_px": {
+        "x": 0.0,
+        "y": 300.0
+      }
+    }
+  ],
+  "visuals": [],
+  "colliders": [],
+  "logic": {}
+}

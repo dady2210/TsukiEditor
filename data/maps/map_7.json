@@ -1,0 +1,46 @@
+{
+  "mapId": 7,
+  "name": "Escena de Apertura (Tren)",
+  "englishName": "Opening Scene (Train)",
+  "zone": "Aldea Hongo / Prólogo",
+  "version": 2,
+  "config": {
+    "ppu": 150,
+    "bgScale": 0.75,
+    "assetsDir": null,
+    "assembled": null,
+    "lighting": "interior",
+    "camera": {
+      "zoom": 40,
+      "minZoom": 15,
+      "maxZoom": 80
+    }
+  },
+  "surfaces": [
+    {
+      "id": "floor_0",
+      "kind": "floor",
+      "groupNum": 0,
+      "flipped": false,
+      "name": "Vagón Inicial",
+      "origin": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "cell": {
+        "w": 58,
+        "h": 28
+      },
+      "rows": 10,
+      "cols": 10,
+      "poly": [],
+      "origin_px": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    }
+  ],
+  "visuals": [],
+  "colliders": [],
+  "logic": {}
+}

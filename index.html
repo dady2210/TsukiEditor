@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tsuki's Odyssey Save Editor</title>
-    <meta name="description" content="Editor web completo para archivos .csave de Tsuki's Odyssey. Modifica inventario, amistad de personajes, mapa 3D, eventos y más.">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css?v=20260849">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=Nunito+Sans:wght@400;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
@@ -24,8 +25,32 @@
             <h2>Arrastra tu archivo <code>.csave</code> aquí</h2>
             <p>o haz clic para seleccionar</p>
             <input type="file" id="file-input" accept=".csave" hidden>
-            <br><br>
-            <button id="btn-new-game" class="btn-primary" disabled title="An no implementado">Nueva Partida</button>
+            
+            <!-- Banner para reanudar partida guardada en caché local -->
+            <div id="cache-resume-banner" class="hidden" style="margin:1.5rem auto; padding:1.2rem; background:rgba(76, 175, 80, 0.12); border:1.5px solid #4caf50; border-radius:12px; max-width:480px;">
+                <div style="font-weight:700; font-size:1.05rem; color:#2e7d32; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <span class="material-symbols-outlined">history</span> Partida guardada en caché detectada
+                </div>
+                <p id="cache-resume-info" style="margin:0.5rem 0 1rem; font-size:0.9rem; color:var(--text-main);">
+                    MOD_save2.csave — guardado hace 2 minutos
+                </p>
+                <div style="display:flex; justify-content:center; gap:10px;">
+                    <button id="btn-resume-cache" class="btn-primary" style="padding:0.6rem 1.4rem;">
+                        <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:4px;">play_arrow</span> Continuar partida
+                    </button>
+                    <button id="btn-discard-cache" class="btn-secondary" style="padding:0.6rem 1rem; font-size:0.85rem;" title="Descartar caché y empezar desde un archivo limpio">
+                        Descartar
+                    </button>
+                </div>
+            </div>
+
+            <div style="margin-top:1.2rem; display:flex; flex-direction:column; align-items:center; gap:8px;">
+                <button id="btn-direct-file" class="btn-secondary" style="font-size:0.85rem; padding:0.5rem 1rem; max-width:320px;" title="Permite auto-guardar directamente sobre el archivo .csave físico en tu PC sin descargar nada">
+                    <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">folder_open</span>
+                    Vincular archivo directo (Auto-escritura en disco)
+                </button>
+                <button id="btn-new-game" class="btn-primary" disabled title="Aún no implementado" style="font-size:0.85rem; padding:0.4rem 1rem; opacity:0.6;">Nueva Partida</button>
+            </div>
         </div>
     </div>
 
@@ -51,6 +76,10 @@
                         <span>Recalcular verificationID</span>
                     </label>
                 </div>
+                <button id="btn-save-cache" class="btn-secondary" title="Guarda inmediatamente en la memoria local persistente del navegador sin descargar archivo" style="margin-right: 8px;">
+                    <span class="material-symbols-outlined" style="font-size:18px;margin-right:6px;vertical-align:text-bottom;">save</span>
+                    Guardar Caché
+                </button>
                 <button id="btn-save" class="btn-primary">
                     <span class="material-symbols-outlined" style="font-size:18px;margin-right:6px;vertical-align:text-bottom;">download</span>
                     Descargar Save
@@ -230,6 +259,49 @@
                                 <option value="1">Casa ampliada (incluye 2º piso)</option>
                             </select>
                             <p style="font-size:0.85rem;color:#888;margin-top:0.3rem;font-style:italic;">Solo cambia el índice de datos de la sublocación Home; no crea muebles automáticamente.</p>
+                        </div>
+                    </div>
+                    <div class="section-card" style="margin-top:1.5rem;">
+                        <h3>🏰 Metadatos del Motor (Castle Core)</h3>
+                        <p class="subtitle" style="margin-top:0;">Parámetros del motor oficial de Tsuki (Castle/Rapbot): versión codificada, tiempo jugado, audio y fase lunar.</p>
+                        <div class="grid-3col" style="gap:1rem; margin-bottom:1rem;">
+                            <div class="input-group">
+                                <label title="Versión codificada del juego (ej: 30214 = 3.2.14).">Versión Guardado (lastSavedVersion)</label>
+                                <input type="number" id="input-castle-version" placeholder="ej: 30214">
+                                <span id="label-castle-version-fmt" style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">-</span>
+                            </div>
+                            <div class="input-group">
+                                <label title="Tiempo total de juego acumulado.">Tiempo Jugado (PlayTime)</label>
+                                <input type="text" id="input-castle-playtime" readonly style="background:var(--bg-card); cursor:default;">
+                            </div>
+                            <div class="input-group">
+                                <label title="Fase lunar astronómica calculada.">Fase Lunar (Moon)</label>
+                                <input type="text" id="input-castle-moon" readonly style="background:var(--bg-card); cursor:default;">
+                            </div>
+                        </div>
+                        <div class="grid-3col" style="gap:1rem; margin-bottom:1rem;">
+                            <div class="input-group">
+                                <label title="ID de sincronización en la nube.">Cloud Save ID</label>
+                                <input type="text" id="input-castle-cloudid" placeholder="Sin Cloud ID">
+                            </div>
+                            <div class="input-group">
+                                <label title="Volumen de música general (0.0 a 1.0).">Volumen Música</label>
+                                <input type="number" id="input-castle-musicvol" step="0.05" min="0" max="1" placeholder="1.0">
+                            </div>
+                            <div class="input-group">
+                                <label title="Volumen de efectos de sonido (0.0 a 1.0).">Volumen SFX</label>
+                                <input type="number" id="input-castle-sfxvol" step="0.05" min="0" max="1" placeholder="1.0">
+                            </div>
+                        </div>
+                        <div class="grid-2col" style="gap:1rem;">
+                            <div class="input-group">
+                                <label title="Fecha del primer guardado (formato OADate).">Primer Guardado (firstSaved)</label>
+                                <input type="text" id="input-castle-firstsaved" readonly style="background:var(--bg-card); cursor:default;">
+                            </div>
+                            <div class="input-group">
+                                <label title="Fecha del último guardado (formato OADate).">Último Guardado (lastSaved)</label>
+                                <input type="text" id="input-castle-lastsaved" readonly style="background:var(--bg-card); cursor:default;">
+                            </div>
                         </div>
                     </div>
 
@@ -990,15 +1062,8 @@
                             <button id="btn-save-atlas" class="btn-primary" style="width:100%; margin-top:10px;">Descargar maps_atlas.js</button>
                             <p style="font-size:12px; margin-bottom:0; margin-top:10px; color:#666;">Arrastra en el canvas para mover la grilla activa.</p>
                         </div>
-                        <!-- Play HUD -->
-                        
-                        
-                        
-
-                        
-
-                        
-                        
+                    </div>
+                </div>
 <div id="tab-experimental" class="tab-content hidden">
                     <h2>🧪 Inyector por Lotes (Experimental)</h2>
                     <p class="subtitle">Inyecta un rango de IDs en el inventario. Uso bajo tu propio riesgo.</p>
@@ -1212,17 +1277,19 @@
     (function(){ const u=window.ITEMS_UNIFIED; const piv={}; const beh={}; for(const id in u){ if(u[id].pivot) piv[id]=u[id].pivot; if(u[id].pivot_back) piv[id+'_BACK']=u[id].pivot_back; if(u[id].behaviour) beh[id]=u[id].behaviour; } window.contentPivots=piv; window.CONTENT_PIVOTS=piv; window.BEHAVIORS=beh; })();
     </script>
     <script src="odin_browser.js?v=28"></script>
+    <script src="castle_core.js?v=3"></script>
+    <script src="save_storage.js?v=1"></script>
     <!-- App logic -->
     <script src="parser.js?v=20260850-wallfloor"></script>
-    <script src="map.js?v=53"></script>
+    <script src="map.js?v=54"></script>
     <script src="data/maps_unified.js"></script>
-    <script>if(!window.mapsAtlas && window.MAPS_UNIFIED) { window.mapsAtlas=window.MAPS_UNIFIED.atlas; window.MAP_META=window.MAPS_UNIFIED.meta; }</script>
+    <script>if(window.MAPS_UNIFIED) { window.mapsAtlas=window.MAPS_UNIFIED.atlas; window.MAP_META=window.MAPS_UNIFIED.meta; }</script>
     <script src="grid_editor.js"></script>
-    <script src="tsuki_port.js"></script>
+    <script src="tsuki_port.js?v=2"></script>
     <script src="ui.js"></script>
     <script src="game_time.js?v=1"></script>
-    <script src="play_lighting.js?v=1"></script>
-    <script src="app.js?v=36"></script>
+    <script src="play_lighting.js?v=2"></script>
+    <script src="app.js?v=38"></script>
     <!-- Experimental features -->
     <script src="patch_experimental.js?v=29"></script>
 <script>
@@ -1259,6 +1326,10 @@
 
 		const bgMusic = new Audio();
 		bgMusic.volume = 0.3; // Volumen al 30%
+		if (window.Castle && window.Castle.BGM) {
+			window.Castle.BGM.currentAudio = bgMusic;
+			window.Castle.BGM.masterVolume = 0.3;
+		}
 
 		// Algoritmo Fisher-Yates para mezclar la lista aleatoriamente
 		const shuffle = (array) => {
@@ -1406,6 +1477,9 @@
                             <span id="port-hud-clock" style="margin-left:10px; font-size:0.85rem; opacity:0.9;">--:--</span>
                             <button id="btn-map-home" class="btn-secondary" style="margin-left:10px; font-size:0.75rem; padding:2px 8px;" title="Casa sloc 0">Casa</button>
                             <button id="btn-map-farm" class="btn-secondary" style="font-size:0.75rem; padding:2px 8px;" title="Granja sloc 6">Granja</button>
+                            <span id="port-hud-autosave" style="margin-left:12px; font-size:0.75rem; opacity:0; transition:opacity 400ms ease; color:#4caf50; font-weight:700; display:inline-flex; align-items:center; gap:3px;">
+                                <span class="material-symbols-outlined" style="font-size:14px;">check_circle</span> Caché guardada
+                            </span>
                         </div>
                         
                         <!-- Port Bottom Bar -->
@@ -1582,10 +1656,11 @@
                             </div>
 
                             <button id="btn-apply-item" class="btn-primary w-full" style="margin-bottom:0.5rem;">Aplicar</button>
+                            <button id="btn-delete-item" class="btn-primary w-full" style="margin-bottom:0.5rem; background-color:#e74c3c; color:#fff; display:flex; align-items:center; justify-content:center; gap:6px;">
+                                <span class="material-symbols-outlined" style="font-size:18px;">delete</span> Eliminar Mueble
+                            </button>
                             <button id="btn-close-editor" class="btn-text w-full">Cerrar</button>
                         </div>
-                    </div>
-                </div>
 </body>
 </html>
 
