@@ -1,0 +1,389 @@
+{
+  "id": 387,
+  "name": "Ceramic Lamp",
+  "raw_properties": {
+    "m_Enabled": 1,
+    "m_Name": "",
+    "transform": {
+      "m_FileID": 0,
+      "m_PathID": -8802988214410757579
+    },
+    "coll": {
+      "m_FileID": 0,
+      "m_PathID": -3713849722225575371
+    },
+    "coll3D": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    },
+    "ID": 387,
+    "numColors": 0,
+    "debugSort": 0,
+    "inShop": 0,
+    "placementID": 0,
+    "orientation": 0,
+    "polyColliderType": 0,
+    "colliderPoints": [],
+    "flippedColliderPoints": [],
+    "gridCollScale": 0.5,
+    "gridHeightOffset": 0.054999999701976776,
+    "gridOffset": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "uiPosition": 0.6299999952316284,
+    "Save": {
+      "rid": -2
+    },
+    "references": {
+      "version": 2,
+      "RefIds": [
+        {
+          "rid": -2,
+          "type": {
+            "class": "",
+            "ns": "",
+            "asm": ""
+          }
+        }
+      ]
+    }
+  },
+  "layer_definitions": [
+    {
+      "renderer": "MonoBehaviour: ID -1059165085320037835",
+      "activitySorting": 2,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 6770420406574955061",
+      "activitySorting": 2,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 2603945580245596725",
+      "activitySorting": 2,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -7333500892248163787",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -8679496833895646667",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -8007670984134116811",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 1686542493984274997",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    }
+  ],
+  "store_data": {},
+  "nodes": [
+    {
+      "path": "Ceramic Lamp",
+      "name": "Ceramic Lamp",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": -30.772497177124023,
+        "y": -1.0758424997329712
+      },
+      "world_pos": {
+        "x": -30.772497177124023,
+        "y": -1.0758424997329712,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": []
+    },
+    {
+      "path": "Ceramic Lamp/Sprite (1)",
+      "name": "Sprite (1)",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": -30.772497177124023,
+        "y": -1.0758424997329712,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Ceramic Lamp_2",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Ceramic Lamp/Sprite (2)",
+      "name": "Sprite (2)",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": -30.772497177124023,
+        "y": -1.0758424997329712,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Ceramic Lamp_3",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Ceramic Lamp/Sprite (3)",
+      "name": "Sprite (3)",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": -30.772497177124023,
+        "y": -1.0758424997329712,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Ceramic Lamp_0",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Ceramic Lamp/Sprite (10)",
+      "name": "Sprite (10)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.0019989013671875,
+        "y": 0.29100000858306885
+      },
+      "world_pos": {
+        "x": -30.77449607849121,
+        "y": -0.7848424911499023,
+        "angle": -0.2362222421813876
+      },
+      "scale": {
+        "x": 0.45601651072502136,
+        "y": 0.5
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "ConeLightDown",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Ceramic Lamp/Sprite (5)",
+      "name": "Sprite (5)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.40799999237060547
+      },
+      "world_pos": {
+        "x": -30.772497177124023,
+        "y": -0.6678425073623657,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 8.0,
+        "y": 8.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.47058823704719543
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Ceramic Lamp/Sprite (8)",
+      "name": "Sprite (8)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.013000000268220901,
+        "y": 0.7919999957084656
+      },
+      "world_pos": {
+        "x": -30.785497177392244,
+        "y": -0.2838425040245056,
+        "angle": 179.77243465257845
+      },
+      "scale": {
+        "x": 0.5323636531829834,
+        "y": 0.5
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "ConeLightDown",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Ceramic Lamp/Sprite (6)",
+      "name": "Sprite (6)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.004000000189989805,
+        "y": 0.4659999907016754
+      },
+      "world_pos": {
+        "x": -30.776497177314013,
+        "y": -0.6098425090312958,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    }
+  ],
+  "colliders": [],
+  "audio": [],
+  "animators": [],
+  "special_scripts": []
+}

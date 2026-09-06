@@ -369,8 +369,15 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const cy = (e.clientY - rect.top) * (canvas.height / rect.height);
             const p = (this.map && (this.map.hoveredPlacement || this.map._findPlacementAtScreen(cx, cy, true))) || null;
             if (!p) return;
+            const profile = window.LIGHT_PROFILES && window.LIGHT_PROFILES[String(p.item_id)];
             const beh = window.BEHAVIORS && window.BEHAVIORS[String(p.item_id)];
-            if (!beh || beh.interact !== 'light_toggle') return;
+            const isBehLamp = beh && beh.interact === 'light_toggle';
+            const hasLampToggle = p._lampToggle !== undefined && p._lampToggle !== null;
+            const dbItem = window.ITEMS_DB && window.ITEMS_DB[String(p.item_id)];
+            const name = (dbItem && (dbItem.furn_name || dbItem.item_name || '')) || '';
+            const isLampName = /lamp|lámpara|light/i.test(name);
+            const isLamp = profile || isBehLamp || hasLampToggle || isLampName;
+            if (!isLamp) return;
             e.stopPropagation(); e.preventDefault();
             const order = ['auto','on','off'];
             const cur = p._lightMode || 'auto';

@@ -1,0 +1,444 @@
+{
+  "id": 395,
+  "name": "Iron Wall Lamp",
+  "raw_properties": {
+    "m_Enabled": 1,
+    "m_Name": "",
+    "transform": {
+      "m_FileID": 0,
+      "m_PathID": -6291489637207191535
+    },
+    "coll": {
+      "m_FileID": 0,
+      "m_PathID": -1990603089592332271
+    },
+    "coll3D": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    },
+    "ID": 395,
+    "numColors": 0,
+    "debugSort": 0,
+    "inShop": 0,
+    "placementID": 0,
+    "protruding": 0,
+    "length": 2,
+    "polyColliderType": 1,
+    "colliderPoints": [
+      {
+        "x": -0.024324029684066772,
+        "y": 0.12630011141300201
+      },
+      {
+        "x": 0.06577834486961365,
+        "y": 0.1019764393568039
+      },
+      {
+        "x": 0.11798095703125,
+        "y": 0.03424793481826782
+      },
+      {
+        "x": 0.120208740234375,
+        "y": -0.06540107727050781
+      },
+      {
+        "x": 0.06117019057273865,
+        "y": -0.13781489431858063
+      },
+      {
+        "x": -0.03308799862861633,
+        "y": -0.1596119999885559
+      },
+      {
+        "x": -0.05985260009765625,
+        "y": -0.21450430154800415
+      },
+      {
+        "x": -0.08901214599609375,
+        "y": -0.2504415512084961
+      },
+      {
+        "x": -0.13379287719726562,
+        "y": -0.2511940002441406
+      },
+      {
+        "x": -0.22414398193359375,
+        "y": -0.22883844375610352
+      },
+      {
+        "x": -0.26450347900390625,
+        "y": -0.25118350982666016
+      },
+      {
+        "x": -0.32935333251953125,
+        "y": -0.24878370761871338
+      },
+      {
+        "x": -0.3620758056640625,
+        "y": -0.1986604928970337
+      },
+      {
+        "x": -0.3644218444824219,
+        "y": -0.1572350263595581
+      },
+      {
+        "x": -0.4675178527832031,
+        "y": -0.08299094438552856
+      },
+      {
+        "x": -0.4755387008190155,
+        "y": -0.043170735239982605
+      },
+      {
+        "x": -0.45990753173828125,
+        "y": 0.0004259943962097168
+      },
+      {
+        "x": -0.31433340907096863,
+        "y": 0.016991451382637024
+      }
+    ],
+    "flippedColliderPoints": [
+      {
+        "x": 0.024324029684066772,
+        "y": 0.12630011141300201
+      },
+      {
+        "x": -0.06577834486961365,
+        "y": 0.1019764393568039
+      },
+      {
+        "x": -0.11798095703125,
+        "y": 0.03424793481826782
+      },
+      {
+        "x": -0.120208740234375,
+        "y": -0.06540107727050781
+      },
+      {
+        "x": -0.06117019057273865,
+        "y": -0.13781489431858063
+      },
+      {
+        "x": 0.03308799862861633,
+        "y": -0.1596119999885559
+      },
+      {
+        "x": 0.05985260009765625,
+        "y": -0.21450430154800415
+      },
+      {
+        "x": 0.08901214599609375,
+        "y": -0.2504415512084961
+      },
+      {
+        "x": 0.13379287719726562,
+        "y": -0.2511940002441406
+      },
+      {
+        "x": 0.22414398193359375,
+        "y": -0.22883844375610352
+      },
+      {
+        "x": 0.26450347900390625,
+        "y": -0.25118350982666016
+      },
+      {
+        "x": 0.32935333251953125,
+        "y": -0.24878370761871338
+      },
+      {
+        "x": 0.3620758056640625,
+        "y": -0.1986604928970337
+      },
+      {
+        "x": 0.3644218444824219,
+        "y": -0.1572350263595581
+      },
+      {
+        "x": 0.4675178527832031,
+        "y": -0.08299094438552856
+      },
+      {
+        "x": 0.4755387008190155,
+        "y": -0.043170735239982605
+      },
+      {
+        "x": 0.45990753173828125,
+        "y": 0.0004259943962097168
+      },
+      {
+        "x": 0.31433340907096863,
+        "y": 0.016991451382637024
+      }
+    ],
+    "useCustomFlippedPoints": 0,
+    "gridCollScale": 0.30000001192092896,
+    "gridHeightOffset": 0.49399998784065247,
+    "Save": {
+      "rid": -2
+    },
+    "references": {
+      "version": 2,
+      "RefIds": [
+        {
+          "rid": -2,
+          "type": {
+            "class": "",
+            "ns": "",
+            "asm": ""
+          }
+        }
+      ]
+    }
+  },
+  "layer_definitions": [
+    {
+      "renderer": "MonoBehaviour: ID 6891724072104874001",
+      "activitySorting": 2,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -768347272334553071",
+      "activitySorting": 2,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 1329219041310789649",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -3999822780536664047",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -2027320856385695727",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    }
+  ],
+  "store_data": {},
+  "nodes": [
+    {
+      "path": "Iron Wall Lamp",
+      "name": "Iron Wall Lamp",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": -24.19700050354004,
+        "y": 3.6070001125335693
+      },
+      "world_pos": {
+        "x": -24.19700050354004,
+        "y": 3.6070001125335693,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": []
+    },
+    {
+      "path": "Iron Wall Lamp/Iron Wall Lamp",
+      "name": "Iron Wall Lamp",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": -24.19700050354004,
+        "y": 3.6070001125335693,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Iron Wall Lamp + Wall Box Lamp_3",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Iron Wall Lamp/Iron Wall Lamp",
+      "name": "Iron Wall Lamp",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": -24.19700050354004,
+        "y": 3.6070001125335693,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Iron Wall Lamp + Wall Box Lamp_2",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Iron Wall Lamp/Sprite (5)",
+      "name": "Sprite (5)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.38999998569488525,
+        "y": -0.23000000417232513
+      },
+      "world_pos": {
+        "x": -24.587000489234924,
+        "y": 3.377000108361244,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 8.0,
+        "y": 8.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.47058823704719543
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Iron Wall Lamp/Sprite (06)",
+      "name": "Sprite (06)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.29499998688697815,
+        "y": -0.17900000512599945
+      },
+      "world_pos": {
+        "x": -24.492000490427017,
+        "y": 3.42800010740757,
+        "angle": -17.327335228440656
+      },
+      "scale": {
+        "x": 0.20215000212192535,
+        "y": 0.23643998801708221
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.27450981736183167
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Iron Wall Lamp/Sprite (07)",
+      "name": "Sprite (07)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.35499998927116394,
+        "y": -0.3140000104904175
+      },
+      "world_pos": {
+        "x": -24.552000492811203,
+        "y": 3.293000102043152,
+        "angle": -27.343205014450117
+      },
+      "scale": {
+        "x": 0.6681014895439148,
+        "y": 0.4614999294281006
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "ConeLightDown",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": -1,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    }
+  ],
+  "colliders": [],
+  "audio": [],
+  "animators": [],
+  "special_scripts": []
+}

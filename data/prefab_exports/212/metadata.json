@@ -1,0 +1,521 @@
+{
+  "id": 212,
+  "name": "Tatami Lamp",
+  "raw_properties": {
+    "m_Enabled": 1,
+    "m_Name": "",
+    "transform": {
+      "m_FileID": 0,
+      "m_PathID": 5048520105057157695
+    },
+    "coll": {
+      "m_FileID": 0,
+      "m_PathID": 3402306204368798271
+    },
+    "coll3D": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    },
+    "ID": 212,
+    "numColors": 0,
+    "debugSort": 0,
+    "inShop": 0,
+    "placementID": 0,
+    "orientation": 0,
+    "polyColliderType": 0,
+    "colliderPoints": [],
+    "flippedColliderPoints": [],
+    "gridCollScale": 0.6499999761581421,
+    "gridHeightOffset": 0.0,
+    "gridOffset": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "uiPosition": 0.7300000190734863,
+    "Save": {
+      "rid": -2
+    },
+    "references": {
+      "version": 2,
+      "RefIds": [
+        {
+          "rid": -2,
+          "type": {
+            "class": "",
+            "ns": "",
+            "asm": ""
+          }
+        }
+      ]
+    }
+  },
+  "layer_definitions": [
+    {
+      "renderer": "MonoBehaviour: ID -2950077548226510273",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -5887322158961360321",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 3529244764737667647",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 5318224229542363711",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -2230582696223538625",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -8883683436633226689",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -2698094554490043841",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -6030007283229687233",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 739992695019110975",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 7627262172238086719",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    }
+  ],
+  "store_data": {},
+  "nodes": [
+    {
+      "path": "Tatami Lamp",
+      "name": "Tatami Lamp",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": -20.880212783813477,
+        "y": 2.269656181335449
+      },
+      "world_pos": {
+        "x": -20.880212783813477,
+        "y": 2.269656181335449,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": []
+    },
+    {
+      "path": "Tatami Lamp/Sprite (1)",
+      "name": "Sprite (1)",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": -20.880212783813477,
+        "y": 2.269656181335449,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Stone Lantern + Tatami Lamp_4",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Tatami Lamp/Sprite (5)",
+      "name": "Sprite (5)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.01600000075995922,
+        "y": 0.35499998927116394
+      },
+      "world_pos": {
+        "x": -20.896212784573436,
+        "y": 2.624656170606613,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 8.0,
+        "y": 8.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.47058823704719543
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Tatami Lamp/Sprite (8)",
+      "name": "Sprite (8)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.2919999957084656,
+        "y": 0.2619999945163727
+      },
+      "world_pos": {
+        "x": -21.172212779521942,
+        "y": 2.531656175851822,
+        "angle": -72.74846698717828
+      },
+      "scale": {
+        "x": 0.5900400280952454,
+        "y": 0.5
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "ConeLightDown",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Tatami Lamp/Sprite (9)",
+      "name": "Sprite (9)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.3013744354248047,
+        "y": 0.27000001072883606
+      },
+      "world_pos": {
+        "x": -20.578838348388672,
+        "y": 2.5396561920642853,
+        "angle": 78.46981288252059
+      },
+      "scale": {
+        "x": 0.5766400098800659,
+        "y": 0.5
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "ConeLightDown",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Tatami Lamp/Sprite (12)",
+      "name": "Sprite (12)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.0062560997903347015,
+        "y": 0.8199999928474426
+      },
+      "world_pos": {
+        "x": -20.88646888360381,
+        "y": 3.089656174182892,
+        "angle": -177.00416625207043
+      },
+      "scale": {
+        "x": 0.42273855209350586,
+        "y": 0.5323078632354736
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "ConeLightDown",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Tatami Lamp/Sprite (13)",
+      "name": "Sprite (13)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.0010000000474974513,
+        "y": 0.5899999737739563
+      },
+      "world_pos": {
+        "x": -20.881212783860974,
+        "y": 2.8596561551094055,
+        "angle": 1.584487020639759
+      },
+      "scale": {
+        "x": 0.2517945468425751,
+        "y": 0.1460709571838379
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Tatami Lamp/Sprite (14)",
+      "name": "Sprite (14)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.12600000202655792,
+        "y": 0.38100001215934753
+      },
+      "world_pos": {
+        "x": -21.006212785840034,
+        "y": 2.6506561934947968,
+        "angle": 67.75471289016812
+      },
+      "scale": {
+        "x": 0.13440190255641937,
+        "y": 0.19694222509860992
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Tatami Lamp/Sprite (15)",
+      "name": "Sprite (15)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.12399999797344208,
+        "y": 0.27300000190734863
+      },
+      "world_pos": {
+        "x": -20.756212785840034,
+        "y": 2.542656183242798,
+        "angle": -65.60553750300548
+      },
+      "scale": {
+        "x": 0.13988827168941498,
+        "y": 0.22822418808937073
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Tatami Lamp/Sprite (16)",
+      "name": "Sprite (16)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.13199999928474426,
+        "y": 0.2720000147819519
+      },
+      "world_pos": {
+        "x": -21.01221278309822,
+        "y": 2.541656196117401,
+        "angle": 64.24224873377253
+      },
+      "scale": {
+        "x": 0.12952010333538055,
+        "y": 0.2046958953142166
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Tatami Lamp/Sprite (17)",
+      "name": "Sprite (17)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.11900000274181366,
+        "y": 0.382999986410141
+      },
+      "world_pos": {
+        "x": -20.761212781071663,
+        "y": 2.65265616774559,
+        "angle": -65.60553750300548
+      },
+      "scale": {
+        "x": 0.13988827168941498,
+        "y": 0.22822418808937073
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    }
+  ],
+  "colliders": [],
+  "audio": [],
+  "animators": [],
+  "special_scripts": []
+}

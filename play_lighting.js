@@ -244,8 +244,10 @@
       const locId = mapId != null ? String(mapId) : String(app.parser.currentSLocation || '0');
       placements.forEach(p => {
         if (p.cluster != null && String(p.cluster) !== String(locId)) return;
+        const profile = window.LIGHT_PROFILES && window.LIGHT_PROFILES[String(p.item_id)];
         const beh = behaviors[String(p.item_id)];
-        if (!beh || beh.interact !== 'light_toggle') return;
+        const isLamp = profile || (beh && beh.interact === 'light_toggle') || (p._lampToggle !== undefined && p._lampToggle !== null);
+        if (!isLamp) return;
         const mode = p._lightMode || 'auto';
         if (!this.lampOn(mode, minutes)) return;
         // posición iso del placement
@@ -270,64 +272,47 @@
           }
         } catch(e) { return; }
 
-        if (p.item_id === 2146) {
-          // Frooty Cherry Wall Lamp: Peach wide glow + 2 cherry focal spots
-          const rad = 95 * scale;
-          const g = haloCtx.createRadialGradient(sx, sy, 0, sx, sy, rad);
-          g.addColorStop(0, 'rgba(254, 166, 145, 0.47)');
-          g.addColorStop(0.5, 'rgba(254, 166, 145, 0.20)');
-          g.addColorStop(1, 'rgba(254, 166, 145, 0)');
-          haloCtx.fillStyle = g;
-          haloCtx.globalCompositeOperation = 'lighter';
-          haloCtx.beginPath();
-          haloCtx.arc(sx, sy, rad, 0, Math.PI * 2);
-          haloCtx.fill();
-
-          // Two cherry focal spots
+        if (profile && profile.halos && profile.halos.length > 0) {
           const flip = p.flipped ? -1 : 1;
-          const spots = [
-            { x: sx + flip * (-14 * scale), y: sy - (8 * scale), r: 20 * scale },
-            { x: sx + flip * (12 * scale), y: sy + (10 * scale), r: 20 * scale }
-          ];
-          for (const sp of spots) {
-            const sg = haloCtx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, sp.r);
-            sg.addColorStop(0, 'rgba(221, 205, 160, 0.39)');
-            sg.addColorStop(0.5, 'rgba(221, 205, 160, 0.15)');
-            sg.addColorStop(1, 'rgba(221, 205, 160, 0)');
-            haloCtx.fillStyle = sg;
+          const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+          const u = _bgo * scale;
+          for (const halo of profile.halos) {
+            const hScale = Number(halo.scale) || 1;
+            const rad = (hScale <= 1 ? Math.max(12, hScale * 65) : (hScale <= 4 ? hScale * 24 : 75 + hScale * 3.5)) * scale;
+            const ox = halo.world_offset ? halo.world_offset.x : (halo.local_pos ? halo.local_pos.x : 0);
+            const oy = halo.world_offset ? halo.world_offset.y : (halo.local_pos ? halo.local_pos.y : 0);
+            const hx = sx + flip * (ox * 100 * u);
+            const hy = sy - (oy * 100 * u);
+            const c = halo.color || [255, 204, 136, 0.5];
+            const r = c[0], g = c[1], b = c[2], a = c[3] != null ? c[3] : 0.5;
+            const grad = haloCtx.createRadialGradient(hx, hy, 0, hx, hy, rad);
+            grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${a})`);
+            grad.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, ${(a * 0.42).toFixed(3)})`);
+            grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+            haloCtx.fillStyle = grad;
+            haloCtx.globalCompositeOperation = 'lighter';
             haloCtx.beginPath();
-            haloCtx.arc(sp.x, sp.y, sp.r, 0, Math.PI * 2);
+            haloCtx.arc(hx, hy, rad, 0, Math.PI * 2);
             haloCtx.fill();
           }
           any = true;
-        } else if (p.item_id === 2140) {
-          // Frooty Grape Wall Lamp: Grape purple wide glow
-          const rad = 100 * scale;
-          const g = haloCtx.createRadialGradient(sx, sy, 0, sx, sy, rad);
-          g.addColorStop(0, 'rgba(176, 158, 216, 0.47)');
-          g.addColorStop(0.5, 'rgba(176, 158, 216, 0.20)');
-          g.addColorStop(1, 'rgba(176, 158, 216, 0)');
-          haloCtx.fillStyle = g;
-          haloCtx.globalCompositeOperation = 'lighter';
-          haloCtx.beginPath();
-          haloCtx.arc(sx, sy, rad, 0, Math.PI * 2);
-          haloCtx.fill();
-          any = true;
         } else {
-          // Generic halo for other lamps
-          const rad = ((beh.light && beh.light.radius) || 72) * scale;
-          const color = (beh.light && beh.light.color) || '#ffcc88';
+          // Generic halo for other lamps without profile
+          const rad = ((beh && beh.light && beh.light.radius) || 72) * scale;
+          const color = (beh && beh.light && beh.light.color) || '#ffcc88';
           const cy = p.isWall ? sy : sy - rad * 0.3;
           const g = haloCtx.createRadialGradient(sx, cy, 0, sx, cy, rad);
           const hex = color.replace('#','');
-          const r = parseInt(hex.slice(0,2),16), gg = parseInt(hex.slice(2,4),16), b = parseInt(hex.slice(4,6),16);
+          const r = parseInt(hex.slice(0,2),16) || 255;
+          const gg = parseInt(hex.slice(2,4),16) || 204;
+          const b = parseInt(hex.slice(4,6),16) || 136;
           g.addColorStop(0, `rgba(${r},${gg},${b},0.55)`);
           g.addColorStop(0.5, `rgba(${r},${gg},${b},0.22)`);
           g.addColorStop(1, `rgba(${r},${gg},${b},0)`);
           haloCtx.fillStyle = g;
           haloCtx.globalCompositeOperation = 'lighter';
           haloCtx.beginPath();
-          haloCtx.arc(sx, cy, rad, 0, Math.PI*2);
+          haloCtx.arc(sx, cy, rad, 0, Math.PI * 2);
           haloCtx.fill();
           any = true;
         }

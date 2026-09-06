@@ -1,0 +1,560 @@
+{
+  "id": 393,
+  "name": "Hanging Wall Lamp",
+  "raw_properties": {
+    "m_Enabled": 1,
+    "m_Name": "",
+    "transform": {
+      "m_FileID": 0,
+      "m_PathID": 5222828195746092805
+    },
+    "coll": {
+      "m_FileID": 0,
+      "m_PathID": 1672432407871362821
+    },
+    "coll3D": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    },
+    "ID": 393,
+    "numColors": 0,
+    "debugSort": 0,
+    "inShop": 0,
+    "placementID": 0,
+    "protruding": 0,
+    "length": 2,
+    "polyColliderType": 1,
+    "colliderPoints": [
+      {
+        "x": -0.3126554489135742,
+        "y": 0.02341628074645996
+      },
+      {
+        "x": -0.31647205352783203,
+        "y": 0.12587738037109375
+      },
+      {
+        "x": -0.2509450912475586,
+        "y": 0.1824791431427002
+      },
+      {
+        "x": -0.14556026458740234,
+        "y": 0.24745798110961914
+      },
+      {
+        "x": -0.07805690169334412,
+        "y": 0.29510223865509033
+      },
+      {
+        "x": 0.1355447769165039,
+        "y": 0.18626737594604492
+      },
+      {
+        "x": 0.12158545851707458,
+        "y": -0.006932690739631653
+      },
+      {
+        "x": 0.03471049666404724,
+        "y": -0.0670248419046402
+      },
+      {
+        "x": 0.04132843017578125,
+        "y": -0.19373106956481934
+      },
+      {
+        "x": 0.01393863558769226,
+        "y": -0.23615020513534546
+      },
+      {
+        "x": -0.041748046875,
+        "y": -0.44225382804870605
+      },
+      {
+        "x": -0.18944644927978516,
+        "y": -0.5160160064697266
+      },
+      {
+        "x": -0.34137579798698425,
+        "y": -0.4401153326034546
+      },
+      {
+        "x": -0.42789268493652344,
+        "y": -0.12867093086242676
+      },
+      {
+        "x": -0.28057384490966797,
+        "y": -0.03937554359436035
+      },
+      {
+        "x": -0.27367445826530457,
+        "y": -0.024473711848258972
+      }
+    ],
+    "flippedColliderPoints": [
+      {
+        "x": 0.30957794189453125,
+        "y": 0.17730450630187988
+      },
+      {
+        "x": 0.2703056335449219,
+        "y": 0.28284311294555664
+      },
+      {
+        "x": 0.16168975830078125,
+        "y": 0.3179004192352295
+      },
+      {
+        "x": 0.139404296875,
+        "y": 0.3951907157897949
+      },
+      {
+        "x": 0.05651244521141052,
+        "y": 0.3997460603713989
+      },
+      {
+        "x": -0.104766845703125,
+        "y": 0.31861114501953125
+      },
+      {
+        "x": -0.1308189332485199,
+        "y": 0.13772206008434296
+      },
+      {
+        "x": -0.06240996718406677,
+        "y": 0.07147441804409027
+      },
+      {
+        "x": -0.02593994140625,
+        "y": -0.009065389633178711
+      },
+      {
+        "x": 0.022994309663772583,
+        "y": -0.22999471426010132
+      },
+      {
+        "x": 0.041748046875,
+        "y": -0.3099100589752197
+      },
+      {
+        "x": 0.18021392822265625,
+        "y": -0.3867502212524414
+      },
+      {
+        "x": 0.34137579798698425,
+        "y": -0.3046935796737671
+      },
+      {
+        "x": 0.4186592102050781,
+        "y": -0.0024831295013427734
+      },
+      {
+        "x": 0.2744178771972656,
+        "y": 0.06219029426574707
+      },
+      {
+        "x": 0.26444098353385925,
+        "y": 0.09863658249378204
+      }
+    ],
+    "useCustomFlippedPoints": 0,
+    "gridCollScale": 0.30000001192092896,
+    "gridHeightOffset": 0.49399998784065247,
+    "Save": {
+      "rid": -2
+    },
+    "references": {
+      "version": 2,
+      "RefIds": [
+        {
+          "rid": -2,
+          "type": {
+            "class": "",
+            "ns": "",
+            "asm": ""
+          }
+        }
+      ]
+    }
+  },
+  "layer_definitions": [
+    {
+      "renderer": "MonoBehaviour: ID -7584222663722658043",
+      "activitySorting": 2,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -7805600057074247931",
+      "activitySorting": 2,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 5648620411971114757",
+      "activitySorting": 2,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -440982894013769979",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 8586432708641363717",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -2610793807071537403",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 8543293938789914373",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -602049867533969659",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    }
+  ],
+  "store_data": {},
+  "nodes": [
+    {
+      "path": "Hanging Wall Lamp",
+      "name": "Hanging Wall Lamp",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": -15.16508960723877,
+        "y": 6.826504230499268
+      },
+      "world_pos": {
+        "x": -15.16508960723877,
+        "y": 6.826504230499268,
+        "angle": -0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": []
+    },
+    {
+      "path": "Hanging Wall Lamp/Sprite",
+      "name": "Sprite",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": -0.1230001449584961
+      },
+      "world_pos": {
+        "x": -15.16508960723877,
+        "y": 6.7035040855407715,
+        "angle": -0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Hanging Wall Lamp_0",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Hanging Wall Lamp/Hanging Nautical Lantern_0",
+      "name": "Hanging Nautical Lantern_0",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": -0.1230001449584961
+      },
+      "world_pos": {
+        "x": -15.16508960723877,
+        "y": 6.7035040855407715,
+        "angle": -0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Hanging Wall Lamp_3",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Hanging Wall Lamp/Hanging Nautical Lantern_0 (1)",
+      "name": "Hanging Nautical Lantern_0 (1)",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": -0.1230001449584961
+      },
+      "world_pos": {
+        "x": -15.16508960723877,
+        "y": 6.7035040855407715,
+        "angle": -0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Hanging Wall Lamp_2",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Hanging Wall Lamp/Sprite (2)",
+      "name": "Sprite (2)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.20499999821186066,
+        "y": -0.364000141620636
+      },
+      "world_pos": {
+        "x": -15.37008960545063,
+        "y": 6.462504088878632,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 8.0,
+        "y": 8.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.47058823704719543
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Hanging Wall Lamp/Sprite (3)",
+      "name": "Sprite (3)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.10899999737739563,
+        "y": -0.3180001378059387
+      },
+      "world_pos": {
+        "x": -15.274089604616165,
+        "y": 6.508504092693329,
+        "angle": -22.482268665695667
+      },
+      "scale": {
+        "x": 0.20000000298023224,
+        "y": 0.30000001192092896
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Hanging Wall Lamp/Sprite (4)",
+      "name": "Sprite (4)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.2630000114440918,
+        "y": -0.3180001378059387
+      },
+      "world_pos": {
+        "x": -15.428089618682861,
+        "y": 6.508504092693329,
+        "angle": 26.459622670787983
+      },
+      "scale": {
+        "x": 0.20000000298023224,
+        "y": 0.30000001192092896
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Hanging Wall Lamp/Sprite (5)",
+      "name": "Sprite (5)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.46700000762939453,
+        "y": -0.3560001254081726
+      },
+      "world_pos": {
+        "x": -15.632089614868164,
+        "y": 6.470504105091095,
+        "angle": -90.47305705254524
+      },
+      "scale": {
+        "x": 0.4000000059604645,
+        "y": 0.5
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "ConeLightDown",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Hanging Wall Lamp/Sprite (6)",
+      "name": "Sprite (6)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0820000022649765,
+        "y": -0.3470001518726349
+      },
+      "world_pos": {
+        "x": -15.083089604973793,
+        "y": 6.479504078626633,
+        "angle": 86.16164666386219
+      },
+      "scale": {
+        "x": 0.4000000059604645,
+        "y": 0.5
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "ConeLightDown",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    }
+  ],
+  "colliders": [],
+  "audio": [],
+  "animators": [],
+  "special_scripts": []
+}

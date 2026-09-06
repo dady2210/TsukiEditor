@@ -280,6 +280,61 @@ class IsometricMap {
     }
 
     getImage(item_id, orientation, placement) {
+        // Light profile from prefab metadata (LIGHT_PROFILES)
+        const profile = window.LIGHT_PROFILES && window.LIGHT_PROFILES[String(item_id)];
+        let targetSprite = null;
+        if (profile) {
+            const mode = placement ? (placement._lightMode || 'auto') : 'auto';
+            const minutes = (window.GameTime && typeof window.GameTime.now === 'function')
+                ? (window.GameTime.now().hour * 60 + (window.GameTime.now().minute || 0))
+                : (this.app && this.app.parser && typeof this.app.parser.getClock === 'function' ? (this.app.parser.getClock().hour * 60 + (this.app.parser.getClock().minute || 0)) : 0);
+            const on = window.Lighting && typeof window.Lighting.lampOn === 'function' ? window.Lighting.lampOn(mode, minutes) : (mode === 'on');
+            if (on && profile.on_sprite) {
+                targetSprite = profile.on_sprite;
+            } else if (!on && profile.off_sprite) {
+                targetSprite = profile.off_sprite;
+            } else if (profile.body_sprite) {
+                targetSprite = profile.body_sprite;
+            }
+        }
+
+        if (targetSprite) {
+            const ori = Number(orientation);
+            const isBack = ori === 2 || ori === 3;
+            const cacheKey = 'PROF_' + targetSprite + (isBack ? '_BACK' : '');
+            if (this._imgCache[cacheKey] !== undefined) {
+                return this._imgCache[cacheKey];
+            }
+            this._imgCache[cacheKey] = false;
+
+            const candidates = [
+                `images/items/${targetSprite}.png?v=5`,
+                `data/prefab_exports/${item_id}/${targetSprite}.png?v=5`,
+                isBack ? `images/items/FURN_${item_id}_BACK.png?v=5` : `images/items/FURN_${item_id}_0.png?v=5`,
+                isBack ? `images/items/FURN_${item_id}_0.png?v=5` : `images/items/FURN_${item_id}.png?v=5`,
+                `images/items/FURN_${item_id}.png?v=5`
+            ];
+
+            const tryLoadIndex = (idx) => {
+                if (idx >= candidates.length) {
+                    this._imgCache[cacheKey] = null;
+                    this.draw();
+                    return;
+                }
+                const img = new Image();
+                img.onload = () => {
+                    this._imgCache[cacheKey] = img;
+                    this.draw();
+                };
+                img.onerror = () => {
+                    tryLoadIndex(idx + 1);
+                };
+                img.src = candidates[idx];
+            };
+            tryLoadIndex(0);
+            return this._imgCache[cacheKey];
+        }
+
         // U4: si BEHAVIORS render.on y placement _lightMode on/auto-on, intentar ON
         let tryOn = false;
         if (placement && window.BEHAVIORS && window.BEHAVIORS[String(item_id)] && window.BEHAVIORS[String(item_id)].render && window.BEHAVIORS[String(item_id)].render.on) {

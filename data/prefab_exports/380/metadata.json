@@ -1,0 +1,653 @@
+{
+  "id": 380,
+  "name": "Wood Lantern",
+  "raw_properties": {
+    "m_Enabled": 1,
+    "m_Name": "",
+    "transform": {
+      "m_FileID": 0,
+      "m_PathID": 5483371947897536493
+    },
+    "coll": {
+      "m_FileID": 0,
+      "m_PathID": -2347254113196294163
+    },
+    "coll3D": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    },
+    "ID": 380,
+    "numColors": 0,
+    "debugSort": 0,
+    "inShop": 0,
+    "placementID": 0,
+    "orientation": 0,
+    "polyColliderType": 0,
+    "colliderPoints": [],
+    "flippedColliderPoints": [],
+    "gridCollScale": 0.5,
+    "gridHeightOffset": 0.1379999965429306,
+    "gridOffset": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "uiPosition": 0.5600000023841858,
+    "Save": {
+      "rid": -2
+    },
+    "references": {
+      "version": 2,
+      "RefIds": [
+        {
+          "rid": -2,
+          "type": {
+            "class": "",
+            "ns": "",
+            "asm": ""
+          }
+        }
+      ]
+    }
+  },
+  "layer_definitions": [
+    {
+      "renderer": "MonoBehaviour: ID 257787010310291437",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -7313568414144708627",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 3241214157155221485",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 7974155359801327597",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 8263996620021514221",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 7817440133693259757",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -4083335809249165331",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -1829992239320252435",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 1318667961676546029",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID -3661867216028024851",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 1647135103208341485",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 7821968773774262253",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "MonoBehaviour: ID 7413865355634556909",
+      "activitySorting": 0,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    }
+  ],
+  "store_data": {},
+  "nodes": [
+    {
+      "path": "Wood Lantern",
+      "name": "Wood Lantern",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": -24.951000213623047,
+        "y": -2.2269999980926514
+      },
+      "world_pos": {
+        "x": -24.951000213623047,
+        "y": -2.2269999980926514,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": []
+    },
+    {
+      "path": "Wood Lantern/Sprite (1)",
+      "name": "Sprite (1)",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": -24.951000213623047,
+        "y": -2.2269999980926514,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Wood Lantern_0",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (2)",
+      "name": "Sprite (2)",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": -24.951000213623047,
+        "y": -2.2269999980926514,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "Wood Lantern_3",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/BigVolume",
+      "name": "BigVolume",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.23399999737739563
+      },
+      "world_pos": {
+        "x": -24.951000213623047,
+        "y": -1.9930000007152557,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 8.0,
+        "y": 8.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.47058823704719543
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (8)",
+      "name": "Sprite (8)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.2759999930858612,
+        "y": 0.19200000166893005
+      },
+      "world_pos": {
+        "x": -25.227000206708908,
+        "y": -2.0349999964237213,
+        "angle": -92.66656414905843
+      },
+      "scale": {
+        "x": 0.48219841718673706,
+        "y": 0.5
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "ConeLightDown",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (14)",
+      "name": "Sprite (14)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.09700000286102295,
+        "y": 0.1809999942779541
+      },
+      "world_pos": {
+        "x": -25.04800021648407,
+        "y": -2.0460000038146973,
+        "angle": 65.3957502375811
+      },
+      "scale": {
+        "x": 0.07676700502634048,
+        "y": 0.1047019213438034
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (9)",
+      "name": "Sprite (9)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.26899999380111694,
+        "y": 0.20000000298023224
+      },
+      "world_pos": {
+        "x": -24.68200021982193,
+        "y": -2.026999995112419,
+        "angle": 87.31040158861865
+      },
+      "scale": {
+        "x": 0.48219841718673706,
+        "y": 0.5
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "ConeLightDown",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (18)",
+      "name": "Sprite (18)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.08609999716281891,
+        "y": 0.2842000126838684
+      },
+      "world_pos": {
+        "x": -25.037100210785866,
+        "y": -1.942799985408783,
+        "angle": 72.40438662726785
+      },
+      "scale": {
+        "x": 0.07676700502634048,
+        "y": 0.1047019213438034
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (19)",
+      "name": "Sprite (19)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.048900000751018524,
+        "y": 0.210999995470047
+      },
+      "world_pos": {
+        "x": -24.999900214374065,
+        "y": -2.0160000026226044,
+        "angle": 0.2714115779820333
+      },
+      "scale": {
+        "x": 0.07676700502634048,
+        "y": 0.1047019213438034
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (20)",
+      "name": "Sprite (20)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": -0.12700000405311584,
+        "y": 0.24400000274181366
+      },
+      "world_pos": {
+        "x": -25.078000217676163,
+        "y": -1.9829999953508377,
+        "angle": 0.18849883982154322
+      },
+      "scale": {
+        "x": 0.07676700502634048,
+        "y": 0.1047019213438034
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (15)",
+      "name": "Sprite (15)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0820000022649765,
+        "y": 0.17900000512599945
+      },
+      "world_pos": {
+        "x": -24.86900021135807,
+        "y": -2.047999992966652,
+        "angle": 117.10743353256612
+      },
+      "scale": {
+        "x": 0.07676700502634048,
+        "y": 0.1047019213438034
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (21)",
+      "name": "Sprite (21)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.07199999690055847,
+        "y": 0.28299999237060547
+      },
+      "world_pos": {
+        "x": -24.87900021672249,
+        "y": -1.944000005722046,
+        "angle": 113.62540287621098
+      },
+      "scale": {
+        "x": 0.07676700502634048,
+        "y": 0.1047019213438034
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (22)",
+      "name": "Sprite (22)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.11400000005960464,
+        "y": 0.24300000071525574
+      },
+      "world_pos": {
+        "x": -24.837000213563442,
+        "y": -1.9839999973773956,
+        "angle": 0.27140633239723605
+      },
+      "scale": {
+        "x": 0.07676700502634048,
+        "y": 0.1047019213438034
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Wood Lantern/Sprite (23)",
+      "name": "Sprite (23)",
+      "layer": 11,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.04190000146627426,
+        "y": 0.22100000083446503
+      },
+      "world_pos": {
+        "x": -24.909100212156773,
+        "y": -2.0059999972581863,
+        "angle": 0.18850306868647568
+      },
+      "scale": {
+        "x": 0.07676700502634048,
+        "y": 0.1047019213438034
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "white",
+          "color": {
+            "r": 0.8679245114326477,
+            "g": 0.8049849271774292,
+            "b": 0.6263794898986816,
+            "a": 0.1568627506494522
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Radial"
+          ]
+        }
+      ]
+    }
+  ],
+  "colliders": [],
+  "audio": [],
+  "animators": [],
+  "special_scripts": []
+}
