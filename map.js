@@ -89,8 +89,11 @@ function opaquePivotFromRgba(data, w, h, th = 12) {
             if (data[(row + x) * 4 + 3] > th) { footX += x; footN++; }
         }
     }
+    const bboxMid = (minx + maxx) / 2 / w;
+    const footMid = footN ? footX / footN / w : bboxMid;
+    const finalX = Math.abs(footMid - bboxMid) > 0.10 ? bboxMid : footMid;
     return {
-        x: footN ? footX / footN / w : (minx + maxx) / 2 / w,
+        x: finalX,
         y: Math.max(0.004, 1 - (maxy + 0.5) / h)
     };
 }
@@ -446,10 +449,22 @@ class IsometricMap {
     // file:// bloquea getImageData: primero data/content_pivots.js (píxeles reales
     // del PNG), luego pivote Unity, y solo al final se intenta leer el canvas.
     _resolveSpritePivot(item_id, img, orientation) {
-        const baked = (typeof window !== 'undefined' && window.contentPivots) || {};
+        // Calibraciones manuales exactas para centrado visual sobre la huella
+        const PIVOT_OVERRIDES = {
+            "115": { x: 0.5000, y: 0.2200 },
+            "115_BACK": { x: 0.5000, y: 0.2200 },
+            "2130": { x: 0.5000, y: 0.2500 },
+            "2130_BACK": { x: 0.5000, y: 0.2500 },
+            "2131": { x: 0.5000, y: 0.2500 },
+            "2131_BACK": { x: 0.5000, y: 0.2500 }
+        };
         const ori = Number(orientation);
         const isBack = ori === 2 || ori === 3;
         const key = String(item_id);
+        if (isBack && PIVOT_OVERRIDES[key + '_BACK']) return PIVOT_OVERRIDES[key + '_BACK'];
+        if (PIVOT_OVERRIDES[key]) return PIVOT_OVERRIDES[key];
+
+        const baked = (typeof window !== 'undefined' && window.contentPivots) || {};
         if (isBack && baked[key + '_BACK']) return baked[key + '_BACK'];
         if (baked[key]) return baked[key];
         if (window.spritePivots && window.spritePivots[item_id]) {
@@ -519,6 +534,19 @@ class IsometricMap {
         return { x: 0, y: 0 };
     }
 
+    _getSurfaceCellUnits(surf) {
+        // En Unity, la grilla isométrica usa estrictamente stepX=0.25 y stepY=0.125 unidades de mundo.
+        // A PPU 150, eso equivale a diamantes de 75px de ancho x 37.5px de alto sin escalar.
+        // En versiones anteriores, surf.cell almacenaba valores medidos en fondos ya escalados a 0.75 (~56-58, ~28).
+        // Si cell.w > 70, ya es la dimensión nativa en px; de lo contrario normalizamos a 75x37.5.
+        const cellW = (surf && surf.cell && surf.cell.w > 70) ? surf.cell.w : 75;
+        const cellH = (surf && surf.cell && surf.cell.h > 35) ? surf.cell.h : 37.5;
+        return {
+            cw_u: cellW / 150, // 0.5 (cw_u / 2 = 0.25)
+            ch_u: cellH / 150  // 0.25 (ch_u / 2 = 0.125)
+        };
+    }
+
     getIsoCoords(x, y, floorNum = 0, mapId) {
         if (mapId == null) {
             const sel = document.getElementById('select-location');
@@ -536,11 +564,10 @@ class IsometricMap {
                 ox = (surf.origin_px.x - 1235) / 150;
                 oy = (1257 - surf.origin_px.y) / 150;
             }
-            const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
-            const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+            const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
             
             const worldX = ox + (x - y) * (cw_u / 2);
-            const worldY = oy - (x + y) * (ch_u / 2);
+            const worldY = oy + (x + y) * (ch_u / 2);
             
             return {
                 x: this.offsetX + worldX * 150 * u,
@@ -582,15 +609,14 @@ class IsometricMap {
                 ox = (surf.origin_px.x - 1235) / 150;
                 oy = (1257 - surf.origin_px.y) / 150;
             }
-            const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
-            const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+            const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
 
             const worldX = (screenX - this.offsetX) / (150 * u);
             const worldY = (this.offsetY - screenY) / (150 * u);
             const wx = worldX - ox;
             const wy = worldY - oy;
             const U = wx / (cw_u / 2);
-            const V = -wy / (ch_u / 2);
+            const V = wy / (ch_u / 2);
             return { x: (U + V) / 2, y: (V - U) / 2 };
         }
         const off = this.getFloorOffset(floorNum);
@@ -764,8 +790,9 @@ class IsometricMap {
         const surf = this.surfaceFor(p.cluster != null ? p.cluster : 0, p.floor != null ? p.floor : 0, false, false);
         const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
         const u = _bgo * this.scale;
-        const cellW = (((surf && surf.cell && surf.cell.w) || 58)) * u;
-        const cellH = (((surf && surf.cell && surf.cell.h) || 28)) * u;
+        const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
+        const cellW = (cw_u / 2) * 150 * u;
+        const cellH = (ch_u / 2) * 150 * u;
         const count = group.length;
         const angle = (idx * 2 * Math.PI) / count + (count % 2 === 0 ? Math.PI / 4 : 0);
         return { x: Math.cos(angle) * 0.25 * cellW, y: Math.sin(angle) * 0.25 * cellH };
@@ -815,8 +842,7 @@ class IsometricMap {
                 ox = (surf.origin_px.x - 1235) / 150;
                 oy = (1257 - surf.origin_px.y) / 150;
             }
-            const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
-            const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+            const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
             
             let worldX, worldY;
             if (!flipped) {
@@ -873,8 +899,7 @@ class IsometricMap {
                     ox = (surf.origin_px.x - 1235) / 150;
                     oy = (1257 - surf.origin_px.y) / 150;
                 }
-                const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
-                const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+                const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
                 const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
                 const u = _bgo * this.scale;
                 const factor = 150 * u;
@@ -978,19 +1003,18 @@ class IsometricMap {
 
     _isCellInSurfacePoly(surf, gx, gy, w = 1, l = 1) {
         if (!surf || !surf.poly || surf.poly.length < 3) return true;
-        const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
-        const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+        const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
         
         // Check center of the item
         const cx = gx + w / 2;
         const cy = gy + l / 2;
         const cwx = (cx - cy) * (cw_u / 2);
-        const cwy = -(cx + cy) * (ch_u / 2);
+        const cwy = (cx + cy) * (ch_u / 2);
         if (this._pointInPoly(cwx, cwy, surf.poly)) return true;
 
         // Check origin of the tile
         const owx = (gx - gy) * (cw_u / 2);
-        const owy = -(gx + gy) * (ch_u / 2);
+        const owy = (gx + gy) * (ch_u / 2);
         if (this._pointInPoly(owx, owy, surf.poly)) return true;
 
         // Check the remaining corners
@@ -1001,7 +1025,7 @@ class IsometricMap {
         ];
         for (const [px, py] of corners) {
             const wx = (px - py) * (cw_u / 2);
-            const wy = -(px + py) * (ch_u / 2);
+            const wy = (px + py) * (ch_u / 2);
             if (this._pointInPoly(wx, wy, surf.poly)) return true;
         }
 
@@ -1051,8 +1075,7 @@ class IsometricMap {
 
     _isWallCellInSurfacePoly(surf, wx, wy, w = 1, h = 1) {
         if (!surf || !surf.poly || surf.poly.length < 3) return true;
-        const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
-        const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+        const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
         const corners = [
             [wx, wy],
             [wx + w, wy],
@@ -1205,15 +1228,14 @@ class IsometricMap {
                 ox = (surf.origin_px.x - 1235) / 150;
                 oy = (1257 - surf.origin_px.y) / 150;
             }
-            const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
-            const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+            const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
 
             const worldX = (screenX - this.offsetX) / (150 * u);
             const worldY = (this.offsetY - screenY) / (150 * u);
             const wx = worldX - ox;
             const wy = worldY - oy;
             const U = wx / (cw_u / 2);
-            const V = -wy / (ch_u / 2);
+            const V = wy / (ch_u / 2);
             const cx = (U + V) / 2;
             const cy = (V - U) / 2;
             const gridX = Math.round(cx);
@@ -1253,8 +1275,7 @@ class IsometricMap {
                 const cols = wSurf.cols || 16;
                 const rows = wSurf.rows || 16;
                 if (wx >= -0.25 && wx <= cols + 0.25 && wy >= -0.25 && wy <= rows + 0.25) {
-                    const cw_u = ((wSurf.cell && wSurf.cell.w) || 58) / 150;
-                    const ch_u = ((wSurf.cell && wSurf.cell.h) || 28) / 150;
+                    const { cw_u, ch_u } = this._getSurfaceCellUnits(wSurf);
                     const relX = wx * (cw_u / 2);
                     const relY = - wx * (ch_u / 2) - wy * ch_u;
                     if (wSurf.poly && wSurf.poly.length > 2) {
@@ -1971,7 +1992,7 @@ class IsometricMap {
                                                 flipped: !!s.flipped,
                                                 rows: s.rows || 16,
                                                 cols: s.cols || 16,
-                                                cell: s.cell || { w: 58, h: 28 },
+                                                cell: s.cell || { w: 75, h: 37.5 },
                                                 origin: originUnity,
                                                 origin_px: originPx,
                                                 defaultCoverId: s.defaultCoverId !== undefined ? s.defaultCoverId : (existing ? existing.defaultCoverId : null),
@@ -2195,8 +2216,7 @@ class IsometricMap {
                     // 3. Grilla isométrica calibrada y optimizada (renderizado por lotes)
                     const cols = Math.max(16, surf.cols || 16);
                     const rows = Math.max(16, surf.rows || 16);
-                    const cw_u = ((surf.cell && surf.cell.w) || 58) / 150;
-                    const ch_u = ((surf.cell && surf.cell.h) || 28) / 150;
+                    const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
                     const halfW = (cw_u / 2) * 150 * u;
                     const halfH = (ch_u / 2) * 150 * u;
 
@@ -2210,12 +2230,12 @@ class IsometricMap {
                         ctx.strokeStyle = 'rgba(0, 255, 120, 0.45)';
                         ctx.beginPath();
                         for (let gx = minGx; gx <= maxGx; gx++) {
-                            ctx.moveTo((gx - minGy) * halfW, (gx + minGy) * halfH);
-                            ctx.lineTo((gx - maxGy) * halfW, (gx + maxGy) * halfH);
+                            ctx.moveTo((gx - minGy) * halfW, -(gx + minGy) * halfH);
+                            ctx.lineTo((gx - maxGy) * halfW, -(gx + maxGy) * halfH);
                         }
                         for (let gy = minGy; gy <= maxGy; gy++) {
-                            ctx.moveTo((minGx - gy) * halfW, (minGx + gy) * halfH);
-                            ctx.lineTo((maxGx - gy) * halfW, (maxGx + gy) * halfH);
+                            ctx.moveTo((minGx - gy) * halfW, -(minGx + gy) * halfH);
+                            ctx.lineTo((maxGx - gy) * halfW, -(maxGx + gy) * halfH);
                         }
                         ctx.stroke();
                     } else {
@@ -2283,6 +2303,23 @@ class IsometricMap {
             for (const p of seeds)   this._drawPlacement(p, 'seed');
             for (const p of regular) this._drawPlacement(p, 'regular');
             for (const p of allWalls) this._drawWallPlacementIso(p);
+
+            // ?? 6. FOREGROUND OVERLAY (Treehouse canopy, front bark frame & stairs railing)
+            if ((isPlay || isGrid) && targetLoc === 0) {
+                const fgPath = '../maps/Exportado_level2/level2_Foreground.png';
+                const fgImg = this.getBackgroundImage(fgPath);
+                if (fgImg && fgImg.complete && fgImg.width > 0) {
+                    const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                    const originPxX = 1235;
+                    const originPxY = 1257;
+                    const s = _bgo * this.scale;
+                    const drawW = fgImg.width * s;
+                    const drawH = fgImg.height * s;
+                    const dx = this.offsetX - originPxX * s;
+                    const dy = this.offsetY - originPxY * s;
+                    ctx.drawImage(fgImg, dx, dy, drawW, drawH);
+                }
+            }
             const dragGhost = (this.isItemDragging && this.selectedPlacement) ? this.selectedPlacement : (typeof this.isItemDragging === 'object' ? this.isItemDragging : null);
             if (dragGhost) {
                 this._drawSnapGhost(dragGhost);

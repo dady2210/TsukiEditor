@@ -3,54 +3,72 @@
 (function() {
   let parserRef = null;
   let lastSig = null;
-  const listeners = { hour: [], day: [], season: [] };
+  const listeners = { hour: [], day: [], season: [], minute: [] };
   const flagMem = new Map(); // flags no whitelist -> memoria
   const WHITELIST = new Set(['homecomingUpdates', 'currSLocData', 'carrots']);
 
   function emit(list, payload) { list.forEach(fn => { try { fn(payload); } catch(e) {} }); }
 
   window.GameTime = {
-    bindParser(p) { parserRef = p; },
+    bindParser(p) {
+      parserRef = p;
+      lastSig = null;
+    },
 
     now() {
-      if (!parserRef || !parserRef.getClock) return { hour: 0, minute: 0, day: 1, month: 1, season: 0, minutes: 0 };
+      if (!parserRef || !parserRef.getClock) {
+        const d = new Date();
+        return { hour: d.getHours(), minute: d.getMinutes(), day: d.getDate(), month: d.getMonth() + 1, season: 0, minutes: d.getHours() * 60 + d.getMinutes() };
+      }
       const c = parserRef.getClock();
-      const minute = c.minute | 0;
+      const minute = c.minute != null ? (c.minute | 0) : new Date().getMinutes();
       return { hour: c.hour|0, minute, day: c.day|0, month: c.month|0, season: c.season|0, minutes: (c.hour|0)*60 + minute };
     },
 
-    syncWithDevice: false, // Default false: do NOT overwrite in-game/saved clock with PC local time (per AGENTE_CONTEXTO_PORT.md: "No usar Date.now() para el cielo")
+    syncWithDevice: true, // Sincroniza con la hora real del dispositivo
 
     syncFromDevice(force = false) {
       if (!this.syncWithDevice && !force) return false;
       if (!parserRef || !parserRef.getClock || !parserRef.setClock) return false;
-      const d = new Date(); // solo para leer hora civil
+      const d = new Date(); // hora civil del sistema
       const hour = d.getHours();
+      const minute = d.getMinutes();
       const day = d.getDate();
       const month = d.getMonth() + 1;
-      // minute no persiste aún: queda 0 si P1 no expone minute
       const cur = parserRef.getClock();
-      const sig = `${hour}|${day}|${month}`;
-      if (sig === lastSig) return false;
+      const sig = `${hour}|${minute}|${day}|${month}`;
+      if (sig === lastSig && !force) return false;
       const hourChanged = cur.hour !== hour;
+      const minuteChanged = cur.minute !== minute;
       const dayChanged = cur.day !== day;
-      const seasonChanged = false; // season no se pisa en P1/P3
-      if (!hourChanged && !dayChanged && cur.month === month) { lastSig = sig; return false; }
-      parserRef.setClock({ hour, day, month });
+      const monthChanged = cur.month !== month;
+      if (!hourChanged && !minuteChanged && !dayChanged && !monthChanged && lastSig !== null && !force) {
+        lastSig = sig;
+        return false;
+      }
+      parserRef.setClock({ hour, minute, day, month });
       lastSig = sig;
       const next = parserRef.getClock();
-      const payload = { hour: next.hour|0, minute: next.minute|0, day: next.day|0, month: next.month|0, season: next.season|0, minutes: (next.hour|0)*60 + (next.minute|0) };
+      const payload = {
+        hour: next.hour | 0,
+        minute: next.minute | 0,
+        day: next.day | 0,
+        month: next.month | 0,
+        season: next.season | 0,
+        minutes: (next.hour | 0) * 60 + (next.minute | 0)
+      };
+      if (minuteChanged) emit(listeners.minute, payload);
       if (hourChanged) emit(listeners.hour, payload);
       if (dayChanged) emit(listeners.day, payload);
-      if (seasonChanged) emit(listeners.season, payload);
       return true;
     },
 
+    onMinuteChanged(cb) { listeners.minute.push(cb); },
     onHourChanged(cb) { listeners.hour.push(cb); },
     onDayChanged(cb) { listeners.day.push(cb); },
     onSeasonChanged(cb) { listeners.season.push(cb); },
     off(event, cb) {
-      const key = event === 'hour' ? 'hour' : event === 'day' ? 'day' : event === 'season' ? 'season' : null;
+      const key = event === 'minute' ? 'minute' : event === 'hour' ? 'hour' : event === 'day' ? 'day' : event === 'season' ? 'season' : null;
       if (!key) return;
       const arr = listeners[key];
       const i = arr.indexOf(cb);

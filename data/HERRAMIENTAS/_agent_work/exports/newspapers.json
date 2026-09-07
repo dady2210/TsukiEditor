@@ -1,0 +1,17 @@
+[
+  {
+    "name": "YoriNewspaper(new)",
+    "type": "MonoBehaviour",
+    "path_id": "3215541210527395787",
+    "body": {},
+    "sprite": null,
+    "keys": [
+      "m_GameObject",
+      "m_Enabled",
+      "m_Script",
+      "m_Name",
+      "nodes",
+      "useNPC"
+    ]
+  }
+]

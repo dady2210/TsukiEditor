@@ -307,6 +307,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
         const stepHour = (delta) => {
             if (!this.parser || typeof this.parser.advanceHour !== 'function') return;
+            if (window.GameTime) window.GameTime.syncWithDevice = false;
             const clk = this.parser.advanceHour(delta);
             const now = window.GameTime ? window.GameTime.now() : clk;
             if (window.Lighting) window.Lighting.apply(now, this.parser.currentSLocation || 0);
@@ -314,7 +315,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             this._refreshClockHUD();
             const inpHour = document.getElementById('input-hour');
             if (inpHour) inpHour.value = clk.hour;
-            this.showToast(`Hora: ${String(clk.hour).padStart(2, '0')}:00`, 'info');
+            this.showToast(`Hora manual: ${String(clk.hour).padStart(2, '0')}:${String(clk.minute != null ? clk.minute : 0).padStart(2, '0')} (clic en hora para volver a hora real)`, 'info');
         };
 
         if (btnPrev && !btnPrev._bound) {
@@ -340,8 +341,21 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const cur = this.parser.getClock();
                 const curH = cur.hour | 0;
                 let nxtH = keyHours.find(h => h > curH);
-                if (nxtH === undefined) nxtH = keyHours[0];
-                this.parser.setClock({ hour: nxtH });
+                if (nxtH === undefined) {
+                    // Volver a sincronizar con hora real
+                    if (window.GameTime) {
+                        window.GameTime.syncWithDevice = true;
+                        window.GameTime.syncFromDevice(true);
+                    }
+                    this._refreshClockHUD();
+                    const now = window.GameTime ? window.GameTime.now() : this.parser.getClock();
+                    if (window.Lighting) window.Lighting.apply(now, this.parser.currentSLocation || 0);
+                    if (this.map) this.map.draw();
+                    this.showToast(`Hora sincronizada con dispositivo: ${this._formatClock(now)}`, 'info');
+                    return;
+                }
+                if (window.GameTime) window.GameTime.syncWithDevice = false;
+                this.parser.setClock({ hour: nxtH, minute: 0 });
                 const nextClk = this.parser.getClock();
                 const now = window.GameTime ? window.GameTime.now() : nextClk;
                 if (window.Lighting) window.Lighting.apply(now, this.parser.currentSLocation || 0);
@@ -349,7 +363,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 this._refreshClockHUD();
                 const inpHour = document.getElementById('input-hour');
                 if (inpHour) inpHour.value = nxtH;
-                this.showToast(`Hora: ${String(nxtH).padStart(2, '0')}:00`, 'info');
+                this.showToast(`Hora manual: ${String(nxtH).padStart(2, '0')}:00 (clic para avanzar / volver a hora real)`, 'info');
             });
         }
     }
@@ -399,7 +413,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     }
 
     _formatClock(c) {
-        const hh = String(c.hour).padStart(2, '0') + ':00';
+        const hh = String(c.hour != null ? c.hour : 0).padStart(2, '0') + ':' + String(c.minute != null ? c.minute : 0).padStart(2, '0');
         // season no se pisa salvo dump confirme calendario real — solo display
         const seasonNames = ['Primavera','Verano','Otoño','Invierno'];
         const sName = seasonNames[c.season] || `S${c.season}`;
@@ -413,12 +427,19 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         el.textContent = this._formatClock(c);
     }
 
-    _syncClockFromDevice() {
-        // P3: única fuente GameTime — watcher 30s llama esto una vez
+    _syncClockFromDevice(force = false) {
+        // P3: única fuente GameTime — watcher periódico
         if (window.GameTime) {
             if (this.parser && window.GameTime.bindParser) window.GameTime.bindParser(this.parser);
-            const changed = window.GameTime.syncFromDevice();
-            if (changed) this._refreshClockHUD();
+            const changed = window.GameTime.syncFromDevice(force);
+            if (changed) {
+                this._refreshClockHUD();
+                if (window.Lighting) {
+                    const now = window.GameTime ? window.GameTime.now() : (this.parser ? this.parser.getClock() : null);
+                    window.Lighting.apply(now, this.parser ? this.parser.currentSLocation || 0 : 0);
+                }
+                if (this.map) this.map.draw();
+            }
             return changed;
         }
         return false;
@@ -428,27 +449,42 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this._stopClockTick();
         if (!this.parser || !this.parser.getClock) return;
         if (window.GameTime && window.GameTime.bindParser) window.GameTime.bindParser(this.parser);
-        this._syncClockFromDevice();
+        this._syncClockFromDevice(true);
         this._refreshClockHUD();
-        if (window.Timers) window.Timers.tick(window.GameTime ? window.GameTime.now() : this.parser.getClock());
+        const now = window.GameTime ? window.GameTime.now() : this.parser.getClock();
+        if (window.Timers) window.Timers.tick(now);
         if (window.Lighting) {
             if (window.Lighting.init) window.Lighting.init().then(() => {
-                const now = window.GameTime ? window.GameTime.now() : this.parser.getClock();
-                window.Lighting.apply(now, this.parser.currentSLocation || 0);
+                const curNow = window.GameTime ? window.GameTime.now() : this.parser.getClock();
+                window.Lighting.apply(curNow, this.parser.currentSLocation || 0);
+                if (this.map) this.map.draw();
             });
-            else window.Lighting.apply(window.GameTime ? window.GameTime.now() : this.parser.getClock(), this.parser.currentSLocation || 0);
+            else {
+                window.Lighting.apply(now, this.parser.currentSLocation || 0);
+                if (this.map) this.map.draw();
+            }
             if (window.GameTime && !this._lightHooked) {
                 this._lightHooked = true;
-                // P2 se suscribe a GameTime — un solo apply por cambio
-                window.GameTime.onHourChanged((c) => { if (window.Lighting) window.Lighting.apply(c, this.parser.currentSLocation || 0); this._refreshClockHUD(); });
+                // P2 se suscribe a GameTime — actualiza ante cambio de minuto u hora
+                window.GameTime.onMinuteChanged((c) => {
+                    if (window.Lighting) window.Lighting.apply(c, this.parser.currentSLocation || 0);
+                    this._refreshClockHUD();
+                    if (this.map) this.map.draw();
+                });
+                window.GameTime.onHourChanged((c) => {
+                    if (window.Lighting) window.Lighting.apply(c, this.parser.currentSLocation || 0);
+                    this._refreshClockHUD();
+                    if (this.map) this.map.draw();
+                });
                 window.GameTime.onDayChanged((c) => {
                     if (window.Lighting) window.Lighting.apply(c, this.parser.currentSLocation || 0);
                     this._refreshClockHUD();
                     if (window.Timers) window.Timers.tick(c);
+                    if (this.map) this.map.draw();
                 });
             }
         }
-        this._clockTimer = setInterval(() => this._syncClockFromDevice(), 30000);
+        this._clockTimer = setInterval(() => this._syncClockFromDevice(), 10000);
     }
 
     _stopClockTick() {
@@ -1399,6 +1435,11 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     parseData() {
         // General vars
         this.parser.parseGeneralVars();
+        if (window.GameTime && window.GameTime.bindParser) {
+            window.GameTime.bindParser(this.parser);
+            window.GameTime.syncWithDevice = true;
+            window.GameTime.syncFromDevice(true);
+        }
         this.populateVarsTab();
 
         // Map
@@ -2295,8 +2336,21 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 if (fWrap) {
                     const lN = fWrap.children.find(c => c.constructor.name === 'OdinList');
                     if (lN && lN.elements.length > 0) {
-                        template = lN.elements[0];
-                        break;
+                        if (isWall) {
+                            template = lN.elements[0];
+                            break;
+                        } else {
+                            // Find an element whose groupPosition is GridGroupPosition
+                            const match = lN.elements.find(el => {
+                                const gp = el.value?.children?.find(c => c.name === 'groupPosition');
+                                return gp && gp.typeName && gp.typeName.includes('GridGroupPosition');
+                            });
+                            if (match) {
+                                template = match;
+                                break;
+                            }
+                            if (!template) template = lN.elements[0];
+                        }
                     }
                 }
             }
@@ -2317,21 +2371,94 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         while (existingPids.has(newPlacementID)) {
             newPlacementID++;
         }
-        const pIdNode = furnNode.children.find(c => c.name === 'placementID');
-        if (pIdNode) pIdNode.value = newPlacementID;
+        let pIdNode = furnNode.children.find(c => c.name === 'placementID');
+        if (!pIdNode) {
+            pIdNode = new OdinPrimitive(0x17, 'placementID', newPlacementID);
+            furnNode.children.unshift(pIdNode);
+        } else {
+            pIdNode.value = newPlacementID;
+        }
+
+        // Calculation and enforcement of verificationID
+        const vIdVal = typeof calcVerificationId === 'function' ? calcVerificationId(itemId) : 0;
+        let vIdNode = furnNode.children.find(c => c.name === 'verificationID');
+        if (!vIdNode) {
+            vIdNode = new OdinPrimitive(0x17, 'verificationID', vIdVal);
+            furnNode.children.push(vIdNode);
+        } else {
+            vIdNode.value = vIdVal;
+        }
+
+        // Explicitly sanitize and enforce groupPosition for Odin/Unity deserialization
+        let groupPos = furnNode.children.find(c => c.name === 'groupPosition');
+        if (!groupPos) {
+            groupPos = new OdinNode(isWall ? 0x03 : 0x01, 'groupPosition', isWall ? 'WallGroupPosition, Odyssey' : 'GridGroupPosition, Odyssey');
+            furnNode.children.push(groupPos);
+        }
+        if (!groupPos.children) groupPos.children = [];
+
+        if (!isWall) {
+            groupPos.typeName = 'GridGroupPosition, Odyssey';
+            groupPos.marker = 0x01;
+            // Remove parentPlacementID to ensure it places on the floor grid, NOT as child of another placement
+            groupPos.children = groupPos.children.filter(c => c.name !== 'parentPlacementID');
+
+            let gridNode = groupPos.children.find(c => c.name === 'grid');
+            if (!gridNode) {
+                gridNode = new OdinNode(0x03, 'grid', 'SimpleGrid, Odyssey');
+                gridNode.children = [
+                    new OdinPrimitive(0x17, 'x', x),
+                    new OdinPrimitive(0x17, 'y', y)
+                ];
+                groupPos.children.unshift(gridNode);
+            }
+
+            let gNumNode = groupPos.children.find(c => c.name === 'groupNum');
+            if (!gNumNode) {
+                gNumNode = new OdinPrimitive(0x17, 'groupNum', parseInt(floor, 10) || 0);
+                groupPos.children.push(gNumNode);
+            } else {
+                gNumNode.value = parseInt(floor, 10) || 0;
+            }
+        } else {
+            groupPos.typeName = 'WallGroupPosition, Odyssey';
+            groupPos.marker = 0x03;
+            let gNumNode = groupPos.children.find(c => c.name === 'groupNum');
+            if (!gNumNode) {
+                gNumNode = new OdinPrimitive(0x17, 'groupNum', parseInt(floor, 10) || 0);
+                groupPos.children.push(gNumNode);
+            } else {
+                gNumNode.value = parseInt(floor, 10) || 0;
+            }
+            let flipNode = groupPos.children.find(c => c.name === 'flipped');
+            if (!flipNode) {
+                flipNode = new OdinPrimitive(0x2b, 'flipped', !!flipped);
+                groupPos.children.push(flipNode);
+            } else {
+                flipNode.value = !!flipped;
+            }
+        }
+
+        // Ensure position node is a valid GridPointer
+        let posNode = furnNode.children.find(c => c.name === 'position');
+        if (!posNode) {
+            posNode = new OdinNode(0x03, 'position', 'GridPointer, Odyssey');
+            posNode.children = [
+                new OdinPrimitive(0x1d, 'pointerType', 0),
+                new OdinNode(0x03, 'grid', 'SimpleGrid, Odyssey'),
+                new OdinPrimitive(0x17, 'groupPointer', 0)
+            ];
+            furnNode.children.push(posNode);
+        }
+        if (posNode.children) {
+            let pType = posNode.children.find(c => c.name === 'pointerType');
+            if (pType) pType.value = 0;
+            let gPtr = posNode.children.find(c => c.name === 'groupPointer');
+            if (gPtr) gPtr.value = 0;
+        }
 
         const dummyPlacement = { furnNode: furnNode, isWall: isWall };
         this.parser.applyMapChange(dummyPlacement, itemId, x, y, orientation);
-
-        const groupPos = furnNode.children.find(c => c.name === 'groupPosition');
-        const gNumNode = groupPos && (groupPos.children || []).find(c => c.name === 'groupNum');
-        if (isWall) {
-            if (gNumNode) gNumNode.value = parseInt(floor, 10) || 0;
-            const flipNode = groupPos && (groupPos.children || []).find(c => c.name === 'flipped');
-            if (flipNode) flipNode.value = !!flipped;
-        } else if (gNumNode) {
-            gNumNode.value = parseInt(floor, 10) || 0;
-        }
 
         listNode.elements.push(clone);
         this.parser.parseMap();

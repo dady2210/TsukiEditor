@@ -514,19 +514,19 @@ window.MAPS_UNIFIED = {
       "kind": "floor",
       "groupNum": 0,
       "flipped": false,
-      "rows": 1,
-      "cols": 1,
+      "rows": 16,
+      "cols": 16,
       "cell": {
-        "w": 58,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "origin": {
-        "x": -0.0532,
-        "y": -2.4103
+        "x": 0.0458,
+        "y": -4.7971
       },
       "origin_px": {
-        "x": 1233.88,
-        "y": 2000.61
+        "x": 1241.86,
+        "y": 1976.56
       },
       "poly": [
         {
@@ -578,8 +578,8 @@ window.MAPS_UNIFIED = {
       "rows": 16,
       "cols": 16,
       "cell": {
-        "w": 58,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "origin": {
         "x": -3.2873,
@@ -615,8 +615,8 @@ window.MAPS_UNIFIED = {
       "rows": 14,
       "cols": 16,
       "cell": {
-        "w": 58,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "origin": {
         "x": 1.849,
@@ -660,12 +660,12 @@ window.MAPS_UNIFIED = {
       "rows": 16,
       "cols": 16,
       "cell": {
-        "w": 58,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "origin": {
-        "x": 0.3234,
-        "y": -0.0529
+        "x": 0.0425,
+        "y": -0.8055
       },
       "origin_px": {
         "x": 1241.38,
@@ -713,8 +713,8 @@ window.MAPS_UNIFIED = {
       "rows": 16,
       "cols": 16,
       "cell": {
-        "w": 58,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "origin": {
         "x": -3.033,
@@ -754,8 +754,8 @@ window.MAPS_UNIFIED = {
       "rows": 16,
       "cols": 16,
       "cell": {
-        "w": 58,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "origin": {
         "x": 2.9013,
@@ -795,8 +795,8 @@ window.MAPS_UNIFIED = {
       "rows": 1,
       "cols": 1,
       "cell": {
-        "w": 58,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "origin": {
         "x": -4.8313,
@@ -840,8 +840,8 @@ window.MAPS_UNIFIED = {
       "rows": 16,
       "cols": 16,
       "cell": {
-        "w": 58,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "origin": {
         "x": 3.7409,
@@ -881,8 +881,8 @@ window.MAPS_UNIFIED = {
       "rows": 1,
       "cols": 1,
       "cell": {
-        "w": 58,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "origin": {
         "x": -7.2859,

@@ -2926,12 +2926,12 @@ window.ITEMS_UNIFIED = {
     "width": 2,
     "length": 4,
     "pivot": {
-      "x": 0.3121,
-      "y": 0.0155
+      "x": 0.5000,
+      "y": 0.2200
     },
     "pivot_back": {
-      "x": 0.3088,
-      "y": 0.0171
+      "x": 0.5000,
+      "y": 0.2200
     },
     "behaviour": {
       "kind": "chair",
@@ -55608,12 +55608,12 @@ window.ITEMS_UNIFIED = {
     "width": 4,
     "length": 4,
     "pivot": {
-      "x": 0.4977,
-      "y": 0.0294
+      "x": 0.5000,
+      "y": 0.2500
     },
     "pivot_back": {
-      "x": 0.4977,
-      "y": 0.0294
+      "x": 0.5000,
+      "y": 0.2500
     },
     "behaviour": {
       "kind": "table",
@@ -55633,12 +55633,12 @@ window.ITEMS_UNIFIED = {
     "width": 1,
     "length": 1,
     "pivot": {
-      "x": 0.4977,
-      "y": 0.0294
+      "x": 0.5000,
+      "y": 0.2500
     },
     "pivot_back": {
-      "x": 0.4977,
-      "y": 0.0294
+      "x": 0.5000,
+      "y": 0.2500
     },
     "behaviour": {
       "kind": "table",

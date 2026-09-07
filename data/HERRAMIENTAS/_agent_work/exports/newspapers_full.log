@@ -1,0 +1,17 @@
+﻿python : C:\Users\Andres\AppData\Roaming\Python\Python313\site-packages\UnityPy\files\BundleFile.py:533: 
+UnityVersionFallbackWarning: No valid Unity version found, defaulting to UnityPy.config.FALLBACK_UNITY_VERSION 
+(2022.3.0f1)
+En línea: 1 Carácter: 1
++ python "C:\Users\Andres\Desktop\Tsuki_Odyssey\Tsuky_WebEditor\tools\e ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\Andres...ON (2022.3.0f1):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  version_str = config.get_fallback_version()
+C:\Users\Andres\AppData\Roaming\Python\Python313\site-packages\UnityPy\files\SerializedFile.py:359: 
+UnityVersionFallbackWarning: No valid Unity version found, defaulting to UnityPy.config.FALLBACK_UNITY_VERSION 
+(2022.3.0f1)
+  string_version = config.get_fallback_version()
+objects 27212
+total 1
+saved

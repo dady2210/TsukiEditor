@@ -8,12 +8,12 @@
       "rows": 16,
       "cols": 16,
       "origin_px": {
-        "x": 1233.88,
-        "y": 2000.61
+        "x": 1241.86,
+        "y": 1976.56
       },
       "cell": {
-        "w": 56,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "mask": "mask_floor_0.png",
       "exportDir": 2,
@@ -24,15 +24,15 @@
       "kind": "floor",
       "groupNum": 1,
       "flipped": false,
-      "rows": 14,
-      "cols": 14,
+      "rows": 16,
+      "cols": 16,
       "origin_px": {
-        "x": 1241.3778650761362,
-        "y": 1377.8195246607497
+        "x": 1241.38,
+        "y": 1377.82
       },
       "cell": {
-        "w": 56,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "mask": "mask_floor_1.png",
       "exportDir": 2,
@@ -50,8 +50,8 @@
         "y": 86
       },
       "cell": {
-        "w": 64,
-        "h": 32
+        "w": 75,
+        "h": 37.5
       },
       "homecoming_only": true
     },
@@ -67,8 +67,8 @@
         "y": 2200
       },
       "cell": {
-        "w": 56,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "outdoor": true,
       "comment": "TODO alinear exterior g4"
@@ -85,8 +85,8 @@
         "y": 2200
       },
       "cell": {
-        "w": 56,
-        "h": 28
+        "w": 75,
+        "h": 37.5
       },
       "outdoor": true,
       "comment": "TODO alinear exterior g5"
@@ -103,8 +103,8 @@
         "y": 1736.7251352113876
       },
       "cell": {
-        "w": 64,
-        "h": 32
+        "w": 75,
+        "h": 37.5
       },
       "mask": "mask_wallL_0.png",
       "exportDir": 2,
@@ -122,8 +122,8 @@
         "y": 1709.2945966576285
       },
       "cell": {
-        "w": 64,
-        "h": 32
+        "w": 75,
+        "h": 37.5
       },
       "mask": "mask_wallR_0.png",
       "exportDir": 2,
@@ -141,8 +141,8 @@
         "y": 1121.399760052171
       },
       "cell": {
-        "w": 64,
-        "h": 32
+        "w": 75,
+        "h": 37.5
       },
       "mask": "mask_wallL_1.png",
       "exportDir": 2,
@@ -160,8 +160,8 @@
         "y": 1174.4446804489417
       },
       "cell": {
-        "w": 64,
-        "h": 32
+        "w": 75,
+        "h": 37.5
       },
       "mask": "mask_wallR_1.png",
       "exportDir": 2,
@@ -179,8 +179,8 @@
         "y": 40
       },
       "cell": {
-        "w": 64,
-        "h": 32
+        "w": 75,
+        "h": 37.5
       },
       "homecoming_only": true,
       "comment": "TODO pared HC izq"
@@ -197,8 +197,8 @@
         "y": 40
       },
       "cell": {
-        "w": 64,
-        "h": 32
+        "w": 75,
+        "h": 37.5
       },
       "homecoming_only": true,
       "comment": "TODO pared HC der"

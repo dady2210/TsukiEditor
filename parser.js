@@ -1005,6 +1005,44 @@ class SaveParser {
                             issues.push({ code: 'CROP_TIME', severity: 'INFO', message: `Cultivo ${p.item_id} tiene tiempo de cosecha inválido o negativo (${ht}).` });
                         }
                     }
+                } else if (!p.isWall && !isCrop && p.furnNode && p.furnNode.children) {
+                    // Auto-sanitize floor furniture placements for mobile Odyssey compatibility
+                    const gp = p.furnNode.children.find(c => c.name === 'groupPosition');
+                    if (gp) {
+                        const parentIdNode = gp.children ? gp.children.find(c => c.name === 'parentPlacementID') : null;
+                        const hasRealParent = parentIdNode && parentIdNode.value !== 0 && parentIdNode.value !== -1 && parentIdNode.value !== 1978618092;
+                        if (!hasRealParent) {
+                            if (gp.typeName && gp.typeName.includes('SubGroupPosition')) {
+                                gp.typeName = 'GridGroupPosition, Odyssey';
+                                gp.marker = 0x01;
+                                gp.children = (gp.children || []).filter(c => c.name !== 'parentPlacementID');
+                                let gNum = gp.children.find(c => c.name === 'groupNum');
+                                if (!gNum) {
+                                    gNum = new OdinPrimitive(0x17, 'groupNum', parseInt(p.floor, 10) || 0);
+                                    gp.children.push(gNum);
+                                } else {
+                                    gNum.value = parseInt(p.floor, 10) || 0;
+                                }
+                                fixes++;
+                            }
+                        }
+                    }
+                    let vid = p.furnNode.children.find(c => c.name === 'verificationID');
+                    const correctV = calcVerificationId(p.item_id);
+                    if (!vid) {
+                        p.furnNode.children.push(new OdinPrimitive(0x17, 'verificationID', correctV));
+                        fixes++;
+                    } else if (fixVerify || vid.value === 0 || vid.value === undefined) {
+                        vid.value = correctV;
+                        fixes++;
+                    }
+                    if (p.x < 0 || p.y < 0) {
+                        issues.push({
+                            code: 'PLACE_NEGATIVE_GRID',
+                            severity: 'WARNING',
+                            message: `Mueble ${p.item_id} en piso ${p.floor} tiene coordenadas negativas (${p.x}, ${p.y}) que Unity descartará en móvil.`
+                        });
+                    }
                 }
             }
         }
@@ -1758,15 +1796,17 @@ class SaveParser {
         const gv = this.generalVars || {};
         return {
             hour: gv.hour ? gv.hour.value | 0 : 0,
+            minute: this._currentMinute !== undefined ? (this._currentMinute | 0) : (new Date().getMinutes()),
             day: gv.day ? gv.day.value | 0 : 1,
             month: gv.month ? gv.month.value | 0 : 1,
             season: gv.season ? gv.season.value | 0 : 0
         };
     }
 
-    setClock({ hour, day, month, season }) {
+    setClock({ hour, minute, day, month, season }) {
         let ok = true;
         if (hour !== undefined) ok = this.writeGeneralVar('hour', hour | 0) && ok;
+        if (minute !== undefined) this._currentMinute = minute | 0;
         if (day !== undefined) ok = this.writeGeneralVar('day', day | 0) && ok;
         if (month !== undefined) ok = this.writeGeneralVar('month', month | 0) && ok;
         if (season !== undefined) ok = this.writeGeneralVar('season', season | 0) && ok;

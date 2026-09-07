@@ -17,6 +17,15 @@ class TsukiPort {
         this.btnPhone = document.getElementById('btn-port-phone');
         this.btnSettings = document.getElementById('btn-port-settings');
         
+        this.settingsModal = document.getElementById('play-settings-modal');
+        this.sliderMusic = document.getElementById('ps-slider-music');
+        this.sliderSfx = document.getElementById('ps-slider-sfx');
+        this.toggleAutosave = document.getElementById('ps-toggle-autosave');
+        this.btnExport = document.getElementById('ps-btn-export');
+        this.btnImport = document.getElementById('ps-btn-import');
+        this.inputFile = document.getElementById('input-play-import-csave');
+        this.btnBackup = document.getElementById('ps-btn-backup');
+        
         this.btnHammerGrid = document.getElementById('btn-hammer-grid');
         this.btnHammerFlip = document.getElementById('btn-hammer-flip');
         
@@ -65,26 +74,182 @@ class TsukiPort {
         }
         
         if (this.btnSettings) {
-            this.btnSettings.style.color = this.autosaveEnabled ? '#4caf50' : '#9e9e9e';
-            this.btnSettings.title = this.autosaveEnabled ? 'Autoguardado en caché activo (cada 30s)' : 'Autoguardado desactivado';
-            this.btnSettings.addEventListener('click', () => {
-                this.autosaveEnabled = !this.autosaveEnabled;
-                this.btnSettings.style.color = this.autosaveEnabled ? '#4caf50' : '#9e9e9e';
-                this.btnSettings.title = this.autosaveEnabled ? 'Autoguardado en caché activo (cada 30s)' : 'Autoguardado desactivado';
-                if (this.autosaveEnabled) {
-                    this.app.showToast('💾 Autoguardado en caché activado.');
-                    this.triggerAutosave();
-                    if (!this.autosaveTimer) {
-                        this.autosaveTimer = setInterval(() => this.triggerAutosave(), 30000);
+            this.btnSettings.title = 'Configuración';
+            this.btnSettings.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleSettingsModal();
+            });
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', (e) => {
+            if (this.settingsModal && !this.settingsModal.classList.contains('hidden')) {
+                if (!this.settingsModal.contains(e.target) && !this.btnSettings.contains(e.target)) {
+                    this.closeSettingsModal();
+                }
+            }
+        });
+
+        // Prevent clicks inside modal from propagating out
+        if (this.settingsModal) {
+            this.settingsModal.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
+
+        // Music volume slider
+        if (this.sliderMusic) {
+            this.sliderMusic.addEventListener('input', (e) => {
+                const vol = parseFloat(e.target.value) / 100;
+                if (window.Castle && window.Castle.BGM) {
+                    if (typeof window.Castle.BGM.setMusicVolume === 'function') {
+                        window.Castle.BGM.setMusicVolume(vol);
                     }
-                } else {
-                    if (this.autosaveTimer) {
-                        clearInterval(this.autosaveTimer);
-                        this.autosaveTimer = null;
+                    if (window.Castle.BGM.currentAudio) {
+                        window.Castle.BGM.currentAudio.volume = vol;
                     }
-                    this.app.showToast('Autoguardado desactivado.');
                 }
             });
+        }
+
+        // Toggle buttons (Minimal SFX, Battery Saver, Vibration, Motion, Notifications, Autosave)
+        document.querySelectorAll('.ps-toggle-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isCurrentlyOn = btn.getAttribute('data-state') === 'on';
+                const newState = !isCurrentlyOn;
+                this.setToggleState(btn, newState);
+                
+                if (btn.id === 'ps-toggle-autosave') {
+                    this.autosaveEnabled = newState;
+                    if (this.autosaveEnabled) {
+                        this.app.showToast('💾 Autoguardado en caché activado.');
+                        this.triggerAutosave();
+                        if (!this.autosaveTimer) {
+                            this.autosaveTimer = setInterval(() => this.triggerAutosave(), 30000);
+                        }
+                    } else {
+                        if (this.autosaveTimer) {
+                            clearInterval(this.autosaveTimer);
+                            this.autosaveTimer = null;
+                        }
+                        this.app.showToast('Autoguardado desactivado.');
+                    }
+                } else {
+                    const label = btn.closest('.ps-toggle-item')?.querySelector('.ps-toggle-label')?.textContent || '';
+                    this.app.showToast(`${label}: ${newState ? 'Activado' : 'Desactivado'}`);
+                }
+            });
+        });
+
+        // Export button (.csave with all changes up to date)
+        if (this.btnExport) {
+            this.btnExport.addEventListener('click', () => {
+                if (!this.app || !this.app.parser) {
+                    this.app.showToast('No hay partida cargada para exportar.', 'error');
+                    return;
+                }
+                const now = Date.now();
+                this.playTime += Math.floor((now - this.lastWrite) / 1000);
+                this.lastWrite = now;
+                if (this.app.parser.generalVars && typeof this.app.parser.generalVars.playTime === 'undefined') {
+                    this.app.parser.generalVars.playTime = { type: 'Int32', value: this.playTime, _stub: true };
+                }
+                this.app.saveAndDownload();
+                this.app.showToast('💾 Partida exportada con todos los cambios.');
+            });
+        }
+
+        // Import button (.csave loading directly into editor and play mode)
+        if (this.btnImport && this.inputFile) {
+            this.btnImport.addEventListener('click', () => {
+                this.inputFile.click();
+            });
+            this.inputFile.addEventListener('change', (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (file) {
+                    this.app.loadFile(file);
+                    this.closeSettingsModal();
+                    this.app.showToast('📂 Partida cargada exitosamente.');
+                }
+                this.inputFile.value = '';
+            });
+        }
+
+        // Cache backup button
+        if (this.btnBackup) {
+            this.btnBackup.addEventListener('click', async () => {
+                await this.triggerAutosave();
+                this.app.showToast('💾 Copia de seguridad guardada en caché local.');
+            });
+        }
+
+        // Secondary text links
+        document.getElementById('ps-link-restore')?.addEventListener('click', () => {
+            this.app.showToast('✅ Compras y pases restaurados correctamente.');
+        });
+        document.getElementById('ps-link-privacy')?.addEventListener('click', () => {
+            this.app.showToast('🔒 Tsuki Odyssey Web Port opera 100% de forma local en tu navegador.');
+        });
+        document.getElementById('ps-btn-account')?.addEventListener('click', () => {
+            this.app.showToast('👤 Sesión local activa.');
+        });
+    }
+
+    toggleSettingsModal() {
+        if (!this.settingsModal) return;
+        if (this.settingsModal.classList.contains('hidden')) {
+            this.openSettingsModal();
+        } else {
+            this.closeSettingsModal();
+        }
+    }
+
+    openSettingsModal() {
+        if (!this.settingsModal) return;
+        this.settingsModal.classList.remove('hidden');
+        if (this.btnSettings) this.btnSettings.classList.add('active');
+
+        // Sync Music Volume slider
+        if (this.sliderMusic && window.Castle && window.Castle.BGM && window.Castle.BGM.currentAudio) {
+            this.sliderMusic.value = Math.round(window.Castle.BGM.currentAudio.volume * 100);
+        }
+
+        // Sync Autosave toggle state
+        if (this.toggleAutosave) {
+            this.setToggleState(this.toggleAutosave, this.autosaveEnabled);
+        }
+
+        // Sync last saved label
+        const lblLastSaved = document.getElementById('ps-lastsaved');
+        if (lblLastSaved) {
+            const deltaSec = Math.floor((Date.now() - this.lastWrite) / 1000);
+            if (deltaSec < 5) {
+                lblLastSaved.textContent = 'Guardado: Justo ahora';
+            } else if (deltaSec < 60) {
+                lblLastSaved.textContent = `Guardado: hace ${deltaSec}s`;
+            } else {
+                lblLastSaved.textContent = `Guardado: hace ${Math.floor(deltaSec / 60)}m`;
+            }
+        }
+    }
+
+    closeSettingsModal() {
+        if (!this.settingsModal) return;
+        this.settingsModal.classList.add('hidden');
+        if (this.btnSettings) this.btnSettings.classList.remove('active');
+    }
+
+    setToggleState(btn, isOn) {
+        if (!btn) return;
+        btn.setAttribute('data-state', isOn ? 'on' : 'off');
+        if (isOn) {
+            btn.classList.add('active');
+            const icon = btn.querySelector('.ps-toggle-icon');
+            if (icon) icon.textContent = '✔';
+        } else {
+            btn.classList.remove('active');
+            const icon = btn.querySelector('.ps-toggle-icon');
+            if (icon) icon.textContent = '✕';
         }
     }
     
@@ -178,6 +343,7 @@ class TsukiPort {
     }
 
     exitPlayMode() {
+        this.closeSettingsModal();
         this.triggerAutosave();
 
         // if (this.bottomBar) this.bottomBar.style.display = 'none';
@@ -185,6 +351,7 @@ class TsukiPort {
     }
     
     enterHammerMode() {
+        this.closeSettingsModal();
         this.isHammerMode = true;
         if (this.bottomBar) this.bottomBar.style.display = 'none';
         this.hammerUI.classList.add('active-ui');
