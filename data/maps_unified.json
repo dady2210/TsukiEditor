@@ -43,17 +43,32 @@
       "kind": "floor",
       "groupNum": 2,
       "flipped": false,
-      "rows": 14,
-      "cols": 14,
+      "rows": 16,
+      "cols": 16,
       "origin_px": {
-        "x": 329,
-        "y": 86
+        "x": 1910.0,
+        "y": 2232.0
       },
       "cell": {
         "w": 75,
         "h": 37.5
+      }
+    },
+    {
+      "mapId": 0,
+      "kind": "floor",
+      "groupNum": 3,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin_px": {
+        "x": 425.0,
+        "y": 2232.0
       },
-      "homecoming_only": true
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      }
     },
     {
       "mapId": 0,

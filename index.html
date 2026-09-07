@@ -799,10 +799,31 @@
             </div>
             <div style="overflow-x:auto; max-height:400px;">
                 <table class="inventory-table" style="width:100%;">
-                    <thead><tr><th>ID</th><th>Nombre</th><th>Shown</th><th>Done</th></tr></thead>
+                    <thead><tr><th></th><th>ID</th><th>Nombre</th><th>Día</th><th>Shown</th><th>Done</th><th></th></tr></thead>
                     <tbody id="news-checklist"></tbody>
                 </table>
             </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:1rem; align-items:center;">
+                <input id="news-search" type="text" placeholder="🔍 Buscar por título..." style="flex:1; min-width:180px; padding:6px 10px;">
+                <select id="news-type-filter" style="padding:6px 10px;">
+                    <option value="">Todos los tipos</option>
+                    <option value="Character">Character</option>
+                    <option value="Sale">Sale</option>
+                    <option value="Fish">Fish</option>
+                    <option value="Gift">Gift</option>
+                    <option value="Location">Location</option>
+                    <option value="Misc">Misc</option>
+                </select>
+                <button id="news-lang-toggle" class="btn-secondary">ES / EN</button>
+            </div>
+        </div>
+        <div class="section-card" style="margin-top:1rem;">
+            <h3>💌 Cartas programadas</h3>
+            <div id="news-letters"></div>
+        </div>
+        <div class="section-card" style="margin-top:1rem;">
+            <h3>📦 Variantes de pedido (Plank &amp; Stone)</h3>
+            <div id="news-orders"></div>
         </div>
     </div>
 </div>
@@ -1276,6 +1297,7 @@
     // shim: expose pivots/behaviours from unified for legacy code
     (function(){ const u=window.ITEMS_UNIFIED; const piv={}; const beh={}; for(const id in u){ if(u[id].pivot) piv[id]=u[id].pivot; if(u[id].pivot_back) piv[id+'_BACK']=u[id].pivot_back; if(u[id].behaviour) beh[id]=u[id].behaviour; } window.contentPivots=piv; window.CONTENT_PIVOTS=piv; window.BEHAVIORS=beh; })();
     </script>
+    <script src="data/newspapers.js?v=1"></script>
     <script src="odin_browser.js?v=28"></script>
     <script src="castle_core.js?v=3"></script>
     <script src="save_storage.js?v=1"></script>

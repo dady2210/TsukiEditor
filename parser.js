@@ -713,6 +713,7 @@ class SaveParser {
     applyMapChange(placement, newId, newX, newY, newOrientation, newFloor) {
         if (!placement) return;
         
+        const oldId = placement.item_id;
         if (newId !== undefined && newId !== null) placement.item_id = newId;
         if (newX !== undefined && newX !== null) placement.x = newX;
         if (newY !== undefined && newY !== null) placement.y = newY;
@@ -725,13 +726,15 @@ class SaveParser {
 
         if (placement.isWall) {
             const fIdNode = node.children.find(c => c.name === 'furnitureID');
-            if (fIdNode) fIdNode.value = newId;
+            if (fIdNode && newId !== undefined && newId !== null) fIdNode.value = newId;
         } else {
             const refNode = node.children.find(c => c.name === 'reference');
             if (refNode) {
-                const idNode = refNode.children.find(c => c.name === 'id');
-                if (idNode) idNode.value = newId;
-                if (newOrientation !== undefined) {
+                if (newId !== undefined && newId !== null) {
+                    const idNode = refNode.children.find(c => c.name === 'id');
+                    if (idNode) idNode.value = newId;
+                }
+                if (newOrientation !== undefined && newOrientation !== null) {
                     const oriNode = refNode.children.find(c => c.name === 'orientation');
                     if (oriNode) oriNode.value = typeof oriNode.value === 'bigint' ? BigInt(newOrientation) : newOrientation;
                 }
@@ -741,8 +744,17 @@ class SaveParser {
         const groupPosNode = node.children.find(c => c.name === 'groupPosition');
         const posNode = node.children.find(c => c.name === 'position');
         
+        if (newFloor !== undefined && newFloor !== null && groupPosNode) {
+            const gNumNode = findChildRecursive(groupPosNode, ['groupNum']);
+            if (gNumNode) {
+                gNumNode.value = Number(newFloor);
+            } else if (groupPosNode.children) {
+                groupPosNode.children.push(new OdinPrimitive(0x17, 'groupNum', Number(newFloor)));
+            }
+        }
+
         const tn = node.typeName || node.className;
-        const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(newId)) 
+        const isCrop = (typeof SEED_IDS !== 'undefined' && SEED_IDS.has(placement.item_id)) 
                        || (tn && /CropSave/i.test(tn))
                        || !!findChildRecursive(node, ['harvestTimeOA', 'harvestTime', 'HarvestTime']);
 
@@ -755,7 +767,7 @@ class SaveParser {
         }
         
         const vIdNode = node.children.find(c => c.name === 'verificationID');
-        if (vIdNode) {
+        if (vIdNode && newId !== undefined && newId !== null && newId !== oldId) {
             const v = calcVerificationId(newId);
             vIdNode.value = v;
             placement.verify = v;

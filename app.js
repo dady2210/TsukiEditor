@@ -1043,7 +1043,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const newY   = parseInt(this.editItemY.value);
                 const newOri = parseInt(this.editItemOri.value);
                 if (!isNaN(newId) && !isNaN(newX) && !isNaN(newY) && !isNaN(newOri)) {
-                    this.parser.applyMapChange(this.map.selectedPlacement, newId, newX, newY, newOri);
+                    this.parser.applyMapChange(this.map.selectedPlacement, newId, newX, newY, newOri, this.map.selectedPlacement.floor);
                     this.showToast("✅ Mueble actualizado");
                     this.map.draw();
                     if (document.body.classList.contains('play-mode') && this.tsukiPort && typeof this.tsukiPort.triggerAutosave === 'function') {
@@ -2458,7 +2458,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
 
         const dummyPlacement = { furnNode: furnNode, isWall: isWall };
-        this.parser.applyMapChange(dummyPlacement, itemId, x, y, orientation);
+        this.parser.applyMapChange(dummyPlacement, itemId, x, y, orientation, floor);
 
         listNode.elements.push(clone);
         this.parser.parseMap();
@@ -3088,19 +3088,74 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     // ─── Phone (Punchcard & Locations) ──────────────────────────────────
 
     // 📰 Newspapers
+    newsLang() {
+        return this._newsLang || (this._newsLang = localStorage.getItem('news_lang') || 'es');
+    }
+    setNewsLang(lang) {
+        this._newsLang = lang;
+        try { localStorage.setItem('news_lang', lang); } catch (e) {}
+        if (this.renderNewsTab) this.renderNewsTab();
+    }
+    newsTitle(entry) {
+        if (!entry) return { title: '', sub: '' };
+        const lang = this.newsLang();
+        const clean = s => { s = (s || '').trim(); return s === '???' ? '' : s; };
+        const pick = (es, en) => lang === 'en' ? (clean(en) || clean(es)) : (clean(es) || clean(en));
+        return { title: pick(entry.title_es, entry.title_en), sub: pick(entry.sub_es, entry.sub_en) };
+    }
+    escHtml(s) {
+        return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    toggleAllNewsShown(shown) {
+        if (!this.parser) return;
+        const news = this.parser.getNewspapers();
+        news.forEach(n => {
+            const doneCb = document.querySelector('.news-done-cb[data-id="' + n.id + '"]');
+            this.parser.setNewspaperStatus(n.id, shown, doneCb ? doneCb.checked : n.done);
+        });
+        if (this.renderNewsTab) this.renderNewsTab();
+    }
+    toggleAllNewsDone(done) {
+        if (!this.parser) return;
+        const news = this.parser.getNewspapers();
+        news.forEach(n => {
+            const shownCb = document.querySelector('.news-shown-cb[data-id="' + n.id + '"]');
+            this.parser.setNewspaperStatus(n.id, shownCb ? shownCb.checked : n.shown, done);
+        });
+        if (this.renderNewsTab) this.renderNewsTab();
+    }
+    openNewsModal(id) {
+        if (this.gameUI && this.gameUI.showNewsInfo) this.gameUI.showNewsInfo(id, this.newsLang());
+    }
     renderNewsTab() {
         if (!this.parser) return;
         const news = this.parser.getNewspapers();
         const container = document.getElementById('news-checklist');
-        const emptyState = document.getElementById('news-empty-state');
+        const content = document.getElementById('news-content');
+        const searchEl = document.getElementById('news-search');
+        const typeEl = document.getElementById('news-type-filter');
+        const langBtn = document.getElementById('news-lang-toggle');
+        if (content) content.style.display = '';
         
-        if (!news || news.length === 0) {
-            if (container) container.innerHTML = '';
-            if (emptyState) emptyState.classList.remove('hidden');
-            return;
+        if (langBtn && !langBtn.dataset.wired) {
+            langBtn.dataset.wired = '1';
+            langBtn.addEventListener('click', () => this.setNewsLang(this.newsLang() === 'es' ? 'en' : 'es'));
         }
+        if (langBtn) langBtn.textContent = this.newsLang() === 'es' ? 'ES / EN' : 'EN / ES';
+        const bindFilter = (el) => {
+            if (el && !el.dataset.wired) {
+                el.dataset.wired = '1';
+                el.addEventListener('input', () => this.renderNewsTab());
+                el.addEventListener('change', () => this.renderNewsTab());
+            }
+        };
+        bindFilter(searchEl); bindFilter(typeEl);
+        const query = searchEl && searchEl.value ? searchEl.value.toLowerCase() : '';
+        const typeFilter = typeEl && typeEl.value ? typeEl.value : '';
+        // Preserve focus on search while re-rendering
+        const activeId = document.activeElement && document.activeElement.id;
+        const searchPos = searchEl ? searchEl.selectionStart : 0;
         
-        if (emptyState) emptyState.classList.add('hidden');
         if (container) {
             container.innerHTML = '';
             
@@ -3108,35 +3163,27 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             news.sort((a, b) => a.id - b.id);
             
             news.forEach(n => {
-                const el = document.createElement('div');
-                el.className = 'list-item';
-                el.style.display = 'flex';
-                el.style.flexDirection = 'column';
-                el.style.gap = '0.5rem';
-                el.style.padding = '10px';
-                el.style.border = '1px solid #444';
-                el.style.borderRadius = '5px';
-                
-                // Try to get title from DB if available, else fallback to ID
-                const title = window.NEWSPAPER_DB && window.NEWSPAPER_DB[n.id] ? window.NEWSPAPER_DB[n.id] : 'Periódico #' + n.id;
-                
-                el.innerHTML = `
-                    <div style="font-weight: bold; margin-bottom: 0.2rem; display: flex; justify-content: space-between;">
-                        <span>${title}</span>
-                        <span style="font-size: 0.8em; color: #888;">ID: ${n.id}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                            <input type="checkbox" class="news-shown-cb" data-id="${n.id}" ${n.shown ? 'checked' : ''}>
-                            <span>Visto (Shown)</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                            <input type="checkbox" class="news-done-cb" data-id="${n.id}" ${n.done ? 'checked' : ''}>
-                            <span>Recompensa (Done)</span>
-                        </label>
-                    </div>
-                `;
-                container.appendChild(el);
+                const db = window.NEWSPAPER_DB && (window.NEWSPAPER_DB[n.id] || window.NEWSPAPER_DB[String(n.id)]);
+                const t = this.newsTitle(db);
+                if (typeFilter && db && db.type !== typeFilter) return;
+                const hay = ((t.title || '') + ' ' + (t.sub || '')).toLowerCase();
+                if (query && hay.indexOf(query) === -1) return;
+                const title = t.title || ('Periódico #' + n.id);
+                const img = db && db.pic
+                    ? '<img src="images/newspapers/' + encodeURI(db.pic) + '.png" style="width:40px;height:40px;object-fit:cover;border-radius:4px;" onerror="this.style.display=\'none\'">'
+                    : '<span style="color:#888;">—</span>';
+                const day = db && db.day != null ? db.day : '—';
+                const tr = document.createElement('tr');
+                tr.innerHTML =
+                    '<td>' + img + '</td>' +
+                    '<td style="color:#888;">' + n.id + '</td>' +
+                    '<td><div style="font-weight:bold;">' + this.escHtml(title) + '</div>' +
+                    (db && db.type ? '<div style="font-size:0.8em;color:#888;">' + this.escHtml(db.type) + '</div>' : '') + '</td>' +
+                    '<td style="text-align:center;">' + day + '</td>' +
+                    '<td style="text-align:center;"><input type="checkbox" class="news-shown-cb" data-id="' + n.id + '"' + (n.shown ? ' checked' : '') + '></td>' +
+                    '<td style="text-align:center;"><input type="checkbox" class="news-done-cb" data-id="' + n.id + '"' + (n.done ? ' checked' : '') + '></td>' +
+                    '<td style="text-align:center;"><button class="btn-secondary news-read-btn" data-id="' + n.id + '" style="padding:2px 8px;">Leer</button></td>';
+                container.appendChild(tr);
             });
             
             // Event Listeners for checkboxes
@@ -3155,6 +3202,66 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     this.parser.setNewspaperStatus(id, shownCb.checked, e.target.checked);
                 });
             });
+
+            container.querySelectorAll('.news-read-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    this.openNewsModal(parseInt(e.target.getAttribute('data-id')));
+                });
+            });
+
+            if (activeId === 'news-search' && searchEl) {
+                searchEl.focus();
+                try { searchEl.setSelectionRange(searchPos, searchPos); } catch (e) {}
+            }
+        }
+        this.renderNewsLetters();
+    }
+
+    renderNewsLetters() {
+        const lang = this.newsLang();
+        const clean = s => { s = (s || '').trim(); return s === '???' ? '' : s; };
+        const pick = (es, en) => lang === 'en' ? (clean(en) || clean(es)) : (clean(es) || clean(en));
+        const lettersBox = document.getElementById('news-letters');
+        if (lettersBox) {
+            const letters = window.NEWSPAPER_LETTERS || [];
+            lettersBox.innerHTML = '';
+            letters.forEach(l => {
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                div.style.cssText = 'padding:10px;border:1px solid #444;border-radius:5px;margin-bottom:0.5rem;';
+                const author = pick(l.author_es, l.author_en);
+                const text = pick(l.text_es, l.text_en);
+                div.innerHTML =
+                    '<div style="font-weight:bold;">#' + l.id + (author ? ' — ' + this.escHtml(author) : '') +
+                    (l.carrots ? ' <span style="font-size:0.8em;color:#888;">🥕' + l.carrots + '</span>' : '') +
+                    (l.gifts ? ' <span style="font-size:0.8em;color:#888;">🎁×' + l.gifts + '</span>' : '') + '</div>' +
+                    '<div style="white-space:pre-wrap;margin-top:0.3rem;">' + this.escHtml(text) + '</div>';
+                lettersBox.appendChild(div);
+            });
+            if (!letters.length) lettersBox.innerHTML = '<p style="color:#888;">Sin datos (cargar data/newspapers.js).</p>';
+        }
+        const ordersBox = document.getElementById('news-orders');
+        if (ordersBox) {
+            const orders = window.NEWSPAPER_ORDERS || [];
+            const meta = window.NEWSPAPER_META || {};
+            ordersBox.innerHTML = '';
+            if (meta.orderAuthor) {
+                const head = document.createElement('div');
+                head.style.cssText = 'margin-bottom:0.5rem;color:#888;';
+                head.textContent = pick(meta.orderAuthor.es, meta.orderAuthor.en) + ' — ' + pick(meta.orderInitialLine.es, meta.orderInitialLine.en);
+                ordersBox.appendChild(head);
+            }
+            orders.forEach(v => {
+                const div = document.createElement('div');
+                div.className = 'list-item';
+                div.style.cssText = 'padding:8px 10px;border:1px solid #444;border-radius:5px;margin-bottom:0.4rem;';
+                const author = pick(v.author_es, v.author_en);
+                div.innerHTML =
+                    '<div style="font-weight:bold;">#' + v.id + (author ? ' — ' + this.escHtml(author) : '') + '</div>' +
+                    '<div style="white-space:pre-wrap;margin-top:0.2rem;">' + this.escHtml(pick(v.text_es, v.text_en)) + '</div>';
+                ordersBox.appendChild(div);
+            });
+            if (!orders.length) ordersBox.innerHTML = '<p style="color:#888;">Sin datos (cargar data/newspapers.js).</p>';
         }
     }
 

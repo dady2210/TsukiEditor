@@ -94,48 +94,77 @@ window.CsaveIO = {
     },
 
     applyPortJson: function(parser, json) {
+        const checkVar = (name, val) => {
+            if (val !== undefined && parser.generalVars && parser.generalVars[name] && parser.generalVars[name].value !== val) {
+                parser.writeGeneralVar(name, val);
+            }
+        };
+
         // Carrots
-        if (json.carrots !== undefined) {
-            parser.writeGeneralVar('carrots', json.carrots);
-        }
+        checkVar('carrots', json.carrots);
 
         // Time
         if (json.time) {
-            if (json.time.day !== undefined) parser.writeGeneralVar('day', json.time.day);
-            if (json.time.month !== undefined) parser.writeGeneralVar('month', json.time.month);
-            if (json.time.season !== undefined) parser.writeGeneralVar('season', json.time.season);
-            if (json.time.hour !== undefined) parser.writeGeneralVar('hour', json.time.hour);
+            checkVar('day', json.time.day);
+            checkVar('month', json.time.month);
+            checkVar('season', json.time.season);
+            checkVar('hour', json.time.hour);
         }
 
         // Homecoming Updates
-        if (json.homecomingUpdates !== undefined) {
-            parser.writeGeneralVar('homecomingUpdates', json.homecomingUpdates);
-        }
+        checkVar('homecomingUpdates', json.homecomingUpdates);
 
         // Inventory
         if (json.inventory && parser.inventory) {
-            // Limpiamos el inventario actual
-            for (let i = 0; i < parser.inventory.length; i++) {
-                parser.clearInventoryItem('inventory', i);
+            const curInv = parser.inventory.filter(item => item.item_id > 0 && item.qty > 0);
+            let invChanged = false;
+            if (curInv.length !== json.inventory.length) {
+                invChanged = true;
+            } else {
+                for (let i = 0; i < json.inventory.length; i++) {
+                    if (json.inventory[i].id !== curInv[i].item_id ||
+                        json.inventory[i].qty !== curInv[i].qty ||
+                        (json.inventory[i].invType || 1) !== (curInv[i].invType || 1)) {
+                        invChanged = true;
+                        break;
+                    }
+                }
             }
-            // Inyectamos los items de la whitelist
-            for (const item of json.inventory) {
-                // injectInventoryItem maneja el stack y los slots vacíos
-                parser.injectInventoryItem(item.id, item.qty, false, item.invType || 1);
+            if (invChanged) {
+                // Limpiamos el inventario actual
+                for (let i = 0; i < parser.inventory.length; i++) {
+                    parser.clearInventoryItem('inventory', i);
+                }
+                // Inyectamos los items de la whitelist
+                for (const item of json.inventory) {
+                    parser.injectInventoryItem(item.id, item.qty, false, item.invType || 1);
+                }
+                parser.parseInventory(); // Re-indexar el inventario para asegurar referencias
             }
-            parser.parseInventory(); // Re-indexar el inventario para asegurar referencias
         }
 
         // Mapas
         if (json.mapas && json.mapas["0"]) {
             const m = json.mapas["0"];
             
-            if (m.wallpapers && parser.setWallpaper) {
-                m.wallpapers.forEach(wp => parser.setWallpaper("0", wp.key, wp.id));
+            if (m.wallpapers && parser.wallpapers && parser.wallpapers["0"]) {
+                m.wallpapers.forEach(wp => {
+                    const found = parser.wallpapers["0"].find(w => w.key === wp.key);
+                    if (found && found.node && found.id !== Number(wp.id)) {
+                        found.id = Number(wp.id);
+                        found.node.value = found.id;
+                    }
+                });
             }
 
-            if (m.floors && parser.setFloor) {
-                m.floors.forEach(fl => parser.setFloor("0", fl.key, fl.id));
+            if (m.floors && parser.floors && parser.floors["0"]) {
+                m.floors.forEach(fl => {
+                    const found = parser.floors["0"].find(f => f.key === fl.key);
+                    if (found && found.node && found.id !== Number(fl.id)) {
+                        found.id = Number(fl.id);
+                        found.node.value = found.id;
+                    }
+                });
             }
 
             // Placements W1 approach: apply positions/rotations for existing, or we just rely on `applyMapChange`
@@ -157,22 +186,32 @@ window.CsaveIO = {
                 // Limpiamos la lista AST real
                 const newElements = [];
                 let pIdCounter = 1000000;
+                let listChanged = false;
 
                 for (const portP of m.placements) {
                     const pId = portP.placement_id || (pIdCounter++);
                     const existingP = existingNodes.get(pId);
                     
                     if (existingP && existingP.furnNode) {
-                        // Mutate existing node
-                        parser.applyMapChange(existingP, portP.item_id, portP.x, portP.y, portP.rot);
-                        if (portP.is_pared) {
-                            parser.setWallPlacementCell(pId, { x: portP.x, y: portP.y, groupNum: portP.groupNum, flipped: portP.flipped });
-                        } else {
-                            // Non-wall layer
-                            const groupPos = existingP.furnNode.children.find(c => c.name === 'groupPosition');
-                            if (groupPos && groupPos.children) {
-                                const gNumNode = groupPos.children.find(c => c.name === 'groupNum');
-                                if (gNumNode) gNumNode.value = portP.groupNum;
+                        // Mutate existing node only if changed
+                        const changed = (existingP.x !== portP.x ||
+                                         existingP.y !== portP.y ||
+                                         existingP.orientation !== portP.rot ||
+                                         Number(existingP.floor) !== Number(portP.groupNum) ||
+                                         !!existingP.flipped !== !!portP.flipped ||
+                                         existingP.item_id !== portP.item_id);
+                        if (changed) {
+                            listChanged = true;
+                            parser.applyMapChange(existingP, portP.item_id, portP.x, portP.y, portP.rot, portP.groupNum);
+                            if (portP.is_pared) {
+                                parser.setWallPlacementCell(pId, { x: portP.x, y: portP.y, groupNum: portP.groupNum, flipped: portP.flipped });
+                            } else {
+                                // Non-wall layer
+                                const groupPos = existingP.furnNode.children.find(c => c.name === 'groupPosition');
+                                if (groupPos && groupPos.children) {
+                                    const gNumNode = groupPos.children.find(c => c.name === 'groupNum');
+                                    if (gNumNode) gNumNode.value = portP.groupNum;
+                                }
                             }
                         }
                         
@@ -181,6 +220,7 @@ window.CsaveIO = {
                         if (entry) newElements.push(entry);
 
                     } else {
+                        listChanged = true;
                         // New node needs to be cloned or built.
                         // We take an existing node to clone as a template.
                         let template = furnList.elements.length > 0 ? furnList.elements[0] : null;
@@ -242,8 +282,10 @@ window.CsaveIO = {
                     }
                 }
                 
-                furnList.elements = newElements;
-                parser.parseMap(); // Re-index placements
+                if (listChanged || newElements.length !== furnList.elements.length) {
+                    furnList.elements = newElements;
+                    parser.parseMap(); // Re-index placements
+                }
             }
         }
     },

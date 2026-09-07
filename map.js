@@ -2492,7 +2492,7 @@ class IsometricMap {
         const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
         
         // Frustum Culling (Camera Viewport)
-        const center = this._tileCenter(p.x, p.y, w, l, p.floor);
+        const center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
         const pad = Math.max(500, 300 * this.scale);
         if (center.x < -pad || center.x > this.canvas.width + pad || center.y < -pad || center.y > this.canvas.height + pad) {
             return;
@@ -2511,10 +2511,10 @@ class IsometricMap {
         
         // Draw grid footprint if in play mode and hammer mode
         if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode && !p.isWall && (this.app.tsukiPort.showGrid || isSelected)) {
-            const pt1 = this.getIsoCoords(p.x, p.y, p.floor);
-            const pt2 = this.getIsoCoords(p.x + w, p.y, p.floor);
-            const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor);
-            const pt4 = this.getIsoCoords(p.x, p.y + l, p.floor);
+            const pt1 = this.getIsoCoords(p.x, p.y, p.floor, p.cluster);
+            const pt2 = this.getIsoCoords(p.x + w, p.y, p.floor, p.cluster);
+            const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor, p.cluster);
+            const pt4 = this.getIsoCoords(p.x, p.y + l, p.floor, p.cluster);
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(pt1.x, pt1.y);
@@ -2560,14 +2560,14 @@ class IsometricMap {
         if (!lift && !hideBox) {
             ctx.save();
             ctx.globalAlpha = 0.25;
-            this._drawDiamondPath(p.x + 0.1, p.y + 0.1, w, l, 1.5, p.floor);
+            this._drawDiamondPath(p.x + 0.1, p.y + 0.1, w, l, 1.5, p.floor, p.cluster);
             ctx.fillStyle = '#000';
             ctx.fill();
             ctx.restore();
         }
 
         if (!hideBox) {
-            this._drawDiamondPath(p.x, p.y, w, l, layer === 'ground' ? 0 : (lift ? 3 : 2), p.floor);
+            this._drawDiamondPath(p.x, p.y, w, l, layer === 'ground' ? 0 : (lift ? 3 : 2), p.floor, p.cluster);
             ctx.fillStyle   = fillColor;
             ctx.strokeStyle = isSelected ? '#ff2222' : isHovered ? '#ffaa00' : (lift ? 'rgba(180,120,40,0.5)' : 'rgba(0,0,0,0.4)');
             ctx.lineWidth   = isSelected ? 2.5 : 1.5;
@@ -2576,14 +2576,14 @@ class IsometricMap {
         }
 
         if (layer === 'ground') {
-            this._drawDirtTexture(p.x, p.y, w, l, p.floor);
+            this._drawDirtTexture(p.x, p.y, w, l, p.floor, p.cluster);
         }
 
         const img = this.getImage(p.item_id, p.orientation);
         if (img) {
-            this._drawSpriteOnTile(img, p.x, p.y, w, l, p.orientation, p.item_id, p.floor);
+            this._drawSpriteOnTile(img, p.x, p.y, w, l, p.orientation, p.item_id, p.floor, p.cluster);
         } else {
-            const center = this._tileCenter(p.x, p.y, w, l, p.floor);
+            const center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
             const name   = this._shortName(p.item_id);
             ctx.save();
             ctx.font      = `bold ${Math.max(7, Math.round(10 * this.scale))}px 'Quicksand', sans-serif`;
@@ -2599,12 +2599,12 @@ class IsometricMap {
         if (p.planted_id !== undefined && p.planted_id > 0 && p.planted_id !== 4294967295) {
             let plantedImg = this.getCropImage(p.planted_id);
             if (plantedImg) {
-                this._drawSpriteOnTile(plantedImg, p.x, p.y - 0.5, w, l, 0, p.planted_id, p.floor);
+                this._drawSpriteOnTile(plantedImg, p.x, p.y - 0.5, w, l, 0, p.planted_id, p.floor, p.cluster);
             }
         }
 
         if (layer === 'seed') {
-            const center = this._tileCenter(p.x, p.y, w, l, p.floor);
+            const center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
             ctx.save();
             ctx.font      = `${Math.max(6, Math.round(8 * this.scale))}px 'Nunito Sans', sans-serif`;
             ctx.fillStyle = '#fff';
@@ -2618,13 +2618,13 @@ class IsometricMap {
         ctx.restore();
     }
 
-    _drawDirtTexture(gx, gy, w, l, floorNum = 0) {
+    _drawDirtTexture(gx, gy, w, l, floorNum = 0, mapId) {
         // Draw a subtle criss-cross dirt pattern inside the tile
         const ctx = this.ctx;
-        const top   = this.getIsoCoords(gx,   gy, floorNum);
-        const right = this.getIsoCoords(gx+w, gy, floorNum);
-        const bot   = this.getIsoCoords(gx+w, gy+l, floorNum);
-        const left  = this.getIsoCoords(gx,   gy+l, floorNum);
+        const top   = this.getIsoCoords(gx,   gy, floorNum, mapId);
+        const right = this.getIsoCoords(gx+w, gy, floorNum, mapId);
+        const bot   = this.getIsoCoords(gx+w, gy+l, floorNum, mapId);
+        const left  = this.getIsoCoords(gx,   gy+l, floorNum, mapId);
 
         ctx.save();
         ctx.beginPath();
@@ -2651,9 +2651,9 @@ class IsometricMap {
         ctx.restore();
     }
 
-    _drawSpriteOnTile(img, gx, gy, w, l, orientation = 0, item_id = null, floorNum = 0) {
+    _drawSpriteOnTile(img, gx, gy, w, l, orientation = 0, item_id = null, floorNum = 0, mapId) {
         const ctx = this.ctx;
-        const center = this._tileCenter(gx, gy, w, l, floorNum);
+        const center = this._tileCenter(gx, gy, w, l, floorNum, mapId);
         
         const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
         const u = _bgo * this.scale;
@@ -2715,7 +2715,7 @@ class IsometricMap {
             center = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, !!p.flipped, this._wallRoomBBox, p.floor);
         } else {
             const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
-            center = this._tileCenter(p.x, p.y, w, l, p.floor);
+            center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
             const off = this._getPlacementRenderOffset(p);
             center.x += off.x;
             center.y += off.y;
@@ -2747,12 +2747,12 @@ class IsometricMap {
         ctx.restore();
     }
 
-    _drawDiamondPath(gx, gy, w, l, shrinkPx = 0, floorNum = 0) {
+    _drawDiamondPath(gx, gy, w, l, shrinkPx = 0, floorNum = 0, mapId) {
         const ctx = this.ctx;
-        const top   = this.getIsoCoords(gx,   gy, floorNum);
-        const right = this.getIsoCoords(gx+w, gy, floorNum);
-        const bot   = this.getIsoCoords(gx+w, gy+l, floorNum);
-        const left  = this.getIsoCoords(gx,   gy+l, floorNum);
+        const top   = this.getIsoCoords(gx,   gy, floorNum, mapId);
+        const right = this.getIsoCoords(gx+w, gy, floorNum, mapId);
+        const bot   = this.getIsoCoords(gx+w, gy+l, floorNum, mapId);
+        const left  = this.getIsoCoords(gx,   gy+l, floorNum, mapId);
         const cx    = (top.x + bot.x) / 2;
         const cy    = (top.y + bot.y) / 2;
 
@@ -2768,9 +2768,9 @@ class IsometricMap {
         ctx.closePath();
     }
 
-    _tileCenter(gx, gy, w, l, floorNum = 0) {
-        const top = this.getIsoCoords(gx,   gy, floorNum);
-        const bot = this.getIsoCoords(gx+w, gy+l, floorNum);
+    _tileCenter(gx, gy, w, l, floorNum = 0, mapId) {
+        const top = this.getIsoCoords(gx,   gy, floorNum, mapId);
+        const bot = this.getIsoCoords(gx+w, gy+l, floorNum, mapId);
         return { x: (top.x + bot.x) / 2, y: (top.y + bot.y) / 2 };
     }
 
@@ -2887,7 +2887,7 @@ class IsometricMap {
                 const stack = (this._stackInfo && this._stackInfo.get(p)) || null;
                 const lift = stack ? stack.lift : 0;
                 const liftShift = lift * this.CELL_H * this.scale;
-                const center = this._tileCenter(p.x, p.y, w, l, p.floor);
+                const center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
                 const off = this._getPlacementRenderOffset(p);
                 center.x += off.x;
                 center.y += off.y;
@@ -2911,10 +2911,10 @@ class IsometricMap {
                 }
 
                 if (!hit) {
-                    const pt1 = this.getIsoCoords(p.x, p.y, p.floor);
-                    const pt2 = this.getIsoCoords(p.x + w, p.y, p.floor);
-                    const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor);
-                    const pt4 = this.getIsoCoords(p.x, p.y + l, p.floor);
+                    const pt1 = this.getIsoCoords(p.x, p.y, p.floor, p.cluster);
+                    const pt2 = this.getIsoCoords(p.x + w, p.y, p.floor, p.cluster);
+                    const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor, p.cluster);
+                    const pt4 = this.getIsoCoords(p.x, p.y + l, p.floor, p.cluster);
                     if (off.x || off.y) {
                         pt1.x += off.x; pt1.y += off.y;
                         pt2.x += off.x; pt2.y += off.y;
@@ -3336,16 +3336,19 @@ class IsometricMap {
                 const isPlayHammer = document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode;
                 const isWallItem = !!this.selectedPlacement.isWall;
 
+                let floorChanged = false;
                 if (isPlayHammer) {
                     const surfaceHit = this._hitTestPlaySurface(mouseX, mouseY, isWallItem ? 'wall' : 'floor');
                     if (isWallItem) {
                         if (surfaceHit && surfaceHit.kind === 'wall') {
                             const oldFlipped = !!this.selectedPlacement.flipped;
+                            const oldFloor = this.selectedPlacement.floor;
                             this.selectedPlacement.floor = surfaceHit.floorNum.toString();
                             this.selectedPlacement.flipped = surfaceHit.flipped;
-                            if (oldFlipped !== !!surfaceHit.flipped) {
+                            if (oldFlipped !== !!surfaceHit.flipped || oldFloor !== this.selectedPlacement.floor) {
                                 this.dragItemOffsetX = 0;
                                 this.dragItemOffsetY = 0;
+                                floorChanged = true;
                             }
                         }
                     } else {
@@ -3355,6 +3358,7 @@ class IsometricMap {
                             if (oldFloor !== this.selectedPlacement.floor) {
                                 this.dragItemOffsetX = 0;
                                 this.dragItemOffsetY = 0;
+                                floorChanged = true;
                             }
                         }
                     }
@@ -3378,12 +3382,13 @@ class IsometricMap {
                     snapped = this._snapMove(this.selectedPlacement, floatedX, floatedY);
                 }
 
-                if (this.selectedPlacement.x !== snapped.x || this.selectedPlacement.y !== snapped.y) {
+                if (this.selectedPlacement.x !== snapped.x || this.selectedPlacement.y !== snapped.y || floorChanged) {
                     try {
                         this.app.parser.applyMapChange(
                             this.selectedPlacement,
                             this.selectedPlacement.item_id, snapped.x, snapped.y,
-                            this.selectedPlacement.orientation
+                            this.selectedPlacement.orientation,
+                            this.selectedPlacement.floor
                         );
                         if (this.app.editItemX) this.app.editItemX.value = snapped.x;
                         if (this.app.editItemY) this.app.editItemY.value = snapped.y;
@@ -3482,16 +3487,19 @@ class IsometricMap {
                     const isPlayHammer = document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode;
                     const isWallItem = !!this.selectedPlacement.isWall;
 
+                    let floorChanged = false;
                     if (isPlayHammer) {
                         const surfaceHit = this._hitTestPlaySurface(mouseX, mouseY, isWallItem ? 'wall' : 'floor');
                         if (isWallItem) {
                             if (surfaceHit && surfaceHit.kind === 'wall') {
                                 const oldFlipped = !!this.selectedPlacement.flipped;
+                                const oldFloor = this.selectedPlacement.floor;
                                 this.selectedPlacement.floor = surfaceHit.floorNum.toString();
                                 this.selectedPlacement.flipped = surfaceHit.flipped;
-                                if (oldFlipped !== !!surfaceHit.flipped) {
+                                if (oldFlipped !== !!surfaceHit.flipped || oldFloor !== this.selectedPlacement.floor) {
                                     this.dragItemOffsetX = 0;
                                     this.dragItemOffsetY = 0;
+                                    floorChanged = true;
                                 }
                             }
                         } else {
@@ -3501,6 +3509,7 @@ class IsometricMap {
                                 if (oldFloor !== this.selectedPlacement.floor) {
                                     this.dragItemOffsetX = 0;
                                     this.dragItemOffsetY = 0;
+                                    floorChanged = true;
                                 }
                             }
                         }
@@ -3524,12 +3533,13 @@ class IsometricMap {
                         snapped = this._snapMove(this.selectedPlacement, floatedX, floatedY);
                     }
 
-                    if (this.selectedPlacement.x !== snapped.x || this.selectedPlacement.y !== snapped.y) {
+                    if (this.selectedPlacement.x !== snapped.x || this.selectedPlacement.y !== snapped.y || floorChanged) {
                         try {
                             this.app.parser.applyMapChange(
                                 this.selectedPlacement,
                                 this.selectedPlacement.item_id, snapped.x, snapped.y,
-                                this.selectedPlacement.orientation
+                                this.selectedPlacement.orientation,
+                                this.selectedPlacement.floor
                             );
                             if (this.app.editItemX) this.app.editItemX.value = snapped.x;
                             if (this.app.editItemY) this.app.editItemY.value = snapped.y;
@@ -3615,7 +3625,7 @@ class IsometricMap {
         newY = clamped.y;
 
         // Persistir en el AST
-        this.app.parser.applyMapChange(p, p.item_id, newX, newY, newOri);
+        this.app.parser.applyMapChange(p, p.item_id, newX, newY, newOri, p.floor);
 
         this.app.openItemEditor(p);
         

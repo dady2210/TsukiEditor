@@ -247,6 +247,32 @@ class GameUI {
     hideInfoModal() {
         this.infoModal.style.display = 'none';
     }
+
+    // ─── Newspapers ──────────────────────────────────────────────
+    newsText(entry, lang) {
+        if (!entry) return { title: '', sub: '' };
+        const pick = (es, en) => {
+            es = (es || '').trim(); en = (en || '').trim();
+            const clean = s => (s === '???' ? '' : s);
+            if (lang === 'en') return clean(en) || clean(es);
+            return clean(es) || clean(en);
+        };
+        return { title: pick(entry.title_es, entry.title_en), sub: pick(entry.sub_es, entry.sub_en) };
+    }
+
+    showNewsInfo(id, lang) {
+        const entry = window.NEWSPAPER_DB && (window.NEWSPAPER_DB[id] || window.NEWSPAPER_DB[String(id)]);
+        const t = this.newsText(entry, lang || 'es');
+        this.modalTitle.innerText = t.title || ('Periódico #' + id);
+        this.modalDesc.innerText = t.sub || '—';
+        if (entry && entry.pic) {
+            this.modalImg.src = 'images/newspapers/' + encodeURI(entry.pic) + '.png';
+            this.modalImg.onerror = () => { this.modalImg.removeAttribute('src'); };
+        } else {
+            this.modalImg.removeAttribute('src');
+        }
+        this.infoModal.style.display = 'flex';
+    }
 }
 
 window.GameUI = GameUI;
