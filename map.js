@@ -91,7 +91,10 @@ function opaquePivotFromRgba(data, w, h, th = 12) {
     }
     const bboxMid = (minx + maxx) / 2 / w;
     const footMid = footN ? footX / footN / w : bboxMid;
-    const finalX = Math.abs(footMid - bboxMid) > 0.10 ? bboxMid : footMid;
+    // D: pies primero — el punto de contacto con el suelo (esquina sur del
+    // primer tile) manda sobre el centro del alpha. bboxMid solo si no hay
+    // píxeles de pie detectados.
+    const finalX = footN ? footMid : bboxMid;
     return {
         x: finalX,
         y: Math.max(0.004, 1 - (maxy + 0.5) / h)
@@ -293,9 +296,9 @@ class IsometricMap {
         }
         // orientation 1 (SW) and 3 (NE) align the object along the opposite axis,
         // so we must swap width and length.
-        if (orientation === 1 || orientation === 3) {
-            return { w: size.l, l: size.w };
-        }
+      if (Number(orientation) === 1 || Number(orientation) === 3) {
+          return { w: size.l, l: size.w };
+      }
         return size;
     }
 
@@ -466,13 +469,13 @@ class IsometricMap {
     // file:// bloquea getImageData: primero data/content_pivots.js (píxeles reales
     // del PNG), luego pivote Unity, y solo al final se intenta leer el canvas.
     _resolveSpritePivot(item_id, img, orientation) {
-        // Los pivots canónicos viven en items_unified.js (generado desde
-        // data/content_pivots.js) y llegan aquí vía window.contentPivots.
-        // NO poner overrides manuales: el override de 115/2130/2131 con
-        // pivots recalibrados desplazaba el sprite fuera de su huella
-        // (deriva horizontal de ~0.19W + pies flotando sobre el diamante).
-        // Verificado contra FURN_115 bbox + geometría del diamante w×l.
+        // Pivots verificados en juego por id (formato C): el rehorneado pies-primero
+        // clava la sombra tenue bajo la base en estos sprites (115: base filas
+        // 139-149, sombra 150-158; BACK: base 130-134, sombra 135-143). Se
+        // restauran los valores horneados previos que clavan la base.
         const PIVOT_OVERRIDES = {
+            "115": { x: 0.3116, y: 0.0919 },
+            "115_BACK": { x: 0.3143, y: 0.106 },
         };
         const ori = Number(orientation);
         const isBack = ori === 2 || ori === 3;
@@ -2596,6 +2599,11 @@ class IsometricMap {
             const pt2 = this.getIsoCoords(p.x + w, p.y,     p.floor, p.cluster);
             const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor, p.cluster);
             const pt4 = this.getIsoCoords(p.x,     p.y + l, p.floor, p.cluster);
+            // B: mismo lift que el blit (el sprite se pinta bajo translate -lift*CELL_H*scale)
+            if (lift) {
+                const liftShift = lift * this.CELL_H * this.scale;
+                pt1.y -= liftShift; pt2.y -= liftShift; pt3.y -= liftShift; pt4.y -= liftShift;
+            }
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(pt1.x, pt1.y);
@@ -2688,7 +2696,7 @@ class IsometricMap {
         if (img) {
             this._drawSpriteOnTile(img, p.x, p.y, w, l, p.orientation, p.item_id, p.floor, p.cluster);
         } else {
-            const center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
+            const anchor = this.getIsoCoords(p.x, p.y, p.floor, p.cluster);
             const name   = this._shortName(p.item_id);
             ctx.save();
             ctx.font      = `bold ${Math.max(7, Math.round(10 * this.scale))}px 'Quicksand', sans-serif`;
@@ -2697,7 +2705,7 @@ class IsometricMap {
             ctx.textBaseline = 'middle';
             ctx.shadowColor = 'rgba(0,0,0,0.7)';
             ctx.shadowBlur  = 3;
-            ctx.fillText(name, center.x, center.y);
+            ctx.fillText(name, anchor.x, anchor.y);
             ctx.restore();
         }
 
@@ -2709,7 +2717,7 @@ class IsometricMap {
         }
 
         if (layer === 'seed') {
-            const center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
+            const anchor = this.getIsoCoords(p.x, p.y, p.floor, p.cluster);
             ctx.save();
             ctx.font      = `${Math.max(6, Math.round(8 * this.scale))}px 'Nunito Sans', sans-serif`;
             ctx.fillStyle = '#fff';
@@ -2717,7 +2725,7 @@ class IsometricMap {
             ctx.textBaseline = 'top';
             ctx.shadowColor = 'rgba(0,0,0,0.8)';
             ctx.shadowBlur  = 2;
-            ctx.fillText('🌱', center.x, center.y - 8 * this.scale);
+            ctx.fillText('🌱', anchor.x, anchor.y - 8 * this.scale);
             ctx.restore();
         }
         ctx.restore();
@@ -2758,7 +2766,8 @@ class IsometricMap {
 
     _drawSpriteOnTile(img, gx, gy, w, l, orientation = 0, item_id = null, floorNum = 0, mapId) {
         const ctx = this.ctx;
-        const center = this._tileCenter(gx, gy, w, l, floorNum, mapId);
+        // Ancla en la celda origen (p.x, p.y) = esquina del rombo, no en el centro
+        const anchor = this.getIsoCoords(gx, gy, floorNum, mapId);
         
         const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
         const u = _bgo * this.scale;
@@ -2777,8 +2786,8 @@ class IsometricMap {
         const flipH = (oriNum === 1 || oriNum === 3);
         const darken = (oriNum === 2 || oriNum === 3);
         
-        const anchorX = center.x;
-        const anchorY = center.y;
+        const anchorX = anchor.x;
+        const anchorY = anchor.y;
         const pivot = this._resolveSpritePivot(item_id, img, orientation);
         const pivotX = pivot.x;
         const pivotY = pivot.y;
@@ -2827,7 +2836,7 @@ class IsometricMap {
             center = this.getWallIsoCoords(p.x + sz.w / 2, p.y + sz.h / 2, !!p.flipped, this._wallRoomBBox, p.floor);
         } else {
             const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
-            center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
+            center = this.getIsoCoords(p.x, p.y, p.floor, p.cluster);
             const off = this._getPlacementRenderOffset(p);
             center.x += off.x;
             center.y += off.y;
@@ -2999,7 +3008,8 @@ class IsometricMap {
                 const stack = (this._stackInfo && this._stackInfo.get(p)) || null;
                 const lift = stack ? stack.lift : 0;
                 const liftShift = lift * this.CELL_H * this.scale;
-                const center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
+                // Hit test anchor matches sprite draw anchor: origin cell (p.x, p.y)
+                const center = this.getIsoCoords(p.x, p.y, p.floor, p.cluster);
                 const off = this._getPlacementRenderOffset(p);
                 center.x += off.x;
                 center.y += off.y;
