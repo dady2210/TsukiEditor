@@ -104,7 +104,13 @@ function opaquePivotFromRgba(data, w, h, th = 12) {
 // Huellas por item/orientación verificadas en juego (formato: itemId -> {ori: [w, l]}).
 // Aplica a ghost + snap + occupancy + tooltip (todo pasa por getRotatedSize).
 const FOOTPRINT_OVERRIDES = {
-    "115": { 2: [4, 2] }, // Banca Tatami vista atrás: corre horizontal como el mueble
+    "115": { 0: [4, 2], 1: [2, 4], 2: [4, 2], 3: [2, 4] }, // Banca Tatami: eje real por orientación
+};
+
+// Tamaños base reales verificados en juego (ori 0), por id. Tienen prioridad
+// sobre getFurnitureSize/items_db. Nunca 1×1 por default para estos ids.
+const REAL_SIZES = {
+    "115": { w: 4, l: 2 }, // Banca Tatami: 4×2 en ori 0/2, 2×4 en ori 1/3
 };
 
 class IsometricMap {
@@ -271,6 +277,10 @@ class IsometricMap {
     // ── Size helpers ──────────────────────────────────────────────────────
     getSize(item_id) {
         if (GROUND_IDS.has(item_id) || SEED_IDS.has(item_id)) return { ...PLOT_SIZE };
+
+        // Tamaño real verificado en juego: gana sobre items_db
+        const real = REAL_SIZES[String(item_id)];
+        if (real) return { ...real };
         
         // Use the exact sizes extracted from Unity
         if (typeof window.getFurnitureSize === 'function') {
@@ -2766,8 +2776,11 @@ class IsometricMap {
 
     _drawSpriteOnTile(img, gx, gy, w, l, orientation = 0, item_id = null, floorNum = 0, mapId) {
         const ctx = this.ctx;
-        // Ancla en la celda origen (p.x, p.y) = esquina del rombo, no en el centro
-        const anchor = this.getIsoCoords(gx, gy, floorNum, mapId);
+        // Misma caja que el rombo: ancla en el CENTRO del footprint w×l para que
+        // sprite y huella pivoten juntos. El pivot del PNG solo corre el blit
+        // dentro del rombo (pies sobre su piso). No rotar el PNG con ctx.rotate:
+        // rotar = sprite frente/back + flip + este w,l.
+        const anchor = this._tileCenter(gx, gy, w, l, floorNum, mapId);
         
         const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
         const u = _bgo * this.scale;
@@ -3008,8 +3021,8 @@ class IsometricMap {
                 const stack = (this._stackInfo && this._stackInfo.get(p)) || null;
                 const lift = stack ? stack.lift : 0;
                 const liftShift = lift * this.CELL_H * this.scale;
-                // Hit test anchor matches sprite draw anchor: origin cell (p.x, p.y)
-                const center = this.getIsoCoords(p.x, p.y, p.floor, p.cluster);
+                // Hit test anchor matches sprite draw anchor: footprint center
+                const center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
                 const off = this._getPlacementRenderOffset(p);
                 center.x += off.x;
                 center.y += off.y;
@@ -3402,6 +3415,11 @@ class IsometricMap {
 
                 if (clickedPlacement) {
                     this.selectedPlacement = clickedPlacement;
+                    // TEMP-DoD: log de tamaño al seleccionar (sacar después)
+                    if (String(clickedPlacement.item_id) === "115") {
+                        const _sz = this.getRotatedSize(115, clickedPlacement.orientation);
+                        console.log(`[DoD] 115 ori=${Number(clickedPlacement.orientation)} size=${_sz.w}x${_sz.l}`);
+                    }
                     this.hoveredPlacement = clickedPlacement;
                     this.app.openItemEditor(this.selectedPlacement);
                     this.isItemDragging = true;

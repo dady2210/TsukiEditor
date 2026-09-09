@@ -4212,11 +4212,14 @@
 
 
 
-            const blX = ox - px * rw, blY = oy - py * rh; const brX = ox + imgW - px * rw, brY = oy - py * rh;
+            // Debug csave: pivot en píxeles de IMAGEN como play (rw/rh solo selección); con espejo px'=1-px
+            const bw = (d.isDebugItem ? imgW : rw), bh = (d.isDebugItem ? imgH : rh);
+            const ex = (d.isDebugItem && sx < 0) ? (1 - px) : px;
+            const blX = ox - ex * bw, blY = oy - py * bh; const brX = ox + imgW - ex * bw, brY = oy - py * bh;
 
 
 
-            const tlX = ox - px * rw, tlY = oy + imgH - py * rh; const trX = ox + imgW - px * rw, trY = oy + imgH - py * rh;
+            const tlX = ox - ex * bw, tlY = oy + imgH - py * bh; const trX = ox + imgW - ex * bw, trY = oy + imgH - py * bh;
 
 
 
@@ -6330,7 +6333,7 @@
 
 
 
-                poly.forEach((pt,i)=>{ const x=pt.x||pt[0], y=pt.y||pt[1]; if(i===0) ctx.moveTo(x*camera.zoom, -y*camera.zoom); else ctx.lineTo(x*camera.zoom, -y*camera.zoom); });
+                poly.forEach((pt,i)=>{ const x=pt.x||pt[0], y=pt.y||pt[1]; if(i===0) ctx.moveTo(x*camera.zoom, polySY(obj, y)*camera.zoom); else ctx.lineTo(x*camera.zoom, polySY(obj, y)*camera.zoom); });
 
 
 
@@ -6354,7 +6357,7 @@
 
 
 
-                    poly.forEach((pt,i)=>{ const x=pt.x||pt[0], y=pt.y||pt[1]; if(i===0) ctx.moveTo(x*camera.zoom, -y*camera.zoom); else ctx.lineTo(x*camera.zoom, -y*camera.zoom); });
+                    poly.forEach((pt,i)=>{ const x=pt.x||pt[0], y=pt.y||pt[1]; if(i===0) ctx.moveTo(x*camera.zoom, polySY(obj, y)*camera.zoom); else ctx.lineTo(x*camera.zoom, polySY(obj, y)*camera.zoom); });
 
 
 
@@ -6378,11 +6381,12 @@
 
 
 
-                    const cw = ((obj.cell && obj.cell.w) || 58) / 150;
+                    const _cW = ((obj.cell && obj.cell.w) || 75), _cH = ((obj.cell && obj.cell.h) || 37.5);
+                    const cw = (_cW > 70 ? _cW : 75) / 150; // igual que play/items: celda nativa 75×37.5
 
 
 
-                    const ch = ((obj.cell && obj.cell.h) || 28) / 150;
+                    const ch = (_cH > 35 ? _cH : 37.5) / 150; // igual que play/items: celda nativa 75×37.5
 
 
 
@@ -6531,13 +6535,13 @@
                         // Halo exterior para seleccionado, hovered o dragging
                         if (isSelectedV || isHovered || isDragging) {
                             ctx.beginPath();
-                            ctx.arc(x * camera.zoom, -y * camera.zoom, 14, 0, Math.PI * 2);
+                            ctx.arc(x * camera.zoom, polySY(obj, y) * camera.zoom, 14, 0, Math.PI * 2);
                             ctx.fillStyle = isDragging ? 'rgba(0, 229, 255, 0.45)' : (isSelectedV ? 'rgba(0, 229, 255, 0.35)' : 'rgba(255, 235, 59, 0.45)');
                             ctx.fill();
                         }
                         ctx.beginPath();
                         const r = (isDragging || isSelectedV) ? 9 : (isHovered ? 9 : 6.5);
-                        ctx.arc(x * camera.zoom, -y * camera.zoom, r, 0, Math.PI * 2);
+                            ctx.arc(x * camera.zoom, polySY(obj, y) * camera.zoom, r, 0, Math.PI * 2);
                         ctx.fillStyle = (isDragging || isSelectedV) ? '#00e5ff' : (isHovered ? '#ffeb3b' : '#ffffff');
                         ctx.shadowColor = (isSelectedV || isHovered || isDragging) ? '#00e5ff' : 'rgba(0,0,0,0.8)';
                         ctx.shadowBlur = (isSelectedV || isHovered || isDragging) ? 10 : 4;
@@ -6549,7 +6553,7 @@
                         // Indicador de punto central para el vértice seleccionado
                         if (isSelectedV) {
                             ctx.beginPath();
-                            ctx.arc(x * camera.zoom, -y * camera.zoom, 3, 0, Math.PI * 2);
+                            ctx.arc(x * camera.zoom, polySY(obj, y) * camera.zoom, 3, 0, Math.PI * 2);
                             ctx.fillStyle = '#ffffff';
                             ctx.fill();
                         }
@@ -6647,6 +6651,8 @@
 
 
             const screenY = -(obj.y + raster.localMaxY) * camera.zoom;
+            // TEMP-DIAG draw (sacar después): posición de pantalla real del ítem debug
+            if (obj.isDebugItem && !(window._dbgDrawLogged || (window._dbgDrawLogged = new Set())).has(obj)) { window._dbgDrawLogged.add(obj); console.log(`[DBG-DRAW] item sp=${obj.sp} world=(${obj.x.toFixed(2)},${obj.y.toFixed(2)}) local=(${raster.localMinX.toFixed(3)},${raster.localMaxY.toFixed(3)}) zoom=${camera.zoom} canvas=${canvas.width}x${canvas.height} cam=(${camera.x.toFixed(1)},${camera.y.toFixed(1)}) screen=(${screenX.toFixed(0)},${screenY.toFixed(0)})`); }
 
 
 
@@ -7532,12 +7538,18 @@
                     if (p.isWall) {
                         const targetFlipped = !!p.flipped;
                         const canonWallId = `wall_${p.floor}_${targetFlipped ? 'L' : 'R'}`;
-                        polyConf = sceneData.find(o => o.is_poly_object && o.id === canonWallId) ||
-                                   sceneData.find(o => o.is_poly_object && String(o.groupNum) === String(p.floor) && (o.role === 'wallpaper' || o.kind === 'wall') && !!o.flipped === targetFlipped);
+                        const wallCands = sceneData.filter(o => o.is_poly_object && (o.id === canonWallId ||
+                                   (String(o.groupNum) === String(p.floor) && (o.role === 'wallpaper' || o.kind === 'wall') && !!o.flipped === targetFlipped)));
+                        // Preferir el polígono del mismo mapa (cluster); si no hay, primer candidato (comportamiento anterior)
+                        polyConf = wallCands.find(o => String(o.mapId) === String(p.cluster)) || wallCands[0] || null;
                     } else {
                         const canonFloorId = `floor_${p.floor}`;
-                        polyConf = sceneData.find(o => o.is_poly_object && o.id === canonFloorId) ||
-                                   sceneData.find(o => o.is_poly_object && String(o.groupNum) === String(p.floor) && (o.role === 'walkable' || o.kind === 'floor'));
+                        const floorCands = sceneData.filter(o => o.is_poly_object && (o.id === canonFloorId ||
+                                   (String(o.groupNum) === String(p.floor) && (o.role === 'walkable' || o.kind === 'floor'))));
+                        // Preferir el polígono del mismo mapa (cluster); si no hay, primer candidato (comportamiento anterior)
+                        polyConf = floorCands.find(o => String(o.mapId) === String(p.cluster)) || floorCands[0] || null;
+                        // TEMP-DIAG: candidatos de polígono por ítem (sacar después)
+                        console.log(`[DBG-POLY] id=${p.item_id} floor=${p.floor} cluster=${p.cluster} elegida=${polyConf ? (polyConf.id || polyConf.go) : 'NONE'} candidatas=${JSON.stringify(floorCands.map(o => { const pp = o.poly || ((o.paths || [])[0]) || []; return { id: o.id || o.go, mapId: o.mapId, x: o.x, y: o.y, npts: pp.length, p0: pp[0] || null }; }))}`);
                     }
 
                     let sConf = polyConf ? { origin_px: {x: polyConf.x, y: polyConf.y}, cell: polyConf.cell, flipped: polyConf.flipped, kind: polyConf.role==='walkable'?'floor':'wall' } : atlas.find(s => String(s.mapId) === String(p.cluster) && String(s.groupNum) === String(p.floor) && (p.isWall ? s.kind === 'wall' && !!s.flipped === !!p.flipped : s.kind === 'floor'));
@@ -7566,6 +7578,16 @@
 
                     let ox = 0, oy = 0;
 
+                    // Tamaños canónicos = play (map.js REAL_SIZES + FOOTPRINT_OVERRIDES + swap 1/3).
+                    // Se calculan aquí porque worldX/worldY (centro del footprint) los necesitan.
+                    const _oriEd = Number(p.orientation || 0);
+                    const _itemEd = ((window.ITEMS_DB || {})[p.item_id] || {});
+                    const _baseEd = ({ "115": { w: 4, l: 2 } })[String(p.item_id)] || { w: (_itemEd.width || 1), l: (_itemEd.length || 1) };
+                    const _ovEd = (({ "115": { 0: [4, 2], 1: [2, 4], 2: [4, 2], 3: [2, 4] } })[String(p.item_id)] || {})[_oriEd];
+                    const _swapEd = (_oriEd === 1 || _oriEd === 3);
+                    const w_cells = _ovEd ? _ovEd[0] : (_swapEd ? _baseEd.l : _baseEd.w);
+                    const l_cells = _ovEd ? _ovEd[1] : (_swapEd ? _baseEd.w : _baseEd.l);
+
 
 
                     if (polyConf) {
@@ -7580,6 +7602,10 @@
 
 
 
+                    } else if (sConf && sConf.origin) {
+                        // Igual que play (getIsoCoords/map_def.js): origin ya viene en unidades mundo
+                        ox = sConf.origin.x;
+                        oy = sConf.origin.y;
                     } else if (sConf && sConf.origin_px) {
 
 
@@ -7588,11 +7614,11 @@
 
 
 
-                            ox = (sConf.origin_px.x * 0.75) / 150;
+                            ox = (sConf.origin_px.x - 1235) / 150; // convención map_def.js/play
 
 
 
-                            oy = (sConf.origin_px.y * 0.75) / 150;
+                            oy = (1257 - sConf.origin_px.y) / 150; // convención map_def.js/play
 
 
 
@@ -7620,7 +7646,9 @@
 
 
 
-                    const cell = (polyConf && polyConf.cell) || (sConf && sConf.cell) || { w: 58, h: 28 };
+                    const cellRaw = (polyConf && polyConf.cell) || (sConf && sConf.cell) || { w: 75, h: 37.5 };
+                    // Igual que play (_getSurfaceCellUnits): celda nativa 75×37.5
+                    const cell = { w: (cellRaw.w > 70 ? cellRaw.w : 75), h: (cellRaw.h > 35 ? cellRaw.h : 37.5) };
 
 
 
@@ -7640,11 +7668,14 @@
 
 
 
-                        worldX = ox + (p.x - p.y) * (cw_u / 2);
+                        // Igual que play (_tileCenter): se mapea el CENTRO del footprint w×l
+                        worldX = ox + ((p.x + w_cells / 2) - (p.y + l_cells / 2)) * (cw_u / 2);
 
 
 
-                        worldY = oy - (p.x + p.y) * (ch_u / 2);
+                        worldY = oy - ((p.x + w_cells / 2) + (p.y + l_cells / 2)) * (ch_u / 2);
+                        // TEMP-DIAG inyector (sacar después): rama y constantes reales por ítem
+                        console.log(`[DBG-INJECT] id=${p.item_id} ori=${_oriEd} grid=(${p.x},${p.y}) wxh=${w_cells}x${l_cells} branch=${polyConf ? 'poly:' + (polyConf.id || polyConf.go) : (sConf ? 'atlas' : 'NONE')} ox=${Number(ox).toFixed(3)} oy=${Number(oy).toFixed(3)} cell=${cell.w}x${cell.h} world=(${worldX.toFixed(2)},${worldY.toFixed(2)})`);
 
 
 
@@ -7687,7 +7718,7 @@
                         // En la pared IZQUIERDA (flipped = true), se invierten horizontalmente (sx = -1).
                         flipH = !!p.flipped;
                     } else {
-                        flipH = (oriNum === 1 || oriNum === 2);
+                        flipH = (oriNum === 1 || oriNum === 3); // igual que play (ori 2 = back, no espejo)
                     }
 
                     // Elegir sprite de renderizado: _BACK para vista trasera, _0 para vista frontal
@@ -7697,11 +7728,8 @@
                     // Obtener pivot de contentPivots si está disponible
                     const bakedPivots = (window.contentPivots || {});
                     const pivotKey = isBack ? `${p.item_id}_BACK` : `${p.item_id}`;
-                    const pivot = bakedPivots[pivotKey] || bakedPivots[String(p.item_id)] || itInfo.pivot || { x: 0.5, y: 0.5 };
+                    const pivot = bakedPivots[pivotKey] || bakedPivots[String(p.item_id)] || itInfo.pivot || { x: 0.5, y: 0.08 }; // default igual que play
 
-                    const isRotated = (oriNum === 1 || oriNum === 3);
-                    const w_cells = isRotated ? (itInfo.length || 1) : (itInfo.width || 1);
-                    const l_cells = isRotated ? (itInfo.width || 1) : (itInfo.length || 1);
                     const w_px = w_cells * 64;
                     const l_px = l_cells * 64;
 
@@ -7738,6 +7766,7 @@
 
 
 
+                if (!window._dbgPolysLogged) { window._dbgPolysLogged = true; console.log(`[DBG-POLYS] total=${sceneData.filter(o => o.is_poly_object).length} polys=${JSON.stringify(sceneData.filter(o => o.is_poly_object).map(o => ({ id: o.id || o.go, role: o.role, kind: o.kind, mapId: o.mapId, group: o.groupNum, x: o.x, y: o.y, cell: o.cell, rows: o.rows, cols: o.cols })))}`); }
                 if(dbgList) dbgList.innerHTML = `<div style="color:#0f0; margin-top:6px;">${injectedCount} items del csave inyectados sobre superficies</div>`;
 
 
@@ -8266,6 +8295,10 @@
             obj.x = canonX;
             obj.y = canonY;
             obj.poly = JSON.parse(JSON.stringify(canonPoly));
+            const _wasNorm = !!obj._polyNorm, _fromMap0 = !!(canon && canon.poly);
+            obj._polyNorm = false;
+            if (_fromMap0) normFloorPolyObj(obj); // map_0 y-down → normaliza; builtin se deja crudo
+            else if (!canon && !CANONICAL_MAP_0[obj.id] && _wasNorm) obj._polyNorm = true; // fallback: ya estaba normalizado
             obj.paths = [obj.poly];
             obj.rows = canonRows;
             obj.cols = canonCols;
@@ -8361,7 +8394,7 @@
 
 
 
-                poly: obj.poly, defaultCoverId: obj.defaultCoverId||null, comment: `harcodeado desde poly ${obj.go}`
+                poly: savePolyOf(obj), defaultCoverId: obj.defaultCoverId||null, comment: `harcodeado desde poly ${obj.go}`
 
 
 
@@ -9011,7 +9044,7 @@
 
 
 
-                        sceneData = arr; folders = []; recordState(); updateLayerList(); fitCameraToScene(); draw();
+                        sceneData = arr; sceneData.forEach(normFloorPolyObj); folders = []; recordState(); updateLayerList(); fitCameraToScene(); draw();
 
 
 
@@ -9042,6 +9075,30 @@
 
 
 
+        // FRAME DE CONTORNOS (solo editor): map_0.json trae los points de PISOS en Y-down
+        // (probado 4/4 por contención de footprints). Se normalizan a Y-up al cargar
+        // (flag _polyNorm, solo memoria); al guardar se devuelven a Y-down para no
+        // cambiar el formato de archivo. Paredes/colliders/usuario: sin cambios.
+        // Play no dibuja con estos polys.
+        function flipPolyY(pts) {
+            if (!pts || !pts.length) return pts || [];
+            return pts.map(pt => Array.isArray(pt)
+                ? [pt[0], -(pt[1] !== undefined ? pt[1] : 0), ...pt.slice(2)]
+                : ({ ...pt, y: -((pt.y !== undefined) ? pt.y : 0) }));
+        }
+        function normFloorPolyObj(o) {
+            if (!o || !o.is_poly_object) return;
+            const isFloor = (o.role === 'walkable' || o.kind === 'floor');
+            const p = o.poly || ((o.paths && o.paths[0]) || null);
+            if (!isFloor || !p || !p.length || o._polyNorm) return;
+            const q = flipPolyY(p);
+            o.poly = q; o.paths = [q]; o._polyNorm = true;
+        }
+        function savePolyOf(v) {
+            if (v && v._polyNorm && v.poly && v.poly.length) return flipPolyY(v.poly);
+            return v ? (v.poly || []) : [];
+        }
+        function polySY(obj, y) { return (obj && obj._polyNorm ? y : -y); }
         function loadUnifiedMapData(data) {
 
 
@@ -9272,6 +9329,9 @@
 
 
 
+            // Normalizar contornos de pisos a Y-up (ver normFloorPolyObj)
+            sceneData.forEach(normFloorPolyObj);
+
             if (data.colliders && data.colliders.length) {
 
 
@@ -9498,7 +9558,7 @@
 
 
 
-                    poly: v.poly || []
+                    poly: savePolyOf(v)
 
 
 
@@ -9546,7 +9606,7 @@
 
 
 
-                poly: v.poly || []
+                poly: savePolyOf(v)
 
 
 
