@@ -1,6 +1,248 @@
 window.MAPS_UNIFIED = {
   "atlas": [
     {
+      "mapId": 0,
+      "id": "floor_0",
+      "name": "Planta Baja - Piso 0",
+      "kind": "floor",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin": {
+        "x": 0.0458,
+        "y": -4.7971
+      },
+      "origin_px": {
+        "x": 1241.86,
+        "y": 1976.56
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "defaultCoverId": 69,
+      "mask": "mask_floor_0.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "id": "floor_1",
+      "name": "Planta Alta - Piso 1",
+      "kind": "floor",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin": {
+        "x": 0.0456,
+        "y": -0.7988
+      },
+      "origin_px": {
+        "x": 1241.38,
+        "y": 1377.82
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "defaultCoverId": 69,
+      "mask": "mask_floor_1.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "id": "floor_2",
+      "name": "Jardín Izquierdo (g2)",
+      "kind": "floor",
+      "groupNum": 2,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin": {
+        "x": -5.4,
+        "y": -6.5
+      },
+      "origin_px": {
+        "x": 425,
+        "y": 2232
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "defaultCoverId": null,
+      "poly": []
+    },
+    {
+      "mapId": 0,
+      "id": "floor_3",
+      "name": "Patio Derecho (g3)",
+      "kind": "floor",
+      "groupNum": 3,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin": {
+        "x": 4.5,
+        "y": -6.5
+      },
+      "origin_px": {
+        "x": 1910,
+        "y": 2232
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "defaultCoverId": null,
+      "poly": []
+    },
+    {
+      "mapId": 0,
+      "id": "floor_4",
+      "name": "Exterior g4",
+      "kind": "floor",
+      "groupNum": 4,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin_px": {
+        "x": 900,
+        "y": 2200
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "outdoor": true
+    },
+    {
+      "mapId": 0,
+      "id": "floor_5",
+      "name": "Exterior g5",
+      "kind": "floor",
+      "groupNum": 5,
+      "flipped": false,
+      "rows": 12,
+      "cols": 12,
+      "origin_px": {
+        "x": 1600,
+        "y": 2200
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "outdoor": true
+    },
+    {
+      "mapId": 0,
+      "id": "wall_0_L",
+      "name": "Pared Izq Piso 0",
+      "kind": "wall",
+      "groupNum": 0,
+      "flipped": true,
+      "rows": 16,
+      "cols": 16,
+      "origin": {
+        "x": -3.2373,
+        "y": 0.371
+      },
+      "origin_px": {
+        "x": 517.586070316604,
+        "y": 1736.7251352113876
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "defaultCoverId": 755,
+      "mask": "mask_wallL_0.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "id": "wall_0_R",
+      "name": "Pared Der Piso 0",
+      "kind": "wall",
+      "groupNum": 0,
+      "flipped": false,
+      "rows": 16,
+      "cols": 16,
+      "origin": {
+        "x": 0.772,
+        "y": 0.051
+      },
+      "origin_px": {
+        "x": 1900.8886116872663,
+        "y": 1709.2945966576285
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "defaultCoverId": 755,
+      "mask": "mask_wallR_0.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "id": "wall_1_L",
+      "name": "Pared Izq Piso 1",
+      "kind": "wall",
+      "groupNum": 1,
+      "flipped": true,
+      "rows": 14,
+      "cols": 16,
+      "origin": {
+        "x": -3.5626,
+        "y": 3.7347
+      },
+      "origin_px": {
+        "x": 695.5865991721795,
+        "y": 1121.399760052171
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "defaultCoverId": 755,
+      "mask": "mask_wallL_1.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
+      "mapId": 0,
+      "id": "wall_1_R",
+      "name": "Pared Der Piso 1",
+      "kind": "wall",
+      "groupNum": 1,
+      "flipped": false,
+      "rows": 14,
+      "cols": 16,
+      "origin": {
+        "x": 0.7653,
+        "y": 3.8215
+      },
+      "origin_px": {
+        "x": 1849.9489946793028,
+        "y": 1108.1746735283964
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "defaultCoverId": 755,
+      "mask": "mask_wallR_1.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
+    },
+    {
       "mapId": 6,
       "kind": "floor",
       "groupNum": 0,
@@ -506,381 +748,6 @@ window.MAPS_UNIFIED = {
         "w": 64,
         "h": 32
       }
-    },
-    {
-      "mapId": 0,
-      "id": "floor_0",
-      "name": "Planta Baja - Piso 0",
-      "kind": "floor",
-      "groupNum": 0,
-      "flipped": false,
-      "rows": 16,
-      "cols": 16,
-      "cell": {
-        "w": 75,
-        "h": 37.5
-      },
-      "origin": {
-        "x": 0.0458,
-        "y": -4.7971
-      },
-      "origin_px": {
-        "x": 1241.86,
-        "y": 1976.56
-      },
-      "poly": [
-        {
-          "x": 3.0692,
-          "y": 0.1349
-        },
-        {
-          "x": 2.3657,
-          "y": -1.2379
-        },
-        {
-          "x": 0.1627,
-          "y": -2.407
-        },
-        {
-          "x": -1.4605,
-          "y": -1.6195
-        },
-        {
-          "x": -1.1945,
-          "y": -1.4772
-        },
-        {
-          "x": -2.1179,
-          "y": -0.9793
-        },
-        {
-          "x": -2.4122,
-          "y": -1.1241
-        },
-        {
-          "x": -3.8924,
-          "y": -0.3863
-        },
-        {
-          "x": -0.0197,
-          "y": 1.6142
-        }
-      ],
-      "defaultCoverId": 69
-    },
-    {
-      "mapId": 0,
-      "id": "wall_0_L",
-      "name": "Pared Izq Piso 0 (WallpaperBL)",
-      "kind": "wall",
-      "groupNum": 0,
-      "flipped": true,
-      "rows": 16,
-      "cols": 16,
-      "cell": {
-        "w": 75,
-        "h": 37.5
-      },
-      "origin": {
-        "x": -3.2873,
-        "y": 0.371
-      },
-      "origin_px": {
-        "x": 517.59,
-        "y": 1736.73
-      },
-      "poly": [
-        {
-          "x": -0.3062,
-          "y": 0.3753
-        },
-        {
-          "x": -0.3951,
-          "y": -3.0223
-        },
-        {
-          "x": 3.2297,
-          "y": -1.1358
-        }
-      ],
-      "defaultCoverId": 755
-    },
-    {
-      "mapId": 0,
-      "id": "wall_0_R",
-      "name": "Pared Der Piso 0 (WallpaperBR)",
-      "kind": "wall",
-      "groupNum": 0,
-      "flipped": false,
-      "rows": 14,
-      "cols": 16,
-      "cell": {
-        "w": 75,
-        "h": 37.5
-      },
-      "origin": {
-        "x": 1.849,
-        "y": -1.118
-      },
-      "origin_px": {
-        "x": 1900.89,
-        "y": 1709.29
-      },
-      "poly": [
-        {
-          "x": -0.5288,
-          "y": 1.3509
-        },
-        {
-          "x": -1.0284,
-          "y": 0.9004
-        },
-        {
-          "x": -1.2306,
-          "y": -1.3709
-        },
-        {
-          "x": 1.2506,
-          "y": -0.1679
-        },
-        {
-          "x": 1.391,
-          "y": 0.599
-        }
-      ],
-      "defaultCoverId": 2127
-    },
-    {
-      "mapId": 0,
-      "id": "floor_1",
-      "name": "Primer Piso - Piso 1",
-      "kind": "floor",
-      "groupNum": 1,
-      "flipped": false,
-      "rows": 16,
-      "cols": 16,
-      "cell": {
-        "w": 75,
-        "h": 37.5
-      },
-      "origin": {
-        "x": 0.0425,
-        "y": -0.8055
-      },
-      "origin_px": {
-        "x": 1241.38,
-        "y": 1377.82
-      },
-      "poly": [
-        {
-          "x": -0.1881,
-          "y": 2.8122
-        },
-        {
-          "x": -3.8489,
-          "y": 1.0566
-        },
-        {
-          "x": -0.7666,
-          "y": -0.5094
-        },
-        {
-          "x": 0.2608,
-          "y": -0.4795
-        },
-        {
-          "x": 1.9765,
-          "y": 0.3684
-        },
-        {
-          "x": 1.4777,
-          "y": 0.6975
-        },
-        {
-          "x": 2.6049,
-          "y": 1.4058
-        }
-      ],
-      "defaultCoverId": 750
-    },
-    {
-      "mapId": 0,
-      "id": "wall_1_L",
-      "name": "Pared Izq Piso 1 (WallpaperTL)",
-      "kind": "wall",
-      "groupNum": 1,
-      "flipped": true,
-      "rows": 16,
-      "cols": 16,
-      "cell": {
-        "w": 75,
-        "h": 37.5
-      },
-      "origin": {
-        "x": -3.033,
-        "y": 3.4574
-      },
-      "origin_px": {
-        "x": 695.59,
-        "y": 1121.4
-      },
-      "poly": [
-        {
-          "x": 2.1746,
-          "y": 0.3124
-        },
-        {
-          "x": -0.2889,
-          "y": -0.6242
-        },
-        {
-          "x": -0.4451,
-          "y": -2.4444
-        },
-        {
-          "x": 2.3849,
-          "y": -1.0333
-        }
-      ],
-      "defaultCoverId": 752
-    },
-    {
-      "mapId": 0,
-      "id": "wall_1_R",
-      "name": "Pared Der Piso 1 (WallpaperTR)",
-      "kind": "wall",
-      "groupNum": 1,
-      "flipped": false,
-      "rows": 16,
-      "cols": 16,
-      "cell": {
-        "w": 75,
-        "h": 37.5
-      },
-      "origin": {
-        "x": 2.9013,
-        "y": 3.2438
-      },
-      "origin_px": {
-        "x": 1878.9,
-        "y": 1174.44
-      },
-      "poly": [
-        {
-          "x": 0.446,
-          "y": -0.0356
-        },
-        {
-          "x": -2.5565,
-          "y": 0.902
-        },
-        {
-          "x": -2.4767,
-          "y": -0.664
-        },
-        {
-          "x": 0.3961,
-          "y": -2.0804
-        }
-      ],
-      "defaultCoverId": 418
-    },
-    {
-      "mapId": 0,
-      "id": "floor_2",
-      "name": "Patio Exterior 1 (g2)",
-      "kind": "floor",
-      "groupNum": 2,
-      "flipped": false,
-      "rows": 16,
-      "cols": 16,
-      "cell": {
-        "w": 75,
-        "h": 37.5
-      },
-      "origin": {
-        "x": 4.5,
-        "y": -6.5
-      },
-      "origin_px": {
-        "x": 1910.0,
-        "y": 2232.0
-      },
-      "poly": [],
-      "defaultCoverId": null
-    },
-    {
-      "mapId": 0,
-      "id": "floor_3",
-      "name": "Patio Exterior 2 (g3)",
-      "kind": "floor",
-      "groupNum": 3,
-      "flipped": false,
-      "rows": 16,
-      "cols": 16,
-      "cell": {
-        "w": 75,
-        "h": 37.5
-      },
-      "origin": {
-        "x": -5.4,
-        "y": -6.5
-      },
-      "origin_px": {
-        "x": 425.0,
-        "y": 2232.0
-      },
-      "poly": [],
-      "defaultCoverId": null
-    },
-    {
-      "mapId": 0,
-      "id": "floor_4",
-      "name": "Ático - Tercer Piso (Homecoming)",
-      "kind": "floor",
-      "groupNum": 4,
-      "flipped": false,
-      "rows": 1,
-      "cols": 1,
-      "cell": {
-        "w": 75,
-        "h": 37.5
-      },
-      "origin": {
-        "x": -7.2859,
-        "y": 0.8342
-      },
-      "origin_px": {
-        "x": 1600.0,
-        "y": 2200.0
-      },
-      "poly": [
-        {
-          "x": 0,
-          "y": 0.6
-        },
-        {
-          "x": 1.6,
-          "y": -0.2
-        },
-        {
-          "x": 1.6516,
-          "y": -0.9808
-        },
-        {
-          "x": 0,
-          "y": -1.8
-        },
-        {
-          "x": -1.6,
-          "y": -1
-        },
-        {
-          "x": -1.6,
-          "y": -0.2
-        }
-      ],
-      "defaultCoverId": null
     }
   ],
   "meta": {

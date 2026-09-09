@@ -23,6 +23,8 @@
 !test_w1.js
 
 !grid_editor.js
+!map_def.js
+!play_scenery.js
 
 !docs/
 !docs/**

@@ -98,6 +98,12 @@ function opaquePivotFromRgba(data, w, h, th = 12) {
     };
 }
 
+// Huellas por item/orientación verificadas en juego (formato: itemId -> {ori: [w, l]}).
+// Aplica a ghost + snap + occupancy + tooltip (todo pasa por getRotatedSize).
+const FOOTPRINT_OVERRIDES = {
+    "115": { 2: [4, 2] }, // Banca Tatami vista atrás: corre horizontal como el mueble
+};
+
 class IsometricMap {
     constructor(canvas, app) {
         this.canvas = canvas;
@@ -274,7 +280,18 @@ class IsometricMap {
 
     getRotatedSize(item_id, orientation) {
         const size = this.getSize(item_id);
-        // orientation 1 (SW) and 3 (NE) align the object along the opposite axis, 
+        // Per-item footprint overrides (verificado en juego): la vista trasera
+        // de estos muebles corre sobre el otro eje (ej. banca 115 en ori 2
+        // mide 4x2 horizontal como el mueble, no 2x4).
+        // NO tocar orientation 1/3 aquí: los valores del save son strings y
+        // el === de abajo nunca matchea strings (comportamiento actual).
+        const ov = FOOTPRINT_OVERRIDES[String(item_id)];
+        const oriNum = Number(orientation);
+        if (ov && ov[oriNum]) {
+            const [w, l] = ov[oriNum];
+            return { w, l };
+        }
+        // orientation 1 (SW) and 3 (NE) align the object along the opposite axis,
         // so we must swap width and length.
         if (orientation === 1 || orientation === 3) {
             return { w: size.l, l: size.w };
@@ -449,14 +466,13 @@ class IsometricMap {
     // file:// bloquea getImageData: primero data/content_pivots.js (píxeles reales
     // del PNG), luego pivote Unity, y solo al final se intenta leer el canvas.
     _resolveSpritePivot(item_id, img, orientation) {
-        // Calibraciones manuales exactas para centrado visual sobre la huella
+        // Los pivots canónicos viven en items_unified.js (generado desde
+        // data/content_pivots.js) y llegan aquí vía window.contentPivots.
+        // NO poner overrides manuales: el override de 115/2130/2131 con
+        // pivots recalibrados desplazaba el sprite fuera de su huella
+        // (deriva horizontal de ~0.19W + pies flotando sobre el diamante).
+        // Verificado contra FURN_115 bbox + geometría del diamante w×l.
         const PIVOT_OVERRIDES = {
-            "115": { x: 0.5000, y: 0.2200 },
-            "115_BACK": { x: 0.5000, y: 0.2200 },
-            "2130": { x: 0.5000, y: 0.2500 },
-            "2130_BACK": { x: 0.5000, y: 0.2500 },
-            "2131": { x: 0.5000, y: 0.2500 },
-            "2131_BACK": { x: 0.5000, y: 0.2500 }
         };
         const ori = Number(orientation);
         const isBack = ori === 2 || ori === 3;
@@ -507,7 +523,12 @@ class IsometricMap {
     // ─── Coordinate transforms ───────────────────────────────────────────────
     surfaceFor(mapId, groupNum, isWall, flipped) {
         if (!window.mapsAtlas) return null;
-        return window.mapsAtlas.find(s => String(s.mapId) === String(mapId) && Number(s.groupNum) === Number(groupNum) && s.kind === (isWall ? 'wall' : 'floor') && (isWall ? !!s.flipped === !!flipped : true)) || null;
+        return window.mapsAtlas.find(s => 
+            (s.mapId == null || String(s.mapId) === String(mapId)) && 
+            Number(s.groupNum) === Number(groupNum) && 
+            s.kind === (isWall ? 'wall' : 'floor') && 
+            (!isWall || !!s.flipped === !!flipped)
+        ) || null;
     }
     getAtlasSurface(kind, groupNum, mapId, flipped) {
         if (mapId == null) {
@@ -1057,7 +1078,8 @@ class IsometricMap {
                 if (this._isCellInSurfacePoly(surf, last.x, last.y, w, l)) {
                     return { x: last.x, y: last.y };
                 }
-                return { x, y };
+                // All snap candidates are outside the polygon — block at original placement position
+                return { x: p.x, y: p.y };
             }
             const maxCols = (surf && surf.cols) || 16;
             const maxRows = (surf && surf.rows) || 16;
@@ -1163,27 +1185,70 @@ class IsometricMap {
         const y = (this._dragSnap && this._dragSnap.y != null) ? this._dragSnap.y : p.y;
         this.ctx.save();
         this.ctx.globalAlpha = 0.85;
-        this.ctx.strokeStyle = '#f5c542';
-        this.ctx.fillStyle = 'rgba(245, 197, 66, 0.18)';
-        this.ctx.lineWidth = 2.5;
         const layerRadio = document.querySelector('input[name="map-layer"]:checked');
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
         if (p.isWall && isWallLayer) {
             const sz = this.getWallSize(p.item_id);
             const gx = 100 + x * this.gridSize;
             const gy = 100 + y * this.gridSize;
+            this.ctx.strokeStyle = '#f5c542';
+            this.ctx.fillStyle = 'rgba(245, 197, 66, 0.18)';
+            this.ctx.lineWidth = 2.5;
             this.ctx.fillRect(gx, gy, this.gridSize * sz.w, this.gridSize * sz.h);
             this.ctx.strokeRect(gx, gy, this.gridSize * sz.w, this.gridSize * sz.h);
         } else if (p.isWall) {
             const sz = this.getWallSize(p.item_id);
+            this.ctx.strokeStyle = '#f5c542';
+            this.ctx.fillStyle = 'rgba(245, 197, 66, 0.18)';
+            this.ctx.lineWidth = 2.5;
             this._pathWallCell(x, y, sz.w, sz.h, !!p.flipped, this._wallRoomBBox, p.floor);
             this.ctx.fill();
             this.ctx.stroke();
         } else {
             const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
-            this._drawDiamondPath(x, y, w, l, 0, p.floor);
+            // Check if current snap position is inside the surface polygon
+            const locVal = document.getElementById('select-location')?.value;
+            const targetLoc = p.cluster != null ? p.cluster : (locVal !== '' && locVal != null ? parseInt(locVal, 10) : 0);
+            const surf = this.surfaceFor(targetLoc, p.floor, false, false);
+            const isOutOfBounds = surf && surf.poly && surf.poly.length > 2
+                && !this._isCellInSurfacePoly(surf, x, y, w, l);
+
+            if (isOutOfBounds) {
+                // Red ghost = placement blocked by boundary
+                this.ctx.strokeStyle = '#f44336';
+                this.ctx.fillStyle = 'rgba(244, 67, 54, 0.25)';
+            } else {
+                this.ctx.strokeStyle = '#f5c542';
+                this.ctx.fillStyle = 'rgba(245, 197, 66, 0.18)';
+            }
+            this.ctx.lineWidth = 2.5;
+
+            // Draw isometric diamond footprint using getIsoCoords
+            const pt1 = this.getIsoCoords(x,     y,     p.floor, targetLoc);
+            const pt2 = this.getIsoCoords(x + w, y,     p.floor, targetLoc);
+            const pt3 = this.getIsoCoords(x + w, y + l, p.floor, targetLoc);
+            const pt4 = this.getIsoCoords(x,     y + l, p.floor, targetLoc);
+            this.ctx.beginPath();
+            this.ctx.moveTo(pt1.x, pt1.y);
+            this.ctx.lineTo(pt2.x, pt2.y);
+            this.ctx.lineTo(pt3.x, pt3.y);
+            this.ctx.lineTo(pt4.x, pt4.y);
+            this.ctx.closePath();
             this.ctx.fill();
             this.ctx.stroke();
+
+            if (isOutOfBounds) {
+                // Show "⛔" warning label at ghost center
+                const cx = (pt1.x + pt3.x) / 2;
+                const cy = (pt1.y + pt3.y) / 2;
+                this.ctx.font = `bold ${Math.max(14, Math.round(16 * this.scale))}px sans-serif`;
+                this.ctx.fillStyle = '#f44336';
+                this.ctx.textAlign = 'center';
+                this.ctx.textBaseline = 'middle';
+                this.ctx.shadowColor = 'rgba(0,0,0,0.7)';
+                this.ctx.shadowBlur = 4;
+                this.ctx.fillText('⛔', cx, cy);
+            }
         }
         this.ctx.restore();
     }
@@ -1913,6 +1978,9 @@ class IsometricMap {
             if ((isPlay || isGrid) && window.mapsAtlas) {
             // 1, 2, 3: BAKED BACKGROUND (House level2 / Farm level4)
             const targetLoc = document.getElementById('select-location') ? parseInt(document.getElementById('select-location').value) : 0;
+            // Layered scenery (map_def.js/play_scenery.js): kick async bake once per map.
+            if (isPlay && window.PlayScenery && !window.PlayScenery.settled(targetLoc)) window.PlayScenery.prepare(targetLoc);
+            const sceneryOn = !!(isPlay && window.PlayScenery && window.PlayScenery.ready(targetLoc));
             const META2 = (window.MAP_META && window.MAP_META[targetLoc]) || {};
             const bgExportDir2 = META2.exportDir != null ? META2.exportDir : (targetLoc === 0 ? 2 : targetLoc);
             const bgAssembled2 = META2.assembled || ('level' + bgExportDir2 + '_Ensamblado.png');
@@ -1929,7 +1997,7 @@ class IsometricMap {
             const wpStr = wpDict && wpDict[targetLoc] ? wpDict[targetLoc].map(x => x.id).join(',') : '';
             const flStr = floorDict && floorDict[targetLoc] ? floorDict[targetLoc].map(x => x.id).join(',') : '';
             const atlasCount = (window.mapsAtlas || []).filter(s => String(s.mapId) === String(targetLoc)).length;
-            const bakeKey = targetLoc + '_' + wpStr + '_' + flStr + '_' + atlasCount + '_g' + grassLoaded;
+            const bakeKey = targetLoc + '_' + wpStr + '_' + flStr + '_' + atlasCount + '_g' + grassLoaded + '_sc' + (sceneryOn ? '1' : '0');
             
             if (bgImg && bgImg.complete && bgImg.width > 0) {
                 // En level2 (árbol), el centro (0, 0) de Unity está en el píxel (1235, 1257) de la imagen ensamblada
@@ -2093,8 +2161,9 @@ class IsometricMap {
                     currentSurfaces.filter(s => s.kind === 'wall').forEach(s => drawSurfaceCovering(s));
                     
                     // Draw base treehouse OVER the floors and walls!
+                    // (skipped when layered scenery owns the tree: bake = grass + coverings only)
                     bCtx.globalCompositeOperation = 'source-over';
-                    bCtx.drawImage(bgImg, 0, 0);
+                    if (!sceneryOn) bCtx.drawImage(bgImg, 0, 0);
 
                     this._bakedBgCanvas = tempBaked;
                     if (allLoaded) {
@@ -2109,7 +2178,8 @@ class IsometricMap {
                 const drawH = this._bakedBgCanvas.height * s;
                 const dx = this.offsetX - originPxX * s;
                 const dy = this.offsetY - originPxY * s;
-                
+                // Layered scenery: far layer under everything (bake holds grass + coverings only)
+                if (sceneryOn) window.PlayScenery.drawFar(ctx, targetLoc, this.offsetX, this.offsetY, s);
                 ctx.drawImage(this._bakedBgCanvas, dx, dy, drawW, drawH);
                 }
             } else {
@@ -2170,7 +2240,7 @@ class IsometricMap {
 
             if (shouldDrawAtlasGridPlay || shouldDrawAtlasGridEdit) {
                 const surfaces = shouldDrawAtlasGridPlay
-                    ? window.mapsAtlas.filter(s => visibleFloors.includes(String(s.groupNum)) && String(s.mapId) === String(targetLoc))
+                    ? window.mapsAtlas.filter(s => s.kind === 'floor' && visibleFloors.includes(String(s.groupNum)) && String(s.mapId) === String(targetLoc))
                     : [window.mapsAtlas[this.app.gridEditor.activeSurfaceIndex]];
 
                 for (const surf of surfaces) {
@@ -2214,16 +2284,20 @@ class IsometricMap {
                     }
 
                     // 3. Grilla isométrica calibrada y optimizada (renderizado por lotes)
-                    const cols = Math.max(16, surf.cols || 16);
-                    const rows = Math.max(16, surf.rows || 16);
+                    // La grilla cubre EXACTAMENTE las celdas de la superficie: líneas en
+                    // los bordes 0..cols / 0..rows. Sin overscan: las superficies sin
+                    // poly (patios) no deben inundar el mapa, y Math.max(16,…) deformaba
+                    // superficies pequeñas (g4 es 1x1).
+                    const cols = surf.cols || 16;
+                    const rows = surf.rows || 16;
                     const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
                     const halfW = (cw_u / 2) * 150 * u;
                     const halfH = (ch_u / 2) * 150 * u;
 
-                    const minGx = -cols;
-                    const maxGx = cols * 2;
-                    const minGy = -rows;
-                    const maxGy = rows * 2;
+                    const minGx = 0;
+                    const maxGx = cols;
+                    const minGy = 0;
+                    const maxGy = rows;
 
                     ctx.lineWidth = 1;
                     if (isFloor) {
@@ -2285,7 +2359,8 @@ class IsometricMap {
                 const sortByZ = (a, b) => {
                     const fb = Number(b.floor||0), fa = Number(a.floor||0);
                     if (fa !== fb) return fa - fb;
-                    const z = (a.x + a.y) - (b.x + b.y);
+                    // Painter's algorithm: background (larger x+y) drawn first, foreground last
+                    const z = (b.x + b.y) - (a.x + a.y);
                     if (z) return z;
                     const la = (this._stackInfo.get(a) || {}).lift || 0;
                     const lb = (this._stackInfo.get(b) || {}).lift || 0;
@@ -2299,25 +2374,36 @@ class IsometricMap {
             const { allWalls, ground, seeds, regular, stackInfo } = this._renderCache;
             this._stackInfo = stackInfo;
 
+            // Layered scenery: mid layer behind furniture (actor slot: between mid and near, future).
+            if (window.PlayScenery && window.PlayScenery.ready(targetLoc)) {
+                const _ms = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) * this.scale;
+                window.PlayScenery.drawMid(ctx, targetLoc, this.offsetX, this.offsetY, _ms);
+            }
             for (const p of ground)  this._drawPlacement(p, 'ground');
             for (const p of seeds)   this._drawPlacement(p, 'seed');
             for (const p of regular) this._drawPlacement(p, 'regular');
             for (const p of allWalls) this._drawWallPlacementIso(p);
 
-            // ?? 6. FOREGROUND OVERLAY (Treehouse canopy, front bark frame & stairs railing)
+            // ?? 6. FOREGROUND: layered scenery near layer replaces the static
+            // foreground overlay when the bake is ready (same canopy art, no double-draw).
             if ((isPlay || isGrid) && targetLoc === 0) {
-                const fgPath = '../maps/Exportado_level2/level2_Foreground.png';
-                const fgImg = this.getBackgroundImage(fgPath);
-                if (fgImg && fgImg.complete && fgImg.width > 0) {
+                if (window.PlayScenery && window.PlayScenery.ready(targetLoc)) {
                     const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
-                    const originPxX = 1235;
-                    const originPxY = 1257;
-                    const s = _bgo * this.scale;
-                    const drawW = fgImg.width * s;
-                    const drawH = fgImg.height * s;
-                    const dx = this.offsetX - originPxX * s;
-                    const dy = this.offsetY - originPxY * s;
-                    ctx.drawImage(fgImg, dx, dy, drawW, drawH);
+                    window.PlayScenery.drawNear(ctx, targetLoc, this.offsetX, this.offsetY, _bgo * this.scale);
+                } else {
+                    const fgPath = '../maps/Exportado_level2/level2_Foreground.png';
+                    const fgImg = this.getBackgroundImage(fgPath);
+                    if (fgImg && fgImg.complete && fgImg.width > 0) {
+                        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                        const originPxX = 1235;
+                        const originPxY = 1257;
+                        const s = _bgo * this.scale;
+                        const drawW = fgImg.width * s;
+                        const drawH = fgImg.height * s;
+                        const dx = this.offsetX - originPxX * s;
+                        const dy = this.offsetY - originPxY * s;
+                        ctx.drawImage(fgImg, dx, dy, drawW, drawH);
+                    }
                 }
             }
             const dragGhost = (this.isItemDragging && this.selectedPlacement) ? this.selectedPlacement : (typeof this.isItemDragging === 'object' ? this.isItemDragging : null);
@@ -2352,8 +2438,8 @@ class IsometricMap {
                     screenPos.y = 100 + this.selectedPlacement.y * this.gridSize;
                 } else {
                     const iso = this.getIsoCoords(this.selectedPlacement.x, this.selectedPlacement.y, this.selectedPlacement.floor);
-                    screenPos.x = this.offsetX + iso.x;
-                    screenPos.y = this.offsetY + iso.y;
+                    screenPos.x = iso.x;
+                    screenPos.y = iso.y;
                 }
                 
                 floatUI.style.left = screenPos.x + 'px';
@@ -2504,17 +2590,12 @@ class IsometricMap {
         const isHovered  = p === this.hoveredPlacement;
         const isSelected = p === this.selectedPlacement;
 
-        ctx.save();
-        if (lift) ctx.translate(0, -lift * this.CELL_H * this.scale);
-        const off = this._getPlacementRenderOffset(p);
-        if (off.x || off.y) ctx.translate(off.x, off.y);
-        
-        // Draw grid footprint if in play mode and hammer mode
+        // ── Draw grid footprint BEFORE sprite transforms (getIsoCoords returns absolute screen coords) ──
         if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode && !p.isWall && (this.app.tsukiPort.showGrid || isSelected)) {
-            const pt1 = this.getIsoCoords(p.x, p.y, p.floor, p.cluster);
-            const pt2 = this.getIsoCoords(p.x + w, p.y, p.floor, p.cluster);
+            const pt1 = this.getIsoCoords(p.x,     p.y,     p.floor, p.cluster);
+            const pt2 = this.getIsoCoords(p.x + w, p.y,     p.floor, p.cluster);
             const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor, p.cluster);
-            const pt4 = this.getIsoCoords(p.x, p.y + l, p.floor, p.cluster);
+            const pt4 = this.getIsoCoords(p.x,     p.y + l, p.floor, p.cluster);
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(pt1.x, pt1.y);
@@ -2523,7 +2604,6 @@ class IsometricMap {
             ctx.lineTo(pt4.x, pt4.y);
             ctx.closePath();
             if (isSelected) {
-                // Highlighted selection: gentle cyan/blue footprint, not alarming red
                 ctx.fillStyle = 'rgba(66, 165, 245, 0.45)';
                 ctx.fill();
                 ctx.strokeStyle = '#2196f3';
@@ -2537,7 +2617,32 @@ class IsometricMap {
                 ctx.stroke();
             }
             ctx.restore();
+
+            // DEBUG: show placement info for selected item
+            if (isSelected) {
+                const cx = (pt1.x + pt3.x) / 2;
+                const cy = (pt1.y + pt3.y) / 2;
+                ctx.save();
+                ctx.font = `bold ${Math.max(10, Math.round(11 * this.scale))}px monospace`;
+                ctx.fillStyle = '#ffffff';
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 3;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                const dbg = `[${p.x},${p.y}] w${w}×l${l} ori${p.orientation} cl${p.cluster} f${p.floor} c${Math.round(cx)},${Math.round(cy)}`;
+                ctx.strokeText(dbg, cx, cy);
+                ctx.fillText(dbg, cx, cy);
+                ctx.restore();
+            }
         }
+
+
+        ctx.save();
+        if (lift) ctx.translate(0, -lift * this.CELL_H * this.scale);
+        const off = this._getPlacementRenderOffset(p);
+        if (off.x || off.y) ctx.translate(off.x, off.y);
+        
+
 
         // ── Tile fill color ──
         let fillColor;
@@ -2685,7 +2790,14 @@ class IsometricMap {
         }
 
         if (darken) {
-            ctx.filter = "brightness(0.75)";
+            // Only apply synthetic darkening when no dedicated _BACK.png sprite exists.
+            // If FURN_xxx_BACK.png was loaded, the sprite already depicts the back view
+            // and does not need to be artificially dimmed.
+            const backCacheKey = `${item_id}_BACK`;
+            const hasDedicatedBack = this._imgCache[backCacheKey] && this._imgCache[backCacheKey] !== false;
+            if (!hasDedicatedBack) {
+                ctx.filter = "brightness(0.75)";
+            }
         }
 
         ctx.drawImage(img,

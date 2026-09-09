@@ -1292,21 +1292,24 @@
     <div id="toast-container"></div>
 
     <!-- Data bundles — loaded as scripts to work with file:// without a server -->
-    <script src="data/items_unified.js?v=1"></script>
+    <script src="data/items_unified.js?v=3"></script>
     <script>window.ITEMS_DB = window.ITEMS_UNIFIED; window.CONTENT_PIVOTS = {}; window.BEHAVIORS = {}; // compat: unified already contains pivot/behaviour
     // shim: expose pivots/behaviours from unified for legacy code
     (function(){ const u=window.ITEMS_UNIFIED; const piv={}; const beh={}; for(const id in u){ if(u[id].pivot) piv[id]=u[id].pivot; if(u[id].pivot_back) piv[id+'_BACK']=u[id].pivot_back; if(u[id].behaviour) beh[id]=u[id].behaviour; } window.contentPivots=piv; window.CONTENT_PIVOTS=piv; window.BEHAVIORS=beh; })();
     </script>
     <script src="data/newspapers.js?v=1"></script>
+    <script src="data/npcs.js?v=1"></script>
     <script src="odin_browser.js?v=28"></script>
     <script src="castle_core.js?v=3"></script>
     <script src="save_storage.js?v=1"></script>
     <!-- App logic -->
     <script src="parser.js?v=20260850-wallfloor"></script>
     <script src="data/light_profiles.js?v=1"></script>
-    <script src="map.js?v=54"></script>
-    <script src="data/maps_unified.js"></script>
-    <script>if(window.MAPS_UNIFIED) { window.mapsAtlas=window.MAPS_UNIFIED.atlas; window.MAP_META=window.MAPS_UNIFIED.meta; }</script>
+    <script src="map.js?v=56"></script>
+    <script src="data/maps_unified.js?v=2"></script>
+    <script>if(window.MAPS_UNIFIED) { window.mapsAtlas=window.MAPS_UNIFIED.atlas; window.MAP_META=window.MAPS_UNIFIED.meta; window.atlasConfig=window.MAPS_UNIFIED.atlasConfig || window.atlasConfig; }</script>
+    <script src="map_def.js?v=2"></script>
+    <script src="play_scenery.js?v=3"></script>
     <script src="grid_editor.js"></script>
     <script src="tsuki_port.js?v=2"></script>
     <script src="ui.js"></script>

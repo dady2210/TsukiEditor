@@ -6786,7 +6786,7 @@
 
 
 
-                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${obj.go}">[SL:${obj.sl || 0}] ${obj.go}</span>
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${obj.go}">[SL:${obj.sl || 0}] ${obj.go}</span>${(!obj.is_poly_object && obj.sp && obj.sp !== 'VirtualPolygon') ? `<button onclick="event.stopPropagation(); cycleSceneryLayer(${i});" title="Capa de bake far/mid/near/skip: ${sceneryLayerOf(obj)}" style="background:#1b3d54; color:#00e5ff; border:1px solid #00a0c0; cursor:pointer; font-size:9px; padding:1px 4px; border-radius:3px; white-space:nowrap;">${sceneryLayerOf(obj)}</button>` : ''}
 
 
 
@@ -6803,6 +6803,10 @@
 
 
                     <button onclick="event.stopPropagation(); toggleVisibility(${i});" title="Visibilidad" style="background:none; border:none; cursor:pointer; font-size:11px; padding:2px;">${isVisible ? '👁' : '🚫'}</button>
+
+
+
+                    <button onclick="event.stopPropagation(); toggleVisualSkip(${i});" title="Excluir del bake (active=false)" style="background:none; border:none; cursor:pointer; font-size:11px; padding:2px;">${(!obj.is_poly_object && obj.sp && obj.sp !== 'VirtualPolygon' && obj.active === false) ? '⛔' : '🧱'}</button>
 
 
 
@@ -7080,6 +7084,16 @@
 
 
         function toggleVisibility(index) { sceneData[index].visible = !(sceneData[index].visible !== false); draw(); updateLayerList(); }
+
+        // Scenery bake layer (map_0.json visuals): badge + skip toggle (active flag).
+        function sceneryLayerOf(obj) { const l = obj.layer || 'mid'; return (l === 'far' || l === 'mid' || l === 'near' || l === 'skip') ? l : 'mid'; }
+        function cycleSceneryLayer(index) {
+            const order = ['far', 'mid', 'near', 'skip'];
+            const cur = sceneryLayerOf(sceneData[index]);
+            sceneData[index].layer = order[(order.indexOf(cur) + 1) % order.length];
+            recordState(); updateLayerList(); draw();
+        }
+        function toggleVisualSkip(index) { sceneData[index].active = !(sceneData[index].active !== false); recordState(); updateLayerList(); draw(); }
 
 
 
@@ -9568,7 +9582,7 @@
 
 
 
-                version: 2,
+                version: (currentMapMeta && currentMapMeta.version) || 3,
 
 
 
