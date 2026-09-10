@@ -4856,8 +4856,9 @@
                     const sx = obj.sx || 1;
                     const sy = obj.sy || 1;
                     const lx = ((ptr.x - obj.x) * cos - (ptr.y - obj.y) * sin) / sx;
-                    const ly = ((ptr.x - obj.x) * sin + (ptr.y - obj.y) * cos) / sy;
-                    poly[editingVertex] = { x: parseFloat(lx.toFixed(4)), y: parseFloat(ly.toFixed(4)) };
+            const lyW = ((ptr.x - obj.x) * sin + (ptr.y - obj.y) * cos) / sy;
+            const ly = ((obj.role==='walkable'||obj.kind==='floor') ? -lyW : lyW);
+                    poly[editingVertex] = { x: parseFloat(lx.toFixed(4)), y: parseFloat((((obj.role==='walkable'||obj.kind==='floor') ? -ly : ly).toFixed(4))) };
                     if (!obj.poly) obj.poly = poly;
                     canvas.style.cursor = 'crosshair';
                     updatePropertiesPanel();
@@ -5336,7 +5337,8 @@
 
 
 
-                const ly = ((wx - obj.x)*sin + (wy - obj.y)*cos)/sy;
+                const lyW = ((wx - obj.x)*sin + (wy - obj.y)*cos)/sy;
+                const ly = ((obj.role==='walkable'||obj.kind==='floor') ? -lyW : lyW);
 
 
 
@@ -6285,11 +6287,19 @@
 
 
 
-                const poly = obj.poly || (obj.paths&&obj.paths[0])||[];
+                let poly = obj.poly || (obj.paths&&obj.paths[0])||[];
 
 
 
-                if (!poly.length) return;
+                if (!poly.length) {
+                    // Grilla default como play: diamante rows×cols para pisos sin contorno
+                    const _isF = (obj.role==='walkable' || obj.kind==='floor');
+                    if (!_isF) return;
+                    const _r = Math.max(1, obj.rows || 16), _c = Math.max(1, obj.cols || 16);
+                    const _cr = obj.cell || {};
+                    const _cw = ((_cr.w || 0) > 70 ? _cr.w : 75) / 150, _ch = ((_cr.h || 0) > 35 ? _cr.h : 37.5) / 150;
+                    poly = [{x:0,y:0},{x:_c*_cw/2,y:_c*_ch/2},{x:(_c-_r)*_cw/2,y:(_c+_r)*_ch/2},{x:-_r*_cw/2,y:_r*_ch/2}];
+                }
 
 
 
@@ -6729,6 +6739,10 @@
 
 
             ctx.drawImage(raster.canvas, screenX, screenY, drawW, drawH);
+            // TEMP-OVERLAY (sacar después): cruz roja en el ancla computada del ítem debug
+            if (obj.isDebugItem) { const ax = screenX - raster.localMinX * camera.zoom, ay = screenY + raster.localMaxY * camera.zoom; ctx.save(); ctx.strokeStyle = '#ff0000'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(ax - 8, ay); ctx.lineTo(ax + 8, ay); ctx.moveTo(ax, ay - 8); ctx.lineTo(ax, ay + 8); ctx.stroke(); ctx.font = '11px monospace'; ctx.fillStyle = '#ffff00'; ctx.fillText(`${obj.itemId}:${obj.gridX},${obj.gridY}f${obj.floor}o${obj.orientation}`, ax + 10, ay - 10); ctx.restore(); }
+            // TEMP-HUELLA (play-parity, solo debug): rombo del footprint w×l centrado en el ancla
+            if (obj.isDebugItem && !obj.isWall && obj.dbgW && obj.dbgL) { const _w = obj.dbgW, _l = obj.dbgL, _cw2 = 0.25, _ch2 = 0.125; const _cx = obj.x, _cy = obj.y; const _pt = [( _l-_w)*_cw2/2, (_w+_l)*_ch2/2]; ctx.save(); ctx.beginPath(); const _corners = [[(_l-_w)*_cw2/2, (_w+_l)*_ch2/2], [(_w+_l)*_cw2/2, (_l-_w)*_ch2/2], [(_w-_l)*_cw2/2, -(_w+_l)*_ch2/2], [(-_w-_l)*_cw2/2, (_w-_l)*_ch2/2]]; _corners.forEach(([qx, qy], _i) => { const _sx = (_cx + qx) * camera.zoom, _sy = -(_cy + qy) * camera.zoom; if (_i === 0) ctx.moveTo(_sx, _sy); else ctx.lineTo(_sx, _sy); }); ctx.closePath(); ctx.fillStyle = 'rgba(74,144,217,0.45)'; ctx.fill(); ctx.strokeStyle = '#4A90D9'; ctx.lineWidth = 1.5; ctx.stroke(); ctx.restore(); }
 
 
 
@@ -7745,6 +7759,7 @@
                         itemId: p.item_id, floor: p.floor, isWall: p.isWall, flipped: p.flipped,
                         placementID: p.placementID, gridX: p.x, gridY: p.y, cluster: p.cluster,
                         orientation: oriNum,
+                        dbgW: w_cells, dbgL: l_cells,
                         surfaceId: (polyConf ? (polyConf.id || polyConf.go) : (p.isWall ? `wall_${p.floor}_${p.flipped ? 'L' : 'R'}` : `floor_${p.floor}`))
                     });
 
@@ -8295,10 +8310,7 @@
             obj.x = canonX;
             obj.y = canonY;
             obj.poly = JSON.parse(JSON.stringify(canonPoly));
-            const _wasNorm = !!obj._polyNorm, _fromMap0 = !!(canon && canon.poly);
-            obj._polyNorm = false;
-            if (_fromMap0) normFloorPolyObj(obj); // map_0 y-down → normaliza; builtin se deja crudo
-            else if (!canon && !CANONICAL_MAP_0[obj.id] && _wasNorm) obj._polyNorm = true; // fallback: ya estaba normalizado
+            // (marco por rol en polySY; no mutar datos)
             obj.paths = [obj.poly];
             obj.rows = canonRows;
             obj.cols = canonCols;
@@ -8394,7 +8406,7 @@
 
 
 
-                poly: savePolyOf(obj), defaultCoverId: obj.defaultCoverId||null, comment: `harcodeado desde poly ${obj.go}`
+                poly: obj.poly, defaultCoverId: obj.defaultCoverId||null, comment: `harcodeado desde poly ${obj.go}`
 
 
 
@@ -9044,7 +9056,7 @@
 
 
 
-                        sceneData = arr; sceneData.forEach(normFloorPolyObj); folders = []; recordState(); updateLayerList(); fitCameraToScene(); draw();
+                        sceneData = arr; folders = []; recordState(); updateLayerList(); fitCameraToScene(); draw();
 
 
 
@@ -9076,10 +9088,10 @@
 
 
         // FRAME DE CONTORNOS (solo editor): map_0.json trae los points de PISOS en Y-down
-        // (probado 4/4 por contención de footprints). Se normalizan a Y-up al cargar
-        // (flag _polyNorm, solo memoria); al guardar se devuelven a Y-down para no
-        // cambiar el formato de archivo. Paredes/colliders/usuario: sin cambios.
-        // Play no dibuja con estos polys.
+        // (probado 4/4 por contención de footprints). No se mutan datos: polySY trata
+        // los pisos sin negar en draw/handles, y hit/hover/drag convierten la query.
+        // Paredes/colliders/usuario y archivos: intactos. Play no dibuja con estos polys.
+        // flipPolyY/normFloorPolyObj/savePolyOf: referencia sin uso (se conserva).
         function flipPolyY(pts) {
             if (!pts || !pts.length) return pts || [];
             return pts.map(pt => Array.isArray(pt)
@@ -9098,7 +9110,7 @@
             if (v && v._polyNorm && v.poly && v.poly.length) return flipPolyY(v.poly);
             return v ? (v.poly || []) : [];
         }
-        function polySY(obj, y) { return (obj && obj._polyNorm ? y : -y); }
+        function polySY(obj, y) { const o = obj || {}; return (((o.role === 'walkable') || (o.kind === 'floor')) ? y : -y); }
         function loadUnifiedMapData(data) {
 
 
@@ -9330,7 +9342,7 @@
 
 
             // Normalizar contornos de pisos a Y-up (ver normFloorPolyObj)
-            sceneData.forEach(normFloorPolyObj);
+            // (marco por rol en polySY; no mutar datos)
 
             if (data.colliders && data.colliders.length) {
 
@@ -9558,7 +9570,7 @@
 
 
 
-                    poly: savePolyOf(v)
+                    poly: v.poly || []
 
 
 
@@ -9606,7 +9618,7 @@
 
 
 
-                poly: savePolyOf(v)
+                poly: v.poly || []
 
 
 
