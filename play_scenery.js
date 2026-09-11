@@ -42,15 +42,19 @@
         let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
         const rad = d => (d || 0) * Math.PI / 180;
         items.forEach(({ img, v }) => {
-            // Natural size (like the extractor): rw×rh may differ ±px from the
-            // PNG when art was re-exported; stretching would distort crisp edges.
-            // Pivot fractions apply to the PNG as exported.
+            // Natural size: use Unity original rect dimensions (v.rw, v.rh) if present, as v.px/v.py are normalized to them.
+            // When art is trimmed on export, img.width/img.height < v.rw/v.rh, so top-left anchor offset is:
+            // px = v.px * origRw
+            // py = img.height - v.py * origRh (since Unity Y is from bottom and Canvas Y is from top)
+            const origRw = (v.rw != null && v.rw > 0) ? v.rw : img.width;
+            const origRh = (v.rh != null && v.rh > 0) ? v.rh : img.height;
             const rw = img.width, rh = img.height;
             const sx = (v.sx == null ? 1 : v.sx) * (v.flipX ? -1 : 1);
             const sy = (v.sy == null ? 1 : v.sy) * (v.flipY ? -1 : 1);
             const ax = 1235 + (v.x || 0) * ppu, ay = 1257 - (v.y || 0) * ppu;
             // corners of draw rect in pre-transform px (pivot-relative), then scale+rotate+translate
-            const px = (v.px == null ? 0.5 : v.px) * rw, py = (1 - (v.py == null ? 0.5 : v.py)) * rh;
+            const px = (v.px == null ? 0.5 : v.px) * origRw;
+            const py = rh - (v.py == null ? 0.5 : v.py) * origRh;
             const ox = v.ox || 0, oy = v.oy || 0;
             const ca = Math.cos(-rad(v.angle || 0)), sa = Math.sin(-rad(v.angle || 0));
             const corners = [[-px, -py], [rw - px, -py], [rw - px, rh - py], [-px, rh - py]].map(([lx, ly]) => {
@@ -77,6 +81,10 @@
             const ax = 1235 + (v.x || 0) * ppu - minX, ay = 1257 - (v.y || 0) * ppu - minY;
             g.save();
             g.globalAlpha = alpha;
+            if (v.sp && v.sp.includes('SHADOWS')) {
+                g.globalCompositeOperation = 'multiply';
+                if (alpha === 1) g.globalAlpha = 0.45;
+            }
             g.translate(ax, ay);
             g.rotate(-(v.angle || 0) * Math.PI / 180);
             g.scale(sx, sy);

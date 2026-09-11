@@ -1,0 +1,5121 @@
+{
+  "activities": {
+    "101": {
+      "id": 101,
+      "name": "Sentarse a Descansar",
+      "category": "chair",
+      "npcID": -1,
+      "npcKey": "0",
+      "npcName": "Tsuki",
+      "type": "furniture_sit",
+      "layer": "on_seat",
+      "anim": {
+        "front": "Tsuki-SitResting",
+        "back": "Tsuki-SitBellyOutBack",
+        "fps": 2.5,
+        "mode": "pingpong"
+      },
+      "offset": {
+        "x": 0,
+        "y": 0.22
+      },
+      "description": "Tsuki sentado comodamente respirando y parpadeando"
+    },
+    "102": {
+      "id": 102,
+      "name": "Leer Libro",
+      "category": "chair",
+      "npcID": -1,
+      "npcKey": "0",
+      "npcName": "Tsuki",
+      "type": "furniture_sit",
+      "layer": "on_seat",
+      "anim": {
+        "front": "Tsuki_Book",
+        "back": "Tsuki-ReadBack",
+        "fps": 2.5,
+        "mode": "loop"
+      },
+      "offset": {
+        "x": 0,
+        "y": 0.22
+      },
+      "description": "Tsuki hojeando un libro entretenido"
+    },
+    "103": {
+      "id": 103,
+      "name": "Tomar Te",
+      "category": "chair",
+      "npcID": -1,
+      "npcKey": "0",
+      "npcName": "Tsuki",
+      "type": "furniture_sit",
+      "layer": "on_seat",
+      "anim": {
+        "front": "TsukiTeaParty",
+        "back": "Tsuki-TeaBack",
+        "fps": 2.5,
+        "mode": "loop"
+      },
+      "offset": {
+        "x": 0,
+        "y": 0.22
+      },
+      "description": "Tsuki bebiendo una reconfortante taza de te"
+    },
+    "104": {
+      "id": 104,
+      "name": "Bano Relajante",
+      "category": "bath",
+      "npcID": -1,
+      "npcKey": "0",
+      "npcName": "Tsuki",
+      "type": "furniture_sit",
+      "layer": "on_seat",
+      "anim": {
+        "front": "tsuki_hyacinthbath",
+        "back": "TsukiDuskBathBack",
+        "fps": 2,
+        "mode": "pingpong"
+      },
+      "offset": {
+        "x": 0,
+        "y": 0.15
+      },
+      "description": "Tsuki sumergido en agua tibia relajandose"
+    },
+    "201": {
+      "id": 201,
+      "name": "Chi Leyendo",
+      "category": "chair",
+      "npcID": 2,
+      "npcKey": "2",
+      "npcName": "Chi",
+      "type": "furniture_sit",
+      "layer": "on_seat",
+      "anim": {
+        "front": "Chi_CBook",
+        "back": "Chi-ReadBack",
+        "fps": 2.5,
+        "mode": "loop"
+      },
+      "offset": {
+        "x": 0,
+        "y": 0.2
+      },
+      "description": "Chi leyendo concentrada sus novelas"
+    },
+    "202": {
+      "id": 202,
+      "name": "Chi Tomando Te",
+      "category": "chair",
+      "npcID": 2,
+      "npcKey": "2",
+      "npcName": "Chi",
+      "type": "furniture_sit",
+      "layer": "on_seat",
+      "anim": {
+        "front": "ChiTeaParty",
+        "back": "ChiWinterTeaBACK",
+        "fps": 2.5,
+        "mode": "loop"
+      },
+      "offset": {
+        "x": 0,
+        "y": 0.2
+      },
+      "description": "Chi tomando el te de la tarde"
+    },
+    "301": {
+      "id": 301,
+      "name": "Moca Tomando Te",
+      "category": "chair",
+      "npcID": 10,
+      "npcKey": "10",
+      "npcName": "Moca",
+      "type": "furniture_sit",
+      "layer": "on_seat",
+      "anim": {
+        "front": "MocaTeaParty",
+        "back": "Moca-TeaBack",
+        "fps": 2.5,
+        "mode": "loop"
+      },
+      "offset": {
+        "x": 0,
+        "y": 0.2
+      },
+      "description": "Moca saboreando meticulosamente su te verde"
+    },
+    "302": {
+      "id": 302,
+      "name": "Moca Durmiendo",
+      "category": "chair",
+      "npcID": 10,
+      "npcKey": "10",
+      "npcName": "Moca",
+      "type": "furniture_sit",
+      "layer": "on_seat",
+      "anim": {
+        "front": "Moca_Sleep",
+        "back": "Moca-SleepBack",
+        "fps": 2,
+        "mode": "pingpong"
+      },
+      "offset": {
+        "x": 0,
+        "y": 0.18
+      },
+      "description": "Moca durmiendo profundamente"
+    },
+    "348": {
+      "id": 348,
+      "name": "Dormir en Cama",
+      "category": "bed",
+      "npcID": -1,
+      "npcKey": "0",
+      "npcName": "Tsuki",
+      "type": "bed_sleep",
+      "layer": "under_duvet",
+      "anim": {
+        "front": "Tsuki-Sleep-Front.png",
+        "back": "Tsuki-Sleep-Back.png",
+        "fps": 1,
+        "mode": "static",
+        "isStatic": true
+      },
+      "offset": {
+        "x": -0.351,
+        "y": 0.355
+      },
+      "description": "Tsuki durmiendo profundamente arropado bajo las sabanas"
+    }
+  },
+  "furniture_categories": {
+    "bed": [
+      348
+    ],
+    "chair": [
+      101,
+      102,
+      103,
+      201,
+      202,
+      301,
+      302
+    ],
+    "sofa": [
+      101,
+      102,
+      103,
+      201,
+      202,
+      301,
+      302
+    ],
+    "table": [
+      103,
+      202,
+      301
+    ],
+    "bath": [
+      104
+    ],
+    "misc": [
+      101,
+      102,
+      103,
+      104
+    ]
+  },
+  "free_activities": [
+    {
+      "id": 501,
+      "name": "Tsuki Leyendo en el Suelo/Cesped",
+      "npcID": -1,
+      "npcKey": "0",
+      "npcName": "Tsuki",
+      "anim": "Tsuki_Book",
+      "fps": 2.5,
+      "mode": "loop"
+    },
+    {
+      "id": 502,
+      "name": "Tsuki Sentado en el Pasto",
+      "npcID": -1,
+      "npcKey": "0",
+      "npcName": "Tsuki",
+      "anim": "Tsuki-SitResting",
+      "fps": 2.5,
+      "mode": "pingpong"
+    },
+    {
+      "id": 503,
+      "name": "Chi Leyendo Relajada",
+      "npcID": 2,
+      "npcKey": "2",
+      "npcName": "Chi",
+      "anim": "Chi_CBook",
+      "fps": 2.5,
+      "mode": "loop"
+    },
+    {
+      "id": 504,
+      "name": "Moca Descansando",
+      "npcID": 10,
+      "npcKey": "10",
+      "npcName": "Moca",
+      "anim": "Moca_Sleep",
+      "fps": 2,
+      "mode": "pingpong"
+    }
+  ],
+  "furniture_offsets": {
+    "101": {
+      "x": 0,
+      "y": 0.22,
+      "name": "Asiento Estándar"
+    },
+    "115": {
+      "x": 0,
+      "y": 0.53,
+      "name": "Item #115"
+    },
+    "115:101": {
+      "x": 0,
+      "y": 0.53
+    }
+  },
+  "seating_profiles": {
+    "6": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_6_BACK_BASE.png",
+      "backrest_sprite": "FURN_6_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "7": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_7_BACK_BASE.png",
+      "backrest_sprite": "FURN_7_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "11": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_11_BACK_BASE.png",
+      "backrest_sprite": "FURN_11_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "14": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_14_BACK_BASE.png",
+      "backrest_sprite": "FURN_14_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "19": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_19_BACK_BASE.png",
+      "backrest_sprite": "FURN_19_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "20": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_20_BACK_BASE.png",
+      "backrest_sprite": "FURN_20_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "21": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_21_BACK_BASE.png",
+      "backrest_sprite": "FURN_21_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "27": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_27_BACK_BASE.png",
+      "backrest_sprite": "FURN_27_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "32": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_32_BACK_BASE.png",
+      "backrest_sprite": "FURN_32_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "34": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_34_BACK_BASE.png",
+      "backrest_sprite": "FURN_34_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "37": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_37_BACK_BASE.png",
+      "backrest_sprite": "FURN_37_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "39": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_39_BACK_BASE.png",
+      "backrest_sprite": "FURN_39_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "42": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_42_BACK_BASE.png",
+      "backrest_sprite": "FURN_42_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "44": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_44_BACK_BASE.png",
+      "backrest_sprite": "FURN_44_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "53": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_53_BACK_BASE.png",
+      "backrest_sprite": "FURN_53_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "55": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_55_BACK_BASE.png",
+      "backrest_sprite": "FURN_55_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "60": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_60_BACK_BASE.png",
+      "backrest_sprite": "FURN_60_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "61": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_61_BACK_BASE.png",
+      "backrest_sprite": "FURN_61_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "63": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_63_BACK_BASE.png",
+      "backrest_sprite": "FURN_63_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "65": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_65_BACK_BASE.png",
+      "backrest_sprite": "FURN_65_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "71": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_71_BACK_BASE.png",
+      "backrest_sprite": "FURN_71_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "73": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_73_BACK_BASE.png",
+      "backrest_sprite": "FURN_73_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "80": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_80_BACK_BASE.png",
+      "backrest_sprite": "FURN_80_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "81": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_81_BACK_BASE.png",
+      "backrest_sprite": "FURN_81_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "82": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_82_BACK_BASE.png",
+      "backrest_sprite": "FURN_82_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "112": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_112_BACK_BASE.png",
+      "backrest_sprite": "FURN_112_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "115": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_115_BACK_BASE.png",
+      "backrest_sprite": "FURN_115_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "116": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_116_BACK_BASE.png",
+      "backrest_sprite": "FURN_116_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "121": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_121_BACK_BASE.png",
+      "backrest_sprite": "FURN_121_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "140": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_140_BACK_BASE.png",
+      "backrest_sprite": "FURN_140_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "150": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_150_BACK_BASE.png",
+      "backrest_sprite": "FURN_150_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "156": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_156_BACK_BASE.png",
+      "backrest_sprite": "FURN_156_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "158": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_158_BACK_BASE.png",
+      "backrest_sprite": "FURN_158_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "167": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_167_BACK_BASE.png",
+      "backrest_sprite": "FURN_167_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "174": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_174_BACK_BASE.png",
+      "backrest_sprite": "FURN_174_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "175": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_175_BACK_BASE.png",
+      "backrest_sprite": "FURN_175_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "177": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_177_BACK_BASE.png",
+      "backrest_sprite": "FURN_177_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "179": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_179_BACK_BASE.png",
+      "backrest_sprite": "FURN_179_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "180": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_180_BACK_BASE.png",
+      "backrest_sprite": "FURN_180_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "184": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_184_BACK_BASE.png",
+      "backrest_sprite": "FURN_184_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "191": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_191_BACK_BASE.png",
+      "backrest_sprite": "FURN_191_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "195": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_195_BACK_BASE.png",
+      "backrest_sprite": "FURN_195_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "198": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_198_BACK_BASE.png",
+      "backrest_sprite": "FURN_198_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "199": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_199_BACK_BASE.png",
+      "backrest_sprite": "FURN_199_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "201": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_201_BACK_BASE.png",
+      "backrest_sprite": "FURN_201_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "233": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_233_BACK_BASE.png",
+      "backrest_sprite": "FURN_233_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "249": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_249_BACK_BASE.png",
+      "backrest_sprite": "FURN_249_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "258": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_258_BACK_BASE.png",
+      "backrest_sprite": "FURN_258_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "308": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_308_BACK_BASE.png",
+      "backrest_sprite": "FURN_308_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "344": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_344_BACK_BASE.png",
+      "backrest_sprite": "FURN_344_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "378": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_378_BACK_BASE.png",
+      "backrest_sprite": "FURN_378_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "383": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_383_BACK_BASE.png",
+      "backrest_sprite": "FURN_383_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "385": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_385_BACK_BASE.png",
+      "backrest_sprite": "FURN_385_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "404": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_404_BACK_BASE.png",
+      "backrest_sprite": "FURN_404_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "405": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_405_BACK_BASE.png",
+      "backrest_sprite": "FURN_405_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "473": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_473_BACK_BASE.png",
+      "backrest_sprite": "FURN_473_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "475": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_475_BACK_BASE.png",
+      "backrest_sprite": "FURN_475_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "481": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_481_BACK_BASE.png",
+      "backrest_sprite": "FURN_481_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "482": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_482_BACK_BASE.png",
+      "backrest_sprite": "FURN_482_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "490": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_490_BACK_BASE.png",
+      "backrest_sprite": "FURN_490_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "492": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_492_BACK_BASE.png",
+      "backrest_sprite": "FURN_492_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "494": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_494_BACK_BASE.png",
+      "backrest_sprite": "FURN_494_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "495": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_495_BACK_BASE.png",
+      "backrest_sprite": "FURN_495_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "497": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_497_BACK_BASE.png",
+      "backrest_sprite": "FURN_497_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "501": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_501_BACK_BASE.png",
+      "backrest_sprite": "FURN_501_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "502": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_502_BACK_BASE.png",
+      "backrest_sprite": "FURN_502_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "506": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_506_BACK_BASE.png",
+      "backrest_sprite": "FURN_506_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "512": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_512_BACK_BASE.png",
+      "backrest_sprite": "FURN_512_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "514": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_514_BACK_BASE.png",
+      "backrest_sprite": "FURN_514_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "516": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_516_BACK_BASE.png",
+      "backrest_sprite": "FURN_516_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "517": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_517_BACK_BASE.png",
+      "backrest_sprite": "FURN_517_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "518": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_518_BACK_BASE.png",
+      "backrest_sprite": "FURN_518_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "519": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_519_BACK_BASE.png",
+      "backrest_sprite": "FURN_519_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "529": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_529_BACK_BASE.png",
+      "backrest_sprite": "FURN_529_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "530": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_530_BACK_BASE.png",
+      "backrest_sprite": "FURN_530_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "531": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_531_BACK_BASE.png",
+      "backrest_sprite": "FURN_531_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "536": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_536_BACK_BASE.png",
+      "backrest_sprite": "FURN_536_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "541": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_541_BACK_BASE.png",
+      "backrest_sprite": "FURN_541_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "543": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_543_BACK_BASE.png",
+      "backrest_sprite": "FURN_543_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "551": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_551_BACK_BASE.png",
+      "backrest_sprite": "FURN_551_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "554": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_554_BACK_BASE.png",
+      "backrest_sprite": "FURN_554_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "563": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_563_BACK_BASE.png",
+      "backrest_sprite": "FURN_563_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "564": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_564_BACK_BASE.png",
+      "backrest_sprite": "FURN_564_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "567": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_567_BACK_BASE.png",
+      "backrest_sprite": "FURN_567_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "576": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_576_BACK_BASE.png",
+      "backrest_sprite": "FURN_576_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "583": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_583_BACK_BASE.png",
+      "backrest_sprite": "FURN_583_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "585": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_585_BACK_BASE.png",
+      "backrest_sprite": "FURN_585_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "586": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_586_BACK_BASE.png",
+      "backrest_sprite": "FURN_586_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "592": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_592_BACK_BASE.png",
+      "backrest_sprite": "FURN_592_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "595": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_595_BACK_BASE.png",
+      "backrest_sprite": "FURN_595_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "596": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_596_BACK_BASE.png",
+      "backrest_sprite": "FURN_596_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "616": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_616_BACK_BASE.png",
+      "backrest_sprite": "FURN_616_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "623": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_623_BACK_BASE.png",
+      "backrest_sprite": "FURN_623_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "625": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_625_BACK_BASE.png",
+      "backrest_sprite": "FURN_625_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "626": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_626_BACK_BASE.png",
+      "backrest_sprite": "FURN_626_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "631": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_631_BACK_BASE.png",
+      "backrest_sprite": "FURN_631_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "636": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_636_BACK_BASE.png",
+      "backrest_sprite": "FURN_636_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "637": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_637_BACK_BASE.png",
+      "backrest_sprite": "FURN_637_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "638": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_638_BACK_BASE.png",
+      "backrest_sprite": "FURN_638_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "641": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_641_BACK_BASE.png",
+      "backrest_sprite": "FURN_641_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "643": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_643_BACK_BASE.png",
+      "backrest_sprite": "FURN_643_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "649": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_649_BACK_BASE.png",
+      "backrest_sprite": "FURN_649_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "652": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_652_BACK_BASE.png",
+      "backrest_sprite": "FURN_652_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "658": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_658_BACK_BASE.png",
+      "backrest_sprite": "FURN_658_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "661": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_661_BACK_BASE.png",
+      "backrest_sprite": "FURN_661_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "662": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_662_BACK_BASE.png",
+      "backrest_sprite": "FURN_662_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "671": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_671_BACK_BASE.png",
+      "backrest_sprite": "FURN_671_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "675": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_675_BACK_BASE.png",
+      "backrest_sprite": "FURN_675_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "683": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_683_BACK_BASE.png",
+      "backrest_sprite": "FURN_683_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "686": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_686_BACK_BASE.png",
+      "backrest_sprite": "FURN_686_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "689": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_689_BACK_BASE.png",
+      "backrest_sprite": "FURN_689_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "691": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_691_BACK_BASE.png",
+      "backrest_sprite": "FURN_691_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "694": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_694_BACK_BASE.png",
+      "backrest_sprite": "FURN_694_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "695": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_695_BACK_BASE.png",
+      "backrest_sprite": "FURN_695_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "696": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_696_BACK_BASE.png",
+      "backrest_sprite": "FURN_696_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "697": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_697_BACK_BASE.png",
+      "backrest_sprite": "FURN_697_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "707": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_707_BACK_BASE.png",
+      "backrest_sprite": "FURN_707_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "708": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_708_BACK_BASE.png",
+      "backrest_sprite": "FURN_708_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "709": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_709_BACK_BASE.png",
+      "backrest_sprite": "FURN_709_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "714": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_714_BACK_BASE.png",
+      "backrest_sprite": "FURN_714_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "716": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_716_BACK_BASE.png",
+      "backrest_sprite": "FURN_716_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "719": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_719_BACK_BASE.png",
+      "backrest_sprite": "FURN_719_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "720": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_720_BACK_BASE.png",
+      "backrest_sprite": "FURN_720_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "728": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_728_BACK_BASE.png",
+      "backrest_sprite": "FURN_728_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "730": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_730_BACK_BASE.png",
+      "backrest_sprite": "FURN_730_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "745": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_745_BACK_BASE.png",
+      "backrest_sprite": "FURN_745_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "769": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_769_BACK_BASE.png",
+      "backrest_sprite": "FURN_769_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "783": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_783_BACK_BASE.png",
+      "backrest_sprite": "FURN_783_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "790": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_790_BACK_BASE.png",
+      "backrest_sprite": "FURN_790_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "808": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_808_BACK_BASE.png",
+      "backrest_sprite": "FURN_808_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "819": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_819_BACK_BASE.png",
+      "backrest_sprite": "FURN_819_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "820": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_820_BACK_BASE.png",
+      "backrest_sprite": "FURN_820_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "830": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_830_BACK_BASE.png",
+      "backrest_sprite": "FURN_830_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "836": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_836_BACK_BASE.png",
+      "backrest_sprite": "FURN_836_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "839": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_839_BACK_BASE.png",
+      "backrest_sprite": "FURN_839_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "841": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_841_BACK_BASE.png",
+      "backrest_sprite": "FURN_841_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "842": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_842_BACK_BASE.png",
+      "backrest_sprite": "FURN_842_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "843": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_843_BACK_BASE.png",
+      "backrest_sprite": "FURN_843_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "845": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_845_BACK_BASE.png",
+      "backrest_sprite": "FURN_845_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "848": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_848_BACK_BASE.png",
+      "backrest_sprite": "FURN_848_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "849": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_849_BACK_BASE.png",
+      "backrest_sprite": "FURN_849_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "901": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_901_BACK_BASE.png",
+      "backrest_sprite": "FURN_901_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "906": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_906_BACK_BASE.png",
+      "backrest_sprite": "FURN_906_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "919": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_919_BACK_BASE.png",
+      "backrest_sprite": "FURN_919_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "921": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_921_BACK_BASE.png",
+      "backrest_sprite": "FURN_921_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "924": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_924_BACK_BASE.png",
+      "backrest_sprite": "FURN_924_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "929": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_929_BACK_BASE.png",
+      "backrest_sprite": "FURN_929_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "930": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_930_BACK_BASE.png",
+      "backrest_sprite": "FURN_930_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "937": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_937_BACK_BASE.png",
+      "backrest_sprite": "FURN_937_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "939": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_939_BACK_BASE.png",
+      "backrest_sprite": "FURN_939_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "940": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_940_BACK_BASE.png",
+      "backrest_sprite": "FURN_940_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "942": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_942_BACK_BASE.png",
+      "backrest_sprite": "FURN_942_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "946": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_946_BACK_BASE.png",
+      "backrest_sprite": "FURN_946_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "950": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_950_BACK_BASE.png",
+      "backrest_sprite": "FURN_950_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "968": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_968_BACK_BASE.png",
+      "backrest_sprite": "FURN_968_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "969": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_969_BACK_BASE.png",
+      "backrest_sprite": "FURN_969_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "975": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_975_BACK_BASE.png",
+      "backrest_sprite": "FURN_975_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "977": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_977_BACK_BASE.png",
+      "backrest_sprite": "FURN_977_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "978": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_978_BACK_BASE.png",
+      "backrest_sprite": "FURN_978_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "979": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_979_BACK_BASE.png",
+      "backrest_sprite": "FURN_979_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "989": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_989_BACK_BASE.png",
+      "backrest_sprite": "FURN_989_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "990": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_990_BACK_BASE.png",
+      "backrest_sprite": "FURN_990_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "994": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_994_BACK_BASE.png",
+      "backrest_sprite": "FURN_994_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "995": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_995_BACK_BASE.png",
+      "backrest_sprite": "FURN_995_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "996": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_996_BACK_BASE.png",
+      "backrest_sprite": "FURN_996_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "997": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_997_BACK_BASE.png",
+      "backrest_sprite": "FURN_997_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "998": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_998_BACK_BASE.png",
+      "backrest_sprite": "FURN_998_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1001": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1001_BACK_BASE.png",
+      "backrest_sprite": "FURN_1001_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1005": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1005_BACK_BASE.png",
+      "backrest_sprite": "FURN_1005_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1010": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1010_BACK_BASE.png",
+      "backrest_sprite": "FURN_1010_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1017": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1017_BACK_BASE.png",
+      "backrest_sprite": "FURN_1017_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1019": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1019_BACK_BASE.png",
+      "backrest_sprite": "FURN_1019_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1020": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1020_BACK_BASE.png",
+      "backrest_sprite": "FURN_1020_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1036": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1036_BACK_BASE.png",
+      "backrest_sprite": "FURN_1036_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1052": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1052_BACK_BASE.png",
+      "backrest_sprite": "FURN_1052_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1065": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1065_BACK_BASE.png",
+      "backrest_sprite": "FURN_1065_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1066": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1066_BACK_BASE.png",
+      "backrest_sprite": "FURN_1066_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1079": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1079_BACK_BASE.png",
+      "backrest_sprite": "FURN_1079_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1085": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1085_BACK_BASE.png",
+      "backrest_sprite": "FURN_1085_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1094": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1094_BACK_BASE.png",
+      "backrest_sprite": "FURN_1094_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1101": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1101_BACK_BASE.png",
+      "backrest_sprite": "FURN_1101_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1105": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1105_BACK_BASE.png",
+      "backrest_sprite": "FURN_1105_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1114": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1114_BACK_BASE.png",
+      "backrest_sprite": "FURN_1114_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1134": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1134_BACK_BASE.png",
+      "backrest_sprite": "FURN_1134_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1182": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1182_BACK_BASE.png",
+      "backrest_sprite": "FURN_1182_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1205": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1205_BACK_BASE.png",
+      "backrest_sprite": "FURN_1205_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1206": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1206_BACK_BASE.png",
+      "backrest_sprite": "FURN_1206_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1207": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1207_BACK_BASE.png",
+      "backrest_sprite": "FURN_1207_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1240": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1240_BACK_BASE.png",
+      "backrest_sprite": "FURN_1240_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1242": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1242_BACK_BASE.png",
+      "backrest_sprite": "FURN_1242_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1244": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1244_BACK_BASE.png",
+      "backrest_sprite": "FURN_1244_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1246": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1246_BACK_BASE.png",
+      "backrest_sprite": "FURN_1246_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1248": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1248_BACK_BASE.png",
+      "backrest_sprite": "FURN_1248_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1250": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1250_BACK_BASE.png",
+      "backrest_sprite": "FURN_1250_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1252": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1252_BACK_BASE.png",
+      "backrest_sprite": "FURN_1252_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1254": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1254_BACK_BASE.png",
+      "backrest_sprite": "FURN_1254_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1255": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1255_BACK_BASE.png",
+      "backrest_sprite": "FURN_1255_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1256": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1256_BACK_BASE.png",
+      "backrest_sprite": "FURN_1256_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1287": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1287_BACK_BASE.png",
+      "backrest_sprite": "FURN_1287_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1288": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1288_BACK_BASE.png",
+      "backrest_sprite": "FURN_1288_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1291": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1291_BACK_BASE.png",
+      "backrest_sprite": "FURN_1291_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1298": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1298_BACK_BASE.png",
+      "backrest_sprite": "FURN_1298_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1303": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1303_BACK_BASE.png",
+      "backrest_sprite": "FURN_1303_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1310": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1310_BACK_BASE.png",
+      "backrest_sprite": "FURN_1310_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1314": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1314_BACK_BASE.png",
+      "backrest_sprite": "FURN_1314_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1340": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1340_BACK_BASE.png",
+      "backrest_sprite": "FURN_1340_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1449": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1449_BACK_BASE.png",
+      "backrest_sprite": "FURN_1449_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1490": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1490_BACK_BASE.png",
+      "backrest_sprite": "FURN_1490_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1491": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1491_BACK_BASE.png",
+      "backrest_sprite": "FURN_1491_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1492": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1492_BACK_BASE.png",
+      "backrest_sprite": "FURN_1492_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1503": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1503_BACK_BASE.png",
+      "backrest_sprite": "FURN_1503_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1504": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1504_BACK_BASE.png",
+      "backrest_sprite": "FURN_1504_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1508": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1508_BACK_BASE.png",
+      "backrest_sprite": "FURN_1508_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1509": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1509_BACK_BASE.png",
+      "backrest_sprite": "FURN_1509_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1511": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1511_BACK_BASE.png",
+      "backrest_sprite": "FURN_1511_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1514": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1514_BACK_BASE.png",
+      "backrest_sprite": "FURN_1514_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1515": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1515_BACK_BASE.png",
+      "backrest_sprite": "FURN_1515_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1519": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1519_BACK_BASE.png",
+      "backrest_sprite": "FURN_1519_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1521": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1521_BACK_BASE.png",
+      "backrest_sprite": "FURN_1521_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1522": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1522_BACK_BASE.png",
+      "backrest_sprite": "FURN_1522_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1533": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1533_BACK_BASE.png",
+      "backrest_sprite": "FURN_1533_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1551": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1551_BACK_BASE.png",
+      "backrest_sprite": "FURN_1551_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1558": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1558_BACK_BASE.png",
+      "backrest_sprite": "FURN_1558_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1630": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1630_BACK_BASE.png",
+      "backrest_sprite": "FURN_1630_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1631": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1631_BACK_BASE.png",
+      "backrest_sprite": "FURN_1631_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1633": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1633_BACK_BASE.png",
+      "backrest_sprite": "FURN_1633_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1776": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1776_BACK_BASE.png",
+      "backrest_sprite": "FURN_1776_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1777": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1777_BACK_BASE.png",
+      "backrest_sprite": "FURN_1777_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1779": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1779_BACK_BASE.png",
+      "backrest_sprite": "FURN_1779_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1782": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1782_BACK_BASE.png",
+      "backrest_sprite": "FURN_1782_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1783": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1783_BACK_BASE.png",
+      "backrest_sprite": "FURN_1783_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1787": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1787_BACK_BASE.png",
+      "backrest_sprite": "FURN_1787_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1788": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1788_BACK_BASE.png",
+      "backrest_sprite": "FURN_1788_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1793": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1793_BACK_BASE.png",
+      "backrest_sprite": "FURN_1793_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1794": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1794_BACK_BASE.png",
+      "backrest_sprite": "FURN_1794_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1795": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1795_BACK_BASE.png",
+      "backrest_sprite": "FURN_1795_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1806": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1806_BACK_BASE.png",
+      "backrest_sprite": "FURN_1806_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1807": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1807_BACK_BASE.png",
+      "backrest_sprite": "FURN_1807_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1826": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1826_BACK_BASE.png",
+      "backrest_sprite": "FURN_1826_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1827": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1827_BACK_BASE.png",
+      "backrest_sprite": "FURN_1827_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1829": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1829_BACK_BASE.png",
+      "backrest_sprite": "FURN_1829_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1849": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1849_BACK_BASE.png",
+      "backrest_sprite": "FURN_1849_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1850": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1850_BACK_BASE.png",
+      "backrest_sprite": "FURN_1850_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "1932": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_1932_BACK_BASE.png",
+      "backrest_sprite": "FURN_1932_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2014": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2014_BACK_BASE.png",
+      "backrest_sprite": "FURN_2014_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2015": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2015_BACK_BASE.png",
+      "backrest_sprite": "FURN_2015_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2020": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2020_BACK_BASE.png",
+      "backrest_sprite": "FURN_2020_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2021": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2021_BACK_BASE.png",
+      "backrest_sprite": "FURN_2021_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2022": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2022_BACK_BASE.png",
+      "backrest_sprite": "FURN_2022_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2023": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2023_BACK_BASE.png",
+      "backrest_sprite": "FURN_2023_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2058": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2058_BACK_BASE.png",
+      "backrest_sprite": "FURN_2058_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2069": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2069_BACK_BASE.png",
+      "backrest_sprite": "FURN_2069_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2070": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2070_BACK_BASE.png",
+      "backrest_sprite": "FURN_2070_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2072": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2072_BACK_BASE.png",
+      "backrest_sprite": "FURN_2072_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2083": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2083_BACK_BASE.png",
+      "backrest_sprite": "FURN_2083_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2088": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2088_BACK_BASE.png",
+      "backrest_sprite": "FURN_2088_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2105": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2105_BACK_BASE.png",
+      "backrest_sprite": "FURN_2105_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2106": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2106_BACK_BASE.png",
+      "backrest_sprite": "FURN_2106_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2132": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2132_BACK_BASE.png",
+      "backrest_sprite": "FURN_2132_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2133": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2133_BACK_BASE.png",
+      "backrest_sprite": "FURN_2133_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2148": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2148_BACK_BASE.png",
+      "backrest_sprite": "FURN_2148_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2149": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2149_BACK_BASE.png",
+      "backrest_sprite": "FURN_2149_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2150": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2150_BACK_BASE.png",
+      "backrest_sprite": "FURN_2150_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2151": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2151_BACK_BASE.png",
+      "backrest_sprite": "FURN_2151_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2158": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2158_BACK_BASE.png",
+      "backrest_sprite": "FURN_2158_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2159": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2159_BACK_BASE.png",
+      "backrest_sprite": "FURN_2159_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2182": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2182_BACK_BASE.png",
+      "backrest_sprite": "FURN_2182_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2183": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2183_BACK_BASE.png",
+      "backrest_sprite": "FURN_2183_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2189": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2189_BACK_BASE.png",
+      "backrest_sprite": "FURN_2189_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2223": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2223_BACK_BASE.png",
+      "backrest_sprite": "FURN_2223_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2224": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2224_BACK_BASE.png",
+      "backrest_sprite": "FURN_2224_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2229": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2229_BACK_BASE.png",
+      "backrest_sprite": "FURN_2229_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2239": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2239_BACK_BASE.png",
+      "backrest_sprite": "FURN_2239_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2241": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2241_BACK_BASE.png",
+      "backrest_sprite": "FURN_2241_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2247": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2247_BACK_BASE.png",
+      "backrest_sprite": "FURN_2247_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2249": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2249_BACK_BASE.png",
+      "backrest_sprite": "FURN_2249_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2251": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2251_BACK_BASE.png",
+      "backrest_sprite": "FURN_2251_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2253": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2253_BACK_BASE.png",
+      "backrest_sprite": "FURN_2253_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2257": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2257_BACK_BASE.png",
+      "backrest_sprite": "FURN_2257_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2260": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2260_BACK_BASE.png",
+      "backrest_sprite": "FURN_2260_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2267": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2267_BACK_BASE.png",
+      "backrest_sprite": "FURN_2267_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2270": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2270_BACK_BASE.png",
+      "backrest_sprite": "FURN_2270_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2295": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2295_BACK_BASE.png",
+      "backrest_sprite": "FURN_2295_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2296": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2296_BACK_BASE.png",
+      "backrest_sprite": "FURN_2296_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2297": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2297_BACK_BASE.png",
+      "backrest_sprite": "FURN_2297_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2298": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2298_BACK_BASE.png",
+      "backrest_sprite": "FURN_2298_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2305": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2305_BACK_BASE.png",
+      "backrest_sprite": "FURN_2305_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2306": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2306_BACK_BASE.png",
+      "backrest_sprite": "FURN_2306_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2309": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2309_BACK_BASE.png",
+      "backrest_sprite": "FURN_2309_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2310": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2310_BACK_BASE.png",
+      "backrest_sprite": "FURN_2310_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2311": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2311_BACK_BASE.png",
+      "backrest_sprite": "FURN_2311_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2312": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2312_BACK_BASE.png",
+      "backrest_sprite": "FURN_2312_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2313": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2313_BACK_BASE.png",
+      "backrest_sprite": "FURN_2313_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2314": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2314_BACK_BASE.png",
+      "backrest_sprite": "FURN_2314_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2321": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2321_BACK_BASE.png",
+      "backrest_sprite": "FURN_2321_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2322": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2322_BACK_BASE.png",
+      "backrest_sprite": "FURN_2322_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2349": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2349_BACK_BASE.png",
+      "backrest_sprite": "FURN_2349_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2350": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2350_BACK_BASE.png",
+      "backrest_sprite": "FURN_2350_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2357": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2357_BACK_BASE.png",
+      "backrest_sprite": "FURN_2357_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2358": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2358_BACK_BASE.png",
+      "backrest_sprite": "FURN_2358_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2365": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2365_BACK_BASE.png",
+      "backrest_sprite": "FURN_2365_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2372": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2372_BACK_BASE.png",
+      "backrest_sprite": "FURN_2372_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2379": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2379_BACK_BASE.png",
+      "backrest_sprite": "FURN_2379_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2380": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2380_BACK_BASE.png",
+      "backrest_sprite": "FURN_2380_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2387": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2387_BACK_BASE.png",
+      "backrest_sprite": "FURN_2387_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2394": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2394_BACK_BASE.png",
+      "backrest_sprite": "FURN_2394_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2414": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2414_BACK_BASE.png",
+      "backrest_sprite": "FURN_2414_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2415": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2415_BACK_BASE.png",
+      "backrest_sprite": "FURN_2415_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2422": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2422_BACK_BASE.png",
+      "backrest_sprite": "FURN_2422_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2436": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2436_BACK_BASE.png",
+      "backrest_sprite": "FURN_2436_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2439": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2439_BACK_BASE.png",
+      "backrest_sprite": "FURN_2439_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2455": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2455_BACK_BASE.png",
+      "backrest_sprite": "FURN_2455_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2458": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2458_BACK_BASE.png",
+      "backrest_sprite": "FURN_2458_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2472": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2472_BACK_BASE.png",
+      "backrest_sprite": "FURN_2472_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2473": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2473_BACK_BASE.png",
+      "backrest_sprite": "FURN_2473_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2492": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2492_BACK_BASE.png",
+      "backrest_sprite": "FURN_2492_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2493": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2493_BACK_BASE.png",
+      "backrest_sprite": "FURN_2493_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2545": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2545_BACK_BASE.png",
+      "backrest_sprite": "FURN_2545_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2546": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2546_BACK_BASE.png",
+      "backrest_sprite": "FURN_2546_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2624": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2624_BACK_BASE.png",
+      "backrest_sprite": "FURN_2624_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2634": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2634_BACK_BASE.png",
+      "backrest_sprite": "FURN_2634_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    },
+    "2640": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_2640_BACK_BASE.png",
+      "backrest_sprite": "FURN_2640_BACKREST.png",
+      "offsets": {
+        "front": {
+          "x": 0,
+          "y": 0.22
+        },
+        "back": {
+          "x": 0,
+          "y": 0.32
+        }
+      }
+    }
+  }
+}

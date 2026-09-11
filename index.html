@@ -1291,11 +1291,41 @@
 
     <div id="toast-container"></div>
 
-    <!-- Data bundles — loaded as scripts to work with file:// without a server -->
-    <script src="data/items_unified.js?v=3"></script>
-    <script>window.ITEMS_DB = window.ITEMS_UNIFIED; window.CONTENT_PIVOTS = {}; window.BEHAVIORS = {}; // compat: unified already contains pivot/behaviour
-    // shim: expose pivots/behaviours from unified for legacy code
-    (function(){ const u=window.ITEMS_UNIFIED; const piv={}; const beh={}; for(const id in u){ if(u[id].pivot) piv[id]=u[id].pivot; if(u[id].pivot_back) piv[id+'_BACK']=u[id].pivot_back; if(u[id].behaviour) beh[id]=u[id].behaviour; } window.contentPivots=piv; window.CONTENT_PIVOTS=piv; window.BEHAVIORS=beh; })();
+    <!-- Single Canonical Items Database -->
+    <script>
+    window.loadItemsDB = async function() {
+        if (window.ITEMS_DB && Object.keys(window.ITEMS_DB).length > 0) return window.ITEMS_DB;
+        try {
+            const res = await fetch('data/items_db.json?v=' + Date.now());
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+            window.ITEMS_DB = data;
+            window.ITEMS_UNIFIED = data;
+            const piv = {};
+            const beh = {};
+            for (const id in data) {
+                if (data[id].pivot) piv[id] = data[id].pivot;
+                if (data[id].pivot_back) piv[id + '_BACK'] = data[id].pivot_back;
+                if (data[id].behaviour) beh[id] = data[id].behaviour;
+            }
+            window.contentPivots = piv;
+            window.CONTENT_PIVOTS = piv;
+            window.BEHAVIORS = beh;
+            return data;
+        } catch (e) {
+            console.error('Error cargando data/items_db.json:', e);
+            return {};
+        }
+    };
+    window._itemsDBPromise = window.loadItemsDB();
+    fetch('data/bed_profiles.json?v=' + Date.now())
+        .then(r => r.json())
+        .then(d => { window.BED_PROFILES = d; })
+        .catch(e => console.warn('bed_profiles load error:', e));
+    fetch('data/activities_db.json?v=' + Date.now())
+        .then(r => r.json())
+        .then(d => { window.ACTIVITIES_DB = d; })
+        .catch(e => console.warn('activities_db load error:', e));
     </script>
     <script src="data/newspapers.js?v=1"></script>
     <script src="data/npcs.js?v=1"></script>
@@ -1305,9 +1335,7 @@
     <!-- App logic -->
     <script src="parser.js?v=20260850-wallfloor"></script>
     <script src="data/light_profiles.js?v=1"></script>
-    <script src="map.js?v=56"></script>
-    <script src="data/maps_unified.js?v=2"></script>
-    <script>if(window.MAPS_UNIFIED) { window.mapsAtlas=window.MAPS_UNIFIED.atlas; window.MAP_META=window.MAPS_UNIFIED.meta; window.atlasConfig=window.MAPS_UNIFIED.atlasConfig || window.atlasConfig; }</script>
+    <script src="map.js?v=64"></script>
     <script src="map_def.js?v=2"></script>
     <script src="play_scenery.js?v=3"></script>
     <script src="grid_editor.js"></script>
@@ -1315,7 +1343,9 @@
     <script src="ui.js"></script>
     <script src="game_time.js?v=1"></script>
     <script src="play_lighting.js?v=2"></script>
-    <script src="app.js?v=38"></script>
+    <script src="routine_scheduler.js?v=2"></script>
+    <script src="dialogue_manager.js?v=1"></script>
+    <script src="app.js?v=40"></script>
     <!-- Experimental features -->
     <script src="patch_experimental.js?v=29"></script>
 <script>
@@ -1505,6 +1535,14 @@
                             <button id="btn-clock-next" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:1px 6px; line-height:1;" title="Avanzar 1 hora">▶</button>
                             <button id="btn-map-home" class="btn-secondary" style="margin-left:10px; font-size:0.75rem; padding:2px 8px;" title="Casa sloc 0">Casa</button>
                             <button id="btn-map-farm" class="btn-secondary" style="font-size:0.75rem; padding:2px 8px;" title="Granja sloc 6">Granja</button>
+                            <button id="btn-reroll-routine" class="btn-secondary" style="margin-left:8px; font-size:0.75rem; padding:2px 8px; background:rgba(255,255,255,0.12);" title="Re-sortear actividad aleatoria de Tsuki y NPCs">🎲 Rutina</button>
+                            <select id="select-time-preset" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:2px 4px; background:#2e2e2e; color:#eee; border-radius:4px;" title="Seleccionar hora rápida">
+                                <option value="auto">⏱ Auto (Reloj)</option>
+                                <option value="8">🌅 Mañana (08:00)</option>
+                                <option value="14">☀️ Tarde (14:00)</option>
+                                <option value="19">🌆 Atardecer (19:00)</option>
+                                <option value="23">🌙 Noche (23:00)</option>
+                            </select>
                             <span id="port-hud-autosave" style="margin-left:12px; font-size:0.75rem; opacity:0; transition:opacity 400ms ease; color:#4caf50; font-weight:700; display:inline-flex; align-items:center; gap:3px;">
                                 <span class="material-symbols-outlined" style="font-size:14px;">check_circle</span> Caché guardada
                             </span>
@@ -1783,6 +1821,33 @@
                                 <div style="display:flex; gap:5px;">
                                     <button id="btn-apply-crop-time" class="btn-primary" style="flex:2; background-color:#3498db; font-size:0.85rem;">Aplicar Tiempo</button>
                                     <button id="btn-mature-crop-single" class="btn-primary" style="flex:1; background-color:#e67e22; font-size:0.85rem;">Madurar</button>
+                                </div>
+                            </div>
+
+                            <!-- Bed Customization UI (Only visible for Bed furniture) -->
+                            <div id="bed-custom-ui" class="hidden" style="margin-bottom:1.5rem; padding-top:1rem; border-top:1px solid rgba(0,0,0,0.1);">
+                                <label style="display:block; margin-bottom:8px; font-weight:bold; color:#8e44ad;">🛏️ Personalización de Cama (BedSave):</label>
+                                <div class="input-group" style="margin-bottom:8px;">
+                                    <label>Almohada (Pillow Skin):</label>
+                                    <div class="select-wrapper w-full">
+                                        <select id="edit-bed-pillow" style="width:100%;">
+                                        </select>
+                                        <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+                                    </div>
+                                </div>
+                                <div class="input-group" style="margin-bottom:8px;">
+                                    <label>Sábanas (Sheets Skin):</label>
+                                    <div class="select-wrapper w-full">
+                                        <select id="edit-bed-sheets" style="width:100%;">
+                                        </select>
+                                        <span class="material-symbols-outlined dropdown-icon">expand_more</span>
+                                    </div>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:8px; margin-top:4px;">
+                                    <label class="check-container" style="margin:0; font-size:0.9em; cursor:pointer;">
+                                        <input type="checkbox" id="edit-bed-sleeping">
+                                        <span>Tsuki Durmiendo en esta cama</span>
+                                    </label>
                                 </div>
                             </div>
 

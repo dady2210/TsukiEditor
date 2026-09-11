@@ -81,21 +81,24 @@
           "x": -0.0687,
           "y": 4.001
         }
-      ]
+      ],
+      "mask": "mask_floor_0.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
     },
     {
       "id": "wall_0_L",
       "kind": "wall",
       "groupNum": 0,
       "flipped": true,
-      "name": "Pared Izq Piso 0 (WallpaperBL)",
+      "name": "Pared Izq Piso 0",
       "origin": {
         "x": -3.2373,
         "y": 0.371
       },
       "origin_px": {
-        "x": 365.94,
-        "y": 1509.94
+        "x": 517.586070316604,
+        "y": 1736.7251352113876
       },
       "cell": {
         "w": 75,
@@ -117,21 +120,24 @@
           "x": 3.2036,
           "y": -1.1663
         }
-      ]
+      ],
+      "mask": "mask_wallL_0.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
     },
     {
       "id": "wall_0_R",
       "kind": "wall",
       "groupNum": 0,
       "flipped": false,
-      "name": "Pared Der Piso 0 (WallpaperBR)",
+      "name": "Pared Der Piso 0",
       "origin": {
         "x": 0.772,
         "y": 0.051
       },
       "origin_px": {
-        "x": 1739.34,
-        "y": 1533.94
+        "x": 1900.8886116872663,
+        "y": 1709.2945966576285
       },
       "cell": {
         "w": 75,
@@ -139,7 +145,7 @@
       },
       "rows": 16,
       "cols": 16,
-      "defaultCoverId": 2127,
+      "defaultCoverId": 755,
       "poly": [
         {
           "x": -0.79,
@@ -153,17 +159,20 @@
           "x": 2.6305,
           "y": 0.8669
         }
-      ]
+      ],
+      "mask": "mask_wallR_0.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
     },
     {
       "id": "floor_1",
       "kind": "floor",
       "groupNum": 1,
       "flipped": false,
-      "name": "Primer Piso - Piso 1",
+      "name": "Planta Alta - Piso 1",
       "origin": {
-        "x": 0.0425,
-        "y": -0.8055
+        "x": 0.0456,
+        "y": -0.7988
       },
       "origin_px": {
         "x": 1241.38,
@@ -175,7 +184,7 @@
       },
       "rows": 16,
       "cols": 16,
-      "defaultCoverId": 750,
+      "defaultCoverId": 69,
       "poly": [
         {
           "x": -0.042,
@@ -205,29 +214,32 @@
           "x": 2.869,
           "y": 2.0518
         }
-      ]
+      ],
+      "mask": "mask_floor_1.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
     },
     {
       "id": "wall_1_L",
       "kind": "wall",
       "groupNum": 1,
       "flipped": true,
-      "name": "Pared Izq Piso 1 (WallpaperTL)",
+      "name": "Pared Izq Piso 1",
       "origin": {
-        "x": -3.033,
-        "y": 3.4574
+        "x": -3.5626,
+        "y": 3.7347
       },
       "origin_px": {
-        "x": 557.74,
-        "y": 953.79
+        "x": 695.5865991721795,
+        "y": 1121.399760052171
       },
       "cell": {
         "w": 75,
         "h": 37.5
       },
-      "rows": 16,
+      "rows": 14,
       "cols": 16,
-      "defaultCoverId": 752,
+      "defaultCoverId": 755,
       "poly": [
         {
           "x": 3.0334,
@@ -245,29 +257,32 @@
           "x": 3.0327,
           "y": -0.7556
         }
-      ]
+      ],
+      "mask": "mask_wallL_1.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
     },
     {
       "id": "wall_1_R",
       "kind": "wall",
       "groupNum": 1,
       "flipped": false,
-      "name": "Pared Der Piso 1 (WallpaperTR)",
+      "name": "Pared Der Piso 1",
       "origin": {
-        "x": 0.5851,
-        "y": 3.241
+        "x": 0.7653,
+        "y": 3.8215
       },
       "origin_px": {
-        "x": 1713.77,
-        "y": 1071.84
+        "x": 1849.9489946793028,
+        "y": 1108.1746735283964
       },
       "cell": {
         "w": 75,
         "h": 37.5
       },
-      "rows": 16,
+      "rows": 14,
       "cols": 16,
-      "defaultCoverId": 418,
+      "defaultCoverId": 755,
       "poly": [
         {
           "x": 2.4951,
@@ -285,7 +300,10 @@
           "x": 2.3762,
           "y": -1.9139
         }
-      ]
+      ],
+      "mask": "mask_wallR_1.png",
+      "exportDir": 2,
+      "assembled": "level2_Ensamblado.png"
     },
     {
       "id": "floor_2",
@@ -298,8 +316,8 @@
         "y": -6.5
       },
       "origin_px": {
-        "x": 425.0,
-        "y": 2232.0
+        "x": 425,
+        "y": 2232
       },
       "cell": {
         "w": 75,
@@ -321,8 +339,8 @@
         "y": -6.5
       },
       "origin_px": {
-        "x": 1910.0,
-        "y": 2232.0
+        "x": 1910,
+        "y": 2232
       },
       "cell": {
         "w": 75,
@@ -380,6 +398,24 @@
           "y": -0.2
         }
       ]
+    },
+    {
+      "id": "floor_5",
+      "name": "Exterior g5",
+      "kind": "floor",
+      "groupNum": 5,
+      "flipped": false,
+      "rows": 12,
+      "cols": 12,
+      "origin_px": {
+        "x": 1600,
+        "y": 2200
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "outdoor": true
     }
   ],
   "visuals": [
@@ -3730,5 +3766,12 @@
     "animators": [],
     "audio": [],
     "particles": []
+  },
+  "meta": {
+    "name": "Home",
+    "exportDir": 2,
+    "export": "Exportado_level2",
+    "assembled": "level2_Ensamblado.png",
+    "lighting": "interior"
   }
 }

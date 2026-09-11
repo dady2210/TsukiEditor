@@ -339,6 +339,22 @@ class SaveParser {
             if (gNumNode) floor = gNumNode.value;
         }
 
+        let bedSave = null;
+        const furnSaveNode = furnNode.children ? furnNode.children.find(c => c.name === 'furnSave' || c.name === 'FurnSave') : null;
+        if (furnSaveNode && furnSaveNode.children) {
+            const pillowNode = furnSaveNode.children.find(c => c.name === 'pillowID');
+            const sheetsNode = furnSaveNode.children.find(c => c.name === 'sheetsID');
+            const editedNode = furnSaveNode.children.find(c => c.name === 'edited');
+            if (pillowNode || sheetsNode || (furnSaveNode.typeName && furnSaveNode.typeName.includes('BedSave'))) {
+                bedSave = {
+                    pillowID: pillowNode ? pillowNode.value : 0,
+                    sheetsID: sheetsNode ? sheetsNode.value : 0,
+                    edited: editedNode ? !!editedNode.value : false,
+                    node: furnSaveNode
+                };
+            }
+        }
+
         this.placements.push({
             placementID,
             subloc_id: sublocId,
@@ -351,7 +367,8 @@ class SaveParser {
             planted_id,
             furnNode,
             flipped: !!flipped,
-            isWall: !refNode
+            isWall: !refNode,
+            bedSave
         });
     }
 
@@ -460,6 +477,22 @@ class SaveParser {
                         const floorLampToggle = floorLampVal !== undefined ? Number(floorLampVal) : undefined;
                         const floorLightMode = floorLampToggle === 1 ? 'on' : (floorLampToggle === 2 ? 'off' : 'auto');
 
+                        let bedSave = null;
+                        const furnSaveNode = furnNode.children ? furnNode.children.find(c => c.name === 'furnSave' || c.name === 'FurnSave') : null;
+                        if (furnSaveNode && furnSaveNode.children) {
+                            const pillowNode = furnSaveNode.children.find(c => c.name === 'pillowID');
+                            const sheetsNode = furnSaveNode.children.find(c => c.name === 'sheetsID');
+                            const editedNode = furnSaveNode.children.find(c => c.name === 'edited');
+                            if (pillowNode || sheetsNode || (furnSaveNode.typeName && furnSaveNode.typeName.includes('BedSave'))) {
+                                bedSave = {
+                                    pillowID: pillowNode ? pillowNode.value : 0,
+                                    sheetsID: sheetsNode ? sheetsNode.value : 0,
+                                    edited: editedNode ? !!editedNode.value : false,
+                                    node: furnSaveNode
+                                };
+                            }
+                        }
+
                         this.placements.push({
                             placementID,
                             subloc_id: sublocId,
@@ -473,7 +506,8 @@ class SaveParser {
                             furnNode,
                             _lampToggle: floorLampToggle,
                             _lightMode: floorLightMode,
-                            isWall: false
+                            isWall: false,
+                            bedSave
                         });
                     }
                 }
@@ -3087,7 +3121,7 @@ class SaveParser {
         return false;
     }
 
-    // --- Feature E: Activity + Trip ---
+    // --- Feature E: Activity + Trip + Bed Customization ---
     getActivitySaves() {
         if (!this.ast) return [];
         let actRoot = findChildRecursive(this.ast, ['activity']);
@@ -3113,17 +3147,182 @@ class SaveParser {
             let npc = n.children.find(c => c.name === 'NpcID');
             let start = n.children.find(c => c.name === 'ActivityStart');
             let valid = n.children.find(c => c.name === 'Valid');
-            let subloc = n.children.find(c => c.name === 'sublocationID' || c.name === 'localLocationID');
+            let seen = n.children.find(c => c.name === 'Seen');
+            let pester = n.children.find(c => c.name === 'Pester');
+
+            let pointerNode = n.children.find(c => c.name === 'placementPointer');
+            let placementID = null;
+            let sublocID = null;
+            if (pointerNode && pointerNode.children) {
+                let pId = pointerNode.children.find(c => c.name === 'placementID');
+                if (pId) placementID = pId.value;
+                let cId = pointerNode.children.find(c => c.name === 'containerID');
+                if (cId && cId.children) {
+                    let sId = cId.children.find(c => c.name === 'sublocationID');
+                    if (sId) sublocID = sId.value;
+                }
+            }
+            if (sublocID === null) {
+                let subloc = n.children.find(c => c.name === 'sublocationID' || c.name === 'localLocationID');
+                if (subloc) sublocID = subloc.value;
+            }
+
+            let groupPosNode = n.children.find(c => c.name === 'groupPosition');
+            let gridX = null, gridY = null, groupNum = null;
+            if (groupPosNode && groupPosNode.children) {
+                let gNode = groupPosNode.children.find(c => c.name === 'groupNum');
+                if (gNode) groupNum = gNode.value;
+                let gridNode = groupPosNode.children.find(c => c.name === 'grid');
+                if (gridNode && gridNode.children) {
+                    let gx = gridNode.children.find(c => c.name === 'x');
+                    let gy = gridNode.children.find(c => c.name === 'y');
+                    if (gx) gridX = gx.value;
+                    if (gy) gridY = gy.value;
+                }
+            }
+            let oriNode = n.children.find(c => c.name === 'Orientation');
+            let orientation = oriNode ? parseInt(oriNode.value, 10) : 0;
+
             acts.push({
                 id: id ? id.value : null,
                 npc: npc ? npc.value : null,
                 start: start ? start.value : null,
                 valid: valid ? !!valid.value : false,
-                subloc: subloc ? subloc.value : null,
+                seen: seen ? !!seen.value : false,
+                pester: pester ? pester.value : 0,
+                subloc: sublocID,
+                placementId: placementID,
+                gridX: gridX,
+                gridY: gridY,
+                floor: groupNum,
+                orientation: isNaN(orientation) ? 0 : orientation,
                 node: n
             });
         });
         return acts;
+    }
+
+    setFurnitureActivity({ placementId, sublocId = 0, npcId = -1, activityId = 348, valid = true } = {}) {
+        if (!this.ast) return false;
+        const _Node = (typeof OdinNode !== 'undefined') ? OdinNode : ((typeof window !== 'undefined' && window.OdinNode) ? window.OdinNode : (typeof require !== 'undefined' ? require('./Odin/odin_ast').OdinNode : class { constructor(m, n, t, tn, id, ch=[]) { this.marker = m; this.name = n; this.typeId = t; this.typeName = tn; this.nodeId = id; this.children = ch; } }));
+        const _Prim = (typeof OdinPrimitive !== 'undefined') ? OdinPrimitive : ((typeof window !== 'undefined' && window.OdinPrimitive) ? window.OdinPrimitive : (typeof require !== 'undefined' ? require('./Odin/odin_ast').OdinPrimitive : class { constructor(m, n, v) { this.marker = m; this.name = n; this.value = v; } }));
+
+        let actNode = this.ast.children.find(c => c.name === 'activity');
+        if (!actNode) {
+            actNode = new _Node(0x01, 'activity', 'FurnitureBoundActivitySave, Odyssey');
+            this.ast.children.push(actNode);
+        }
+        actNode.typeName = 'FurnitureBoundActivitySave, Odyssey';
+        actNode.marker = 0x01;
+        if (!actNode.children) actNode.children = [];
+
+        const setOrAdd = (name, marker, val) => {
+            let ch = actNode.children.find(c => c.name === name);
+            if (ch) ch.value = val;
+            else actNode.children.push(new _Prim(marker, name, val));
+        };
+
+        setOrAdd('ActivityID', 0x17, (activityId !== undefined ? activityId : 348) | 0);
+        setOrAdd('NpcID', 0x17, (npcId !== undefined ? npcId : -1) | 0);
+        setOrAdd('ActivityStart', 0x21, dateToOADate(new Date()));
+        setOrAdd('Valid', 0x2b, Boolean(valid));
+        setOrAdd('Seen', 0x2b, true);
+        setOrAdd('Pester', 0x17, 0);
+
+        let pointerNode = actNode.children.find(c => c.name === 'placementPointer');
+        if (!pointerNode) {
+            pointerNode = new _Node(0x03, 'placementPointer', 'FurniturePlacementPointer, Odyssey');
+            pointerNode.children = [
+                new _Node(0x01, 'containerID', 'SLocationID, Odyssey', null, [
+                    new _Prim(0x17, 'sublocationID', (sublocId || 0) | 0),
+                    new _Prim(0x17, 'localLocationID', 0)
+                ]),
+                new _Prim(0x17, 'placementID', (placementId || 0) | 0)
+            ];
+            actNode.children.push(pointerNode);
+        } else {
+            pointerNode.typeName = 'FurniturePlacementPointer, Odyssey';
+            let pId = pointerNode.children.find(c => c.name === 'placementID');
+            if (pId) pId.value = (placementId || 0) | 0;
+            else pointerNode.children.push(new _Prim(0x17, 'placementID', (placementId || 0) | 0));
+
+            let cId = pointerNode.children.find(c => c.name === 'containerID');
+            if (!cId) {
+                cId = new _Node(0x01, 'containerID', 'SLocationID, Odyssey', null, [
+                    new _Prim(0x17, 'sublocationID', (sublocId || 0) | 0),
+                    new _Prim(0x17, 'localLocationID', 0)
+                ]);
+                pointerNode.children.unshift(cId);
+            } else if (cId.children) {
+                let sId = cId.children.find(c => c.name === 'sublocationID');
+                if (sId) sId.value = (sublocId || 0) | 0;
+            }
+        }
+        return true;
+    }
+
+    clearFurnitureActivity() {
+        if (!this.ast) return false;
+        let actNode = this.ast.children.find(c => c.name === 'activity');
+        if (actNode && actNode.children) {
+            let validNode = actNode.children.find(c => c.name === 'Valid');
+            if (validNode) validNode.value = false;
+        }
+        return true;
+    }
+
+    setBedCustomization(placementID, { pillowID, sheetsID }) {
+        if (!this.placements) return false;
+        const p = this.placements.find(item => item.placementID === placementID);
+        if (!p || !p.furnNode) return false;
+
+        const _Node = (typeof OdinNode !== 'undefined') ? OdinNode : ((typeof window !== 'undefined' && window.OdinNode) ? window.OdinNode : (typeof require !== 'undefined' ? require('./Odin/odin_ast').OdinNode : class { constructor(m, n, t, tn, id, ch=[]) { this.marker = m; this.name = n; this.typeId = t; this.typeName = tn; this.nodeId = id; this.children = ch; } }));
+        const _Prim = (typeof OdinPrimitive !== 'undefined') ? OdinPrimitive : ((typeof window !== 'undefined' && window.OdinPrimitive) ? window.OdinPrimitive : (typeof require !== 'undefined' ? require('./Odin/odin_ast').OdinPrimitive : class { constructor(m, n, v) { this.marker = m; this.name = n; this.value = v; } }));
+
+        const node = p.furnNode;
+        let furnSaveNode = node.children.find(c => c.name === 'furnSave' || c.name === 'FurnSave');
+        if (!furnSaveNode) {
+            furnSaveNode = new _Node(0x01, 'furnSave', 'Bed+BedSave, Odyssey');
+            furnSaveNode.children = [
+                new _Prim(0x21, 'placedOA', dateToOADate(new Date())),
+                new _Prim(0x17, 'pillowID', parseInt(pillowID, 10) || 0),
+                new _Prim(0x17, 'sheetsID', parseInt(sheetsID, 10) || 0),
+                new _Prim(0x2b, 'edited', true)
+            ];
+            node.children.push(furnSaveNode);
+        } else {
+            furnSaveNode.typeName = 'Bed+BedSave, Odyssey';
+            if (!furnSaveNode.children) furnSaveNode.children = [];
+            
+            let pillowNode = furnSaveNode.children.find(c => c.name === 'pillowID');
+            if (pillowNode) {
+                pillowNode.value = parseInt(pillowID, 10) || 0;
+            } else {
+                furnSaveNode.children.push(new _Prim(0x17, 'pillowID', parseInt(pillowID, 10) || 0));
+            }
+
+            let sheetsNode = furnSaveNode.children.find(c => c.name === 'sheetsID');
+            if (sheetsNode) {
+                sheetsNode.value = parseInt(sheetsID, 10) || 0;
+            } else {
+                furnSaveNode.children.push(new _Prim(0x17, 'sheetsID', parseInt(sheetsID, 10) || 0));
+            }
+
+            let editedNode = furnSaveNode.children.find(c => c.name === 'edited');
+            if (editedNode) {
+                editedNode.value = true;
+            } else {
+                furnSaveNode.children.push(new _Prim(0x2b, 'edited', true));
+            }
+        }
+
+        p.bedSave = {
+            pillowID: parseInt(pillowID, 10) || 0,
+            sheetsID: parseInt(sheetsID, 10) || 0,
+            edited: true,
+            node: furnSaveNode
+        };
+        return true;
     }
 
     getTripSave() {

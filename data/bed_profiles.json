@@ -1,0 +1,4738 @@
+{
+  "beds": {
+    "820": {
+      "id": "820",
+      "name": "Shipwreck Bed",
+      "prefab_name": "Shipwreck Bed",
+      "defaultSkin": 23,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Cushion",
+          "pos": {
+            "x": -0.4519999921321869,
+            "y": 1.3930015563964844,
+            "z": -0.07000000029802322
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "SleepingSheetsB (2)",
+          "pos": {
+            "x": -0.17299999296665192,
+            "y": 0.9679985046386719,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB (1)",
+          "pos": {
+            "x": -0.1569995880126953,
+            "y": 0.7960014343261719,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SleepingSheets (1)",
+          "pos": {
+            "x": -0.17300033569335938,
+            "y": 0.9679985046386719,
+            "z": -1.0199999809265137
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SleepingSheetsB (1)",
+          "pos": {
+            "x": -0.1529998779296875,
+            "y": 0.8069992065429688,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "2634": {
+      "id": "2634",
+      "name": "Unknown Item 2634",
+      "prefab_name": "Snowy Log Bed B",
+      "defaultSkin": 67,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.3009999990463257,
+            "y": 0.991999626159668,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Snowy_Bedsheets_4.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.16499948501586914,
+            "y": 0.5579986572265625,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Snowy_Bedsheets_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.04700005054473877,
+            "y": 0.6440000534057617,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Snowy_Bedsheets_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.10399997234344482,
+            "y": 0.5830001831054688,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Snowy_Bedsheets_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": 0.04999995231628418,
+            "y": 0.6370000839233398,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Snowy_Bedsheets_2.png"
+        }
+      }
+    },
+    "2132": {
+      "id": "2132",
+      "name": "Frooty Strawberry Bed",
+      "prefab_name": "Frooty Strawberry Bed",
+      "defaultSkin": 52,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.344970703125,
+            "y": 0.97900390625,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Mahogany_Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Normal Sheets (1)",
+          "pos": {
+            "x": 0.114013671875,
+            "y": 0.600006103515625,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Mahogany_Sheet_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Normal SheetsB (1)",
+          "pos": {
+            "x": -0.06402587890625,
+            "y": 0.6820068359375,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Mahogany_Sheet_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "Sleep Sheets",
+          "pos": {
+            "x": 0.114013671875,
+            "y": 0.600006103515625,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Mahogany_Sheet_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "Sleep SheetsB (1)",
+          "pos": {
+            "x": -0.06402587890625,
+            "y": 0.6820068359375,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Mahogany_Sheet_2.png"
+        }
+      }
+    },
+    "2133": {
+      "id": "2133",
+      "name": "Unknown Item 2133",
+      "prefab_name": "Frooty Strawberry Bed B",
+      "defaultSkin": 53,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.344970703125,
+            "y": 0.97900390625,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Garden_Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Normal Sheets (1)",
+          "pos": {
+            "x": 0.114013671875,
+            "y": 0.600006103515625,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Garden_Sheet_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Normal SheetsB (1)",
+          "pos": {
+            "x": -0.06402587890625,
+            "y": 0.6820068359375,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Garden_Sheet_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "Sleep Bed Sheets",
+          "pos": {
+            "x": 0.114013671875,
+            "y": 0.600006103515625,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Garden_Sheet_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "Sleep Bed SheetsB (1)",
+          "pos": {
+            "x": -0.06402587890625,
+            "y": 0.6820068359375,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Garden_Sheet_2.png"
+        }
+      }
+    },
+    "1019": {
+      "id": "1019",
+      "name": "Unknown Item 1019",
+      "prefab_name": "Interstellar Bed B",
+      "defaultSkin": 27,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3819999694824219,
+            "y": 1.0890007019042969,
+            "z": -0.07999999821186066
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "SheetsF",
+          "pos": {
+            "x": 0.048000335693359375,
+            "y": 0.707000732421875,
+            "z": -0.07000000029802322
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_0.png"
+        },
+        "sheetsF": {
+          "go_name": "BedsheetsB",
+          "pos": {
+            "x": -0.0449981689453125,
+            "y": 0.9169998168945312,
+            "z": -0.09000000357627869
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SheetsF (Sleeping)",
+          "pos": {
+            "x": 0.019001007080078125,
+            "y": 0.7360000610351562,
+            "z": -1.0299999713897705
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedsheetsB (Sleepingh)",
+          "pos": {
+            "x": -0.0449981689453125,
+            "y": 0.9169998168945312,
+            "z": -1.0099999904632568
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_2.png"
+        }
+      }
+    },
+    "2014": {
+      "id": "2014",
+      "name": "Jester's Bed",
+      "prefab_name": "Jester's Bed",
+      "defaultSkin": 46,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.30999755859375,
+            "y": 1.0210037231445312,
+            "z": -0.030000001192092896
+          },
+          "sorting_order": 0,
+          "sprite": "Jester_Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Sheets",
+          "pos": {
+            "x": 0.0919952392578125,
+            "y": 0.6480026245117188,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Jester_Sheet_0.png"
+        },
+        "sheetsF": {
+          "go_name": "SheetsF",
+          "pos": {
+            "x": 0.0,
+            "y": 0.7679977416992188,
+            "z": -0.020000003278255463
+          },
+          "sorting_order": 0,
+          "sprite": "Jester_Sheet_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SheetsCover",
+          "pos": {
+            "x": 0.050994873046875,
+            "y": 0.6819992065429688,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Jester_Sheet_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SheetsCoverF",
+          "pos": {
+            "x": 0.0229949951171875,
+            "y": 0.7910003662109375,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Jester_Sheet_2.png"
+        }
+      }
+    },
+    "116": {
+      "id": "116",
+      "name": "Spiny Lobster",
+      "prefab_name": "Tatami Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5920028686523438,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6610031127929688,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5920028686523438,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6610031127929688,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1287": {
+      "id": "1287",
+      "name": "Borrowed Tin Can",
+      "prefab_name": "Borrowed Tin Can",
+      "defaultSkin": 35,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.4109992980957031,
+            "y": 0.8930015563964844,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Sheets",
+          "pos": {
+            "x": 0.024000167846679688,
+            "y": 0.5480003356933594,
+            "z": -0.05000000074505806
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "SheetsF",
+          "pos": {
+            "x": -0.26800060272216797,
+            "y": 0.6529979705810547,
+            "z": -0.030000001192092896
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SheetsCover",
+          "pos": {
+            "x": 0.0149993896484375,
+            "y": 0.5610008239746094,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SheetsCoverF",
+          "pos": {
+            "x": -0.2589998245239258,
+            "y": 0.6490001678466797,
+            "z": -1.059999942779541
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "2070": {
+      "id": "2070",
+      "name": "Clam Bed",
+      "prefab_name": "Clam Bed",
+      "defaultSkin": 48,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.2700004577636719,
+            "y": 0.9029998779296875,
+            "z": -0.09000000357627869
+          },
+          "sorting_order": 0,
+          "sprite": "Clam BedSheets_2.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.16499900817871094,
+            "y": 0.5579986572265625,
+            "z": -0.10000000149011612
+          },
+          "sorting_order": 0,
+          "sprite": "Clam BedSheets_3.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.10300064086914062,
+            "y": 0.6719970703125,
+            "z": -0.07999999821186066
+          },
+          "sorting_order": 0,
+          "sprite": "Clam BedSheets_4.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.15599822998046875,
+            "y": 0.5709991455078125,
+            "z": -1.1100000143051147
+          },
+          "sorting_order": 0,
+          "sprite": "Clam BedSheets_1.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.11200141906738281,
+            "y": 0.667999267578125,
+            "z": -1.100000023841858
+          },
+          "sorting_order": 0,
+          "sprite": "Clam BedSheets_0.png"
+        }
+      }
+    },
+    "2224": {
+      "id": "2224",
+      "name": "Unknown Item 2224",
+      "prefab_name": "Forluxe Bed B",
+      "defaultSkin": 57,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.34299999475479126,
+            "y": 0.9689998626708984,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Enchanted_Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bed Sheets",
+          "pos": {
+            "x": 0.13899999856948853,
+            "y": 0.5419998168945312,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "EnchantedSheet_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB (1)",
+          "pos": {
+            "x": -0.04800000041723251,
+            "y": 0.6359996795654297,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "EnchantedSheet_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SleepingSheets (1)",
+          "pos": {
+            "x": 0.07100000232458115,
+            "y": 0.5709991455078125,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "EnchantedSheet_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SleepingSheetsB (1)",
+          "pos": {
+            "x": -0.054999999701976776,
+            "y": 0.6350002288818359,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "EnchantedSheet_2.png"
+        }
+      }
+    },
+    "583": {
+      "id": "583",
+      "name": "Unknown Item 583",
+      "prefab_name": "Rosewood Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "2546": {
+      "id": "2546",
+      "name": "Unknown Item 2546",
+      "prefab_name": "Primal Bed B",
+      "defaultSkin": 66,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.3049999475479126,
+            "y": 0.983001708984375,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "WyrmcraftB_Sheets_9.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.1649993658065796,
+            "y": 0.5579986572265625,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "WyrmcraftB_Sheets_5.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.04999995231628418,
+            "y": 0.7249984741210938,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "WyrmcraftB_Sheets_6.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.1559985876083374,
+            "y": 0.5709991455078125,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "WyrmcraftB_Sheets_7.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.026999950408935547,
+            "y": 0.7130012512207031,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "WyrmcraftB_Sheets_8.png"
+        }
+      }
+    },
+    "2310": {
+      "id": "2310",
+      "name": "Unknown Item 2310",
+      "prefab_name": "Lovestruck Bed B",
+      "defaultSkin": 60,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.32199999690055847,
+            "y": 0.9930000305175781,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Lovestruck_PillowB.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.07500000298023224,
+            "y": 0.6030006408691406,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Lovestruck_SheetsB_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.03700000047683716,
+            "y": 0.6550006866455078,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Lovestruck_SheetsB_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.0729999989271164,
+            "y": 0.6130008697509766,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Lovestruck_SheetsB_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.029999999329447746,
+            "y": 0.6450004577636719,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Lovestruck_SheetsB_2.png"
+        }
+      }
+    },
+    "2455": {
+      "id": "2455",
+      "name": "Unknown Item 2455",
+      "prefab_name": "Eggcellent Bed B",
+      "defaultSkin": 64,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.26999998092651367,
+            "y": 0.9860000610351562,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Eggcellent_Pillow_B.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.14599990844726562,
+            "y": 0.61199951171875,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Eggcellent_Sheet_0_B.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.04500007629394531,
+            "y": 0.7159996032714844,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Eggcellent_Sheet_1_B.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.10200023651123047,
+            "y": 0.6340007781982422,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Eggcellent_Sheet_3_B.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.028999805450439453,
+            "y": 0.7310009002685547,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Eggcellent_Sheet_2_B.png"
+        }
+      }
+    },
+    "1020": {
+      "id": "1020",
+      "name": "Celestial Bed",
+      "prefab_name": "Celestial Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.2700004577636719,
+            "y": 0.9029998779296875,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.16499900817871094,
+            "y": 0.5579986572265625,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.10300064086914062,
+            "y": 0.6719970703125,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.15599822998046875,
+            "y": 0.5709991455078125,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.11200141906738281,
+            "y": 0.667999267578125,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1827": {
+      "id": "1827",
+      "name": "Unknown Item 1827",
+      "prefab_name": "Popblock Bed B",
+      "defaultSkin": 45,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.28900146484375,
+            "y": 0.990997314453125,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "popblock-blankets_4.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.100006103515625,
+            "y": 0.592010498046875,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "popblock-blankets_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.074005126953125,
+            "y": 0.67498779296875,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "popblock-blankets_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.100006103515625,
+            "y": 0.592010498046875,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "popblock-blankets_2.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.035003662109375,
+            "y": 0.6610107421875,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "popblock-blankets_3.png"
+        }
+      }
+    },
+    "2309": {
+      "id": "2309",
+      "name": "Lovestruck Bed",
+      "prefab_name": "Lovestruck Bed",
+      "defaultSkin": 59,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.32199999690055847,
+            "y": 0.9930000305175781,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Lovestruck_Pillow_9.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.07500000298023224,
+            "y": 0.6030006408691406,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Lovestruck_Sheets_5.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.03700000047683716,
+            "y": 0.6550006866455078,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Lovestruck_Sheets_6.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.0729999989271164,
+            "y": 0.6130008697509766,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Lovestruck_Sheets_7.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.029999999329447746,
+            "y": 0.6450004577636719,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Lovestruck_Sheets_8.png"
+        }
+      }
+    },
+    "563": {
+      "id": "563",
+      "name": "Sweetbed",
+      "prefab_name": "Sweetbed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3559989929199219,
+            "y": 0.9669990539550781,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "SheetsF",
+          "pos": {
+            "x": 0.023998260498046875,
+            "y": 0.5849990844726562,
+            "z": -0.05000000074505806
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "SheetsB",
+          "pos": {
+            "x": -0.22700119018554688,
+            "y": 0.7239990234375,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SheetsF (Sleeping)",
+          "pos": {
+            "x": 0.007999420166015625,
+            "y": 0.5629997253417969,
+            "z": -1.059999942779541
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SheetsB (sleeping)",
+          "pos": {
+            "x": -0.2619972229003906,
+            "y": 0.733001708984375,
+            "z": -1.0099999904632568
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "728": {
+      "id": "728",
+      "name": "Unknown Item 728",
+      "prefab_name": "Dusk Bed B",
+      "defaultSkin": 21,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow 2.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.10000228881835938,
+            "y": 0.5919990539550781,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet 2.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF 2.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.10000228881835938,
+            "y": 0.5919990539550781,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover 2.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF 2.png"
+        }
+      }
+    },
+    "2379": {
+      "id": "2379",
+      "name": "Unknown Item 2379",
+      "prefab_name": "Wyrmcraft Bed B",
+      "defaultSkin": 62,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.3859996795654297,
+            "y": 1.0240020751953125,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "WyrmcraftB_Sheets_9.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.04900002479553223,
+            "y": 0.6790008544921875,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "WyrmcraftB_Sheets_5.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.042999982833862305,
+            "y": 0.7919998168945312,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "WyrmcraftB_Sheets_6.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.15599870681762695,
+            "y": 0.5709991455078125,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "WyrmcraftB_Sheets_7.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.09599995613098145,
+            "y": 0.6629981994628906,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "WyrmcraftB_Sheets_8.png"
+        }
+      }
+    },
+    "730": {
+      "id": "730",
+      "name": "Unknown Item 730",
+      "prefab_name": "Flower Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1504": {
+      "id": "1504",
+      "name": "Unknown Item 1504",
+      "prefab_name": "Retro Car Bed",
+      "defaultSkin": 38,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.40799999237060547,
+            "y": 1.141998291015625,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Retro Bedsheets_0.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.06299972534179688,
+            "y": 0.7579994201660156,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Retro Bedsheets_2.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.053000450134277344,
+            "y": 0.8440017700195312,
+            "z": -0.07999999821186066
+          },
+          "sorting_order": 0,
+          "sprite": "Retro Bedsheets_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.03199958801269531,
+            "y": 0.7610015869140625,
+            "z": -1.0299999713897705
+          },
+          "sorting_order": 0,
+          "sprite": "Retro Bedsheets_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.09399986267089844,
+            "y": 0.8180007934570312,
+            "z": -1.059999942779541
+          },
+          "sorting_order": 0,
+          "sprite": "Retro Bedsheets_4.png"
+        }
+      }
+    },
+    "2106": {
+      "id": "2106",
+      "name": "Unknown Item 2106",
+      "prefab_name": "Rustic Bed B",
+      "defaultSkin": 51,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.26999998092651367,
+            "y": 0.9029998779296875,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow 2.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.16499948501586914,
+            "y": 0.5579986572265625,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet 2.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.10300016403198242,
+            "y": 0.6719970703125,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF 2.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.15599870681762695,
+            "y": 0.5709991455078125,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover 2.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.11200094223022461,
+            "y": 0.667999267578125,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF 2.png"
+        }
+      }
+    },
+    "80": {
+      "id": "80",
+      "name": "Giant Clam",
+      "prefab_name": "Dusk Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.10000228881835938,
+            "y": 0.5919990539550781,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.10000228881835938,
+            "y": 0.5919990539550781,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "2015": {
+      "id": "2015",
+      "name": "Unknown Item 2015",
+      "prefab_name": "Jester's Bed B",
+      "defaultSkin": 47,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.30999755859375,
+            "y": 1.0210037231445312,
+            "z": -0.030000001192092896
+          },
+          "sorting_order": 0,
+          "sprite": "Jester_B_Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Sheets",
+          "pos": {
+            "x": 0.0919952392578125,
+            "y": 0.6480026245117188,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Jester_B_Sheet_0.png"
+        },
+        "sheetsF": {
+          "go_name": "SheetsF",
+          "pos": {
+            "x": 0.0,
+            "y": 0.7679977416992188,
+            "z": -0.020000003278255463
+          },
+          "sorting_order": 0,
+          "sprite": "Jester_B_Sheet_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SheetsCover",
+          "pos": {
+            "x": 0.050994873046875,
+            "y": 0.6819992065429688,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Jester_B_Sheet_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SheetsCoverF",
+          "pos": {
+            "x": 0.0229949951171875,
+            "y": 0.7910003662109375,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Jester_B_Sheet_2.png"
+        }
+      }
+    },
+    "643": {
+      "id": "643",
+      "name": "Unknown Item 643",
+      "prefab_name": "Wooden Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5920028686523438,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6610031127929688,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5920028686523438,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6610031127929688,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1288": {
+      "id": "1288",
+      "name": "Unknown Item 1288",
+      "prefab_name": "Borrowed Tin Can B",
+      "defaultSkin": 36,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.4109992980957031,
+            "y": 0.8930015563964844,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Sheets",
+          "pos": {
+            "x": 0.024000167846679688,
+            "y": 0.5480003356933594,
+            "z": -0.05000000074505806
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "SheetsF",
+          "pos": {
+            "x": -0.26800060272216797,
+            "y": 0.6529979705810547,
+            "z": -0.030000001192092896
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SheetsCover",
+          "pos": {
+            "x": 0.0149993896484375,
+            "y": 0.5610008239746094,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SheetsCoverF",
+          "pos": {
+            "x": -0.2589998245239258,
+            "y": 0.6490001678466797,
+            "z": -1.059999942779541
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "55": {
+      "id": "55",
+      "name": "Yoga Mat",
+      "prefab_name": "Feudal Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "32": {
+      "id": "32",
+      "name": "Rainbow Lolly",
+      "prefab_name": "Library Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.40799903869628906,
+            "y": 0.970001220703125,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.02700042724609375,
+            "y": 0.625,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.2409992218017578,
+            "y": 0.7389984130859375,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.017999649047851562,
+            "y": 0.63800048828125,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.25,
+            "y": 0.7350006103515625,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "708": {
+      "id": "708",
+      "name": "Unknown Item 708",
+      "prefab_name": "Tatami Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5920028686523438,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6610031127929688,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5920028686523438,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6610031127929688,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "595": {
+      "id": "595",
+      "name": "Unknown Item 595",
+      "prefab_name": "Coastal Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3449978828430176,
+            "y": 0.9790000915527344,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bed Sheets",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB (1)",
+          "pos": {
+            "x": -0.06399917602539062,
+            "y": 0.6819992065429688,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SleepingSheets (1)",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SleepingSheetsB (1)",
+          "pos": {
+            "x": -0.06399917602539062,
+            "y": 0.6819992065429688,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1207": {
+      "id": "1207",
+      "name": "Staircase Bed",
+      "prefab_name": "Staircase Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.753000020980835,
+            "y": 1.989999771118164,
+            "z": -0.09000000357627869
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": -0.35199999809265137,
+            "y": 1.5830001831054688,
+            "z": -0.07999999821186066
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.10300019383430481,
+            "y": 1.5900001525878906,
+            "z": -0.10000000149011612
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": -0.3199999928474426,
+            "y": 1.6030006408691406,
+            "z": -1.0099999904632568
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.112000972032547,
+            "y": 1.5629997253417969,
+            "z": -1.0099999904632568
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "616": {
+      "id": "616",
+      "name": "Unknown Item 616",
+      "prefab_name": "Stone Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3110008239746094,
+            "y": 0.9990005493164062,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bed Sheets",
+          "pos": {
+            "x": 0.14500045776367188,
+            "y": 0.5940017700195312,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB",
+          "pos": {
+            "x": -0.15000152587890625,
+            "y": 0.7280006408691406,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "Bed Sheets (1)",
+          "pos": {
+            "x": 0.14500045776367188,
+            "y": 0.5940017700195312,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "Bed SheetsB (1)",
+          "pos": {
+            "x": -0.15000152587890625,
+            "y": 0.7280006408691406,
+            "z": -1.059999942779541
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "2239": {
+      "id": "2239",
+      "name": "Snowy Log Bed",
+      "prefab_name": "Snowy Log Bed",
+      "defaultSkin": 58,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.3009999990463257,
+            "y": 0.991999626159668,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "SnowyPillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.16499945521354675,
+            "y": 0.5579986572265625,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "SnowySheets_5.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.04699999839067459,
+            "y": 0.6440000534057617,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "SnowySheets_6.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.10400000214576721,
+            "y": 0.5830001831054688,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "SnowySheets_7.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": 0.05000000074505806,
+            "y": 0.6370000839233398,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "SnowySheets_8.png"
+        }
+      }
+    },
+    "2158": {
+      "id": "2158",
+      "name": "West Ranch Bed",
+      "prefab_name": "West Ranch Bed",
+      "defaultSkin": 54,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3449974060058594,
+            "y": 0.9790000915527344,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Red+BrownSheets_9.png"
+        },
+        "sheets": {
+          "go_name": "Bed Sheets",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Red+BrownSheets_5.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB (1)",
+          "pos": {
+            "x": -0.06399917602539062,
+            "y": 0.6819992065429688,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Red+BrownSheets_6.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SleepingSheets (1)",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Red+BrownSheets_7.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SleepingSheetsB (1)",
+          "pos": {
+            "x": -0.06399917602539062,
+            "y": 0.6819992065429688,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Red+BrownSheets_8.png"
+        }
+      }
+    },
+    "695": {
+      "id": "695",
+      "name": "Unknown Item 695",
+      "prefab_name": "Feudal Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5920028686523438,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6610031127929688,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5920028686523438,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6610031127929688,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "2105": {
+      "id": "2105",
+      "name": "Rustic Bed",
+      "prefab_name": "Rustic Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.26999998092651367,
+            "y": 0.9029998779296875,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.16499948501586914,
+            "y": 0.5579986572265625,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.10300016403198242,
+            "y": 0.6719970703125,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.15599870681762695,
+            "y": 0.5709991455078125,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.11200094223022461,
+            "y": 0.667999267578125,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1788": {
+      "id": "1788",
+      "name": "Unknown Item 1788",
+      "prefab_name": "Ironwood Bed B",
+      "defaultSkin": 42,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.3330078125,
+            "y": 1.05999755859375,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "movie-ironwood-blankets_9.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.118011474609375,
+            "y": 0.628997802734375,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "movie-ironwood-blankets_5.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.040985107421875,
+            "y": 0.7030029296875,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "movie-ironwood-blankets_6.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.1090087890625,
+            "y": 0.635986328125,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "movie-ironwood-blankets_8.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.024993896484375,
+            "y": 0.69000244140625,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "movie-ironwood-blankets_7.png"
+        }
+      }
+    },
+    "492": {
+      "id": "492",
+      "name": "Enchanted Bed",
+      "prefab_name": "Enchanted Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.34800052642822266,
+            "y": 0.9420013427734375,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "SheetsF",
+          "pos": {
+            "x": 0.11100006103515625,
+            "y": 0.5629997253417969,
+            "z": -0.05000000074505806
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "SheetB",
+          "pos": {
+            "x": -0.095001220703125,
+            "y": 0.7360000610351562,
+            "z": -0.15000000596046448
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SheetsF (sleeping)",
+          "pos": {
+            "x": 0.13899993896484375,
+            "y": 0.5709991455078125,
+            "z": -1.0299999713897705
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SheetB (sleeping)",
+          "pos": {
+            "x": -0.10100173950195312,
+            "y": 0.73699951171875,
+            "z": -1.090000033378601
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "2357": {
+      "id": "2357",
+      "name": "Wyrmcraft Bed",
+      "prefab_name": "Wyrmcraft Bed",
+      "defaultSkin": 61,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.3859996795654297,
+            "y": 1.0240020751953125,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Wyrmcraft_Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.048999786376953125,
+            "y": 0.6790008544921875,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Wyrmcraft_Sheets_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.042999267578125,
+            "y": 0.7919998168945312,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Wyrmcraft_Sheets_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.15599822998046875,
+            "y": 0.5709991455078125,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Wyrmcraft_Sheets_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.09600067138671875,
+            "y": 0.6629981994628906,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Wyrmcraft_Sheets_2.png"
+        }
+      }
+    },
+    "6": {
+      "id": "6",
+      "name": "Bamboo Staff",
+      "prefab_name": "Coastal Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3449974060058594,
+            "y": 0.9790000915527344,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bed Sheets",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB (1)",
+          "pos": {
+            "x": -0.06399917602539062,
+            "y": 0.6819992065429688,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SleepingSheets (1)",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SleepingSheetsB (1)",
+          "pos": {
+            "x": -0.06399917602539062,
+            "y": 0.6819992065429688,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1631": {
+      "id": "1631",
+      "name": "Unknown Item 1631",
+      "prefab_name": "Popblock Bed",
+      "defaultSkin": 41,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.2890000343322754,
+            "y": 0.9909999370574951,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "popblock-blankets_4.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.10000228881835938,
+            "y": 0.5919990539550781,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "popblock-blankets_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.07400000095367432,
+            "y": 0.6749999523162842,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "popblock-blankets_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.10000228881835938,
+            "y": 0.5919990539550781,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "popblock-blankets_2.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "popblock-blankets_3.png"
+        }
+      }
+    },
+    "2223": {
+      "id": "2223",
+      "name": "Forluxe Bed",
+      "prefab_name": "Forluxe Bed",
+      "defaultSkin": 56,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.34299999475479126,
+            "y": 0.9689998626708984,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Sweetheart_Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bed Sheets",
+          "pos": {
+            "x": 0.13899999856948853,
+            "y": 0.5419998168945312,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Sweetheart_Sheet_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB (1)",
+          "pos": {
+            "x": -0.04800000041723251,
+            "y": 0.6359996795654297,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Sweetheart_Sheet_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SleepingSheets (1)",
+          "pos": {
+            "x": 0.07100000232458115,
+            "y": 0.5709991455078125,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Sweetheart_Sheet_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SleepingSheetsB (1)",
+          "pos": {
+            "x": -0.054999999701976776,
+            "y": 0.6350002288818359,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Sweetheart_Sheet_2.png"
+        }
+      }
+    },
+    "2088": {
+      "id": "2088",
+      "name": "Unknown Item 2088",
+      "prefab_name": "Clam Bed B",
+      "defaultSkin": 49,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.26999998092651367,
+            "y": 0.9029998779296875,
+            "z": -0.09000000357627869
+          },
+          "sorting_order": 0,
+          "sprite": "Clam BedSheets_9.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.16499948501586914,
+            "y": 0.5579986572265625,
+            "z": -0.10000000149011612
+          },
+          "sorting_order": 0,
+          "sprite": "Clam BedSheets_5.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.10300016403198242,
+            "y": 0.6719970703125,
+            "z": -0.07999999821186066
+          },
+          "sorting_order": 0,
+          "sprite": "Clam BedSheets_6.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.15599870681762695,
+            "y": 0.5709991455078125,
+            "z": -1.1100000143051147
+          },
+          "sorting_order": 0,
+          "sprite": "Clam BedSheets_7.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.11200094223022461,
+            "y": 0.667999267578125,
+            "z": -1.100000023841858
+          },
+          "sorting_order": 0,
+          "sprite": "Clam BedSheets_8.png"
+        }
+      }
+    },
+    "180": {
+      "id": "180",
+      "name": "Spooky Mixtape",
+      "prefab_name": "Stone Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3110008239746094,
+            "y": 0.9990005493164062,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bed Sheets",
+          "pos": {
+            "x": 0.14500045776367188,
+            "y": 0.5940017700195312,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB",
+          "pos": {
+            "x": -0.15000152587890625,
+            "y": 0.7280006408691406,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "Bed Sheets (1)",
+          "pos": {
+            "x": 0.14500045776367188,
+            "y": 0.5940017700195312,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "Bed SheetsB (1)",
+          "pos": {
+            "x": -0.15000152587890625,
+            "y": 0.7280006408691406,
+            "z": -1.059999942779541
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1036": {
+      "id": "1036",
+      "name": "Unknown Item 1036",
+      "prefab_name": "Celestial Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.26999998092651367,
+            "y": 0.9029998779296875,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.16499948501586914,
+            "y": 0.5579986572265625,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.10300016403198242,
+            "y": 0.6719970703125,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.15599870681762695,
+            "y": 0.5709991455078125,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.09600019454956055,
+            "y": 0.6629981994628906,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "937": {
+      "id": "937",
+      "name": "Unknown Item 937",
+      "prefab_name": "Enchanted Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.34800052642822266,
+            "y": 0.9420013427734375,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "SheetsF",
+          "pos": {
+            "x": 0.11100006103515625,
+            "y": 0.5629997253417969,
+            "z": -0.05000000074505806
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "SheetB",
+          "pos": {
+            "x": -0.095001220703125,
+            "y": 0.7360000610351562,
+            "z": -0.15000000596046448
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SheetsF (sleeping)",
+          "pos": {
+            "x": 0.13899993896484375,
+            "y": 0.5709991455078125,
+            "z": -1.0299999713897705
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SheetB (sleeping)",
+          "pos": {
+            "x": -0.10100173950195312,
+            "y": 0.73699951171875,
+            "z": -1.090000033378601
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "2436": {
+      "id": "2436",
+      "name": "Eggcellent Bed",
+      "prefab_name": "Eggcellent Bed",
+      "defaultSkin": 63,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.26999998092651367,
+            "y": 0.9860000610351562,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Eggcellent_Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.14599990844726562,
+            "y": 0.61199951171875,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Eggcellent_Sheet_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.04500007629394531,
+            "y": 0.7159996032714844,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Eggcellent_Sheet_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.10200023651123047,
+            "y": 0.6340007781982422,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Eggcellent_Sheet_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.028999805450439453,
+            "y": 0.7310009002685547,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Eggcellent_Sheet_2.png"
+        }
+      }
+    },
+    "1522": {
+      "id": "1522",
+      "name": "Unknown Item 1522",
+      "prefab_name": "Movie Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.289000004529953,
+            "y": 0.9599990844726562,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.14000000059604645,
+            "y": 0.5379981994628906,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.09399999678134918,
+            "y": 0.6430015563964844,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.16500000655651093,
+            "y": 0.5330009460449219,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.12099999934434891,
+            "y": 0.6489982604980469,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1807": {
+      "id": "1807",
+      "name": "Unknown Item 1807",
+      "prefab_name": "Retro Car Bed B",
+      "defaultSkin": 44,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.407989501953125,
+            "y": 1.141998291015625,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Retro Bedsheets_0.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.06298828125,
+            "y": 0.75799560546875,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Retro Bedsheets_2.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.053009033203125,
+            "y": 0.843994140625,
+            "z": -0.07999999821186066
+          },
+          "sorting_order": 0,
+          "sprite": "Retro Bedsheets_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.032012939453125,
+            "y": 0.760986328125,
+            "z": -1.0299999713897705
+          },
+          "sorting_order": 0,
+          "sprite": "Retro Bedsheets_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.093994140625,
+            "y": 0.8179931640625,
+            "z": -1.059999942779541
+          },
+          "sorting_order": 0,
+          "sprite": "Retro Bedsheets_4.png"
+        }
+      }
+    },
+    "1079": {
+      "id": "1079",
+      "name": "Unknown Item 1079",
+      "prefab_name": "Fortune Bed B",
+      "defaultSkin": 31,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.5290000438690186,
+            "y": 1.0340003967285156,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet",
+          "pos": {
+            "x": -0.1679999828338623,
+            "y": 0.6370010375976562,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "BedsheetF",
+          "pos": {
+            "x": -0.3229999542236328,
+            "y": 0.7410011291503906,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover",
+          "pos": {
+            "x": -0.1679999828338623,
+            "y": 0.6370010375976562,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF",
+          "pos": {
+            "x": -0.3229999542236328,
+            "y": 0.7410011291503906,
+            "z": -0.05000000074505806
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1503": {
+      "id": "1503",
+      "name": "Unknown Item 1503",
+      "prefab_name": "Modern Bed",
+      "defaultSkin": 37,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.3039999008178711,
+            "y": 0.9930000305175781,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Modern_Bedsheets_0.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.13099956512451172,
+            "y": 0.5890007019042969,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Modern_Bedsheets_1.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.11900043487548828,
+            "y": 0.7010002136230469,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Modern_Bedsheets_2.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.1490001678466797,
+            "y": 0.6180000305175781,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Modern_Bedsheets_4.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.13700008392333984,
+            "y": 0.7089996337890625,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Modern_Bedsheets_3.png"
+        }
+      }
+    },
+    "11": {
+      "id": "11",
+      "name": "Crowbar",
+      "prefab_name": "Flower Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "969": {
+      "id": "969",
+      "name": "Unknown Item 969",
+      "prefab_name": "Shipwreck Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Cushion",
+          "pos": {
+            "x": -0.4519999921321869,
+            "y": 1.3930015563964844,
+            "z": -0.07000000029802322
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "SleepingSheetsB (2)",
+          "pos": {
+            "x": -0.17299999296665192,
+            "y": 0.9679985046386719,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB (1)",
+          "pos": {
+            "x": -0.1569995880126953,
+            "y": 0.7960014343261719,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SleepingSheets (1)",
+          "pos": {
+            "x": -0.17300033569335938,
+            "y": 0.9679985046386719,
+            "z": -1.0199999809265137
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SleepingSheetsB (1)",
+          "pos": {
+            "x": -0.1529998779296875,
+            "y": 0.8069992065429688,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1521": {
+      "id": "1521",
+      "name": "Unknown Item 1521",
+      "prefab_name": "Ironwood Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.3330000042915344,
+            "y": 1.0600013732910156,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.11800000071525574,
+            "y": 0.6290016174316406,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.04100000113248825,
+            "y": 0.7029991149902344,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.10899999737739563,
+            "y": 0.6360015869140625,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.02500000037252903,
+            "y": 0.6899986267089844,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "637": {
+      "id": "637",
+      "name": "Unknown Item 637",
+      "prefab_name": "Mahogany Bed B",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3449974060058594,
+            "y": 0.9790000915527344,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bed Sheets",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB",
+          "pos": {
+            "x": -0.047000885009765625,
+            "y": 0.6739997863769531,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SleepingSheets",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SleepingSheetsB",
+          "pos": {
+            "x": -0.051998138427734375,
+            "y": 0.6529998779296875,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "564": {
+      "id": "564",
+      "name": "Interstellar Bed",
+      "prefab_name": "Interstellar Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3819999694824219,
+            "y": 1.0890007019042969,
+            "z": -0.07999999821186066
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "SheetsF",
+          "pos": {
+            "x": 0.048000335693359375,
+            "y": 0.707000732421875,
+            "z": -0.07000000029802322
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "BedsheetsB",
+          "pos": {
+            "x": -0.0449981689453125,
+            "y": 0.9169998168945312,
+            "z": -0.09000000357627869
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SheetsF (Sleeping)",
+          "pos": {
+            "x": 0.019001007080078125,
+            "y": 0.7360000610351562,
+            "z": -1.0299999713897705
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedsheetsB (Sleepingh)",
+          "pos": {
+            "x": -0.0449981689453125,
+            "y": 0.9169998168945312,
+            "z": -1.0099999904632568
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "709": {
+      "id": "709",
+      "name": "Unknown Item 709",
+      "prefab_name": "Library Bed B",
+      "defaultSkin": 20,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.40799903869628906,
+            "y": 0.970001220703125,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.02700042724609375,
+            "y": 0.625,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.2409992218017578,
+            "y": 0.7389984130859375,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.017999649047851562,
+            "y": 0.63800048828125,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.25,
+            "y": 0.7350006103515625,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "2159": {
+      "id": "2159",
+      "name": "Unknown Item 2159",
+      "prefab_name": "West Ranch Bed B",
+      "defaultSkin": 55,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3449974060058594,
+            "y": 0.9790000915527344,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bed Sheets",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB (1)",
+          "pos": {
+            "x": -0.06399917602539062,
+            "y": 0.6819992065429688,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SleepingSheets (1)",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SleepingSheetsB (1)",
+          "pos": {
+            "x": -0.06399917602539062,
+            "y": 0.6819992065429688,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_2.png"
+        }
+      }
+    },
+    "1206": {
+      "id": "1206",
+      "name": "Voyager",
+      "prefab_name": "Voyager",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.36800000071525574,
+            "y": 1.2070000171661377,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.03299999237060547,
+            "y": 0.8000011444091797,
+            "z": -0.05000000074505806
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.0970001220703125,
+            "y": 0.944000244140625,
+            "z": -0.07000000029802322
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.06499999761581421,
+            "y": 0.8200010061264038,
+            "z": -0.6000000238418579
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.12800000607967377,
+            "y": 0.9610000252723694,
+            "z": -0.05000000074505806
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "121": {
+      "id": "121",
+      "name": "Trigger Fish",
+      "prefab_name": "Rosewood Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (1)",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (1)",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (1)",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "990": {
+      "id": "990",
+      "name": "Unknown Item 990",
+      "prefab_name": "Sweetbed B",
+      "defaultSkin": 26,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3559989929199219,
+            "y": 0.9669990539550781,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "SheetsF",
+          "pos": {
+            "x": 0.023998260498046875,
+            "y": 0.5849990844726562,
+            "z": -0.05000000074505806
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_0.png"
+        },
+        "sheetsF": {
+          "go_name": "SheetsB",
+          "pos": {
+            "x": -0.22700119018554688,
+            "y": 0.7239990234375,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SheetsF (Sleeping)",
+          "pos": {
+            "x": 0.007999420166015625,
+            "y": 0.5629997253417969,
+            "z": -1.059999942779541
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SheetsB (sleeping)",
+          "pos": {
+            "x": -0.2619972229003906,
+            "y": 0.7329978942871094,
+            "z": -1.0099999904632568
+          },
+          "sorting_order": 0,
+          "sprite": "Interstellar_Sheets_2.png"
+        }
+      }
+    },
+    "2545": {
+      "id": "2545",
+      "name": "Primal Bed",
+      "prefab_name": "Primal Bed",
+      "defaultSkin": 65,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.3049999475479126,
+            "y": 0.983001708984375,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Wyrmcraft_Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.1649993658065796,
+            "y": 0.5579986572265625,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Wyrmcraft_Sheets_0.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.04999995231628418,
+            "y": 0.7249984741210938,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Wyrmcraft_Sheets_1.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.1559985876083374,
+            "y": 0.5709991455078125,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Wyrmcraft_Sheets_3.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.026999950408935547,
+            "y": 0.7130012512207031,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Wyrmcraft_Sheets_2.png"
+        }
+      }
+    },
+    "1114": {
+      "id": "1114",
+      "name": "Wildbark Bed",
+      "prefab_name": "Wildbark Bed",
+      "defaultSkin": 32,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.29200005531311035,
+            "y": 1.0089998245239258,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Red+BrownSheets_9.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet",
+          "pos": {
+            "x": 0.12300002574920654,
+            "y": 0.625,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Red+BrownSheets_5.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.05900001525878906,
+            "y": 0.7150001525878906,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Red+BrownSheets_6.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover",
+          "pos": {
+            "x": 0.10599994659423828,
+            "y": 0.6190004348754883,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Red+BrownSheets_7.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF",
+          "pos": {
+            "x": -0.05900001525878906,
+            "y": 0.7209997177124023,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "Red+BrownSheets_8.png"
+        }
+      }
+    },
+    "20": {
+      "id": "20",
+      "name": "Lord of the Carrots 3",
+      "prefab_name": "Mahogany Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3449974060058594,
+            "y": 0.9790000915527344,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bed Sheets",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bed SheetsB",
+          "pos": {
+            "x": -0.047000885009765625,
+            "y": 0.6739997863769531,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "SleepingSheets",
+          "pos": {
+            "x": 0.11400222778320312,
+            "y": 0.5999984741210938,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "SleepingSheetsB",
+          "pos": {
+            "x": -0.051998138427734375,
+            "y": 0.6529998779296875,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "53": {
+      "id": "53",
+      "name": "Umbrella",
+      "prefab_name": "Wooden Bed",
+      "defaultSkin": 50,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.3400001525878906,
+            "y": 0.9690017700195312,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover",
+          "pos": {
+            "x": 0.09999847412109375,
+            "y": 0.5919990539550781,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF",
+          "pos": {
+            "x": -0.034999847412109375,
+            "y": 0.6609992980957031,
+            "z": -0.05999999865889549
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1065": {
+      "id": "1065",
+      "name": "Fortune Bed",
+      "prefab_name": "Fortune Bed",
+      "defaultSkin": 30,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow",
+          "pos": {
+            "x": -0.5290000438690186,
+            "y": 1.0340003967285156,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Pillow.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet",
+          "pos": {
+            "x": -0.1679999828338623,
+            "y": 0.6370010375976562,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Bedsheet.png"
+        },
+        "sheetsF": {
+          "go_name": "BedsheetF",
+          "pos": {
+            "x": -0.3229999542236328,
+            "y": 0.7410011291503906,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "BedsheetF.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover",
+          "pos": {
+            "x": -0.1679999828338623,
+            "y": 0.6370010375976562,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "BedCover.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF",
+          "pos": {
+            "x": -0.3229999542236328,
+            "y": 0.7410011291503906,
+            "z": -0.05000000074505806
+          },
+          "sorting_order": 0,
+          "sprite": "BedCoverF.png"
+        }
+      }
+    },
+    "1806": {
+      "id": "1806",
+      "name": "Unknown Item 1806",
+      "prefab_name": "Modern Bed B",
+      "defaultSkin": 43,
+      "hasBack": true,
+      "offset_tsuki_sleep": {
+        "x": -0.351,
+        "y": 0.355,
+        "px_x": -52.6,
+        "px_y": 53.2
+      },
+      "parts": {
+        "pillow": {
+          "go_name": "Pillow (2)",
+          "pos": {
+            "x": -0.303985595703125,
+            "y": 0.993011474609375,
+            "z": -0.029999999329447746
+          },
+          "sorting_order": 0,
+          "sprite": "Modern_Bedsheets_0.png"
+        },
+        "sheets": {
+          "go_name": "Bedsheet (2)",
+          "pos": {
+            "x": 0.131011962890625,
+            "y": 0.5889892578125,
+            "z": -0.03999999910593033
+          },
+          "sorting_order": 0,
+          "sprite": "Modern_Bedsheets_1.png"
+        },
+        "sheetsF": {
+          "go_name": "Bedsheet F (2)",
+          "pos": {
+            "x": -0.118988037109375,
+            "y": 0.70098876953125,
+            "z": -0.019999999552965164
+          },
+          "sorting_order": 0,
+          "sprite": "Modern_Bedsheets_2.png"
+        },
+        "sheetsSleep": {
+          "go_name": "BedCover (2)",
+          "pos": {
+            "x": 0.14898681640625,
+            "y": 0.618011474609375,
+            "z": -1.0499999523162842
+          },
+          "sorting_order": 0,
+          "sprite": "Modern_Bedsheets_4.png"
+        },
+        "sheetsSleepF": {
+          "go_name": "BedCoverF (2)",
+          "pos": {
+            "x": -0.136993408203125,
+            "y": 0.708984375,
+            "z": -1.0399999618530273
+          },
+          "sorting_order": 0,
+          "sprite": "Modern_Bedsheets_3.png"
+        }
+      }
+    }
+  },
+  "skins": {
+    "20": {
+      "name": "Rustic",
+      "pillow": "Pillow.png",
+      "sheets": "Bedsheet.png",
+      "sheetsF": "BedsheetF.png",
+      "sheetsSleep": "BedCover.png",
+      "sheetsSleepF": "BedCoverF.png"
+    },
+    "21": {
+      "name": "Rustic B",
+      "pillow": "Pillow 2.png",
+      "sheets": "Bedsheet 2.png",
+      "sheetsF": "BedsheetF 2.png",
+      "sheetsSleep": "BedCover 2.png",
+      "sheetsSleepF": "BedCoverF 2.png"
+    },
+    "23": {
+      "name": "Shipwreck",
+      "pillow": "Pillow.png",
+      "sheets": "Bedsheet.png",
+      "sheetsF": "BedsheetF.png",
+      "sheetsSleep": "BedCover.png",
+      "sheetsSleepF": "BedCoverF.png"
+    },
+    "26": {
+      "name": "Interstellar",
+      "pillow": "Interstellar_Pillow.png",
+      "sheets": "Interstellar_Sheets_0.png",
+      "sheetsF": "Interstellar_Sheets_1.png",
+      "sheetsSleep": "Interstellar_Sheets_3.png",
+      "sheetsSleepF": "Interstellar_Sheets_2.png"
+    },
+    "27": {
+      "name": "Interstellar B",
+      "pillow": "Interstellar_Pillow.png",
+      "sheets": "Interstellar_Sheets_0.png",
+      "sheetsF": "Interstellar_Sheets_1.png",
+      "sheetsSleep": "Interstellar_Sheets_3.png",
+      "sheetsSleepF": "Interstellar_Sheets_2.png"
+    },
+    "30": {
+      "name": "Fortune",
+      "pillow": "Pillow.png",
+      "sheets": "Bedsheet.png",
+      "sheetsF": "BedsheetF.png",
+      "sheetsSleep": "BedCover.png",
+      "sheetsSleepF": "BedCoverF.png"
+    },
+    "31": {
+      "name": "Fortune B",
+      "pillow": "Pillow.png",
+      "sheets": "Bedsheet.png",
+      "sheetsF": "BedsheetF.png",
+      "sheetsSleep": "BedCover.png",
+      "sheetsSleepF": "BedCoverF.png"
+    },
+    "32": {
+      "name": "Wildbark",
+      "pillow": "Red+BrownSheets_9.png",
+      "sheets": "Red+BrownSheets_5.png",
+      "sheetsF": "Red+BrownSheets_6.png",
+      "sheetsSleep": "Red+BrownSheets_7.png",
+      "sheetsSleepF": "Red+BrownSheets_8.png"
+    },
+    "35": {
+      "name": "Tin Can",
+      "pillow": "Pillow.png",
+      "sheets": "Bedsheet.png",
+      "sheetsF": "BedsheetF.png",
+      "sheetsSleep": "BedCover.png",
+      "sheetsSleepF": "BedCoverF.png"
+    },
+    "36": {
+      "name": "Tin Can B",
+      "pillow": "Pillow.png",
+      "sheets": "Bedsheet.png",
+      "sheetsF": "BedsheetF.png",
+      "sheetsSleep": "BedCover.png",
+      "sheetsSleepF": "BedCoverF.png"
+    },
+    "37": {
+      "name": "Modern",
+      "pillow": "Modern_Bedsheets_0.png",
+      "sheets": "Modern_Bedsheets_1.png",
+      "sheetsF": "Modern_Bedsheets_2.png",
+      "sheetsSleep": "Modern_Bedsheets_4.png",
+      "sheetsSleepF": "Modern_Bedsheets_3.png"
+    },
+    "38": {
+      "name": "Retro Car",
+      "pillow": "Retro Bedsheets_0.png",
+      "sheets": "Retro Bedsheets_2.png",
+      "sheetsF": "Retro Bedsheets_1.png",
+      "sheetsSleep": "Retro Bedsheets_3.png",
+      "sheetsSleepF": "Retro Bedsheets_4.png"
+    },
+    "41": {
+      "name": "Popblock",
+      "pillow": "popblock-blankets_4.png",
+      "sheets": "popblock-blankets_0.png",
+      "sheetsF": "popblock-blankets_1.png",
+      "sheetsSleep": "popblock-blankets_2.png",
+      "sheetsSleepF": "popblock-blankets_3.png"
+    },
+    "42": {
+      "name": "Ironwood",
+      "pillow": "movie-ironwood-blankets_9.png",
+      "sheets": "movie-ironwood-blankets_5.png",
+      "sheetsF": "movie-ironwood-blankets_6.png",
+      "sheetsSleep": "movie-ironwood-blankets_8.png",
+      "sheetsSleepF": "movie-ironwood-blankets_7.png"
+    },
+    "43": {
+      "name": "Modern B",
+      "pillow": "Modern_Bedsheets_0.png",
+      "sheets": "Modern_Bedsheets_1.png",
+      "sheetsF": "Modern_Bedsheets_2.png",
+      "sheetsSleep": "Modern_Bedsheets_4.png",
+      "sheetsSleepF": "Modern_Bedsheets_3.png"
+    },
+    "44": {
+      "name": "Retro Car B",
+      "pillow": "Retro Bedsheets_0.png",
+      "sheets": "Retro Bedsheets_2.png",
+      "sheetsF": "Retro Bedsheets_1.png",
+      "sheetsSleep": "Retro Bedsheets_3.png",
+      "sheetsSleepF": "Retro Bedsheets_4.png"
+    },
+    "45": {
+      "name": "Popblock B",
+      "pillow": "popblock-blankets_4.png",
+      "sheets": "popblock-blankets_0.png",
+      "sheetsF": "popblock-blankets_1.png",
+      "sheetsSleep": "popblock-blankets_2.png",
+      "sheetsSleepF": "popblock-blankets_3.png"
+    },
+    "46": {
+      "name": "Jester",
+      "pillow": "Jester_Pillow.png",
+      "sheets": "Jester_Sheet_0.png",
+      "sheetsF": "Jester_Sheet_1.png",
+      "sheetsSleep": "Jester_Sheet_3.png",
+      "sheetsSleepF": "Jester_Sheet_2.png"
+    },
+    "47": {
+      "name": "Jester B",
+      "pillow": "Jester_B_Pillow.png",
+      "sheets": "Jester_B_Sheet_0.png",
+      "sheetsF": "Jester_B_Sheet_1.png",
+      "sheetsSleep": "Jester_B_Sheet_3.png",
+      "sheetsSleepF": "Jester_B_Sheet_2.png"
+    },
+    "48": {
+      "name": "Clam",
+      "pillow": "Clam BedSheets_2.png",
+      "sheets": "Clam BedSheets_3.png",
+      "sheetsF": "Clam BedSheets_4.png",
+      "sheetsSleep": "Clam BedSheets_1.png",
+      "sheetsSleepF": "Clam BedSheets_0.png"
+    },
+    "49": {
+      "name": "Clam B",
+      "pillow": "Clam BedSheets_9.png",
+      "sheets": "Clam BedSheets_5.png",
+      "sheetsF": "Clam BedSheets_6.png",
+      "sheetsSleep": "Clam BedSheets_7.png",
+      "sheetsSleepF": "Clam BedSheets_8.png"
+    },
+    "50": {
+      "name": "Basic White",
+      "pillow": "Pillow.png",
+      "sheets": "Bedsheet.png",
+      "sheetsF": "BedsheetF.png",
+      "sheetsSleep": "BedCover.png",
+      "sheetsSleepF": "BedCoverF.png"
+    },
+    "51": {
+      "name": "Basic Grey",
+      "pillow": "Pillow 2.png",
+      "sheets": "Bedsheet 2.png",
+      "sheetsF": "BedsheetF 2.png",
+      "sheetsSleep": "BedCover 2.png",
+      "sheetsSleepF": "BedCoverF 2.png"
+    },
+    "52": {
+      "name": "Mahogany",
+      "pillow": "Mahogany_Pillow.png",
+      "sheets": "Mahogany_Sheet_0.png",
+      "sheetsF": "Mahogany_Sheet_1.png",
+      "sheetsSleep": "Mahogany_Sheet_3.png",
+      "sheetsSleepF": "Mahogany_Sheet_2.png"
+    },
+    "53": {
+      "name": "Garden",
+      "pillow": "Garden_Pillow.png",
+      "sheets": "Garden_Sheet_0.png",
+      "sheetsF": "Garden_Sheet_1.png",
+      "sheetsSleep": "Garden_Sheet_3.png",
+      "sheetsSleepF": "Garden_Sheet_2.png"
+    },
+    "54": {
+      "name": "West Ranch",
+      "pillow": "Red+BrownSheets_9.png",
+      "sheets": "Red+BrownSheets_5.png",
+      "sheetsF": "Red+BrownSheets_6.png",
+      "sheetsSleep": "Red+BrownSheets_7.png",
+      "sheetsSleepF": "Red+BrownSheets_8.png"
+    },
+    "55": {
+      "name": "West Ranch B",
+      "pillow": "Interstellar_Pillow.png",
+      "sheets": "Interstellar_Sheets_0.png",
+      "sheetsF": "Interstellar_Sheets_1.png",
+      "sheetsSleep": "Interstellar_Sheets_3.png",
+      "sheetsSleepF": "Interstellar_Sheets_2.png"
+    },
+    "56": {
+      "name": "Sweetheart",
+      "pillow": "Sweetheart_Pillow.png",
+      "sheets": "Sweetheart_Sheet_0.png",
+      "sheetsF": "Sweetheart_Sheet_1.png",
+      "sheetsSleep": "Sweetheart_Sheet_3.png",
+      "sheetsSleepF": "Sweetheart_Sheet_2.png"
+    },
+    "57": {
+      "name": "Enchanted",
+      "pillow": "Enchanted_Pillow.png",
+      "sheets": "EnchantedSheet_0.png",
+      "sheetsF": "EnchantedSheet_1.png",
+      "sheetsSleep": "EnchantedSheet_3.png",
+      "sheetsSleepF": "EnchantedSheet_2.png"
+    },
+    "58": {
+      "name": "Snowy Log",
+      "pillow": "SnowyPillow.png",
+      "sheets": "SnowySheets_5.png",
+      "sheetsF": "SnowySheets_6.png",
+      "sheetsSleep": "SnowySheets_7.png",
+      "sheetsSleepF": "SnowySheets_8.png"
+    },
+    "59": {
+      "name": "Lovestruck",
+      "pillow": "Lovestruck_Pillow_9.png",
+      "sheets": "Lovestruck_Sheets_5.png",
+      "sheetsF": "Lovestruck_Sheets_6.png",
+      "sheetsSleep": "Lovestruck_Sheets_7.png",
+      "sheetsSleepF": "Lovestruck_Sheets_8.png"
+    },
+    "60": {
+      "name": "Lovestruck B",
+      "pillow": "Lovestruck_PillowB.png",
+      "sheets": "Lovestruck_SheetsB_0.png",
+      "sheetsF": "Lovestruck_SheetsB_1.png",
+      "sheetsSleep": "Lovestruck_SheetsB_3.png",
+      "sheetsSleepF": "Lovestruck_SheetsB_2.png"
+    },
+    "61": {
+      "name": "Wyrmcraft",
+      "pillow": "Wyrmcraft_Pillow.png",
+      "sheets": "Wyrmcraft_Sheets_0.png",
+      "sheetsF": "Wyrmcraft_Sheets_1.png",
+      "sheetsSleep": "Wyrmcraft_Sheets_3.png",
+      "sheetsSleepF": "Wyrmcraft_Sheets_2.png"
+    },
+    "62": {
+      "name": "Wyrmcraft B",
+      "pillow": "WyrmcraftB_Sheets_9.png",
+      "sheets": "WyrmcraftB_Sheets_5.png",
+      "sheetsF": "WyrmcraftB_Sheets_6.png",
+      "sheetsSleep": "WyrmcraftB_Sheets_7.png",
+      "sheetsSleepF": "WyrmcraftB_Sheets_8.png"
+    },
+    "63": {
+      "name": "Eggcellent",
+      "pillow": "Eggcellent_Pillow.png",
+      "sheets": "Eggcellent_Sheet_0.png",
+      "sheetsF": "Eggcellent_Sheet_1.png",
+      "sheetsSleep": "Eggcellent_Sheet_3.png",
+      "sheetsSleepF": "Eggcellent_Sheet_2.png"
+    },
+    "64": {
+      "name": "Eggcellent B",
+      "pillow": "Eggcellent_Pillow_B.png",
+      "sheets": "Eggcellent_Sheet_0_B.png",
+      "sheetsF": "Eggcellent_Sheet_1_B.png",
+      "sheetsSleep": "Eggcellent_Sheet_3_B.png",
+      "sheetsSleepF": "Eggcellent_Sheet_2_B.png"
+    },
+    "65": {
+      "name": "Primal",
+      "pillow": "Wyrmcraft_Pillow.png",
+      "sheets": "Wyrmcraft_Sheets_0.png",
+      "sheetsF": "Wyrmcraft_Sheets_1.png",
+      "sheetsSleep": "Wyrmcraft_Sheets_3.png",
+      "sheetsSleepF": "Wyrmcraft_Sheets_2.png"
+    },
+    "66": {
+      "name": "Primal B",
+      "pillow": "WyrmcraftB_Sheets_9.png",
+      "sheets": "WyrmcraftB_Sheets_5.png",
+      "sheetsF": "WyrmcraftB_Sheets_6.png",
+      "sheetsSleep": "WyrmcraftB_Sheets_7.png",
+      "sheetsSleepF": "WyrmcraftB_Sheets_8.png"
+    },
+    "67": {
+      "name": "Snowy Log B",
+      "pillow": "Snowy_Bedsheets_4.png",
+      "sheets": "Snowy_Bedsheets_0.png",
+      "sheetsF": "Snowy_Bedsheets_1.png",
+      "sheetsSleep": "Snowy_Bedsheets_3.png",
+      "sheetsSleepF": "Snowy_Bedsheets_2.png"
+    }
+  }
+}

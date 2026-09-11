@@ -103,15 +103,11 @@ function opaquePivotFromRgba(data, w, h, th = 12) {
 
 // Huellas por item/orientación verificadas en juego (formato: itemId -> {ori: [w, l]}).
 // Aplica a ghost + snap + occupancy + tooltip (todo pasa por getRotatedSize).
-const FOOTPRINT_OVERRIDES = {
-    "115": { 0: [4, 2], 1: [2, 4], 2: [4, 2], 3: [2, 4] }, // Banca Tatami: eje real por orientación
-};
+const FOOTPRINT_OVERRIDES = {};
 
 // Tamaños base reales verificados en juego (ori 0), por id. Tienen prioridad
 // sobre getFurnitureSize/items_db. Nunca 1×1 por default para estos ids.
-const REAL_SIZES = {
-    "115": { w: 4, l: 2 }, // Banca Tatami: 4×2 en ori 0/2, 2×4 en ori 1/3
-};
+const REAL_SIZES = {};
 
 class IsometricMap {
     constructor(canvas, app) {
@@ -147,7 +143,141 @@ class IsometricMap {
         this._dragSnap       = null;
         this._rafId = undefined;
 
+        if (!window.BED_PROFILES) {
+            fetch('data/bed_profiles.json')
+                .then(r => r.json())
+                .then(data => {
+                    window.BED_PROFILES = data;
+                    if (this.draw) this.draw();
+                })
+                .catch(e => console.warn('Could not load bed_profiles.json:', e));
+        }
+
+        if (!window.ACTIVITIES_DB) {
+            fetch('data/activities_db.json')
+                .then(r => r.json())
+                .then(data => {
+                    window.ACTIVITIES_DB = data;
+                    if (this.draw) this.draw();
+                })
+                .catch(e => console.warn('Could not load activities_db.json:', e));
+        }
+
+        // Heartbeat for living animated characters (breathing, blinking, frame cycling at ~2.6 FPS)
+        this._animTimer = setInterval(() => {
+            if (this._hasActiveAnimatedEntities && this._hasActiveAnimatedEntities()) {
+                this.draw();
+            }
+        }, 380);
+
+        if (typeof window !== 'undefined') {
+            window.getAnimationFrame = this.getAnimationFrame.bind(this);
+            window.resolveNpcAnimFrames = this.resolveNpcAnimFrames.bind(this);
+        }
+
         this.bindEvents();
+    }
+
+    _hasActiveAnimatedEntities() {
+        if (!this.app) return false;
+        if (this.placements) {
+            for (let i = 0; i < this.placements.length; i++) {
+                const p = this.placements[i];
+                if (p._simSitting || p._simActivity || (p.activityData && p.activityData.valid)) return true;
+            }
+        }
+        if (this.app.parser && typeof this.app.parser.getActivitySaves === 'function') {
+            const acts = this.app.parser.getActivitySaves();
+            if (acts && acts.some(a => a.valid)) return true;
+        }
+        return false;
+    }
+
+    getAnimationFrame(frames, fps = 2.5, mode = 'pingpong', timeMs = Date.now()) {
+        if (!frames || !frames.length) return null;
+        if (frames.length === 1) return frames[0];
+        const frameDuration = 1000 / (fps || 2.5);
+        const totalFrames = frames.length;
+        
+        if (mode === 'pingpong' && totalFrames > 2) {
+            const period = 2 * (totalFrames - 1);
+            const k = Math.floor(timeMs / frameDuration) % period;
+            const idx = k < totalFrames ? k : period - k;
+            return frames[idx];
+        } else {
+            const idx = Math.floor(timeMs / frameDuration) % totalFrames;
+            return frames[idx];
+        }
+    }
+
+    resolveNpcAnimFrames(npcKey, animName) {
+        const db = (typeof window !== 'undefined' && window.NPC_DB) ? window.NPC_DB : null;
+        if (!db) return null;
+        const npc = db[String(npcKey)] || db['0'];
+        if (!npc || !npc.animations) return null;
+        const frames = npc.animations[animName];
+        if (frames && frames.length) {
+            const folder = npc.name || 'Tsuki';
+            return frames.map(f => folder + '/' + f);
+        }
+        return null;
+    }
+
+    getBedCustomImage(filename) {
+        if (!filename) return null;
+        const cacheKey = 'BED_CUSTOM_' + filename;
+        if (this._imgCache[cacheKey] !== undefined) {
+            return this._imgCache[cacheKey];
+        }
+        this._imgCache[cacheKey] = false;
+        const img = new Image();
+        img.onload = () => {
+            this._imgCache[cacheKey] = img;
+            this.draw();
+        };
+        img.onerror = () => {
+            this._imgCache[cacheKey] = null;
+        };
+        img.src = 'images/items/bed_custom/' + filename;
+        return this._imgCache[cacheKey];
+    }
+
+    getItemCustomImage(filename) {
+        if (!filename) return null;
+        const cacheKey = 'ITEM_CUSTOM_' + filename;
+        if (this._imgCache[cacheKey] !== undefined) {
+            return this._imgCache[cacheKey];
+        }
+        this._imgCache[cacheKey] = false;
+        const img = new Image();
+        img.onload = () => {
+            this._imgCache[cacheKey] = img;
+            this.draw();
+        };
+        img.onerror = () => {
+            this._imgCache[cacheKey] = null;
+        };
+        img.src = 'images/items/' + filename;
+        return this._imgCache[cacheKey];
+    }
+
+    getNpcSprite(path) {
+        if (!path) return null;
+        const cacheKey = 'NPC_' + path;
+        if (this._imgCache[cacheKey] !== undefined) {
+            return this._imgCache[cacheKey];
+        }
+        this._imgCache[cacheKey] = false;
+        const img = new Image();
+        img.onload = () => {
+            this._imgCache[cacheKey] = img;
+            this.draw();
+        };
+        img.onerror = () => {
+            this._imgCache[cacheKey] = null;
+        };
+        img.src = 'images/npcs/' + path;
+        return this._imgCache[cacheKey];
     }
 
     // Tileset Image Loader (for Wallpapers/Floors)
@@ -483,10 +613,7 @@ class IsometricMap {
         // clava la sombra tenue bajo la base en estos sprites (115: base filas
         // 139-149, sombra 150-158; BACK: base 130-134, sombra 135-143). Se
         // restauran los valores horneados previos que clavan la base.
-        const PIVOT_OVERRIDES = {
-            "115": { x: 0.3116, y: 0.0919 },
-            "115_BACK": { x: 0.3143, y: 0.106 },
-        };
+        const PIVOT_OVERRIDES = {};
         const ori = Number(orientation);
         const isBack = ori === 2 || ori === 3;
         const key = String(item_id);
@@ -1517,7 +1644,7 @@ class IsometricMap {
                     const u = _bgo * this.scale;
                     const dw = img.width * u;
                     const dh = img.height * u;
-                    const pivot = this._resolveSpritePivot(p.item_id, img, p.orientation || 0) || { x: 0.5, y: 0.5 };
+                    const pivot = this._resolveSpritePivot(p.item_id, img, p.orientation || 0) || { x: 0.5, y: (p.isWall ? 0.5 : 0.25) };
                     const left = pt.x - dw * pivot.x;
                     const top = pt.y - dh * (1 - pivot.y);
                     if (screenX >= left && screenX <= left + dw && screenY >= top && screenY <= top + dh) {
@@ -1816,11 +1943,28 @@ class IsometricMap {
     // a draw() dentro del mismo frame colapsan en un solo redraw real.
     draw() {
         this._clampCamera();
+        if (document.body.classList.contains('play-mode')) {
+            this.startPlayAnimationLoop();
+        }
         if (this._rafId !== undefined) return;
         this._rafId = requestAnimationFrame(() => {
             this._rafId = undefined;
             this._drawImmediate();
         });
+    }
+
+    startPlayAnimationLoop() {
+        if (this._playAnimTimer) return;
+        this._playAnimTimer = setInterval(() => {
+            if (!document.body.classList.contains('play-mode')) {
+                clearInterval(this._playAnimTimer);
+                this._playAnimTimer = null;
+                return;
+            }
+            if (this._activeFurnitureActors > 0 || (window.RoutineScheduler && window.RoutineScheduler.currentSchedule && window.RoutineScheduler.currentSchedule.ambientActors && window.RoutineScheduler.currentSchedule.ambientActors.length > 0)) {
+                this.draw();
+            }
+        }, 300);
     }
 
     _clampCamera() {
@@ -2040,60 +2184,31 @@ class IsometricMap {
                     }
                     if (!this._sceneFullCache) this._sceneFullCache = {};
                     if (this._sceneFullCache[targetLoc] === undefined) {
-                        if (location.protocol === 'file:') { this._sceneFullCache[targetLoc]=null; }
-                        else {
-                            const META = (window.MAP_META && window.MAP_META[targetLoc]) || {};
-                            let exportDir = META.exportDir != null ? META.exportDir : (targetLoc === 0 ? 2 : targetLoc);
+                        this._sceneFullCache[targetLoc] = null; // Prevent multiple fetches
+                        if (location.protocol !== 'file:') {
                             fetch(`data/maps/map_${targetLoc}.json`).then(r=>r.ok?r.json():null).then(unifiedMap=>{
                                 if(unifiedMap){
-                                    this._sceneFullCache[targetLoc]=unifiedMap;
-                                    if(unifiedMap.surfaces && unifiedMap.surfaces.length){
-                                        if(!window.mapsAtlas) window.mapsAtlas=[];
-                                        unifiedMap.surfaces.forEach(s=>{
-                                            const isFloor = s.kind==='floor';
-                                            const existing = window.mapsAtlas.find(a=>String(a.mapId)===String(targetLoc) && String(a.groupNum)===String(s.groupNum) && a.kind===s.kind && (isFloor || !!a.flipped===!!s.flipped));
-                                            let originPx = s.origin_px;
-                                            if (!originPx || (Math.abs(originPx.x) < 500 && Math.abs(originPx.y) < 500)) {
-                                                if (existing && existing.origin_px && Math.abs(existing.origin_px.x) > 500) {
-                                                    originPx = { ...existing.origin_px };
-                                                } else if (s.origin) {
-                                                    originPx = {
-                                                        x: 1235 + s.origin.x * 150,
-                                                        y: 1257 - s.origin.y * 150
-                                                    };
-                                                }
-                                            }
-                                            const originUnity = s.origin || (originPx ? { x: (originPx.x - 1235) / 150, y: (1257 - originPx.y) / 150 } : { x: 0, y: 0 });
-                                            const atlasEntry = {
-                                                mapId: targetLoc,
-                                                id: s.id,
-                                                name: s.name,
-                                                kind: s.kind,
-                                                groupNum: s.groupNum,
-                                                flipped: !!s.flipped,
-                                                rows: s.rows || 16,
-                                                cols: s.cols || 16,
-                                                cell: s.cell || { w: 75, h: 37.5 },
-                                                origin: originUnity,
-                                                origin_px: originPx,
-                                                defaultCoverId: s.defaultCoverId !== undefined ? s.defaultCoverId : (existing ? existing.defaultCoverId : null),
-                                                poly: s.poly || [],
-                                                mask: s.mask || (existing ? existing.mask : null),
-                                                anchorID: s.anchorID != null ? s.anchorID : (existing ? existing.anchorID : null)
-                                            };
-                                            if(existing) Object.assign(existing, atlasEntry);
-                                            else window.mapsAtlas.push(atlasEntry);
+                                    this._sceneFullCache[targetLoc] = unifiedMap;
+                                    
+                                    // Make sure mapId is on every surface
+                                    if(unifiedMap.surfaces) {
+                                        unifiedMap.surfaces.forEach(s => {
+                                            s.mapId = unifiedMap.mapId !== undefined ? unifiedMap.mapId : targetLoc;
                                         });
+                                        window.mapsAtlas = unifiedMap.surfaces;
+                                    } else {
+                                        window.mapsAtlas = [];
                                     }
+                                    
+                                    if(unifiedMap.meta || unifiedMap.config) {
+                                        if(!window.MAP_META) window.MAP_META = {};
+                                        window.MAP_META[targetLoc] = unifiedMap.meta || unifiedMap.config;
+                                    }
+                                    
                                     this._bakedBgKey = null;
                                     this.draw();
-                                } else {
-                                    fetch(`images/maps/Exportado_level${exportDir}/scene_full.json`).then(r=>r.ok?r.json():null).then(j=>{ this._sceneFullCache[targetLoc]=j; this._bakedBgKey = null; if(j) this.draw(); }).catch(()=>{ this._sceneFullCache[targetLoc]=null; });
                                 }
-                            }).catch(()=>{
-                                fetch(`images/maps/Exportado_level${exportDir}/scene_full.json`).then(r=>r.ok?r.json():null).then(j=>{ this._sceneFullCache[targetLoc]=j; this._bakedBgKey = null; if(j) this.draw(); }).catch(()=>{ this._sceneFullCache[targetLoc]=null; });
-                            });
-                            this._sceneFullCache[targetLoc]=null;
+                            }).catch(console.error);
                         }
                     }
 
@@ -2191,9 +2306,10 @@ class IsometricMap {
                 const drawH = this._bakedBgCanvas.height * s;
                 const dx = this.offsetX - originPxX * s;
                 const dy = this.offsetY - originPxY * s;
-                // Layered scenery: far layer under everything (bake holds grass + coverings only)
-                if (sceneryOn) window.PlayScenery.drawFar(ctx, targetLoc, this.offsetX, this.offsetY, s);
+                // Ground layer: grass + coverings
                 ctx.drawImage(this._bakedBgCanvas, dx, dy, drawW, drawH);
+                // Layered scenery: far layer on top of grass (trees, rocks, flowers, vegetation)
+                if (sceneryOn) window.PlayScenery.drawFar(ctx, targetLoc, this.offsetX, this.offsetY, s);
                 }
             } else {
                 // ?? Editor mode: draw floor tilesets inside scaled ctx ????????????????
@@ -2347,9 +2463,15 @@ class IsometricMap {
                 }
             }
 
-            // ?? 5. WALL ITEMS + FLOOR FURNITURE ??????????????????????????????????????
+            // 5. WALL ITEMS + FLOOR FURNITURE ──────────────────────────────────────
             if (!isGrid && !isPlay) this._drawIsoWallGrids(targetLoc, targetFloor);
 
+            this._activeFurnitureActors = 0;
+            this._tsukiOnFurniture = false;
+            this._interactiveActors = [];
+            if (window.RoutineScheduler && (isPlay || isGrid)) {
+                window.RoutineScheduler.evaluateSchedule(targetLoc, (this.app.parser && this.app.parser.placements) || []);
+            }
             let itemHash = 0;
             if (this.app.parser.placements) {
                 for (const p of this.app.parser.placements) {
@@ -2397,7 +2519,12 @@ class IsometricMap {
             for (const p of regular) this._drawPlacement(p, 'regular');
             for (const p of allWalls) this._drawWallPlacementIso(p);
 
-            // ?? 6. FOREGROUND: layered scenery near layer replaces the static
+            // ── ACTOR SLOT: Ambient / Free-Roaming Character (Tsuki) ──
+            if (isPlay || isGrid) {
+                this._drawAmbientActors(targetLoc, targetFloor);
+            }
+
+            // 6. FOREGROUND: layered scenery near layer replaces the static
             // foreground overlay when the bake is ready (same canopy art, no double-draw).
             if ((isPlay || isGrid) && targetLoc === 0) {
                 if (window.PlayScenery && window.PlayScenery.ready(targetLoc)) {
@@ -2504,7 +2631,7 @@ class IsometricMap {
         const u = _bgo * this.scale;
         const dw = img.width * u;
         const dh = img.height * u;
-        const pivot = this._resolveSpritePivot(p.item_id, img, p.orientation || 0) || { x: 0.5, y: 0.5 };
+        const pivot = this._resolveSpritePivot(p.item_id, img, p.orientation || 0) || { x: 0.5, y: (p.isWall ? 0.5 : 0.25) };
         
         if (isSel) {
             this.ctx.shadowColor = 'white';
@@ -2704,7 +2831,7 @@ class IsometricMap {
 
         const img = this.getImage(p.item_id, p.orientation);
         if (img) {
-            this._drawSpriteOnTile(img, p.x, p.y, w, l, p.orientation, p.item_id, p.floor, p.cluster);
+            this._drawSpriteOnTile(img, p.x, p.y, w, l, p.orientation, p.item_id, p.floor, p.cluster, p);
         } else {
             const anchor = this.getIsoCoords(p.x, p.y, p.floor, p.cluster);
             const name   = this._shortName(p.item_id);
@@ -2774,7 +2901,7 @@ class IsometricMap {
         ctx.restore();
     }
 
-    _drawSpriteOnTile(img, gx, gy, w, l, orientation = 0, item_id = null, floorNum = 0, mapId) {
+    _drawSpriteOnTile(img, gx, gy, w, l, orientation = 0, item_id = null, floorNum = 0, mapId, placement = null) {
         const ctx = this.ctx;
         // Misma caja que el rombo: ancla en el CENTRO del footprint w×l para que
         // sprite y huella pivoten juntos. El pivot del PNG solo corre el blit
@@ -2795,9 +2922,10 @@ class IsometricMap {
         // 2: NW (Back Left, Sprite Back o frontal oscurecido, eje w,l)
         // 3: NE (Back Right, Reflejado horizontalmente, eje l,w)
         
-        const oriNum = Number(orientation);
+        const oriNum = parseInt(orientation, 10) || 0;
         const flipH = (oriNum === 1 || oriNum === 3);
         const darken = (oriNum === 2 || oriNum === 3);
+        const isBack = darken;
         
         const anchorX = anchor.x;
         const anchorY = anchor.y;
@@ -2811,6 +2939,49 @@ class IsometricMap {
             ctx.translate(-anchorX, 0);
         }
 
+        // Seating profile & general activity check
+        const itemIdStr = String(item_id || placement?.item_id || '');
+        const itemObj = (this.items && this.items[itemIdStr]) || (window.ITEMS_DB && window.ITEMS_DB[itemIdStr]);
+        const seatingProfiles = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.seating_profiles) || {};
+        const seatProfile = itemObj?.seating_profile || seatingProfiles[itemIdStr];
+
+
+        let activeAct = null;
+        let actActor = null;
+        const pId = placement?.placementID || placement?.placementId;
+        const bedData = window.BED_PROFILES && window.BED_PROFILES.beds && window.BED_PROFILES.beds[String(item_id)];
+
+        if (!bedData) {
+            if (placement && placement._simActivity) {
+                activeAct = placement._simActivity;
+            } else if (placement && placement._simSitting) {
+                activeAct = 101;
+            } else if (window.RoutineScheduler && (document.body.classList.contains('play-mode') || this.isHammerMode)) {
+                actActor = window.RoutineScheduler.getPlacementActor(placement);
+                if (actActor && !actActor.isSleeping) {
+                    activeAct = actActor.activityId;
+                }
+            } else if (pId != null && pId !== 0 && this.app && this.app.parser && typeof this.app.parser.getActivitySaves === 'function') {
+                const acts = this.app.parser.getActivitySaves();
+                const matched = acts.find(a => a.valid && a.placementId != null && String(a.placementId) === String(pId));
+                if (matched && matched.id !== 348 && String(matched.id) !== '348') {
+                    activeAct = matched.id;
+                }
+            }
+        }
+
+        // Layer 1 Base Sprite:
+        // When seating furniture is viewed from rear and has a character sitting on it,
+        // use the base seat sprite (without backrest) so character is drawn between seat and backrest.
+        const useSeatingLayers = (isBack && activeAct && seatProfile && seatProfile.has_backrest);
+        let baseSpriteImg = img;
+        if (useSeatingLayers && seatProfile.back_base_sprite) {
+            const customBase = this.getItemCustomImage(seatProfile.back_base_sprite);
+            if (customBase && customBase.complete && customBase.naturalWidth > 0) {
+                baseSpriteImg = customBase;
+            }
+        }
+
         if (darken) {
             // Only apply synthetic darkening when no dedicated _BACK.png sprite exists.
             // If FURN_xxx_BACK.png was loaded, the sprite already depicts the back view
@@ -2822,14 +2993,359 @@ class IsometricMap {
             }
         }
 
-        ctx.drawImage(img,
+        // Layer 1: Base Bed Frame / Furniture Sprite / Seat Base
+        ctx.drawImage(baseSpriteImg,
             anchorX - (drawW * pivotX),
             anchorY - (drawH * (1 - pivotY)),
             drawW,
             drawH
         );
+
+        if (darken) {
+            ctx.filter = "none";
+        }
+
+        // Layer 2: Multilayer Bed & Character Logic
+        if (bedData) {
+            const skins = (window.BED_PROFILES && window.BED_PROFILES.skins) || {};
+            const dSkin = bedData.defaultSkin || 50;
+            const pillowSkinId = (placement && placement.bedSave && placement.bedSave.pillowID) ? placement.bedSave.pillowID : (placement && placement._simPillowID ? placement._simPillowID : dSkin);
+            const sheetsSkinId = (placement && placement.bedSave && placement.bedSave.sheetsID) ? placement.bedSave.sheetsID : (placement && placement._simSheetsID ? placement._simSheetsID : dSkin);
+
+            const pillowSkin = skins[pillowSkinId] || skins[dSkin] || skins[50];
+            const sheetsSkin = skins[sheetsSkinId] || skins[dSkin] || skins[50];
+
+            // Check if Tsuki is sleeping here
+            let isSleeping = false;
+            if (placement && placement._simSleeping) {
+                isSleeping = true;
+            } else if (window.RoutineScheduler && (document.body.classList.contains('play-mode') || this.isHammerMode)) {
+                const schedActor = window.RoutineScheduler.getPlacementActor(placement);
+                if (schedActor && schedActor.isSleeping) isSleeping = true;
+            } else if (pId != null && pId !== 0 && this.app && this.app.parser && typeof this.app.parser.getActivitySaves === 'function') {
+                const acts = this.app.parser.getActivitySaves();
+                const activeOnBed = acts.find(a => a.valid && a.placementId != null && String(a.placementId) === String(pId));
+                if (activeOnBed && (activeOnBed.id === 348 || activeOnBed.id === '348' || activeOnBed.id == null)) isSleeping = true;
+            }
+            if (isSleeping) {
+                this._activeFurnitureActors = (this._activeFurnitureActors || 0) + 1;
+                this._tsukiOnFurniture = true;
+            }
+
+            // Layer 2A: Pillow
+            let pillowFile = pillowSkin?.pillow || bedData.parts?.pillow?.sprite || 'Pillow.png';
+            if (isBack && pillowSkin && pillowSkin.pillow_B) pillowFile = pillowSkin.pillow_B;
+            const pillowImg = this.getBedCustomImage(pillowFile);
+            if (pillowImg && pillowImg.complete && pillowImg.naturalWidth > 0) {
+                const pPos = bedData.parts?.pillow?.pos || { x: -0.345, y: 0.979 };
+                const cx = anchorX + (pPos.x * 150 * u);
+                const cy = anchorY - (pPos.y * 150 * u);
+                const pw = pillowImg.width * u;
+                const ph = pillowImg.height * u;
+                ctx.drawImage(pillowImg, cx - pw * 0.5, cy - ph * 0.5, pw, ph);
+            }
+
+            // Sheets Sleep transform & Tsuki offset
+            const sSleepPos = bedData.parts?.sheetsSleep?.pos || { x: 0.114, y: 0.600 };
+            const sSleepBPos = bedData.parts?.sheetsSleepF?.pos || sSleepPos;
+            const activeSleepPos = isBack ? sSleepBPos : sSleepPos;
+
+            if (!isSleeping) {
+                // Layer 2B: Empty Day Sheets
+                const sheetsFile = isBack 
+                    ? (sheetsSkin?.sheetsF || bedData.parts?.sheetsF?.sprite || 'BedsheetF.png')
+                    : (sheetsSkin?.sheets || bedData.parts?.sheets?.sprite || 'Bedsheet.png');
+                const sheetsImg = this.getBedCustomImage(sheetsFile);
+                if (sheetsImg && sheetsImg.complete && sheetsImg.naturalWidth > 0) {
+                    const sPos = isBack 
+                        ? (bedData.parts?.sheetsF?.pos || { x: -0.064, y: 0.682 })
+                        : (bedData.parts?.sheets?.pos || { x: 0.114, y: 0.600 });
+                    const cx = anchorX + (sPos.x * 150 * u);
+                    const cy = anchorY - (sPos.y * 150 * u);
+                    const sw = sheetsImg.width * u;
+                    const sh = sheetsImg.height * u;
+                    ctx.drawImage(sheetsImg, cx - sw * 0.5, cy - sh * 0.5, sw, sh);
+                }
+            } else {
+                // Layer 2C: Character Sleeping Sprite (under the duvet)
+                let sleepSprite = isBack ? 'Tsuki/Tsuki-Sleep-Back.png' : 'Tsuki/Tsuki-Sleep-Front.png';
+                if (String(item_id) === '820') {
+                    sleepSprite = isBack ? 'Tsuki/Tsuki_ShipWreckBedBack_0.png' : 'Tsuki/Tsuki_ShipWreckBedFront_0.png';
+                }
+                const sleepImg = this.getNpcSprite(sleepSprite);
+                if (sleepImg && sleepImg.complete && sleepImg.naturalWidth > 0) {
+                    const tsukiLocalX = activeSleepPos.x - 0.351;
+                    const tsukiLocalY = activeSleepPos.y + 0.355;
+                    const cx = anchorX + (tsukiLocalX * 150 * u);
+                    const cy = anchorY - (tsukiLocalY * 150 * u);
+                    const tw = sleepImg.width * u;
+                    const th = sleepImg.height * u;
+                    ctx.drawImage(sleepImg, cx - tw * 0.5, cy - th * 0.5, tw, th);
+
+                    if (this._interactiveActors) {
+                        this._interactiveActors.push({
+                            charId: 0,
+                            name: 'Tsuki',
+                            bounds: { minX: cx - tw * 0.5, maxX: cx + tw * 0.5, minY: cy - th * 0.5, maxY: cy + th * 0.5 }
+                        });
+                    }
+                }
+
+                // Layer 2D: Sleeping Duvet / Blanket (drawn ON TOP of Tsuki)
+                const coverFile = isBack
+                    ? (sheetsSkin?.sheetsSleepF || bedData.parts?.sheetsSleepF?.sprite || 'BedCoverF.png')
+                    : (sheetsSkin?.sheetsSleep || bedData.parts?.sheetsSleep?.sprite || 'BedCover.png');
+                const coverImg = this.getBedCustomImage(coverFile);
+                if (coverImg && coverImg.complete && coverImg.naturalWidth > 0) {
+                    const cx = anchorX + (activeSleepPos.x * 150 * u);
+                    const cy = anchorY - (activeSleepPos.y * 150 * u);
+                    const cw = coverImg.width * u;
+                    const ch = coverImg.height * u;
+                    ctx.drawImage(coverImg, cx - cw * 0.5, cy - ch * 0.5, cw, ch);
+                }
+            }
+        } else {
+            // General character furniture interaction (sitting, reading, drinking tea, bath, etc.)
+            if (activeAct && window.ACTIVITIES_DB) {
+                const actsDict = window.ACTIVITIES_DB.activities || {};
+                const actDef = (actActor && actActor.actDef) || actsDict[String(activeAct)] || (window.ACTIVITIES_DB.free_activities && window.ACTIVITIES_DB.free_activities.find(f => String(f.id) === String(activeAct))) || actsDict['101'];
+                if (actDef && actDef.anim && actDef.category !== 'bed') {
+                    let animFront = '';
+                    let animBack = '';
+                    let animFps = 2.5;
+                    let animMode = 'pingpong';
+                    let isStatic = false;
+
+                    if (typeof actDef.anim === 'string') {
+                        animFront = actDef.anim;
+                        animBack = actDef.anim;
+                        animFps = actDef.fps || 2.5;
+                        animMode = actDef.mode || 'loop';
+                        isStatic = (actDef.mode === 'static');
+                    } else if (typeof actDef.anim === 'object') {
+                        animFront = actDef.anim.front || '';
+                        animBack = actDef.anim.back || animFront;
+                        animFps = actDef.anim.fps || 2.5;
+                        animMode = actDef.anim.mode || 'pingpong';
+                        isStatic = (actDef.anim.isStatic || actDef.anim.mode === 'static');
+                    }
+
+                    const animName = isBack ? (animBack || animFront) : (animFront || animBack);
+                    if (animName) {
+                        const charKey = (actActor && actActor.npcKey) || actDef.npcKey || '0';
+                        let frames = null;
+                        if (window.resolveNpcAnimFrames) {
+                            frames = window.resolveNpcAnimFrames(charKey, animName);
+                        }
+                        if (!frames || !frames.length) {
+                            const ext = animName.endsWith('.png') ? '' : (isStatic ? '.png' : '_0.png');
+                            frames = [animName.includes('/') ? animName : (((actActor && actActor.actorName) || actDef.npcName || 'Tsuki') + '/' + animName + ext)];
+                        }
+
+                        const currentFrame = window.getAnimationFrame ? window.getAnimationFrame(frames, animFps, animMode) : frames[0];
+                        const charImg = this.getNpcSprite(currentFrame);
+                        if (charImg && charImg.complete && charImg.naturalWidth > 0) {
+                            this._activeFurnitureActors = (this._activeFurnitureActors || 0) + 1;
+                            const isTsuki = (actActor && (actActor.charId === 0 || actActor.npcKey === '0')) || (!actActor && (actDef.npcKey === '0' || actDef.npcName === 'Tsuki'));
+                            if (isTsuki) {
+                                this._tsukiOnFurniture = true;
+                            }
+                            const itemId = String(placement?.item_id || placement?.itemId || '');
+                            const actKey = String(activeAct);
+                            const dbOffsets = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.furniture_offsets) || {};
+                            const furnOffset = dbOffsets[itemId + ':' + actKey] || dbOffsets[itemId];
+                            
+                            const defaultOffX = (isBack && seatProfile?.offsets?.back?.x != null)
+                                ? seatProfile.offsets.back.x
+                                : (seatProfile?.offsets?.front?.x != null
+                                    ? seatProfile.offsets.front.x
+                                    : (furnOffset?.x != null ? furnOffset.x : (actDef.offset?.x || 0)));
+
+                            const defaultOffY = (isBack && seatProfile?.offsets?.back?.y != null)
+                                ? seatProfile.offsets.back.y
+                                : (seatProfile?.offsets?.front?.y != null
+                                    ? seatProfile.offsets.front.y
+                                    : (furnOffset?.y != null ? furnOffset.y : (actDef.offset?.y !== undefined ? actDef.offset.y : 0.2)));
+
+                            const effOffsetX = (placement?.charOffsetX != null) ? placement.charOffsetX : defaultOffX;
+                            const effOffsetY = (placement?.charOffsetY != null) ? placement.charOffsetY : defaultOffY;
+
+                            const offX = effOffsetX * 150 * u;
+                            const offY = effOffsetY * drawH;
+                            const cx = anchorX + offX;
+                            const cy = anchorY - offY;
+                            const sw = charImg.width * u;
+                            const sh = charImg.height * u;
+
+                            // Layer 2: Draw Character on seat
+                            ctx.drawImage(charImg, cx - sw * 0.5, cy - sh * 0.5, sw, sh);
+
+                            // Layer 3: Draw Furniture Backrest Foreground (ON TOP of Character)
+                            if (useSeatingLayers && seatProfile.backrest_sprite) {
+                                const backrestImg = this.getItemCustomImage(seatProfile.backrest_sprite);
+                                if (backrestImg && backrestImg.complete && backrestImg.naturalWidth > 0) {
+                                    ctx.drawImage(backrestImg,
+                                        anchorX - (drawW * pivotX),
+                                        anchorY - (drawH * (1 - pivotY)),
+                                        drawW,
+                                        drawH
+                                    );
+                                }
+                            }
+
+                            if (this._interactiveActors) {
+                                const actorCharId = (actActor && actActor.charId !== undefined) ? actActor.charId : (isTsuki ? 0 : (actDef.npcID || 0));
+                                const actorName = (actActor && actActor.actorName) || actDef.npcName || (isTsuki ? 'Tsuki' : 'NPC');
+                                this._interactiveActors.push({
+                                    charId: actorCharId,
+                                    name: actorName,
+                                    bounds: { minX: cx - sw * 0.5, maxX: cx + sw * 0.5, minY: cy - sh * 0.5, maxY: cy + sh * 0.5 }
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }
         
         ctx.restore();
+    }
+
+    _drawAmbientActors(targetLoc, targetFloor) {
+        const ctx = this.ctx;
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+
+        let actorsToDraw = [];
+
+        if (window.RoutineScheduler) {
+            const schedActors = window.RoutineScheduler.getAmbientActors(targetLoc, targetFloor);
+            for (const sa of schedActors) {
+                // If this is Tsuki and Tsuki is already on furniture, skip Tsuki
+                if (sa.charId === 0 && this._tsukiOnFurniture) continue;
+                actorsToDraw.push(sa);
+            }
+        } else {
+            // Fallback if RoutineScheduler is not loaded
+            if (this._tsukiOnFurniture) return;
+            let actDef = null;
+            let gx = 8, gy = 8, floorNum = 0, orientation = 0;
+            if (this.app && this.app.parser && typeof this.app.parser.getActivitySaves === 'function') {
+                const acts = this.app.parser.getActivitySaves();
+                const gridAct = acts.find(a => a.valid && (a.npc === -1 || a.npc === 0 || a.npc == null) && (a.subloc === targetLoc || a.subloc == null) && a.gridX != null);
+                if (gridAct) {
+                    gx = gridAct.gridX;
+                    gy = gridAct.gridY;
+                    floorNum = (gridAct.floor != null) ? gridAct.floor : 0;
+                    orientation = gridAct.orientation || 0;
+                    if (window.ACTIVITIES_DB && window.ACTIVITIES_DB.activities) {
+                        actDef = window.ACTIVITIES_DB.activities[String(gridAct.id)];
+                    }
+                }
+            }
+            if (!actDef && window.ACTIVITIES_DB && window.ACTIVITIES_DB.activities) {
+                actDef = window.ACTIVITIES_DB.activities['101'] || window.ACTIVITIES_DB.activities['502'];
+                gx = 8; gy = 8; floorNum = 0; orientation = 0;
+            }
+            if (actDef && actDef.anim && actDef.category !== 'bed') {
+                actorsToDraw.push({
+                    actorName: 'Tsuki',
+                    charId: 0,
+                    npcKey: '0',
+                    actDef: actDef,
+                    gridPos: { gx, gy, floor: floorNum, orientation }
+                });
+            }
+        }
+
+        for (const actor of actorsToDraw) {
+            const gx = actor.gridPos ? actor.gridPos.gx : 8;
+            const gy = actor.gridPos ? actor.gridPos.gy : 8;
+            const floorNum = actor.gridPos ? actor.gridPos.floor : 0;
+            const orientation = actor.gridPos ? actor.gridPos.orientation : 0;
+            const isBack = (orientation === 2 || orientation === 3);
+            const actDef = actor.actDef || (window.ACTIVITIES_DB && (window.ACTIVITIES_DB.activities?.[String(actor.activityId)] || (window.ACTIVITIES_DB.free_activities && window.ACTIVITIES_DB.free_activities.find(f => String(f.id) === String(actor.activityId))))) || (window.ACTIVITIES_DB && window.ACTIVITIES_DB.activities && window.ACTIVITIES_DB.activities['101']);
+            if (!actDef || !actDef.anim || actDef.category === 'bed') continue;
+
+            const tileCoords = this.getIsoCoords(gx, gy, floorNum, targetLoc);
+            if (!tileCoords) continue;
+
+            ctx.save();
+            const flipH = (orientation === 1 || orientation === 3);
+            if (flipH) {
+                ctx.translate(tileCoords.x, 0);
+                ctx.scale(-1, 1);
+                ctx.translate(-tileCoords.x, 0);
+            }
+
+            let animFront = '';
+            let animBack = '';
+            let animFps = 2.5;
+            let animMode = 'pingpong';
+            let isStatic = false;
+
+            if (typeof actDef.anim === 'string') {
+                animFront = actDef.anim;
+                animBack = actDef.anim;
+                animFps = actDef.fps || 2.5;
+                animMode = actDef.mode || 'loop';
+                isStatic = (actDef.mode === 'static');
+            } else if (typeof actDef.anim === 'object') {
+                animFront = actDef.anim.front || '';
+                animBack = actDef.anim.back || animFront;
+                animFps = actDef.anim.fps || 2.5;
+                animMode = actDef.anim.mode || 'pingpong';
+                isStatic = (actDef.anim.isStatic || actDef.anim.mode === 'static');
+            }
+
+            const animName = isBack ? (animBack || animFront) : (animFront || animBack);
+            if (!animName) {
+                ctx.restore();
+                continue;
+            }
+
+            const charKey = actor.npcKey || actDef.npcKey || '0';
+            let frames = null;
+            if (window.resolveNpcAnimFrames) {
+                frames = window.resolveNpcAnimFrames(charKey, animName);
+            }
+            if (!frames || !frames.length) {
+                const ext = animName.endsWith('.png') ? '' : (isStatic ? '.png' : '_0.png');
+                frames = [animName.includes('/') ? animName : ((actor.actorName || actDef.npcName || 'Tsuki') + '/' + animName + ext)];
+            }
+
+            const currentFrame = window.getAnimationFrame ? window.getAnimationFrame(frames, animFps, animMode) : frames[0];
+            const charImg = this.getNpcSprite(currentFrame);
+            if (charImg && charImg.complete && charImg.naturalWidth > 0) {
+                const sw = charImg.width * u;
+                const sh = charImg.height * u;
+
+                // Ambient shadow under character
+                ctx.save();
+                ctx.beginPath();
+                ctx.ellipse(tileCoords.x, tileCoords.y + 2 * u, sw * 0.28, sh * 0.08, 0, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
+                ctx.fill();
+                ctx.restore();
+
+                // Draw character grounded on tileCoords
+                const cx = tileCoords.x;
+                const cy = tileCoords.y - sh * 0.45;
+                ctx.drawImage(charImg, cx - sw * 0.5, cy - sh * 0.5, sw, sh);
+
+                if (this._interactiveActors) {
+                    const actorCharId = (actor.charId !== undefined) ? actor.charId : (actDef.npcID || 0);
+                    const actorName = actor.actorName || actDef.npcName || 'Tsuki';
+                    this._interactiveActors.push({
+                        charId: actorCharId,
+                        name: actorName,
+                        bounds: { minX: cx - sw * 0.5, maxX: cx + sw * 0.5, minY: cy - sh * 0.5, maxY: cy + sh * 0.5 }
+                    });
+                }
+            }
+
+            ctx.restore();
+        }
     }
 
     _drawTooltip(p) {
@@ -3032,7 +3548,7 @@ class IsometricMap {
                 if (img && img.complete && img.naturalWidth > 0) {
                     const drawW = img.width * u;
                     const drawH = img.height * u;
-                    const pivot = this._resolveSpritePivot(p.item_id, img, p.orientation || 0) || { x: 0.5, y: 0.5 };
+                    const pivot = this._resolveSpritePivot(p.item_id, img, p.orientation || 0) || { x: 0.5, y: (p.isWall ? 0.5 : 0.25) };
                     const oriNum = Number(p.orientation || 0);
                     const flipH = (oriNum === 1 || oriNum === 3);
                     const pivotX = flipH ? (1 - pivot.x) : pivot.x;
@@ -3411,6 +3927,25 @@ class IsometricMap {
                 const rect   = this.canvas.getBoundingClientRect();
                 const mouseX = e.clientX - rect.left;
                 const mouseY = e.clientY - rect.top;
+
+                // Módulo 2: Interacción con Personajes en Modo Play
+                const isPlay = document.body.classList.contains('play-mode');
+                if (isPlay && this._interactiveActors && this._interactiveActors.length > 0) {
+                    // Check top-most actor first (reverse order)
+                    for (let i = this._interactiveActors.length - 1; i >= 0; i--) {
+                        const actor = this._interactiveActors[i];
+                        const b = actor.bounds;
+                        if (mouseX >= b.minX && mouseX <= b.maxX && mouseY >= b.minY && mouseY <= b.maxY) {
+                            if (window.DialogueManager) {
+                                window.DialogueManager.startDialogue(actor.charId, actor.name);
+                            }
+                            this.selectedPlacement = null;
+                            if (this.app) this.app.closeItemEditor();
+                            return;
+                        }
+                    }
+                }
+
                 const clickedPlacement = this._findPlacementAtScreen(mouseX, mouseY) || this.hoveredPlacement;
 
                 if (clickedPlacement) {
@@ -3541,6 +4076,25 @@ class IsometricMap {
             }
 
             if (this.app.parser) {
+                const isPlay = document.body.classList.contains('play-mode');
+                let hoveredActor = null;
+                if (isPlay && this._interactiveActors && this._interactiveActors.length > 0) {
+                    for (let i = this._interactiveActors.length - 1; i >= 0; i--) {
+                        const actor = this._interactiveActors[i];
+                        const b = actor.bounds;
+                        if (mouseX >= b.minX && mouseX <= b.maxX && mouseY >= b.minY && mouseY <= b.maxY) {
+                            hoveredActor = actor;
+                            break;
+                        }
+                    }
+                }
+
+                if (hoveredActor) {
+                    this.canvas.style.cursor = 'pointer';
+                } else if (!this.isPanDragging && !this.isItemDragging) {
+                    this.canvas.style.cursor = '';
+                }
+
                 const top = this._findPlacementAtScreen(mouseX, mouseY);
                 if (this.hoveredPlacement !== top) {
                     this.hoveredPlacement = top;

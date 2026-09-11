@@ -366,6 +366,35 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 this.showToast(`Hora manual: ${String(nxtH).padStart(2, '0')}:00 (clic para avanzar / volver a hora real)`, 'info');
             });
         }
+
+        const btnReroll = document.getElementById('btn-reroll-routine');
+        if (btnReroll && !btnReroll._bound) {
+            btnReroll._bound = true;
+            btnReroll.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.RoutineScheduler) {
+                    window.RoutineScheduler.reroll();
+                    this.showToast('🎲 Nueva rutina asignada aleatoriamente', 'success');
+                }
+            });
+        }
+
+        const selPreset = document.getElementById('select-time-preset');
+        if (selPreset && !selPreset._bound) {
+            selPreset._bound = true;
+            selPreset.addEventListener('change', (e) => {
+                const val = e.target.value;
+                if (val === 'auto') {
+                    if (window.RoutineScheduler) window.RoutineScheduler.resetToRealTime();
+                    this.showToast('Horario automático restaurado', 'info');
+                } else {
+                    const h = parseInt(val, 10);
+                    if (window.RoutineScheduler) window.RoutineScheduler.setTimePreset(h);
+                    this.showToast(`Horario fijado a las ${String(h).padStart(2, '0')}:00`, 'info');
+                }
+                this._refreshClockHUD();
+            });
+        }
     }
 
     _bindLampClick() {
@@ -1044,6 +1073,39 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const newOri = parseInt(this.editItemOri.value);
                 if (!isNaN(newId) && !isNaN(newX) && !isNaN(newY) && !isNaN(newOri)) {
                     this.parser.applyMapChange(this.map.selectedPlacement, newId, newX, newY, newOri, this.map.selectedPlacement.floor);
+                    
+                    const bedUI = document.getElementById('bed-custom-ui');
+                    if (bedUI && !bedUI.classList.contains('hidden')) {
+                        const pVal = parseInt(document.getElementById('edit-bed-pillow')?.value) || 50;
+                        const sVal = parseInt(document.getElementById('edit-bed-sheets')?.value) || 50;
+                        const isSleep = !!document.getElementById('edit-bed-sleeping')?.checked;
+
+                        this.map.selectedPlacement.bedSave = { pillowID: pVal, sheetsID: sVal, edited: true };
+                        this.map.selectedPlacement._simPillowID = pVal;
+                        this.map.selectedPlacement._simSheetsID = sVal;
+                        this.map.selectedPlacement._simSleeping = isSleep;
+
+                        if (this.parser && typeof this.parser.setBedCustomization === 'function') {
+                            this.parser.setBedCustomization(this.map.selectedPlacement.placementID, { pillowID: pVal, sheetsID: sVal });
+                        }
+                        if (this.parser) {
+                            if (isSleep) {
+                                if (typeof this.parser.setFurnitureActivity === 'function') {
+                                    this.parser.setFurnitureActivity({
+                                        placementId: this.map.selectedPlacement.placementID,
+                                        sublocId: this.map.currentFloor || 0,
+                                        npcId: -1,
+                                        activityId: 348
+                                    });
+                                }
+                            } else {
+                                if (typeof this.parser.clearFurnitureActivity === 'function') {
+                                    this.parser.clearFurnitureActivity();
+                                }
+                            }
+                        }
+                    }
+
                     this.showToast("✅ Mueble actualizado");
                     this.map.draw();
                     if (document.body.classList.contains('play-mode') && this.tsukiPort && typeof this.tsukiPort.triggerAutosave === 'function') {
@@ -2770,6 +2832,57 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             lampSel.onchange = e=>{ if(e.target.value!=='') this.parser.setLampToggle(placement, parseInt(e.target.value)); };
         }
 
+        // Bed Customization UI
+        const bedUI = document.getElementById('bed-custom-ui');
+        if (bedUI) {
+            const isBed = window.BED_PROFILES && window.BED_PROFILES.beds && window.BED_PROFILES.beds[String(placement.item_id)];
+            if (isBed) {
+                bedUI.classList.remove('hidden');
+                const pSel = document.getElementById('edit-bed-pillow');
+                const sSel = document.getElementById('edit-bed-sheets');
+                const sleepCb = document.getElementById('edit-bed-sleeping');
+                
+                const skins = (window.BED_PROFILES && window.BED_PROFILES.skins) || {};
+                const dSkin = isBed.defaultSkin || 50;
+                
+                const skinOptions = Object.entries(skins).map(([id, s]) => `<option value="${id}">${id} - ${s.name || ('Skin ' + id)}</option>`).join('');
+
+                if (pSel) {
+                    pSel.innerHTML = skinOptions;
+                    const curP = (placement.bedSave && placement.bedSave.pillowID) ? placement.bedSave.pillowID : (placement._simPillowID || dSkin);
+                    pSel.value = String(curP);
+                    pSel.onchange = (e) => {
+                        placement._simPillowID = parseInt(e.target.value) || dSkin;
+                        if (this.map && this.map.draw) this.map.draw();
+                    };
+                }
+                if (sSel) {
+                    sSel.innerHTML = skinOptions;
+                    const curS = (placement.bedSave && placement.bedSave.sheetsID) ? placement.bedSave.sheetsID : (placement._simSheetsID || dSkin);
+                    sSel.value = String(curS);
+                    sSel.onchange = (e) => {
+                        placement._simSheetsID = parseInt(e.target.value) || dSkin;
+                        if (this.map && this.map.draw) this.map.draw();
+                    };
+                }
+                if (sleepCb) {
+                    let isSleeping = !!placement._simSleeping;
+                    if (!isSleeping && this.parser && typeof this.parser.getActivitySaves === 'function') {
+                        const acts = this.parser.getActivitySaves();
+                        const activeOnBed = acts.find(a => a.valid && a.placementId === placement.placementID);
+                        if (activeOnBed) isSleeping = true;
+                    }
+                    sleepCb.checked = isSleeping;
+                    sleepCb.onchange = (e) => {
+                        placement._simSleeping = !!e.target.checked;
+                        if (this.map && this.map.draw) this.map.draw();
+                    };
+                }
+            } else {
+                bedUI.classList.add('hidden');
+            }
+        }
+
         this.itemEditor.classList.remove('hidden');
 
         const flipGroup = document.querySelector('.wall-flipped-group');
@@ -4414,7 +4527,11 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     }
 }
 
-window.onload = () => { window.app = new App(); };
+window.onload = async () => {
+    if (window._itemsDBPromise) await window._itemsDBPromise;
+    else if (typeof window.loadItemsDB === 'function') await window.loadItemsDB();
+    window.app = new App();
+};
 
 // ============================================================
 // SizeEditor — Editor de Tamaños de Grilla (Experimental Tab)

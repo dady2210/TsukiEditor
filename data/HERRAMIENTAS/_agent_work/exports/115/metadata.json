@@ -1,0 +1,473 @@
+{
+  "id": 115,
+  "name": "Tatami Bench",
+  "raw_properties": {
+    "m_Enabled": 1,
+    "m_Name": "",
+    "transform": {
+      "m_FileID": 0,
+      "m_PathID": 4196912204608061611
+    },
+    "coll": {
+      "m_FileID": 0,
+      "m_PathID": -1078270080594919253
+    },
+    "coll3D": {
+      "m_FileID": 0,
+      "m_PathID": 0
+    },
+    "ID": 115,
+    "numColors": 0,
+    "debugSort": 0,
+    "inShop": 0,
+    "placementID": 0,
+    "orientation": 0,
+    "polyColliderType": 1,
+    "colliderPoints": [
+      {
+        "x": 0.0,
+        "y": -0.08300000429153442
+      },
+      {
+        "x": 0.9160000085830688,
+        "y": 0.375
+      },
+      {
+        "x": 0.9594060182571411,
+        "y": 0.5306200981140137
+      },
+      {
+        "x": 0.9354457855224609,
+        "y": 0.6524372100830078
+      },
+      {
+        "x": 0.7181034088134766,
+        "y": 0.7603769302368164
+      },
+      {
+        "x": 0.7163000106811523,
+        "y": 0.887141227722168
+      },
+      {
+        "x": 0.5432310104370117,
+        "y": 0.9781267642974854
+      },
+      {
+        "x": -0.425510048866272,
+        "y": 0.48084211349487305
+      },
+      {
+        "x": -0.4255110025405884,
+        "y": 0.11456298828125
+      }
+    ],
+    "flippedColliderPoints": [
+      {
+        "x": 0.0,
+        "y": -0.08300000429153442
+      },
+      {
+        "x": 0.9073187112808228,
+        "y": 0.37065887451171875
+      },
+      {
+        "x": 0.9438605308532715,
+        "y": 0.49046897888183594
+      },
+      {
+        "x": 0.9570169448852539,
+        "y": 0.6152791976928711
+      },
+      {
+        "x": 0.929021954536438,
+        "y": 0.7776408195495605
+      },
+      {
+        "x": 0.7630195617675781,
+        "y": 0.8738813400268555
+      },
+      {
+        "x": 0.616063117980957,
+        "y": 0.8073816299438477
+      },
+      {
+        "x": 0.5241365432739258,
+        "y": 0.850956916809082
+      },
+      {
+        "x": -0.4339485168457031,
+        "y": 0.3456003665924072
+      },
+      {
+        "x": -0.44287264347076416,
+        "y": 0.23914480209350586
+      },
+      {
+        "x": -0.39512693881988525,
+        "y": 0.08417892456054688
+      }
+    ],
+    "gridCollScale": 0.8320000171661377,
+    "gridHeightOffset": 0.20399999618530273,
+    "gridOffset": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "uiPosition": 0.699999988079071,
+    "Save": {
+      "rid": -2
+    },
+    "references": {
+      "version": 2,
+      "RefIds": [
+        {
+          "rid": -2,
+          "type": {
+            "class": "",
+            "ns": "",
+            "asm": ""
+          }
+        }
+      ]
+    }
+  },
+  "layer_definitions": [
+    {
+      "renderer": "ScriptableObject: SpriteObject",
+      "activitySorting": 2,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    },
+    {
+      "renderer": "ScriptableObject: SpriteObject",
+      "activitySorting": 1,
+      "onlyVisibleWithActivity": 0,
+      "useActivityConditions": 0,
+      "conditions": [],
+      "activityFlags": []
+    }
+  ],
+  "store_data": {},
+  "nodes": [
+    {
+      "path": "Tatami Bench",
+      "name": "Tatami Bench",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": -15.5165433883667,
+        "y": -7.712391376495361
+      },
+      "world_pos": {
+        "x": -15.5165433883667,
+        "y": -7.712391376495361,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "Furniture",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": 4196912204608061611
+            },
+            "coll": {
+              "m_FileID": 0,
+              "m_PathID": -1078270080594919253
+            },
+            "coll3D": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "ID": 115,
+            "numColors": 0,
+            "debugSort": 0,
+            "sprites": [
+              {
+                "renderer": "ScriptableObject: SpriteObject",
+                "activitySorting": 2,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              },
+              {
+                "renderer": "ScriptableObject: SpriteObject",
+                "activitySorting": 1,
+                "onlyVisibleWithActivity": 0,
+                "useActivityConditions": 0,
+                "conditions": [],
+                "activityFlags": []
+              }
+            ],
+            "inShop": 0,
+            "placementID": 0,
+            "orientation": 0,
+            "polyColliderType": 1,
+            "colliderPoints": [
+              {
+                "x": 0.0,
+                "y": -0.08300000429153442
+              },
+              {
+                "x": 0.9160000085830688,
+                "y": 0.375
+              },
+              {
+                "x": 0.9594060182571411,
+                "y": 0.5306200981140137
+              },
+              {
+                "x": 0.9354457855224609,
+                "y": 0.6524372100830078
+              },
+              {
+                "x": 0.7181034088134766,
+                "y": 0.7603769302368164
+              },
+              {
+                "x": 0.7163000106811523,
+                "y": 0.887141227722168
+              },
+              {
+                "x": 0.5432310104370117,
+                "y": 0.9781267642974854
+              },
+              {
+                "x": -0.425510048866272,
+                "y": 0.48084211349487305
+              },
+              {
+                "x": -0.4255110025405884,
+                "y": 0.11456298828125
+              }
+            ],
+            "flippedColliderPoints": [
+              {
+                "x": 0.0,
+                "y": -0.08300000429153442
+              },
+              {
+                "x": 0.9073187112808228,
+                "y": 0.37065887451171875
+              },
+              {
+                "x": 0.9438605308532715,
+                "y": 0.49046897888183594
+              },
+              {
+                "x": 0.9570169448852539,
+                "y": 0.6152791976928711
+              },
+              {
+                "x": 0.929021954536438,
+                "y": 0.7776408195495605
+              },
+              {
+                "x": 0.7630195617675781,
+                "y": 0.8738813400268555
+              },
+              {
+                "x": 0.616063117980957,
+                "y": 0.8073816299438477
+              },
+              {
+                "x": 0.5241365432739258,
+                "y": 0.850956916809082
+              },
+              {
+                "x": -0.4339485168457031,
+                "y": 0.3456003665924072
+              },
+              {
+                "x": -0.44287264347076416,
+                "y": 0.23914480209350586
+              },
+              {
+                "x": -0.39512693881988525,
+                "y": 0.08417892456054688
+              }
+            ],
+            "gridCollScale": 0.8320000171661377,
+            "gridHeightOffset": 0.20399999618530273,
+            "gridOffset": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "uiPosition": 0.699999988079071,
+            "Save": {
+              "rid": -2
+            },
+            "references": {
+              "version": 2,
+              "RefIds": [
+                {
+                  "rid": -2,
+                  "type": {
+                    "class": "",
+                    "ns": "",
+                    "asm": ""
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Tatami Bench/Sprite",
+      "name": "Sprite",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": -15.5165433883667,
+        "y": -7.712391376495361,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "TatamiBench_Front",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        },
+        {
+          "type": "SpriteObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": 8888356749247463595
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 0,
+            "flipSettings": 0,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": 7099580352692961451
+            },
+            "spriteFlipLogic": 1,
+            "normal": "Sprite: TatamiBench_Front",
+            "flipped": "Sprite: TatamiBench_Back_0",
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "Tatami Bench/Sprite (1)",
+      "name": "Sprite (1)",
+      "layer": 0,
+      "tag": 0,
+      "local_pos": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "world_pos": {
+        "x": -15.5165433883667,
+        "y": -7.712391376495361,
+        "angle": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "sprite": "TatamiBench_Back_1",
+          "color": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "sorting_layer": 0,
+          "sorting_order": 0,
+          "materials": [
+            "Sprite-Unlit-Default"
+          ]
+        },
+        {
+          "type": "SpriteObject",
+          "properties": {
+            "m_Enabled": 1,
+            "m_Name": "",
+            "transform": {
+              "m_FileID": 0,
+              "m_PathID": -3763418092447383381
+            },
+            "overrideInvisible": 0,
+            "xPos": 0.0,
+            "useFlippedXPos": 0,
+            "flippedXPos": 0.0,
+            "disableXPos": 0,
+            "sortingMod": 0,
+            "orderModification": 0,
+            "flipLogic": 2,
+            "flipSettings": 0,
+            "sr": {
+              "m_FileID": 0,
+              "m_PathID": 7377450897283301547
+            },
+            "spriteFlipLogic": 0,
+            "normal": "Sprite: SlidingCabinet_Front_0",
+            "flipped": "Sprite: SlidingCabinet_Back_0",
+            "up": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "down": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "colliders": [],
+  "audio": [],
+  "animators": [],
+  "special_scripts": []
+}

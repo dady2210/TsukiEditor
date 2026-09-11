@@ -188,16 +188,76 @@
 
 
 
-    <script src="../../data/items_db.js"></script>
-    <script src="../../data/content_pivots.js"></script>
+    <!-- Single Canonical Items Database -->
+    <script>
+    window.loadItemsDB = async function() {
+        if (window.ITEMS_DB && Object.keys(window.ITEMS_DB).length > 0) return window.ITEMS_DB;
+        try {
+            const res = await fetch('../../data/items_db.json?v=' + Date.now());
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+            window.ITEMS_DB = data;
+            window.ITEMS_UNIFIED = data;
+            const piv = {};
+            for (const id in data) {
+                if (data[id].pivot) piv[id] = data[id].pivot;
+                if (data[id].pivot_back) piv[id + '_BACK'] = data[id].pivot_back;
+            }
+            window.contentPivots = piv;
+            if (typeof initCatalog === 'function') initCatalog();
+            return data;
+        } catch (e) {
+            console.error('Error cargando data/items_db.json en map_editor:', e);
+            return {};
+        }
+    };
+    window._itemsDBPromise = window.loadItemsDB();
+    </script>
 
 
 
     <script src="../../data/maps_unified.js"></script>
+    <script src="../../data/npcs.js"></script>
 
+    <script>if(typeof OdinReader!=="undefined") window.OdinReader = OdinReader; if(typeof SaveParser!=="undefined") window.SaveParser = SaveParser; if(window.MAPS_UNIFIED && !window.mapsAtlas) { window.mapsAtlas = window.MAPS_UNIFIED.atlas; window.MAP_META = window.MAPS_UNIFIED.meta; window.atlasConfig = window.MAPS_UNIFIED.atlasConfig; }
+    fetch('../../data/bed_profiles.json').then(r=>r.json()).then(d=>{ window.BED_PROFILES = d; if(typeof draw==='function') draw(); }).catch(e=>console.warn('Could not load bed_profiles.json in editor:', e));
+    fetch('../../data/activities_db.json').then(r=>r.json()).then(d=>{ window.ACTIVITIES_DB = d; if(typeof draw==='function') draw(); }).catch(e=>console.warn('Could not load activities_db.json in editor:', e));
+    
+    window.getAnimationFrame = function(frames, fps = 2.5, mode = 'pingpong', timeMs = Date.now()) {
+        if (!frames || !frames.length) return null;
+        if (frames.length === 1) return frames[0];
+        const frameDuration = 1000 / (fps || 2.5);
+        const totalFrames = frames.length;
+        if (mode === 'pingpong' && totalFrames > 2) {
+            const period = 2 * (totalFrames - 1);
+            const k = Math.floor(timeMs / frameDuration) % period;
+            const idx = k < totalFrames ? k : period - k;
+            return frames[idx];
+        } else {
+            const idx = Math.floor(timeMs / frameDuration) % totalFrames;
+            return frames[idx];
+        }
+    };
 
+    window.resolveNpcAnimFrames = function(npcKey, animName) {
+        if (!window.NPC_DB) return null;
+        const npc = window.NPC_DB[String(npcKey)] || window.NPC_DB['0'];
+        if (!npc || !npc.animations) return null;
+        const frames = npc.animations[animName];
+        if (frames && frames.length) {
+            const folder = npc.name || 'Tsuki';
+            return frames.map(f => folder + '/' + f);
+        }
+        return null;
+    };
 
-    <script>if(typeof OdinReader!=="undefined") window.OdinReader = OdinReader; if(typeof SaveParser!=="undefined") window.SaveParser = SaveParser; if(window.MAPS_UNIFIED && !window.mapsAtlas) { window.mapsAtlas = window.MAPS_UNIFIED.atlas; window.MAP_META = window.MAPS_UNIFIED.meta; window.atlasConfig = window.MAPS_UNIFIED.atlasConfig; }</script>
+    // Heartbeat for living animated entities in map editor
+    setInterval(() => {
+        if (typeof sceneData !== 'undefined' && sceneData.some(o => o._simSleeping || o._simActivity)) {
+            if (typeof draw === 'function') draw();
+        }
+    }, 380);
+    </script>
 
 
 
@@ -1142,6 +1202,68 @@
                 </button>
             </div>
 
+            <div id="bed-custom-props" style="display:none; margin-top:12px; border:1px solid #eab308; padding:8px; background:rgba(234,179,8,0.08); border-radius:6px;">
+                <strong style="color:#eab308; font-size:11px; display:flex; align-items:center; gap:4px;">
+                    <span>🛏️</span> Personalización de Cama (BedSave)
+                </strong>
+                <div style="margin-top:6px; display:flex; flex-direction:column; gap:6px;">
+                    <div>
+                        <label style="font-size:10px; color:#aaa; display:block;">Almohada (Pillow Skin):</label>
+                        <select id="bed-prop-pillow" class="input-field" style="width:100%; font-size:10px; background:#181818; color:#fff; border:1px solid #444; border-radius:3px; padding:2px;" onchange="onBedPropChange()">
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:10px; color:#aaa; display:block;">Sábanas (Sheets Skin):</label>
+                        <select id="bed-prop-sheets" class="input-field" style="width:100%; font-size:10px; background:#181818; color:#fff; border:1px solid #444; border-radius:3px; padding:2px;" onchange="onBedPropChange()">
+                        </select>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                        <label style="font-size:10px; color:#eab308; cursor:pointer; display:flex; align-items:center; gap:4px;">
+                            <input type="checkbox" id="bed-prop-sleeping" onchange="onBedSleepingToggle(this.checked)"> Simular Tsuki Durmiendo
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Furniture Interaction & NPC Activity Panel -->
+            <div id="furniture-activity-props" style="display:none; margin-top:12px; border-top:1px solid #444; padding-top:8px;">
+                <strong style="color:#a855f7; font-size:11px; display:flex; align-items:center; gap:4px;">
+                    <span>🐰</span> Interacción / Actividad de Personaje (NPC)
+                </strong>
+                <div style="margin-top:6px; display:flex; flex-direction:column; gap:6px;">
+                    <div>
+                        <label style="font-size:10px; color:#aaa; display:block;">Actividad / Personaje:</label>
+                        <select id="furn-prop-activity" class="input-field" style="width:100%; font-size:10px; background:#181818; color:#fff; border:1px solid #444; border-radius:3px; padding:2px;" onchange="onFurnitureActivityChange()">
+                            <option value="">(Ninguna interacción)</option>
+                        </select>
+                    </div>
+                    <div id="furn-act-details" style="font-size:9px; color:#a855f7; background:#1e1427; border:1px solid #4c1d95; padding:5px; border-radius:3px; display:none;">
+                    </div>
+                    
+                    <!-- Offset Calibration Subpanel -->
+                    <div id="furn-offset-controls" style="display:none; margin-top:4px; border-top:1px dashed #555; padding-top:6px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <span style="font-size:10px; color:#c084fc; font-weight:bold;">🎯 Calibración Posición Personaje</span>
+                            <button type="button" class="btn btn-xs" style="font-size:9px; background:#333; color:#ccc; border:1px solid #555; padding:1px 5px; cursor:pointer;" onclick="resetFurnitureOffset()" title="Restablecer a valores por defecto">Reset</button>
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <div>
+                                <label style="font-size:9px; color:#aaa; display:block;">Offset X (Horizontal):</label>
+                                <input type="number" id="furn-offset-x" step="0.01" value="0.00" style="width:100%; font-size:10px; background:#181818; color:#fff; border:1px solid #444; border-radius:3px; padding:2px;" oninput="onFurnitureOffsetChange()">
+                            </div>
+                            <div>
+                                <label style="font-size:9px; color:#aaa; display:block;">Offset Y (Vertical):</label>
+                                <input type="number" id="furn-offset-y" step="0.01" value="0.22" style="width:100%; font-size:10px; background:#181818; color:#fff; border:1px solid #444; border-radius:3px; padding:2px;" oninput="onFurnitureOffsetChange()">
+                            </div>
+                        </div>
+                        <button type="button" id="btn-save-furniture-offset" class="btn btn-sm" style="width:100%; margin-top:6px; background:#7c3aed; color:#fff; font-size:10px; font-weight:bold; padding:4px; cursor:pointer; border:none; border-radius:3px;" onclick="saveFurnitureOffset()">
+                            💾 Guardar Calibración en Base de Datos
+                        </button>
+                        <div id="furn-offset-status" style="font-size:9px; color:#4ade80; margin-top:3px; display:none;"></div>
+                    </div>
+                </div>
+            </div>
+
             <div id="poly-surface-props" style="display:none; margin-top:12px; border-top:1px solid #444; padding-top:8px;">
 
 
@@ -1374,7 +1496,7 @@
 
 
 
-                <button class="btn btn-sm" style="background:#007acc; font-weight:bold; flex:1;" onclick="exportUnifiedMapFile()" title="Guardar archivo único map_X.json">💾 Guardar Mapa (.json)</button>
+                <button id="btn-guardar-mapa" class="btn btn-sm" style="background:#007acc; font-weight:bold; flex:1;" onclick="exportUnifiedMapFile()" title="Guardar archivo único map_X.json">💾 Guardar Mapa (.json)</button>
 
 
 
@@ -2166,64 +2288,54 @@
 
 
                 let usedSceneFull = false;
-
-
-
-                if (byName['scene_full.json']) {
-
-
-
+                let mapJsonFile = jsonFiles.find(f => f.name.startsWith('map_') && f.name.endsWith('.json'));
+                if (mapJsonFile) {
                     try {
-
-
-
-                        const full = JSON.parse(await byName['scene_full.json'].text());
-
-
-
-                        if (full.kind === 'map' && full.layout && Array.isArray(full.layout.front)) {
-
-
-
-                            usedSceneFull = true;
-
-
-
-                            currentMapMeta = Object.assign({}, full.logic || {}, { raw: full.raw, colliders: full.colliders || [] });
-
-
-
-                            if (!currentMetadata) currentMetadata = full.raw || currentMapMeta;
-
-
-
-                            const folderId = 'folder_layout';
-
-
-
-                            folders.push({ id: folderId, name: 'LAYOUT', visible: true, locked: false, collapsed: false });
-
-
-
-                            full.layout.front.forEach(obj => { obj.folderId = folderId; sceneData.push(obj); });
-
-
-
+                        const full = JSON.parse(await mapJsonFile.text());
+                        
+                        currentMapMeta = {
+                            mapId: full.mapId !== undefined ? full.mapId : 0,
+                            name: full.name,
+                            version: full.version,
+                            config: full.config || {},
+                            meta: full.meta || {},
+                            colliders: full.colliders || [],
+                            logic: full.logic || {}
+                        };
+                        currentMetadata = currentMapMeta;
+                        
+                        const folderId = 'folder_visuals';
+                        folders.push({ id: folderId, name: 'VISUALS', visible: true, locked: false, collapsed: false });
+                        
+                        if (Array.isArray(full.visuals)) {
+                            full.visuals.forEach(obj => { obj.folderId = folderId; sceneData.push(obj); });
                         }
-
-
-
-                    } catch(e) { console.error('scene_full', e); }
-
-
-
+                        
+                        if (Array.isArray(full.surfaces)) {
+                            full.surfaces.forEach(surf => {
+                                const isFloor = surf.kind === 'floor';
+                                const role = isFloor ? 'walkable' : 'wallpaper';
+                                sceneData.push({
+                                    is_poly_object: true,
+                                    role: role,
+                                    kind: surf.kind,
+                                    groupNum: surf.groupNum,
+                                    flipped: !!surf.flipped,
+                                    mapId: full.mapId,
+                                    x: (surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((surf.origin_px.x - 1235) / 150) : (surf.origin ? surf.origin.x : 0),
+                                    y: (surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((1257 - surf.origin_px.y) / 150) : (surf.origin ? surf.origin.y : 0),
+                                    poly: surf.poly || [],
+                                    defaultCoverId: surf.defaultCoverId,
+                                    outdoor: surf.outdoor,
+                                    cell: surf.cell,
+                                    rows: surf.rows,
+                                    cols: surf.cols
+                                });
+                            });
+                        }
+                        usedSceneFull = true;
+                    } catch(e) { console.error('map_json error', e); }
                 }
-
-
-
-
-
-
 
                 if (!usedSceneFull) {
 
@@ -3566,16 +3678,30 @@
 
 
 
+            if (String(sp).startsWith('BED_CUSTOM/')) {
+                img.src = '../../images/items/bed_custom/' + sp.replace('BED_CUSTOM/', '');
+                img.onload = () => draw();
+                imageCache[sp] = img;
+                return img;
+            } else if (String(sp).startsWith('NPC/')) {
+                img.src = '../../images/npcs/' + sp.replace('NPC/', '');
+                img.onload = () => draw();
+                imageCache[sp] = img;
+                return img;
+            }
+
             if (String(sp).startsWith('FURN_') || String(sp).startsWith('ITEM_')) {
                 const spStr = String(sp);
                 if (spStr.startsWith('FURN_')) {
-                    if (spStr.endsWith('_BACK')) {
+                    if (spStr.endsWith('_BACK_BASE') || spStr.endsWith('_BACKREST') || spStr.includes('_BACK_') || spStr.endsWith('_BACK')) {
                         img.src = '../../images/items/' + spStr + '.png';
                         img.onerror = () => {
-                            img.src = '../../images/items/' + spStr.replace('_BACK', '_0') + '.png';
-                            img.onerror = () => {
-                                img.src = '../../images/items/' + spStr.replace('_BACK', '') + '.png';
-                            };
+                            if (spStr.endsWith('_BACK')) {
+                                img.src = '../../images/items/' + spStr.replace('_BACK', '_0') + '.png';
+                                img.onerror = () => {
+                                    img.src = '../../images/items/' + spStr.replace('_BACK', '') + '.png';
+                                };
+                            }
                         };
                     } else if (spStr.endsWith('_0')) {
                         img.src = '../../images/items/' + spStr + '.png';
@@ -4156,11 +4282,7 @@
 
 
 
-                } else {
-
-
-
-                    processedCtx.drawImage(sourceImg, 0, 0, newW, newH);
+                } else { if (d.sp && d.sp.includes('SHADOWS')) { processedCtx.globalCompositeOperation = 'multiply'; processedCtx.globalAlpha = (d.color && d.color.a != null) ? d.color.a : 0.45; } processedCtx.drawImage(sourceImg, 0, 0, newW, newH);
 
 
 
@@ -6738,11 +6860,194 @@
 
 
 
-            ctx.drawImage(raster.canvas, screenX, screenY, drawW, drawH);
+            // Seating profile & general activity check
+            const itemIdStr = String(obj.itemId || obj.id || '');
+            const itemObj = (window.ITEMS_DB && window.ITEMS_DB[itemIdStr]) || (window.items && window.items[itemIdStr]);
+            const seatingProfiles = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.seating_profiles) || {};
+            const seatProfile = itemObj?.seating_profile || seatingProfiles[itemIdStr];
+            const isBedObj = window.BED_PROFILES && window.BED_PROFILES.beds && window.BED_PROFILES.beds[itemIdStr];
+            const hasSimAct = !isBedObj && (obj._simActivity || (obj.activityData && obj.activityData.valid));
+            const oriNum = parseInt(obj.orientation, 10) || 0;
+            const spStr = String(obj.sp || '');
+            const isBack = (oriNum === 2 || oriNum === 3) || spStr.includes('_BACK') || spStr.includes('Back');
+            const flipH = (oriNum === 1 || oriNum === 3) || (obj.sx < 0);
+            const useSeatingLayers = (isBack && hasSimAct && seatProfile && seatProfile.has_backrest);
+
+
+            let baseCanvas = raster.canvas;
+            if (useSeatingLayers && seatProfile.back_base_sprite) {
+                const baseSp = seatProfile.back_base_sprite.replace('.png', '');
+                const baseRaster = generateObjectRaster({ ...obj, sp: baseSp });
+                if (baseRaster && baseRaster.canvas) baseCanvas = baseRaster.canvas;
+            }
+
+            ctx.drawImage(baseCanvas, screenX, screenY, drawW, drawH);
+
+            // Multilayer Bed Rendering in Map Editor
+            const bedData = window.BED_PROFILES && window.BED_PROFILES.beds && window.BED_PROFILES.beds[String(obj.itemId || obj.id)];
+            if (bedData) {
+                const ax = screenX - raster.localMinX * camera.zoom;
+                const ay = screenY + raster.localMaxY * camera.zoom;
+                const skins = (window.BED_PROFILES && window.BED_PROFILES.skins) || {};
+                const dSkin = bedData.defaultSkin || 50;
+                const pillowSkinId = (obj.bedSave && obj.bedSave.pillowID) ? obj.bedSave.pillowID : (obj._simPillowID || dSkin);
+                const sheetsSkinId = (obj.bedSave && obj.bedSave.sheetsID) ? obj.bedSave.sheetsID : (obj._simSheetsID || dSkin);
+
+                const pillowSkin = skins[pillowSkinId] || skins[dSkin] || skins[50];
+                const sheetsSkin = skins[sheetsSkinId] || skins[dSkin] || skins[50];
+
+                ctx.save();
+                if (flipH) {
+                    ctx.translate(ax, 0);
+                    ctx.scale(-1, 1);
+                    ctx.translate(-ax, 0);
+                }
+
+                // Pillow
+                let pillowFile = pillowSkin?.pillow || bedData.parts?.pillow?.sprite || 'Pillow.png';
+                if (isBack && pillowSkin && pillowSkin.pillow_B) pillowFile = pillowSkin.pillow_B;
+                const pillowImg = getSpriteImage('BED_CUSTOM/' + pillowFile);
+                if (pillowImg && pillowImg.complete && pillowImg.naturalWidth > 0) {
+                    const pPos = bedData.parts?.pillow?.pos || { x: -0.345, y: 0.979 };
+                    const cx = ax + (pPos.x * camera.zoom);
+                    const cy = ay - (pPos.y * camera.zoom);
+                    const pw = pillowImg.naturalWidth * (camera.zoom / 150);
+                    const ph = pillowImg.naturalHeight * (camera.zoom / 150);
+                    ctx.drawImage(pillowImg, cx - pw * 0.5, cy - ph * 0.5, pw, ph);
+                }
+
+                const sSleepPos = bedData.parts?.sheetsSleep?.pos || { x: 0.114, y: 0.600 };
+                const sSleepBPos = bedData.parts?.sheetsSleepF?.pos || sSleepPos;
+                const activeSleepPos = isBack ? sSleepBPos : sSleepPos;
+
+                if (!obj._simSleeping) {
+                    // Empty sheets
+                    const sheetsFile = isBack 
+                        ? (sheetsSkin?.sheetsF || bedData.parts?.sheetsF?.sprite || 'BedsheetF.png')
+                        : (sheetsSkin?.sheets || bedData.parts?.sheets?.sprite || 'Bedsheet.png');
+                    const sheetsImg = getSpriteImage('BED_CUSTOM/' + sheetsFile);
+                    if (sheetsImg && sheetsImg.complete && sheetsImg.naturalWidth > 0) {
+                        const sPos = isBack 
+                            ? (bedData.parts?.sheetsF?.pos || { x: -0.064, y: 0.682 })
+                            : (bedData.parts?.sheets?.pos || { x: 0.114, y: 0.600 });
+                        const cx = ax + (sPos.x * camera.zoom);
+                        const cy = ay - (sPos.y * camera.zoom);
+                        const sw = sheetsImg.naturalWidth * (camera.zoom / 150);
+                        const sh = sheetsImg.naturalHeight * (camera.zoom / 150);
+                        ctx.drawImage(sheetsImg, cx - sw * 0.5, cy - sh * 0.5, sw, sh);
+                    }
+                } else {
+                    // Character sleeping sprite
+                    let sleepSprite = isBack ? 'Tsuki/Tsuki-Sleep-Back.png' : 'Tsuki/Tsuki-Sleep-Front.png';
+                    if (String(obj.itemId || obj.id) === '820') {
+                        sleepSprite = isBack ? 'Tsuki/Tsuki_ShipWreckBedBack_0.png' : 'Tsuki/Tsuki_ShipWreckBedFront_0.png';
+                    }
+                    const sleepImg = getSpriteImage('NPC/' + sleepSprite);
+                    if (sleepImg && sleepImg.complete && sleepImg.naturalWidth > 0) {
+                        const tsukiLocalX = activeSleepPos.x - 0.351;
+                        const tsukiLocalY = activeSleepPos.y + 0.355;
+                        const cx = ax + (tsukiLocalX * camera.zoom);
+                        const cy = ay - (tsukiLocalY * camera.zoom);
+                        const tw = sleepImg.naturalWidth * (camera.zoom / 150);
+                        const th = sleepImg.naturalHeight * (camera.zoom / 150);
+                        ctx.drawImage(sleepImg, cx - tw * 0.5, cy - th * 0.5, tw, th);
+                    }
+
+                    // Sleeping duvet
+                    const coverFile = isBack
+                        ? (sheetsSkin?.sheetsSleepF || bedData.parts?.sheetsSleepF?.sprite || 'BedCoverF.png')
+                        : (sheetsSkin?.sheetsSleep || bedData.parts?.sheetsSleep?.sprite || 'BedCover.png');
+                    const coverImg = getSpriteImage('BED_CUSTOM/' + coverFile);
+                    if (coverImg && coverImg.complete && coverImg.naturalWidth > 0) {
+                        const cx = ax + (activeSleepPos.x * camera.zoom);
+                        const cy = ay - (activeSleepPos.y * camera.zoom);
+                        const cw = coverImg.naturalWidth * (camera.zoom / 150);
+                        const ch = coverImg.naturalHeight * (camera.zoom / 150);
+                        ctx.drawImage(coverImg, cx - cw * 0.5, cy - ch * 0.5, cw, ch);
+                    }
+                }
+                ctx.restore();
+            }
+
+            // General Animated Character Furniture Interaction (Chairs, Sofas, Baths, etc.)
+            if (!isBedObj && hasSimAct) {
+                const actId = obj._simActivity || (obj.activityData ? obj.activityData.id : null);
+                const acts = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.activities) || {};
+                const actDef = actId ? acts[String(actId)] : null;
+                if (actDef && actDef.anim && actDef.category !== 'bed') {
+                    const ax = screenX - (raster.localMinX || 0) * camera.zoom;
+                    const ay = screenY + (raster.localMaxY || 0) * camera.zoom;
+
+                    ctx.save();
+                    if (flipH) {
+                        ctx.translate(ax, 0);
+                        ctx.scale(-1, 1);
+                        ctx.translate(-ax, 0);
+                    }
+
+                    const animName = isBack ? (actDef.anim.back || actDef.anim.front) : actDef.anim.front;
+                    let frames = null;
+                    if (window.resolveNpcAnimFrames) {
+                        frames = window.resolveNpcAnimFrames(actDef.npcKey || '0', animName);
+                    }
+                    if (!frames || !frames.length) {
+                        const isStatic = actDef.anim?.isStatic || actDef.anim?.mode === 'static';
+                        const ext = animName.endsWith('.png') ? '' : (isStatic ? '.png' : '_0.png');
+                        frames = [animName.includes('/') ? animName : ((actDef.npcName || 'Tsuki') + '/' + animName + ext)];
+                    }
+
+                    const currentFrame = window.getAnimationFrame ? window.getAnimationFrame(frames, actDef.anim.fps || 2.5, actDef.anim.mode || 'pingpong') : frames[0];
+                    const charImg = getSpriteImage('NPC/' + currentFrame);
+                    if (charImg && charImg.complete && charImg.naturalWidth > 0) {
+                        const itemId = String(obj.itemId || obj.id || '');
+                        const actKey = String(actId);
+                        const dbOffsets = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.furniture_offsets) || {};
+                        const furnOffset = dbOffsets[itemId + ':' + actKey] || dbOffsets[itemId];
+                        
+                        const defaultOffX = (isBack && seatProfile?.offsets?.back?.x != null)
+                            ? seatProfile.offsets.back.x
+                            : (seatProfile?.offsets?.front?.x != null
+                                ? seatProfile.offsets.front.x
+                                : (furnOffset?.x != null ? furnOffset.x : (actDef.offset?.x || 0)));
+
+                        const defaultOffY = (isBack && seatProfile?.offsets?.back?.y != null)
+                            ? seatProfile.offsets.back.y
+                            : (seatProfile?.offsets?.front?.y != null
+                                ? seatProfile.offsets.front.y
+                                : (furnOffset?.y != null ? furnOffset.y : (actDef.offset?.y !== undefined ? actDef.offset.y : 0.2)));
+
+                        const effOffsetX = (obj.charOffsetX != null) ? obj.charOffsetX : defaultOffX;
+                        const effOffsetY = (obj.charOffsetY != null) ? obj.charOffsetY : defaultOffY;
+
+                        const offX = effOffsetX * camera.zoom;
+                        const offY = effOffsetY * (raster.canvas.height * (camera.zoom / 150));
+                        const cx = ax + offX;
+                        const cy = ay - offY;
+                        const tw = charImg.naturalWidth * (camera.zoom / 150);
+                        const th = charImg.naturalHeight * (camera.zoom / 150);
+
+                        // Layer 2: Draw Character on seat
+                        ctx.drawImage(charImg, cx - tw * 0.5, cy - th * 0.5, tw, th);
+
+                        // Layer 3: Draw Furniture Backrest Foreground (ON TOP of Character)
+                        if (useSeatingLayers && seatProfile.backrest_sprite) {
+                            const backrestSp = seatProfile.backrest_sprite.replace('.png', '');
+                            const backrestRaster = generateObjectRaster({ ...obj, sp: backrestSp });
+                            if (backrestRaster && backrestRaster.canvas) {
+                                ctx.restore();
+                                ctx.drawImage(backrestRaster.canvas, screenX, screenY, drawW, drawH);
+                                ctx.save();
+                            }
+                        }
+                    }
+                    ctx.restore();
+                }
+            }
+
             // TEMP-OVERLAY (sacar después): cruz roja en el ancla computada del ítem debug
             if (obj.isDebugItem) { const ax = screenX - raster.localMinX * camera.zoom, ay = screenY + raster.localMaxY * camera.zoom; ctx.save(); ctx.strokeStyle = '#ff0000'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(ax - 8, ay); ctx.lineTo(ax + 8, ay); ctx.moveTo(ax, ay - 8); ctx.lineTo(ax, ay + 8); ctx.stroke(); ctx.font = '11px monospace'; ctx.fillStyle = '#ffff00'; ctx.fillText(`${obj.itemId}:${obj.gridX},${obj.gridY}f${obj.floor}o${obj.orientation}`, ax + 10, ay - 10); ctx.restore(); }
             // TEMP-HUELLA (play-parity, solo debug): rombo del footprint w×l centrado en el ancla
-            if (obj.isDebugItem && !obj.isWall && obj.dbgW && obj.dbgL) { const _w = obj.dbgW, _l = obj.dbgL, _cw2 = 0.25, _ch2 = 0.125; const _cx = obj.x, _cy = obj.y; const _pt = [( _l-_w)*_cw2/2, (_w+_l)*_ch2/2]; ctx.save(); ctx.beginPath(); const _corners = [[(_l-_w)*_cw2/2, (_w+_l)*_ch2/2], [(_w+_l)*_cw2/2, (_l-_w)*_ch2/2], [(_w-_l)*_cw2/2, -(_w+_l)*_ch2/2], [(-_w-_l)*_cw2/2, (_w-_l)*_ch2/2]]; _corners.forEach(([qx, qy], _i) => { const _sx = (_cx + qx) * camera.zoom, _sy = -(_cy + qy) * camera.zoom; if (_i === 0) ctx.moveTo(_sx, _sy); else ctx.lineTo(_sx, _sy); }); ctx.closePath(); ctx.fillStyle = 'rgba(74,144,217,0.45)'; ctx.fill(); ctx.strokeStyle = '#4A90D9'; ctx.lineWidth = 1.5; ctx.stroke(); ctx.restore(); }
+            if (obj.isDebugItem && !obj.isWall && obj.dbgW && obj.dbgL) { const _w = obj.dbgW, _l = obj.dbgL, _cw2 = 0.25, _ch2 = 0.125; const _cx = obj.x, _cy = obj.y; const _pt = [( _l-_w)*_cw2/2, (_w+_l)*_ch2/2]; ctx.save(); ctx.beginPath(); const _corners = [[(_w-_l)*_cw2/2, (_w+_l)*_ch2/2], [(_w+_l)*_cw2/2, (_w-_l)*_ch2/2], [-(_w-_l)*_cw2/2, -(_w+_l)*_ch2/2], [-(_w+_l)*_cw2/2, -(_w-_l)*_ch2/2]]; _corners.forEach(([qx, qy], _i) => { const _sx = (_cx + qx) * camera.zoom, _sy = -(_cy + qy) * camera.zoom; if (_i === 0) ctx.moveTo(_sx, _sy); else ctx.lineTo(_sx, _sy); }); ctx.closePath(); ctx.fillStyle = 'rgba(74,144,217,0.45)'; ctx.fill(); ctx.strokeStyle = '#4A90D9'; ctx.lineWidth = 1.5; ctx.stroke(); ctx.restore(); }
 
 
 
@@ -7381,7 +7686,8 @@
 
 
 
-        function autoCreateDefaultGrids(){
+        async function autoCreateDefaultGrids(){
+            if (!window.ITEMS_DB && window._itemsDBPromise) await window._itemsDBPromise;
 
 
 
@@ -7431,7 +7737,8 @@
                     orientation: p.orientation,
                     x: p.x,
                     y: p.y,
-                    cluster: p.cluster
+                    cluster: p.cluster,
+                    bedSave: p.bedSave
                 }));
 
 
@@ -7596,8 +7903,8 @@
                     // Se calculan aquí porque worldX/worldY (centro del footprint) los necesitan.
                     const _oriEd = Number(p.orientation || 0);
                     const _itemEd = ((window.ITEMS_DB || {})[p.item_id] || {});
-                    const _baseEd = ({ "115": { w: 4, l: 2 } })[String(p.item_id)] || { w: (_itemEd.width || 1), l: (_itemEd.length || 1) };
-                    const _ovEd = (({ "115": { 0: [4, 2], 1: [2, 4], 2: [4, 2], 3: [2, 4] } })[String(p.item_id)] || {})[_oriEd];
+                    const _baseEd = { w: (_itemEd.width || 1), l: (_itemEd.length || 1) };
+                    const _ovEd = null;
                     const _swapEd = (_oriEd === 1 || _oriEd === 3);
                     const w_cells = _ovEd ? _ovEd[0] : (_swapEd ? _baseEd.l : _baseEd.w);
                     const l_cells = _ovEd ? _ovEd[1] : (_swapEd ? _baseEd.w : _baseEd.l);
@@ -7687,7 +7994,7 @@
 
 
 
-                        worldY = oy - ((p.x + w_cells / 2) + (p.y + l_cells / 2)) * (ch_u / 2);
+                        worldY = oy + ((p.x + w_cells / 2) + (p.y + l_cells / 2)) * (ch_u / 2);
                         // TEMP-DIAG inyector (sacar después): rama y constantes reales por ítem
                         console.log(`[DBG-INJECT] id=${p.item_id} ori=${_oriEd} grid=(${p.x},${p.y}) wxh=${w_cells}x${l_cells} branch=${polyConf ? 'poly:' + (polyConf.id || polyConf.go) : (sConf ? 'atlas' : 'NONE')} ox=${Number(ox).toFixed(3)} oy=${Number(oy).toFixed(3)} cell=${cell.w}x${cell.h} world=(${worldX.toFixed(2)},${worldY.toFixed(2)})`);
 
@@ -7760,6 +8067,7 @@
                         placementID: p.placementID, gridX: p.x, gridY: p.y, cluster: p.cluster,
                         orientation: oriNum,
                         dbgW: w_cells, dbgL: l_cells,
+                        bedSave: p.bedSave,
                         surfaceId: (polyConf ? (polyConf.id || polyConf.go) : (p.isWall ? `wall_${p.floor}_${p.flipped ? 'L' : 'R'}` : `floor_${p.floor}`))
                     });
 
@@ -7881,6 +8189,109 @@
                     if (syncChk) syncChk.checked = (window.anchorSyncEnabled !== false);
                 } else {
                     anchorNotice.style.display = 'none';
+                }
+            }
+
+            const bedPanel = document.getElementById('bed-custom-props');
+            const bedData = window.BED_PROFILES && window.BED_PROFILES.beds && window.BED_PROFILES.beds[String(obj.itemId || obj.id)];
+            if (bedPanel) {
+                if (bedData) {
+                    bedPanel.style.display = 'block';
+                    const skins = (window.BED_PROFILES && window.BED_PROFILES.skins) || {};
+                    const pillowSelect = document.getElementById('bed-prop-pillow');
+                    const sheetsSelect = document.getElementById('bed-prop-sheets');
+                    const sleepChk = document.getElementById('bed-prop-sleeping');
+
+                    const curPillow = (obj.bedSave && obj.bedSave.pillowID) ? obj.bedSave.pillowID : (obj._simPillowID || bedData.defaultSkin || 50);
+                    const curSheets = (obj.bedSave && obj.bedSave.sheetsID) ? obj.bedSave.sheetsID : (obj._simSheetsID || bedData.defaultSkin || 50);
+
+                    if (pillowSelect && sheetsSelect) {
+                        const skinEntries = Object.entries(skins);
+                        pillowSelect.innerHTML = skinEntries.map(([sid, s]) => `<option value="${sid}" ${String(sid) === String(curPillow) ? 'selected' : ''}>${s.name} (ID: ${sid})</option>`).join('');
+                        sheetsSelect.innerHTML = skinEntries.map(([sid, s]) => `<option value="${sid}" ${String(sid) === String(curSheets) ? 'selected' : ''}>${s.name} (ID: ${sid})</option>`).join('');
+                    }
+                    if (sleepChk) sleepChk.checked = !!obj._simSleeping;
+                } else {
+                    bedPanel.style.display = 'none';
+                }
+            }
+
+            // Furniture Activity Props
+            const actPanel = document.getElementById('furniture-activity-props');
+            if (actPanel) {
+                const isFurniture = !obj.is_poly_object && (obj.itemId || obj.placementID || obj.id);
+                if (isFurniture) {
+                    actPanel.style.display = 'block';
+                    const actSelect = document.getElementById('furn-prop-activity');
+                    const actDetails = document.getElementById('furn-act-details');
+                    const acts = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.activities) || {};
+                    
+                    if (actSelect) {
+                        const curAct = obj._simActivity || '';
+                        let html = '<option value="">(Ninguna interacción)</option>';
+                        const itemIdStr = String(obj.itemId || obj.id || '');
+                        const itInfo = (window.ITEMS_DB && window.ITEMS_DB[itemIdStr]) || {};
+                        const kind = itInfo.behaviour?.kind || (window.BED_PROFILES?.beds?.[itemIdStr] ? 'bed' : '');
+                        const furnCats = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.furniture_categories) || {};
+                        const allowedIds = furnCats[kind] || (kind === 'sofa' ? furnCats.chair : null);
+
+                        const matching = [];
+                        const others = [];
+                        Object.entries(acts).forEach(([id, a]) => {
+                            if (!allowedIds || allowedIds.includes(Number(id))) {
+                                matching.push([id, a]);
+                            } else {
+                                others.push([id, a]);
+                            }
+                        });
+
+                        if (matching.length > 0 && others.length > 0) {
+                            html += `<optgroup label="Recomendadas para este mueble (${kind || 'Interacción'})">`;
+                            matching.forEach(([id, a]) => {
+                                html += `<option value="${id}" ${String(id) === String(curAct) ? 'selected' : ''}>${a.npcName}: ${a.name} (ID ${id})</option>`;
+                            });
+                            html += `</optgroup><optgroup label="Otras interacciones">`;
+                            others.forEach(([id, a]) => {
+                                html += `<option value="${id}" ${String(id) === String(curAct) ? 'selected' : ''}>${a.npcName}: ${a.name} (ID ${id})</option>`;
+                            });
+                            html += `</optgroup>`;
+                        } else {
+                            Object.entries(acts).forEach(([id, a]) => {
+                                html += `<option value="${id}" ${String(id) === String(curAct) ? 'selected' : ''}>${a.npcName}: ${a.name} (ID ${id})</option>`;
+                            });
+                        }
+                        actSelect.innerHTML = html;
+                        
+                        const offsetControls = document.getElementById('furn-offset-controls');
+                        const offXInput = document.getElementById('furn-offset-x');
+                        const offYInput = document.getElementById('furn-offset-y');
+                        const offsetStatus = document.getElementById('furn-offset-status');
+                        if (offsetStatus) offsetStatus.style.display = 'none';
+
+                        if (curAct && acts[String(curAct)]) {
+                            const a = acts[String(curAct)];
+                            if (actDetails) {
+                                actDetails.style.display = 'block';
+                                actDetails.innerHTML = `<b>${a.npcName}</b> — ${a.description}<br><span style="color:#aaa;">Animación: ${a.anim?.front || 'default'} (${a.anim?.fps || 2.5} FPS, ${a.anim?.mode || 'loop'})</span>`;
+                            }
+                            if (offsetControls) offsetControls.style.display = 'block';
+                            
+                            const itemId = String(obj.itemId || obj.id || '');
+                            const dbOffsets = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.furniture_offsets) || {};
+                            const furnOffset = dbOffsets[itemId + ':' + curAct] || dbOffsets[itemId];
+                            
+                            const curOffX = (obj.charOffsetX != null) ? obj.charOffsetX : (furnOffset?.x != null ? furnOffset.x : (a.offset?.x || 0));
+                            const curOffY = (obj.charOffsetY != null) ? obj.charOffsetY : (furnOffset?.y != null ? furnOffset.y : (a.offset?.y !== undefined ? a.offset.y : 0.2));
+                            
+                            if (offXInput) offXInput.value = Number(curOffX).toFixed(2);
+                            if (offYInput) offYInput.value = Number(curOffY).toFixed(2);
+                        } else {
+                            if (actDetails) actDetails.style.display = 'none';
+                            if (offsetControls) offsetControls.style.display = 'none';
+                        }
+                    }
+                } else {
+                    actPanel.style.display = 'none';
                 }
             }
 
@@ -8759,6 +9170,283 @@
 
         function updatePolySurfaceCover(v){ if(primarySelectedIndex!==-1 && sceneData[primarySelectedIndex].is_poly_object){ const n=parseInt(v); if(!isNaN(n)) sceneData[primarySelectedIndex].defaultCoverId=n; else delete sceneData[primarySelectedIndex].defaultCoverId; draw(); } }
 
+        function onBedPropChange() {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            const pVal = parseInt(document.getElementById('bed-prop-pillow')?.value) || 50;
+            const sVal = parseInt(document.getElementById('bed-prop-sheets')?.value) || 50;
+            obj.bedSave = { pillowID: pVal, sheetsID: sVal, edited: true };
+            obj._simPillowID = pVal;
+            obj._simSheetsID = sVal;
+
+            if (window._csavePlacements) {
+                const cp = window._csavePlacements.find(p => p.placementID === obj.placementID);
+                if (cp) cp.bedSave = obj.bedSave;
+            }
+            if (window._csaveBuf && typeof SaveParser !== 'undefined') {
+                try {
+                    const parser = new SaveParser(window._csaveBuf);
+                    const reader = new OdinReader(window._csaveBuf);
+                    parser.ast = reader.parse()[0];
+                    parser.parseMap();
+                    parser.setBedCustomization(obj.placementID, { pillowID: pVal, sheetsID: sVal });
+                    if (typeof OdinWriter !== 'undefined') {
+                        const writer = new OdinWriter();
+                        window._csaveBuf = writer.write([parser.ast]);
+                    }
+                } catch(e) { console.warn('Bed csave sync error:', e); }
+            }
+            draw();
+        }
+
+        function onBedSleepingToggle(checked) {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            obj._simSleeping = !!checked;
+
+            if (window._csaveBuf && typeof SaveParser !== 'undefined') {
+                try {
+                    const parser = new SaveParser(window._csaveBuf);
+                    const reader = new OdinReader(window._csaveBuf);
+                    parser.ast = reader.parse()[0];
+                    parser.parseMap();
+                    if (checked) {
+                        parser.setFurnitureActivity({ placementId: obj.placementID, sublocId: obj.cluster, npcId: -1, activityId: 348 });
+                    } else {
+                        parser.clearFurnitureActivity();
+                    }
+                    if (typeof OdinWriter !== 'undefined') {
+                        const writer = new OdinWriter();
+                        window._csaveBuf = writer.write([parser.ast]);
+                    }
+                } catch(e) { console.warn('Activity csave sync error:', e); }
+            }
+            draw();
+        }
+
+        function onFurnitureActivityChange() {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            const selVal = document.getElementById('furn-prop-activity')?.value;
+            const actId = selVal ? parseInt(selVal) : null;
+            obj._simActivity = actId;
+
+            const acts = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.activities) || {};
+            const actDef = actId ? acts[String(actId)] : null;
+
+            const actDetails = document.getElementById('furn-act-details');
+            const offsetControls = document.getElementById('furn-offset-controls');
+            const offXInput = document.getElementById('furn-offset-x');
+            const offYInput = document.getElementById('furn-offset-y');
+            const offsetStatus = document.getElementById('furn-offset-status');
+            if (offsetStatus) offsetStatus.style.display = 'none';
+
+            if (actDef) {
+                const oriNum = parseInt(obj.orientation, 10) || 0;
+                const spStr = String(obj.sp || '');
+                const isBack = (oriNum === 2 || oriNum === 3) || spStr.includes('_BACK') || spStr.includes('Back');
+                const itemId = String(obj.itemId || obj.id || '');
+                const itemObj = (window.ITEMS_DB && window.ITEMS_DB[itemId]) || (window.items && window.items[itemId]);
+                const seatingProfiles = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.seating_profiles) || {};
+                const seatProfile = itemObj?.seating_profile || seatingProfiles[itemId];
+
+                const animName = isBack ? (actDef.anim?.back || actDef.anim?.front) : (actDef.anim?.front || actDef.anim?.back);
+                if (actDetails) {
+                    actDetails.style.display = 'block';
+                    actDetails.innerHTML = `<b>${actDef.npcName}</b> — ${actDef.description}<br><span style="color:#aaa;">Animación: ${animName || 'default'} (${actDef.anim?.fps || 2.5} FPS, ${actDef.anim?.mode || 'loop'})</span>`;
+                }
+                if (offsetControls) offsetControls.style.display = 'block';
+
+                const dbOffsets = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.furniture_offsets) || {};
+                const furnOffset = dbOffsets[itemId + ':' + actId] || dbOffsets[itemId];
+                
+                const defaultOffX = (isBack && seatProfile?.offsets?.back?.x != null)
+                    ? seatProfile.offsets.back.x
+                    : (seatProfile?.offsets?.front?.x != null
+                        ? seatProfile.offsets.front.x
+                        : (furnOffset?.x != null ? furnOffset.x : (actDef.offset?.x || 0)));
+
+                const defaultOffY = (isBack && seatProfile?.offsets?.back?.y != null)
+                    ? seatProfile.offsets.back.y
+                    : (seatProfile?.offsets?.front?.y != null
+                        ? seatProfile.offsets.front.y
+                        : (furnOffset?.y != null ? furnOffset.y : (actDef.offset?.y !== undefined ? actDef.offset.y : 0.22)));
+                
+                const curOffX = (obj.charOffsetX != null) ? obj.charOffsetX : defaultOffX;
+                const curOffY = (obj.charOffsetY != null) ? obj.charOffsetY : defaultOffY;
+                
+                if (offXInput) offXInput.value = Number(curOffX).toFixed(2);
+                if (offYInput) offYInput.value = Number(curOffY).toFixed(2);
+            } else {
+                if (actDetails) actDetails.style.display = 'none';
+                if (offsetControls) offsetControls.style.display = 'none';
+            }
+
+            if (window._csaveBuf && typeof SaveParser !== 'undefined') {
+                try {
+                    const parser = new SaveParser(window._csaveBuf);
+                    const reader = new OdinReader(window._csaveBuf);
+                    parser.ast = reader.parse()[0];
+                    parser.parseMap();
+                    if (actDef) {
+                        parser.setFurnitureActivity({
+                            placementId: obj.placementID,
+                            sublocId: obj.cluster || 0,
+                            npcId: actDef.npcID,
+                            activityId: actDef.id
+                        });
+                    } else {
+                        parser.clearFurnitureActivity();
+                    }
+                    if (typeof OdinWriter !== 'undefined') {
+                        const writer = new OdinWriter();
+                        window._csaveBuf = writer.write([parser.ast]);
+                    }
+                } catch(e) { console.warn('Activity csave sync error:', e); }
+            }
+            draw();
+            if (actDef) {
+                saveFurnitureOffset(true);
+            }
+        }
+
+        let _furnOffsetSaveTimeout = null;
+
+        function onFurnitureOffsetChange() {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            const offX = parseFloat(document.getElementById('furn-offset-x')?.value) || 0;
+            const offY = parseFloat(document.getElementById('furn-offset-y')?.value) || 0;
+            obj.charOffsetX = offX;
+            obj.charOffsetY = offY;
+            draw();
+
+            // Auto-guardado silencioso con debounce de 500ms al modificar los valores
+            if (_furnOffsetSaveTimeout) clearTimeout(_furnOffsetSaveTimeout);
+            _furnOffsetSaveTimeout = setTimeout(() => {
+                saveFurnitureOffset(true); // true = silencioso / automático
+            }, 500);
+        }
+
+        function resetFurnitureOffset() {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            const actId = obj._simActivity || (obj.activityData ? obj.activityData.id : null);
+            const acts = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.activities) || {};
+            const actDef = actId ? acts[String(actId)] : null;
+            
+            const oriNum = parseInt(obj.orientation, 10) || 0;
+            const spStr = String(obj.sp || '');
+            const isBack = (oriNum === 2 || oriNum === 3) || spStr.includes('_BACK') || spStr.includes('Back');
+            const itemId = String(obj.itemId || obj.id || '');
+            const itemObj = (window.ITEMS_DB && window.ITEMS_DB[itemId]) || (window.items && window.items[itemId]);
+            const seatingProfiles = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.seating_profiles) || {};
+            const seatProfile = itemObj?.seating_profile || seatingProfiles[itemId];
+
+            const defX = (isBack && seatProfile?.offsets?.back?.x != null)
+                ? seatProfile.offsets.back.x
+                : (seatProfile?.offsets?.front?.x != null ? seatProfile.offsets.front.x : (actDef?.offset?.x || 0));
+
+            const defY = (isBack && seatProfile?.offsets?.back?.y != null)
+                ? seatProfile.offsets.back.y
+                : (seatProfile?.offsets?.front?.y != null ? seatProfile.offsets.front.y : (actDef?.offset?.y !== undefined ? actDef.offset.y : 0.22));
+            
+            obj.charOffsetX = defX;
+            obj.charOffsetY = defY;
+            
+            const offXInput = document.getElementById('furn-offset-x');
+            const offYInput = document.getElementById('furn-offset-y');
+            if (offXInput) offXInput.value = Number(defX).toFixed(2);
+            if (offYInput) offYInput.value = Number(defY).toFixed(2);
+            
+            const offsetStatus = document.getElementById('furn-offset-status');
+            if (offsetStatus) {
+                offsetStatus.style.display = 'block';
+                offsetStatus.style.color = '#eab308';
+                offsetStatus.innerText = 'Valores restablecidos por defecto.';
+                setTimeout(() => { if (offsetStatus) offsetStatus.style.display = 'none'; }, 2500);
+            }
+            draw();
+            saveFurnitureOffset(true);
+        }
+
+        async function saveFurnitureOffset(isAuto = false) {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            const itemId = String(obj.itemId || obj.id || '');
+            const actId = obj._simActivity || (obj.activityData ? obj.activityData.id : null);
+            const offX = parseFloat(document.getElementById('furn-offset-x')?.value) || 0;
+            const offY = parseFloat(document.getElementById('furn-offset-y')?.value) || 0;
+            
+            obj.charOffsetX = offX;
+            obj.charOffsetY = offY;
+
+            if (!window.ACTIVITIES_DB) window.ACTIVITIES_DB = { activities: {}, furniture_offsets: {} };
+            if (!window.ACTIVITIES_DB.furniture_offsets) window.ACTIVITIES_DB.furniture_offsets = {};
+
+            const offsetEntry = { x: offX, y: offY, name: obj.name || ('Item #' + itemId) };
+            window.ACTIVITIES_DB.furniture_offsets[itemId] = offsetEntry;
+            if (actId) {
+                window.ACTIVITIES_DB.furniture_offsets[itemId + ':' + actId] = { x: offX, y: offY };
+            }
+
+            const offsetStatus = document.getElementById('furn-offset-status');
+
+            try {
+                const res = await fetch('/api/save/activities', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(window.ACTIVITIES_DB, null, 2)
+                });
+                if (res.ok) {
+                    if (offsetStatus) {
+                        offsetStatus.style.display = 'block';
+                        offsetStatus.style.color = '#4ade80';
+                        offsetStatus.innerText = isAuto 
+                            ? `💾 Auto-guardado en activities_db.json (#${itemId}: X=${offX}, Y=${offY})`
+                            : `✅ ¡Guardado en activities_db.json (Mueble #${itemId})!`;
+                        setTimeout(() => { if (offsetStatus) offsetStatus.style.display = 'none'; }, 3000);
+                    }
+                    return;
+                }
+            } catch(err) {
+                // Fallback a descarga/picker solo si fue pulsado manualmente por el usuario
+            }
+
+            if (!isAuto) {
+                try {
+                    const jsonStr = JSON.stringify(window.ACTIVITIES_DB, null, 2);
+                    const blob = new Blob([jsonStr], { type: 'application/json' });
+                    if (window.showSaveFilePicker) {
+                        const handle = await window.showSaveFilePicker({
+                            suggestedName: 'activities_db.json',
+                            types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }]
+                        });
+                        const writable = await handle.createWritable();
+                        await writable.write(blob);
+                        await writable.close();
+                        if (offsetStatus) {
+                            offsetStatus.style.display = 'block';
+                            offsetStatus.style.color = '#4ade80';
+                            offsetStatus.innerText = `✅ ¡Archivo activities_db.json actualizado exitosamente!`;
+                            setTimeout(() => { if (offsetStatus) offsetStatus.style.display = 'none'; }, 4000);
+                        }
+                        return;
+                    }
+                } catch(e) {
+                    if (e.name === 'AbortError') return;
+                }
+            }
+
+            if (offsetStatus) {
+                offsetStatus.style.display = 'block';
+                offsetStatus.style.color = '#4ade80';
+                offsetStatus.innerText = `✅ Calibración aplicada en memoria (Mueble #${itemId}: X=${offX}, Y=${offY})`;
+                setTimeout(() => { if (offsetStatus) offsetStatus.style.display = 'none'; }, 4000);
+            }
+            draw();
+        }
+
 
 
 
@@ -9110,7 +9798,7 @@
             if (v && v._polyNorm && v.poly && v.poly.length) return flipPolyY(v.poly);
             return v ? (v.poly || []) : [];
         }
-        function polySY(obj, y) { const o = obj || {}; return (((o.role === 'walkable') || (o.kind === 'floor')) ? y : -y); }
+        function polySY(obj, y) { const o = obj || {}; return -y; }
         function loadUnifiedMapData(data) {
 
 
@@ -9464,7 +10152,38 @@
 
 
 
-        function exportUnifiedMapFile() {
+        function showEditorNotification(msg, bgColor = '#28a745') {
+            let el = document.getElementById('editor-floating-toast');
+            if (!el) {
+                el = document.createElement('div');
+                el.id = 'editor-floating-toast';
+                el.style.position = 'fixed';
+                el.style.bottom = '24px';
+                el.style.right = '24px';
+                el.style.padding = '12px 22px';
+                el.style.color = '#fff';
+                el.style.borderRadius = '8px';
+                el.style.boxShadow = '0 6px 18px rgba(0,0,0,0.5)';
+                el.style.zIndex = '999999';
+                el.style.fontSize = '14px';
+                el.style.fontWeight = 'bold';
+                el.style.fontFamily = 'sans-serif';
+                el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                el.style.pointerEvents = 'none';
+                document.body.appendChild(el);
+            }
+            el.style.backgroundColor = bgColor;
+            el.innerHTML = msg;
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+            clearTimeout(el._hideTimer);
+            el._hideTimer = setTimeout(() => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(10px)';
+            }, 3500);
+        }
+
+        async function exportUnifiedMapFile() {
 
 
 
@@ -9686,121 +10405,108 @@
 
 
 
-            const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
-
-
-
-            const a = document.createElement('a');
-
-
-
-            a.href = URL.createObjectURL(blob);
-
-
-
-            a.download = `map_${mapId}.json`;
-
-
-
-            a.click();
-
-
-
-            console.log(`[exportUnifiedMapFile] Exportado map_${mapId}.json (${surfaces.length} superficies, ${visuals.length} visuales).`);
-
-
-
-        }
-
-
-
-
-
-
-
-        function exportJSON() {
-
-
-
-            const virtuals = sceneData.filter(o=>o.is_poly_object);
-
-
-
-            const visuals = sceneData.filter(o=>!o.is_poly_object && !o.isDebugItem).map(v => {
-                const copy = { ...v };
-                delete copy._rasterCache;
-                delete copy._rasterHash;
-                delete copy._warned;
-                delete copy.folderId;
-                return copy;
-            });
-
-
-
-            const walkable = virtuals.filter(o=>o.role==='walkable');
-
-
-
-            const blockers = virtuals.filter(o=>o.role==='blocker');
-
-
-
-            const triggers = virtuals.filter(o=>o.role==='trigger');
-
-
-
-            const out = { kind: 'map', layout: { front: visuals }, logic: { walkable, blockers, triggers, interaction_nodes: virtuals.filter(o=>o.role==='unknown') } };
-
-
-
-            const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
-
-
-
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'scene_full.json'; a.click();
-
-
-
-            // también generar patch atlas desde polígonos con groupNum manual
-
-
-
-            const atlasPatch = virtuals.filter(v=> v.groupNum!==undefined && v.groupNum!=='' ).map(v=>{
-
-
-
-                const isFloor = v.role==='walkable';
-
-
-
-                const mapId = currentMapMeta ? currentMapMeta.mapId || 0 : 0;
-
-
-
-                return { mapId, kind: isFloor?'floor':'wall', groupNum: parseInt(v.groupNum), flipped: !!v.flipped, rows: 16, cols: 16, origin_px: {x: v.x, y: v.y}, poly: v.poly, defaultCoverId: v.defaultCoverId || null };
-
-
-
-            });
-
-
-
-            if (atlasPatch.length) {
-
-
-
-                const b2 = new Blob([JSON.stringify(atlasPatch, null, 2)], {type:'application/json'});
-
-
-
-                const a2=document.createElement('a'); a2.href=URL.createObjectURL(b2); a2.download='atlas_patch.json'; setTimeout(()=>a2.click(), 300);
-
-
-
+            const jsonStr = JSON.stringify(out, null, 2);
+            let savedOnServer = false;
+
+            if (window.location.protocol.startsWith('http')) {
+                try {
+                    const res = await fetch(`/api/save/map/${mapId}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: jsonStr
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data && data.ok) {
+                            savedOnServer = true;
+                            showEditorNotification(`✅ ¡Mapa <code>map_${mapId}.json</code> sobreescrito con éxito en el servidor!`, '#28a745');
+                            console.log(`[exportUnifiedMapFile] Guardado directo en servidor: map_${mapId}.json (${surfaces.length} superficies, ${visuals.length} visuales).`);
+                        }
+                    }
+                } catch (e) {
+                    console.warn('[exportUnifiedMapFile] No se pudo guardar en servidor, usando fallback:', e);
+                }
             }
 
+            if (!savedOnServer) {
+                const blob = new Blob([jsonStr], { type: 'application/json' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `map_${mapId}.json`;
+                a.click();
+                showEditorNotification(`💾 Descargando map_${mapId}.json (servidor no disponible)`, '#17a2b8');
+                console.log(`[exportUnifiedMapFile] Exportado map_${mapId}.json (${surfaces.length} superficies, ${visuals.length} visuales).`);
+            }
 
+            const btnSave = document.getElementById('btn-guardar-mapa');
+            if (btnSave) {
+                const origText = btnSave.innerHTML;
+                btnSave.innerHTML = savedOnServer ? '✅ ¡Guardado!' : '💾 Descargado';
+                setTimeout(() => { btnSave.innerHTML = origText; }, 2000);
+            }
+        }
 
+        async function exportJSON() {
+            const virtuals = sceneData.filter(o=>o.is_poly_object);
+            const visuals = sceneData.filter(o=>!o.is_poly_object);
+            
+            const surfaces = virtuals.filter(v => v.role==='walkable' || v.role==='wallpaper').map(v => {
+                const isFloor = v.role==='walkable';
+                return {
+                    id: isFloor ? `floor_${v.groupNum}` : `wall_${v.groupNum}`,
+                    kind: isFloor ? 'floor' : 'wall',
+                    groupNum: parseInt(v.groupNum) || 0,
+                    flipped: !!v.flipped,
+                    origin_px: {x: Math.round(1235 + v.x * 150 * 100)/100, y: Math.round(1257 - v.y * 150 * 100)/100},
+                    origin: {x: v.x, y: v.y},
+                    cell: v.cell || {w: 75, h: 37.5},
+                    rows: v.rows || 16, 
+                    cols: v.cols || 16,
+                    poly: v.poly || [],
+                    defaultCoverId: v.defaultCoverId || null,
+                    outdoor: v.outdoor
+                };
+            });
+            
+            const mapId = currentMapMeta ? currentMapMeta.mapId : 0;
+            const out = {
+                mapId: mapId,
+                name: currentMapMeta ? currentMapMeta.name : `Map ${mapId}`,
+                version: currentMapMeta ? currentMapMeta.version : 3,
+                config: currentMapMeta ? currentMapMeta.config : {},
+                surfaces: surfaces,
+                visuals: visuals,
+                colliders: currentMapMeta ? currentMapMeta.colliders : [],
+                logic: currentMapMeta ? currentMapMeta.logic : {},
+                meta: currentMapMeta ? currentMapMeta.meta : {}
+            };
+            
+            const jsonStr = JSON.stringify(out, null, 2);
+            let savedOnServer = false;
+            if (window.location.protocol.startsWith('http')) {
+                try {
+                    const res = await fetch(`/api/save/map/${mapId}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: jsonStr
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data && data.ok) {
+                            savedOnServer = true;
+                            showEditorNotification(`✅ ¡Mapa <code>map_${mapId}.json</code> sobreescrito con éxito en el servidor!`, '#28a745');
+                        }
+                    }
+                } catch(e) {
+                    console.warn('[exportJSON] No se pudo guardar en servidor:', e);
+                }
+            }
+            if (!savedOnServer) {
+                const blob = new Blob([jsonStr], { type: 'application/json' });
+                const a = document.createElement('a'); a.href = URL.createObjectURL(blob); 
+                a.download = `map_${mapId}.json`; a.click();
+                showEditorNotification(`💾 Descargando map_${mapId}.json...`, '#17a2b8');
+            }
         }
 
 
@@ -9961,10 +10667,8 @@
 
 
 
-        function initCatalog(){
-
-
-
+        async function initCatalog(){
+            if (!window.ITEMS_DB && window._itemsDBPromise) await window._itemsDBPromise;
             const j = window.ITEMS_DB || {};
 
 
@@ -10571,49 +11275,63 @@
 
 
         function loadJSON(ev) {
-
-
-
             const f = ev.target.files[0]; if (!f) return;
-
-
-
             const r = new FileReader();
-
-
-
             r.onload = () => {
-
-
-
                 try {
-
-
-
-                    const parsed = JSON.parse(r.result);
-
-
-
-                    const arr = Array.isArray(parsed) ? parsed : (parsed.layout && parsed.layout.front) || parsed.sceneData || [];
-
-
-
-                    sceneData = arr; folders = []; recordState(); updateLayerList(); fitCameraToScene(); draw();
-
-
-
-                } catch (e) { alert('JSON inválido'); }
-
-
-
+                    const full = JSON.parse(r.result);
+                    sceneData = []; folders = [];
+                    
+                    if (full.mapId !== undefined || full.visuals || full.surfaces) {
+                        currentMapMeta = {
+                            mapId: full.mapId !== undefined ? full.mapId : 0,
+                            name: full.name,
+                            version: full.version,
+                            config: full.config || {},
+                            meta: full.meta || {},
+                            colliders: full.colliders || [],
+                            logic: full.logic || {}
+                        };
+                        currentMetadata = currentMapMeta;
+                        
+                        const folderId = 'folder_visuals';
+                        folders.push({ id: folderId, name: 'VISUALS', visible: true, locked: false, collapsed: false });
+                        
+                        if (Array.isArray(full.visuals)) {
+                            full.visuals.forEach(obj => { obj.folderId = folderId; sceneData.push(obj); });
+                        }
+                        
+                        if (Array.isArray(full.surfaces)) {
+                            full.surfaces.forEach(surf => {
+                                const isFloor = surf.kind === 'floor';
+                                const role = isFloor ? 'walkable' : 'wallpaper';
+                                sceneData.push({
+                                    is_poly_object: true,
+                                    role: role,
+                                    kind: surf.kind,
+                                    groupNum: surf.groupNum,
+                                    flipped: !!surf.flipped,
+                                    mapId: full.mapId,
+                                    x: (surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((surf.origin_px.x - 1235) / 150) : (surf.origin ? surf.origin.x : 0),
+                                    y: (surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((1257 - surf.origin_px.y) / 150) : (surf.origin ? surf.origin.y : 0),
+                                    poly: surf.poly || [],
+                                    defaultCoverId: surf.defaultCoverId,
+                                    outdoor: surf.outdoor,
+                                    cell: surf.cell,
+                                    rows: surf.rows,
+                                    cols: surf.cols
+                                });
+                            });
+                        }
+                    } else {
+                        const arr = Array.isArray(full) ? full : (full.layout && full.layout.front) || full.sceneData || [];
+                        sceneData = arr;
+                    }
+                    
+                    recordState(); updateLayerList(); fitCameraToScene(); draw();
+                } catch (e) { alert('JSON inválido'); console.error(e); }
             };
-
-
-
             r.readAsText(f);
-
-
-
         }
 
 
