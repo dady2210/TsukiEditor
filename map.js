@@ -154,7 +154,7 @@ class IsometricMap {
         }
 
         if (!window.ACTIVITIES_DB) {
-            fetch('data/activities_db.json')
+            fetch('data/activities_db.json?v=' + Date.now())
                 .then(r => r.json())
                 .then(data => {
                     window.ACTIVITIES_DB = data;
@@ -650,12 +650,17 @@ class IsometricMap {
             img2.onerror = () => {
                 const img3 = new Image();
                 img3.onload = () => { this._imgCache[cacheKey] = img3; this.draw(); };
-                img3.onerror = () => { this._imgCache[cacheKey] = null; };
-                img3.src = `images/items/CROP_${item_id}.png?v=5`;
+                img3.onerror = () => {
+                    const img4 = new Image();
+                    img4.onload = () => { this._imgCache[cacheKey] = img4; this.draw(); };
+                    img4.onerror = () => { this._imgCache[cacheKey] = null; };
+                    img4.src = `images/items/CROP_${item_id}.png?v=5`;
+                };
+                img3.src = `images/items/ITEM_${item_id}.png?v=5`;
             };
-            img2.src = `images/items/ITEM_${item_id}.png?v=5`;
+            img2.src = `images/items/FURN_${item_id}.png?v=5`;
         };
-        img.src = `images/items/FURN_${item_id}.png?v=5`;
+        img.src = `images/items/FURN_${item_id}_0.png?v=5`;
         
         return false;
     }
@@ -1008,10 +1013,10 @@ class IsometricMap {
             let worldX, worldY;
             if (!flipped) {
                 worldX = ox + wx * (cw_u / 2);
-                worldY = oy - wx * (ch_u / 2) - wy * ch_u;
+                worldY = oy - wx * (ch_u / 2) + wy * ch_u;
             } else {
-                worldX = ox + wx * (cw_u / 2);
-                worldY = oy - wx * (ch_u / 2) - wy * ch_u;
+                worldX = ox - wx * (cw_u / 2);
+                worldY = oy - wx * (ch_u / 2) + wy * ch_u;
             }
             
             return {
@@ -1068,8 +1073,14 @@ class IsometricMap {
                 const worldX = (screenX - this.offsetX) / factor;
                 const worldY = (this.offsetY - screenY) / factor;
 
-                const wx = (worldX - ox) / (cw_u / 2);
-                const wy = (oy - worldY - wx * (ch_u / 2)) / ch_u;
+                let wx, wy;
+                if (!flipped) {
+                    wx = (worldX - ox) / (cw_u / 2);
+                    wy = (worldY - (oy - wx * (ch_u / 2))) / ch_u;
+                } else {
+                    wx = (ox - worldX) / (cw_u / 2);
+                    wy = (worldY - (oy - wx * (ch_u / 2))) / ch_u;
+                }
                 return { x: wx, y: wy };
             }
         }
@@ -1532,30 +1543,53 @@ class IsometricMap {
     }
 
     isWallFurniture(item_id) {
+        if (item_id == null || item_id === -1) return false;
+        const idNum = Number(item_id);
         const WALL_IDS = new Set([98, 2140, 2146]);
-        if (WALL_IDS.has(Number(item_id))) return true;
+        if (WALL_IDS.has(idNum)) return true;
         
-        const db = (typeof window !== 'undefined' && window.ITEMS_DB) ? window.ITEMS_DB[String(item_id)] : null;
+        const db = (typeof window !== 'undefined' && window.ITEMS_DB) ? window.ITEMS_DB[String(idNum)] : null;
         if (db) {
+            const beh = db.behaviour || {};
+            if (beh.kind === 'wallpaper' || beh.place === 'cover_wall' || beh.kind === 'floor' || beh.place === 'cover_floor') {
+                return false;
+            }
             const cat = (db.category || '').toUpperCase();
+            if (cat.includes('WALLPAPER') || cat.includes('FLOOR')) return false;
             if (cat.includes('WALLDECO') || cat.includes('LAMP') || cat.includes('POSTER')) return true;
             
             const name = (db.furn_name || db.item_name || '').toUpperCase();
-            if (name.includes('WALLPAPER') || name.includes('TAPIZ')) return false;
-            if (name.includes('WALL LAMP') || name.includes('WALLDECO') || name.includes('POSTER') || name.includes('L�MPARA DE PARED') || name.includes('CUADRO') || name.includes('WALL')) return true;
+            if (name.includes('WALLPAPER') || name.includes('TAPIZ') || name.includes('SUELO') || name.includes('AZULEJO')) return false;
+            if (name.includes('WALL LAMP') || name.includes('WALLDECO') || name.includes('POSTER') || name.includes('LÁMPARA DE PARED') || name.includes('CUADRO') || name.includes('WALL')) return true;
         }
         return false;
     }
     
     isCovering(item_id) {
-        const COVERING_FLOORS = new Set([100, 1166, 1167, 1168, 1169, 128, 130, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610, 1611, 1612, 1613, 1614, 1615, 1861, 1862, 1863, 1864, 1866, 1867, 2181, 240, 242, 244, 245, 246, 250, 347, 67, 69, 749, 750, 755, 796, 797, 798, 95, 98, 99]);
-        const COVERING_WALLPAPERS = new Set([1118, 1316, 1585, 1588, 1589, 1590, 1591, 1592, 1594, 1595, 1596, 1599, 1617, 2009, 2084, 2127, 2128, 2129, 2195, 2308, 2424, 2484, 2486, 396, 410, 417, 418, 419, 420, 421, 752, 753, 754, 755, 756, 757, 761, 763, 764, 765, 787, 794, 795, 804, 882, 883, 884, 914]);
+        if (item_id == null || item_id === -1) return null;
+        const idNum = Number(item_id);
         
-        // Exceptional cases: if 98 is indeed wall furniture, don't return it as a floor covering
+        // Exceptional cases: if it is explicitly wall furniture (e.g. 98, lamps), don't return it as a covering
         if (this.isWallFurniture(item_id)) return null;
 
-        if (COVERING_FLOORS.has(Number(item_id))) return 'floor';
-        if (COVERING_WALLPAPERS.has(Number(item_id))) return 'wallpaper';
+        const db = (typeof window !== 'undefined' && window.ITEMS_DB) ? window.ITEMS_DB[String(idNum)] : null;
+        if (db) {
+            const beh = db.behaviour || {};
+            if (beh.kind === 'wallpaper' || beh.place === 'cover_wall') return 'wallpaper';
+            if (beh.kind === 'floor' || beh.place === 'cover_floor') return 'floor';
+            const cat = (db.category || '').toUpperCase();
+            if (cat.includes('WALLPAPER')) return 'wallpaper';
+            if (cat.includes('FLOOR')) return 'floor';
+            const name = (db.furn_name || db.item_name || '').toUpperCase();
+            if (name.includes('WALLPAPER') || name.includes('TAPIZ')) return 'wallpaper';
+            if (name.includes('FLOORING') || name.includes('AZULEJO') || name.includes('SUELO')) return 'floor';
+        }
+
+        const COVERING_FLOORS = new Set([100, 1166, 1167, 1168, 1169, 128, 130, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610, 1611, 1612, 1613, 1614, 1615, 1861, 1862, 1863, 1864, 1866, 1867, 2181, 240, 242, 244, 245, 246, 250, 347, 67, 69, 749, 750, 755, 796, 797, 798, 95, 98, 99]);
+        const COVERING_WALLPAPERS = new Set([1118, 1316, 1585, 1588, 1589, 1590, 1591, 1592, 1594, 1595, 1596, 1599, 1617, 2009, 2084, 2127, 2128, 2129, 2195, 2308, 2424, 2484, 2486, 396, 410, 417, 418, 419, 420, 421, 752, 753, 754, 755, 756, 757, 760, 761, 762, 763, 764, 765, 787, 794, 795, 804, 882, 883, 884, 914]);
+
+        if (COVERING_FLOORS.has(idNum)) return 'floor';
+        if (COVERING_WALLPAPERS.has(idNum)) return 'wallpaper';
         return null;
     }
 
@@ -2021,6 +2055,13 @@ class IsometricMap {
         const targetLocStr = document.getElementById('select-location')?.value;
         const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 0;
         
+        if (this._lastTargetLoc !== targetLoc) {
+            this._lastTargetLoc = targetLoc;
+            this._bakedBgCanvas = null;
+            this._bakedBgKey = null;
+            this._renderCache = null;
+        }
+
         let visibleFloors = [document.getElementById('select-floor')?.value || '0'];
         let isPlay = document.body.classList.contains('play-mode');
         let isGrid = document.body.classList.contains('grid-mode');
@@ -2183,21 +2224,35 @@ class IsometricMap {
                         }
                     }
                     if (!this._sceneFullCache) this._sceneFullCache = {};
-                    if (this._sceneFullCache[targetLoc] === undefined) {
+                    if (this._sceneFullCache[targetLoc]) {
+                        // Restaurar superficies en window.mapsAtlas si no están presentes
+                        const cached = this._sceneFullCache[targetLoc];
+                        if (cached && cached.surfaces) {
+                            if (!window.mapsAtlas) window.mapsAtlas = [];
+                            const mapIdNum = cached.mapId !== undefined ? cached.mapId : targetLoc;
+                            const hasSurfs = window.mapsAtlas.some(s => String(s.mapId) === String(targetLoc));
+                            if (!hasSurfs) {
+                                cached.surfaces.forEach(s => { s.mapId = mapIdNum; });
+                                window.mapsAtlas = window.mapsAtlas.filter(s => String(s.mapId) !== String(targetLoc));
+                                window.mapsAtlas.push(...cached.surfaces);
+                            }
+                        }
+                    } else if (this._sceneFullCache[targetLoc] === undefined) {
                         this._sceneFullCache[targetLoc] = null; // Prevent multiple fetches
                         if (location.protocol !== 'file:') {
-                            fetch(`data/maps/map_${targetLoc}.json`).then(r=>r.ok?r.json():null).then(unifiedMap=>{
+                            fetch(`data/maps/map_${targetLoc}.json?v=${Date.now()}`).then(r=>r.ok?r.json():null).then(unifiedMap=>{
                                 if(unifiedMap){
                                     this._sceneFullCache[targetLoc] = unifiedMap;
                                     
-                                    // Make sure mapId is on every surface
+                                    // Make sure mapId is on every surface and merge without wiping other maps
                                     if(unifiedMap.surfaces) {
+                                        if (!window.mapsAtlas) window.mapsAtlas = [];
+                                        const mapIdNum = unifiedMap.mapId !== undefined ? unifiedMap.mapId : targetLoc;
                                         unifiedMap.surfaces.forEach(s => {
-                                            s.mapId = unifiedMap.mapId !== undefined ? unifiedMap.mapId : targetLoc;
+                                            s.mapId = mapIdNum;
                                         });
-                                        window.mapsAtlas = unifiedMap.surfaces;
-                                    } else {
-                                        window.mapsAtlas = [];
+                                        window.mapsAtlas = window.mapsAtlas.filter(s => String(s.mapId) !== String(targetLoc));
+                                        window.mapsAtlas.push(...unifiedMap.surfaces);
                                     }
                                     
                                     if(unifiedMap.meta || unifiedMap.config) {
@@ -2205,6 +2260,8 @@ class IsometricMap {
                                         window.MAP_META[targetLoc] = unifiedMap.meta || unifiedMap.config;
                                     }
                                     
+                                    this._renderCache = null;
+                                    this._bakedBgCanvas = null;
                                     this._bakedBgKey = null;
                                     this.draw();
                                 }
@@ -2292,6 +2349,10 @@ class IsometricMap {
                     // (skipped when layered scenery owns the tree: bake = grass + coverings only)
                     bCtx.globalCompositeOperation = 'source-over';
                     if (!sceneryOn) bCtx.drawImage(bgImg, 0, 0);
+
+                    if (targetLoc === 0 && currentSurfaces.length === 0) {
+                        allLoaded = false;
+                    }
 
                     this._bakedBgCanvas = tempBaked;
                     if (allLoaded) {
@@ -2478,7 +2539,8 @@ class IsometricMap {
                     if (p.cluster === targetLoc) itemHash += (p.x || 0) + (p.y || 0) + (p.item_id || 0) + (p.floor || 0) + (p.flipped ? 1 : 0) + (p.orientation || 0);
                 }
             }
-            const cacheKey = this.app.parser.placements.length + '_' + targetLoc + '_' + targetFloor + '_' + visibleFloors.join(',') + '_' + isPlay + '_' + isGrid + '_' + itemHash;
+            const atlasHash = (window.mapsAtlas || []).map(s => String(s.origin?.x || s.origin_px?.x || 0) + ',' + String(s.origin?.y || s.origin_px?.y || 0)).join(';');
+            const cacheKey = this.app.parser.placements.length + '_' + targetLoc + '_' + targetFloor + '_' + visibleFloors.join(',') + '_' + isPlay + '_' + isGrid + '_' + itemHash + '_' + atlasHash;
             if (!this._renderCache || this._renderCache.key !== cacheKey || this.isItemDragging) {
                 // D: paredes usan surface wall del mismo groupNum, no filtrar por visibleFloors de piso
                 const allWalls = this.app.parser.placements.filter(
@@ -2518,6 +2580,11 @@ class IsometricMap {
             for (const p of seeds)   this._drawPlacement(p, 'seed');
             for (const p of regular) this._drawPlacement(p, 'regular');
             for (const p of allWalls) this._drawWallPlacementIso(p);
+
+            // ── Draw CropBox 1301 on Granja if present ──
+            if (targetLoc === 6) {
+                this._drawCropBoxFixture();
+            }
 
             // ── ACTOR SLOT: Ambient / Free-Roaming Character (Tsuki) ──
             if (isPlay || isGrid) {
@@ -2591,6 +2658,10 @@ class IsometricMap {
 
         if (document.body.classList.contains('play-mode') && window.Lighting && typeof window.Lighting.renderHalos === 'function') {
             window.Lighting.renderHalos(null, targetLoc);
+        }
+
+        if (this.app?.farmingSystem?.renderFloatingRewards) {
+            this.app.farmingSystem.renderFloatingRewards(this.ctx);
         }
     }
     _updateLocationLabel(locId) {
@@ -2847,10 +2918,7 @@ class IsometricMap {
         }
 
         if (p.planted_id !== undefined && p.planted_id > 0 && p.planted_id !== 4294967295) {
-            let plantedImg = this.getCropImage(p.planted_id);
-            if (plantedImg) {
-                this._drawSpriteOnTile(plantedImg, p.x, p.y - 0.5, w, l, 0, p.planted_id, p.floor, p.cluster);
-            }
+            this._drawCropOnPlot(p, w, l);
         }
 
         if (layer === 'seed') {
@@ -2898,6 +2966,178 @@ class IsometricMap {
             ctx.lineTo(cx + i + r, cy + r);
             ctx.stroke();
         }
+        ctx.restore();
+    }
+
+    _drawCropOnPlot(p, w, l) {
+        if (!p || p.planted_id == null || p.planted_id <= 0 || p.planted_id === 4294967295) return;
+        
+        const farming = this.app?.farmingSystem;
+        const status = farming ? farming.getCropStatus(p) : null;
+        const plantedImg = this.getCropImage(p.planted_id);
+        const ctx = this.ctx;
+
+        const anchor = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+
+        const stage = status ? status.stage : 3;
+        const isReady = status ? status.isReady : false;
+        const isRotten = status ? status.isRotten : false;
+        const def = status ? status.def : (farming ? farming.getCropDefinition(p.planted_id) : { icon: '🥕' });
+
+        ctx.save();
+
+        if (plantedImg && plantedImg.complete && plantedImg.naturalWidth > 0) {
+            let stageScale = 1.0;
+            let yOffset = 0;
+            if (stage === 0) {
+                stageScale = 0.45;
+                yOffset = 3 * this.scale;
+            } else if (stage === 1) {
+                stageScale = 0.65;
+                yOffset = 2 * this.scale;
+            } else if (stage === 2) {
+                stageScale = 0.85;
+                yOffset = 1 * this.scale;
+            } else if (stage === 3) {
+                stageScale = 1.0;
+                if (isReady) {
+                    yOffset = Math.sin(Date.now() / 250) * 2.5 * this.scale;
+                }
+            } else if (stage === 4) {
+                stageScale = 0.9;
+                ctx.filter = 'grayscale(60%) sepia(80%) hue-rotate(320deg) brightness(80%)';
+            }
+
+            const dw = plantedImg.width * u * stageScale;
+            const dh = plantedImg.height * u * stageScale;
+            const dx = anchor.x - dw / 2;
+            const dy = anchor.y - dh * 0.85 + yOffset;
+
+            // Sombra del cultivo en la parcela
+            ctx.save();
+            ctx.beginPath();
+            ctx.ellipse(anchor.x, anchor.y - 2 * this.scale, Math.max(4, dw * 0.35), Math.max(2, dh * 0.15), 0, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+            ctx.fill();
+            ctx.restore();
+
+            if (isReady && !isRotten) {
+                ctx.shadowColor = '#f1c40f';
+                ctx.shadowBlur = 8 * this.scale;
+            }
+
+            ctx.drawImage(plantedImg, dx, dy, dw, dh);
+        } else {
+            ctx.font = `${Math.max(12, Math.round(18 * this.scale))}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(stage === 0 ? '🌱' : (def.icon || '🥕'), anchor.x, anchor.y - 10 * this.scale);
+        }
+
+        // ── Indicador flotante / Burbuja de Cosecha lista ──
+        if (isReady && !isRotten) {
+            const bubbleY = anchor.y - 38 * this.scale + Math.sin(Date.now() / 250) * 2 * this.scale;
+            const radius = 13 * this.scale;
+
+            ctx.beginPath();
+            ctx.arc(anchor.x, bubbleY, radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff9e6';
+            ctx.fill();
+            ctx.strokeStyle = '#f39c12';
+            ctx.lineWidth = 2 * this.scale;
+            ctx.stroke();
+
+            ctx.font = `${Math.max(10, Math.round(14 * this.scale))}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(def.icon || '🥕', anchor.x, bubbleY + 1 * this.scale);
+        } else if (isRotten) {
+            const bubbleY = anchor.y - 36 * this.scale;
+            ctx.font = `${Math.max(10, Math.round(14 * this.scale))}px sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🍂', anchor.x, bubbleY);
+        } else if (status && (this.hoveredPlacement === p || this.selectedPlacement === p)) {
+            const infoY = anchor.y - 32 * this.scale;
+            ctx.font = `bold ${Math.max(8, Math.round(10 * this.scale))}px "Quicksand", sans-serif`;
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+            ctx.lineWidth = 3;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            const progressText = `${Math.round(status.progress * 100)}% (${status.minutesLeft}m)`;
+            ctx.strokeText(progressText, anchor.x, infoY);
+            ctx.fillText(progressText, anchor.x, infoY);
+        }
+
+        ctx.restore();
+    }
+
+    _drawCropBoxFixture() {
+        if (!this.app?.parser?.placements) return;
+        const p = this.app.parser.placements.find(x => x.item_id === 1301 && Number(x.subloc_id ?? x.cluster) === 6);
+        if (!p) return;
+
+        if (p.x === -1 || p.y === -1) {
+            p.x = 21;
+            p.y = 15;
+            p.floor = '0';
+            p.cluster = 6;
+        }
+
+        const w = 3, l = 3;
+        const img = this.getCropImage(1301) || this.getImage(1301, 0);
+        if (!img || !img.complete || img.naturalWidth <= 0) return;
+
+        const anchor = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+        const dw = img.width * u;
+        const dh = img.height * u;
+        const pivot = this._resolveSpritePivot(1301, img, 0) || { x: 0.5, y: 0.25 };
+
+        const ctx = this.ctx;
+        ctx.save();
+
+        const isHovered = (this.hoveredPlacement === p);
+        if (isHovered) {
+            ctx.shadowColor = '#f39c12';
+            ctx.shadowBlur = 10 * this.scale;
+        }
+
+        ctx.drawImage(img, anchor.x - dw * pivot.x, anchor.y - dh * (1 - pivot.y), dw, dh);
+
+        // Badge con zanahorias / cultivos almacenados
+        const boxInfo = this.app.parser.getCropBoxSave();
+        const carrots = boxInfo?.carrots || 0;
+        const slotsCount = (boxInfo?.slots || []).filter(s => s.quantity > 0).length;
+
+        if (carrots > 0 || slotsCount > 0) {
+            const badgeY = anchor.y - dh * (1 - pivot.y) - 14 * this.scale + Math.sin(Date.now() / 300) * 2 * this.scale;
+            ctx.font = `bold ${Math.max(10, Math.round(12 * this.scale))}px "Quicksand", sans-serif`;
+            const badgeText = `📦 ${carrots}🥕${slotsCount > 0 ? ` +${slotsCount}🌾` : ''}`;
+            const metrics = ctx.measureText(badgeText);
+            const bw = metrics.width + 16 * this.scale;
+            const bh = 22 * this.scale;
+            const bx = anchor.x - bw / 2;
+            const by = badgeY - bh / 2;
+
+            ctx.beginPath();
+            ctx.roundRect ? ctx.roundRect(bx, by, bw, bh, 8 * this.scale) : ctx.rect(bx, by, bw, bh);
+            ctx.fillStyle = '#2c251e';
+            ctx.fill();
+            ctx.strokeStyle = '#f1c40f';
+            ctx.lineWidth = 2 * this.scale;
+            ctx.stroke();
+
+            ctx.fillStyle = '#f1c40f';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(badgeText, anchor.x, badgeY);
+        }
+
         ctx.restore();
     }
 
@@ -3153,19 +3393,27 @@ class IsometricMap {
                             const itemId = String(placement?.item_id || placement?.itemId || '');
                             const actKey = String(activeAct);
                             const dbOffsets = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.furniture_offsets) || {};
-                            const furnOffset = dbOffsets[itemId + ':' + actKey] || dbOffsets[itemId];
+                            const userOffset = (isBack && dbOffsets[itemId + ':' + actKey + ':back'])
+                                || (isBack && dbOffsets[itemId + ':back'])
+                                || (!isBack && dbOffsets[itemId + ':front'])
+                                || dbOffsets[itemId + ':' + actKey]
+                                || dbOffsets[itemId];
                             
-                            const defaultOffX = (isBack && seatProfile?.offsets?.back?.x != null)
-                                ? seatProfile.offsets.back.x
-                                : (seatProfile?.offsets?.front?.x != null
-                                    ? seatProfile.offsets.front.x
-                                    : (furnOffset?.x != null ? furnOffset.x : (actDef.offset?.x || 0)));
+                            const defaultOffX = (userOffset?.x != null)
+                                ? userOffset.x
+                                : ((isBack && seatProfile?.offsets?.back?.x != null)
+                                    ? seatProfile.offsets.back.x
+                                    : (seatProfile?.offsets?.front?.x != null
+                                        ? seatProfile.offsets.front.x
+                                        : (actDef.offset?.x || 0)));
 
-                            const defaultOffY = (isBack && seatProfile?.offsets?.back?.y != null)
-                                ? seatProfile.offsets.back.y
-                                : (seatProfile?.offsets?.front?.y != null
-                                    ? seatProfile.offsets.front.y
-                                    : (furnOffset?.y != null ? furnOffset.y : (actDef.offset?.y !== undefined ? actDef.offset.y : 0.2)));
+                            const defaultOffY = (userOffset?.y != null)
+                                ? userOffset.y
+                                : ((isBack && seatProfile?.offsets?.back?.y != null)
+                                    ? seatProfile.offsets.back.y
+                                    : (seatProfile?.offsets?.front?.y != null
+                                        ? seatProfile.offsets.front.y
+                                        : (actDef.offset?.y !== undefined ? actDef.offset.y : 0.2)));
 
                             const effOffsetX = (placement?.charOffsetX != null) ? placement.charOffsetX : defaultOffX;
                             const effOffsetY = (placement?.charOffsetY != null) ? placement.charOffsetY : defaultOffY;

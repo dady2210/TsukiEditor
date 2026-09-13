@@ -1225,6 +1225,93 @@
                 </div>
             </div>
 
+            <!-- Furniture Pivot & Footprint Calibration Panel -->
+            <div id="furniture-pivot-footprint-props" style="display:none; margin-top:12px; border:1px solid #38bdf8; padding:8px; background:rgba(56,189,248,0.06); border-radius:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <strong style="color:#38bdf8; font-size:11px; display:flex; align-items:center; gap:4px;">
+                        <span>📐</span> Calibración Pivot & Huella (Footprint)
+                    </strong>
+                    <button type="button" class="btn btn-xs" style="font-size:9px; background:#222; color:#ccc; border:1px solid #555; padding:1px 6px; cursor:pointer; border-radius:3px;" onclick="resetItemPivotFootprint()" title="Restablecer valores originales de items_db.json">Reset</button>
+                </div>
+
+                <!-- Footprint Size Controls (width & length in cells) -->
+                <div style="background:#181818; border:1px solid #333; border-radius:4px; padding:6px; margin-bottom:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                        <span style="font-size:10px; color:#38bdf8; font-weight:bold;">🔷 Tamaño Huella (Celdas)</span>
+                        <span id="furn-fp-dims-badge" style="font-size:9px; color:#aaa; font-family:monospace;">1 × 1</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                        <div>
+                            <label style="font-size:9px; color:#aaa; display:block;">Ancho (W):</label>
+                            <div style="display:flex; align-items:center; gap:2px; margin-top:2px;">
+                                <button type="button" style="background:#333; color:#fff; border:1px solid #555; padding:2px 6px; cursor:pointer; font-size:10px; border-radius:2px;" onclick="stepFootprint('width', -1)">-</button>
+                                <input type="number" id="furn-fp-width" min="1" max="12" step="1" value="1" style="width:100%; text-align:center; font-size:10px; background:#141414; color:#38bdf8; font-weight:bold; border:1px solid #444; border-radius:2px; padding:2px;" oninput="onFootprintInputChange()">
+                                <button type="button" style="background:#333; color:#fff; border:1px solid #555; padding:2px 6px; cursor:pointer; font-size:10px; border-radius:2px;" onclick="stepFootprint('width', 1)">+</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label style="font-size:9px; color:#aaa; display:block;">Largo (L):</label>
+                            <div style="display:flex; align-items:center; gap:2px; margin-top:2px;">
+                                <button type="button" style="background:#333; color:#fff; border:1px solid #555; padding:2px 6px; cursor:pointer; font-size:10px; border-radius:2px;" onclick="stepFootprint('length', -1)">-</button>
+                                <input type="number" id="furn-fp-length" min="1" max="12" step="1" value="1" style="width:100%; text-align:center; font-size:10px; background:#141414; color:#38bdf8; font-weight:bold; border:1px solid #444; border-radius:2px; padding:2px;" oninput="onFootprintInputChange()">
+                                <button type="button" style="background:#333; color:#fff; border:1px solid #555; padding:2px 6px; cursor:pointer; font-size:10px; border-radius:2px;" onclick="stepFootprint('length', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pivot Controls (Target: Front vs Back) -->
+                <div style="background:#181818; border:1px solid #333; border-radius:4px; padding:6px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <span style="font-size:10px; color:#c084fc; font-weight:bold;">🎯 Pivot (Anclaje Visual)</span>
+                        <div style="display:flex; gap:2px; background:#111; padding:1px; border-radius:3px; border:1px solid #444;">
+                            <button type="button" id="btn-pivot-mode-front" style="background:#0284c7; color:#fff; border:none; font-size:9px; padding:2px 6px; cursor:pointer; border-radius:2px;" onclick="setPivotEditMode('front')">Frente</button>
+                            <button type="button" id="btn-pivot-mode-back" style="background:transparent; color:#888; border:none; font-size:9px; padding:2px 6px; cursor:pointer; border-radius:2px;" onclick="setPivotEditMode('back')">Atrás</button>
+                        </div>
+                    </div>
+
+                    <!-- Pivot Y (Height / Vertical) -->
+                    <div style="margin-bottom:6px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <label style="font-size:9px; color:#38bdf8; font-weight:bold;">Pivot Y (Altura / Vertical):</label>
+                            <div style="display:flex; align-items:center; gap:2px;">
+                                <button type="button" style="background:#333; color:#fff; border:1px solid #555; padding:1px 4px; cursor:pointer; font-size:8px; border-radius:2px;" onclick="stepPivot('y', -0.01)" title="Mover mueble hacia arriba">▲ +0.01</button>
+                                <button type="button" style="background:#333; color:#fff; border:1px solid #555; padding:1px 4px; cursor:pointer; font-size:8px; border-radius:2px;" onclick="stepPivot('y', 0.01)" title="Mover mueble hacia abajo">▼ -0.01</button>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                            <input type="range" id="furn-pivot-y-slider" min="-0.10" max="1.10" step="0.001" value="0.08" style="flex:1; cursor:pointer;" oninput="onPivotSliderChange('y')">
+                            <input type="number" id="furn-pivot-y-num" step="0.001" value="0.080" style="width:58px; text-align:right; font-size:10px; background:#141414; color:#fff; border:1px solid #444; border-radius:2px; padding:2px;" oninput="onPivotNumChange('y')">
+                        </div>
+                    </div>
+
+                    <!-- Pivot X (Horizontal) -->
+                    <div style="margin-bottom:6px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <label style="font-size:9px; color:#aaa;">Pivot X (Horizontal):</label>
+                            <div style="display:flex; align-items:center; gap:2px;">
+                                <button type="button" style="background:#333; color:#fff; border:1px solid #555; padding:1px 4px; cursor:pointer; font-size:8px; border-radius:2px;" onclick="stepPivot('x', -0.01)">◄ -0.01</button>
+                                <button type="button" style="background:#333; color:#fff; border:1px solid #555; padding:1px 4px; cursor:pointer; font-size:8px; border-radius:2px;" onclick="stepPivot('x', 0.01)">► +0.01</button>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                            <input type="range" id="furn-pivot-x-slider" min="-0.10" max="1.10" step="0.001" value="0.50" style="flex:1; cursor:pointer;" oninput="onPivotSliderChange('x')">
+                            <input type="number" id="furn-pivot-x-num" step="0.001" value="0.500" style="width:58px; text-align:right; font-size:10px; background:#141414; color:#fff; border:1px solid #444; border-radius:2px; padding:2px;" oninput="onPivotNumChange('x')">
+                        </div>
+                    </div>
+
+                    <!-- Quick copy button -->
+                    <div style="display:flex; gap:4px; margin-top:4px;">
+                        <button type="button" id="btn-copy-pivot-mode" class="btn btn-xs" style="flex:1; font-size:9px; background:#222; color:#aaa; border:1px solid #444; padding:2px 4px; cursor:pointer; border-radius:2px;" onclick="copyCurrentPivotToOtherMode()">📋 Copiar Frente ⇄ Atrás</button>
+                    </div>
+                </div>
+
+                <!-- Auto-save notification badge -->
+                <div id="furn-pivot-save-status" style="font-size:9px; color:#4ade80; margin-top:5px; text-align:center; min-height:14px; display:none;">
+                    💾 Auto-guardado en items_db.json
+                </div>
+            </div>
+
             <!-- Furniture Interaction & NPC Activity Panel -->
             <div id="furniture-activity-props" style="display:none; margin-top:12px; border-top:1px solid #444; padding-top:8px;">
                 <strong style="color:#a855f7; font-size:11px; display:flex; align-items:center; gap:4px;">
@@ -2322,8 +2409,8 @@
                                     groupNum: surf.groupNum,
                                     flipped: !!surf.flipped,
                                     mapId: full.mapId,
-                                    x: (surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((surf.origin_px.x - 1235) / 150) : (surf.origin ? surf.origin.x : 0),
-                                    y: (surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((1257 - surf.origin_px.y) / 150) : (surf.origin ? surf.origin.y : 0),
+                                    x: (surf.origin ? surf.origin.x : ((surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((surf.origin_px.x - 1235) / 150) : 0)),
+                                    y: (surf.origin ? surf.origin.y : ((surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((1257 - surf.origin_px.y) / 150) : 0)),
                                     poly: surf.poly || [],
                                     defaultCoverId: surf.defaultCoverId,
                                     outdoor: surf.outdoor,
@@ -2493,7 +2580,7 @@
 
 
 
-                        const hash = JSON.stringify(fused.map(p=>[Math.round((p.x||p[0])*100), Math.round((p.y||p[1])*100)]).sort());
+                        const hash = JSON.stringify(fused.map(p=>[Math.round(((p.x !== undefined ? p.x : p[0]) || 0)*100), Math.round(((p.y !== undefined ? p.y : p[1]) || 0)*100)]).sort());
 
 
 
@@ -4560,7 +4647,27 @@
         let justFinishedVertexDrag = false;
 
         function findHoveredVertex(ptr, obj) {
-            const poly = obj && (obj.poly || (obj.paths && obj.paths[0]));
+            let poly = obj && (obj.poly && obj.poly.length ? obj.poly : (obj.paths && obj.paths[0] && obj.paths[0].length ? obj.paths[0] : null));
+            if (!poly && obj) {
+                const _isF = (obj.role === 'walkable' || obj.kind === 'floor');
+                const _r = Math.max(1, obj.rows || 16), _c = Math.max(1, obj.cols || 16);
+                const _cr = obj.cell || {};
+                const _cw = ((_cr.w || 0) > 70 ? _cr.w : 75) / 150, _ch = ((_cr.h || 0) > 35 ? _cr.h : 37.5) / 150;
+                if (_isF) {
+                    poly = [{x:0,y:0},{x:_c*_cw/2,y:_c*_ch/2},{x:(_c-_r)*_cw/2,y:(_c+_r)*_ch/2},{x:-_r*_cw/2,y:_r*_ch/2}];
+                } else {
+                    const stepX = obj.flipped ? -_cw / 2 : _cw / 2;
+                    const wallH = _r * _ch * 2;
+                    poly = [
+                        { x: 0, y: 0 },
+                        { x: parseFloat((_c * stepX).toFixed(4)), y: parseFloat((-_c * _ch / 2).toFixed(4)) },
+                        { x: parseFloat((_c * stepX).toFixed(4)), y: parseFloat((-_c * _ch / 2 + wallH).toFixed(4)) },
+                        { x: 0, y: parseFloat(wallH.toFixed(4)) }
+                    ];
+                }
+                obj.poly = poly;
+                obj.paths = [poly];
+            }
             if (!poly || !poly.length) return -1;
             const ang = (obj.angle || 0) * Math.PI / 180;
             const cos = Math.cos(-ang), sin = Math.sin(-ang);
@@ -4577,8 +4684,8 @@
 
             for (let vi = 0; vi < poly.length; vi++) {
                 const pt = poly[vi];
-                const px = pt.x !== undefined ? pt.x : pt[0];
-                const py = pt.y !== undefined ? pt.y : pt[1];
+                const px = pt.x !== undefined ? pt.x : (pt[0] !== undefined ? pt[0] : 0);
+                const py = pt.y !== undefined ? pt.y : (pt[1] !== undefined ? pt[1] : 0);
                 const dist = Math.hypot((lx - px) * sx, (ly - py) * sy);
                 if (dist < bestDist) {
                     bestDist = dist;
@@ -5431,10 +5538,15 @@
 
 
 
-                const poly = obj.poly || (obj.paths && obj.paths[0]) || [];
-
-
-
+                let poly = obj.poly || (obj.paths && obj.paths[0]) || [];
+                if (!poly.length && (obj.role === 'walkable' || obj.kind === 'floor')) {
+                    const _r = Math.max(1, obj.rows || 16), _c = Math.max(1, obj.cols || 16);
+                    const _cr = obj.cell || {};
+                    const _cw = ((_cr.w || 0) > 70 ? _cr.w : 75) / 150, _ch = ((_cr.h || 0) > 35 ? _cr.h : 37.5) / 150;
+                    poly = [{x:0,y:0},{x:_c*_cw/2,y:_c*_ch/2},{x:(_c-_r)*_cw/2,y:(_c+_r)*_ch/2},{x:-_r*_cw/2,y:_r*_ch/2}];
+                    obj.poly = poly;
+                    obj.paths = [poly];
+                }
                 if (!poly.length) return false;
 
 
@@ -5472,11 +5584,10 @@
 
 
 
-                    const xi=poly[i].x||poly[i][0], yi=poly[i].y||poly[i][1];
-
-
-
-                    const xj=poly[j].x||poly[j][0], yj=poly[j].y||poly[j][1];
+                    const xi = poly[i].x !== undefined ? poly[i].x : (poly[i][0] !== undefined ? poly[i][0] : 0);
+                    const yi = poly[i].y !== undefined ? poly[i].y : (poly[i][1] !== undefined ? poly[i][1] : 0);
+                    const xj = poly[j].x !== undefined ? poly[j].x : (poly[j][0] !== undefined ? poly[j][0] : 0);
+                    const yj = poly[j].y !== undefined ? poly[j].y : (poly[j][1] !== undefined ? poly[j][1] : 0);
 
 
 
@@ -6414,84 +6525,60 @@
 
 
                 if (!poly.length) {
-                    // Grilla default como play: diamante rows×cols para pisos sin contorno
+                    // Grilla default como play: diamante rows×cols para pisos sin contorno, o paralelogramo para paredes
                     const _isF = (obj.role==='walkable' || obj.kind==='floor');
-                    if (!_isF) return;
                     const _r = Math.max(1, obj.rows || 16), _c = Math.max(1, obj.cols || 16);
                     const _cr = obj.cell || {};
                     const _cw = ((_cr.w || 0) > 70 ? _cr.w : 75) / 150, _ch = ((_cr.h || 0) > 35 ? _cr.h : 37.5) / 150;
-                    poly = [{x:0,y:0},{x:_c*_cw/2,y:_c*_ch/2},{x:(_c-_r)*_cw/2,y:(_c+_r)*_ch/2},{x:-_r*_cw/2,y:_r*_ch/2}];
+                    if (_isF) {
+                        poly = [{x:0,y:0},{x:_c*_cw/2,y:_c*_ch/2},{x:(_c-_r)*_cw/2,y:(_c+_r)*_ch/2},{x:-_r*_cw/2,y:_r*_ch/2}];
+                    } else {
+                        const stepX = obj.flipped ? -_cw / 2 : _cw / 2;
+                        const wallH = _r * _ch * 2;
+                        poly = [
+                            { x: 0, y: 0 },
+                            { x: parseFloat((_c * stepX).toFixed(4)), y: parseFloat((-_c * _ch / 2).toFixed(4)) },
+                            { x: parseFloat((_c * stepX).toFixed(4)), y: parseFloat((-_c * _ch / 2 + wallH).toFixed(4)) },
+                            { x: 0, y: parseFloat(wallH.toFixed(4)) }
+                        ];
+                    }
+                    obj.poly = poly;
+                    obj.paths = [poly];
                 }
-
-
 
                 ctx.save();
 
-
-
                 ctx.translate(obj.x*camera.zoom, -obj.y*camera.zoom);
-
-
 
                 ctx.rotate(-obj.angle*Math.PI/180);
 
-
-
                 ctx.scale((obj.sx||1)*camera.zoom, (obj.sy||1)*camera.zoom);
-
-
 
                 // poly en espacio local, escalar por 1/camera.zoom ya que ya aplicamos zoom arriba? No, ya está en transform, dibujar directo
 
-
-
                 ctx.scale(1/camera.zoom, 1/camera.zoom);
-
-
 
                 ctx.fillStyle = col;
 
-
-
                 ctx.strokeStyle = isSelected ? '#00ffff' : col.replace('0.35','0.9');
-
-
 
                 ctx.lineWidth = isSelected ? 2.5 : 1.2;
 
-
-
                 ctx.beginPath();
 
-
-
-                poly.forEach((pt,i)=>{ const x=pt.x||pt[0], y=pt.y||pt[1]; if(i===0) ctx.moveTo(x*camera.zoom, polySY(obj, y)*camera.zoom); else ctx.lineTo(x*camera.zoom, polySY(obj, y)*camera.zoom); });
-
-
+                poly.forEach((pt,i)=>{ const x = pt.x !== undefined ? pt.x : (pt[0] !== undefined ? pt[0] : 0); const y = pt.y !== undefined ? pt.y : (pt[1] !== undefined ? pt[1] : 0); if(i===0) ctx.moveTo(x*camera.zoom, polySY(obj, y)*camera.zoom); else ctx.lineTo(x*camera.zoom, polySY(obj, y)*camera.zoom); });
 
                 ctx.closePath(); ctx.fill(); ctx.stroke();
 
-
-
                 // Grilla isométrica dentro del polígono
-
-
 
                 if (obj.role === 'walkable' || obj.role === 'wallpaper' || obj.kind === 'floor' || obj.kind === 'wall') {
 
-
-
                     ctx.save();
-
-
 
                     ctx.beginPath();
 
-
-
-                    poly.forEach((pt,i)=>{ const x=pt.x||pt[0], y=pt.y||pt[1]; if(i===0) ctx.moveTo(x*camera.zoom, polySY(obj, y)*camera.zoom); else ctx.lineTo(x*camera.zoom, polySY(obj, y)*camera.zoom); });
-
-
+                    poly.forEach((pt,i)=>{ const x = pt.x !== undefined ? pt.x : (pt[0] !== undefined ? pt[0] : 0); const y = pt.y !== undefined ? pt.y : (pt[1] !== undefined ? pt[1] : 0); if(i===0) ctx.moveTo(x*camera.zoom, polySY(obj, y)*camera.zoom); else ctx.lineTo(x*camera.zoom, polySY(obj, y)*camera.zoom); });
 
                     ctx.closePath();
 
@@ -7002,19 +7089,27 @@
                         const itemId = String(obj.itemId || obj.id || '');
                         const actKey = String(actId);
                         const dbOffsets = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.furniture_offsets) || {};
-                        const furnOffset = dbOffsets[itemId + ':' + actKey] || dbOffsets[itemId];
+                        const userOffset = (isBack && dbOffsets[itemId + ':' + actKey + ':back'])
+                            || (isBack && dbOffsets[itemId + ':back'])
+                            || (!isBack && dbOffsets[itemId + ':front'])
+                            || dbOffsets[itemId + ':' + actKey]
+                            || dbOffsets[itemId];
                         
-                        const defaultOffX = (isBack && seatProfile?.offsets?.back?.x != null)
-                            ? seatProfile.offsets.back.x
-                            : (seatProfile?.offsets?.front?.x != null
-                                ? seatProfile.offsets.front.x
-                                : (furnOffset?.x != null ? furnOffset.x : (actDef.offset?.x || 0)));
+                        const defaultOffX = (userOffset?.x != null)
+                            ? userOffset.x
+                            : ((isBack && seatProfile?.offsets?.back?.x != null)
+                                ? seatProfile.offsets.back.x
+                                : (seatProfile?.offsets?.front?.x != null
+                                    ? seatProfile.offsets.front.x
+                                    : (actDef.offset?.x || 0)));
 
-                        const defaultOffY = (isBack && seatProfile?.offsets?.back?.y != null)
-                            ? seatProfile.offsets.back.y
-                            : (seatProfile?.offsets?.front?.y != null
-                                ? seatProfile.offsets.front.y
-                                : (furnOffset?.y != null ? furnOffset.y : (actDef.offset?.y !== undefined ? actDef.offset.y : 0.2)));
+                        const defaultOffY = (userOffset?.y != null)
+                            ? userOffset.y
+                            : ((isBack && seatProfile?.offsets?.back?.y != null)
+                                ? seatProfile.offsets.back.y
+                                : (seatProfile?.offsets?.front?.y != null
+                                    ? seatProfile.offsets.front.y
+                                    : (actDef.offset?.y !== undefined ? actDef.offset.y : 0.2)));
 
                         const effOffsetX = (obj.charOffsetX != null) ? obj.charOffsetX : defaultOffX;
                         const effOffsetY = (obj.charOffsetY != null) ? obj.charOffsetY : defaultOffY;
@@ -7046,8 +7141,73 @@
 
             // TEMP-OVERLAY (sacar después): cruz roja en el ancla computada del ítem debug
             if (obj.isDebugItem) { const ax = screenX - raster.localMinX * camera.zoom, ay = screenY + raster.localMaxY * camera.zoom; ctx.save(); ctx.strokeStyle = '#ff0000'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(ax - 8, ay); ctx.lineTo(ax + 8, ay); ctx.moveTo(ax, ay - 8); ctx.lineTo(ax, ay + 8); ctx.stroke(); ctx.font = '11px monospace'; ctx.fillStyle = '#ffff00'; ctx.fillText(`${obj.itemId}:${obj.gridX},${obj.gridY}f${obj.floor}o${obj.orientation}`, ax + 10, ay - 10); ctx.restore(); }
-            // TEMP-HUELLA (play-parity, solo debug): rombo del footprint w×l centrado en el ancla
-            if (obj.isDebugItem && !obj.isWall && obj.dbgW && obj.dbgL) { const _w = obj.dbgW, _l = obj.dbgL, _cw2 = 0.25, _ch2 = 0.125; const _cx = obj.x, _cy = obj.y; const _pt = [( _l-_w)*_cw2/2, (_w+_l)*_ch2/2]; ctx.save(); ctx.beginPath(); const _corners = [[(_w-_l)*_cw2/2, (_w+_l)*_ch2/2], [(_w+_l)*_cw2/2, (_w-_l)*_ch2/2], [-(_w-_l)*_cw2/2, -(_w+_l)*_ch2/2], [-(_w+_l)*_cw2/2, -(_w-_l)*_ch2/2]]; _corners.forEach(([qx, qy], _i) => { const _sx = (_cx + qx) * camera.zoom, _sy = -(_cy + qy) * camera.zoom; if (_i === 0) ctx.moveTo(_sx, _sy); else ctx.lineTo(_sx, _sy); }); ctx.closePath(); ctx.fillStyle = 'rgba(74,144,217,0.45)'; ctx.fill(); ctx.strokeStyle = '#4A90D9'; ctx.lineWidth = 1.5; ctx.stroke(); ctx.restore(); }
+            // HUELLA / FOOTPRINT (rombo w×l centrado en el ancla del mueble)
+            const _isFurnObj = !obj.is_poly_object && !obj.isWall && (obj.itemId || obj.placementID || (obj.sp && obj.sp.startsWith('FURN_')) || obj.dbgW);
+            const _showHuella = (obj.isDebugItem && !obj.isWall && (obj.dbgW || obj.width)) || (isSelected && _isFurnObj);
+            if (_showHuella) {
+                const _w = obj.dbgW || obj.width || (window.ITEMS_DB && window.ITEMS_DB[obj.itemId]?.width) || 1;
+                const _l = obj.dbgL || obj.length || (window.ITEMS_DB && window.ITEMS_DB[obj.itemId]?.length) || 1;
+                const _cw2 = 0.25, _ch2 = 0.125;
+                const _cx = obj.x, _cy = obj.y;
+                const _corners = [
+                    [(_w-_l)*_cw2/2, (_w+_l)*_ch2/2],
+                    [(_w+_l)*_cw2/2, (_w-_l)*_ch2/2],
+                    [-(_w-_l)*_cw2/2, -(_w+_l)*_ch2/2],
+                    [-(_w+_l)*_cw2/2, -(_w-_l)*_ch2/2]
+                ];
+                ctx.save();
+                ctx.beginPath();
+                _corners.forEach(([qx, qy], _i) => {
+                    const _sx = (_cx + qx) * camera.zoom, _sy = -(_cy + qy) * camera.zoom;
+                    if (_i === 0) ctx.moveTo(_sx, _sy); else ctx.lineTo(_sx, _sy);
+                });
+                ctx.closePath();
+                ctx.fillStyle = isSelected ? 'rgba(56, 189, 248, 0.40)' : 'rgba(74, 144, 217, 0.35)';
+                ctx.fill();
+                ctx.strokeStyle = isSelected ? '#38bdf8' : '#4A90D9';
+                ctx.lineWidth = isSelected ? 2.0 : 1.5;
+                ctx.stroke();
+
+                // Si el mueble está seleccionado y es multi-celda, dibujar líneas de subdivisión interna
+                if (isSelected && (_w > 1 || _l > 1)) {
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+                    ctx.lineWidth = 1;
+                    for (let i = 1; i < _w; i++) {
+                        const t = i / _w;
+                        const p0x = _corners[3][0] + (_corners[0][0] - _corners[3][0]) * t;
+                        const p0y = _corners[3][1] + (_corners[0][1] - _corners[3][1]) * t;
+                        const p1x = _corners[2][0] + (_corners[1][0] - _corners[2][0]) * t;
+                        const p1y = _corners[2][1] + (_corners[1][1] - _corners[2][1]) * t;
+                        ctx.beginPath();
+                        ctx.moveTo((_cx + p0x) * camera.zoom, -(_cy + p0y) * camera.zoom);
+                        ctx.lineTo((_cx + p1x) * camera.zoom, -(_cy + p1y) * camera.zoom);
+                        ctx.stroke();
+                    }
+                    for (let j = 1; j < _l; j++) {
+                        const t = j / _l;
+                        const p0x = _corners[3][0] + (_corners[2][0] - _corners[3][0]) * t;
+                        const p0y = _corners[3][1] + (_corners[2][1] - _corners[3][1]) * t;
+                        const p1x = _corners[0][0] + (_corners[1][0] - _corners[0][0]) * t;
+                        const p1y = _corners[0][1] + (_corners[1][1] - _corners[0][1]) * t;
+                        ctx.beginPath();
+                        ctx.moveTo((_cx + p0x) * camera.zoom, -(_cy + p0y) * camera.zoom);
+                        ctx.lineTo((_cx + p1x) * camera.zoom, -(_cy + p1y) * camera.zoom);
+                        ctx.stroke();
+                    }
+                }
+
+                // Cruz central pequeña en el origen del rombo de la huella
+                if (isSelected) {
+                    const _ax = _cx * camera.zoom, _ay = -_cy * camera.zoom;
+                    ctx.strokeStyle = '#facc15';
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(_ax - 4, _ay); ctx.lineTo(_ax + 4, _ay);
+                    ctx.moveTo(_ax, _ay - 4); ctx.lineTo(_ax, _ay + 4);
+                    ctx.stroke();
+                }
+                ctx.restore();
+            }
 
 
 
@@ -7522,59 +7682,44 @@
 
 
 
-                        if (parser.wallpapers && parser.wallpapers['0']) {
-
-
-
-                            parser.wallpapers['0'].forEach(w => {
-
-
-
-                                const surf = sceneData.find(o => o.is_poly_object && (o.anchorID === w.key || (w.key === -852939649 && o.id === 'wall_0_L') || (w.key === 495018548 && o.id === 'wall_0_R') || (w.key === 636683912 && o.id === 'wall_1_L') || (w.key === 1355124652 && o.id === 'wall_1_R')));
-
-
-
-                                if (surf) surf.defaultCoverId = w.id;
-
-
-
+                        let appliedCount = 0;
+                        const curMid = String((currentMapMeta && currentMapMeta.mapId !== undefined) ? currentMapMeta.mapId : 0);
+                        if (parser.wallpapers) {
+                            Object.entries(parser.wallpapers).forEach(([mid, wList]) => {
+                                if (mid === curMid && Array.isArray(wList)) {
+                                    wList.forEach(w => {
+                                        const surf = sceneData.find(o => o.is_poly_object && (
+                                            o.anchorID === w.key ||
+                                            (w.key === -852939649 && o.id === 'wall_0_L') ||
+                                            (w.key === 495018548 && o.id === 'wall_0_R') ||
+                                            (w.key === 636683912 && o.id === 'wall_1_L') ||
+                                            (w.key === 1355124652 && o.id === 'wall_1_R') ||
+                                            (w.key === -1979330218 && o.id === 'wall_3_L') ||
+                                            (w.key === 773467785 && o.id === 'wall_3_R')
+                                        ));
+                                        if (surf) { surf.defaultCoverId = w.id; appliedCount++; }
+                                    });
+                                }
                             });
-
-
-
                         }
 
-
-
-                        if (parser.floors && parser.floors['0']) {
-
-
-
-                            parser.floors['0'].forEach(f => {
-
-
-
-                                const surf = sceneData.find(o => o.is_poly_object && (o.anchorID === f.key || (f.key === 407290786 && o.id === 'floor_0') || (f.key === 1518507412 && o.id === 'floor_1')));
-
-
-
-                                if (surf) surf.defaultCoverId = f.id;
-
-
-
+                        if (parser.floors) {
+                            Object.entries(parser.floors).forEach(([mid, fList]) => {
+                                if (mid === curMid && Array.isArray(fList)) {
+                                    fList.forEach(f => {
+                                        const surf = sceneData.find(o => o.is_poly_object && (
+                                            o.anchorID === f.key ||
+                                            (f.key === 407290786 && o.id === 'floor_0') ||
+                                            (f.key === 1518507412 && o.id === 'floor_1') ||
+                                            (f.key === 1421158723 && o.id === 'floor_3')
+                                        ));
+                                        if (surf) { surf.defaultCoverId = f.id; appliedCount++; }
+                                    });
+                                }
                             });
-
-
-
                         }
-
-
-
                         
-
-
-
-                        document.getElementById('csave-status').textContent = `csave cargado: ${f.name} — 6 texturas aplicadas automáticamente`;
+                        document.getElementById('csave-status').textContent = `csave cargado: ${f.name} — ${appliedCount} texturas aplicadas automáticamente`;
 
 
 
@@ -8010,10 +8155,10 @@
 
                         if (!flipped) {
                             worldX = ox + p.x * (cw_u / 2);
-                            worldY = oy - p.x * (ch_u / 2) - p.y * ch_u;
+                            worldY = oy - p.x * (ch_u / 2) + p.y * ch_u;
                         } else {
-                            worldX = ox + p.x * (cw_u / 2);
-                            worldY = oy - p.x * (ch_u / 2) - p.y * ch_u;
+                            worldX = ox - p.x * (cw_u / 2);
+                            worldY = oy - p.x * (ch_u / 2) + p.y * ch_u;
                         }
 
 
@@ -8213,6 +8358,18 @@
                     if (sleepChk) sleepChk.checked = !!obj._simSleeping;
                 } else {
                     bedPanel.style.display = 'none';
+                }
+            }
+
+            // Furniture Pivot & Footprint Calibration Props
+            const fpPanel = document.getElementById('furniture-pivot-footprint-props');
+            if (fpPanel) {
+                const isFurniture = !obj.is_poly_object && !obj.isWall && (obj.itemId || obj.placementID || (obj.sp && obj.sp.startsWith('FURN_')) || obj.dbgW);
+                if (isFurniture) {
+                    fpPanel.style.display = 'block';
+                    if (typeof updateItemPivotFootprintUI === 'function') updateItemPivotFootprintUI(obj);
+                } else {
+                    fpPanel.style.display = 'none';
                 }
             }
 
@@ -8550,7 +8707,7 @@
 
 
 
-                        const xs=obj.poly.map(p=>p.x||p[0]), ys=obj.poly.map(p=>p.y||p[1]);
+                        const xs = obj.poly.map(p => p.x !== undefined ? p.x : (p[0] !== undefined ? p[0] : 0)), ys = obj.poly.map(p => p.y !== undefined ? p.y : (p[1] !== undefined ? p[1] : 0));
 
 
 
@@ -8701,12 +8858,19 @@
                 'floor_3': { groupNum: 3, kind: 'floor', flipped: false, x: -4.2, y: -3.5, rows: 16, cols: 18, poly: [{"x": 0.0, "y": 1.0}, {"x": 2.2, "y": -0.2}, {"x": 1.8, "y": -1.8}, {"x": -0.5, "y": -2.2}, {"x": -2.2, "y": -0.8}] },
                 'floor_4': { groupNum: 4, kind: 'floor', flipped: false, x: 0.0, y: 3.8, rows: 16, cols: 16, poly: [{"x": 0.0, "y": 1.0}, {"x": 2.2, "y": -0.2}, {"x": 2.2, "y": -1.5}, {"x": 0.0, "y": -2.5}, {"x": -2.2, "y": -1.5}, {"x": -2.2, "y": -0.2}] }
             };
+            // Fallback de respaldo canónico exacto (Granja - map_6)
+            const CANONICAL_MAP_6 = {
+                'floor_3': { groupNum: 3, kind: 'floor', flipped: false, x: -3.7727, y: 1.5641, rows: 11, cols: 7, poly: [{"x": -0.2189, "y": 0.0741}, {"x": 2.5344, "y": 1.4359}, {"x": 0.7825, "y": 2.3524}, {"x": -1.9537, "y": 0.9449}] },
+                'wall_3_L': { groupNum: 3, kind: 'wall', flipped: true, x: -2.99, y: 3.9167, rows: 12, cols: 11, poly: [{"x": 0, "y": 0}, {"x": -2.7367, "y": -1.408}, {"x": -2.7367, "y": 0.2633}, {"x": 0, "y": 1.6633}] },
+                'wall_3_R': { groupNum: 3, kind: 'wall', flipped: false, x: -2.99, y: 3.9167, rows: 12, cols: 7, poly: [{"x": 0, "y": 0}, {"x": 1.752, "y": -0.9167}, {"x": 1.752, "y": 0.75}, {"x": 0, "y": 1.6633}] }
+            };
 
-            const canonX = canon ? (canon.origin ? canon.origin.x : canon.x) : (CANONICAL_MAP_0[obj.id]?.x ?? obj.x);
-            const canonY = canon ? (canon.origin ? canon.origin.y : canon.y) : (CANONICAL_MAP_0[obj.id]?.y ?? obj.y);
-            const canonPoly = (canon && canon.poly) ? canon.poly : (CANONICAL_MAP_0[obj.id]?.poly || obj.poly);
-            const canonRows = (canon && canon.rows) ? canon.rows : (CANONICAL_MAP_0[obj.id]?.rows || obj.rows || 14);
-            const canonCols = (canon && canon.cols) ? canon.cols : (CANONICAL_MAP_0[obj.id]?.cols || obj.cols || 16);
+            const canonMap = (currentMapMeta && currentMapMeta.mapId === 6) ? CANONICAL_MAP_6 : CANONICAL_MAP_0;
+            const canonX = canon ? (canon.origin ? canon.origin.x : canon.x) : (canonMap[obj.id]?.x ?? obj.x);
+            const canonY = canon ? (canon.origin ? canon.origin.y : canon.y) : (canonMap[obj.id]?.y ?? obj.y);
+            const canonPoly = (canon && canon.poly) ? canon.poly : (canonMap[obj.id]?.poly || obj.poly);
+            const canonRows = (canon && canon.rows) ? canon.rows : (canonMap[obj.id]?.rows || obj.rows || 14);
+            const canonCols = (canon && canon.cols) ? canon.cols : (canonMap[obj.id]?.cols || obj.cols || 16);
 
             const dx = canonX - obj.x;
             const dy = canonY - obj.y;
@@ -8793,7 +8957,7 @@
 
 
 
-            const bbox = obj.poly ? (()=>{ const xs=obj.poly.map(p=>p.x||p[0]), ys=obj.poly.map(p=>p.y||p[1]); return {minX:Math.min(...xs), maxX:Math.max(...xs), minY:Math.min(...ys), maxY:Math.max(...ys)}; })() : {minX:obj.x, maxX:obj.x+10, minY:obj.y, maxY:obj.y+10};
+            const bbox = obj.poly ? (()=>{ const xs = obj.poly.map(p => p.x !== undefined ? p.x : (p[0] !== undefined ? p[0] : 0)), ys = obj.poly.map(p => p.y !== undefined ? p.y : (p[1] !== undefined ? p[1] : 0)); return {minX:Math.min(...xs), maxX:Math.max(...xs), minY:Math.min(...ys), maxY:Math.max(...ys)}; })() : {minX:obj.x, maxX:obj.x+10, minY:obj.y, maxY:obj.y+10};
 
 
 
@@ -9008,7 +9172,7 @@
 
 
 
-                const xs=obj.poly.map(p=>p.x||p[0]), ys=obj.poly.map(p=>p.y||p[1]);
+                const xs = obj.poly.map(p => p.x !== undefined ? p.x : (p[0] !== undefined ? p[0] : 0)), ys = obj.poly.map(p => p.y !== undefined ? p.y : (p[1] !== undefined ? p[1] : 0));
 
 
 
@@ -9258,19 +9422,27 @@
                 if (offsetControls) offsetControls.style.display = 'block';
 
                 const dbOffsets = (window.ACTIVITIES_DB && window.ACTIVITIES_DB.furniture_offsets) || {};
-                const furnOffset = dbOffsets[itemId + ':' + actId] || dbOffsets[itemId];
+                const userOffset = (isBack && dbOffsets[itemId + ':' + actId + ':back'])
+                    || (isBack && dbOffsets[itemId + ':back'])
+                    || (!isBack && dbOffsets[itemId + ':front'])
+                    || dbOffsets[itemId + ':' + actId]
+                    || dbOffsets[itemId];
                 
-                const defaultOffX = (isBack && seatProfile?.offsets?.back?.x != null)
-                    ? seatProfile.offsets.back.x
-                    : (seatProfile?.offsets?.front?.x != null
-                        ? seatProfile.offsets.front.x
-                        : (furnOffset?.x != null ? furnOffset.x : (actDef.offset?.x || 0)));
+                const defaultOffX = (userOffset?.x != null)
+                    ? userOffset.x
+                    : ((isBack && seatProfile?.offsets?.back?.x != null)
+                        ? seatProfile.offsets.back.x
+                        : (seatProfile?.offsets?.front?.x != null
+                            ? seatProfile.offsets.front.x
+                            : (actDef.offset?.x || 0)));
 
-                const defaultOffY = (isBack && seatProfile?.offsets?.back?.y != null)
-                    ? seatProfile.offsets.back.y
-                    : (seatProfile?.offsets?.front?.y != null
-                        ? seatProfile.offsets.front.y
-                        : (furnOffset?.y != null ? furnOffset.y : (actDef.offset?.y !== undefined ? actDef.offset.y : 0.22)));
+                const defaultOffY = (userOffset?.y != null)
+                    ? userOffset.y
+                    : ((isBack && seatProfile?.offsets?.back?.y != null)
+                        ? seatProfile.offsets.back.y
+                        : (seatProfile?.offsets?.front?.y != null
+                            ? seatProfile.offsets.front.y
+                            : (actDef.offset?.y !== undefined ? actDef.offset.y : 0.22)));
                 
                 const curOffX = (obj.charOffsetX != null) ? obj.charOffsetX : defaultOffX;
                 const curOffY = (obj.charOffsetY != null) ? obj.charOffsetY : defaultOffY;
@@ -9381,13 +9553,36 @@
             obj.charOffsetX = offX;
             obj.charOffsetY = offY;
 
-            if (!window.ACTIVITIES_DB) window.ACTIVITIES_DB = { activities: {}, furniture_offsets: {} };
+            const oriNum = parseInt(obj.ori ?? obj.orientation ?? 0);
+            const isBack = obj.sp ? (obj.sp.includes('_BACK') || (oriNum === 2 || oriNum === 3)) : false;
+
+            if (!window.ACTIVITIES_DB) window.ACTIVITIES_DB = { activities: {}, furniture_offsets: {}, seating_profiles: {} };
             if (!window.ACTIVITIES_DB.furniture_offsets) window.ACTIVITIES_DB.furniture_offsets = {};
+            if (!window.ACTIVITIES_DB.seating_profiles) window.ACTIVITIES_DB.seating_profiles = {};
 
             const offsetEntry = { x: offX, y: offY, name: obj.name || ('Item #' + itemId) };
             window.ACTIVITIES_DB.furniture_offsets[itemId] = offsetEntry;
+            if (isBack) {
+                window.ACTIVITIES_DB.furniture_offsets[itemId + ':back'] = { x: offX, y: offY };
+            } else {
+                window.ACTIVITIES_DB.furniture_offsets[itemId + ':front'] = { x: offX, y: offY };
+            }
+
+            if (window.ACTIVITIES_DB.seating_profiles[itemId]) {
+                const sp = window.ACTIVITIES_DB.seating_profiles[itemId];
+                if (!sp.offsets) sp.offsets = {};
+                if (isBack) {
+                    sp.offsets.back = { x: offX, y: offY };
+                } else {
+                    sp.offsets.front = { x: offX, y: offY };
+                }
+            }
+
             if (actId) {
                 window.ACTIVITIES_DB.furniture_offsets[itemId + ':' + actId] = { x: offX, y: offY };
+                if (isBack) {
+                    window.ACTIVITIES_DB.furniture_offsets[itemId + ':' + actId + ':back'] = { x: offX, y: offY };
+                }
             }
 
             const offsetStatus = document.getElementById('furn-offset-status');
@@ -9447,11 +9642,368 @@
             draw();
         }
 
+        // =========================================================================
+        // CALIBRACIÓN DE PIVOT Y FOOTPRINT (HUELLA) CON AUTO-GUARDADO EN items_db.json
+        // =========================================================================
+        let _currentPivotMode = 'front';
+        let _userForcedPivotMode = false;
+        let _pivotFootprintSaveTimeout = null;
+        let _originalItemPivotFootprint = null;
+        let _lastSelectedItemId = null;
 
+        function getFurnitureItemId(obj) {
+            if (!obj) return null;
+            if (obj.itemId != null) return String(obj.itemId);
+            if (obj.sp && obj.sp.startsWith('FURN_')) {
+                return obj.sp.replace('FURN_', '').replace('_BACK', '').replace('_0', '');
+            }
+            if (obj.id != null && String(obj.id).match(/^\d+$/)) return String(obj.id);
+            return null;
+        }
 
+        function updateItemPivotFootprintUI(obj) {
+            if (!obj) return;
+            const itemId = getFurnitureItemId(obj);
+            if (!itemId) return;
 
+            const itInfo = (window.ITEMS_DB && window.ITEMS_DB[itemId]) || {};
 
+            // Si cambió el mueble seleccionado, resetear el modo forzado
+            if (_lastSelectedItemId !== itemId) {
+                _userForcedPivotMode = false;
+                _lastSelectedItemId = itemId;
+            }
 
+            // Guardar valores originales para el botón Reset si no están guardados para este item
+            if (!_originalItemPivotFootprint || _originalItemPivotFootprint.itemId !== itemId) {
+                _originalItemPivotFootprint = {
+                    itemId: itemId,
+                    width: itInfo.width || obj.width || obj.dbgW || 1,
+                    length: itInfo.length || obj.length || obj.dbgL || 1,
+                    pivot: itInfo.pivot ? { ...itInfo.pivot } : { x: (obj.px != null ? obj.px : 0.5), y: (obj.py != null ? obj.py : 0.08) },
+                    pivot_back: itInfo.pivot_back ? { ...itInfo.pivot_back } : null
+                };
+            }
+
+            // Detección de vista frontal vs trasera según orientación del mueble
+            const oriNum = parseInt(obj.orientation ?? obj.ori ?? 0, 10) || 0;
+            const isBack = (oriNum === 2 || oriNum === 3) || String(obj.sp || '').includes('_BACK');
+            
+            if (!_userForcedPivotMode) {
+                _currentPivotMode = isBack ? 'back' : 'front';
+            }
+
+            // Estilizar selector Frente / Atrás
+            const btnFront = document.getElementById('btn-pivot-mode-front');
+            const btnBack = document.getElementById('btn-pivot-mode-back');
+            if (btnFront && btnBack) {
+                if (_currentPivotMode === 'front') {
+                    btnFront.style.background = '#0284c7';
+                    btnFront.style.color = '#fff';
+                    btnBack.style.background = 'transparent';
+                    btnBack.style.color = '#888';
+                } else {
+                    btnBack.style.background = '#0284c7';
+                    btnBack.style.color = '#fff';
+                    btnFront.style.background = 'transparent';
+                    btnFront.style.color = '#888';
+                }
+            }
+
+            // Tamaño de huella (Footprint)
+            const curW = itInfo.width || obj.width || obj.dbgW || 1;
+            const curL = itInfo.length || obj.length || obj.dbgL || 1;
+            const inpW = document.getElementById('furn-fp-width');
+            const inpL = document.getElementById('furn-fp-length');
+            const badgeDims = document.getElementById('furn-fp-dims-badge');
+            if (inpW) inpW.value = curW;
+            if (inpL) inpL.value = curL;
+            if (badgeDims) badgeDims.innerText = `${curW} × ${curL} celdas`;
+
+            // Pivot según modo actual
+            let curPivot;
+            if (_currentPivotMode === 'back') {
+                curPivot = itInfo.pivot_back || (isBack ? { x: (obj.px != null ? obj.px : 0.5), y: (obj.py != null ? obj.py : 0.08) } : (itInfo.pivot || { x: 0.5, y: 0.08 }));
+            } else {
+                curPivot = itInfo.pivot || (!isBack ? { x: (obj.px != null ? obj.px : 0.5), y: (obj.py != null ? obj.py : 0.08) } : { x: 0.5, y: 0.08 });
+            }
+
+            const sliderY = document.getElementById('furn-pivot-y-slider');
+            const numY = document.getElementById('furn-pivot-y-num');
+            const sliderX = document.getElementById('furn-pivot-x-slider');
+            const numX = document.getElementById('furn-pivot-x-num');
+
+            const pyVal = (curPivot && curPivot.y != null) ? Number(curPivot.y) : (obj.py ?? 0.08);
+            const pxVal = (curPivot && curPivot.x != null) ? Number(curPivot.x) : (obj.px ?? 0.5);
+
+            if (sliderY) sliderY.value = pyVal;
+            if (numY) numY.value = pyVal.toFixed(3);
+            if (sliderX) sliderX.value = pxVal;
+            if (numX) numX.value = pxVal.toFixed(3);
+
+            const copyBtn = document.getElementById('btn-copy-pivot-mode');
+            if (copyBtn) {
+                copyBtn.innerText = _currentPivotMode === 'front' ? '📋 Copiar Frente a Atrás' : '📋 Copiar Atrás a Frente';
+            }
+        }
+
+        function setPivotEditMode(mode) {
+            _userForcedPivotMode = true;
+            _currentPivotMode = mode;
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            updateItemPivotFootprintUI(sceneData[primarySelectedIndex]);
+        }
+
+        function stepFootprint(axis, delta) {
+            const input = document.getElementById(axis === 'width' ? 'furn-fp-width' : 'furn-fp-length');
+            if (!input) return;
+            let val = (parseInt(input.value, 10) || 1) + delta;
+            val = Math.max(1, Math.min(12, val));
+            input.value = val;
+            onFootprintInputChange();
+        }
+
+        function onFootprintInputChange() {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            const itemId = getFurnitureItemId(obj);
+            if (!itemId) return;
+
+            const w = Math.max(1, Math.min(12, parseInt(document.getElementById('furn-fp-width')?.value, 10) || 1));
+            const l = Math.max(1, Math.min(12, parseInt(document.getElementById('furn-fp-length')?.value, 10) || 1));
+
+            const badgeDims = document.getElementById('furn-fp-dims-badge');
+            if (badgeDims) badgeDims.innerText = `${w} × ${l} celdas`;
+
+            if (!window.ITEMS_DB) window.ITEMS_DB = {};
+            if (!window.ITEMS_DB[itemId]) window.ITEMS_DB[itemId] = { id: itemId };
+            window.ITEMS_DB[itemId].width = w;
+            window.ITEMS_DB[itemId].length = l;
+
+            // Sincronizar todas las instancias del mueble en la escena
+            sceneData.forEach(o => {
+                if (getFurnitureItemId(o) === itemId) {
+                    const oriNum = parseInt(o.orientation ?? o.ori ?? 0, 10) || 0;
+                    const swap = (oriNum === 1 || oriNum === 3);
+                    o.dbgW = swap ? l : w;
+                    o.dbgL = swap ? w : l;
+                    o.width = w;
+                    o.length = l;
+                    o.rw = o.dbgW * 64;
+                    o.rh = o.dbgL * 64;
+                    delete o._rasterCache;
+                }
+            });
+
+            draw();
+            scheduleSaveItemPivotFootprint();
+        }
+
+        function stepPivot(axis, delta) {
+            const numInput = document.getElementById(axis === 'y' ? 'furn-pivot-y-num' : 'furn-pivot-x-num');
+            if (!numInput) return;
+            let val = (parseFloat(numInput.value) || 0) + delta;
+            val = parseFloat(val.toFixed(3));
+            numInput.value = val.toFixed(3);
+            const slider = document.getElementById(axis === 'y' ? 'furn-pivot-y-slider' : 'furn-pivot-x-slider');
+            if (slider) slider.value = val;
+            applyPivotChange(axis, val);
+        }
+
+        function onPivotSliderChange(axis) {
+            const slider = document.getElementById(axis === 'y' ? 'furn-pivot-y-slider' : 'furn-pivot-x-slider');
+            const numInput = document.getElementById(axis === 'y' ? 'furn-pivot-y-num' : 'furn-pivot-x-num');
+            if (!slider || !numInput) return;
+            const val = parseFloat(slider.value) || 0;
+            numInput.value = val.toFixed(3);
+            applyPivotChange(axis, val);
+        }
+
+        function onPivotNumChange(axis) {
+            const slider = document.getElementById(axis === 'y' ? 'furn-pivot-y-slider' : 'furn-pivot-x-slider');
+            const numInput = document.getElementById(axis === 'y' ? 'furn-pivot-y-num' : 'furn-pivot-x-num');
+            if (!slider || !numInput) return;
+            const val = parseFloat(numInput.value) || 0;
+            slider.value = val;
+            applyPivotChange(axis, val);
+        }
+
+        function applyPivotChange(axis, val) {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            const itemId = getFurnitureItemId(obj);
+            if (!itemId) return;
+
+            if (!window.ITEMS_DB) window.ITEMS_DB = {};
+            if (!window.ITEMS_DB[itemId]) window.ITEMS_DB[itemId] = { id: itemId };
+            const item = window.ITEMS_DB[itemId];
+
+            if (!window.contentPivots) window.contentPivots = {};
+
+            if (_currentPivotMode === 'back') {
+                if (!item.pivot_back) {
+                    item.pivot_back = item.pivot ? { ...item.pivot } : { x: 0.5, y: 0.08 };
+                }
+                item.pivot_back[axis] = val;
+                window.contentPivots[itemId + '_BACK'] = { ...item.pivot_back };
+            } else {
+                if (!item.pivot) item.pivot = { x: 0.5, y: 0.08 };
+                item.pivot[axis] = val;
+                window.contentPivots[itemId] = { ...item.pivot };
+            }
+
+            // Aplicar en tiempo real a las instancias correspondientes en escena
+            sceneData.forEach(o => {
+                if (getFurnitureItemId(o) === itemId) {
+                    const oriNum = parseInt(o.orientation ?? o.ori ?? 0, 10) || 0;
+                    const oIsBack = (oriNum === 2 || oriNum === 3) || String(o.sp || '').includes('_BACK');
+                    
+                    if (oIsBack && _currentPivotMode === 'back') {
+                        if (axis === 'y') o.py = val;
+                        if (axis === 'x') o.px = val;
+                        delete o._rasterCache;
+                    } else if (!oIsBack && _currentPivotMode === 'front') {
+                        if (axis === 'y') o.py = val;
+                        if (axis === 'x') o.px = val;
+                        delete o._rasterCache;
+                    }
+                }
+            });
+
+            draw();
+            scheduleSaveItemPivotFootprint();
+        }
+
+        function copyCurrentPivotToOtherMode() {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            const itemId = getFurnitureItemId(obj);
+            if (!itemId) return;
+
+            const itInfo = (window.ITEMS_DB && window.ITEMS_DB[itemId]) || {};
+            if (!itInfo.pivot) itInfo.pivot = { x: 0.5, y: 0.08 };
+
+            if (_currentPivotMode === 'front') {
+                itInfo.pivot_back = { ...itInfo.pivot };
+                if (window.contentPivots) window.contentPivots[itemId + '_BACK'] = { ...itInfo.pivot_back };
+                showPivotSaveStatus(`📋 Copiado Frente ➔ Atrás (${itInfo.pivot.x}, ${itInfo.pivot.y})`);
+            } else {
+                if (itInfo.pivot_back) {
+                    itInfo.pivot = { ...itInfo.pivot_back };
+                    if (window.contentPivots) window.contentPivots[itemId] = { ...itInfo.pivot };
+                    showPivotSaveStatus(`📋 Copiado Atrás ➔ Frente (${itInfo.pivot.x}, ${itInfo.pivot.y})`);
+                }
+            }
+
+            sceneData.forEach(o => {
+                if (getFurnitureItemId(o) === itemId) {
+                    const oriNum = parseInt(o.orientation ?? o.ori ?? 0, 10) || 0;
+                    const oIsBack = (oriNum === 2 || oriNum === 3) || String(o.sp || '').includes('_BACK');
+                    const targetPiv = (oIsBack && itInfo.pivot_back) ? itInfo.pivot_back : itInfo.pivot;
+                    o.px = targetPiv.x;
+                    o.py = targetPiv.y;
+                    delete o._rasterCache;
+                }
+            });
+
+            draw();
+            scheduleSaveItemPivotFootprint();
+        }
+
+        function resetItemPivotFootprint() {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            const itemId = getFurnitureItemId(obj);
+            if (!itemId) return;
+
+            if (_originalItemPivotFootprint && _originalItemPivotFootprint.itemId === itemId) {
+                const itInfo = (window.ITEMS_DB && window.ITEMS_DB[itemId]) || {};
+                itInfo.width = _originalItemPivotFootprint.width;
+                itInfo.length = _originalItemPivotFootprint.length;
+                itInfo.pivot = { ..._originalItemPivotFootprint.pivot };
+                itInfo.pivot_back = _originalItemPivotFootprint.pivot_back ? { ..._originalItemPivotFootprint.pivot_back } : null;
+
+                if (window.contentPivots) {
+                    window.contentPivots[itemId] = { ...itInfo.pivot };
+                    if (itInfo.pivot_back) window.contentPivots[itemId + '_BACK'] = { ...itInfo.pivot_back };
+                    else delete window.contentPivots[itemId + '_BACK'];
+                }
+
+                sceneData.forEach(o => {
+                    if (getFurnitureItemId(o) === itemId) {
+                        const oriNum = parseInt(o.orientation ?? o.ori ?? 0, 10) || 0;
+                        const isBack = (oriNum === 2 || oriNum === 3) || String(o.sp || '').includes('_BACK');
+                        const p = (isBack && itInfo.pivot_back) ? itInfo.pivot_back : itInfo.pivot;
+                        o.px = p.x;
+                        o.py = p.y;
+                        const swap = (oriNum === 1 || oriNum === 3);
+                        o.dbgW = swap ? itInfo.length : itInfo.width;
+                        o.dbgL = swap ? itInfo.width : itInfo.length;
+                        o.width = itInfo.width;
+                        o.length = itInfo.length;
+                        o.rw = o.dbgW * 64;
+                        o.rh = o.dbgL * 64;
+                        delete o._rasterCache;
+                    }
+                });
+
+                _userForcedPivotMode = false;
+                updateItemPivotFootprintUI(obj);
+                draw();
+                showPivotSaveStatus('Valores restablecidos al estado original.', '#eab308');
+                scheduleSaveItemPivotFootprint();
+            }
+        }
+
+        function scheduleSaveItemPivotFootprint() {
+            if (_pivotFootprintSaveTimeout) clearTimeout(_pivotFootprintSaveTimeout);
+            _pivotFootprintSaveTimeout = setTimeout(() => {
+                saveItemPivotFootprint(true);
+            }, 400);
+        }
+
+        async function saveItemPivotFootprint(isAuto = false) {
+            if (primarySelectedIndex === -1 || !sceneData[primarySelectedIndex]) return;
+            const obj = sceneData[primarySelectedIndex];
+            const itemId = getFurnitureItemId(obj);
+            if (!itemId) return;
+
+            const itInfo = (window.ITEMS_DB && window.ITEMS_DB[itemId]) || {};
+            const payload = {
+                itemId: itemId,
+                width: itInfo.width || 1,
+                length: itInfo.length || 1,
+                pivot: itInfo.pivot || { x: 0.5, y: 0.08 },
+                pivot_back: itInfo.pivot_back || null
+            };
+
+            try {
+                const res = await fetch('/api/save/item_pivot_footprint', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    showPivotSaveStatus(`💾 Guardado en items_db.json (#${itemId}: W=${payload.width} L=${payload.length} Py=${payload.pivot.y})`, '#4ade80');
+                    return;
+                }
+            } catch(e) {
+                console.warn('Error auto-guardando pivot/footprint:', e);
+            }
+            showPivotSaveStatus(`⚠️ Guardado en memoria (#${itemId})`, '#eab308');
+        }
+
+        function showPivotSaveStatus(text, color = '#4ade80') {
+            const el = document.getElementById('furn-pivot-save-status');
+            if (!el) return;
+            el.style.display = 'block';
+            el.style.color = color;
+            el.innerText = text;
+            clearTimeout(el._statusTimer);
+            el._statusTimer = setTimeout(() => {
+                if (el) el.style.display = 'none';
+            }, 3000);
+        }
 
         document.addEventListener('keydown', (e)=>{
             // Si el foco está en un input o textarea, permitir escritura normal
@@ -9990,17 +10542,58 @@
 
 
                         defaultCoverId: s.defaultCoverId || null,
-
-
-
-                        poly: s.poly || [],
-
-
-
-                        paths: s.poly ? [s.poly] : [],
-
-
-
+                        poly: (() => {
+                            let surfPoly = (s.poly && s.poly.length) ? JSON.parse(JSON.stringify(s.poly)) : null;
+                            if (!surfPoly) {
+                                const _r = Math.max(1, s.rows || 16), _c = Math.max(1, s.cols || 16);
+                                const _cr = s.cell || {};
+                                const _cw = ((_cr.w || 0) > 70 ? _cr.w : 75) / 150, _ch = ((_cr.h || 0) > 35 ? _cr.h : 37.5) / 150;
+                                if (isFloor) {
+                                    surfPoly = [
+                                        { x: 0, y: 0 },
+                                        { x: parseFloat((_c * _cw / 2).toFixed(4)), y: parseFloat((_c * _ch / 2).toFixed(4)) },
+                                        { x: parseFloat(((_c - _r) * _cw / 2).toFixed(4)), y: parseFloat(((_c + _r) * _ch / 2).toFixed(4)) },
+                                        { x: parseFloat((-_r * _cw / 2).toFixed(4)), y: parseFloat((_r * _ch / 2).toFixed(4)) }
+                                    ];
+                                } else {
+                                    const stepX = s.flipped ? -_cw / 2 : _cw / 2;
+                                    const wallH = _r * _ch * 2;
+                                    surfPoly = [
+                                        { x: 0, y: 0 },
+                                        { x: parseFloat((_c * stepX).toFixed(4)), y: parseFloat((-_c * _ch / 2).toFixed(4)) },
+                                        { x: parseFloat((_c * stepX).toFixed(4)), y: parseFloat((-_c * _ch / 2 + wallH).toFixed(4)) },
+                                        { x: 0, y: parseFloat(wallH.toFixed(4)) }
+                                    ];
+                                }
+                            }
+                            return surfPoly || [];
+                        })(),
+                        paths: (() => {
+                            let surfPoly = (s.poly && s.poly.length) ? JSON.parse(JSON.stringify(s.poly)) : null;
+                            if (!surfPoly) {
+                                const _r = Math.max(1, s.rows || 16), _c = Math.max(1, s.cols || 16);
+                                const _cr = s.cell || {};
+                                const _cw = ((_cr.w || 0) > 70 ? _cr.w : 75) / 150, _ch = ((_cr.h || 0) > 35 ? _cr.h : 37.5) / 150;
+                                if (isFloor) {
+                                    surfPoly = [
+                                        { x: 0, y: 0 },
+                                        { x: parseFloat((_c * _cw / 2).toFixed(4)), y: parseFloat((_c * _ch / 2).toFixed(4)) },
+                                        { x: parseFloat(((_c - _r) * _cw / 2).toFixed(4)), y: parseFloat(((_c + _r) * _ch / 2).toFixed(4)) },
+                                        { x: parseFloat((-_r * _cw / 2).toFixed(4)), y: parseFloat((_r * _ch / 2).toFixed(4)) }
+                                    ];
+                                } else {
+                                    const stepX = s.flipped ? -_cw / 2 : _cw / 2;
+                                    const wallH = _r * _ch * 2;
+                                    surfPoly = [
+                                        { x: 0, y: 0 },
+                                        { x: parseFloat((_c * stepX).toFixed(4)), y: parseFloat((-_c * _ch / 2).toFixed(4)) },
+                                        { x: parseFloat((_c * stepX).toFixed(4)), y: parseFloat((-_c * _ch / 2 + wallH).toFixed(4)) },
+                                        { x: 0, y: parseFloat(wallH.toFixed(4)) }
+                                    ];
+                                }
+                            }
+                            return surfPoly && surfPoly.length ? [surfPoly] : [];
+                        })(),
                         folderId: surfacesFolder.id,
 
 
@@ -10246,30 +10839,10 @@
 
 
 
-                    origin_px: (() => {
-                        const CANON_BASELINE = {
-                            floor_0:  { orig: { x: 0.0, y: -2.25 },       px: { x: 1241.86, y: 1976.56 } },
-                            floor_1:  { orig: { x: -0.306, y: 0.857 },    px: { x: 1241.38, y: 1377.82 } },
-                            wall_0_L: { orig: { x: -2.2263, y: -1.1409 }, px: { x: 517.59,  y: 1736.73 } },
-                            wall_0_R: { orig: { x: 1.849, y: -1.118 },    px: { x: 1900.89, y: 1709.29 } },
-                            wall_1_L: { orig: { x: -2.114, y: 2.340 },    px: { x: 695.59,  y: 1121.40 } },
-                            wall_1_R: { orig: { x: 1.686, y: 2.557 },     px: { x: 1878.90, y: 1174.44 } },
-                            floor_2:  { orig: { x: 3.8, y: -3.5 },        px: { x: 329.0,   y: 86.0 } },
-                            floor_3:  { orig: { x: 3.8, y: -3.5 },        px: { x: 900.0,   y: 2200.0 } },
-                            floor_4:  { orig: { x: 3.8, y: -3.5 },        px: { x: 1600.0,  y: 2200.0 } }
-                        };
-                        const base = CANON_BASELINE[v.id];
-                        if (base) {
-                            return {
-                                x: parseFloat((base.px.x + ((v.x || 0) - base.orig.x) * 150).toFixed(2)),
-                                y: parseFloat((base.px.y - ((v.y || 0) - base.orig.y) * 150).toFixed(2))
-                            };
-                        }
-                        return {
-                            x: parseFloat((1235 + (v.x || 0) * 150).toFixed(2)),
-                            y: parseFloat((1257 - (v.y || 0) * 150).toFixed(2))
-                        };
-                    })(),
+                    origin_px: {
+                        x: parseFloat((1235 + (v.x || 0) * 150).toFixed(2)),
+                        y: parseFloat((1257 - (v.y || 0) * 150).toFixed(2))
+                    },
 
 
 
@@ -10941,7 +11514,20 @@
 
 
 
-                        sceneData.push({go: SLOCATION_NAMES[mapId]||'Casa', sp:`FURN_${it.id}`, x:w.x, y:w.y, angle:0, sx:1, sy:1, o:0, sl:0, px:it.pivot.x, py:it.pivot.y, rw:it.w*64, rh:it.l*64, ppu:150, width:it.w, length:it.l, is_poly_object:false});
+                        sceneData.push({
+                            go: SLOCATION_NAMES[mapId]||'Casa',
+                            sp: `FURN_${it.id}`,
+                            x: w.x, y: w.y, angle: 0,
+                            sx: 1, sy: 1, o: 0, sl: 0,
+                            px: it.pivot ? it.pivot.x : 0.5,
+                            py: it.pivot ? it.pivot.y : 0.08,
+                            rw: it.w * 64, rh: it.l * 64, ppu: 150,
+                            width: it.w, length: it.l,
+                            dbgW: it.w, dbgL: it.l,
+                            itemId: it.id,
+                            isDebugItem: true,
+                            is_poly_object: false
+                        });
 
 
 
@@ -11215,17 +11801,12 @@
 
 
         function syncDeletedPlacementsToStorage() {
-            const activeDebugItems = sceneData.filter(o => o.isDebugItem);
-            const activePlacementIDs = new Set(activeDebugItems.map(o => o.placementID).filter(id => id !== undefined && id !== -1));
             let deletedPlacementIDs = [];
-            if (window._csavePlacements) {
-                deletedPlacementIDs = window._csavePlacements
-                    .filter(p => p.placementID !== undefined && p.placementID !== -1 && !activePlacementIDs.has(p.placementID))
-                    .map(p => p.placementID);
-            }
             if (window._deletedPlacementIDs) {
                 window._deletedPlacementIDs.forEach(id => {
-                    if (!deletedPlacementIDs.includes(id)) deletedPlacementIDs.push(id);
+                    if (id !== undefined && id !== -1 && !deletedPlacementIDs.includes(id)) {
+                        deletedPlacementIDs.push(id);
+                    }
                 });
             }
             try {
@@ -11312,8 +11893,8 @@
                                     groupNum: surf.groupNum,
                                     flipped: !!surf.flipped,
                                     mapId: full.mapId,
-                                    x: (surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((surf.origin_px.x - 1235) / 150) : (surf.origin ? surf.origin.x : 0),
-                                    y: (surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((1257 - surf.origin_px.y) / 150) : (surf.origin ? surf.origin.y : 0),
+                                    x: (surf.origin ? surf.origin.x : ((surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((surf.origin_px.x - 1235) / 150) : 0)),
+                                    y: (surf.origin ? surf.origin.y : ((surf.origin_px && Math.abs(surf.origin_px.x)>500) ? ((1257 - surf.origin_px.y) / 150) : 0)),
                                     poly: surf.poly || [],
                                     defaultCoverId: surf.defaultCoverId,
                                     outdoor: surf.outdoor,
