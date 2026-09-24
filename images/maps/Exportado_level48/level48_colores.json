@@ -1,0 +1,5996 @@
+[
+ {
+  "sprite": "Water",
+  "go": "Door (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Carriage (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "PropSprite (3)",
+  "go": "Roof",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Door",
+  "go": "Gravel_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_20",
+  "go": "New Sprite (9)",
+  "color": {
+   "r": 1.0,
+   "g": 0.8875,
+   "b": 0.7311,
+   "a": 0.6275
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (1)",
+  "go": "GameObject (2)",
+  "color": {
+   "r": 0.0,
+   "g": 0.0,
+   "b": 0.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 999,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Carriage",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (15)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (11)",
+  "go": "DoorB",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Door",
+  "go": "PropSprite (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (13)",
+  "go": "CarriageInterior_24",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (19)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Door",
+  "go": "CarriageInterior_18",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "PropSprite (3)",
+  "go": "Roof",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (29)",
+  "go": "CarriageInterior_5",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (13)",
+  "go": "Door",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Door",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Tracks (1)",
+  "go": "CarriageInterior_20",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (20)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Gravel_0",
+  "go": "DreamHouse_Environment_Reusables_SummerGrass",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Head",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Cliffs",
+  "go": "Tracks (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 2,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (16)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_24",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (11)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (20)",
+  "go": "Entrance",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (13)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Tracks (1)",
+  "go": "CarriageInterior_20",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (16)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (20)",
+  "go": "GameObject (3)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "DoorB",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_24",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (4)",
+  "go": "RearWindow",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Cliff(Clone)",
+  "go": "CarriageInterior_14",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Carriage (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Carriage (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (09)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_5",
+  "go": "Front (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (19)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (8)",
+  "go": "Pillar",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (26)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (23)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (18)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Carriage (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Head",
+  "go": "Controls",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "DoorB",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Door",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Lights L",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Carriage (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Carriage",
+  "go": "FirstCarriage_6 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Wall",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (4)",
+  "go": "Window",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (17)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (4)",
+  "go": "CarriageInterior_28 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Table",
+  "go": "Front",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (19)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Carriage (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Head",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (22)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (12)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (26)",
+  "go": "CarriageInterior_9",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Carriage (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (26)",
+  "go": "CarriageInterior_33",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Carriage",
+  "go": "FirstCarriage_6 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (4)",
+  "go": "Window",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (5)",
+  "go": "Head",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (18)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (15)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_24",
+  "go": "Lightmaps_3 (1)",
+  "color": {
+   "r": 0.0,
+   "g": 0.0,
+   "b": 0.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 999,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Carriage (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "DoorB",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Wall",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (20)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_24",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (13)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (15)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Carriage",
+  "go": "FirstCarriage_6",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Head",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (14)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "PropSprite (2)",
+  "go": "Rear",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "Roof",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject (2)",
+  "go": "cliffOuterEdge",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Roof",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (18)",
+  "go": "Roof",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "CarriageInterior_23",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Carriage",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "DoorB",
+  "go": "Train Reusables_10 (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (20)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "DoorB",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Carriage (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Lightmaps_3",
+  "color": {
+   "r": 0.0,
+   "g": 0.0,
+   "b": 0.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 999,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (17)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "New Sprite (7)",
+  "color": {
+   "r": 1.0,
+   "g": 0.7157,
+   "b": 0.3255,
+   "a": 0.6275
+  },
+  "materials": [
+   {
+    "material": "Radial",
+    "shader": null
+   }
+  ],
+  "orden": 1,
+  "mask_interaction": 1
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (20)",
+  "go": "DoorF",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (5)",
+  "go": "CarriageInterior_21",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (08)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Carriage (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "PropSprite (2)",
+  "go": "Rear",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (4)",
+  "go": "Window",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "DoorB",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Lightmaps_3",
+  "color": {
+   "r": 0.0,
+   "g": 0.0,
+   "b": 0.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 999,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (5)",
+  "go": "Door",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "DoorB",
+  "go": "Train Reusables_10 (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (19)",
+  "go": "Train Reusables_10",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (11)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (20)",
+  "go": "DoorF",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (16)",
+  "go": "Handle",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (20)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "PropSprite (1)",
+  "go": "Train Reusables_3",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (9)",
+  "go": "Front (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (5)",
+  "go": "Door",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (20)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "New Sprite (9)",
+  "go": "OuterTrack",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "PropSprite (1)",
+  "go": "Train Reusables_3",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (19)",
+  "go": "Train Reusables_10",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (12)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (15)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "New Sprite (5)",
+  "color": {
+   "r": 1.0,
+   "g": 0.3255,
+   "b": 0.3255,
+   "a": 0.6275
+  },
+  "materials": [
+   {
+    "material": "Radial",
+    "shader": null
+   }
+  ],
+  "orden": 1,
+  "mask_interaction": 1
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_24",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (19)",
+  "go": "Train Reusables_10",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (14)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (15)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Door",
+  "go": "CarriageInterior_18",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "Roof",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Tracks (1)",
+  "go": "CarriageInterior_20",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Back (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Carriage",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Train Reusables_10 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Back",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Roof (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Wall",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (5)",
+  "go": "Door",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (15)",
+  "go": "CarriageInterior_9",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "New Sprite (5)",
+  "color": {
+   "r": 1.0,
+   "g": 0.3255,
+   "b": 0.3255,
+   "a": 0.6275
+  },
+  "materials": [
+   {
+    "material": "Radial",
+    "shader": null
+   }
+  ],
+  "orden": 1,
+  "mask_interaction": 1
+ },
+ {
+  "sprite": "Foam (18)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (5)",
+  "go": "Front (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (09)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (4)",
+  "go": "Window (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Carriage",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Table",
+  "go": "Front",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (6)",
+  "go": "Roof",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "PropSprite (1)",
+  "go": "Train Reusables_3",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Cliff(Clone)",
+  "go": "EndCliff",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (21)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (18)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (11)",
+  "go": "DoorB",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (20)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Carriage",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (5)",
+  "go": "Door",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (18)",
+  "go": "Roof",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (09)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Water",
+  "go": "Door (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Train Reusables_10 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (19)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (5)",
+  "go": "Door",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (6)",
+  "go": "Carriage (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (4)",
+  "go": "Window",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (24)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (11)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_24",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "DoorB",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "Roof",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Wall",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Water",
+  "go": "Door",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "DoorB",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Cliff(Clone)",
+  "go": "CarriageInterior_14",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (18)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (17)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Carriage (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (17)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Roof",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (11)",
+  "go": "DoorB",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (19)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "PropSprite (1)",
+  "go": "walkway_0 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_20",
+  "go": "New Sprite (10)",
+  "color": {
+   "r": 1.0,
+   "g": 0.8863,
+   "b": 0.7294,
+   "a": 0.3137
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Square (13)",
+  "go": "CarriageInterior_24",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Window (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (17)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "DoorB",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (5)",
+  "go": "CarriageInterior_21",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (10)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "New Sprite (6)",
+  "color": {
+   "r": 1.0,
+   "g": 0.7157,
+   "b": 0.3255,
+   "a": 0.6275
+  },
+  "materials": [
+   {
+    "material": "Radial",
+    "shader": null
+   }
+  ],
+  "orden": 1,
+  "mask_interaction": 1
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "cliff test_0",
+  "go": "Carriage",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Floor",
+  "go": "Pillar2",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": -5,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (13)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Cliffs",
+  "go": "SecondCarriage_12",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (19)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "BarL",
+  "go": "CarriageInterior_9",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_24",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (16)",
+  "go": "Handle",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (5)",
+  "go": "Front (2)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (17)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "PropSprite (2)",
+  "go": "Rear",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "CarriageInterior_20",
+  "go": "New Sprite (8)",
+  "color": {
+   "r": 1.0,
+   "g": 0.8875,
+   "b": 0.7311,
+   "a": 0.6275
+  },
+  "materials": [
+   {
+    "material": "Reveal",
+    "shader": null
+   }
+  ],
+  "orden": 1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (26)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (12)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Foam (4)",
+  "go": "CarriageInterior_28",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "GameObject",
+  "go": "cliff test_0 (1)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Lightmaps_2",
+  "go": "cliff test_0",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": "Sprite-Unlit-Default",
+    "shader": null
+   }
+  ],
+  "orden": 0,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (25)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ },
+ {
+  "sprite": "Window (2)",
+  "go": "Foam (18)",
+  "color": {
+   "r": 1.0,
+   "g": 1.0,
+   "b": 1.0,
+   "a": 1.0
+  },
+  "materials": [
+   {
+    "material": null,
+    "shader": null
+   }
+  ],
+  "orden": -1,
+  "mask_interaction": 0
+ }
+]

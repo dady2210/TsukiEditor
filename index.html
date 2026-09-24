@@ -6,7 +6,7 @@
     <title>Tsuki's Odyssey Save Editor</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css?v=20260849">
+    <link rel="stylesheet" href="styles.css?v=20260851-m5">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&family=Nunito+Sans:wght@400;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 </head>
@@ -49,7 +49,7 @@
                     <span class="material-symbols-outlined" style="font-size:18px;vertical-align:text-bottom;margin-right:6px;">folder_open</span>
                     Vincular archivo directo (Auto-escritura en disco)
                 </button>
-                <button id="btn-new-game" class="btn-primary" disabled title="Aún no implementado" style="font-size:0.85rem; padding:0.4rem 1rem; opacity:0.6;">Nueva Partida</button>
+                <button id="btn-new-game" class="btn-primary" title="Parte de un .csave tuyo y lo deja de cero: vacía inventario, muebles, vecinos y contadores, y respeta tus ajustes. El original no se toca." style="font-size:0.85rem; padding:0.4rem 1rem;">Nueva Partida</button>
             </div>
         </div>
     </div>
@@ -128,6 +128,30 @@
             <main class="content-area rustic-panel">
 <div id="tab-vars" class="tab-content active">
                     <h2>Variables Generales</h2>
+
+                    <div class="section-card" style="border: 1.5px solid #e67e22; background: rgba(230, 126, 34, 0.04); margin-bottom: 1rem;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+                            <div>
+                                <h3 style="margin:0; color:#d35400; display:flex; align-items:center; gap:8px;">
+                                    <span class="material-symbols-outlined">storefront</span> Módulo 3: Tiendas & Máquina Junker
+                                </h3>
+                                <p style="margin:4px 0 0; font-size:0.85rem; color:var(--text-muted);">
+                                    Rotación horaria xx:00 (Yori, Rosemary, Dawn), compra/venta con zanahorias y fusión Shiny en la Junker.
+                                </p>
+                            </div>
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn-primary" onclick="window.shopUI?.open('yori_1')">
+                                    <span class="material-symbols-outlined" style="font-size:18px;margin-right:4px;vertical-align:text-bottom;">store</span>
+                                    Abrir Tiendas
+                                </button>
+                                <button class="btn-secondary" onclick="window.junkerUI?.open()" style="border-color:#3498db; color:#2980b9;">
+                                    <span class="material-symbols-outlined" style="font-size:18px;margin-right:4px;vertical-align:text-bottom;">precision_manufacturing</span>
+                                    Máquina Junker
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <p class="subtitle">Administra tu pequeña vida en la aldea hongo.</p>
 
                     <div class="section-card">
@@ -792,6 +816,8 @@
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
                 <h3>Lista de Periódicos</h3>
                 <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="btn-primary" onclick="if(window.NewspaperSystem) window.NewspaperSystem.checkMorningDispatch(true)" title="Abrir y leer el periódico matutino correspondiente a hoy">📰 Periódico de Hoy (08:00)</button>
+                    <button class="btn-secondary" onclick="if(window.BountySystem) window.BountySystem.open()" title="Abrir el Tablón de Peces del Día de Benny">🐟 Tablón de Peces</button>
                     <button class="btn-secondary" onclick="window.app.toggleAllNewsShown(true)">Mostrar Todos</button>
                     <button class="btn-secondary" onclick="window.app.toggleAllNewsShown(false)">Ocultar Todos</button>
                     <button class="btn-primary" onclick="window.app.toggleAllNewsDone(true)">Completar Todos</button>
@@ -1066,8 +1092,6 @@
                                 </div>
                             </div>
                             <div style="margin-top:10px;">
-                                <label style="display:block; margin-bottom:4px;">Mask (opcional):</label>
-                                <input type="text" id="grid-mask" placeholder="mask_floor_0.png" style="width:100%; margin-bottom:6px;">
                                 <label style="display:block; margin-bottom:4px;">defaultCoverId (preview):</label>
                                 <input type="number" id="grid-default-cover" placeholder="ej 123" style="width:100%; margin-bottom:6px;">
                                 <label style="display:block; margin-bottom:4px;">Comentario:</label>
@@ -1326,26 +1350,81 @@
         .then(r => r.json())
         .then(d => { window.ACTIVITIES_DB = d; })
         .catch(e => console.warn('activities_db load error:', e));
+    // Etapas de crecimiento y animación de cosecha de las semillas de la granja.
+    // Lo genera tools/extract_crops.py desde el bundle de muebles del juego.
+    fetch('data/crops_db.json?v=' + Date.now())
+        .then(r => r.json())
+        .then(d => { window.CROPS_DB = d; })
+        .catch(e => console.warn('crops_db load error:', e));
+    // Tabla de auto-tiling de las parcelas: 47 estados sacados del prefab Plot del
+    // juego (tools/extract_plots.py). Es lo que hace que dos parcelas contiguas se
+    // vean como un solo bancal, sin la junta en medio.
+    fetch('data/plots_autotile.json?v=' + Date.now())
+        .then(r => r.json())
+        .then(d => { window.PLOTS_AUTOTILE = d; if (window.app?.map) window.app.map.draw(); })
+        .catch(e => console.warn('plots_autotile load error:', e));
     </script>
     <script src="data/newspapers.js?v=1"></script>
     <script src="data/npcs.js?v=1"></script>
     <script src="odin_browser.js?v=28"></script>
-    <script src="castle_core.js?v=3"></script>
+    <script src="castle_core.js?v=5"></script>
     <script src="save_storage.js?v=1"></script>
     <!-- App logic -->
-    <script src="parser.js?v=20260850-wallfloor"></script>
+    <script src="parser.js?v=20260923-puerta"></script>
     <script src="data/light_profiles.js?v=1"></script>
-    <script src="map.js?v=64"></script>
-    <script src="map_def.js?v=2"></script>
-    <script src="play_scenery.js?v=3"></script>
-    <script src="grid_editor.js"></script>
+    <script src="data/maps_atlas.js?v=2"></script>
+    <script src="events_system.js?v=3"></script>
+    <!-- La musica de cada sala, con su par dia/noche sacado del binario. Sustituye
+         a la lista aleatoria de mas abajo, que sonaba al azar y no por sala. -->
+    <script src="music_system.js?v=2"></script>
+    <script src="gacha_system.js?v=2"></script>
+    <script src="progress_system.js?v=2"></script>
+    <script src="activity_scheduler.js?v=4"></script>
+    <script src="homecoming_system.js?v=1"></script>
+    <script src="travel_system.js?v=3"></script>
+    <script src="train_system.js?v=5"></script>
+    <script src="train_studio.js?v=4"></script>
+    <script src="npc_system.js?v=1"></script>
+    <script src="default_layouts.js?v=3"></script>
+    <script src="map.js?v=113"></script>
+    <script src="map_def.js?v=5"></script>
+    <script src="play_materials.js?v=2"></script>
+    <script src="play_doors.js?v=2"></script>
+    <script src="play_train.js?v=2"></script>
+    <script src="play_sfx.js?v=2"></script>
+    <script src="play_scenery.js?v=22"></script>
+    <script src="day_cycle.js?v=1"></script>
+    <script src="play_opening.js?v=3"></script>
+    <script src="new_game.js?v=3"></script>
+    <script>
+        if (window.MapDef) {
+            window.MapDef.load(0).then(() => window.MapDef.syncAtlas(0)).catch(console.warn);
+        }
+    </script>
+    <script src="grid_editor.js?v=2"></script>
     <script src="tsuki_port.js?v=2"></script>
-    <script src="ui.js"></script>
-    <script src="game_time.js?v=1"></script>
-    <script src="play_lighting.js?v=2"></script>
-    <script src="routine_scheduler.js?v=2"></script>
-    <script src="dialogue_manager.js?v=1"></script>
-    <script src="app.js?v=40"></script>
+    <script src="ui.js?v=1"></script>
+    <script src="game_time.js?v=2"></script>
+    <script src="play_lighting.js?v=3"></script>
+    <script src="seeded_random.js?v=1"></script>
+    <script src="seeded_scene_objects.js?v=4"></script>
+    <script src="scene_objects.js?v=6"></script>
+    <script src="furniture_subgroups.js?v=3"></script>
+    <script src="weather_system.js?v=1"></script>
+    <script src="play_npcs.js?v=3"></script>
+    <script src="play_walkers.js?v=1"></script>
+    <script src="play_minigames.js?v=3"></script>
+    <script src="play_fishing.js?v=3"></script>
+    <script src="play_mail.js?v=1"></script>
+    <script src="routine_scheduler.js?v=5"></script>
+    <script src="dialogue_manager.js?v=5"></script>
+    <script src="bubble_system.js?v=3"></script>
+    <script src="mixtape_player.js?v=4"></script>
+    <script src="shop_system.js?v=2"></script>
+    <script src="farming_system.js?v=3"></script>
+    <script src="newspaper_system.js?v=4"></script>
+    <script src="bounty_system.js?v=4"></script>
+    <script src="app.js?v=51"></script>
     <!-- Experimental features -->
     <script src="patch_experimental.js?v=29"></script>
 <script>
@@ -1435,12 +1514,21 @@
 			});
 		};
 
-		// Intentar reproducir al cargar
-		startAudio();
-
-		// Respaldo por restricciones del navegador (clic o tecla)
-		document.addEventListener("click", startAudio);
-		document.addEventListener("keydown", startAudio);
+		// LA LISTA ALEATORIA YA NO ARRANCA.
+		//
+		// Sonaba al azar: mezclaba las 24 pistas y las iba encadenando, asi que en la
+		// Casa de Moca podia sonar la tienda de Rosemary. El juego no hace eso: CADA
+		// nivel declara su par dia/noche (`BaseGame.dayTrack` / `nightTrack`), y eso es
+		// lo que pone `music_system.js` desde `data/map_music.json`.
+		//
+		// El codigo se deja entero, que es una lista de reproduccion que funciona, por si
+		// se quiere volver: basta descomentar las tres lineas. Pero entonces deja de ser
+		// fiel al juego.
+		//
+		// startAudio();
+		// document.addEventListener("click", startAudio);
+		// document.addEventListener("keydown", startAudio);
+		void playNextTrack; void startAudio;   // referenciados, para que no parezcan muertos
 	});
 </script>
 
@@ -1519,6 +1607,134 @@
         </div>
     </div>
     
+    
+    <!-- ── MODAL TIENDAS (Módulo 3) ── -->
+    <div id="modal-shops" class="modal hidden" style="z-index: 10005;">
+        <div class="modal-content rustic-panel" style="max-width: 780px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; padding: 0; overflow: hidden;">
+            <div class="modal-header" style="padding: 1rem 1.2rem; background: rgba(0,0,0,0.03); border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="material-symbols-outlined" style="color: #e67e22; font-size: 26px;">storefront</span>
+                    <h3 style="margin: 0; font-size: 1.2rem; color: var(--text-main);">Mercado de la Aldea Hongo</h3>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="display: inline-flex; align-items: center; gap: 4px; background: rgba(230,126,34,0.15); padding: 4px 10px; border-radius: 20px; font-weight: 700; color: #d35400;">
+                        <span id="shop-modal-carrots">0</span> &#129365;
+                    </div>
+                    <button class="close-modal" id="btn-close-shop-modal" style="background: none; border: none; font-size: 1.6rem; cursor: pointer; color: #888;">&times;</button>
+                </div>
+            </div>
+
+            <!-- Navegación entre Tiendas -->
+            <div style="display: flex; gap: 6px; padding: 8px 12px; background: rgba(0,0,0,0.05); overflow-x: auto; border-bottom: 1px solid rgba(0,0,0,0.08);">
+                <button class="shop-nav-btn btn-secondary active" data-shop="yori_1" style="font-size: 0.82rem; padding: 5px 10px; display: flex; align-items: center; gap: 4px;">
+                    <span>🏪 Yori (P.B.)</span>
+                </button>
+                <button class="shop-nav-btn btn-secondary" data-shop="yori_2" style="font-size: 0.82rem; padding: 5px 10px; display: flex; align-items: center; gap: 4px;">
+                    <span>🪑 Yori Muebles (P.A.)</span>
+                </button>
+                <button class="shop-nav-btn btn-secondary" data-shop="rosemary" style="font-size: 0.82rem; padding: 5px 10px; display: flex; align-items: center; gap: 4px;">
+                    <span>🌿 Rosemary</span>
+                </button>
+                <button class="shop-nav-btn btn-secondary" data-shop="dawn" style="font-size: 0.82rem; padding: 5px 10px; display: flex; align-items: center; gap: 4px;">
+                    <span>🔨 Taller de Dawn</span>
+                </button>
+            </div>
+
+            <!-- Cabecera del Vendedor y Diálogo -->
+            <div style="display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: rgba(255,255,255,0.4); border-bottom: 1px solid rgba(0,0,0,0.06);">
+                <img id="shop-keeper-avatar" src="images/npcs/Yori/ChameleonYoriShop_0.png" alt="Tendero" style="width: 52px; height: 52px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));" onerror="this.src='favicon.png'">
+                <div style="flex: 1; min-width: 0;">
+                    <div id="shop-keeper-name" style="font-weight: 700; font-size: 1.05rem; color: var(--text-main);">Yori — Planta Baja</div>
+                    <div id="shop-keeper-sub" style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">Herramientas y consumibles</div>
+                    <div id="shop-keeper-quote" style="font-size: 0.86rem; font-style: italic; color: #555; background: rgba(0,0,0,0.03); padding: 4px 8px; border-radius: 6px; display: inline-block;">"¡Bienvenido Tsuki! Mira los estantes."</div>
+                </div>
+            </div>
+
+            <!-- Sub-tabs: Comprar vs Vender -->
+            <div style="display: flex; border-bottom: 1px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02);">
+                <button id="tab-shop-buy" class="btn-text active" style="flex: 1; padding: 8px; font-weight: 700; border-bottom: 2px solid #e67e22; border-radius: 0;">🛒 Escaparate (Comprar)</button>
+                <button id="tab-shop-sell" class="btn-text" style="flex: 1; padding: 8px; font-weight: 700; border-bottom: 2px solid transparent; border-radius: 0;">💰 Vender Objetos</button>
+            </div>
+
+            <!-- Cuerpo Scrolleable -->
+            <div class="modal-body" style="padding: 1rem; overflow-y: auto; flex: 1;">
+                <div id="shop-content-buy">
+                    <div id="shop-displays-grid" class="shop-grid"></div>
+                </div>
+                <div id="shop-content-sell" class="hidden">
+                    <div id="shop-sell-grid" class="sell-grid"></div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer" style="padding: 0.8rem 1.2rem; background: rgba(0,0,0,0.03); border-top: 1px solid rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center;">
+                <button id="btn-shop-reroll-hour" class="btn-secondary" style="font-size: 0.8rem; padding: 4px 10px;" title="Fuerza una rotación horaria aleatoria para probar nuevos ítems">
+                    <span class="material-symbols-outlined" style="font-size: 16px; vertical-align: text-bottom; margin-right: 4px;">update</span>
+                    Simular Reroll de Hora (xx:00)
+                </button>
+                <button class="btn-primary" onclick="document.getElementById('modal-shops').classList.add('hidden')">Salir de la Tienda</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── MODAL JUNKER (Módulo 3) ── -->
+    <div id="modal-junker" class="modal hidden" style="z-index: 10006;">
+        <div class="modal-content rustic-panel" style="max-width: 680px; width: 95%; max-height: 90vh; display: flex; flex-direction: column; padding: 0; overflow: hidden;">
+            <div class="modal-header" style="padding: 1rem 1.2rem; background: rgba(52,152,219,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="material-symbols-outlined" style="color: #2980b9; font-size: 26px;">precision_manufacturing</span>
+                    <h3 style="margin: 0; font-size: 1.2rem; color: var(--text-main);">Máquina Junker de Dawn</h3>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span id="junker-status-badge" style="font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 12px; background: #2ecc71; color: #fff;">⚙️ LISTA</span>
+                    <button class="close-modal" id="btn-close-junker-modal" style="background: none; border: none; font-size: 1.6rem; cursor: pointer; color: #888;">&times;</button>
+                </div>
+            </div>
+
+            <div class="modal-body" style="padding: 1.2rem; overflow-y: auto; flex: 1;">
+                <div id="junker-result-banner" class="hidden"></div>
+
+                <p style="margin: 0 0 1rem; font-size: 0.88rem; color: var(--text-muted); text-align: center;">
+                    Inserta <strong>3 muebles</strong> para combinarlos o forjar una <strong>versión alternativa Shiny (⭐)</strong>. <br>
+                    <span style="color:#e74c3c; font-size:0.8rem;">⚠️ Advertencia de Dawn: No introduzcas tréboles ni sobrecargues los circuitos.</span>
+                </p>
+
+                <!-- Los 3 Pedestales -->
+                <div class="junker-pods-container" style="display: flex; justify-content: center; gap: 16px; margin: 1.2rem 0;">
+                    <div id="junker-pod-0" class="junker-pod empty"></div>
+                    <div id="junker-pod-1" class="junker-pod empty"></div>
+                    <div id="junker-pod-2" class="junker-pod empty"></div>
+                </div>
+
+                <!-- Palanca / Botón de Acción -->
+                <div style="text-align: center; margin: 1.2rem 0;">
+                    <button id="btn-junker-fuse" class="btn-primary" style="padding: 0.7rem 1.8rem; font-size: 1.05rem; background: linear-gradient(135deg, #e67e22, #d35400); box-shadow: 0 4px 12px rgba(230,126,34,0.3); border: none;">
+                        <span class="material-symbols-outlined" style="font-size: 20px; vertical-align: text-bottom; margin-right: 4px;">bolt</span>
+                        ¡FUSIONAR MUEBLES!
+                    </button>
+                    <button id="btn-junker-repair" class="btn-secondary" style="display: none; padding: 0.6rem 1.4rem; font-size: 0.95rem; border-color: #e74c3c; color: #c0392b;">
+                        <span class="material-symbols-outlined" style="font-size: 18px; vertical-align: text-bottom; margin-right: 4px;">build</span>
+                        Reparar Máquina (Dawn)
+                    </button>
+                    <button id="btn-junker-clear" class="btn-text" style="font-size: 0.8rem; margin-left: 8px;">Vaciar pedestales</button>
+                </div>
+
+                <!-- Selector de Muebles de la Mochila -->
+                <div style="border-top: 1px solid rgba(0,0,0,0.08); padding-top: 1rem; margin-top: 1rem;">
+                    <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">inventory_2</span>
+                        Muebles en tu Mochila (Haz clic para colocar):
+                    </div>
+                    <div id="junker-inv-picker" class="junker-picker-grid"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="padding: 0.8rem 1.2rem; background: rgba(0,0,0,0.03); border-top: 1px solid rgba(0,0,0,0.08); display: flex; justify-content: flex-end;">
+                <button class="btn-secondary" onclick="document.getElementById('modal-junker').classList.add('hidden')">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <!-- Drop Overlay -->
@@ -1531,11 +1747,24 @@
                         <div class="port-hud-top" id="port-hud-top" style="display:none;">
                             <span id="port-hud-carrots">0</span> &#129365;
                             <button id="btn-clock-prev" class="btn-secondary" style="margin-left:10px; font-size:0.75rem; padding:1px 6px; line-height:1;" title="Retroceder 1 hora">◀</button>
+                            
+                            <button id="btn-hud-shops" class="btn-secondary" style="margin-left:8px; font-size:0.75rem; padding:2px 8px; background:rgba(230, 126, 34, 0.2); border-color:#e67e22;" title="Mercado y Tiendas de la Aldea">🏪 Tiendas</button>
+                            <button id="btn-hud-junker" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:2px 8px; background:rgba(52, 152, 219, 0.2); border-color:#3498db;" title="Taller y Máquina Junker de Dawn">⚙️ Junker</button>
                             <span id="port-hud-clock" style="margin-left:4px; font-size:0.85rem; opacity:0.9; cursor:pointer;" title="Hora del juego. Clic para ciclar horas clave">--:--</span>
                             <button id="btn-clock-next" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:1px 6px; line-height:1;" title="Avanzar 1 hora">▶</button>
                             <button id="btn-map-home" class="btn-secondary" style="margin-left:10px; font-size:0.75rem; padding:2px 8px;" title="Casa sloc 0">Casa</button>
                             <button id="btn-map-farm" class="btn-secondary" style="font-size:0.75rem; padding:2px 8px;" title="Granja sloc 6">Granja</button>
+                            <button id="btn-map-menu" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:2px 8px; background:rgba(52, 152, 219, 0.25); border-color:#3498db; color:#3498db; font-weight:bold;" title="Abrir Mapa de Viaje de la Aldea">🗺️ Mapa</button>
+                            <button id="btn-hud-cropbox" class="btn-secondary" style="margin-left:6px; font-size:0.75rem; padding:2px 8px; background:rgba(241, 196, 15, 0.2); border-color:#f1c40f;" title="Ver y vaciar Caja de Cultivos">📦 CropBox</button>
+                            <button id="btn-hud-newspaper" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:2px 8px; background:rgba(231, 76, 60, 0.2); border-color:#e74c3c;" title="Ver Periódico Matutino (The Daily Tear)">📰 Periódico</button>
+                            <button id="btn-hud-bounty" class="btn-secondary" style="display:none; margin-left:4px; font-size:0.75rem; padding:2px 8px; background:rgba(46, 204, 113, 0.2); border-color:#2ecc71;" title="Tablón de Pesca Municipal de Benny">🐟 Peces del Día</button>
                             <button id="btn-reroll-routine" class="btn-secondary" style="margin-left:8px; font-size:0.75rem; padding:2px 8px; background:rgba(255,255,255,0.12);" title="Re-sortear actividad aleatoria de Tsuki y NPCs">🎲 Rutina</button>
+                            <button id="btn-hud-progress" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:2px 8px; background:rgba(255,255,255,0.12);" title="Colección, punchcard, cartas y estadísticas" onclick="if(window.Progress) window.Progress.abrirPanel()">📚 Progreso</button>
+                            <button id="btn-hud-npcs" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:2px 8px; background:rgba(255,255,255,0.12);" title="Amistad con los vecinos" onclick="if(window.NPCSystem) window.NPCSystem.abrirPanelAsync()">🧑‍🤝‍🧑 Vecinos <span id="npc-hud-badge" style="display:none;background:#e74c3c;color:#fff;border-radius:8px;padding:0 5px;font-size:.7rem;"></span></button>
+                            <button id="btn-hud-homecoming" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:2px 8px; background:rgba(255,255,255,0.12);" title="Ampliación de la Casa del Árbol" onclick="if(window.Homecoming) window.Homecoming.abrirPanel()">🏠 Ampliación</button>
+                            <button id="btn-hud-travel" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:2px 8px; background:rgba(255,255,255,0.12);" title="Viajar por la aldea y la ciudad" onclick="if(window.Travel) window.Travel.abrirPanel()">🧭 Viajar</button>
+                            <button id="btn-hud-weather" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:2px 8px; background:rgba(255,255,255,0.12);" title="Tiempo y festival de hoy" onclick="if(window.Weather&&window.app)window.app.showToast(window.Weather.resumenDeHoy(null).replace(/
+/g,' · '),'info')">🌦️ Hoy</button>
                             <select id="select-time-preset" class="btn-secondary" style="margin-left:4px; font-size:0.75rem; padding:2px 4px; background:#2e2e2e; color:#eee; border-radius:4px;" title="Seleccionar hora rápida">
                                 <option value="auto">⏱ Auto (Reloj)</option>
                                 <option value="8">🌅 Mañana (08:00)</option>
@@ -1550,16 +1779,20 @@
                         
                         <!-- Port Bottom Bar -->
                         <div id="play-bottom-bar" class="port-bottom-bar">
+                            <div class="port-btn" id="btn-hud-sickle" title="Cosechar con la Hoz (Sickle)" style="position:relative;">
+                                <span class="material-symbols-outlined" style="font-size:32px; color:#27ae60;">agriculture</span>
+                                <span id="sickle-badge" style="display:none; position:absolute; top:-4px; right:-4px; background:#e74c3c; color:white; font-size:11px; font-weight:bold; width:20px; height:20px; border-radius:50%; align-items:center; justify-content:center; border:2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.4);">0</span>
+                            </div>
                             <div class="port-btn" id="btn-port-bag" title="Mochila">
                                 <span class="material-symbols-outlined" style="font-size:32px; color:#795548;">backpack</span>
                             </div>
                             <div class="port-btn" id="btn-port-hammer" title="Martillo">
                                 <span class="material-symbols-outlined" style="font-size:32px; color:#ff9800;">hardware</span>
                             </div>
-                            <div class="port-btn" id="btn-port-phone" title="Telfono">
+                            <div class="port-btn" id="btn-port-phone" title="Teléfono">
                                 <span class="material-symbols-outlined" style="font-size:32px; color:#2196f3;">smartphone</span>
                             </div>
-                            <div class="port-btn" id="btn-port-settings" title="Configuracin">
+                            <div class="port-btn" id="btn-port-settings" title="Configuración">
                                 <span class="material-symbols-outlined" style="font-size:32px; color:#9e9e9e;">settings</span>
                             </div>
                         </div>
@@ -1689,6 +1922,41 @@
                                 <span class="ps-lastsaved" id="ps-lastsaved">Caché: activa</span>
                             </div>
                         </div>
+
+                        <!-- Play Mode Village & City Map Modal (Travel Menu) -->
+                        <div id="play-map-overlay" class="port-map-overlay hidden"></div>
+                        <div id="play-map-modal" class="port-map-modal hidden">
+                            <div class="pm-header">
+                                <div class="pm-title-group">
+                                    <span class="material-symbols-outlined pm-icon-main">map</span>
+                                    <div>
+                                        <h3 class="pm-title">Mapa de Viaje</h3>
+                                        <span class="pm-subtitle">Selecciona una ubicación para viajar con Tsuki</span>
+                                    </div>
+                                </div>
+                                <button type="button" class="pm-btn-close" id="btn-map-modal-close" title="Cerrar Mapa">✕</button>
+                            </div>
+
+                            <!-- Tabs: Aldea Hongo vs Gran Ciudad -->
+                            <div class="pm-tabs-bar">
+                                <button type="button" class="pm-tab active" id="pm-tab-village" data-zone="village">
+                                    <span class="pm-tab-icon">🍄</span> Aldea Hongo <span class="pm-tab-badge" id="pm-badge-village">13</span>
+                                </button>
+                                <button type="button" class="pm-tab" id="pm-tab-city" data-zone="city">
+                                    <span class="pm-tab-icon">🏙️</span> Gran Ciudad <span class="pm-tab-badge" id="pm-badge-city">16</span>
+                                </button>
+                            </div>
+
+                            <!-- Destinations Grid Container -->
+                            <div class="pm-grid-container" id="pm-destinations-grid">
+                                <!-- Populated dynamically by TsukiPort -->
+                            </div>
+
+                            <div class="pm-footer">
+                                <span id="pm-current-location-hint" class="pm-location-hint">📍 Ubicación actual: Casa del Árbol</span>
+                                <span class="pm-tip">💡 Haz clic en cualquier lugar para viajar al instante</span>
+                            </div>
+                        </div>
                         <!-- Bag UI Mode -->
                         <div id="bag-ui" class="bag-ui-container">
                             <div class="bag-panel" id="bag-panel">
@@ -1776,6 +2044,25 @@
                                     <input type="checkbox" id="edit-item-flipped">
                                     <span style="font-weight:normal;">Volteado (Flipped)</span>
                                 </label>
+                            </div>
+
+                            <!-- Solo para el mobiliario que coloca el juego (no está en el .csave) -->
+                            <div id="layout-item-ui" class="hidden" style="margin-bottom:1.5rem; padding:0.75rem; border-radius:8px; background:rgba(0,170,220,0.08); border:1px solid rgba(0,170,220,0.35);">
+                                <div style="font-weight:bold; color:#0b7285; margin-bottom:6px;">🏛️ Mueble del juego</div>
+                                <div id="layout-item-info" style="font-size:0.85em; color:#555; margin-bottom:8px;">
+                                    Lo coloca el juego, no el save.
+                                </div>
+                                <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                                    <input type="checkbox" id="edit-item-can-override">
+                                    <span style="font-weight:normal;">El jugador puede moverlo (canOverride)</span>
+                                </label>
+                                <label style="display:flex; align-items:center; gap:6px; cursor:pointer; margin-top:4px;">
+                                    <input type="checkbox" id="edit-item-layout-hidden">
+                                    <span style="font-weight:normal;">Ocultarlo en este mapa</span>
+                                </label>
+                                <div style="font-size:0.78em; color:#777; margin-top:6px;">
+                                    Los cambios van a <code>data/layout_overrides.json</code>, no al save.
+                                </div>
                             </div>
                             
                             <!-- Magic Seed Planting UI (Only visible for plot 306) -->

@@ -1,0 +1,2298 @@
+{
+  "kind": "map",
+  "id": "level44",
+  "name": "level44",
+  "source": "C:\\Users\\Andres\\Desktop\\Tsuki_Odyssey\\AssetPack\\assets\\bin\\Data\\level44",
+  "layout": {
+    "front": [
+      {
+        "sp": "lanterns_0",
+        "go": "summerfestdeco_townhall_0",
+        "x": -6.254000186920166,
+        "y": 5.216000556945801,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.8399999737739563,
+        "rw": 74.0,
+        "rh": 121.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (2)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 1,
+        "tr_path_id": 79,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -4.836999893188477,
+        "y": 6.3430003225803375,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (5)/GameObject/Target/Glow (2)",
+        "go_path_id": 3,
+        "tr_path_id": 81,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -5.423000335693359,
+        "y": 6.072000324726105,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (4)/GameObject/Target/Glow (3)",
+        "go_path_id": 4,
+        "tr_path_id": 82,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_0",
+        "go": "summerfestdeco_townhall_0",
+        "x": -6.802999973297119,
+        "y": 5.506999969482422,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": -1,
+        "px": 0.5,
+        "py": 0.8399999737739563,
+        "rw": 74.0,
+        "rh": 121.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (3)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 5,
+        "tr_path_id": 83,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -0.39900004863739014,
+        "y": -1.0939996093511581,
+        "angle": 0.0,
+        "sx": 3.0,
+        "sy": 3.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (6)/GameObject/Lantern (5)/GameObject/Target/Glow (3)",
+        "go_path_id": 9,
+        "tr_path_id": 87,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_4",
+        "go": "summerfestdeco_townhall_0",
+        "x": -4.732999801635742,
+        "y": 3.190999984741211,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": -1,
+        "px": 0.5,
+        "py": 0.10000000149011612,
+        "rw": 41.0,
+        "rh": 68.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": -1,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern/summerfestdeco_townhall_0",
+        "go_path_id": 11,
+        "tr_path_id": 89,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_6",
+        "go": "summerfestdeco_townhall_0",
+        "x": -2.941999912261963,
+        "y": 0.39099979400634766,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": -4,
+        "px": 0.519022524356842,
+        "py": 0.8046749234199524,
+        "rw": 55.0,
+        "rh": 52.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": true,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (7)/GameObject/Lantern (4)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 12,
+        "tr_path_id": 90,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -3.25,
+        "y": 0.4169997274875641,
+        "angle": 0.0,
+        "sx": 0.6100000143051147,
+        "sy": 0.6100000143051147,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (7)/GameObject/Lantern (3)/GameObject/Target/Glow (2)",
+        "go_path_id": 13,
+        "tr_path_id": 91,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_6",
+        "go": "summerfestdeco_townhall_0",
+        "x": -0.7480000257492065,
+        "y": -0.8409996032714844,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": -4,
+        "px": 0.519022524356842,
+        "py": 0.8046749234199524,
+        "rw": 55.0,
+        "rh": 52.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": true,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (6)/GameObject/Lantern (4)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 17,
+        "tr_path_id": 95,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -6.254000186920166,
+        "y": 4.886000543832779,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (2)/GameObject/Target/Glow (2)",
+        "go_path_id": 21,
+        "tr_path_id": 99,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (5)",
+        "x": -4.732999801635742,
+        "y": 3.322999984025955,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9137254953384399,
+          "g": 0.8240512013435364,
+          "b": 0.7019608020782471,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern/Glow (5)",
+        "go_path_id": 22,
+        "tr_path_id": 100,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -2.5929999351501465,
+        "y": 0.13799944519996643,
+        "angle": 0.0,
+        "sx": 0.6100000143051147,
+        "sy": 0.6100000143051147,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (7)/GameObject/Lantern (5)/GameObject/Target/Glow (2)",
+        "go_path_id": 23,
+        "tr_path_id": 101,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -5.423000335693359,
+        "y": 6.072000414133072,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (4)/GameObject/Target/Glow (2)",
+        "go_path_id": 24,
+        "tr_path_id": 102,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_6",
+        "go": "summerfestdeco_townhall_0",
+        "x": -0.39900004863739014,
+        "y": -0.9659996032714844,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": -4,
+        "px": 0.519022524356842,
+        "py": 0.8046749234199524,
+        "rw": 55.0,
+        "rh": 52.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": true,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (6)/GameObject/Lantern (5)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 25,
+        "tr_path_id": 103,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -3.25,
+        "y": 0.41700007021427155,
+        "angle": 0.0,
+        "sx": 3.0,
+        "sy": 3.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (7)/GameObject/Lantern (3)/GameObject/Target/Glow (3)",
+        "go_path_id": 26,
+        "tr_path_id": 104,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -0.7480000257492065,
+        "y": -0.9689999520778656,
+        "angle": 0.0,
+        "sx": 0.6100000143051147,
+        "sy": 0.6100000143051147,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (6)/GameObject/Lantern (4)/GameObject/Target/Glow (2)",
+        "go_path_id": 32,
+        "tr_path_id": 110,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_6",
+        "go": "summerfestdeco_townhall_0",
+        "x": -3.25,
+        "y": 0.5450000762939453,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": -4,
+        "px": 0.519022524356842,
+        "py": 0.8046749234199524,
+        "rw": 55.0,
+        "rh": 52.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": true,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (7)/GameObject/Lantern (3)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 33,
+        "tr_path_id": 111,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_0",
+        "go": "summerfestdeco_townhall_0",
+        "x": -5.423000335693359,
+        "y": 6.402000427246094,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": -2,
+        "px": 0.5,
+        "py": 0.8399999737739563,
+        "rw": 74.0,
+        "rh": 121.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (4)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 35,
+        "tr_path_id": 113,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -2.5929999351501465,
+        "y": 0.1379997879266739,
+        "angle": 0.0,
+        "sx": 3.0,
+        "sy": 3.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (7)/GameObject/Lantern (5)/GameObject/Target/Glow (3)",
+        "go_path_id": 39,
+        "tr_path_id": 117,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -1.055999994277954,
+        "y": -0.8149996697902679,
+        "angle": 0.0,
+        "sx": 0.6100000143051147,
+        "sy": 0.6100000143051147,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (6)/GameObject/Lantern (3)/GameObject/Target/Glow (2)",
+        "go_path_id": 41,
+        "tr_path_id": 119,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -0.39900004863739014,
+        "y": -1.0939999520778656,
+        "angle": 0.0,
+        "sx": 0.6100000143051147,
+        "sy": 0.6100000143051147,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (6)/GameObject/Lantern (5)/GameObject/Target/Glow (2)",
+        "go_path_id": 42,
+        "tr_path_id": 120,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_4",
+        "go": "summerfestdeco_townhall_0",
+        "x": -3.759000062942505,
+        "y": 3.6649999618530273,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": -1,
+        "px": 0.5,
+        "py": 0.10000000149011612,
+        "rw": 41.0,
+        "rh": 68.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": -1,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern (1)/summerfestdeco_townhall_0",
+        "go_path_id": 45,
+        "tr_path_id": 123,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -4.836999893188477,
+        "y": 6.34300023317337,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (5)/GameObject/Target/Glow (3)",
+        "go_path_id": 48,
+        "tr_path_id": 126,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -6.802999973297119,
+        "y": 5.176999866962433,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (3)/GameObject/Target/Glow (3)",
+        "go_path_id": 51,
+        "tr_path_id": 129,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (4)",
+        "x": -3.759000062942505,
+        "y": 3.796999931335449,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9137254953384399,
+          "g": 0.8240512013435364,
+          "b": 0.7019608020782471,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern (1)/Glow (4)",
+        "go_path_id": 53,
+        "tr_path_id": 131,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -1.055999994277954,
+        "y": -0.8149993270635605,
+        "angle": 0.0,
+        "sx": 3.0,
+        "sy": 3.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (6)/GameObject/Lantern (3)/GameObject/Target/Glow (3)",
+        "go_path_id": 54,
+        "tr_path_id": 132,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -6.802999973297119,
+        "y": 5.1769999563694,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (3)/GameObject/Target/Glow (2)",
+        "go_path_id": 55,
+        "tr_path_id": 133,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (5)",
+        "x": -3.759000062942505,
+        "y": 3.7969999611377716,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9137254953384399,
+          "g": 0.8240512013435364,
+          "b": 0.7019608020782471,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern (1)/Glow (5)",
+        "go_path_id": 58,
+        "tr_path_id": 136,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (4)",
+        "x": -4.732999801635742,
+        "y": 3.322999954223633,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9137254953384399,
+          "g": 0.8240512013435364,
+          "b": 0.7019608020782471,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern/Glow (4)",
+        "go_path_id": 60,
+        "tr_path_id": 138,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -6.254000186920166,
+        "y": 4.886000454425812,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (2)/GameObject/Target/Glow (3)",
+        "go_path_id": 62,
+        "tr_path_id": 140,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -2.941999912261963,
+        "y": 0.26299944519996643,
+        "angle": 0.0,
+        "sx": 0.6100000143051147,
+        "sy": 0.6100000143051147,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (7)/GameObject/Lantern (4)/GameObject/Target/Glow (2)",
+        "go_path_id": 64,
+        "tr_path_id": 142,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -0.7480000257492065,
+        "y": -0.9689996093511581,
+        "angle": 0.0,
+        "sx": 3.0,
+        "sy": 3.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (6)/GameObject/Lantern (4)/GameObject/Target/Glow (3)",
+        "go_path_id": 65,
+        "tr_path_id": 143,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_6",
+        "go": "summerfestdeco_townhall_0",
+        "x": -1.055999994277954,
+        "y": -0.6869993209838867,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": -4,
+        "px": 0.519022524356842,
+        "py": 0.8046749234199524,
+        "rw": 55.0,
+        "rh": 52.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": true,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (6)/GameObject/Lantern (3)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 69,
+        "tr_path_id": 147,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_6",
+        "go": "summerfestdeco_townhall_0",
+        "x": -2.5929999351501465,
+        "y": 0.26599979400634766,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": -4,
+        "px": 0.519022524356842,
+        "py": 0.8046749234199524,
+        "rw": 55.0,
+        "rh": 52.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": true,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (7)/GameObject/Lantern (5)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 70,
+        "tr_path_id": 148,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -2.941999912261963,
+        "y": 0.2629997879266739,
+        "angle": 0.0,
+        "sx": 3.0,
+        "sy": 3.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5921568870544434,
+          "b": 0.5058823823928833,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (7)/GameObject/Lantern (4)/GameObject/Target/Glow (3)",
+        "go_path_id": 76,
+        "tr_path_id": 154,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_0",
+        "go": "summerfestdeco_townhall_0",
+        "x": -4.836999893188477,
+        "y": 6.673000335693359,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": -3,
+        "px": 0.5,
+        "py": 0.8399999737739563,
+        "rw": 74.0,
+        "rh": 121.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Rope (4)/GameObject/Lantern (5)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 77,
+        "tr_path_id": 155,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      }
+    ],
+    "back": [],
+    "fx": []
+  },
+  "hierarchy": [
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "MonoBehaviour",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (4)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (5)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (5)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Rope (4)",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (5)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Rope (6)",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (4)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (4)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (5)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (1)",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (4)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Rope (7)",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (5)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (4)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "SceneData",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    }
+  ],
+  "colliders": [],
+  "logic": {
+    "walkable": [],
+    "blockers": [],
+    "triggers": [],
+    "interaction_nodes": [],
+    "grids": [],
+    "camera_confines": [],
+    "lights": [],
+    "scripts": [],
+    "animators": [],
+    "audio": [],
+    "particles": []
+  },
+  "animation": {
+    "controllers": []
+  },
+  "audio": [],
+  "particles": [],
+  "catalog": {},
+  "raw": {
+    "level": "level44",
+    "origin_offset": {
+      "x": 0.0,
+      "y": -15.0
+    },
+    "grid_system": [],
+    "interaction_nodes": [],
+    "walkable_bounds": [],
+    "camera_confines": [],
+    "lighting_volumes": [],
+    "special_scripts": [],
+    "animator_nodes": [],
+    "audio_sources": [],
+    "particle_systems": []
+  }
+}

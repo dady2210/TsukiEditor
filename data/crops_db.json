@@ -1,0 +1,528 @@
+{
+ "1230": {
+  "id": 1230,
+  "prefab": "Pumpkin Seeds",
+  "name_en": "Pumpkin Seeds",
+  "name_es": "Semillas de Calabaza",
+  "dir": "images/crops/1230_PumpkinSeeds",
+  "frameW": 142,
+  "frameH": 265,
+  "pivot": {
+   "x": 0.584851,
+   "y": 0.023208
+  },
+  "ppu": 150.0,
+  "anims": {
+   "stage": {
+    "frames": [
+     "CROP_1230_stage_0",
+     "CROP_1230_stage_1",
+     "CROP_1230_stage_2"
+    ]
+   },
+   "harvest": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1230_harvest_0",
+     "CROP_1230_harvest_1",
+     "CROP_1230_harvest_2",
+     "CROP_1230_harvest_3",
+     "CROP_1230_harvest_4",
+     "CROP_1230_harvest_5",
+     "CROP_1230_harvest_6",
+     "CROP_1230_harvest_7"
+    ]
+   },
+   "strange": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1230_strange_0",
+     "CROP_1230_strange_1",
+     "CROP_1230_strange_2",
+     "CROP_1230_strange_3",
+     "CROP_1230_strange_4",
+     "CROP_1230_strange_5",
+     "CROP_1230_strange_6",
+     "CROP_1230_strange_7"
+    ]
+   },
+   "rotten": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": true,
+    "frames": [
+     "CROP_1230_rotten_0",
+     "CROP_1230_rotten_1",
+     "CROP_1230_rotten_2",
+     "CROP_1230_rotten_3",
+     "CROP_1230_rotten_4",
+     "CROP_1230_rotten_5",
+     "CROP_1230_rotten_6",
+     "CROP_1230_rotten_7"
+    ]
+   }
+  }
+ },
+ "342": {
+  "id": 342,
+  "prefab": "Carrot Seeds",
+  "name_en": "Carrot Seeds",
+  "name_es": "Semillas de Zanahoria",
+  "dir": "images/crops/342_CarrotSeeds",
+  "frameW": 98,
+  "frameH": 264,
+  "pivot": {
+   "x": 0.512245,
+   "y": 0.015341
+  },
+  "ppu": 150.0,
+  "anims": {
+   "stage": {
+    "frames": [
+     "CROP_342_stage_0",
+     "CROP_342_stage_1",
+     "CROP_342_stage_2"
+    ]
+   },
+   "harvest": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_342_harvest_0",
+     "CROP_342_harvest_1",
+     "CROP_342_harvest_2",
+     "CROP_342_harvest_3",
+     "CROP_342_harvest_4",
+     "CROP_342_harvest_5",
+     "CROP_342_harvest_6",
+     "CROP_342_harvest_7"
+    ]
+   },
+   "strange": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_342_strange_0",
+     "CROP_342_strange_1",
+     "CROP_342_strange_2",
+     "CROP_342_strange_3",
+     "CROP_342_strange_4",
+     "CROP_342_strange_5",
+     "CROP_342_strange_6",
+     "CROP_342_strange_7"
+    ]
+   }
+  }
+ },
+ "1232": {
+  "id": 1232,
+  "prefab": "Potato Seeds",
+  "name_en": "Potato Seeds",
+  "name_es": "Semillas de Papa",
+  "dir": "images/crops/1232_PotatoSeeds",
+  "frameW": 93,
+  "frameH": 258,
+  "pivot": {
+   "x": 0.532258,
+   "y": 0.02093
+  },
+  "ppu": 150.0,
+  "anims": {
+   "stage": {
+    "frames": [
+     "CROP_1232_stage_0",
+     "CROP_1232_stage_1",
+     "CROP_1232_stage_2"
+    ]
+   },
+   "harvest": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1232_harvest_0",
+     "CROP_1232_harvest_1",
+     "CROP_1232_harvest_2",
+     "CROP_1232_harvest_3",
+     "CROP_1232_harvest_4",
+     "CROP_1232_harvest_5",
+     "CROP_1232_harvest_6",
+     "CROP_1232_harvest_7"
+    ]
+   },
+   "strange": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1232_strange_0",
+     "CROP_1232_strange_1",
+     "CROP_1232_strange_2",
+     "CROP_1232_strange_3",
+     "CROP_1232_strange_4",
+     "CROP_1232_strange_5",
+     "CROP_1232_strange_6",
+     "CROP_1232_strange_7"
+    ]
+   }
+  }
+ },
+ "1233": {
+  "id": 1233,
+  "prefab": "Turnip Seeds",
+  "name_en": "Turnip Seeds",
+  "name_es": "Semillas de Rábano",
+  "dir": "images/crops/1233_TurnipSeeds",
+  "frameW": 103,
+  "frameH": 247,
+  "pivot": {
+   "x": 0.483981,
+   "y": 0.021255
+  },
+  "ppu": 150.0,
+  "anims": {
+   "stage": {
+    "frames": [
+     "CROP_1233_stage_0",
+     "CROP_1233_stage_1",
+     "CROP_1233_stage_2"
+    ]
+   },
+   "harvest": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1233_harvest_0",
+     "CROP_1233_harvest_1",
+     "CROP_1233_harvest_2",
+     "CROP_1233_harvest_3",
+     "CROP_1233_harvest_4",
+     "CROP_1233_harvest_5",
+     "CROP_1233_harvest_6",
+     "CROP_1233_harvest_7"
+    ]
+   },
+   "strange": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1233_strange_0",
+     "CROP_1233_strange_1",
+     "CROP_1233_strange_2",
+     "CROP_1233_strange_3",
+     "CROP_1233_strange_4",
+     "CROP_1233_strange_5",
+     "CROP_1233_strange_6",
+     "CROP_1233_strange_7"
+    ]
+   }
+  }
+ },
+ "345": {
+  "id": 345,
+  "prefab": "Watermelon Seeds",
+  "name_en": "Watermelon Seeds",
+  "name_es": "Semillas de Sandía",
+  "dir": "images/crops/345_WatermelonSeeds",
+  "frameW": 134,
+  "frameH": 255,
+  "pivot": {
+   "x": 0.55709,
+   "y": 0.020579
+  },
+  "ppu": 150.0,
+  "anims": {
+   "stage": {
+    "frames": [
+     "CROP_345_stage_0",
+     "CROP_345_stage_1",
+     "CROP_345_stage_2"
+    ]
+   },
+   "harvest": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_345_harvest_0",
+     "CROP_345_harvest_1",
+     "CROP_345_harvest_2",
+     "CROP_345_harvest_3",
+     "CROP_345_harvest_4",
+     "CROP_345_harvest_5",
+     "CROP_345_harvest_6",
+     "CROP_345_harvest_7"
+    ]
+   },
+   "strange": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_345_strange_0",
+     "CROP_345_strange_1",
+     "CROP_345_strange_2",
+     "CROP_345_strange_3",
+     "CROP_345_strange_4",
+     "CROP_345_strange_5",
+     "CROP_345_strange_6",
+     "CROP_345_strange_7"
+    ]
+   }
+  }
+ },
+ "1208": {
+  "id": 1208,
+  "prefab": "Onion Seeds",
+  "name_en": "Onion Seeds",
+  "name_es": "Semillas de Cebolla",
+  "dir": "images/crops/1208_OnionSeeds",
+  "frameW": 92,
+  "frameH": 304,
+  "pivot": {
+   "x": 0.523913,
+   "y": 0.014803
+  },
+  "ppu": 150.0,
+  "anims": {
+   "stage": {
+    "frames": [
+     "CROP_1208_stage_0",
+     "CROP_1208_stage_1",
+     "CROP_1208_stage_2"
+    ]
+   },
+   "harvest": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1208_harvest_0",
+     "CROP_1208_harvest_1",
+     "CROP_1208_harvest_2",
+     "CROP_1208_harvest_3",
+     "CROP_1208_harvest_4",
+     "CROP_1208_harvest_5",
+     "CROP_1208_harvest_6"
+    ]
+   },
+   "strange": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1208_strange_0",
+     "CROP_1208_strange_1",
+     "CROP_1208_strange_2",
+     "CROP_1208_strange_3",
+     "CROP_1208_strange_4",
+     "CROP_1208_strange_5",
+     "CROP_1208_strange_6",
+     "CROP_1208_strange_7"
+    ]
+   }
+  }
+ },
+ "1238": {
+  "id": 1238,
+  "prefab": "Grape Seeds",
+  "name_en": "Grape Seeds",
+  "name_es": "Semillas de Uva",
+  "dir": "images/crops/1238_GrapeSeeds",
+  "frameW": 114,
+  "frameH": 244,
+  "pivot": {
+   "x": 0.489035,
+   "y": 0.021926
+  },
+  "ppu": 150.0,
+  "anims": {
+   "stage": {
+    "frames": [
+     "CROP_1238_stage_0",
+     "CROP_1238_stage_1",
+     "CROP_1238_stage_2",
+     "CROP_1238_stage_3",
+     "CROP_1238_stage_4",
+     "CROP_1238_stage_5",
+     "CROP_1238_stage_6",
+     "CROP_1238_stage_7"
+    ]
+   },
+   "harvest": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1238_harvest_0",
+     "CROP_1238_harvest_1",
+     "CROP_1238_harvest_2",
+     "CROP_1238_harvest_3",
+     "CROP_1238_harvest_4",
+     "CROP_1238_harvest_5",
+     "CROP_1238_harvest_6"
+    ]
+   },
+   "strange": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1238_strange_0",
+     "CROP_1238_strange_1",
+     "CROP_1238_strange_2",
+     "CROP_1238_strange_3",
+     "CROP_1238_strange_4",
+     "CROP_1238_strange_5",
+     "CROP_1238_strange_6"
+    ]
+   }
+  }
+ },
+ "1237": {
+  "id": 1237,
+  "prefab": "Strawberry Seeds",
+  "name_en": "Strawberry Seeds",
+  "name_es": "Semillas de Fresa",
+  "dir": "images/crops/1237_StrawberrySeeds",
+  "frameW": 152,
+  "frameH": 248,
+  "pivot": {
+   "x": 0.557895,
+   "y": -0.002218
+  },
+  "ppu": 150.0,
+  "anims": {
+   "stage": {
+    "frames": [
+     "CROP_1237_stage_0",
+     "CROP_1237_stage_1",
+     "CROP_1237_stage_2"
+    ]
+   },
+   "harvest": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1237_harvest_0",
+     "CROP_1237_harvest_1",
+     "CROP_1237_harvest_2",
+     "CROP_1237_harvest_3",
+     "CROP_1237_harvest_4",
+     "CROP_1237_harvest_5",
+     "CROP_1237_harvest_6",
+     "CROP_1237_harvest_7"
+    ]
+   },
+   "strange": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1237_strange_0",
+     "CROP_1237_strange_1",
+     "CROP_1237_strange_2",
+     "CROP_1237_strange_3",
+     "CROP_1237_strange_4",
+     "CROP_1237_strange_5",
+     "CROP_1237_strange_6",
+     "CROP_1237_strange_7"
+    ]
+   }
+  }
+ },
+ "1231": {
+  "id": 1231,
+  "prefab": "Gloamroot Seeds",
+  "name_en": "Gloamroot Seeds",
+  "name_es": "Semillas de Raíz Oscura",
+  "dir": "images/crops/1231_GloamrootSeeds",
+  "frameW": 104,
+  "frameH": 285,
+  "pivot": {
+   "x": 0.523077,
+   "y": 0.022105
+  },
+  "ppu": 150.0,
+  "anims": {
+   "stage": {
+    "frames": [
+     "CROP_1231_stage_0",
+     "CROP_1231_stage_1",
+     "CROP_1231_stage_2"
+    ]
+   },
+   "harvest": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1231_harvest_0",
+     "CROP_1231_harvest_1",
+     "CROP_1231_harvest_2",
+     "CROP_1231_harvest_3",
+     "CROP_1231_harvest_4",
+     "CROP_1231_harvest_5",
+     "CROP_1231_harvest_6",
+     "CROP_1231_harvest_7",
+     "CROP_1231_harvest_8"
+    ]
+   },
+   "strange": {
+    "fps": 12,
+    "loopMode": 2,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1231_strange_0",
+     "CROP_1231_strange_1",
+     "CROP_1231_strange_2",
+     "CROP_1231_strange_3",
+     "CROP_1231_strange_4",
+     "CROP_1231_strange_5",
+     "CROP_1231_strange_6",
+     "CROP_1231_strange_7",
+     "CROP_1231_strange_8"
+    ]
+   },
+   "fail": {
+    "fps": 12,
+    "loopMode": null,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1231_fail_0",
+     "CROP_1231_fail_1",
+     "CROP_1231_fail_2",
+     "CROP_1231_fail_3",
+     "CROP_1231_fail_4",
+     "CROP_1231_fail_5",
+     "CROP_1231_fail_6",
+     "CROP_1231_fail_7"
+    ]
+   },
+   "strangefail": {
+    "fps": 12,
+    "loopMode": null,
+    "stopOnLastFrame": false,
+    "frames": [
+     "CROP_1231_strangefail_0",
+     "CROP_1231_strangefail_1",
+     "CROP_1231_strangefail_2",
+     "CROP_1231_strangefail_3",
+     "CROP_1231_strangefail_4",
+     "CROP_1231_strangefail_5",
+     "CROP_1231_strangefail_6",
+     "CROP_1231_strangefail_7"
+    ]
+   }
+  }
+ }
+}

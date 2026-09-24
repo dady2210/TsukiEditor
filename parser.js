@@ -9,10 +9,12 @@ function getDictList(wrap) {
 // Verificado contra 11 pares reales. Ver INFORME §14.
 // ============================================================
 function calcVerificationId(itemId) {
+    const raw = itemId | 0;
+    const id = raw < 0 ? (Math.abs(raw) - 1) : raw;
     const MBIG = 2147483647;
     const MSEED = 161803398;
     const seedArray = new Array(56).fill(0);
-    let mj = MSEED - Math.abs(itemId | 0);
+    let mj = MSEED - id;
     seedArray[55] = mj;
     let mk = 1;
     for (let i = 1; i < 55; i++) {
@@ -339,6 +341,18 @@ class SaveParser {
             if (gNumNode) floor = gNumNode.value;
         }
 
+        // ¿Va encima de otro mueble? `GridPointer.PointerType` (dump.cs, TypeDefIndex 3746)
+        // es Room=0, Placement=1, Invalid=2; cuando es 1, `groupPointer` es el placementID
+        // del mueble que hace de base. De ahí sale el alzado (ver furniture_subgroups.js).
+        let parentPlacementID = null;
+        if (groupPosNode) {
+            const ptNode = findChildRecursive(groupPosNode, ['pointerType']);
+            if (ptNode && Number(ptNode.value) === 1) {
+                const gpNode = findChildRecursive(groupPosNode, ['groupPointer']);
+                if (gpNode && gpNode.value != null) parentPlacementID = Number(gpNode.value);
+            }
+        }
+
         let bedSave = null;
         const furnSaveNode = furnNode.children ? furnNode.children.find(c => c.name === 'furnSave' || c.name === 'FurnSave') : null;
         if (furnSaveNode && furnSaveNode.children) {
@@ -368,7 +382,9 @@ class SaveParser {
             furnNode,
             flipped: !!flipped,
             isWall: !refNode,
-            bedSave
+            bedSave,
+            parentPlacementID,
+            onFurniture: parentPlacementID != null
         });
     }
 
@@ -732,7 +748,18 @@ class SaveParser {
     // Raíz FALTA — helpers genéricos
     _rootNode(name){ return findChildRecursive(this.ast, [name, name.charAt(0).toUpperCase()+name.slice(1)]); }
     getLocation(){ const n=this._rootNode('location'); return n? n.value : undefined; }
-    setLocation(v){ const n=this._rootNode('location'); if(!n) return false; n.value=v|0; return true; }
+    /**
+     * El nodo raiz `location` es el enum `Location` del juego: MV = 0 (la aldea),
+     * Train = 1 (a bordo), GC = 2 (la Gran Ciudad). NO es la sublocacion: vale 0 en
+     * los cuatro saves de prueba, incluido el que se hizo estando en la ciudad.
+     * Se guarda como int64, asi que hay que respetar el BigInt o el writer se atraganta.
+     */
+    setLocation(v){
+        const n=this._rootNode('location'); if(!n) return false;
+        const x = Math.trunc(Number(v)) | 0;
+        n.value = (typeof n.value === 'bigint') ? BigInt(x) : x;
+        return true;
+    }
     getPotGuyStorage(){ const n=this._rootNode('potGuyStorage'); if(!n) return []; const list=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; return list? list.elements.map(e=>e.value||e):[]; }
     getSavedValues(){ const n=this._rootNode('savedValues'); if(!n) return {}; const dict=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; const out={}; (dict?dict.elements:[]).forEach(e=>{ const k=e.key?e.key.value:e.value?.key; const v=e.value?e.value.value:e.value; if(k!=null) out[k]=v; }); return out; }
     setSavedValue(k,v){ const n=this._rootNode('savedValues'); if(!n) return false; let dict=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; if(!dict) return false; let entry=dict.elements.find(e=>(e.key?e.key.value:e.value?.key)==k); if(entry){ const valNode=entry.value?entry.value:entry; if(valNode.value!==undefined) valNode.value=v|0; else if(entry.value) entry.value.value=v|0; } return !!entry; }
@@ -746,7 +773,21 @@ class SaveParser {
 
     applyMapChange(placement, newId, newX, newY, newOrientation, newFloor) {
         if (!placement) return;
-        
+
+        // Los muebles que pone el juego (layoutFurniture) no están en el .csave: no
+        // tienen furnNode que tocar. Sus retoques van a data/layout_overrides.json.
+        if (placement.isLayout) {
+            const DL = (typeof window !== 'undefined') ? window.DefaultLayouts : null;
+            if (!DL) return;
+            if (newId === -1) {
+                // "Borrar" una pieza del juego es ocultarla: el original sigue en los assets.
+                DL.setOverride(placement.cluster, placement.placementID, { hidden: true });
+            } else {
+                DL.applyMove(placement, newX, newY, newOrientation, newFloor);
+            }
+            return;
+        }
+
         const oldId = placement.item_id;
         if (newId !== undefined && newId !== null) placement.item_id = newId;
         if (newX !== undefined && newX !== null) placement.x = newX;
@@ -875,7 +916,9 @@ class SaveParser {
         // B4: Re-parsear para tener links actualizados
         this.parseMap();
         let count = 0;
-        const seedIds = [342, 345, 1208, 1230, 1231, 1232, 1233, 1237, 1238, 1301];
+        // 1301 (caja de cultivo) NO va aquí: no es una semilla y este barrido la habría
+        // borrado del mapa por no tener parcela enlazada.
+        const seedIds = [342, 345, 1208, 1230, 1231, 1232, 1233, 1237, 1238];
         for (const p of this.placements) {
             // Solo borrar seeds SIN link válido a una parcela
             const isSeed = seedIds.includes(p.item_id)
@@ -891,6 +934,93 @@ class SaveParser {
 
 
     // ─── Crops & Validation ──────────────────────────────────────────────
+
+    // ─── Gachapon ────────────────────────────────────────────────────────
+
+    /**
+     * `GachaponSave` del mueble de gacha: lo que el juego guarda de esa máquina.
+     *
+     *     int lastRolledDay      el día de la última reposición de bolas
+     *     int hits               cuántos golpes lleva (Benny se queja a partir de 3)
+     *     GachaBall[] balls      {bool golden, bool used, Vector3 position}
+     *
+     * Devuelve null si el mueble no está en el .csave — que es justo el caso de la
+     * gacha del Ayuntamiento, porque la coloca el layout del juego y no la partida
+     * (ver default_layouts.js). Ahí los golpes se llevan en memoria y no persisten:
+     * no hay nodo en el save donde escribirlos sin inventarse uno.
+     */
+    getGachaponSave(placement) {
+        if (!placement) return null;
+        if (!placement.furnNode) {
+            placement._gachaMem = placement._gachaMem || { hits: 0, lastRolledDay: 0, balls: [] };
+            placement._gachaMem.enMemoria = true;
+            return placement._gachaMem;
+        }
+        const hitsNode = findChildRecursive(placement.furnNode, ['hits', 'Hits']);
+        const dayNode = findChildRecursive(placement.furnNode, ['lastRolledDay', 'LastRolledDay']);
+        const ballsNode = findChildRecursive(placement.furnNode, ['balls', 'Balls']);
+        const lista = ballsNode && ballsNode.children
+            ? ballsNode.children.find(c => c.elements) : (ballsNode && ballsNode.elements ? ballsNode : null);
+        const balls = [];
+        for (const el of ((lista && lista.elements) || [])) {
+            const v = el.value || el;
+            const g = k => findChildRecursive(v, [k]);
+            const pos = g('position');
+            const num = (n, k) => {
+                const c = n && (n.children || []).find(x => x.name === k);
+                return c ? Number(c.value) || 0 : 0;
+            };
+            balls.push({
+                golden: String((g('golden') || {}).value) === 'true',
+                used: String((g('used') || {}).value) === 'true',
+                x: num(pos, 'x'), y: num(pos, 'y'), z: num(pos, 'z'),
+                nodo: v,
+            });
+        }
+        return {
+            hits: hitsNode ? Number(hitsNode.value) || 0 : 0,
+            lastRolledDay: dayNode ? Number(dayNode.value) || 0 : 0,
+            balls,
+            hitsNode, dayNode, ballsNode: lista, enMemoria: false,
+        };
+    }
+
+    /**
+     * Guarda donde han quedado las bolas. `GachaponSave.GachaBall` es
+     * {bool golden, bool used, Vector3 position}, y `Gachapon.SaveBalls()` lo escribe
+     * al soltar la maquina, asi que las posiciones persisten entre sesiones.
+     *
+     * Solo se escriben las bolas que ya existen en el save: crear entradas nuevas
+     * obligaria a inventarse la forma del nodo, y no hace falta para lo que hay.
+     */
+    setGachaponBalls(placement, bolas) {
+        const s = this.getGachaponSave(placement);
+        if (!s) return false;
+        if (s.enMemoria) { s.balls = bolas.map(b => Object.assign({}, b)); return true; }
+        let n = 0;
+        for (let i = 0; i < Math.min(s.balls.length, bolas.length); i++) {
+            const destino = s.balls[i].nodo, origen = bolas[i];
+            if (!destino) continue;
+            const pos = findChildRecursive(destino, ['position']);
+            const poner = (k, v) => {
+                const c = pos && (pos.children || []).find(x => x.name === k);
+                if (c) c.value = Number(v) || 0;
+            };
+            poner('x', origen.x); poner('y', origen.y); poner('z', origen.z || 0);
+            const gd = findChildRecursive(destino, ['golden']);
+            if (gd && typeof gd.value === 'boolean') gd.value = !!origen.golden;
+            n++;
+        }
+        return n > 0;
+    }
+
+    setGachaponHits(placement, n) {
+        const s = this.getGachaponSave(placement);
+        if (!s) return false;
+        if (s.enMemoria) { s.hits = n | 0; return true; }
+        if (s.hitsNode) { s.hitsNode.value = n | 0; s.hits = n | 0; return true; }
+        return false;
+    }
 
     getCropSaveFields(placement) {
         if (!placement || !placement.furnNode) return null;
@@ -1589,122 +1719,108 @@ class SaveParser {
 
     // ─── NPC Friendship (liminalSaves) ───────────────────────────────────
 
-    parseNPCSaves() {
-        this.npcSaves = [];
-        const npcTag = 'NpcID'.length > 0 ? [0x17,0x01,0x05,0x00,0x00,0x00,78,0,112,0,99,0,73,0,68,0] : [];
-        // Search all NpcID instances within liminalSaves blocks
-        const charTag    = this.buildFieldTag(0x1d, 'character');
-        const friendTag  = this.buildFieldTag(0x17, 'friendship');
-        const lastDayTag = this.buildFieldTag(0x17, 'lastFriendshipDay');
-        const lastTalkTag= this.buildFieldTag(0x21, 'lastTalkOA');
-        const pesterTag  = this.buildFieldTag(0x17, 'Pester');
-
-        // Find liminalSaves collection anchor
-        const liminalAnchor = 'liminalSaves'.split('').reduce((arr, c) => {
-            arr.push(c.charCodeAt(0)); arr.push(0); return arr;
-        }, []);
-
-        let start = this.findPattern(liminalAnchor, 0);
-        if (start === -1) start = 0;
-
-        let idx = start;
-        let safety = 0;
-
-        while (safety++ < 200) {
-            // Find next character field
-            const cIdx = this.findPattern(charTag, idx, 3000);
-            if (cIdx === -1) break;
-            const charValOff = cIdx + charTag.length;
-
-            // Read character ID (ULong stored as 8 bytes LE — we read low 4 bytes as int for enum)
-            const charId = this.readInt32(charValOff);
-
-            const range = 800;
-            const fOff = this.findPattern(friendTag, charValOff, range) !== -1
-                ? this.findPattern(friendTag, charValOff, range) + friendTag.length : -1;
-            const ldOff = this.findPattern(lastDayTag, charValOff, range) !== -1
-                ? this.findPattern(lastDayTag, charValOff, range) + lastDayTag.length : -1;
-            const ltOff = this.findPattern(lastTalkTag, charValOff, range) !== -1
-                ? this.findPattern(lastTalkTag, charValOff, range) + lastTalkTag.length : -1;
-            const pOff = this.findPattern(pesterTag, charValOff, range) !== -1
-                ? this.findPattern(pesterTag, charValOff, range) + pesterTag.length : -1;
-
-            if (fOff !== -1 && charId >= 0 && charId <= 99) {
-                this.npcSaves.push({
-                    charId,
-                    friendship: fOff !== -1 ? this.readInt32(fOff) : 0,
-                    lastFriendshipDay: ldOff !== -1 ? this.readInt32(ldOff) : 0,
-                    lastTalkOA: ltOff !== -1 ? this.readFloat64(ltOff) : 0,
-                    pester: pOff !== -1 ? this.readInt32(pOff) : 0,
-                    fOff, ldOff, ltOff, pOff
-                });
-            }
-            idx = charValOff + 1;
-        }
+    /**
+     * Devuelve la lista de elementos de un nodo raiz del save (npcSaves, liminalSaves…).
+     */
+    _listaRaiz(nombre) {
+        if (!this.ast) return [];
+        const n = (this.ast.children || []).find(c => c.name === nombre);
+        const lista = n && n.children && n.children[0];
+        return (lista && lista.elements) ? lista.elements : [];
     }
 
-    setNPCFriendship(npcIndex, newFriendship) {
-        const npc = this.npcSaves[npcIndex];
-        if (!npc || npc.fOff === -1) return false;
-        
-        // AST approach
-        if (this.ast) {
-            const npcSavesNodes = this._findNodesInAST('npcSaves');
-            const npcSavesNode = npcSavesNodes.length > 0 ? npcSavesNodes[0] : null;
-            if (npcSavesNode) {
-                const listNode = npcSavesNode.children[0];
-                if (listNode && listNode.elements) {
-                    for (const el of listNode.elements) {
-                        const val = el.value || el;
-                        if (val && val.children) {
-                            const charNode = val.children.find(c => c.name === 'character');
-                            if (charNode && charNode.value === npc.charId) {
-                                const fNode = val.children.find(c => c.name === 'friendship');
-                                if (fNode) fNode.value = newFriendship;
-                                const ldNode = val.children.find(c => c.name === 'lastFriendshipDay');
-                                if (ldNode) ldNode.value = 0;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    /**
+     * Amistad de los NPC del pueblo.
+     *
+     * Hay DOS listas de personajes en el save y no son intercambiables:
+     *
+     *     npcSaves      35 entradas — los del pueblo. Aqui SI hay amistad (0..50),
+     *                   `lastFriendshipDay` y `lastTalkOA` de verdad.
+     *     liminalSaves  64 entradas — los "liminales" (la ciudad). Su `friendship`
+     *                   esta a 0 en todos; su progreso se lleva por `conditionSaves`.
+     *
+     * Antes esto se leia recorriendo bytes desde el ancla `liminalSaves`, asi que
+     * devolvia los 64 equivocados y todos a cero, mientras `setNPCFriendship`
+     * escribia en el arbol de `npcSaves`: leia de un sitio y escribia en otro. Ahora
+     * se hace sobre el AST, que es donde se guarda de verdad.
+     */
+    parseNPCSaves() {
+        this.npcSaves = [];
+        this.liminalSaves = [];
 
-        this.writeInt32(npc.fOff, newFriendship);
-        npc.friendship = newFriendship;
-        if (npc.ldOff !== -1) { this.writeInt32(npc.ldOff, 0); npc.lastFriendshipDay = 0; }
+        const leer = (nombre, destino) => {
+            for (const el of this._listaRaiz(nombre)) {
+                const val = el.value || el;
+                if (!val || !val.children) continue;
+                const nodo = k => val.children.find(c => c.name === k);
+                const charNode = nodo('character');
+                if (!charNode) continue;
+                destino.push({
+                    charId: Number(charNode.value),
+                    friendship: Number(nodo('friendship')?.value ?? 0),
+                    lastFriendshipDay: Number(nodo('lastFriendshipDay')?.value ?? 0),
+                    lastTalkOA: Number(nodo('lastTalkOA')?.value ?? 0),
+                    pester: Number(findChildRecursive(val, ['Pester', 'pester'])?.value ?? 0),
+                    origen: nombre,
+                    node: val,
+                });
+            }
+        };
+        leer('npcSaves', this.npcSaves);
+        leer('liminalSaves', this.liminalSaves);
+    }
+
+    /** Todos los personajes con ficha, sean del pueblo o liminales. */
+    getAllNPCSaves() {
+        if (!this.npcSaves || !this.npcSaves.length) this.parseNPCSaves();
+        return (this.npcSaves || []).concat(this.liminalSaves || []);
+    }
+
+    /** La ficha de un personaje por su id, mire donde mire. */
+    getNPCSave(charId) {
+        if (!this.npcSaves || !this.npcSaves.length) this.parseNPCSaves();
+        const n = Number(charId);
+        return (this.npcSaves || []).find(x => x.charId === n)
+            || (this.liminalSaves || []).find(x => x.charId === n)
+            || null;
+    }
+
+    _setNPCCampo(npc, campo, valor) {
+        if (!npc || !npc.node || !npc.node.children) return false;
+        const nodo = npc.node.children.find(c => c.name === campo);
+        if (!nodo) return false;
+        nodo.value = valor;
+        npc[campo] = valor;
         return true;
     }
 
+    setNPCFriendship(npcIndex, newFriendship) {
+        const npc = (typeof npcIndex === 'object') ? npcIndex : this.npcSaves[npcIndex];
+        if (!npc) return false;
+        return this._setNPCCampo(npc, 'friendship', newFriendship | 0);
+    }
+
+    setNPCLastTalk(npc, oaDate) {
+        return this._setNPCCampo(npc, 'lastTalkOA', Number(oaDate));
+    }
+
+    setNPCLastFriendshipDay(npc, dia) {
+        return this._setNPCCampo(npc, 'lastFriendshipDay', dia | 0);
+    }
+
+    // `getConditionSaves()` esta mas abajo, sobre la 4340. Aqui habia una segunda
+    // definicion que JS descartaba en silencio —en una clase gana la ultima—, asi que
+    // devolvia `character` y no `charId` y el panel de vecinos veia cero condiciones
+    // en todos los liminales.
+
+    /** `Pester` vive dentro del `activitySave`, no al lado de `friendship`. */
     setNPCPester(npcIndex, pesterValue) {
-        const npc = this.npcSaves[npcIndex];
-        if (!npc || npc.pOff === -1) return false;
-
-        // AST approach
-        if (this.ast) {
-            const npcSavesNodes = this._findNodesInAST('npcSaves');
-            const npcSavesNode = npcSavesNodes.length > 0 ? npcSavesNodes[0] : null;
-            if (npcSavesNode) {
-                const listNode = npcSavesNode.children[0];
-                if (listNode && listNode.elements) {
-                    for (const el of listNode.elements) {
-                        const val = el.value || el;
-                        if (val && val.children) {
-                            const charNode = val.children.find(c => c.name === 'character');
-                            if (charNode && charNode.value === npc.charId) {
-                                const pNode = val.children.find(c => c.name && c.name.toLowerCase() === 'pester');
-                                if (pNode) pNode.value = pesterValue;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        this.writeInt32(npc.pOff, pesterValue);
-        npc.pester = pesterValue;
+        const npc = (typeof npcIndex === 'object') ? npcIndex : this.npcSaves[npcIndex];
+        if (!npc || !npc.node) return false;
+        const pNode = findChildRecursive(npc.node, ['Pester', 'pester']);
+        if (!pNode) return false;
+        pNode.value = pesterValue | 0;
+        npc.pester = pesterValue | 0;
         return true;
     }
 
@@ -1752,10 +1868,18 @@ class SaveParser {
 
         const fields = [
             { name: 'carrots',           marker: 0x17, read: 'int32', write: 'int32' },
-            { name: 'day',               marker: 0x17, read: 'int32', write: 'int32' },
-            { name: 'month',             marker: 0x17, read: 'int32', write: 'int32' },
-            { name: 'season',            marker: 0x17, read: 'int32', write: 'int32' },
-            { name: 'hour',              marker: 0x17, read: 'int32', write: 'int32' },
+            // NO hay `day`, `month`, `season` ni `hour` en el save.
+            //
+            // Se comprobo sobre el arbol: la raiz tiene 101 campos y ninguno es ese. Los
+            // que aparecian eran nodos ANIDADOS de otra cosa —el `day` de un periodico,
+            // el de `parsnapSave`, el `season` de la punchcard, el `hour` de un objeto de
+            // escena—, y `setClock` estaba escribiendo ahi dentro. Silencioso y dañino.
+            //
+            // Tiene sentido: Tsuki Odyssey va con el reloj de verdad, no guarda la fecha.
+            // Lo que si guarda son marcas OA (`gameStartOA`, `lastLegitTimeOA`,
+            // `legitTimeBinary`, que son el anticheat de tiempo). La hora del port sale
+            // del dispositivo y se puede forzar en memoria para previsualizar.
+            { name: 'lastLegitTimeOA',   marker: 0x21, read: 'double', write: 'double' },
             { name: 'ravenChapter',      marker: 0x17, read: 'int32', write: 'int32' },
             { name: 'lastChapterComplete',marker:0x17, read: 'int32', write: 'int32' },
             { name: 'homecomingUpdates', marker: 0x17, read: 'int32', write: 'int32' },
@@ -1767,6 +1891,11 @@ class SaveParser {
             { name: 'fishCaught',        marker: 0x17, read: 'int32', write: 'int32' },
             { name: 'cloversBred',       marker: 0x17, read: 'int32', write: 'int32' },
             { name: 'junkerUsed',        marker: 0x17, read: 'int32', write: 'int32' },
+            // `gameStartOA` es el día en que empezó la partida, y va como DOUBLE con
+            // marcador 0x21, no como los int32 de 0x17. Nunca se leía: había dos ramas
+            // en el parser que preguntaban por él y siempre caían al valor de respaldo.
+            // Comprobado en `save (37).csave`: 46234,3112 -> 2026-07-31.
+            { name: 'gameStartOA',       marker: 0x21, read: 'double', write: 'double' },
             { name: 'startBedtime',      marker: 0x1f, read: 'float', write: 'float' },
             { name: 'endBedtime',        marker: 0x1f, read: 'float', write: 'float' },
         ];
@@ -1779,15 +1908,67 @@ class SaveParser {
                 const value = f.read === 'int32' ? this.readInt32(valOff) :
                               f.read === 'float'  ? this.readFloat32(valOff) :
                               this.readFloat64(valOff);
+                // (el 'double' cae en readFloat64, igual que antes)
                 this.generalVars[f.name] = { value, offset: valOff, type: f.read };
             }
         }
 
-        // Add AST nodes
+        // Enlazar cada variable con SU nodo del arbol.
+        //
+        // Antes se cogia `nodes[0]` a secas, y hay nombres repetidos: `day` aparece DOS
+        // veces en el save (el dia de la partida y otro dentro de una fecha anidada), y
+        // el primero no era el bueno. El efecto era silencioso y feo: `setClock({day})`
+        // escribia en el nodo equivocado, el offset del bufer se parcheaba bien pero
+        // `getBuffer()` serializa el ARBOL, asi que al guardar se perdia el cambio.
+        //
+        // Se desempata con el valor: el nodo bueno es el que coincide con lo leido en el
+        // offset del fichero. Si ninguno coincide se deja el primero, como antes.
         for (const key of Object.keys(this.generalVars)) {
+            const entrada = this.generalVars[key];
             const nodes = this._findNodesInAST(key);
-            if (nodes.length > 0) {
-                this.generalVars[key].astNode = nodes[0];
+            if (!nodes.length) continue;
+            let elegido = nodes[0];
+            if (nodes.length > 1) {
+                const mismo = nodes.find(n => {
+                    if (n.value === undefined || n.value === null) return false;
+                    const a = Number(n.value), b = Number(entrada.value);
+                    if (!isFinite(a) || !isFinite(b)) return false;
+                    return entrada.type === 'int32' ? (a | 0) === (b | 0) : Math.abs(a - b) < 1e-6;
+                });
+                if (mismo) elegido = mismo;
+                else if (this._avisoVars !== false) {
+                    console.warn('[parser] "' + key + '" aparece ' + nodes.length
+                        + ' veces en el arbol y ninguna casa con ' + entrada.value
+                        + '; se usa la primera');
+                }
+            }
+            entrada.astNode = elegido;
+        }
+
+        // Barrido genérico: el resto de primitivas de la raíz.
+        //
+        // La tabla de arriba lista a mano los campos que además necesitan offset en el
+        // búfer (los que se escriben por bytes). Pero el save tiene 65 primitivas en la
+        // raíz —contadores de partidas, estadísticas, ajustes— y listarlas una a una
+        // sería frágil y lento (`findPattern` recorre el búfer entero por cada una).
+        // Aquí se leen todas del AST, que ya está parseado, y se escriben por nodo.
+        //
+        // Marcadores de Odin observados en los saves reales:
+        //     0x17 int32   0x1b int64   0x1d uint   0x1f float   0x21 double   0x2b bool
+        const TIPO_POR_MARCADOR = {
+            0x17: 'int32', 0x1b: 'int64', 0x1d: 'int64',
+            0x1f: 'float', 0x21: 'double', 0x2b: 'bool',
+        };
+        if (this.ast && this.ast.children) {
+            for (const nodo of this.ast.children) {
+                if (!nodo || !nodo.name) continue;
+                if (this.generalVars[nodo.name]) continue;          // ya lo cubre la tabla
+                if (nodo.constructor.name !== 'OdinPrimitive') continue;
+                const tipo = TIPO_POR_MARCADOR[nodo.marker];
+                if (!tipo) continue;
+                this.generalVars[nodo.name] = {
+                    value: nodo.value, type: tipo, offset: -1, astNode: nodo, fromAst: true,
+                };
             }
         }
 
@@ -1824,40 +2005,79 @@ class SaveParser {
         // AST approach
         if (entry.astNode) {
             if (entry.type === 'int32') entry.astNode.value = value | 0;
-            else if (entry.type === 'float') entry.astNode.value = value;
+            // Los int64 del save viajan como BigInt: pasarlos a Number rompe el
+            // reempaquetado, así que se convierten de vuelta.
+            else if (entry.type === 'int64') entry.astNode.value = BigInt(Math.trunc(Number(value)));
+            else if (entry.type === 'float' || entry.type === 'double') entry.astNode.value = Number(value);
             else if (entry.type === 'bool') entry.astNode.value = !!value;
+            else entry.astNode.value = value;
         }
 
+        entry.value = (entry.type === 'bool') ? !!value
+                    : (entry.type === 'int32') ? (value | 0)
+                    : (entry.type === 'int64') ? BigInt(Math.trunc(Number(value)))
+                    : value;
+
         if (entry.offset !== -1) {
-            if (entry.type === 'int32') { this.writeInt32(entry.offset, value | 0); entry.value = value | 0; }
-            else if (entry.type === 'float') { this.writeFloat32(entry.offset, value); entry.value = value; }
-            else if (entry.type === 'bool') { this.writeBool(entry.offset, !!value); entry.value = !!value; }
+            if (entry.type === 'int32') { this.writeInt32(entry.offset, value | 0); }
+            else if (entry.type === 'float') { this.writeFloat32(entry.offset, value); }
+            else if (entry.type === 'double' && typeof this.writeFloat64 === 'function') {
+                this.writeFloat64(entry.offset, Number(value));
+            }
+            else if (entry.type === 'bool') { this.writeBool(entry.offset, !!value); }
         }
         return true;
     }
 
     // ─── Town Clock (P1) ─────────────────────────────────────────────────
 
+    /**
+     * El reloj. Sale del DISPOSITIVO, no del save: el save no guarda la fecha.
+     *
+     * `day` es un dia OA (46287 = 2026-09-22), que es la unidad en la que el juego
+     * guarda sus marcas de tiempo y la que esperan los eventos y las actividades.
+     * `_relojForzado` permite fijarlo a mano para previsualizar sin tocar la partida.
+     */
     getClock() {
-        const gv = this.generalVars || {};
+        const f = this._relojForzado || {};
+        const d = new Date();
+        const mes = f.month !== undefined ? (f.month | 0) : (d.getMonth() + 1);
+        // SeasonID del juego: 0=Verano 1=Otonio 2=Invierno 3=Primavera.
+        const porMes = (mes >= 6 && mes <= 8) ? 0 : (mes >= 9 && mes <= 11) ? 1
+                     : (mes === 12 || mes <= 2) ? 2 : 3;
+        const oaHoy = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000) + 25569;
         return {
-            hour: gv.hour ? gv.hour.value | 0 : 0,
-            minute: this._currentMinute !== undefined ? (this._currentMinute | 0) : (new Date().getMinutes()),
-            day: gv.day ? gv.day.value | 0 : 1,
-            month: gv.month ? gv.month.value | 0 : 1,
-            season: gv.season ? gv.season.value | 0 : 0
+            hour: f.hour !== undefined ? (f.hour | 0) : d.getHours(),
+            minute: f.minute !== undefined ? (f.minute | 0)
+                  : (this._currentMinute !== undefined ? (this._currentMinute | 0) : d.getMinutes()),
+            day: f.day !== undefined ? (f.day | 0) : oaHoy,
+            month: mes,
+            season: f.season !== undefined ? (f.season | 0) : porMes,
         };
     }
 
+    /**
+     * Fija el reloj EN MEMORIA. No escribe en el save, porque el save no tiene donde:
+     * no hay `day`, `month`, `season` ni `hour` entre sus 101 campos de raiz.
+     *
+     * Antes esto llamaba a `writeGeneralVar` con esos cuatro nombres, que resolvian a
+     * nodos anidados de otras cosas: cambiar la hora le cambiaba el dia a un periodico y
+     * la estacion a la punchcard. Devolvia `true` igualmente.
+     *
+     * Para fijar la fecha de inicio de una partida esta `gameStartOA`, que si existe.
+     */
     setClock({ hour, minute, day, month, season }) {
-        let ok = true;
-        if (hour !== undefined) ok = this.writeGeneralVar('hour', hour | 0) && ok;
-        if (minute !== undefined) this._currentMinute = minute | 0;
-        if (day !== undefined) ok = this.writeGeneralVar('day', day | 0) && ok;
-        if (month !== undefined) ok = this.writeGeneralVar('month', month | 0) && ok;
-        if (season !== undefined) ok = this.writeGeneralVar('season', season | 0) && ok;
-        return ok;
+        if (!this._relojForzado) this._relojForzado = {};
+        if (hour !== undefined) this._relojForzado.hour = hour | 0;
+        if (minute !== undefined) { this._relojForzado.minute = minute | 0; this._currentMinute = minute | 0; }
+        if (day !== undefined) this._relojForzado.day = day | 0;
+        if (month !== undefined) this._relojForzado.month = month | 0;
+        if (season !== undefined) this._relojForzado.season = season | 0;
+        return true;
     }
+
+    /** Vuelve al reloj del dispositivo. */
+    soltarReloj() { this._relojForzado = null; this._currentMinute = undefined; }
 
     advanceHour(delta = 1) {
         // Legacy helper — no usado por P1 corregido (hora civil del device).
@@ -2045,7 +2265,9 @@ class SaveParser {
                 let rNode = elements[i].value || elements[i];
                 let typeNode = findChildNode(rNode, ['RewardType', 'rewardType', 'type', 'Type']);
                 let claimNode = findChildNode(rNode, ['claimed', 'Claimed', 'isClaimed']);
-                let modifierNode = findChildNode(rNode, ['modifier', 'Modifier', 'rarity']);
+                // El save escribe `RewardModifier`; sin ese alias el modificador salia
+                // siempre 0 y las recompensas de zanahorias no se entregaban.
+                let modifierNode = findChildNode(rNode, ['RewardModifier', 'modifier', 'Modifier', 'rarity']);
                 
                 rewards.push({
                     index: i,
@@ -2123,7 +2345,7 @@ class SaveParser {
         return results;
     }
 
-    setNewspaperStatus(id, shown, done) {
+    setNewspaperStatus(id, shown, done, day) {
         if (!this.ast) return false;
         const nNode = findChildRecursive(this.ast, ['newspapers']);
         if (!nNode || !nNode.children || nNode.children.length === 0) return false;
@@ -2137,9 +2359,53 @@ class SaveParser {
             if (idNode && idNode.value == id) {
                 const shownNode = findChildRecursive(val, ['shown', 'Shown']);
                 const doneNode = findChildRecursive(val, ['done', 'Done']);
-                if (shownNode) shownNode.value = shown;
-                if (doneNode) doneNode.value = done;
+                const dayNode = findChildRecursive(val, ['day', 'Day']);
+                if (shownNode) shownNode.value = Boolean(shown);
+                if (doneNode) doneNode.value = Boolean(done);
+                if (day !== undefined && dayNode) dayNode.value = Number(day);
                 return true;
+            }
+        }
+
+        // If not found, clone first element to add new newspaper entry
+        if (list.elements.length > 0) {
+            try {
+                const tmpl = list.elements[0].value || list.elements[0];
+                const clone = cloneOdinTree(tmpl);
+                const idNode = findChildRecursive(clone, ['ID', 'id']);
+                const shownNode = findChildRecursive(clone, ['shown', 'Shown']);
+                const doneNode = findChildRecursive(clone, ['done', 'Done']);
+                const dayNode = findChildRecursive(clone, ['day', 'Day']);
+                if (idNode) idNode.value = Number(id);
+                if (shownNode) shownNode.value = Boolean(shown);
+                if (doneNode) doneNode.value = Boolean(done);
+                if (dayNode) dayNode.value = day !== undefined ? Number(day) : 0;
+                list.elements.push(list.elements[0].value !== undefined ? { value: clone } : clone);
+                list.length = list.elements.length;
+                return true;
+            } catch (err) {
+                console.warn('[Parser] Error cloning newspaper entry:', err);
+            }
+        }
+        return false;
+    }
+
+    ensureNewspaperEntry(id, day, shown = true, done = false) {
+        return this.setNewspaperStatus(id, shown, done, day);
+    }
+
+    /** ¿Ya está marcado como visto este periódico? Para no contarlo dos veces. */
+    isNewspaperRead(id) {
+        if (!this.ast) return false;
+        const nNode = findChildRecursive(this.ast, ['newspapers']);
+        const list = nNode && nNode.children && nNode.children[0];
+        if (!list || !list.elements) return false;
+        for (const el of list.elements) {
+            const val = el.value || el;
+            const idNode = findChildRecursive(val, ['ID', 'id']);
+            if (idNode && idNode.value == id) {
+                const shownNode = findChildRecursive(val, ['shown', 'Shown']);
+                return !!(shownNode && shownNode.value);
             }
         }
         return false;
@@ -2225,6 +2491,76 @@ class SaveParser {
         else n.value = 0xFFFFFFFF;
         if (cos.nodes.newColorsNode) cos.nodes.newColorsNode.value = 0;
         return true;
+    }
+
+    /**
+     * El paso del tutorial. `TsukiSave.tutorialStep` (0xDC), un entero.
+     *
+     * No se leia, y es lo que decide mas de lo que parece: las 13 cajas de la Tienda de
+     * Yori son un `TimedObject` con la condicion `Tutorial < 9`, o sea que estan mientras
+     * el tutorial no pasa del paso 9. Y de las 418 condiciones del catalogo de
+     * actividades, 7 son de este tipo y quedaban sin juzgar.
+     *
+     * `Tutorial.IsOver(save)` en el binario lo compara con el paso final; aqui se
+     * devuelve el numero crudo y quien pregunta compara.
+     */
+    getTutorialStep() {
+        if (!this.ast) return 0;
+        const n = findChildRecursive(this.ast, ['tutorialStep', 'TutorialStep']);
+        return n && n.value != null ? (n.value | 0) : 0;
+    }
+
+    setTutorialStep(paso) {
+        if (!this.ast) return false;
+        const n = findChildRecursive(this.ast, ['tutorialStep', 'TutorialStep']);
+        if (!n) return false;
+        n.value = paso | 0;
+        return true;
+    }
+
+    /**
+     * Localiza el nodo LISTA que hay detrás de un campo, esté como esté envuelto.
+     *
+     * Un campo de lista aparece de tres formas en el árbol: el propio nodo es la lista,
+     * la lista cuelga de su `.value`, o cuelga de uno de sus `children`. El resto del
+     * parser resolvía eso a mano en cada sitio; esto lo hace una vez.
+     */
+    _nodoLista(nombre) {
+        const raiz = findChildRecursive(this.ast, Array.isArray(nombre) ? nombre : [nombre]);
+        if (!raiz) return null;
+        if (raiz.elements) return raiz;
+        if (raiz.value && raiz.value.elements) return raiz.value;
+        if (raiz.children) {
+            for (const c of raiz.children) {
+                if (c.elements) return c;
+                if (c.value && c.value.elements) return c.value;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Vacía una lista del save. Devuelve cuántos elementos tenía, o null si no existe.
+     *
+     * Hace falta para la partida nueva: el parser sabía AÑADIR a una lista en seis
+     * sitios distintos pero no quitar. `OdinWriter` escribe `elements.length` al
+     * serializar el array, así que vaciar el array basta; `length` se actualiza igual
+     * para que quien lea el AST en memoria vea lo mismo que se va a escribir.
+     */
+    vaciarLista(nombre) {
+        const lista = this._nodoLista(nombre);
+        if (!lista) return null;
+        const n = lista.elements.length;
+        lista.elements = [];
+        lista.length = 0;
+        if (lista.count !== undefined) lista.count = 0;
+        return n;
+    }
+
+    /** Cuántos elementos tiene una lista, o null si no está en este save. */
+    tamanoLista(nombre) {
+        const lista = this._nodoLista(nombre);
+        return lista ? lista.elements.length : null;
     }
 
     getLocationsOnPhone() {
@@ -3001,6 +3337,58 @@ class SaveParser {
         if (!node) node = this._findNodesInAST('ParsnapSave')[0];
         return { present: !!node, message: node ? 'Presente' : 'No presente en este save.', node };
     }
+
+    /**
+     * Encargos de foto de Parsnap (la app de fotos del teléfono).
+     *
+     *     day          el día en que se sortearon
+     *     bountySlots  cuántos encargos caben a la vez (3 en los saves de prueba)
+     *     bounties[]   {bountyType, bountyID, ticketReward, collected, shiny}
+     *
+     * Es el mismo patrón que el tablón de peces, que ya funciona: hay encargos, se
+     * cumplen y se cobran. `ticketReward` significa que paga con un ticket de gacha
+     * en vez de zanahorias.
+     */
+    getParsnapBounties() {
+        const ps = this.getParsnapSave();
+        if (!ps.present) return { present: false, day: 0, slots: 0, bounties: [] };
+        const node = ps.node;
+        const bNode = findChildRecursive(node, ['bounties', 'Bounties']);
+        const list = bNode && bNode.children
+            ? bNode.children.find(c => c.constructor.name === 'OdinList') : null;
+        const els = list ? resolveListElements(list) : (bNode && bNode.elements ? bNode.elements : []);
+        const bounties = (els || []).map((el, i) => {
+            const v = el.value || el;
+            const g = (...n) => findChildRecursive(v, n);
+            const collectedNode = g('collected', 'Collected');
+            return {
+                index: i,
+                bountyType: g('bountyType', 'BountyType')?.value ?? -1,
+                bountyID: g('bountyID', 'BountyID')?.value ?? -1,
+                ticketReward: !!(g('ticketReward', 'TicketReward')?.value),
+                shiny: !!(g('shiny', 'Shiny')?.value),
+                collected: !!(collectedNode?.value),
+                collectedNode,
+            };
+        });
+        return {
+            present: true,
+            day: findChildRecursive(node, ['day', 'Day'])?.value ?? 0,
+            slots: findChildRecursive(node, ['bountySlots', 'BountySlots'])?.value ?? bounties.length,
+            bounties,
+        };
+    }
+
+    /** Marca un encargo de foto como cobrado. Devuelve lo que paga, o null. */
+    claimParsnapBounty(index) {
+        const st = this.getParsnapBounties();
+        const b = st.bounties[index];
+        if (!b || b.collected || !b.collectedNode) return null;
+        b.collectedNode.value = true;
+        b.collected = true;
+        this.bumpCounter('camBountiesClaimed', 1);
+        return { ticket: b.ticketReward, shiny: b.shiny, bountyID: b.bountyID };
+    }
     // Fase 1: CropBoxSave (id 1301 / CropBox+CropBoxSave) — slots[{cropID,quantity}], carrots caja, OA, LastHarvest 0x2D
     _findCropBoxNode() {
         const p = (this.placements || []).find(x => x.item_id === 1301);
@@ -3043,16 +3431,116 @@ class SaveParser {
         const info = this.getCropBoxSave(); if (!info.present) return false;
         const n = info._nodes.carrotsNode; if (!n) return false; n.value = val|0; return true;
     }
+    addCarrotsToCropBox(amount) {
+        const info = this.getCropBoxSave();
+        if (!info.present) return false;
+        const cur = Number(info.carrots) || 0;
+        return this.setCropBoxCarrots(cur + (amount | 0));
+    }
     setCropBoxSlot(idx, cropID, quantity) {
         const info = this.getCropBoxSave(); if (!info.present || !info.slots[idx]) return false;
         const s = info.slots[idx]; if (cropID!=null) { const c=findChildRecursive(s.node,['cropID','CropID','id']); if(c) c.value=cropID|0; } if (quantity!=null){ const q=findChildRecursive(s.node,['quantity','Quantity']); if(q) q.value=quantity|0; } return true;
     }
+    addCropToCropBox(cropID, quantity = 1) {
+        const info = this.getCropBoxSave();
+        if (!info.present) return false;
+        
+        for (let i = 0; i < info.slots.length; i++) {
+            const s = info.slots[i];
+            if (Number(s.cropID) === Number(cropID)) {
+                const newQty = (Number(s.quantity) || 0) + (quantity | 0);
+                return this.setCropBoxSlot(i, cropID, newQty);
+            }
+        }
+        for (let i = 0; i < info.slots.length; i++) {
+            const s = info.slots[i];
+            if (s.cropID == null || Number(s.cropID) === 0 || Number(s.quantity) <= 0) {
+                return this.setCropBoxSlot(i, cropID, quantity | 0);
+            }
+        }
+        try {
+            const slotsNode = info._nodes.slotsNode;
+            if (slotsNode) {
+                const list = slotsNode.children ? slotsNode.children.find(c => c.constructor.name === 'OdinList') : null;
+                const els = list ? list.elements : (slotsNode.elements || []);
+                const newSlotNode = {
+                    marker: 2,
+                    name: null,
+                    typeName: 'CropBox+CropBoxSave+CropSlot, Odyssey',
+                    children: [
+                        { marker: 23, name: 'cropID', value: cropID | 0 },
+                        { marker: 23, name: 'quantity', value: quantity | 0 }
+                    ]
+                };
+                els.push(newSlotNode);
+                return true;
+            }
+        } catch (_) {}
+        return false;
+    }
+    getPlayerCarrots() {
+        return this.generalVars && this.generalVars['carrots'] ? (Number(this.generalVars['carrots'].value) || 0) : 0;
+    }
+    setPlayerCarrots(val) {
+        if (this.generalVars && this.generalVars['carrots']) {
+            this.generalVars['carrots'].value = Math.max(0, val | 0);
+            return true;
+        }
+        return false;
+    }
+    addPlayerCarrots(amount) {
+        const cur = this.getPlayerCarrots();
+        const next = cur + (amount | 0);
+        this.setPlayerCarrots(next);
+        return next;
+    }
+    transferCropBoxCarrotsToPlayer() {
+        const info = this.getCropBoxSave();
+        if (!info.present) return 0;
+        const carrots = Number(info.carrots) || 0;
+        if (carrots > 0) {
+            this.addPlayerCarrots(carrots);
+            this.setCropBoxCarrots(0);
+        }
+        return carrots;
+    }
+    collectCropBoxAll() {
+        const info = this.getCropBoxSave();
+        if (!info.present) return { carrots: 0, itemsCount: 0 };
+        const carrotsClaimed = this.transferCropBoxCarrotsToPlayer();
+        let itemsClaimed = 0;
+        for (let i = 0; i < info.slots.length; i++) {
+            const s = info.slots[i];
+            const q = Number(s.quantity) || 0;
+            const cId = Number(s.cropID) || 0;
+            if (cId > 0 && q > 0) {
+                try {
+                    this.injectInventoryItem(cId, q, false, 0);
+                    itemsClaimed += q;
+                } catch (e) {
+                    console.warn('Error transfiriendo cultivo a inventario:', e);
+                }
+                this.setCropBoxSlot(i, 0, 0);
+            }
+        }
+        return { carrots: carrotsClaimed, itemsCount: itemsClaimed };
+    }
+    removePlacement(placement) {
+        if (!placement) return false;
+        try {
+            this.applyMapChange(placement, -1, placement.x, placement.y, placement.orientation);
+        } catch (_) {}
+        const idx = (this.placements || []).indexOf(placement);
+        if (idx !== -1) {
+            this.placements.splice(idx, 1);
+        }
+        return true;
+    }
     setCropBoxOA(field, oa) {
         const info=this.getCropBoxSave(); if(!info.present) return false;
         const map={start:'startNode',end:'endNode',last:'lastNode'}; const n=info._nodes[map[field]||field]; if(!n) return false;
-        if (oa==null) { // set to null 0x2D — reemplazar por OdinNull si es posible
+        if (oa==null) {
             if (n.constructor.name==='OdinNull') return true;
-            // convertir a null: cambiar marker y limpiar
             n.constructor = { name:'OdinNull' }; n.value=null; n.marker=0x2d; return true;
         }
         n.value = Number(oa); return true;
@@ -3323,6 +3811,229 @@ class SaveParser {
             node: furnSaveNode
         };
         return true;
+    }
+
+    /**
+     * Pone (o saca) el casete de un reproductor.
+     *
+     * `MusicPlayer` es el mueble 406 y su save es `MusicPlayer+MusicPlayerSave`, que
+     * hereda de `FurnitureSave` y añade un solo campo:
+     *
+     *     placedOA   double   lo que trae FurnitureSave
+     *     musicID    int      el ID DE OBJETO del casete puesto; 0 = vacío
+     *
+     * `musicID` guarda el id del objeto, no el `clipID`: es `LoadMusic(ItemInventorySlot,
+     * MusicPlayer)` quien recibe la ranura del inventario. La pista sale luego de
+     * `Mixtape.bgm.clipID`, y ese puente está en `data/mixtapes.json`.
+     *
+     * Está calcado de `setBedCustomization`, que es el otro mueble con save propio.
+     */
+    setMusicPlayerCassette(placementID, musicID) {
+        if (!this.placements) return false;
+        const p = this.placements.find(item => item.placementID === placementID);
+        if (!p || !p.furnNode) return false;
+
+        const _Node = (typeof OdinNode !== 'undefined') ? OdinNode : ((typeof window !== 'undefined' && window.OdinNode) ? window.OdinNode : (typeof require !== 'undefined' ? require('./Odin/odin_ast').OdinNode : null));
+        const _Prim = (typeof OdinPrimitive !== 'undefined') ? OdinPrimitive : ((typeof window !== 'undefined' && window.OdinPrimitive) ? window.OdinPrimitive : (typeof require !== 'undefined' ? require('./Odin/odin_ast').OdinPrimitive : null));
+        if (!_Node || !_Prim) return false;
+
+        const id = parseInt(musicID, 10) || 0;
+        const node = p.furnNode;
+        if (!node.children) node.children = [];
+        let furnSaveNode = node.children.find(c => c.name === 'furnSave' || c.name === 'FurnSave');
+        if (!furnSaveNode) {
+            furnSaveNode = new _Node(0x01, 'furnSave', 'MusicPlayer+MusicPlayerSave, Odyssey');
+            furnSaveNode.children = [
+                new _Prim(0x21, 'placedOA', dateToOADate(new Date())),
+                new _Prim(0x17, 'musicID', id)
+            ];
+            node.children.push(furnSaveNode);
+        } else {
+            furnSaveNode.typeName = 'MusicPlayer+MusicPlayerSave, Odyssey';
+            if (!furnSaveNode.children) furnSaveNode.children = [];
+            const musicNode = furnSaveNode.children.find(c => c.name === 'musicID');
+            if (musicNode) musicNode.value = id;
+            else furnSaveNode.children.push(new _Prim(0x17, 'musicID', id));
+        }
+
+        p.musicPlayerSave = { musicID: id, node: furnSaveNode };
+        return true;
+    }
+
+    /**
+     * El nodo de la puerta corredera de la Casa de Moca.
+     *
+     * `SceneDoor.DoorSave : SceneObjectSave { bool open }` vive en
+     * `sublocations[...].sceneObjectSaves`, y en el save hay EXACTAMENTE UNO: el juego
+     * solo tiene una `SceneDoor`. Por eso se busca por nombre de tipo y no por
+     * `objectID`, que en las partidas miradas es 1626592435 pero no hay por qué fiarse
+     * de que sea el mismo siempre.
+     */
+    _nodoPuerta() {
+        if (!this.ast) return null;
+        let encontrado = null;
+        const visitar = (n, prof) => {
+            if (!n || encontrado || prof > 12) return;
+            if (typeof n.typeName === 'string' && n.typeName.indexOf('DoorSave') >= 0) {
+                encontrado = n;
+                return;
+            }
+            (n.children || []).forEach(c => visitar(c, prof + 1));
+            (n.elements || []).forEach(c => visitar(c, prof + 1));
+            if (n.value && typeof n.value === 'object') visitar(n.value, prof + 1);
+        };
+        visitar(this.ast, 0);
+        return encontrado;
+    }
+
+    /** ¿Está abierta la puerta corredera? null si el save no la trae. */
+    getSceneDoorOpen() {
+        const n = this._nodoPuerta();
+        if (!n || !n.children) return null;
+        const c = n.children.find(x => x.name === 'open');
+        return c ? !!c.value : null;
+    }
+
+    /** La abre o la cierra en el save. */
+    setSceneDoorOpen(abierta) {
+        const n = this._nodoPuerta();
+        if (!n || !n.children) return false;
+        const c = n.children.find(x => x.name === 'open');
+        if (!c) return false;
+        c.value = !!abierta;
+        return true;
+    }
+
+    // ── LO RECOGIDO DE LA ESCENA, QUE SI SE GUARDA ─────────────────────
+    //
+    // `SceneObjects` llevaba lo recogido en un `Set` en memoria: al recargar la partida,
+    // los huevos y los montones de nieve volvian a estar. El juego SI lo guarda:
+    //
+    //     public class SeededSceneObject.SeededObjectSave : SceneObjectSave {
+    //         public int objectID;        // heredado
+    //         public bool inactive;       // recogido
+    //         public int inactiveSeed;    // con que semilla se recogio
+    //     }
+    //
+    // dentro de `sublocations[<sala>].sceneObjectSaves`. La semilla es la del dia, y por
+    // eso lo recogido vuelve manana sin que nadie lo borre: cambia la semilla y la marca
+    // deja de valer. En un save real hay cinco de estos, junto a los `TimedObjectSave`,
+    // los `ShopSave` y el `DoorSave`.
+
+    /** El nodo `sceneObjectSaves` de una sala, y su lista. null si la sala no esta. */
+    _nodoObjetosDeEscena(sublocId) {
+        if (!this.ast) return null;
+        const w = this.ast.children.find(c => c.name === 'sublocations');
+        if (!w || !w.children) return null;
+        const lista = w.children.find(c => c.elements);
+        if (!lista) return null;
+        for (const e of lista.elements) {
+            const k = Number(e.key && e.key.value !== undefined ? e.key.value : e.key);
+            if (k !== Number(sublocId)) continue;
+            const v = e.value || e;
+            const s = (v.children || []).find(c => c.name === 'sceneObjectSaves');
+            if (!s || !s.children) return null;
+            const l = s.children.find(c => c.elements);
+            return l ? { nodo: s, lista: l } : null;
+        }
+        return null;
+    }
+
+    /** Lo que hay guardado de la escena en esa sala. */
+    getSceneObjectSaves(sublocId) {
+        const r = this._nodoObjetosDeEscena(sublocId);
+        if (!r) return [];
+        return r.lista.elements.map((el, i) => {
+            const v = el.value || el;
+            const campo = (n) => (v.children || []).find(c => c.name === n);
+            const id = campo('objectID');
+            return {
+                indice: i,
+                tipo: v.typeName || '',
+                objectID: id ? Number(id.value) : null,
+                nodo: v,
+            };
+        });
+    }
+
+    /**
+     * Marca un objeto de escena como recogido, o lo desmarca.
+     *
+     * Si no hay entrada para ese `objectID` se crea. Crearla necesita el nombre COMPLETO
+     * del tipo tal y como lo escribe Odin —`SeededSceneObject+SeededObjectSave,
+     * Odyssey`— porque es lo que el juego espera leer; el `typeId` da igual mientras no
+     * choque, ya que el escritor emite el nombre la primera vez que ve uno nuevo y el
+     * lector lo registra al vuelo. Se clona el de una entrada existente cuando la hay,
+     * que es mas seguro que elegirlo.
+     */
+    setSeededObjectRecogido(sublocId, objectID, recogido, semilla) {
+        const r = this._nodoObjetosDeEscena(sublocId);
+        if (!r) return false;
+        const TIPO = 'SeededSceneObject+SeededObjectSave, Odyssey';
+
+        let destino = null;
+        for (const el of r.lista.elements) {
+            const v = el.value || el;
+            if ((v.typeName || '') !== TIPO) continue;
+            const id = (v.children || []).find(c => c.name === 'objectID');
+            if (id && Number(id.value) === Number(objectID)) { destino = v; break; }
+        }
+
+        if (!destino) {
+            // El typeId: el de otro `SeededObjectSave` del save si lo hay; si no, uno
+            // por encima de todos los que ya existen, que no puede chocar.
+            let typeId = null, maxTipo = 0, maxNodo = 0;
+            const mirar = (n) => {
+                if (!n) return;
+                if (typeof n.typeId === 'number') {
+                    if (n.typeId > maxTipo) maxTipo = n.typeId;
+                    if (typeId === null && n.typeName === TIPO) typeId = n.typeId;
+                }
+                if (typeof n.nodeId === 'number' && n.nodeId > maxNodo) maxNodo = n.nodeId;
+                for (const c of (n.children || [])) mirar(c);
+                for (const e of (n.elements || [])) { mirar(e.value || e); mirar(e.key); }
+            };
+            mirar(this.ast);
+            if (typeId === null) typeId = maxTipo + 1;
+
+            // El `nodeId` tiene que ser UNICO entre los nodos de referencia: si se repite,
+            // una referencia interna apuntaria a dos sitios. Se sigue contando desde el
+            // mayor que haya, y se recuerda para el siguiente que se cree.
+            if (this._siguienteNodeId === undefined || this._siguienteNodeId <= maxNodo) {
+                this._siguienteNodeId = maxNodo;
+            }
+            this._siguienteNodeId += 1;
+
+            destino = new OdinNode(0x02, null, typeId, TIPO, this._siguienteNodeId);
+            destino.children = [
+                new OdinPrimitive(0x17, 'objectID', Number(objectID)),
+                new OdinPrimitive(0x2B, 'inactive', false),
+                new OdinPrimitive(0x17, 'inactiveSeed', 0),
+            ];
+            r.lista.elements.push(destino);
+            r.lista.length = r.lista.elements.length;
+        }
+
+        const pon = (nombre, valor) => {
+            const c = (destino.children || []).find(x => x.name === nombre);
+            if (c) c.value = valor;
+        };
+        pon('inactive', !!recogido);
+        if (semilla !== undefined) pon('inactiveSeed', Number(semilla) | 0);
+        return true;
+    }
+
+    /** ¿Esta recogido? Devuelve `{ recogido, semilla }` o null si no hay entrada. */
+    getSeededObjectRecogido(sublocId, objectID) {
+        const TIPO = 'SeededSceneObject+SeededObjectSave, Odyssey';
+        for (const o of this.getSceneObjectSaves(sublocId)) {
+            if (o.tipo !== TIPO || Number(o.objectID) !== Number(objectID)) continue;
+            const campo = (n) => (o.nodo.children || []).find(c => c.name === n);
+            const inact = campo('inactive'), sem = campo('inactiveSeed');
+            return { recogido: inact ? !!inact.value : false,
+                     semilla: sem ? Number(sem.value) : 0 };
+        }
+        return null;
     }
 
     getTripSave() {
@@ -3980,6 +4691,50 @@ class SaveParser {
         return false;
     }
 
+    /**
+     * Estado de un temporizador: cuánto le falta y si ya terminó.
+     *
+     * `startTime` es una fecha OLE Automation (días desde 1899-12-30) y
+     * `minutesActive` lo que dura. Son los cronómetros de "esto estará listo en
+     * tantas horas": ampliaciones de la casa, reparaciones... En los saves de prueba
+     * el único es `Home2Construction`, de 1440 minutos, que es el que levanta el piso
+     * extra de la Casa del Árbol.
+     */
+    getTempTimerStatus(idStr) {
+        const t = this.getTempTimers().find(x => x.id === idStr);
+        if (!t) return null;
+        const ahoraOA = (Date.now() / 86400000) + 25569;      // epoch -> OLE Automation
+        const finOA = Number(t.startTime) + (Number(t.minutesActive) || 0) / 1440;
+        const faltanMin = Math.round((finOA - ahoraOA) * 1440);
+        return {
+            id: t.id,
+            startTime: Number(t.startTime),
+            minutesActive: Number(t.minutesActive) || 0,
+            minutesLeft: Math.max(0, faltanMin),
+            done: faltanMin <= 0,
+        };
+    }
+
+    /** Todos los temporizadores con su estado, para pintarlos de un vistazo. */
+    getAllTempTimerStatus() {
+        return this.getTempTimers()
+            .map(t => this.getTempTimerStatus(t.id))
+            .filter(Boolean);
+    }
+
+    /**
+     * Despliega o repliega el piso extra de la Casa del Árbol.
+     * El interruptor real es `sublocations[0].currSLocData`; `homecomingUpdates` NO
+     * lo es (es el número de tandas de contenido publicadas).
+     */
+    setHomecoming(activo) {
+        return this.setHomeCurrSLocData(activo ? 1 : 0);
+    }
+
+    isHomecomingActive() {
+        return Number(this.getHomeCurrSLocData()) === 1;
+    }
+
     maxAllCollection(allIdsArray) {
         const colNodes = this._findNodesInAST('collection');
         if (colNodes.length === 0 || !colNodes[0].children) return false;
@@ -4007,17 +4762,97 @@ class SaveParser {
         if (!listNode) return [];
         
         const elements = resolveListElements(listNode);
+        // `character` viene como BigInt del arbol Odin, asi que hay que normalizarlo o
+        // cualquier comparacion con un numero falla.
+        const num = v => (v === undefined || v === null) ? -1 : Number(v);
         return elements.map((el, i) => {
             const val = el.value || el;
+            const character = num(findChildRecursive(val, ['character'])?.value);
+            const conditionID = num(findChildRecursive(val, ['conditionID'])?.value);
             return {
                 index: i,
                 astNode: val,
-                character: findChildRecursive(val, ['character'])?.value,
-                conditionID: findChildRecursive(val, ['conditionID'])?.value,
-                level: findChildRecursive(val, ['level'])?.value,
-                dateFulfilled: findChildRecursive(val, ['dateFulfilled'])?.value
+                character,
+                conditionID,
+                level: num(findChildRecursive(val, ['level'])?.value),
+                dateFulfilled: num(findChildRecursive(val, ['dateFulfilled'])?.value),
+                // Alias para quien lo llama desde npc_system.js.
+                charId: character,
+                node: val,
             };
         });
+    }
+
+    /**
+     * Enciende una condicion de NPC, copiando `NPCCondition.Fulfill()`:
+     *
+     *     var save = get_Save();
+     *     if (save != null) { save.Renew(); return save; }   // Renew: fecha = ahora, level += 1
+     *     conditionSaves.Add(new NPCConditionSave(this));    // nueva, level = 1
+     *
+     * O sea que `level` NO es un rango 0..n sino LAS VECES que se ha cumplido: por eso
+     * Draper tiene 46 en `ShownAd` y Camille 84.
+     *
+     * El `conditionID` es el indice dentro del array `conditions` de ese personaje
+     * (ver data/npc_conditions.json y NPCCondition.get_ID()).
+     */
+    fulfillNPCCondition(charId, conditionID, ahoraOA) {
+        if (!this.ast) return null;
+        const cNodes = this._findNodesInAST('conditionSaves');
+        if (!cNodes.length || !cNodes[0].children) return null;
+        const listNode = cNodes[0].children.find(c => c.marker === 0x06 || c.elements);
+        if (!listNode || !listNode.elements) return null;
+
+        const char_ = Number(charId);
+        const cond = Number(conditionID);
+        const fecha = (ahoraOA != null) ? Number(ahoraOA)
+                                        : (Date.now() / 86400000) + 25569;
+
+        // Los campos no son todos del mismo tipo: `character` viene como BigInt del
+        // arbol Odin y los demas como numero. Se respeta el tipo que ya tenia el nodo
+        // o el writer escribe basura.
+        const poner = (nodo, valor) => {
+            if (!nodo) return;
+            nodo.value = (typeof nodo.value === 'bigint')
+                ? BigInt(Math.trunc(valor)) : valor;
+        };
+
+        for (const el of listNode.elements) {
+            const v = el.value || el;
+            const nC = findChildRecursive(v, ['character']);
+            const nI = findChildRecursive(v, ['conditionID']);
+            if (!nC || !nI) continue;
+            if (Number(nC.value) !== char_ || Number(nI.value) !== cond) continue;
+            // Ya existe: Renew().
+            const nL = findChildRecursive(v, ['level']);
+            const nD = findChildRecursive(v, ['dateFulfilled']);
+            poner(nL, (Number(nL && nL.value) || 0) + 1);
+            poner(nD, fecha);
+            return { creada: false, charId: char_, conditionID: cond,
+                     level: Number(nL && nL.value) || 1 };
+        }
+
+        // No existe: hay que clonar una entrada para no inventarse la forma del nodo.
+        if (!listNode.elements.length) return null;
+        let maxNodeId = 10000;
+        const buscarMax = n => {
+            if (!n || typeof n !== 'object') return;
+            if (n.nodeId && n.nodeId > maxNodeId) maxNodeId = n.nodeId;
+            if (n.children) n.children.forEach(buscarMax);
+            if (n.elements) n.elements.forEach(buscarMax);
+        };
+        buscarMax(this.ast);
+
+        const clone = this._deepCloneOdin(listNode.elements[0]);
+        clone.nodeId = ++maxNodeId;
+        const cv = clone.value || clone;
+        poner(findChildRecursive(cv, ['character']), char_);
+        poner(findChildRecursive(cv, ['conditionID']), cond);
+        poner(findChildRecursive(cv, ['level']), 1);
+        poner(findChildRecursive(cv, ['dateFulfilled']), fecha);
+        listNode.elements.push(clone);
+        listNode.length = listNode.elements.length;
+        return { creada: true, charId: char_, conditionID: cond, level: 1 };
     }
 
     unlockAllNPCConditions(maxLevel = 3) {
@@ -4131,6 +4966,379 @@ class SaveParser {
         }
         listNode.length = listNode.elements.length;
         return added;
+    }
+
+    getShopSaves() {
+        if (!this.ast) return [];
+        const sublocsWrapper = this.ast.children.find(c => c.name === 'sublocations');
+        if (!sublocsWrapper) return [];
+        const sublocsList = sublocsWrapper.children ? sublocsWrapper.children.find(c => c.elements) : null;
+        if (!sublocsList) return [];
+
+        const shops = [];
+        for (const entry of sublocsList.elements) {
+            const sublocId = Number(entry.key.value !== undefined ? entry.key.value : entry.key);
+            const sNode = entry.value.children ? entry.value.children.find(c => c.name === 'sceneObjectSaves') : null;
+            if (!sNode) continue;
+            const sList = sNode.children ? sNode.children.find(c => c.elements) : null;
+            if (!sList) continue;
+
+            let shopIdx = 0;
+            for (const obj of sList.elements) {
+                const typeName = obj.typeName || '';
+                if (typeName.includes('ShopSave')) {
+                    const props = {};
+                    for (const ch of obj.children || []) {
+                        props[ch.name] = ch;
+                    }
+                    
+                    const displays = [];
+                    const dSavesNode = props.displaySaves;
+                    const dList = dSavesNode?.children?.[0]?.elements || [];
+                    for (let dIndex = 0; dIndex < dList.length; dIndex++) {
+                        const dObj = dList[dIndex];
+                        const dChildren = {};
+                        for (const dc of dObj.children || []) {
+                            dChildren[dc.name] = dc;
+                        }
+                        const itemProps = {};
+                        for (const ic of dChildren.shopItem?.children || []) {
+                            itemProps[ic.name] = ic.value;
+                        }
+
+                        displays.push({
+                            index: dIndex,
+                            dataID: dChildren.dataID ? Number(dChildren.dataID.value) : 0,
+                            itemId: itemProps.id !== undefined ? Number(itemProps.id) : 0,
+                            verification: itemProps.verification !== undefined ? Number(itemProps.verification) : 0,
+                            quantity: itemProps.quantity !== undefined ? Number(itemProps.quantity) : 1,
+                            bought: Boolean(dChildren.bought ? dChildren.bought.value : false),
+                            empty: Boolean(dChildren.empty ? dChildren.empty.value : false),
+                            rerolled: Boolean(dChildren.rerolled ? dChildren.rerolled.value : false),
+                            _node: dObj
+                        });
+                    }
+
+                    let lastRolled = [];
+                    const lrNode = props.lastRolledItems?.children?.[0];
+                    if (lrNode) {
+                        if (lrNode.rawData && lrNode.rawData.buffer) {
+                            const ints = new Int32Array(lrNode.rawData.buffer, lrNode.rawData.byteOffset, lrNode.numElements);
+                            lastRolled = Array.from(ints);
+                        } else if (lrNode.elements) {
+                            lastRolled = lrNode.elements.map(e => Number(e.value !== undefined ? e.value : e));
+                        }
+                    }
+
+                    shops.push({
+                        sublocId,
+                        shopIdx,
+                        shopkeeper: props.shopkeeper ? Number(props.shopkeeper.value) : 0,
+                        date: props.date ? Number(props.date.value) : 0,
+                        hour: props.hour ? Number(props.hour.value) : 0,
+                        lastRolledItems: lastRolled,
+                        shopkeeperCash: props.shopkeeperCash ? Number(props.shopkeeperCash.value) : 0,
+                        displays,
+                        _node: obj
+                    });
+                    shopIdx++;
+                }
+            }
+        }
+        return shops;
+    }
+
+    setShopSave(sublocId, shopIdx, data) {
+        const shops = this.getShopSaves();
+        const target = shops.find(s => s.sublocId === sublocId && s.shopIdx === shopIdx);
+        if (!target || !target._node) return false;
+
+        const obj = target._node;
+        const props = {};
+        for (const ch of obj.children || []) {
+            props[ch.name] = ch;
+        }
+
+        if (data.hour !== undefined && props.hour) props.hour.value = Number(data.hour);
+        if (data.date !== undefined && props.date) props.date.value = Number(data.date);
+        if (data.shopkeeper !== undefined && props.shopkeeper) props.shopkeeper.value = typeof props.shopkeeper.value === 'bigint' ? BigInt(data.shopkeeper) : data.shopkeeper;
+        if (data.shopkeeperCash !== undefined && props.shopkeeperCash) props.shopkeeperCash.value = Number(data.shopkeeperCash);
+
+        if (Array.isArray(data.lastRolledItems) && props.lastRolledItems) {
+            const lrNode = props.lastRolledItems.children?.[0];
+            if (lrNode) {
+                if (lrNode.rawData !== undefined) {
+                    const u8 = new Uint8Array(data.lastRolledItems.length * 4);
+                    const i32 = new Int32Array(u8.buffer);
+                    data.lastRolledItems.forEach((v, idx) => i32[idx] = Number(v));
+                    lrNode.rawData = u8;
+                    lrNode.numElements = data.lastRolledItems.length;
+                    lrNode.bytesPerElement = 4;
+                } else if (lrNode.elements) {
+                    if (lrNode.elements.length > 0) {
+                        const tmpl = lrNode.elements[0];
+                        lrNode.elements = data.lastRolledItems.map(val => {
+                            const copy = this._deepCloneOdin ? this._deepCloneOdin(tmpl) : { ...tmpl };
+                            copy.value = Number(val);
+                            return copy;
+                        });
+                    } else {
+                        lrNode.elements = data.lastRolledItems.map(val => ({
+                            marker: 0x17,
+                            value: Number(val)
+                        }));
+                    }
+                    lrNode.length = lrNode.elements.length;
+                }
+            }
+        }
+
+        if (Array.isArray(data.displays) && props.displaySaves) {
+            const dList = props.displaySaves.children?.[0]?.elements || [];
+            for (let i = 0; i < data.displays.length && i < dList.length; i++) {
+                const src = data.displays[i];
+                const dObj = dList[i];
+                const dChildren = {};
+                for (const dc of dObj.children || []) dChildren[dc.name] = dc;
+
+                if (src.bought !== undefined && dChildren.bought) dChildren.bought.value = Boolean(src.bought);
+                if (src.empty !== undefined && dChildren.empty) dChildren.empty.value = Boolean(src.empty);
+                if (src.rerolled !== undefined && dChildren.rerolled) dChildren.rerolled.value = Boolean(src.rerolled);
+
+                if (dChildren.shopItem && dChildren.shopItem.children) {
+                    for (const ic of dChildren.shopItem.children) {
+                        if (ic.name === 'id' && src.itemId !== undefined) ic.value = Number(src.itemId);
+                        if (ic.name === 'verification' && src.verification !== undefined) ic.value = Number(src.verification);
+                        if (ic.name === 'quantity' && src.quantity !== undefined) ic.value = Number(src.quantity);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    getJunkerSave() {
+        if (!this.ast) return null;
+        const sublocsWrapper = this.ast.children.find(c => c.name === 'sublocations');
+        if (!sublocsWrapper) return null;
+        const sublocsList = sublocsWrapper.children ? sublocsWrapper.children.find(c => c.elements) : null;
+        if (!sublocsList) return null;
+
+        const dawnEntry = sublocsList.elements.find(e => Number(e.key.value !== undefined ? e.key.value : e.key) === 11);
+        if (!dawnEntry) return null;
+        const sNode = dawnEntry.value.children ? dawnEntry.value.children.find(c => c.name === 'sceneObjectSaves') : null;
+        if (!sNode) return null;
+        const sList = sNode.children ? sNode.children.find(c => c.elements) : null;
+        if (!sList) return null;
+
+        const junkerObj = sList.elements.find(o => (o.typeName || '').includes('JunkerSave'));
+        if (!junkerObj) return null;
+
+        const props = {};
+        for (const ch of junkerObj.children || []) {
+            props[ch.name] = ch;
+        }
+
+        const brokenNodes = [];
+        const bnNode = props.brokenNodes?.children?.[0];
+        if (bnNode) {
+            if (bnNode.rawData) {
+                for (let i = 0; i < bnNode.numElements; i++) {
+                    brokenNodes.push(Boolean(bnNode.rawData[i]));
+                }
+            } else if (bnNode.elements) {
+                for (const bne of bnNode.elements) {
+                    brokenNodes.push(Boolean(bne.value !== undefined ? bne.value : bne));
+                }
+            }
+        }
+        while (brokenNodes.length < 3) brokenNodes.push(false);
+
+        const junkerUsedNode = this.ast.children.find(c => c.name === 'junkerUsed');
+
+        return {
+            objectID: props.objectID ? Number(props.objectID.value) : 1364397954,
+            day: props.day ? Number(props.day.value) : 0,
+            brokenNodes,
+            invType: props.invType ? Number(props.invType.value) : 0,
+            craftedItem: props.craftedItem ? Number(props.craftedItem.value) : -1,
+            quantity: props.quantity ? Number(props.quantity.value) : 1,
+            verification: props.verification ? Number(props.verification.value) : 0,
+            busted: brokenNodes.some(b => b === true) || Boolean(junkerUsedNode?.value > 50),
+            _node: junkerObj
+        };
+    }
+
+    setJunkerSave(data) {
+        const junker = this.getJunkerSave();
+        if (!junker || !junker._node) return false;
+
+        const props = {};
+        for (const ch of junker._node.children || []) props[ch.name] = ch;
+
+        if (data.day !== undefined && props.day) props.day.value = Number(data.day);
+        if (data.craftedItem !== undefined && props.craftedItem) props.craftedItem.value = Number(data.craftedItem);
+        if (data.quantity !== undefined && props.quantity) props.quantity.value = Number(data.quantity);
+        if (data.verification !== undefined && props.verification) props.verification.value = Number(data.verification);
+        if (data.invType !== undefined && props.invType) props.invType.value = Number(data.invType);
+
+        if (Array.isArray(data.brokenNodes) && props.brokenNodes) {
+            const bnNode = props.brokenNodes.children?.[0];
+            if (bnNode) {
+                if (bnNode.rawData !== undefined) {
+                    const u8 = new Uint8Array(data.brokenNodes.length);
+                    data.brokenNodes.forEach((v, idx) => u8[idx] = v ? 1 : 0);
+                    bnNode.rawData = u8;
+                    bnNode.numElements = data.brokenNodes.length;
+                    bnNode.bytesPerElement = 1;
+                } else if (bnNode.elements) {
+                    bnNode.elements = data.brokenNodes.map(val => ({
+                        marker: 0x14,
+                        value: Boolean(val)
+                    }));
+                    bnNode.length = bnNode.elements.length;
+                }
+            }
+        }
+        return true;
+    }
+
+    // --- Módulo 5: Bounty Board Save & Inventory Helpers ---
+    getBountyBoardSave() {
+        if (!this.ast) return null;
+        const sublocsWrapper = this.ast.children?.find(c => c.name === 'sublocations');
+        if (!sublocsWrapper) return null;
+        const sublocsList = sublocsWrapper.children?.find(c => c.elements);
+        if (!sublocsList) return null;
+
+        for (const entry of sublocsList.elements) {
+            const sublocId = Number(entry.key?.value !== undefined ? entry.key.value : entry.key);
+            if (sublocId !== 8) continue; // Town Hall is sublocation 8
+            const sNode = entry.value?.children?.find(c => c.name === 'sceneObjectSaves');
+            if (!sNode) continue;
+            const sList = sNode.children?.find(c => c.elements);
+            if (!sList) continue;
+
+            for (const obj of sList.elements) {
+                const node = obj.value || obj;
+                if (node.typeName && node.typeName.includes('BountyBoardSave')) {
+                    const bSaves = findChildRecursive(node, ['bountySaves']);
+                    const rDate = findChildRecursive(node, ['rollDate']);
+                    const bList = bSaves?.children?.find(c => c.elements) || (bSaves?.elements ? bSaves : null);
+                    const items = [];
+                    if (bList && bList.elements) {
+                        for (const bEl of bList.elements) {
+                            const bv = bEl.value || bEl;
+                            const fIdNode = findChildRecursive(bv, ['fishID', 'id']);
+                            const clNode = findChildRecursive(bv, ['claimed']);
+                            items.push({
+                                fishID: fIdNode ? Number(fIdNode.value) : 0,
+                                claimed: clNode ? Boolean(clNode.value) : false,
+                                node: bv,
+                                fIdNode,
+                                claimedNode: clNode
+                            });
+                        }
+                    }
+                    return {
+                        present: true,
+                        rollDate: rDate ? Number(rDate.value) : 0,
+                        bounties: items,
+                        node,
+                        bSavesNode: bSaves,
+                        rollDateNode: rDate
+                    };
+                }
+            }
+        }
+        return null;
+    }
+
+    setBountyClaimed(fishId) {
+        const board = this.getBountyBoardSave();
+        if (!board || !board.bounties) return false;
+        const target = board.bounties.find(b => Number(b.fishID) === Number(fishId));
+        if (!target) return false;
+        if (target.claimedNode) {
+            target.claimedNode.value = true;
+            target.claimed = true;
+            return true;
+        }
+        return false;
+    }
+
+    saveBountyBoardState(rollDate, bounties) {
+        let board = this.getBountyBoardSave();
+        if (board) {
+            if (board.rollDateNode) board.rollDateNode.value = Number(rollDate);
+            board.rollDate = Number(rollDate);
+            if (board.bounties && board.bounties.length >= bounties.length) {
+                bounties.forEach((b, idx) => {
+                    if (board.bounties[idx]) {
+                        if (board.bounties[idx].fIdNode) board.bounties[idx].fIdNode.value = Number(b.fishID);
+                        if (board.bounties[idx].claimedNode) board.bounties[idx].claimedNode.value = Boolean(b.claimed);
+                        board.bounties[idx].fishID = Number(b.fishID);
+                        board.bounties[idx].claimed = Boolean(b.claimed);
+                    }
+                });
+            }
+            return true;
+        }
+        return false;
+    }
+
+    deductInventoryItem(itemId, qty = 1) {
+        if (!this.inventory || !this.inventory.length) this.parseInventory();
+        let remaining = Number(qty);
+        for (let i = 0; i < this.inventory.length && remaining > 0; i++) {
+            const slot = this.inventory[i];
+            if (slot.item_id === Number(itemId) && slot.qty > 0) {
+                if (slot.qty > remaining) {
+                    this.updateInventoryItem('inventory', i, slot.item_id, slot.qty - remaining, slot.invType);
+                    remaining = 0;
+                } else {
+                    remaining -= slot.qty;
+                    this.clearInventoryItem('inventory', i);
+                }
+            }
+        }
+        return remaining === 0;
+    }
+
+    addCarrots(qty) {
+        const current = this.generalVars?.carrots?.value !== undefined ? Number(this.generalVars.carrots.value) : 0;
+        const delta = Number(qty) || 0;
+        const newTotal = Math.max(0, current + delta);
+        this.writeGeneralVar('carrots', newTotal);
+        if (this.generalVars && this.generalVars.carrots) {
+            this.generalVars.carrots.value = newTotal;
+        }
+        // El juego lleva el total ganado y el gastado por separado del saldo.
+        if (delta > 0) this.bumpCounter('carrotsEarned', delta);
+        else if (delta < 0) this.bumpCounter('carrotsSpent', -delta);
+        return newTotal;
+    }
+
+    /**
+     * Suma a un contador de partida (`carrotsSpent`, `fishCaught`, `harvestTimes`…).
+     *
+     * El save lleva 49 de estos y hasta ahora no se tocaban: el saldo de zanahorias
+     * cambiaba pero "zanahorias ganadas" se quedaba quieto, así que las estadísticas
+     * y todo lo que dependa de ellas se iban desviando. Si el contador no existe en
+     * este save no se inventa nada: se ignora.
+     */
+    bumpCounter(name, delta = 1) {
+        const e = this.generalVars && this.generalVars[name];
+        if (!e) return null;
+        const actual = Number(e.value) || 0;
+        const nuevo = Math.max(0, actual + (Number(delta) || 0));
+        this.writeGeneralVar(name, nuevo);
+        return nuevo;
+    }
+
+    getCounter(name) {
+        const e = this.generalVars && this.generalVars[name];
+        return e ? Number(e.value) || 0 : 0;
     }
 
 }

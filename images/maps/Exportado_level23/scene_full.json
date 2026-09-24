@@ -1,0 +1,216 @@
+{
+  "kind": "map",
+  "id": "level23",
+  "name": "level23",
+  "source": "C:\\Users\\Andres\\Desktop\\Tsuki_Odyssey\\AssetPack\\assets\\bin\\Data\\level23",
+  "layout": {
+    "front": [
+      {
+        "sp": "ScarlettSnow_2",
+        "go": "ScarlettSnow_2",
+        "x": -0.6749992370605469,
+        "y": 4.258999824523926,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 953.0,
+        "rh": 549.0,
+        "ox": 4.0,
+        "oy": 5.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 6.353333473205566,
+        "sz_y": 3.6600000858306885,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "ScarlettSnow_2",
+        "go_path_id": 1,
+        "tr_path_id": 5,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "ScarlettSnow_0",
+        "go": "ScarlettSnow_0",
+        "x": 3.871000289916992,
+        "y": 3.0310001373291016,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 421.0,
+        "rh": 252.0,
+        "ox": 3.0,
+        "oy": 1.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.806666612625122,
+        "sz_y": 1.6799999475479126,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "ScarlettSnow_0",
+        "go_path_id": 3,
+        "tr_path_id": 7,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "ScarlettSnow_1",
+        "go": "ScarlettSnow_1",
+        "x": -4.3520002365112305,
+        "y": 1.0120000839233398,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 508.0,
+        "rh": 518.0,
+        "ox": 0.0,
+        "oy": 3.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 3.386666774749756,
+        "sz_y": 3.4533333778381348,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "ScarlettSnow_1",
+        "go_path_id": 4,
+        "tr_path_id": 8,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      }
+    ],
+    "back": [],
+    "fx": []
+  },
+  "hierarchy": [
+    {
+      "path": "ScarlettSnow_2",
+      "components": [
+        "Texture2D",
+        "Texture2D"
+      ]
+    },
+    {
+      "path": "ScarlettWinter",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "ScarlettSnow_0",
+      "components": [
+        "Texture2D",
+        "Shader"
+      ]
+    },
+    {
+      "path": "ScarlettSnow_1",
+      "components": [
+        "Texture2D",
+        "AudioClip"
+      ]
+    }
+  ],
+  "colliders": [],
+  "logic": {
+    "walkable": [],
+    "blockers": [],
+    "triggers": [],
+    "interaction_nodes": [],
+    "grids": [],
+    "camera_confines": [],
+    "lights": [],
+    "scripts": [],
+    "animators": [],
+    "audio": [],
+    "particles": []
+  },
+  "animation": {
+    "controllers": []
+  },
+  "audio": [],
+  "particles": [],
+  "catalog": {},
+  "raw": {
+    "level": "level23",
+    "origin_offset": {
+      "x": 20.0,
+      "y": -15.0
+    },
+    "grid_system": [],
+    "interaction_nodes": [],
+    "walkable_bounds": [],
+    "camera_confines": [],
+    "lighting_volumes": [],
+    "special_scripts": [],
+    "animator_nodes": [],
+    "audio_sources": [],
+    "particle_systems": []
+  }
+}

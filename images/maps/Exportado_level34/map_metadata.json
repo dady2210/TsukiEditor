@@ -1,0 +1,24 @@
+{
+  "level": "level34",
+  "origin_offset": {
+    "x": 0.0,
+    "y": 15.0
+  },
+  "grid_system": [],
+  "interaction_nodes": [],
+  "walkable_bounds": [],
+  "camera_confines": [],
+  "lighting_volumes": [],
+  "special_scripts": [],
+  "animator_nodes": [],
+  "audio_sources": [],
+  "particle_systems": [],
+  "origin_px": {
+    "x": 1174.0,
+    "y": 739.0
+  },
+  "canvas": {
+    "width": 2331,
+    "height": 1363
+  }
+}

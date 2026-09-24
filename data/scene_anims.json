@@ -1,0 +1,1507 @@
+{
+ "fuente": "tools/cs_scene_anims — SimpleAnim / SimpleAnimOriented de cada levelN",
+ "nota": "Las animaciones que la escena trae puestas: el alfarero de la Casa del Árbol, la bandera del Ayuntamiento, las ruedas del tren, la fuente del Centro Comercial, los montículos de nieve de las variantes de invierno. loopMode: 0 Loop, 1 Transition, 2 None, 3 LoopStart.",
+ "porNivel": {
+  "level2": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Guy",
+    "activo": true,
+    "x": -1.4819999933242798,
+    "y": -5.13100004196167,
+    "sl": 9,
+    "o": 2,
+    "fps": 4,
+    "loopMode": 1,
+    "transitionStart": 10,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": true,
+    "frames": [
+     {
+      "sprite": "PotteryMan_42",
+      "loopInterval": 0,
+      "rw": 25.0,
+      "rh": 14.0,
+      "px": 0.512,
+      "py": -0.957143,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_43",
+      "loopInterval": 0,
+      "rw": 35.0,
+      "rh": 28.0,
+      "px": 0.542857,
+      "py": -0.25,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_44",
+      "loopInterval": 0,
+      "rw": 57.0,
+      "rh": 46.0,
+      "px": 0.452632,
+      "py": 0.001087,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_45",
+      "loopInterval": 0,
+      "rw": 107.0,
+      "rh": 63.0,
+      "px": 0.485981,
+      "py": 0.154762,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_46",
+      "loopInterval": 0,
+      "rw": 101.0,
+      "rh": 95.0,
+      "px": 0.491089,
+      "py": 0.097368,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_47",
+      "loopInterval": 0,
+      "rw": 100.0,
+      "rh": 100.0,
+      "px": 0.485,
+      "py": 0.092,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_48",
+      "loopInterval": 0,
+      "rw": 100.0,
+      "rh": 108.0,
+      "px": 0.482,
+      "py": 0.083333,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_49",
+      "loopInterval": 0,
+      "rw": 100.0,
+      "rh": 99.0,
+      "px": 0.491,
+      "py": 0.059091,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_50",
+      "loopInterval": 0,
+      "rw": 97.0,
+      "rh": 104.0,
+      "px": 0.571134,
+      "py": 0.099038,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_51",
+      "loopInterval": 0,
+      "rw": 96.0,
+      "rh": 101.0,
+      "px": 0.532813,
+      "py": 0.072277,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_0",
+      "loopInterval": 0,
+      "rw": 92.0,
+      "rh": 100.0,
+      "px": 0.542391,
+      "py": 0.0695,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_1",
+      "loopInterval": 0,
+      "rw": 90.0,
+      "rh": 99.0,
+      "px": 0.553333,
+      "py": 0.060606,
+      "ox": 0.0,
+      "oy": 0.1677
+     },
+     {
+      "sprite": "PotteryMan_2",
+      "loopInterval": 0,
+      "rw": 90.0,
+      "rh": 97.0,
+      "px": 0.551667,
+      "py": 0.040722,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_1",
+      "loopInterval": 0,
+      "rw": 90.0,
+      "rh": 99.0,
+      "px": 0.553333,
+      "py": 0.060606,
+      "ox": 0.0,
+      "oy": 0.1677
+     }
+    ]
+   }
+  ],
+  "level8": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Flag",
+    "activo": true,
+    "x": -23.965999603271484,
+    "y": 19.47800064086914,
+    "sl": 9,
+    "o": 0,
+    "fps": 8,
+    "loopMode": 0,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "DreamHouse_Environment_TownHall_Final_7",
+      "loopInterval": 0,
+      "rw": 133.0,
+      "rh": 142.0,
+      "px": 0.037594,
+      "py": 0.302817,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TownHall_Final_8",
+      "loopInterval": 0,
+      "rw": 131.0,
+      "rh": 145.0,
+      "px": 0.030534,
+      "py": 0.317241,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TownHall_Final_9",
+      "loopInterval": 0,
+      "rw": 130.0,
+      "rh": 146.0,
+      "px": 0.030769,
+      "py": 0.349315,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TownHall_Final_10",
+      "loopInterval": 0,
+      "rw": 131.0,
+      "rh": 143.0,
+      "px": 0.038168,
+      "py": 0.335664,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TownHall_Final_11",
+      "loopInterval": 0,
+      "rw": 132.0,
+      "rh": 139.0,
+      "px": 0.030303,
+      "py": 0.294964,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TownHall_Final_12",
+      "loopInterval": 0,
+      "rw": 134.0,
+      "rh": 131.0,
+      "px": 0.029851,
+      "py": 0.267176,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level10": [
+   {
+    "clase": "SimpleAnim",
+    "go": "BannerAnim",
+    "activo": true,
+    "x": 17.653000116348267,
+    "y": 33.05900001525879,
+    "sl": -1,
+    "o": 102,
+    "fps": 8,
+    "loopMode": 0,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "DreamHouse_Environment_MomoTeaHouseBobo_26",
+      "loopInterval": 0,
+      "rw": 246.0,
+      "rh": 174.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_MomoTeaHouseBobo_27",
+      "loopInterval": 0,
+      "rw": 246.0,
+      "rh": 174.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_MomoTeaHouseBobo_28",
+      "loopInterval": 0,
+      "rw": 249.0,
+      "rh": 175.0,
+      "px": 0.504217,
+      "py": 0.499143,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_MomoTeaHouseBobo_29",
+      "loopInterval": 0,
+      "rw": 248.0,
+      "rh": 172.0,
+      "px": 0.502419,
+      "py": 0.494767,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_MomoTeaHouseBobo_30",
+      "loopInterval": 0,
+      "rw": 248.0,
+      "rh": 170.0,
+      "px": 0.5,
+      "py": 0.488529,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_MomoTeaHouseBobo_31",
+      "loopInterval": 0,
+      "rw": 247.0,
+      "rh": 172.0,
+      "px": 0.5,
+      "py": 0.49564,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_MomoTeaHouseBobo_32",
+      "loopInterval": 0,
+      "rw": 245.0,
+      "rh": 174.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_MomoTeaHouseBobo_33",
+      "loopInterval": 0,
+      "rw": 246.0,
+      "rh": 174.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level12": [
+   {
+    "clase": "SimpleAnim",
+    "go": "MouthMalfunction",
+    "activo": false,
+    "x": -3.133999824523926,
+    "y": -41.85599899291992,
+    "sl": -4,
+    "o": -1,
+    "fps": 8,
+    "loopMode": 0,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "Dawn'sShop_Final_12",
+      "loopInterval": 0,
+      "rw": 133.0,
+      "rh": 246.0,
+      "px": 0.605789,
+      "py": 0.268659,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Dawn'sShop_Final_13",
+      "loopInterval": 0,
+      "rw": 137.0,
+      "rh": 181.0,
+      "px": 0.618248,
+      "py": 0.364917,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Dawn'sShop_Final_14",
+      "loopInterval": 0,
+      "rw": 134.0,
+      "rh": 213.0,
+      "px": 0.609702,
+      "py": 0.311408,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level15": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Wheels",
+    "activo": true,
+    "x": -1.3539999723434448,
+    "y": 24.00799995660782,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 0,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_11",
+      "loopInterval": 0,
+      "rw": 213.0,
+      "rh": 77.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_12",
+      "loopInterval": 0,
+      "rw": 215.0,
+      "rh": 76.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_13",
+      "loopInterval": 0,
+      "rw": 213.0,
+      "rh": 76.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_14",
+      "loopInterval": 0,
+      "rw": 216.0,
+      "rh": 74.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_15",
+      "loopInterval": 0,
+      "rw": 211.0,
+      "rh": 74.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   },
+   {
+    "clase": "SimpleAnim",
+    "go": "Wheels (1)",
+    "activo": true,
+    "x": 1.1449999809265137,
+    "y": 24.00799995660782,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 0,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_11",
+      "loopInterval": 0,
+      "rw": 213.0,
+      "rh": 77.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_12",
+      "loopInterval": 0,
+      "rw": 215.0,
+      "rh": 76.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_13",
+      "loopInterval": 0,
+      "rw": 213.0,
+      "rh": 76.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_14",
+      "loopInterval": 0,
+      "rw": 216.0,
+      "rh": 74.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_15",
+      "loopInterval": 0,
+      "rw": 211.0,
+      "rh": 74.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   },
+   {
+    "clase": "SimpleAnim",
+    "go": "Wheels",
+    "activo": true,
+    "x": 5.173999905586243,
+    "y": 24.00799995660782,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 0,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_11",
+      "loopInterval": 0,
+      "rw": 213.0,
+      "rh": 77.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_12",
+      "loopInterval": 0,
+      "rw": 215.0,
+      "rh": 76.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_13",
+      "loopInterval": 0,
+      "rw": 213.0,
+      "rh": 76.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_14",
+      "loopInterval": 0,
+      "rw": 216.0,
+      "rh": 74.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_15",
+      "loopInterval": 0,
+      "rw": 211.0,
+      "rh": 74.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   },
+   {
+    "clase": "SimpleAnim",
+    "go": "Wheels",
+    "activo": true,
+    "x": 7.672999858856201,
+    "y": 24.00799995660782,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 0,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_11",
+      "loopInterval": 0,
+      "rw": 213.0,
+      "rh": 77.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_12",
+      "loopInterval": 0,
+      "rw": 215.0,
+      "rh": 76.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_13",
+      "loopInterval": 0,
+      "rw": 213.0,
+      "rh": 76.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_14",
+      "loopInterval": 0,
+      "rw": 216.0,
+      "rh": 74.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "DreamHouse_Environment_TrainRide_15",
+      "loopInterval": 0,
+      "rw": 211.0,
+      "rh": 74.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level18": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Sprite",
+    "activo": true,
+    "x": -25.510000228881836,
+    "y": 13.960000038146973,
+    "sl": -1,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 2,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "Snow_Mound_0",
+      "loopInterval": 0,
+      "rw": 106.0,
+      "rh": 67.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_1",
+      "loopInterval": 0,
+      "rw": 108.0,
+      "rh": 89.0,
+      "px": 0.498611,
+      "py": 0.334831,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_2",
+      "loopInterval": 0,
+      "rw": 143.0,
+      "rh": 122.0,
+      "px": 0.501049,
+      "py": 0.236885,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_3",
+      "loopInterval": 0,
+      "rw": 187.0,
+      "rh": 145.0,
+      "px": 0.501604,
+      "py": 0.206207,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_4",
+      "loopInterval": 0,
+      "rw": 80.0,
+      "rh": 46.0,
+      "px": 0.498125,
+      "py": 0.552174,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level20": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Sprite",
+    "activo": true,
+    "x": -14.619999885559082,
+    "y": 0.5299999713897705,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 2,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "Snow_Mound_0",
+      "loopInterval": 0,
+      "rw": 106.0,
+      "rh": 67.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_1",
+      "loopInterval": 0,
+      "rw": 108.0,
+      "rh": 89.0,
+      "px": 0.498611,
+      "py": 0.334831,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_2",
+      "loopInterval": 0,
+      "rw": 143.0,
+      "rh": 122.0,
+      "px": 0.501049,
+      "py": 0.236885,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_3",
+      "loopInterval": 0,
+      "rw": 187.0,
+      "rh": 145.0,
+      "px": 0.501604,
+      "py": 0.206207,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_4",
+      "loopInterval": 0,
+      "rw": 80.0,
+      "rh": 46.0,
+      "px": 0.498125,
+      "py": 0.552174,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level22": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Sprite",
+    "activo": true,
+    "x": -21.809999465942383,
+    "y": 26.239999771118164,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 2,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "Snow_Mound_0",
+      "loopInterval": 0,
+      "rw": 106.0,
+      "rh": 67.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_1",
+      "loopInterval": 0,
+      "rw": 108.0,
+      "rh": 89.0,
+      "px": 0.498611,
+      "py": 0.334831,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_2",
+      "loopInterval": 0,
+      "rw": 143.0,
+      "rh": 122.0,
+      "px": 0.501049,
+      "py": 0.236885,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_3",
+      "loopInterval": 0,
+      "rw": 187.0,
+      "rh": 145.0,
+      "px": 0.501604,
+      "py": 0.206207,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_4",
+      "loopInterval": 0,
+      "rw": 80.0,
+      "rh": 46.0,
+      "px": 0.498125,
+      "py": 0.552174,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level24": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Sprite",
+    "activo": true,
+    "x": -1.6699999570846558,
+    "y": 9.470000267028809,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 2,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "Snow_Mound_0",
+      "loopInterval": 0,
+      "rw": 106.0,
+      "rh": 67.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_1",
+      "loopInterval": 0,
+      "rw": 108.0,
+      "rh": 89.0,
+      "px": 0.498611,
+      "py": 0.334831,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_2",
+      "loopInterval": 0,
+      "rw": 143.0,
+      "rh": 122.0,
+      "px": 0.501049,
+      "py": 0.236885,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_3",
+      "loopInterval": 0,
+      "rw": 187.0,
+      "rh": 145.0,
+      "px": 0.501604,
+      "py": 0.206207,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_4",
+      "loopInterval": 0,
+      "rw": 80.0,
+      "rh": 46.0,
+      "px": 0.498125,
+      "py": 0.552174,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level25": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Sprite",
+    "activo": true,
+    "x": -5.980000019073486,
+    "y": -32.189998626708984,
+    "sl": -1,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 2,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "Snow_Mound_0",
+      "loopInterval": 0,
+      "rw": 106.0,
+      "rh": 67.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_1",
+      "loopInterval": 0,
+      "rw": 108.0,
+      "rh": 89.0,
+      "px": 0.498611,
+      "py": 0.334831,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_2",
+      "loopInterval": 0,
+      "rw": 143.0,
+      "rh": 122.0,
+      "px": 0.501049,
+      "py": 0.236885,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_3",
+      "loopInterval": 0,
+      "rw": 187.0,
+      "rh": 145.0,
+      "px": 0.501604,
+      "py": 0.206207,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_4",
+      "loopInterval": 0,
+      "rw": 80.0,
+      "rh": 46.0,
+      "px": 0.498125,
+      "py": 0.552174,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level26": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Sprite",
+    "activo": true,
+    "x": 17.777999877929688,
+    "y": 23.649999618530273,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 2,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "Snow_Mound_0",
+      "loopInterval": 0,
+      "rw": 106.0,
+      "rh": 67.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_1",
+      "loopInterval": 0,
+      "rw": 108.0,
+      "rh": 89.0,
+      "px": 0.498611,
+      "py": 0.334831,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_2",
+      "loopInterval": 0,
+      "rw": 143.0,
+      "rh": 122.0,
+      "px": 0.501049,
+      "py": 0.236885,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_3",
+      "loopInterval": 0,
+      "rw": 187.0,
+      "rh": 145.0,
+      "px": 0.501604,
+      "py": 0.206207,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_4",
+      "loopInterval": 0,
+      "rw": 80.0,
+      "rh": 46.0,
+      "px": 0.498125,
+      "py": 0.552174,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level27": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Sprite",
+    "activo": true,
+    "x": 2.4200000762939453,
+    "y": -46.91999816894531,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 2,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "Snow_Mound_0",
+      "loopInterval": 0,
+      "rw": 106.0,
+      "rh": 67.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_1",
+      "loopInterval": 0,
+      "rw": 108.0,
+      "rh": 89.0,
+      "px": 0.498611,
+      "py": 0.334831,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_2",
+      "loopInterval": 0,
+      "rw": 143.0,
+      "rh": 122.0,
+      "px": 0.501049,
+      "py": 0.236885,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_3",
+      "loopInterval": 0,
+      "rw": 187.0,
+      "rh": 145.0,
+      "px": 0.501604,
+      "py": 0.206207,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "Snow_Mound_4",
+      "loopInterval": 0,
+      "rw": 80.0,
+      "rh": 46.0,
+      "px": 0.498125,
+      "py": 0.552174,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level28": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Guy",
+    "activo": true,
+    "x": -25.159000396728516,
+    "y": -35.4640007019043,
+    "sl": 9,
+    "o": 2,
+    "fps": 4,
+    "loopMode": 1,
+    "transitionStart": 10,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": true,
+    "frames": [
+     {
+      "sprite": "PotteryMan_42",
+      "loopInterval": 0,
+      "rw": 25.0,
+      "rh": 14.0,
+      "px": 0.512,
+      "py": -0.957143,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_43",
+      "loopInterval": 0,
+      "rw": 35.0,
+      "rh": 28.0,
+      "px": 0.542857,
+      "py": -0.25,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_44",
+      "loopInterval": 0,
+      "rw": 57.0,
+      "rh": 46.0,
+      "px": 0.452632,
+      "py": 0.001087,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_45",
+      "loopInterval": 0,
+      "rw": 107.0,
+      "rh": 63.0,
+      "px": 0.485981,
+      "py": 0.154762,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_46",
+      "loopInterval": 0,
+      "rw": 101.0,
+      "rh": 95.0,
+      "px": 0.491089,
+      "py": 0.097368,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_47",
+      "loopInterval": 0,
+      "rw": 100.0,
+      "rh": 100.0,
+      "px": 0.485,
+      "py": 0.092,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_48",
+      "loopInterval": 0,
+      "rw": 100.0,
+      "rh": 108.0,
+      "px": 0.482,
+      "py": 0.083333,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_49",
+      "loopInterval": 0,
+      "rw": 100.0,
+      "rh": 99.0,
+      "px": 0.491,
+      "py": 0.059091,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_50",
+      "loopInterval": 0,
+      "rw": 97.0,
+      "rh": 104.0,
+      "px": 0.571134,
+      "py": 0.099038,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_51",
+      "loopInterval": 0,
+      "rw": 96.0,
+      "rh": 101.0,
+      "px": 0.532813,
+      "py": 0.072277,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_0",
+      "loopInterval": 0,
+      "rw": 92.0,
+      "rh": 100.0,
+      "px": 0.542391,
+      "py": 0.0695,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_1",
+      "loopInterval": 0,
+      "rw": 90.0,
+      "rh": 99.0,
+      "px": 0.553333,
+      "py": 0.060606,
+      "ox": 0.0,
+      "oy": 0.1677
+     },
+     {
+      "sprite": "PotteryMan_2",
+      "loopInterval": 0,
+      "rw": 90.0,
+      "rh": 97.0,
+      "px": 0.551667,
+      "py": 0.040722,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "PotteryMan_1",
+      "loopInterval": 0,
+      "rw": 90.0,
+      "rh": 99.0,
+      "px": 0.553333,
+      "py": 0.060606,
+      "ox": 0.0,
+      "oy": 0.1677
+     }
+    ]
+   }
+  ],
+  "level59": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Top",
+    "activo": true,
+    "x": -119.96000000089407,
+    "y": 45.090001821517944,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 0,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": true,
+    "frames": [
+     {
+      "sprite": "mallFountain_0",
+      "loopInterval": 0,
+      "rw": 140.0,
+      "rh": 271.0,
+      "px": 0.576733,
+      "py": 0.087221,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "mallFountain_1",
+      "loopInterval": 0,
+      "rw": 108.0,
+      "rh": 348.0,
+      "px": 0.523368,
+      "py": 0.065564,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "mallFountain_2",
+      "loopInterval": 0,
+      "rw": 142.0,
+      "rh": 349.0,
+      "px": 0.456294,
+      "py": 0.082292,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "mallFountain_3",
+      "loopInterval": 0,
+      "rw": 211.0,
+      "rh": 264.0,
+      "px": 0.568459,
+      "py": 0.136551,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "mallFountain_4",
+      "loopInterval": 0,
+      "rw": 169.0,
+      "rh": 208.0,
+      "px": 0.494763,
+      "py": 0.174186,
+      "ox": 1.0,
+      "oy": 0.0
+     }
+    ]
+   },
+   {
+    "clase": "SimpleAnim",
+    "go": "Level",
+    "activo": true,
+    "x": -119.98200000077486,
+    "y": 44.57700181007385,
+    "sl": 0,
+    "o": 0,
+    "fps": 4,
+    "loopMode": 0,
+    "transitionStart": 0,
+    "startLoopCount": 0,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": true,
+    "frames": [
+     {
+      "sprite": "mallFountain_5",
+      "loopInterval": 0,
+      "rw": 575.0,
+      "rh": 347.0,
+      "px": 0.5,
+      "py": 0.5,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "mallFountain_6",
+      "loopInterval": 0,
+      "rw": 567.0,
+      "rh": 346.0,
+      "px": 0.505291,
+      "py": 0.495145,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "mallFountain_7",
+      "loopInterval": 0,
+      "rw": 586.0,
+      "rh": 337.0,
+      "px": 0.492423,
+      "py": 0.482774,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ],
+  "level69": [
+   {
+    "clase": "SimpleAnim",
+    "go": "Belt",
+    "activo": true,
+    "x": -216.01600646972656,
+    "y": -52.352996826171875,
+    "sl": 0,
+    "o": 51,
+    "fps": 4,
+    "loopMode": 0,
+    "transitionStart": 0,
+    "startLoopCount": 2,
+    "stopOnLastFrame": false,
+    "playOnTap": false,
+    "stopped": false,
+    "independentTime": false,
+    "frames": [
+     {
+      "sprite": "ConveyorBelt_Anim_0",
+      "loopInterval": 0,
+      "rw": 374.0,
+      "rh": 142.0,
+      "px": 0.504011,
+      "py": 0.428169,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "ConveyorBelt_Anim_1",
+      "loopInterval": 0,
+      "rw": 374.0,
+      "rh": 142.0,
+      "px": 0.504011,
+      "py": 0.428169,
+      "ox": 0.0,
+      "oy": 0.0
+     },
+     {
+      "sprite": "ConveyorBelt_Anim_2",
+      "loopInterval": 0,
+      "rw": 374.0,
+      "rh": 142.0,
+      "px": 0.504011,
+      "py": 0.428169,
+      "ox": 0.0,
+      "oy": 0.0
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -42,7 +42,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers1",
@@ -87,7 +88,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_13",
@@ -132,7 +134,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SHADOWS_2",
@@ -177,7 +180,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers1",
@@ -222,7 +226,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers9",
@@ -267,7 +272,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_12",
@@ -312,7 +318,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_Reusables_49",
@@ -357,7 +364,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_3",
@@ -402,7 +410,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers11",
@@ -447,7 +456,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers4",
@@ -492,7 +502,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
@@ -537,7 +548,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks10",
@@ -582,7 +594,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SHADOWS_4",
@@ -627,7 +640,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_9",
@@ -672,7 +686,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks13",
@@ -717,7 +732,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "T2 TREEHOUSE SLICED_14",
@@ -762,7 +778,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_7",
@@ -807,7 +824,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "WoodBark",
@@ -829,30 +847,7 @@
     "draw_mode": 2,
     "sz_x": 2.2255802154541016,
     "sz_y": 2.043862819671631,
-    "poly": [
-      [
-        {
-          "x": -0.528810977935791,
-          "y": 1.3508846759796143
-        },
-        {
-          "x": -1.0284109115600586,
-          "y": 0.9003573656082153
-        },
-        {
-          "x": -1.2305817604064941,
-          "y": -1.3709356784820557
-        },
-        {
-          "x": 1.2506321668624878,
-          "y": -0.1679011583328247
-        },
-        {
-          "x": 1.390986442565918,
-          "y": 0.5989882946014404
-        }
-      ]
-    ],
+    "poly": [],
     "color": {
       "r": 1.0,
       "g": 1.0,
@@ -874,11 +869,9 @@
       "z": 0.0,
       "w": 0.0
     },
-    "tiling": {
-      "sz_x": 2.2255802154541016,
-      "sz_y": 2.043862819671631
-    },
-    "sorting_group": null
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "egg11",
@@ -923,7 +916,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_16",
@@ -968,7 +962,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_0",
@@ -1013,7 +1008,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_2",
@@ -1058,7 +1054,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers6",
@@ -1103,7 +1100,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks21",
@@ -1148,7 +1146,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers10",
@@ -1193,7 +1192,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk3",
@@ -1238,7 +1238,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk3",
@@ -1283,7 +1284,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "PotteryMan_1",
@@ -1328,7 +1330,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves1",
@@ -1373,7 +1376,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks22",
@@ -1418,7 +1422,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk6",
@@ -1463,7 +1468,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SHADOWS_8",
@@ -1508,7 +1514,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SHADOWS_10",
@@ -1553,7 +1560,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers11",
@@ -1598,7 +1606,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
@@ -1643,7 +1652,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers5",
@@ -1688,7 +1698,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers5",
@@ -1733,7 +1744,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_18",
@@ -1778,7 +1790,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_15",
@@ -1823,7 +1836,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves4",
@@ -1868,7 +1882,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_5",
@@ -1913,7 +1928,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk4",
@@ -1958,7 +1974,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk7",
@@ -2003,7 +2020,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers3",
@@ -2048,7 +2066,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SHADOWS_3",
@@ -2093,7 +2112,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers5",
@@ -2138,7 +2158,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_8",
@@ -2183,7 +2204,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SHADOWS_9",
@@ -2228,7 +2250,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers11",
@@ -2273,7 +2296,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_Reusables_51",
@@ -2318,7 +2342,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SHADOWS_1",
@@ -2363,7 +2388,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves1",
@@ -2408,7 +2434,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers1",
@@ -2453,7 +2480,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks16",
@@ -2498,7 +2526,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "WoodBark",
@@ -2520,34 +2549,7 @@
     "draw_mode": 2,
     "sz_x": 2.5584425926208496,
     "sz_y": 2.363680362701416,
-    "poly": [
-      [
-        {
-          "x": 0.7711094617843628,
-          "y": 1.1803643703460693
-        },
-        {
-          "x": -0.5386171340942383,
-          "y": 0.6496386528015137
-        },
-        {
-          "x": -1.0114407539367676,
-          "y": -0.14405179023742676
-        },
-        {
-          "x": -1.1372861862182617,
-          "y": -1.240250825881958
-        },
-        {
-          "x": 1.1601673364639282,
-          "y": -0.13052034378051758
-        },
-        {
-          "x": 1.1029646396636963,
-          "y": 1.0
-        }
-      ]
-    ],
+    "poly": [],
     "color": {
       "r": 1.0,
       "g": 1.0,
@@ -2569,11 +2571,9 @@
       "z": 0.0,
       "w": 0.0
     },
-    "tiling": {
-      "sz_x": 2.5584425926208496,
-      "sz_y": 2.363680362701416
-    },
-    "sorting_group": null
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves2",
@@ -2618,7 +2618,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
@@ -2663,7 +2664,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SHADOWS_5",
@@ -2708,7 +2710,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk2",
@@ -2753,7 +2756,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
@@ -2798,7 +2802,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers5",
@@ -2843,7 +2848,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks20",
@@ -2888,7 +2894,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers6",
@@ -2933,7 +2940,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
@@ -2978,7 +2986,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers10",
@@ -3023,7 +3032,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks18",
@@ -3068,7 +3078,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers3",
@@ -3113,7 +3124,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SHADOWS_0",
@@ -3158,7 +3170,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers10",
@@ -3203,7 +3216,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SHADOWS_7",
@@ -3248,7 +3262,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_1",
@@ -3293,7 +3308,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks18",
@@ -3338,7 +3354,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks20",
@@ -3383,7 +3400,8 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "T2 TREEHOUSE SLICED_6",
@@ -3428,59 +3446,7 @@
       "w": 0.0
     },
     "tiling": null,
-    "sorting_group": null
-  },
-  {
-    "sp": "WoodBark",
-    "go": "WallpaperBL",
-    "x": -2.226300001144409,
-    "y": -1.1409000158309937,
-    "angle": 0.0,
-    "sx": 1.0,
-    "sy": 1.0,
-    "o": 1,
-    "px": 0.5,
-    "py": 0.5,
-    "rw": 512,
-    "rh": 512,
-    "ox": 0,
-    "oy": 0,
-    "ppu": 150.0,
-    "sl": -8,
-    "draw_mode": 2,
-    "sz_x": 2.5584425926208496,
-    "sz_y": 2.363680362701416,
-    "poly": [
-      [
-        {
-          "x": 0.8288687467575073,
-          "y": 0.5718355178833008
-        },
-        {
-          "x": -0.7819706201553345,
-          "y": 1.1683392524719238
-        },
-        {
-          "x": -1.1936436891555786,
-          "y": 0.9008889198303223
-        },
-        {
-          "x": -1.254348874092102,
-          "y": 0.36823105812072754
-        },
-        {
-          "x": -0.7128322124481201,
-          "y": -0.3354116678237915
-        },
-        {
-          "x": 1.0164098739624023,
-          "y": -1.180505633354187
-        },
-        {
-          "x": 1.2297346591949463,
-          "y": -0.017394542694091797
-        }
-      ]
-    ]
+    "sorting_group": null,
+    "mask_interaction": 0
   }
 ]

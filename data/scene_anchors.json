@@ -1,0 +1,8459 @@
+{
+  "_fuente": "Extraido de las escenas de Unity con tools/cs_scene_containers. Una entrada por FloorAnchor/WallpaperAnchor: anchorID (la clave con la que el save guarda el revestimiento), defaultF (el que sale por defecto), flipped, y el spline de su SpriteShapeController, que es el contorno exacto de lo pintado. Coordenadas de MUNDO del juego: para pasarlas al espacio del port hay que sumar el delta del mapa que da data/scene_containers.json.",
+  "anclas": [
+    {
+      "nivel": "level2",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL2 (1)",
+      "ruta": "TreeHouse/FloorL2 (1)",
+      "anchorID": 1518507412,
+      "groupNum": 1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.226,
+      "yOffset": 0.168,
+      "mundoX": -0.306,
+      "mundoY": 0.857,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -3.4973,
+              "y": 0.9496
+            },
+            {
+              "x": -0.8247,
+              "y": 2.2907
+            },
+            {
+              "x": 0.4767,
+              "y": 2.4737
+            },
+            {
+              "x": 2.8958,
+              "y": 1.2647
+            },
+            {
+              "x": 1.6839,
+              "y": 0.6419
+            },
+            {
+              "x": 2.2715,
+              "y": 0.3296
+            },
+            {
+              "x": 0.5162,
+              "y": -0.5538
+            },
+            {
+              "x": -0.4785,
+              "y": -0.5563
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level2",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBR",
+      "ruta": "TreeHouse/WallpaperBR",
+      "anchorID": 495018548,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0.201,
+      "mundoX": 1.849,
+      "mundoY": -1.118,
+      "poligonos": [
+        {
+          "objeto": "Closed Sprite Shape (1)",
+          "puntos": [
+            {
+              "x": 0.293,
+              "y": -0.4401
+            },
+            {
+              "x": 2.1107,
+              "y": 0.5173
+            },
+            {
+              "x": 3.2195,
+              "y": -0.3023
+            },
+            {
+              "x": 3.1942,
+              "y": -2.3989
+            },
+            {
+              "x": 0.5787,
+              "y": -1.1014
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level2",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBL",
+      "ruta": "TreeHouse/WallpaperBL",
+      "anchorID": -852939649,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0.283,
+      "mundoX": -2.2263,
+      "mundoY": -1.1409,
+      "poligonos": [
+        {
+          "objeto": "Closed Sprite Shape",
+          "puntos": [
+            {
+              "x": -0.6703,
+              "y": -0.463
+            },
+            {
+              "x": -3.456,
+              "y": 0.7532
+            },
+            {
+              "x": -3.7341,
+              "y": -2.6899
+            },
+            {
+              "x": -0.7426,
+              "y": -1.1927
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level2",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperTR",
+      "ruta": "TreeHouse/WallpaperTR",
+      "anchorID": 1355124652,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": false,
+      "xOffset": 0.126,
+      "yOffset": 0.239,
+      "mundoX": 1.686,
+      "mundoY": 2.5567,
+      "poligonos": [
+        {
+          "objeto": "Closed Sprite Shape (2)",
+          "puntos": [
+            {
+              "x": 0.3248,
+              "y": 3.5018
+            },
+            {
+              "x": 0.7701,
+              "y": 4.0289
+            },
+            {
+              "x": 2.6357,
+              "y": 3.33
+            },
+            {
+              "x": 3.061,
+              "y": 2.6341
+            },
+            {
+              "x": 2.929,
+              "y": 1.2451
+            },
+            {
+              "x": 0.3908,
+              "y": 2.4988
+            },
+            {
+              "x": 0.2191,
+              "y": 3.0727
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level2",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperTL",
+      "ruta": "TreeHouse/WallpaperTL",
+      "anchorID": 636683912,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": true,
+      "xOffset": 0.107,
+      "yOffset": 0.239,
+      "mundoX": -2.114,
+      "mundoY": 2.3396,
+      "poligonos": [
+        {
+          "objeto": "Closed Sprite Shape (1)",
+          "puntos": [
+            {
+              "x": -0.8252,
+              "y": 3.6252
+            },
+            {
+              "x": -1.4674,
+              "y": 3.9218
+            },
+            {
+              "x": -3.0811,
+              "y": 3.3299
+            },
+            {
+              "x": -3.4719,
+              "y": 2.2127
+            },
+            {
+              "x": -3.474,
+              "y": 0.9505
+            },
+            {
+              "x": -0.8716,
+              "y": 2.2577
+            },
+            {
+              "x": -0.7561,
+              "y": 2.6518
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level2",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL1 (1)",
+      "ruta": "TreeHouse/FloorL1 (1)",
+      "anchorID": 407290786,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.301,
+      "yOffset": 0.025,
+      "mundoX": -0.215,
+      "mundoY": -2.986,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -2.476,
+              "y": -3.5542
+            },
+            {
+              "x": -3.9773,
+              "y": -2.7925
+            },
+            {
+              "x": 0.0021,
+              "y": -0.8014
+            },
+            {
+              "x": 3.1964,
+              "y": -2.3895
+            },
+            {
+              "x": 2.9707,
+              "y": -3.3352
+            },
+            {
+              "x": 0.54,
+              "y": -4.5713
+            },
+            {
+              "x": -0.4387,
+              "y": -4.5629
+            },
+            {
+              "x": -1.5125,
+              "y": -4.028
+            },
+            {
+              "x": -1.2511,
+              "y": -3.9016
+            },
+            {
+              "x": -2.2033,
+              "y": -3.4148
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level3",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL1 (1)",
+      "ruta": "SceneData/FloorL1 (1)",
+      "anchorID": 1814250297,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -0.377,
+      "mundoY": 12.8,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -1.1243,
+              "y": 11.3936
+            },
+            {
+              "x": -4.4175,
+              "y": 13.0109
+            },
+            {
+              "x": -0.7159,
+              "y": 14.8649
+            },
+            {
+              "x": 1.5378,
+              "y": 13.7258
+            },
+            {
+              "x": -0.2546,
+              "y": 12.8467
+            },
+            {
+              "x": 0.7503,
+              "y": 12.3591
+            }
+          ]
+        },
+        {
+          "objeto": "New Sprite (1)",
+          "puntos": [
+            {
+              "x": 1.2443,
+              "y": 10.836
+            },
+            {
+              "x": 0.7369,
+              "y": 11.0916
+            },
+            {
+              "x": 0.2245,
+              "y": 10.8305
+            },
+            {
+              "x": -0.6959,
+              "y": 11.3204
+            },
+            {
+              "x": 0.9175,
+              "y": 12.1227
+            },
+            {
+              "x": 0.2644,
+              "y": 12.4243
+            },
+            {
+              "x": 1.9146,
+              "y": 13.2626
+            },
+            {
+              "x": 2.314,
+              "y": 13.0519
+            },
+            {
+              "x": 2.4369,
+              "y": 13.1046
+            },
+            {
+              "x": 2.4369,
+              "y": 13.245
+            },
+            {
+              "x": 2.9504,
+              "y": 13.4952
+            },
+            {
+              "x": 3.0076,
+              "y": 13.4584
+            },
+            {
+              "x": 3.0095,
+              "y": 12.7075
+            },
+            {
+              "x": 3.9326,
+              "y": 12.2528
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level3",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperTL",
+      "ruta": "SceneData/WallpaperTL",
+      "anchorID": 1392021920,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -2.2414,
+      "mundoY": 17.8744,
+      "poligonos": [
+        {
+          "objeto": "WallpaperTL",
+          "puntos": [
+            {
+              "x": -0.7392,
+              "y": 17.9845
+            },
+            {
+              "x": -0.7921,
+              "y": 19.4294
+            },
+            {
+              "x": -3.77,
+              "y": 18.0947
+            },
+            {
+              "x": -3.7304,
+              "y": 16.5837
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level3",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperTR",
+      "ruta": "SceneData/WallpaperTR",
+      "anchorID": 531377748,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": 0.821,
+      "mundoY": 18.113,
+      "poligonos": [
+        {
+          "objeto": "WallpaperTR",
+          "puntos": [
+            {
+              "x": -0.7661,
+              "y": 18.0191
+            },
+            {
+              "x": -0.7788,
+              "y": 19.7639
+            },
+            {
+              "x": 2.2677,
+              "y": 19.1513
+            },
+            {
+              "x": 2.2677,
+              "y": 16.5387
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level3",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBL",
+      "ruta": "SceneData/WallpaperBL",
+      "anchorID": -1806706531,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -2.4847,
+      "mundoY": 14.5096,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBL",
+          "puntos": [
+            {
+              "x": -0.7064,
+              "y": 14.7476
+            },
+            {
+              "x": -0.7556,
+              "y": 16.8596
+            },
+            {
+              "x": -4.5088,
+              "y": 15.5152
+            },
+            {
+              "x": -4.4595,
+              "y": 12.9587
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level3",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL2 (1)",
+      "ruta": "SceneData/FloorL2 (1)",
+      "anchorID": -2111038135,
+      "groupNum": 1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -0.704,
+      "mundoY": 16.896,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -1.5165,
+              "y": 15.6823
+            },
+            {
+              "x": -3.543,
+              "y": 16.7186
+            },
+            {
+              "x": -0.8627,
+              "y": 18.0398
+            },
+            {
+              "x": -0.7517,
+              "y": 17.9875
+            },
+            {
+              "x": -0.6644,
+              "y": 18.0355
+            },
+            {
+              "x": -0.5552,
+              "y": 17.9787
+            },
+            {
+              "x": -0.4373,
+              "y": 18.0311
+            },
+            {
+              "x": -0.4433,
+              "y": 18.2106
+            },
+            {
+              "x": 0.1785,
+              "y": 17.9711
+            },
+            {
+              "x": 0.1617,
+              "y": 17.6212
+            },
+            {
+              "x": 1.9767,
+              "y": 16.6877
+            },
+            {
+              "x": -0.0066,
+              "y": 15.6846
+            },
+            {
+              "x": -0.7527,
+              "y": 16.0663
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level3",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBR",
+      "ruta": "SceneData/WallpaperBR",
+      "anchorID": 788646942,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": 1.6919,
+      "mundoY": 14.2513,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBR",
+          "puntos": [
+            {
+              "x": -0.723,
+              "y": 14.5768
+            },
+            {
+              "x": -0.6491,
+              "y": 16.9549
+            },
+            {
+              "x": 4.1034,
+              "y": 14.685
+            },
+            {
+              "x": 4.1063,
+              "y": 12.1351
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level4",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "Shed/Floor",
+      "anchorID": 1421158723,
+      "groupNum": 3,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.044,
+      "yOffset": 0.207,
+      "mundoX": 16.5263,
+      "mundoY": 2.7834,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": 15.9952,
+              "y": 1.6293
+            },
+            {
+              "x": 14.264,
+              "y": 2.5366
+            },
+            {
+              "x": 16.9912,
+              "y": 3.9185
+            },
+            {
+              "x": 18.7953,
+              "y": 3.012
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level4",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBL (1)",
+      "ruta": "Shed/WallpaperBL (1)",
+      "anchorID": -1979330218,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": true,
+      "xOffset": 0.13,
+      "yOffset": 0.198,
+      "mundoX": 15.6162,
+      "mundoY": 3.9239,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBL (1)",
+          "puntos": [
+            {
+              "x": 16.9679,
+              "y": 3.9568
+            },
+            {
+              "x": 16.9703,
+              "y": 5.2075
+            },
+            {
+              "x": 14.2645,
+              "y": 4.0083
+            },
+            {
+              "x": 14.2756,
+              "y": 2.5945
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level4",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBR (1)",
+      "ruta": "Shed/WallpaperBR (1)",
+      "anchorID": 773467785,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": false,
+      "xOffset": 0.068,
+      "yOffset": 0.294,
+      "mundoX": 17.841,
+      "mundoY": 4.3787,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBR (1)",
+          "puntos": [
+            {
+              "x": 17.0597,
+              "y": 3.9638
+            },
+            {
+              "x": 17.0675,
+              "y": 5.4607
+            },
+            {
+              "x": 18.6876,
+              "y": 4.8277
+            },
+            {
+              "x": 18.6733,
+              "y": 3.1441
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level6",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBL (3)",
+      "ruta": "DreamHouse_Environment_ChiHouse/GameObject/WallpaperBL (3)",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0.123,
+      "mundoX": -15.605,
+      "mundoY": -1.973,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBL (3)",
+          "puntos": [
+            {
+              "x": -16.5975,
+              "y": -2.923
+            },
+            {
+              "x": -16.6117,
+              "y": 0.1
+            },
+            {
+              "x": -14.3482,
+              "y": -0.979
+            },
+            {
+              "x": -14.4075,
+              "y": -4.0058
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level6",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBL (1)",
+      "ruta": "DreamHouse_Environment_ChiHouse/GameObject/WallpaperBL (1)",
+      "anchorID": 1325877990,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": true,
+      "xOffset": 0.13,
+      "yOffset": 0.239,
+      "mundoX": -23.417,
+      "mundoY": 0.735,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBL (1)",
+          "puntos": [
+            {
+              "x": -21.703,
+              "y": -0.5747
+            },
+            {
+              "x": -21.735,
+              "y": 3.6268
+            },
+            {
+              "x": -24.0702,
+              "y": 0.9431
+            },
+            {
+              "x": -24.7089,
+              "y": 1.2651
+            },
+            {
+              "x": -24.7089,
+              "y": -2.106
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level6",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBL (2)",
+      "ruta": "DreamHouse_Environment_ChiHouse/GameObject/WallpaperBL (2)",
+      "anchorID": -380728059,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": false,
+      "xOffset": 0.15,
+      "yOffset": 0.137,
+      "mundoX": -19.1991,
+      "mundoY": 0.866,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBL (2)",
+          "puntos": [
+            {
+              "x": -21.2622,
+              "y": -0.6057
+            },
+            {
+              "x": -21.3133,
+              "y": 4.554
+            },
+            {
+              "x": -16.9456,
+              "y": 2.3279
+            },
+            {
+              "x": -16.9893,
+              "y": -2.752
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level6",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL1",
+      "ruta": "DreamHouse_Environment_ChiHouse/GameObject/FloorL1",
+      "anchorID": 425774384,
+      "groupNum": 0,
+      "defaultF": 244,
+      "flipped": false,
+      "xOffset": 0.3,
+      "yOffset": 0.05,
+      "mundoX": -19.813,
+      "mundoY": -2.657,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -16.433,
+              "y": -4.9772
+            },
+            {
+              "x": -18.9404,
+              "y": -3.7318
+            },
+            {
+              "x": -20.5951,
+              "y": -4.5498
+            },
+            {
+              "x": -25.1745,
+              "y": -2.3367
+            },
+            {
+              "x": -21.7171,
+              "y": -0.5974
+            },
+            {
+              "x": -21.4469,
+              "y": -0.7414
+            },
+            {
+              "x": -21.2491,
+              "y": -0.5814
+            },
+            {
+              "x": -14.4915,
+              "y": -3.9764
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level6",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL2",
+      "ruta": "DreamHouse_Environment_ChiHouse/GameObject/FloorL2",
+      "anchorID": 2019626084,
+      "groupNum": 1,
+      "defaultF": 244,
+      "flipped": false,
+      "xOffset": 0.207,
+      "yOffset": 0.057,
+      "mundoX": -19.412,
+      "mundoY": 0.65,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -21.9404,
+              "y": 0.9137
+            },
+            {
+              "x": -19.9519,
+              "y": 1.9272
+            },
+            {
+              "x": -16.8618,
+              "y": 0.4162
+            },
+            {
+              "x": -18.9495,
+              "y": -0.5913
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level7",
+      "clase": "WallpaperAnchor",
+      "nombre": "WoodenWall1 (3)",
+      "ruta": "DreamHouse_Environment_MocaHouse/WoodenWall1 (3)",
+      "anchorID": -1392362380,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": false,
+      "xOffset": 0.171,
+      "yOffset": 0,
+      "mundoX": -0.7712,
+      "mundoY": -25.1489,
+      "poligonos": [
+        {
+          "objeto": "WoodenWall1 (3)",
+          "puntos": [
+            {
+              "x": -1.8592,
+              "y": -25.3924
+            },
+            {
+              "x": -1.854,
+              "y": -23.8767
+            },
+            {
+              "x": 0.217,
+              "y": -24.7999
+            },
+            {
+              "x": 0.1,
+              "y": -26.3901
+            },
+            {
+              "x": -1.0226,
+              "y": -25.8389
+            },
+            {
+              "x": -1.0239,
+              "y": -24.7252
+            },
+            {
+              "x": -1.6979,
+              "y": -24.4225
+            },
+            {
+              "x": -1.7072,
+              "y": -25.4518
+            }
+          ]
+        },
+        {
+          "objeto": "WoodenWall1 (2)",
+          "puntos": [
+            {
+              "x": -2.1376,
+              "y": -25.4314
+            },
+            {
+              "x": -2.1104,
+              "y": -24.1833
+            },
+            {
+              "x": -1.5083,
+              "y": -24.3891
+            },
+            {
+              "x": -1.5629,
+              "y": -25.7208
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level7",
+      "clase": "WallpaperAnchor",
+      "nombre": "WoodenWall1",
+      "ruta": "DreamHouse_Environment_MocaHouse/WoodenWall1",
+      "anchorID": 1415233520,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": false,
+      "xOffset": 0.062,
+      "yOffset": 0.063,
+      "mundoX": -0.86,
+      "mundoY": -29.03,
+      "poligonos": [
+        {
+          "objeto": "WoodenWall1",
+          "puntos": [
+            {
+              "x": -1.288,
+              "y": -30.1912
+            },
+            {
+              "x": -1.287,
+              "y": -28.5427
+            },
+            {
+              "x": -2.4949,
+              "y": -27.9355
+            },
+            {
+              "x": -2.4976,
+              "y": -27.8026
+            },
+            {
+              "x": -2.1392,
+              "y": -27.9732
+            },
+            {
+              "x": -1.2908,
+              "y": -27.5591
+            },
+            {
+              "x": -0.1274,
+              "y": -27.804
+            },
+            {
+              "x": -0.1259,
+              "y": -28.7727
+            },
+            {
+              "x": 0.3786,
+              "y": -29.0198
+            },
+            {
+              "x": 0.3838,
+              "y": -31.0235
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level7",
+      "clase": "WallpaperAnchor",
+      "nombre": "WoodenWall1 (1)",
+      "ruta": "DreamHouse_Environment_MocaHouse/WoodenWall1 (1)",
+      "anchorID": 808006231,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0.144,
+      "mundoX": -4.095,
+      "mundoY": -29.2262,
+      "poligonos": [
+        {
+          "objeto": "WoodenWall1 (1)",
+          "puntos": [
+            {
+              "x": -2.6086,
+              "y": -29.5176
+            },
+            {
+              "x": -2.6161,
+              "y": -27.4198
+            },
+            {
+              "x": -5.3926,
+              "y": -28.1621
+            },
+            {
+              "x": -5.401,
+              "y": -30.9227
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level7",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL2",
+      "ruta": "DreamHouse_Environment_MocaHouse/FloorL2",
+      "anchorID": -547835505,
+      "groupNum": 1,
+      "defaultF": 67,
+      "flipped": false,
+      "xOffset": 0.134,
+      "yOffset": 0.13,
+      "mundoX": 2.9,
+      "mundoY": -28.442,
+      "poligonos": [
+        {
+          "objeto": "New Sprite (1)",
+          "puntos": [
+            {
+              "x": 0.3564,
+              "y": -28.5203
+            },
+            {
+              "x": 2.0436,
+              "y": -27.6917
+            },
+            {
+              "x": 2.0398,
+              "y": -27.4832
+            },
+            {
+              "x": 2.2938,
+              "y": -27.286
+            },
+            {
+              "x": 2.5687,
+              "y": -27.2102
+            },
+            {
+              "x": 2.5668,
+              "y": -27.3258
+            },
+            {
+              "x": 2.6786,
+              "y": -27.3808
+            },
+            {
+              "x": 2.7639,
+              "y": -27.3239
+            },
+            {
+              "x": 2.8606,
+              "y": -27.3618
+            },
+            {
+              "x": 2.9305,
+              "y": -27.3131
+            },
+            {
+              "x": 5.3793,
+              "y": -28.5206
+            },
+            {
+              "x": 2.8786,
+              "y": -29.7882
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level7",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL1",
+      "ruta": "DreamHouse_Environment_MocaHouse/FloorL1",
+      "anchorID": -376191014,
+      "groupNum": 0,
+      "defaultF": 128,
+      "flipped": false,
+      "xOffset": 0.177,
+      "yOffset": 0.437,
+      "mundoX": -0.743,
+      "mundoY": -31.899,
+      "poligonos": [
+        {
+          "objeto": "New Sprite (1)",
+          "puntos": [
+            {
+              "x": -5.5877,
+              "y": -31.0093
+            },
+            {
+              "x": -2.6276,
+              "y": -29.5215
+            },
+            {
+              "x": -2.4954,
+              "y": -29.5858
+            },
+            {
+              "x": -2.4204,
+              "y": -29.5601
+            },
+            {
+              "x": -2.3411,
+              "y": -29.5999
+            },
+            {
+              "x": -2.1996,
+              "y": -29.5312
+            },
+            {
+              "x": -1.5229,
+              "y": -29.8787
+            },
+            {
+              "x": -1.5229,
+              "y": -29.9956
+            },
+            {
+              "x": -1.4262,
+              "y": -30.0099
+            },
+            {
+              "x": -1.4275,
+              "y": -30.1221
+            },
+            {
+              "x": 0.4952,
+              "y": -31.0775
+            },
+            {
+              "x": 0.6249,
+              "y": -30.9997
+            },
+            {
+              "x": 0.8212,
+              "y": -31.1071
+            },
+            {
+              "x": 0.9175,
+              "y": -31.046
+            },
+            {
+              "x": 1.6593,
+              "y": -31.4196
+            },
+            {
+              "x": 1.7431,
+              "y": -31.3675
+            },
+            {
+              "x": 2.4025,
+              "y": -31.7001
+            },
+            {
+              "x": 2.4097,
+              "y": -31.8968
+            },
+            {
+              "x": 3.9605,
+              "y": -32.6509
+            },
+            {
+              "x": 3.075,
+              "y": -33.1335
+            },
+            {
+              "x": 2.9016,
+              "y": -33.0376
+            },
+            {
+              "x": 1.902,
+              "y": -33.5286
+            },
+            {
+              "x": 2.0172,
+              "y": -33.6088
+            },
+            {
+              "x": 2.1418,
+              "y": -33.5331
+            },
+            {
+              "x": 2.2268,
+              "y": -33.5958
+            },
+            {
+              "x": 0.8829,
+              "y": -34.2557
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level7",
+      "clase": "WallpaperAnchor",
+      "nombre": "WoodenWall1 (4)",
+      "ruta": "DreamHouse_Environment_MocaHouse/WoodenWall1 (4)",
+      "anchorID": 1498863682,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": 4.116,
+      "mundoY": -27.7377,
+      "poligonos": [
+        {
+          "objeto": "WoodenWall1 (4)",
+          "puntos": [
+            {
+              "x": 2.8815,
+              "y": -27.3192
+            },
+            {
+              "x": 2.9384,
+              "y": -25.9549
+            },
+            {
+              "x": 5.3746,
+              "y": -26.9095
+            },
+            {
+              "x": 5.3915,
+              "y": -28.556
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level7",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL3",
+      "ruta": "DreamHouse_Environment_MocaHouse/FloorL3",
+      "anchorID": 1341287819,
+      "groupNum": 2,
+      "defaultF": 67,
+      "flipped": false,
+      "xOffset": 0.1,
+      "yOffset": 0.118,
+      "mundoX": -2.382,
+      "mundoY": -26.325,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -4.8674,
+              "y": -26.906
+            },
+            {
+              "x": -1.9733,
+              "y": -25.4481
+            },
+            {
+              "x": -1.5986,
+              "y": -25.3298
+            },
+            {
+              "x": -1.3093,
+              "y": -25.3837
+            },
+            {
+              "x": -1.0649,
+              "y": -25.6156
+            },
+            {
+              "x": -1.0653,
+              "y": -25.8166
+            },
+            {
+              "x": 0.1342,
+              "y": -26.4071
+            },
+            {
+              "x": -2.1315,
+              "y": -27.5428
+            },
+            {
+              "x": -2.8921,
+              "y": -27.1613
+            },
+            {
+              "x": -3.6261,
+              "y": -27.5393
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level7",
+      "clase": "WallpaperAnchor",
+      "nombre": "WoodenWall1 (5)",
+      "ruta": "DreamHouse_Environment_MocaHouse/WoodenWall1 (5)",
+      "anchorID": -1583912010,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": 1.41,
+      "mundoY": -27.172,
+      "poligonos": [
+        {
+          "objeto": "WoodenWall1 (5)",
+          "puntos": [
+            {
+              "x": 2.8759,
+              "y": -27.3024
+            },
+            {
+              "x": 2.8843,
+              "y": -25.765
+            },
+            {
+              "x": 0.4993,
+              "y": -26.5738
+            },
+            {
+              "x": 0.5035,
+              "y": -28.463
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level8",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL1",
+      "ruta": "SceneData/FloorL1",
+      "anchorID": 1141093861,
+      "groupNum": 0,
+      "defaultF": 128,
+      "flipped": false,
+      "xOffset": 0.05,
+      "yOffset": 0.207,
+      "mundoX": -18.694,
+      "mundoY": 14.385,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -17.7106,
+              "y": 12.196
+            },
+            {
+              "x": -23.2773,
+              "y": 14.961
+            },
+            {
+              "x": -19.9307,
+              "y": 16.6192
+            },
+            {
+              "x": -19.7456,
+              "y": 16.517
+            },
+            {
+              "x": -19.5662,
+              "y": 16.6043
+            },
+            {
+              "x": -14.1534,
+              "y": 13.9704
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level8",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBR (2)",
+      "ruta": "SceneData/WallpaperBR (2)",
+      "anchorID": 1827453492,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": false,
+      "xOffset": 0.294,
+      "yOffset": 0.089,
+      "mundoX": -16.862,
+      "mundoY": 16.1688,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBR (2)",
+          "puntos": [
+            {
+              "x": -19.791,
+              "y": 16.6691
+            },
+            {
+              "x": -19.7898,
+              "y": 18.8
+            },
+            {
+              "x": -15.5419,
+              "y": 16.9206
+            },
+            {
+              "x": -14.067,
+              "y": 15.9187
+            },
+            {
+              "x": -14.0759,
+              "y": 13.8947
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level8",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBL (2)",
+      "ruta": "SceneData/WallpaperBL (2)",
+      "anchorID": 2052784028,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": true,
+      "xOffset": 0.059,
+      "yOffset": 0.298,
+      "mundoX": -21.598,
+      "mundoY": 16.587,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBL (2)",
+          "puntos": [
+            {
+              "x": -19.9201,
+              "y": 16.5971
+            },
+            {
+              "x": -19.9155,
+              "y": 19.0039
+            },
+            {
+              "x": -23.2602,
+              "y": 17.3119
+            },
+            {
+              "x": -23.2724,
+              "y": 14.9517
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level9",
+      "clase": "FloorAnchor",
+      "nombre": "Floor_L2 (3)",
+      "ruta": "DreamHouse_Environment_TrainStation_Background/Floor_L2 (3)",
+      "anchorID": 1253001774,
+      "groupNum": 0,
+      "defaultF": 128,
+      "flipped": false,
+      "xOffset": 0.373,
+      "yOffset": 0.136,
+      "mundoX": -40,
+      "mundoY": -30,
+      "poligonos": [
+        {
+          "objeto": "Floor_L2 (3)",
+          "puntos": [
+            {
+              "x": -37.2426,
+              "y": -28.925
+            },
+            {
+              "x": -37.0004,
+              "y": -29.0539
+            },
+            {
+              "x": -36.7644,
+              "y": -28.9314
+            },
+            {
+              "x": -34.4963,
+              "y": -30.0821
+            },
+            {
+              "x": -36.4623,
+              "y": -31.0439
+            },
+            {
+              "x": -35.3206,
+              "y": -31.6271
+            },
+            {
+              "x": -36.8298,
+              "y": -32.3713
+            },
+            {
+              "x": -37.9676,
+              "y": -31.8062
+            },
+            {
+              "x": -39.9839,
+              "y": -32.8056
+            },
+            {
+              "x": -42.5474,
+              "y": -31.5348
+            },
+            {
+              "x": -41.3123,
+              "y": -30.9139
+            },
+            {
+              "x": -41.1427,
+              "y": -30.8689
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level9",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "Train/SecondCarriage/Interior/Floor",
+      "anchorID": 0,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.373,
+      "yOffset": 0.136,
+      "mundoX": -20.4,
+      "mundoY": -15.39,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -15.8674,
+              "y": -14.9996
+            },
+            {
+              "x": -22.9645,
+              "y": -18.5438
+            },
+            {
+              "x": -25.2152,
+              "y": -17.4181
+            },
+            {
+              "x": -18.0978,
+              "y": -13.8595
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level9",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall (1)",
+      "ruta": "Train/ThirdCarriage/Interior/Wall (1)",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 0,
+      "flipped": true,
+      "xOffset": 0.065,
+      "yOffset": 0.023,
+      "mundoX": -8.875,
+      "mundoY": -9.953,
+      "poligonos": [
+        {
+          "objeto": "Wall (1)",
+          "puntos": [
+            {
+              "x": -9.7715,
+              "y": -10.7954
+            },
+            {
+              "x": -7.8807,
+              "y": -9.8509
+            },
+            {
+              "x": -7.8872,
+              "y": -8.8954
+            },
+            {
+              "x": -8.8017,
+              "y": -9.3018
+            },
+            {
+              "x": -8.9018,
+              "y": -9.5307
+            },
+            {
+              "x": -8.1694,
+              "y": -9.1616
+            },
+            {
+              "x": -8.1671,
+              "y": -9.7659
+            },
+            {
+              "x": -9.3813,
+              "y": -10.3782
+            },
+            {
+              "x": -9.3837,
+              "y": -9.8516
+            },
+            {
+              "x": -9.7801,
+              "y": -9.6518
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level9",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L1_1 (3)",
+      "ruta": "DreamHouse_Environment_TrainStation_Background/Wall_L1_1 (3)",
+      "anchorID": 164250935,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": true,
+      "xOffset": 0.065,
+      "yOffset": 0.023,
+      "mundoX": -37.6492,
+      "mundoY": -28.4894,
+      "poligonos": [
+        {
+          "objeto": "Wall_L1_1 (3)",
+          "puntos": [
+            {
+              "x": -38.0721,
+              "y": -28.0422
+            },
+            {
+              "x": -38.0628,
+              "y": -29.338
+            },
+            {
+              "x": -37.236,
+              "y": -28.9227
+            },
+            {
+              "x": -37.2258,
+              "y": -27.6548
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level9",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L1_2 (2)",
+      "ruta": "DreamHouse_Environment_TrainStation_Background/Wall_L1_2 (2)",
+      "anchorID": 1195682614,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": false,
+      "xOffset": 0.176,
+      "yOffset": 0.182,
+      "mundoX": -40,
+      "mundoY": -30,
+      "poligonos": [
+        {
+          "objeto": "Wall_L1_2 (2)",
+          "puntos": [
+            {
+              "x": -34.4918,
+              "y": -28.1665
+            },
+            {
+              "x": -34.4843,
+              "y": -30.0659
+            },
+            {
+              "x": -36.7663,
+              "y": -28.9453
+            },
+            {
+              "x": -36.7652,
+              "y": -27.1904
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level9",
+      "clase": "FloorAnchor",
+      "nombre": "Floor_L2 (4)",
+      "ruta": "DreamHouse_Environment_TrainStation_Background/Floor_L2 (4)",
+      "anchorID": 1598093390,
+      "groupNum": 1,
+      "defaultF": 250,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0.023,
+      "mundoX": -40,
+      "mundoY": -30,
+      "poligonos": [
+        {
+          "objeto": "Floor_L2 (4)",
+          "puntos": [
+            {
+              "x": -44.1038,
+              "y": -32.256
+            },
+            {
+              "x": -44.9947,
+              "y": -31.8085
+            },
+            {
+              "x": -44.9915,
+              "y": -30.0235
+            },
+            {
+              "x": -43.0087,
+              "y": -29.0477
+            },
+            {
+              "x": -41.401,
+              "y": -29.7691
+            },
+            {
+              "x": -41.3898,
+              "y": -30.854
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level9",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L1_1 (2)",
+      "ruta": "DreamHouse_Environment_TrainStation_Background/Wall_L1_1 (2)",
+      "anchorID": -1001339325,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": true,
+      "xOffset": 0.065,
+      "yOffset": 0.023,
+      "mundoX": -41.572,
+      "mundoY": -30.3036,
+      "poligonos": [
+        {
+          "objeto": "Wall_L1_1 (2)",
+          "puntos": [
+            {
+              "x": -42.2504,
+              "y": -31.4137
+            },
+            {
+              "x": -42.0676,
+              "y": -31.3175
+            },
+            {
+              "x": -42.0676,
+              "y": -29.9864
+            },
+            {
+              "x": -41.2698,
+              "y": -29.6113
+            },
+            {
+              "x": -41.263,
+              "y": -30.9626
+            },
+            {
+              "x": -40.6975,
+              "y": -30.6628
+            },
+            {
+              "x": -40.7026,
+              "y": -28.8716
+            },
+            {
+              "x": -42.2576,
+              "y": -29.6028
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level9",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "Train/ThirdCarriage/Interior/Floor",
+      "anchorID": 0,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.373,
+      "yOffset": 0.136,
+      "mundoX": -12.4,
+      "mundoY": -11.39,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -7.7125,
+              "y": -10.9392
+            },
+            {
+              "x": -14.9645,
+              "y": -14.5438
+            },
+            {
+              "x": -17.2152,
+              "y": -13.4181
+            },
+            {
+              "x": -9.9684,
+              "y": -9.7829
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level9",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "Train/SecondCarriage/Interior/Wall",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.065,
+      "yOffset": 0.023,
+      "mundoX": -20.4,
+      "mundoY": -15.39,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -15.7221,
+              "y": -17.3701
+            },
+            {
+              "x": -21.8354,
+              "y": -14.2891
+            },
+            {
+              "x": -21.8373,
+              "y": -13.4264
+            },
+            {
+              "x": -21.5934,
+              "y": -13.5499
+            },
+            {
+              "x": -21.596,
+              "y": -13.9937
+            },
+            {
+              "x": -21.0718,
+              "y": -14.2765
+            },
+            {
+              "x": -18.0984,
+              "y": -15.3005
+            },
+            {
+              "x": -17.8377,
+              "y": -15.4214
+            },
+            {
+              "x": -17.8457,
+              "y": -15.8792
+            },
+            {
+              "x": -16.7782,
+              "y": -16.4245
+            },
+            {
+              "x": -16.7714,
+              "y": -15.7686
+            },
+            {
+              "x": -15.7179,
+              "y": -16.2931
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level9",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "Train/ThirdCarriage/Interior/Wall",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.065,
+      "yOffset": 0.023,
+      "mundoX": -12.4,
+      "mundoY": -11.39,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -9.9582,
+              "y": -12.2271
+            },
+            {
+              "x": -14.8174,
+              "y": -9.7955
+            },
+            {
+              "x": -14.8309,
+              "y": -9.0187
+            },
+            {
+              "x": -14.3959,
+              "y": -9.2289
+            },
+            {
+              "x": -14.396,
+              "y": -9.7746
+            },
+            {
+              "x": -13.1746,
+              "y": -10.3804
+            },
+            {
+              "x": -13.1746,
+              "y": -9.8499
+            },
+            {
+              "x": -12.895,
+              "y": -9.982
+            },
+            {
+              "x": -12.8891,
+              "y": -10.5319
+            },
+            {
+              "x": -11.6731,
+              "y": -11.129
+            },
+            {
+              "x": -11.6775,
+              "y": -10.5984
+            },
+            {
+              "x": -11.3957,
+              "y": -10.7459
+            },
+            {
+              "x": -11.3891,
+              "y": -11.2765
+            },
+            {
+              "x": -10.1805,
+              "y": -11.8841
+            },
+            {
+              "x": -10.1733,
+              "y": -11.3555
+            },
+            {
+              "x": -9.9478,
+              "y": -11.4654
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level10",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL1 (1)",
+      "ruta": "SceneData/FloorL1 (1)",
+      "anchorID": -58456388,
+      "groupNum": 1,
+      "defaultF": 244,
+      "flipped": false,
+      "xOffset": 0.088,
+      "yOffset": 0.165,
+      "mundoX": 17.089,
+      "mundoY": 29.884,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": 14.1299,
+              "y": 30.1646
+            },
+            {
+              "x": 17.0797,
+              "y": 31.6522
+            },
+            {
+              "x": 20.118,
+              "y": 30.1328
+            },
+            {
+              "x": 15.9099,
+              "y": 28.054
+            },
+            {
+              "x": 14.4223,
+              "y": 28.8462
+            },
+            {
+              "x": 15.5623,
+              "y": 29.411
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level10",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL1",
+      "ruta": "SceneData/FloorL1",
+      "anchorID": 393071517,
+      "groupNum": 0,
+      "defaultF": 749,
+      "flipped": false,
+      "xOffset": 0.253,
+      "yOffset": 0.241,
+      "mundoX": 20.07,
+      "mundoY": 31.692,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": 20.5088,
+              "y": 30.2587
+            },
+            {
+              "x": 17.5006,
+              "y": 31.8492
+            },
+            {
+              "x": 19.5852,
+              "y": 32.9038
+            },
+            {
+              "x": 21.2395,
+              "y": 32.0771
+            },
+            {
+              "x": 21.3511,
+              "y": 32.128
+            },
+            {
+              "x": 21.8885,
+              "y": 31.8652
+            },
+            {
+              "x": 21.8821,
+              "y": 31.7663
+            },
+            {
+              "x": 22.6735,
+              "y": 31.3624
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level10",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBR (1)",
+      "ruta": "SceneData/WallpaperBR (1)",
+      "anchorID": 1795233508,
+      "groupNum": -1,
+      "defaultF": 794,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0.172,
+      "mundoX": 21.019,
+      "mundoY": 32.7618,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBR (1)",
+          "puntos": [
+            {
+              "x": 19.5803,
+              "y": 32.8828
+            },
+            {
+              "x": 19.5733,
+              "y": 35.1371
+            },
+            {
+              "x": 22.4926,
+              "y": 33.9568
+            },
+            {
+              "x": 22.4352,
+              "y": 31.4876
+            },
+            {
+              "x": 21.9225,
+              "y": 31.7427
+            },
+            {
+              "x": 21.9193,
+              "y": 32.8805
+            },
+            {
+              "x": 21.2416,
+              "y": 33.1989
+            },
+            {
+              "x": 21.2196,
+              "y": 32.0768
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level10",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBL (1)",
+      "ruta": "SceneData/WallpaperBL (1)",
+      "anchorID": -1257018367,
+      "groupNum": -1,
+      "defaultF": 794,
+      "flipped": true,
+      "xOffset": 0.185,
+      "yOffset": 0.083,
+      "mundoX": 18.5346,
+      "mundoY": 32.7601,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBL (1)",
+          "puntos": [
+            {
+              "x": 19.5626,
+              "y": 32.8228
+            },
+            {
+              "x": 19.5626,
+              "y": 34.2287
+            },
+            {
+              "x": 17.5066,
+              "y": 33.3894
+            },
+            {
+              "x": 17.5486,
+              "y": 31.83
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level11",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL1 (1)",
+      "ruta": "Rosemary's Shop/DreamHouse_Environment_RosemaryShop_0/FloorL1 (1)",
+      "anchorID": 1695730436,
+      "groupNum": 0,
+      "defaultF": 246,
+      "flipped": false,
+      "xOffset": 0.029,
+      "yOffset": 0.076,
+      "mundoX": -20.217,
+      "mundoY": 31.522,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -20.4281,
+              "y": 30.3537
+            },
+            {
+              "x": -22.4518,
+              "y": 31.4951
+            },
+            {
+              "x": -20.1328,
+              "y": 32.6503
+            },
+            {
+              "x": -19.9823,
+              "y": 32.5724
+            },
+            {
+              "x": -19.8347,
+              "y": 32.6504
+            },
+            {
+              "x": -17.8742,
+              "y": 31.6588
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level11",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperR",
+      "ruta": "Rosemary's Shop/WallpaperR",
+      "anchorID": 2024472814,
+      "groupNum": -1,
+      "defaultF": 253,
+      "flipped": false,
+      "xOffset": 0.178,
+      "yOffset": 0.069,
+      "mundoX": -19.2061,
+      "mundoY": 32.6856,
+      "poligonos": [
+        {
+          "objeto": "WallpaperR",
+          "puntos": [
+            {
+              "x": -19.948,
+              "y": 32.6426
+            },
+            {
+              "x": -19.9373,
+              "y": 34.277
+            },
+            {
+              "x": -18.4427,
+              "y": 33.7286
+            },
+            {
+              "x": -18.4642,
+              "y": 31.9222
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level11",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperL",
+      "ruta": "Rosemary's Shop/WallpaperL",
+      "anchorID": 868957347,
+      "groupNum": -1,
+      "defaultF": 253,
+      "flipped": true,
+      "xOffset": 0.246,
+      "yOffset": 0.116,
+      "mundoX": -21.2573,
+      "mundoY": 32.5345,
+      "poligonos": [
+        {
+          "objeto": "WallpaperL",
+          "puntos": [
+            {
+              "x": -20.0819,
+              "y": 32.629
+            },
+            {
+              "x": -20.1122,
+              "y": 34.2541
+            },
+            {
+              "x": -22.0239,
+              "y": 33.4288
+            },
+            {
+              "x": -21.9686,
+              "y": 33.0412
+            },
+            {
+              "x": -21.8169,
+              "y": 33.0917
+            },
+            {
+              "x": -21.4774,
+              "y": 32.8943
+            },
+            {
+              "x": -21.4678,
+              "y": 32.1359
+            },
+            {
+              "x": -22.1839,
+              "y": 31.7965
+            },
+            {
+              "x": -22.1742,
+              "y": 32.6493
+            },
+            {
+              "x": -22.1275,
+              "y": 32.81
+            },
+            {
+              "x": -22.0678,
+              "y": 32.9236
+            },
+            {
+              "x": -21.9711,
+              "y": 33.0384
+            },
+            {
+              "x": -21.9469,
+              "y": 33.4661
+            },
+            {
+              "x": -22.481,
+              "y": 33.2322
+            },
+            {
+              "x": -22.4725,
+              "y": 31.4225
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level12",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Floor",
+      "anchorID": -1496770348,
+      "groupNum": 0,
+      "defaultF": 885,
+      "flipped": false,
+      "xOffset": 0.089,
+      "yOffset": 0.191,
+      "mundoX": 0.287,
+      "mundoY": -42.279,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": 0.238,
+              "y": -43.503
+            },
+            {
+              "x": -2.2738,
+              "y": -42.2465
+            },
+            {
+              "x": 0.2841,
+              "y": -40.9723
+            },
+            {
+              "x": 1.6305,
+              "y": -41.6396
+            },
+            {
+              "x": 1.6305,
+              "y": -41.6923
+            },
+            {
+              "x": 2.731,
+              "y": -42.2475
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level12",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBL (1)",
+      "ruta": "SceneData/WallpaperBL (1)",
+      "anchorID": 1634081498,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": true,
+      "xOffset": 0.121,
+      "yOffset": 0.146,
+      "mundoX": -1.045,
+      "mundoY": -41.121,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBL (1)",
+          "puntos": [
+            {
+              "x": 0.24,
+              "y": -41.0089
+            },
+            {
+              "x": 0.2337,
+              "y": -39.6066
+            },
+            {
+              "x": 0.0802,
+              "y": -40.1941
+            },
+            {
+              "x": 0.0807,
+              "y": -40.7628
+            },
+            {
+              "x": -0.58,
+              "y": -41.064
+            },
+            {
+              "x": -0.6093,
+              "y": -40.5076
+            },
+            {
+              "x": 0.0807,
+              "y": -40.1814
+            },
+            {
+              "x": 0.239,
+              "y": -39.6287
+            },
+            {
+              "x": -2.2766,
+              "y": -40.8581
+            },
+            {
+              "x": -2.2814,
+              "y": -42.2569
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level12",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperBR (1)",
+      "ruta": "SceneData/WallpaperBR (1)",
+      "anchorID": 1921222985,
+      "groupNum": -1,
+      "defaultF": 254,
+      "flipped": false,
+      "xOffset": 0.123,
+      "yOffset": 0.08,
+      "mundoX": 2.2627,
+      "mundoY": -41.2442,
+      "poligonos": [
+        {
+          "objeto": "WallpaperBR (1)",
+          "puntos": [
+            {
+              "x": 1.7444,
+              "y": -41.7507
+            },
+            {
+              "x": 1.729,
+              "y": -40.2109
+            },
+            {
+              "x": 2.7446,
+              "y": -40.7068
+            },
+            {
+              "x": 2.7522,
+              "y": -42.2584
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level13",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL2 (1)",
+      "ruta": "SceneData/Sprite/FloorL2 (1)",
+      "anchorID": 1910440199,
+      "groupNum": 3,
+      "defaultF": 67,
+      "flipped": false,
+      "xOffset": 0.107,
+      "yOffset": 0.038,
+      "mundoX": 21.941,
+      "mundoY": -13.806,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": 19.6243,
+              "y": -13.3483
+            },
+            {
+              "x": 21.1153,
+              "y": -12.6101
+            },
+            {
+              "x": 24.2537,
+              "y": -14.1692
+            },
+            {
+              "x": 22.7424,
+              "y": -14.9441
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level13",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL2",
+      "ruta": "SceneData/Sprite/FloorL2",
+      "anchorID": -1251440245,
+      "groupNum": 2,
+      "defaultF": 67,
+      "flipped": false,
+      "xOffset": 0.15,
+      "yOffset": 0.183,
+      "mundoX": 18.852,
+      "mundoY": -12.595,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": 17.9895,
+              "y": -13.5012
+            },
+            {
+              "x": 16.6905,
+              "y": -12.8619
+            },
+            {
+              "x": 19.2602,
+              "y": -11.618
+            },
+            {
+              "x": 21.0369,
+              "y": -12.501
+            },
+            {
+              "x": 19.5159,
+              "y": -13.2642
+            },
+            {
+              "x": 18.9564,
+              "y": -12.9917
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level13",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperTR (3)",
+      "ruta": "SceneData/Sprite/WallpaperTR (3)",
+      "anchorID": -349950713,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": true,
+      "xOffset": 0.094,
+      "yOffset": 0.082,
+      "mundoX": 18.2997,
+      "mundoY": -11.7672,
+      "poligonos": [
+        {
+          "objeto": "New Sprite (2)",
+          "puntos": [
+            {
+              "x": 19.171,
+              "y": -11.7032
+            },
+            {
+              "x": 19.154,
+              "y": -10.4891
+            },
+            {
+              "x": 17.3685,
+              "y": -11.2691
+            },
+            {
+              "x": 17.4208,
+              "y": -12.577
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level13",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperTR (1)",
+      "ruta": "SceneData/Sprite/WallpaperTR (1)",
+      "anchorID": -1138057585,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": false,
+      "xOffset": 0.05,
+      "yOffset": 0.17,
+      "mundoX": 20.8584,
+      "mundoY": -15.4355,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": 22.8089,
+              "y": -17.0158
+            },
+            {
+              "x": 21.6174,
+              "y": -16.4028
+            },
+            {
+              "x": 21.6224,
+              "y": -16.2492
+            },
+            {
+              "x": 20.2048,
+              "y": -15.5461
+            },
+            {
+              "x": 20.0705,
+              "y": -15.6177
+            },
+            {
+              "x": 18.9195,
+              "y": -15.0389
+            },
+            {
+              "x": 18.9318,
+              "y": -14.4112
+            },
+            {
+              "x": 19.141,
+              "y": -14.5343
+            },
+            {
+              "x": 20.3596,
+              "y": -13.9312
+            },
+            {
+              "x": 22.7474,
+              "y": -15.0882
+            },
+            {
+              "x": 23.1857,
+              "y": -14.9328
+            },
+            {
+              "x": 23.5058,
+              "y": -14.787
+            },
+            {
+              "x": 23.8765,
+              "y": -15.0354
+            },
+            {
+              "x": 24.158,
+              "y": -15.2499
+            },
+            {
+              "x": 24.1452,
+              "y": -15.764
+            },
+            {
+              "x": 23.2275,
+              "y": -15.3343
+            },
+            {
+              "x": 22.8112,
+              "y": -15.1745
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level13",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL1 (3)",
+      "ruta": "SceneData/Sprite/FloorL1 (3)",
+      "anchorID": 683528870,
+      "groupNum": 1,
+      "defaultF": 67,
+      "flipped": false,
+      "xOffset": 0.069,
+      "yOffset": 0.013,
+      "mundoX": 20.36,
+      "mundoY": -17.095,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": 19.9797,
+              "y": -19.122
+            },
+            {
+              "x": 16.732,
+              "y": -17.4461
+            },
+            {
+              "x": 17.2399,
+              "y": -17.182
+            },
+            {
+              "x": 17.2393,
+              "y": -16.916
+            },
+            {
+              "x": 18.0806,
+              "y": -16.4898
+            },
+            {
+              "x": 18.0806,
+              "y": -16.0155
+            },
+            {
+              "x": 17.0154,
+              "y": -15.4533
+            },
+            {
+              "x": 17.6324,
+              "y": -15.15
+            },
+            {
+              "x": 18.0329,
+              "y": -15.3662
+            },
+            {
+              "x": 18.8501,
+              "y": -14.9801
+            },
+            {
+              "x": 20.0647,
+              "y": -15.6182
+            },
+            {
+              "x": 20.21,
+              "y": -15.5365
+            },
+            {
+              "x": 21.6143,
+              "y": -16.2346
+            },
+            {
+              "x": 21.6152,
+              "y": -16.3903
+            },
+            {
+              "x": 22.7589,
+              "y": -16.9508
+            },
+            {
+              "x": 22.8793,
+              "y": -16.8935
+            },
+            {
+              "x": 23.3009,
+              "y": -16.6617
+            },
+            {
+              "x": 24.0435,
+              "y": -17.0427
+            },
+            {
+              "x": 22.6194,
+              "y": -17.7951
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level13",
+      "clase": "FloorAnchor",
+      "nombre": "FloorL1 (2)",
+      "ruta": "SceneData/Sprite/FloorL1 (2)",
+      "anchorID": 450254282,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.088,
+      "yOffset": 0,
+      "mundoX": 16.603,
+      "mundoY": -16.385,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": 16.3066,
+              "y": -17.1604
+            },
+            {
+              "x": 15.1598,
+              "y": -16.6121
+            },
+            {
+              "x": 17.1466,
+              "y": -15.6097
+            },
+            {
+              "x": 18.0138,
+              "y": -16.0383
+            },
+            {
+              "x": 18.0053,
+              "y": -16.3104
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level13",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallpaperTR (2)",
+      "ruta": "SceneData/Sprite/WallpaperTR (2)",
+      "anchorID": -571040144,
+      "groupNum": -1,
+      "defaultF": 251,
+      "flipped": false,
+      "xOffset": 0.038,
+      "yOffset": 0.239,
+      "mundoX": 20.168,
+      "mundoY": -11.6484,
+      "poligonos": [
+        {
+          "objeto": "New Sprite (1)",
+          "puntos": [
+            {
+              "x": 20.012,
+              "y": -12.0072
+            },
+            {
+              "x": 19.3588,
+              "y": -11.6645
+            },
+            {
+              "x": 19.3588,
+              "y": -11.021
+            },
+            {
+              "x": 19.6054,
+              "y": -10.7804
+            },
+            {
+              "x": 19.9182,
+              "y": -10.9608
+            },
+            {
+              "x": 19.7738,
+              "y": -11.045
+            },
+            {
+              "x": 19.7979,
+              "y": -11.4239
+            },
+            {
+              "x": 20.1076,
+              "y": -11.8359
+            },
+            {
+              "x": 20.5975,
+              "y": -11.8161
+            },
+            {
+              "x": 20.6289,
+              "y": -11.538
+            },
+            {
+              "x": 20.5124,
+              "y": -11.167
+            },
+            {
+              "x": 21.0645,
+              "y": -11.4838
+            },
+            {
+              "x": 20.9916,
+              "y": -12.497
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L2_2",
+      "ruta": "SceneData/GameObject/Platform_L2/Wall_L2_2",
+      "anchorID": 1355124652,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": false,
+      "xOffset": 0.141,
+      "yOffset": 0.171,
+      "mundoX": -16.6819,
+      "mundoY": -28.3106,
+      "poligonos": [
+        {
+          "objeto": "Wall_L2_2",
+          "puntos": [
+            {
+              "x": -15.4547,
+              "y": -27.5454
+            },
+            {
+              "x": -15.4257,
+              "y": -30.1229
+            },
+            {
+              "x": -17.992,
+              "y": -28.8312
+            },
+            {
+              "x": -17.9986,
+              "y": -27.9058
+            },
+            {
+              "x": -16.5386,
+              "y": -27.1476
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L1_1 (1)",
+      "ruta": "SceneData/Wall_L1_1 (1)",
+      "anchorID": -852939649,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": true,
+      "xOffset": 0.065,
+      "yOffset": 0.055,
+      "mundoX": -23.3856,
+      "mundoY": -31.9987,
+      "poligonos": [
+        {
+          "objeto": "Wall_L1_1 (1)",
+          "puntos": [
+            {
+              "x": -24.7967,
+              "y": -33.984
+            },
+            {
+              "x": -22.0148,
+              "y": -32.5869
+            },
+            {
+              "x": -22.0225,
+              "y": -31.3248
+            },
+            {
+              "x": -23.2827,
+              "y": -30.7483
+            },
+            {
+              "x": -24.8111,
+              "y": -31.3496
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "FloorAnchor",
+      "nombre": "Floor_L1",
+      "ruta": "SceneData/Floor_L1",
+      "anchorID": 1017047559,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.2,
+      "yOffset": 0.059,
+      "mundoX": -19.992,
+      "mundoY": -34.644,
+      "poligonos": [
+        {
+          "objeto": "Floor_L1",
+          "puntos": [
+            {
+              "x": -20.1153,
+              "y": -33.4306
+            },
+            {
+              "x": -19.9352,
+              "y": -33.4307
+            },
+            {
+              "x": -19.4612,
+              "y": -33.1961
+            },
+            {
+              "x": -19.3494,
+              "y": -33.2504
+            },
+            {
+              "x": -17.9938,
+              "y": -32.5868
+            },
+            {
+              "x": -15.0044,
+              "y": -34.0793
+            },
+            {
+              "x": -19.4845,
+              "y": -36.3379
+            },
+            {
+              "x": -20.4652,
+              "y": -36.3494
+            },
+            {
+              "x": -21.5036,
+              "y": -35.8094
+            },
+            {
+              "x": -21.2361,
+              "y": -35.674
+            },
+            {
+              "x": -22.177,
+              "y": -35.1957
+            },
+            {
+              "x": -22.476,
+              "y": -35.3468
+            },
+            {
+              "x": -25.0067,
+              "y": -34.0903
+            },
+            {
+              "x": -21.9937,
+              "y": -32.5847
+            },
+            {
+              "x": -20.675,
+              "y": -33.2465
+            },
+            {
+              "x": -20.5714,
+              "y": -33.1992
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L1_4 (1)",
+      "ruta": "SceneData/Wall_L1_4 (1)",
+      "anchorID": 1562059134,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": true,
+      "xOffset": 0.041,
+      "yOffset": 0.212,
+      "mundoX": -18.6732,
+      "mundoY": -32.1852,
+      "poligonos": [
+        {
+          "objeto": "Wall_L1_4 (1)",
+          "puntos": [
+            {
+              "x": -19.2555,
+              "y": -31.7352
+            },
+            {
+              "x": -19.2497,
+              "y": -33.22
+            },
+            {
+              "x": -18.0953,
+              "y": -32.6531
+            },
+            {
+              "x": -18.0922,
+              "y": -31.1323
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L1_3 (1)",
+      "ruta": "SceneData/Wall_L1_3 (1)",
+      "anchorID": 1877336580,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": false,
+      "xOffset": 0.018,
+      "yOffset": 0.235,
+      "mundoX": -21.3459,
+      "mundoY": -32.1767,
+      "poligonos": [
+        {
+          "objeto": "Wall_L1_3 (1)",
+          "puntos": [
+            {
+              "x": -20.7615,
+              "y": -31.7342
+            },
+            {
+              "x": -20.7652,
+              "y": -33.2124
+            },
+            {
+              "x": -21.932,
+              "y": -32.6288
+            },
+            {
+              "x": -21.9248,
+              "y": -31.1313
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L2_1",
+      "ruta": "SceneData/GameObject/Platform_L2/Wall_L2_1",
+      "anchorID": 636683912,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": true,
+      "xOffset": 0.477,
+      "yOffset": 0.276,
+      "mundoX": -23.0641,
+      "mundoY": -28.4289,
+      "poligonos": [
+        {
+          "objeto": "Wall_L2_1",
+          "puntos": [
+            {
+              "x": -24.0042,
+              "y": -29.8297
+            },
+            {
+              "x": -22.0131,
+              "y": -28.829
+            },
+            {
+              "x": -22.0048,
+              "y": -27.8555
+            },
+            {
+              "x": -23.2731,
+              "y": -27.1989
+            },
+            {
+              "x": -24.0254,
+              "y": -28.4314
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L3_2",
+      "ruta": "SceneData/GameObject/Platform_L3/Wall_L3_2",
+      "anchorID": -2003690543,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": false,
+      "xOffset": 0.765,
+      "yOffset": 0.182,
+      "mundoX": -16.9891,
+      "mundoY": -25.3197,
+      "poligonos": [
+        {
+          "objeto": "Wall_L3_2",
+          "puntos": [
+            {
+              "x": -15.8368,
+              "y": -25.997
+            },
+            {
+              "x": -15.7794,
+              "y": -26.2962
+            },
+            {
+              "x": -15.7794,
+              "y": -26.5657
+            },
+            {
+              "x": -15.7937,
+              "y": -26.6881
+            },
+            {
+              "x": -18.7711,
+              "y": -25.2023
+            },
+            {
+              "x": -18.7866,
+              "y": -24.1023
+            },
+            {
+              "x": -18.6133,
+              "y": -24.11
+            },
+            {
+              "x": -17.3921,
+              "y": -24.4505
+            },
+            {
+              "x": -16.797,
+              "y": -24.6435
+            },
+            {
+              "x": -16.342,
+              "y": -25.1418
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L3_4",
+      "ruta": "SceneData/GameObject/Platform_L3/Wall_L3_4",
+      "anchorID": 2138298758,
+      "groupNum": -1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.835,
+      "yOffset": 0.218,
+      "mundoX": -18.405,
+      "mundoY": -26.125,
+      "poligonos": [
+        {
+          "objeto": "Wall_L3_4",
+          "puntos": [
+            {
+              "x": -17.5505,
+              "y": -24.7332
+            },
+            {
+              "x": -17.5531,
+              "y": -26.2117
+            },
+            {
+              "x": -18.7139,
+              "y": -25.6272
+            },
+            {
+              "x": -18.7138,
+              "y": -24.1303
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L1_2 (1)",
+      "ruta": "SceneData/Wall_L1_2 (1)",
+      "anchorID": 495018548,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": false,
+      "xOffset": 0.176,
+      "yOffset": 0.182,
+      "mundoX": -16.6423,
+      "mundoY": -32.2178,
+      "poligonos": [
+        {
+          "objeto": "Wall_L1_2 (1)",
+          "puntos": [
+            {
+              "x": -18.0203,
+              "y": -31.7167
+            },
+            {
+              "x": -18.003,
+              "y": -32.6061
+            },
+            {
+              "x": -15.9466,
+              "y": -33.6153
+            },
+            {
+              "x": -15.7048,
+              "y": -32.7042
+            },
+            {
+              "x": -15.8697,
+              "y": -32.1495
+            },
+            {
+              "x": -16.2189,
+              "y": -31.603
+            },
+            {
+              "x": -16.7329,
+              "y": -31.13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L2_4",
+      "ruta": "SceneData/GameObject/Platform_L2/Wall_L2_4",
+      "anchorID": 1387903347,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": true,
+      "xOffset": 0.235,
+      "yOffset": 0.212,
+      "mundoX": -18.6768,
+      "mundoY": -28.4274,
+      "poligonos": [
+        {
+          "objeto": "Wall_L2_4",
+          "puntos": [
+            {
+              "x": -19.2555,
+              "y": -27.9832
+            },
+            {
+              "x": -19.2596,
+              "y": -29.4642
+            },
+            {
+              "x": -18.0997,
+              "y": -28.8819
+            },
+            {
+              "x": -18.0922,
+              "y": -27.3803
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L2_3",
+      "ruta": "SceneData/GameObject/Platform_L2/Wall_L2_3",
+      "anchorID": 1667414859,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": false,
+      "xOffset": 0.424,
+      "yOffset": 0.224,
+      "mundoX": -21.3435,
+      "mundoY": -28.4248,
+      "poligonos": [
+        {
+          "objeto": "Wall_L2_3",
+          "puntos": [
+            {
+              "x": -20.7615,
+              "y": -27.9822
+            },
+            {
+              "x": -20.762,
+              "y": -29.4588
+            },
+            {
+              "x": -21.9259,
+              "y": -28.879
+            },
+            {
+              "x": -21.9248,
+              "y": -27.3793
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L3_1",
+      "ruta": "SceneData/GameObject/Platform_L3/Wall_L3_1",
+      "anchorID": 303531675,
+      "groupNum": -1,
+      "defaultF": 1,
+      "flipped": true,
+      "xOffset": 0.894,
+      "yOffset": 0.282,
+      "mundoX": -22.5118,
+      "mundoY": -25.0498,
+      "poligonos": [
+        {
+          "objeto": "Wall_L3_1",
+          "puntos": [
+            {
+              "x": -24.0418,
+              "y": -26.6252
+            },
+            {
+              "x": -21.2558,
+              "y": -25.2324
+            },
+            {
+              "x": -21.2584,
+              "y": -24.1418
+            },
+            {
+              "x": -21.9642,
+              "y": -24.0888
+            },
+            {
+              "x": -24.039,
+              "y": -25.1608
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "FloorAnchor",
+      "nombre": "Floor_L3",
+      "ruta": "SceneData/GameObject/Platform_L3/Floor_L3",
+      "anchorID": 614905356,
+      "groupNum": 2,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.2,
+      "yOffset": 0.059,
+      "mundoX": -20.7451,
+      "mundoY": -26.0793,
+      "poligonos": [
+        {
+          "objeto": "Floor_L3",
+          "puntos": [
+            {
+              "x": -20.4082,
+              "y": -25.2358
+            },
+            {
+              "x": -20.1725,
+              "y": -25.1236
+            },
+            {
+              "x": -19.9117,
+              "y": -25.1111
+            },
+            {
+              "x": -19.7979,
+              "y": -25.1358
+            },
+            {
+              "x": -19.6322,
+              "y": -25.2323
+            },
+            {
+              "x": -19.38,
+              "y": -25.2199
+            },
+            {
+              "x": -19.1228,
+              "y": -25.3609
+            },
+            {
+              "x": -18.7786,
+              "y": -25.1889
+            },
+            {
+              "x": -15.7333,
+              "y": -26.7188
+            },
+            {
+              "x": -19.5506,
+              "y": -28.6208
+            },
+            {
+              "x": -20.5509,
+              "y": -28.6192
+            },
+            {
+              "x": -23.3115,
+              "y": -27.2076
+            },
+            {
+              "x": -22.6824,
+              "y": -26.8931
+            },
+            {
+              "x": -23.5229,
+              "y": -26.4603
+            },
+            {
+              "x": -24.1748,
+              "y": -26.7746
+            },
+            {
+              "x": -24.2833,
+              "y": -26.6984
+            },
+            {
+              "x": -21.2868,
+              "y": -25.2041
+            },
+            {
+              "x": -20.9747,
+              "y": -25.3764
+            },
+            {
+              "x": -20.8819,
+              "y": -25.3248
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "FloorAnchor",
+      "nombre": "Floor_L2",
+      "ruta": "SceneData/GameObject/Platform_L2/Floor_L2",
+      "anchorID": -220685715,
+      "groupNum": 1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.176,
+      "yOffset": 0.071,
+      "mundoX": -19.3638,
+      "mundoY": -30.1585,
+      "poligonos": [
+        {
+          "objeto": "Floor_L2",
+          "puntos": [
+            {
+              "x": -20.1219,
+              "y": -29.6862
+            },
+            {
+              "x": -19.9313,
+              "y": -29.6863
+            },
+            {
+              "x": -19.4678,
+              "y": -29.4623
+            },
+            {
+              "x": -19.3508,
+              "y": -29.5126
+            },
+            {
+              "x": -17.9836,
+              "y": -28.8302
+            },
+            {
+              "x": -15.2163,
+              "y": -30.2067
+            },
+            {
+              "x": -15.796,
+              "y": -30.4997
+            },
+            {
+              "x": -16.2286,
+              "y": -30.2897
+            },
+            {
+              "x": -17.0556,
+              "y": -30.6969
+            },
+            {
+              "x": -16.6557,
+              "y": -30.9014
+            },
+            {
+              "x": -19.4845,
+              "y": -32.3415
+            },
+            {
+              "x": -20.4652,
+              "y": -32.353
+            },
+            {
+              "x": -24.0587,
+              "y": -30.572
+            },
+            {
+              "x": -24.0996,
+              "y": -29.8705
+            },
+            {
+              "x": -22.0125,
+              "y": -28.8289
+            },
+            {
+              "x": -20.6803,
+              "y": -29.5022
+            },
+            {
+              "x": -20.5767,
+              "y": -29.4548
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level28",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L3_3",
+      "ruta": "SceneData/GameObject/Platform_L3/Wall_L3_3",
+      "anchorID": -956470798,
+      "groupNum": -1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.029,
+      "yOffset": 0.218,
+      "mundoX": -21.616,
+      "mundoY": -26.12,
+      "poligonos": [
+        {
+          "objeto": "Wall_L3_3",
+          "puntos": [
+            {
+              "x": -20.7615,
+              "y": -24.7282
+            },
+            {
+              "x": -20.7641,
+              "y": -26.2067
+            },
+            {
+              "x": -21.9249,
+              "y": -25.6222
+            },
+            {
+              "x": -21.9248,
+              "y": -24.1253
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level39",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_R",
+      "ruta": "SceneData/GameObject/Base/FloorCornerR/Wall_R",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.176,
+      "yOffset": 0.182,
+      "mundoX": 2.88,
+      "mundoY": -2.849,
+      "poligonos": [
+        {
+          "objeto": "Wall_R",
+          "puntos": [
+            {
+              "x": 2.88,
+              "y": -0.049
+            },
+            {
+              "x": 2.88,
+              "y": -2.849
+            },
+            {
+              "x": 0.2,
+              "y": -1.509
+            },
+            {
+              "x": 0.2,
+              "y": 1.291
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level39",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/GameObject/Floor",
+      "anchorID": 0,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.176,
+      "yOffset": 0.071,
+      "mundoX": 0,
+      "mundoY": -4.435,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": 0,
+              "y": -4.435
+            },
+            {
+              "x": 3.026,
+              "y": -2.922
+            },
+            {
+              "x": 0,
+              "y": -1.409
+            },
+            {
+              "x": -3.026,
+              "y": -2.922
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level39",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall_L",
+      "ruta": "SceneData/GameObject/Base/FloorCornerL/Wall_L",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.065,
+      "yOffset": 0.023,
+      "mundoX": -2.88,
+      "mundoY": -2.849,
+      "poligonos": [
+        {
+          "objeto": "Wall_L",
+          "puntos": [
+            {
+              "x": -2.88,
+              "y": -0.049
+            },
+            {
+              "x": -2.88,
+              "y": -2.849
+            },
+            {
+              "x": -5.56,
+              "y": -1.509
+            },
+            {
+              "x": -5.56,
+              "y": 1.291
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level48",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Train/SecondCarriage/Interior/Floor",
+      "anchorID": -394394225,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.373,
+      "yOffset": 0.136,
+      "mundoX": -92,
+      "mundoY": -45,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -87.4674,
+              "y": -44.6096
+            },
+            {
+              "x": -94.5645,
+              "y": -48.1538
+            },
+            {
+              "x": -96.8152,
+              "y": -47.0281
+            },
+            {
+              "x": -89.6978,
+              "y": -43.4695
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level48",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Train/ThirdCarriage/Interior/Wall",
+      "anchorID": 2002203782,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": false,
+      "xOffset": 0.065,
+      "yOffset": 0.023,
+      "mundoX": -84,
+      "mundoY": -41,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -81.5582,
+              "y": -41.8371
+            },
+            {
+              "x": -86.4174,
+              "y": -39.4055
+            },
+            {
+              "x": -86.4309,
+              "y": -38.6287
+            },
+            {
+              "x": -85.996,
+              "y": -38.8389
+            },
+            {
+              "x": -85.996,
+              "y": -39.3846
+            },
+            {
+              "x": -84.7746,
+              "y": -39.9904
+            },
+            {
+              "x": -84.7746,
+              "y": -39.4599
+            },
+            {
+              "x": -84.495,
+              "y": -39.592
+            },
+            {
+              "x": -84.4891,
+              "y": -40.1419
+            },
+            {
+              "x": -83.2731,
+              "y": -40.739
+            },
+            {
+              "x": -83.2775,
+              "y": -40.2084
+            },
+            {
+              "x": -82.9957,
+              "y": -40.3559
+            },
+            {
+              "x": -82.9891,
+              "y": -40.8865
+            },
+            {
+              "x": -81.7805,
+              "y": -41.4941
+            },
+            {
+              "x": -81.7733,
+              "y": -40.9655
+            },
+            {
+              "x": -81.5478,
+              "y": -41.0754
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level48",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Train/SecondCarriage/Interior/Wall",
+      "anchorID": -917149526,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": false,
+      "xOffset": 0.065,
+      "yOffset": 0.023,
+      "mundoX": -92,
+      "mundoY": -45,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -87.3221,
+              "y": -46.9801
+            },
+            {
+              "x": -93.4354,
+              "y": -43.8991
+            },
+            {
+              "x": -93.4373,
+              "y": -43.0364
+            },
+            {
+              "x": -93.1934,
+              "y": -43.1599
+            },
+            {
+              "x": -93.196,
+              "y": -43.6037
+            },
+            {
+              "x": -92.6718,
+              "y": -43.8865
+            },
+            {
+              "x": -89.6984,
+              "y": -44.9105
+            },
+            {
+              "x": -89.4377,
+              "y": -45.0314
+            },
+            {
+              "x": -89.4457,
+              "y": -45.4892
+            },
+            {
+              "x": -88.3782,
+              "y": -46.0345
+            },
+            {
+              "x": -88.3714,
+              "y": -45.3786
+            },
+            {
+              "x": -87.3179,
+              "y": -45.9031
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level48",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall (1)",
+      "ruta": "SceneData/Train/ThirdCarriage/Interior/Wall (1)",
+      "anchorID": 806716747,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": true,
+      "xOffset": 0.065,
+      "yOffset": 0.023,
+      "mundoX": -80.475,
+      "mundoY": -39.563,
+      "poligonos": [
+        {
+          "objeto": "Wall (1)",
+          "puntos": [
+            {
+              "x": -81.3715,
+              "y": -40.4054
+            },
+            {
+              "x": -79.4807,
+              "y": -39.4609
+            },
+            {
+              "x": -79.4872,
+              "y": -38.5054
+            },
+            {
+              "x": -80.4017,
+              "y": -38.9118
+            },
+            {
+              "x": -80.5018,
+              "y": -39.1407
+            },
+            {
+              "x": -79.7694,
+              "y": -38.7716
+            },
+            {
+              "x": -79.7671,
+              "y": -39.3759
+            },
+            {
+              "x": -80.9813,
+              "y": -39.9882
+            },
+            {
+              "x": -80.9837,
+              "y": -39.4616
+            },
+            {
+              "x": -81.3801,
+              "y": -39.2618
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level48",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Train/FrontCarriage/Interior/Wall",
+      "anchorID": 297680542,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -100,
+      "mundoY": -49,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -97.9304,
+              "y": -49.5553
+            },
+            {
+              "x": -97.9302,
+              "y": -49.6453
+            },
+            {
+              "x": -101.4348,
+              "y": -47.8954
+            },
+            {
+              "x": -101.4429,
+              "y": -47.1254
+            },
+            {
+              "x": -101.3324,
+              "y": -47.1801
+            },
+            {
+              "x": -101.3395,
+              "y": -47.7004
+            },
+            {
+              "x": -100.1269,
+              "y": -48.3087
+            },
+            {
+              "x": -100.1269,
+              "y": -47.7872
+            },
+            {
+              "x": -99.8308,
+              "y": -47.9356
+            },
+            {
+              "x": -99.8317,
+              "y": -48.4521
+            },
+            {
+              "x": -98.6157,
+              "y": -49.0615
+            },
+            {
+              "x": -98.6142,
+              "y": -48.5463
+            },
+            {
+              "x": -98.3286,
+              "y": -48.6832
+            },
+            {
+              "x": -98.3354,
+              "y": -49.2011
+            },
+            {
+              "x": -97.8386,
+              "y": -49.4445
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level48",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Train/FrontCarriage/Interior/Floor",
+      "anchorID": 1347192656,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -100,
+      "mundoY": -49,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -95.6737,
+              "y": -48.4721
+            },
+            {
+              "x": -102.893,
+              "y": -52.2002
+            },
+            {
+              "x": -104.4221,
+              "y": -51.4451
+            },
+            {
+              "x": -104.3808,
+              "y": -51.0261
+            },
+            {
+              "x": -102.0781,
+              "y": -49.6527
+            },
+            {
+              "x": -97.6971,
+              "y": -47.4621
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level48",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Train/ThirdCarriage/Interior/Floor",
+      "anchorID": -1332069797,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.373,
+      "yOffset": 0.136,
+      "mundoX": -84,
+      "mundoY": -41,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -79.3125,
+              "y": -40.5492
+            },
+            {
+              "x": -86.5645,
+              "y": -44.1538
+            },
+            {
+              "x": -88.8152,
+              "y": -43.0281
+            },
+            {
+              "x": -81.5684,
+              "y": -39.3929
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level49",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallR",
+      "ruta": "SceneData/Interior/L1/WallR",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 253,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0.225,
+      "mundoX": -217.14,
+      "mundoY": -10.1,
+      "poligonos": [
+        {
+          "objeto": "WallR",
+          "puntos": [
+            {
+              "x": -218.253,
+              "y": -10.1751
+            },
+            {
+              "x": -216.456,
+              "y": -9.2726
+            },
+            {
+              "x": -216.456,
+              "y": -9.4509
+            },
+            {
+              "x": -216.3517,
+              "y": -9.4912
+            },
+            {
+              "x": -216.085,
+              "y": -9.3583
+            },
+            {
+              "x": -216.0848,
+              "y": -11.1296
+            },
+            {
+              "x": -216.2139,
+              "y": -11.1985
+            },
+            {
+              "x": -216.9973,
+              "y": -10.8074
+            },
+            {
+              "x": -216.9993,
+              "y": -10.6915
+            },
+            {
+              "x": -217.0893,
+              "y": -10.5755
+            },
+            {
+              "x": -217.6685,
+              "y": -10.2908
+            },
+            {
+              "x": -217.9864,
+              "y": -10.3025
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level49",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL",
+      "ruta": "SceneData/Interior/L2/WallL",
+      "anchorID": 1325877990,
+      "groupNum": -1,
+      "defaultF": 253,
+      "flipped": true,
+      "xOffset": 0.13,
+      "yOffset": 0.022,
+      "mundoX": -223.59,
+      "mundoY": -5.9,
+      "poligonos": [
+        {
+          "objeto": "WallL",
+          "puntos": [
+            {
+              "x": -221.6006,
+              "y": -5.8471
+            },
+            {
+              "x": -221.5984,
+              "y": -3.9753
+            },
+            {
+              "x": -221.8044,
+              "y": -3.8733
+            },
+            {
+              "x": -222.54,
+              "y": -4.2459
+            },
+            {
+              "x": -222.5314,
+              "y": -4.3531
+            },
+            {
+              "x": -222.3986,
+              "y": -4.3184
+            },
+            {
+              "x": -222.2914,
+              "y": -4.3504
+            },
+            {
+              "x": -222.2097,
+              "y": -4.4006
+            },
+            {
+              "x": -222.1416,
+              "y": -4.4857
+            },
+            {
+              "x": -222.115,
+              "y": -4.612
+            },
+            {
+              "x": -222.1196,
+              "y": -5.7542
+            },
+            {
+              "x": -222.9487,
+              "y": -6.1731
+            },
+            {
+              "x": -222.9554,
+              "y": -5.0763
+            },
+            {
+              "x": -222.933,
+              "y": -4.8859
+            },
+            {
+              "x": -222.8716,
+              "y": -4.6905
+            },
+            {
+              "x": -222.7441,
+              "y": -4.4919
+            },
+            {
+              "x": -222.6268,
+              "y": -4.3974
+            },
+            {
+              "x": -222.5314,
+              "y": -4.353
+            },
+            {
+              "x": -222.54,
+              "y": -4.2457
+            },
+            {
+              "x": -224.5228,
+              "y": -5.2411
+            },
+            {
+              "x": -224.2388,
+              "y": -5.3798
+            },
+            {
+              "x": -224.2388,
+              "y": -5.5707
+            },
+            {
+              "x": -224.3855,
+              "y": -5.6513
+            },
+            {
+              "x": -224.3684,
+              "y": -5.7398
+            },
+            {
+              "x": -224.3684,
+              "y": -6.8822
+            },
+            {
+              "x": -225.1979,
+              "y": -7.2976
+            },
+            {
+              "x": -225.2091,
+              "y": -6.0688
+            },
+            {
+              "x": -225.1227,
+              "y": -5.8143
+            },
+            {
+              "x": -225.0532,
+              "y": -5.6983
+            },
+            {
+              "x": -225.0015,
+              "y": -5.6333
+            },
+            {
+              "x": -224.9418,
+              "y": -5.5831
+            },
+            {
+              "x": -225.3966,
+              "y": -5.361
+            },
+            {
+              "x": -225.3844,
+              "y": -7.6259
+            },
+            {
+              "x": -225.2624,
+              "y": -7.6874
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level49",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Interior/L2/Floor",
+      "anchorID": 2019626084,
+      "groupNum": 1,
+      "defaultF": 67,
+      "flipped": false,
+      "xOffset": 0.25,
+      "yOffset": 0.061,
+      "mundoX": -220.84,
+      "mundoY": -8.05,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -225.4488,
+              "y": -7.7799
+            },
+            {
+              "x": -221.483,
+              "y": -5.7879
+            },
+            {
+              "x": -220.3531,
+              "y": -6.3638
+            },
+            {
+              "x": -220.2312,
+              "y": -6.2992
+            },
+            {
+              "x": -220.2334,
+              "y": -6.0981
+            },
+            {
+              "x": -220.0221,
+              "y": -5.9736
+            },
+            {
+              "x": -219.8107,
+              "y": -5.8868
+            },
+            {
+              "x": -219.619,
+              "y": -5.9835
+            },
+            {
+              "x": -219.4896,
+              "y": -5.9245
+            },
+            {
+              "x": -219.3454,
+              "y": -6.0031
+            },
+            {
+              "x": -219.3446,
+              "y": -6.8638
+            },
+            {
+              "x": -217.9682,
+              "y": -7.5514
+            },
+            {
+              "x": -217.665,
+              "y": -7.5409
+            },
+            {
+              "x": -217.081,
+              "y": -7.8322
+            },
+            {
+              "x": -217.0018,
+              "y": -7.9392
+            },
+            {
+              "x": -216.9987,
+              "y": -8.0401
+            },
+            {
+              "x": -216.1918,
+              "y": -8.4403
+            },
+            {
+              "x": -220.2333,
+              "y": -10.4655
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level49",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL",
+      "ruta": "SceneData/Interior/L1/WallL",
+      "anchorID": 1325877990,
+      "groupNum": -1,
+      "defaultF": 253,
+      "flipped": true,
+      "xOffset": 0.13,
+      "yOffset": 0.022,
+      "mundoX": -223.177,
+      "mundoY": -10.173,
+      "poligonos": [
+        {
+          "objeto": "WallL",
+          "puntos": [
+            {
+              "x": -222.2424,
+              "y": -10.4266
+            },
+            {
+              "x": -222.2392,
+              "y": -10.1629
+            },
+            {
+              "x": -224.0698,
+              "y": -9.2441
+            },
+            {
+              "x": -224.0577,
+              "y": -11.1639
+            },
+            {
+              "x": -223.9031,
+              "y": -11.2545
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level49",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Interior/L1/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 0,
+      "defaultF": 67,
+      "flipped": false,
+      "xOffset": 0.13,
+      "yOffset": 0.124,
+      "mundoX": -220.49,
+      "mundoY": -11.85,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -220.2337,
+              "y": -13.2201
+            },
+            {
+              "x": -223.9885,
+              "y": -11.3114
+            },
+            {
+              "x": -222.2409,
+              "y": -10.4197
+            },
+            {
+              "x": -221.3818,
+              "y": -10.7656
+            },
+            {
+              "x": -220.2342,
+              "y": -11.682
+            },
+            {
+              "x": -218.7447,
+              "y": -10.915
+            },
+            {
+              "x": -218.7601,
+              "y": -10.4263
+            },
+            {
+              "x": -218.249,
+              "y": -10.1763
+            },
+            {
+              "x": -217.9812,
+              "y": -10.3012
+            },
+            {
+              "x": -217.8852,
+              "y": -10.2662
+            },
+            {
+              "x": -217.6607,
+              "y": -10.2934
+            },
+            {
+              "x": -217.0918,
+              "y": -10.579
+            },
+            {
+              "x": -216.972,
+              "y": -10.8169
+            },
+            {
+              "x": -216.208,
+              "y": -11.2056
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level49",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallR",
+      "ruta": "SceneData/Interior/L2/WallR",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 253,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0.225,
+      "mundoX": -218.65,
+      "mundoY": -6.31,
+      "poligonos": [
+        {
+          "objeto": "WallR",
+          "puntos": [
+            {
+              "x": -219.2286,
+              "y": -6.9211
+            },
+            {
+              "x": -219.2121,
+              "y": -5.358
+            },
+            {
+              "x": -220.4272,
+              "y": -4.7299
+            },
+            {
+              "x": -220.433,
+              "y": -6.3209
+            },
+            {
+              "x": -221.3671,
+              "y": -5.8544
+            },
+            {
+              "x": -221.3623,
+              "y": -3.9183
+            },
+            {
+              "x": -216.4527,
+              "y": -6.3692
+            },
+            {
+              "x": -216.4608,
+              "y": -6.678
+            },
+            {
+              "x": -216.0876,
+              "y": -6.8524
+            },
+            {
+              "x": -216.08,
+              "y": -8.4922
+            },
+            {
+              "x": -217.0038,
+              "y": -8.0371
+            },
+            {
+              "x": -217.0043,
+              "y": -7.9434
+            },
+            {
+              "x": -217.0916,
+              "y": -7.8315
+            },
+            {
+              "x": -217.6717,
+              "y": -7.5436
+            },
+            {
+              "x": -217.8629,
+              "y": -7.52
+            },
+            {
+              "x": -217.9682,
+              "y": -7.5544
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level52",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "Train/SecondCarriage/Interior/Floor",
+      "anchorID": 0,
+      "groupNum": 0,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.373,
+      "yOffset": 0.136,
+      "mundoX": -212.2,
+      "mundoY": -91.675,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -207.6674,
+              "y": -91.2846
+            },
+            {
+              "x": -214.7645,
+              "y": -94.8288
+            },
+            {
+              "x": -217.0152,
+              "y": -93.7031
+            },
+            {
+              "x": -209.8978,
+              "y": -90.1445
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level52",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "Train/SecondCarriage/Interior/Wall",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0.065,
+      "yOffset": 0.023,
+      "mundoX": -212.2,
+      "mundoY": -91.675,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -207.5221,
+              "y": -93.6551
+            },
+            {
+              "x": -213.6354,
+              "y": -90.5741
+            },
+            {
+              "x": -213.6373,
+              "y": -89.7114
+            },
+            {
+              "x": -213.3934,
+              "y": -89.8349
+            },
+            {
+              "x": -213.396,
+              "y": -90.2787
+            },
+            {
+              "x": -212.8718,
+              "y": -90.5615
+            },
+            {
+              "x": -209.8984,
+              "y": -91.5855
+            },
+            {
+              "x": -209.6377,
+              "y": -91.7064
+            },
+            {
+              "x": -209.6457,
+              "y": -92.1642
+            },
+            {
+              "x": -208.5782,
+              "y": -92.7095
+            },
+            {
+              "x": -208.5714,
+              "y": -92.0536
+            },
+            {
+              "x": -207.5179,
+              "y": -92.5781
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level53",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Capsule Hotel/L3/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 2,
+      "defaultF": 67,
+      "flipped": false,
+      "xOffset": 0.13,
+      "yOffset": 0.124,
+      "mundoX": -200.86,
+      "mundoY": -67.51,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -200.5942,
+              "y": -69.0416
+            },
+            {
+              "x": -205.119,
+              "y": -66.7693
+            },
+            {
+              "x": -204.3354,
+              "y": -66.3704
+            },
+            {
+              "x": -200.708,
+              "y": -68.1912
+            },
+            {
+              "x": -200.5691,
+              "y": -67.9928
+            },
+            {
+              "x": -200.321,
+              "y": -67.8741
+            },
+            {
+              "x": -200.3192,
+              "y": -67.8234
+            },
+            {
+              "x": -199.0634,
+              "y": -67.1948
+            },
+            {
+              "x": -199.0132,
+              "y": -67.2108
+            },
+            {
+              "x": -198.9038,
+              "y": -67.131
+            },
+            {
+              "x": -198.8422,
+              "y": -67.1287
+            },
+            {
+              "x": -197.8822,
+              "y": -66.6465
+            },
+            {
+              "x": -196.8687,
+              "y": -67.1605
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level53",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL",
+      "ruta": "SceneData/Capsule Hotel/Convenience Store/WallL",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": true,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -199.611,
+      "mundoY": -73.04,
+      "poligonos": [
+        {
+          "objeto": "WallL",
+          "puntos": [
+            {
+              "x": -199.0941,
+              "y": -73.4816
+            },
+            {
+              "x": -199.0934,
+              "y": -71.9945
+            },
+            {
+              "x": -200.1023,
+              "y": -72.4873
+            },
+            {
+              "x": -200.0982,
+              "y": -73.9972
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level53",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallR",
+      "ruta": "SceneData/Capsule Hotel/Convenience Store/WallR",
+      "anchorID": 1325877990,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": false,
+      "xOffset": 0.13,
+      "yOffset": 0.022,
+      "mundoX": -193.632,
+      "mundoY": -72.046,
+      "poligonos": [
+        {
+          "objeto": "WallR",
+          "puntos": [
+            {
+              "x": -194.0785,
+              "y": -72.7794
+            },
+            {
+              "x": -194.079,
+              "y": -71.178
+            },
+            {
+              "x": -193.3018,
+              "y": -71.5819
+            },
+            {
+              "x": -193.3109,
+              "y": -73.1643
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level53",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL",
+      "ruta": "SceneData/Capsule Hotel/L2/WallL",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": true,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -204.257,
+      "mundoY": -67.937,
+      "poligonos": [
+        {
+          "objeto": "WallL",
+          "puntos": [
+            {
+              "x": -203.4048,
+              "y": -67.977
+            },
+            {
+              "x": -204.9745,
+              "y": -67.1894
+            },
+            {
+              "x": -204.9704,
+              "y": -68.7499
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level53",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Capsule Hotel/Convenience Store/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 0,
+      "defaultF": 242,
+      "flipped": false,
+      "xOffset": 0.522,
+      "yOffset": 0.23,
+      "mundoX": -196.87,
+      "mundoY": -73.75,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -197.334,
+              "y": -75.3825
+            },
+            {
+              "x": -200.1459,
+              "y": -74.0116
+            },
+            {
+              "x": -197.5981,
+              "y": -72.7407
+            },
+            {
+              "x": -197.5981,
+              "y": -72.6459
+            },
+            {
+              "x": -196.1173,
+              "y": -71.903
+            },
+            {
+              "x": -196.021,
+              "y": -71.9526
+            },
+            {
+              "x": -195.6633,
+              "y": -71.9526
+            },
+            {
+              "x": -195.5611,
+              "y": -71.9039
+            },
+            {
+              "x": -193.9987,
+              "y": -72.704
+            },
+            {
+              "x": -193.9987,
+              "y": -72.8116
+            },
+            {
+              "x": -193.3376,
+              "y": -73.1016
+            },
+            {
+              "x": -193.3412,
+              "y": -73.4199
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level53",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL",
+      "ruta": "SceneData/Capsule Hotel/L3/WallL",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": true,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -204.628,
+      "mundoY": -65.549,
+      "poligonos": [
+        {
+          "objeto": "WallL",
+          "puntos": [
+            {
+              "x": -204.3307,
+              "y": -66.3747
+            },
+            {
+              "x": -204.3368,
+              "y": -64.6174
+            },
+            {
+              "x": -204.7165,
+              "y": -64.8276
+            },
+            {
+              "x": -204.9766,
+              "y": -64.6875
+            },
+            {
+              "x": -204.9704,
+              "y": -66.6949
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level53",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Capsule Hotel/L2/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 1,
+      "defaultF": 67,
+      "flipped": false,
+      "xOffset": 0.13,
+      "yOffset": 0.124,
+      "mundoX": -200.86,
+      "mundoY": -69.92,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -200.564,
+              "y": -71.1448
+            },
+            {
+              "x": -201.9335,
+              "y": -70.8472
+            },
+            {
+              "x": -204.1446,
+              "y": -69.7883
+            },
+            {
+              "x": -201.969,
+              "y": -68.6761
+            },
+            {
+              "x": -200.7167,
+              "y": -69.3136
+            },
+            {
+              "x": -200.3512,
+              "y": -69.9956
+            },
+            {
+              "x": -200.0401,
+              "y": -69.8619
+            },
+            {
+              "x": -199.6117,
+              "y": -69.9987
+            },
+            {
+              "x": -199.1243,
+              "y": -69.762
+            },
+            {
+              "x": -199.1212,
+              "y": -69.6684
+            },
+            {
+              "x": -198.412,
+              "y": -69.341
+            },
+            {
+              "x": -198.3293,
+              "y": -69.3608
+            },
+            {
+              "x": -197.8886,
+              "y": -69.1296
+            },
+            {
+              "x": -197.1993,
+              "y": -69.4777
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level54",
+      "clase": "FloorAnchor",
+      "nombre": "Floor (2)",
+      "ruta": "SceneData/Lobby/Floor (2)",
+      "anchorID": 2047309301,
+      "groupNum": 2,
+      "defaultF": 1612,
+      "flipped": false,
+      "xOffset": 0.215,
+      "yOffset": 0.215,
+      "mundoX": -177.62,
+      "mundoY": -9.97,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -179.5113,
+              "y": -8.6681
+            },
+            {
+              "x": -178.5081,
+              "y": -9.1609
+            },
+            {
+              "x": -178.2684,
+              "y": -9.0447
+            },
+            {
+              "x": -175.4177,
+              "y": -10.4561
+            },
+            {
+              "x": -176.2306,
+              "y": -10.8782
+            },
+            {
+              "x": -179.517,
+              "y": -9.2405
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level54",
+      "clase": "FloorAnchor",
+      "nombre": "Floor (1)",
+      "ruta": "SceneData/Lobby/Floor (1)",
+      "anchorID": -1378238022,
+      "groupNum": 2,
+      "defaultF": 1614,
+      "flipped": false,
+      "xOffset": 0.067,
+      "yOffset": 0.078,
+      "mundoX": -181.36,
+      "mundoY": -12.12,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -184.7645,
+              "y": -15.1779
+            },
+            {
+              "x": -184.7683,
+              "y": -12.5278
+            },
+            {
+              "x": -184.0122,
+              "y": -12.1587
+            },
+            {
+              "x": -184.0033,
+              "y": -11.9353
+            },
+            {
+              "x": -183.8828,
+              "y": -11.8559
+            },
+            {
+              "x": -183.8655,
+              "y": -11.6997
+            },
+            {
+              "x": -183.1437,
+              "y": -11.3409
+            },
+            {
+              "x": -183.1383,
+              "y": -11.2444
+            },
+            {
+              "x": -182.3151,
+              "y": -10.8287
+            },
+            {
+              "x": -182.1998,
+              "y": -10.869
+            },
+            {
+              "x": -181.3135,
+              "y": -10.4111
+            },
+            {
+              "x": -181.151,
+              "y": -10.4801
+            },
+            {
+              "x": -180.7543,
+              "y": -10.2852
+            },
+            {
+              "x": -180.5229,
+              "y": -10.4118
+            },
+            {
+              "x": -179.7481,
+              "y": -10.0378
+            },
+            {
+              "x": -177.7552,
+              "y": -11.019
+            },
+            {
+              "x": -177.7619,
+              "y": -11.7192
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level54",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall ",
+      "ruta": "SceneData/Lobby/Wall ",
+      "anchorID": 1824362585,
+      "groupNum": -1,
+      "defaultF": 1585,
+      "flipped": true,
+      "xOffset": 0.424,
+      "yOffset": 0.276,
+      "mundoX": -182.765,
+      "mundoY": -10.362,
+      "poligonos": [
+        {
+          "objeto": "Wall ",
+          "puntos": [
+            {
+              "x": -181.3085,
+              "y": -10.4108
+            },
+            {
+              "x": -181.313,
+              "y": -8.7996
+            },
+            {
+              "x": -183.8841,
+              "y": -10.0827
+            },
+            {
+              "x": -183.8683,
+              "y": -11.7008
+            },
+            {
+              "x": -183.1409,
+              "y": -11.3309
+            },
+            {
+              "x": -183.1425,
+              "y": -11.2494
+            },
+            {
+              "x": -182.3178,
+              "y": -10.8339
+            },
+            {
+              "x": -182.219,
+              "y": -10.8621
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level55",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 0,
+      "defaultF": 1603,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0.067,
+      "mundoX": -80.36,
+      "mundoY": 14.37,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -79.3133,
+              "y": 10.5824
+            },
+            {
+              "x": -86.2895,
+              "y": 14.0816
+            },
+            {
+              "x": -86.2907,
+              "y": 14.53
+            },
+            {
+              "x": -86.0442,
+              "y": 14.6554
+            },
+            {
+              "x": -86.0442,
+              "y": 14.7485
+            },
+            {
+              "x": -85.41,
+              "y": 15.0732
+            },
+            {
+              "x": -85.3072,
+              "y": 15.0219
+            },
+            {
+              "x": -85.0414,
+              "y": 15.1395
+            },
+            {
+              "x": -85.0397,
+              "y": 15.2887
+            },
+            {
+              "x": -84.0587,
+              "y": 15.7898
+            },
+            {
+              "x": -83.0954,
+              "y": 15.3161
+            },
+            {
+              "x": -82.0382,
+              "y": 15.7958
+            },
+            {
+              "x": -80.5591,
+              "y": 15.0622
+            },
+            {
+              "x": -80.4806,
+              "y": 15.1485
+            },
+            {
+              "x": -80.1893,
+              "y": 14.9625
+            },
+            {
+              "x": -79.8069,
+              "y": 15.1597
+            },
+            {
+              "x": -78.0541,
+              "y": 14.2862
+            },
+            {
+              "x": -77.658,
+              "y": 14.49
+            },
+            {
+              "x": -77.6641,
+              "y": 14.776
+            },
+            {
+              "x": -78.5471,
+              "y": 15.3179
+            },
+            {
+              "x": -78.0871,
+              "y": 15.5501
+            },
+            {
+              "x": -75.3109,
+              "y": 14.1555
+            },
+            {
+              "x": -75.0709,
+              "y": 14.2876
+            },
+            {
+              "x": -74.7992,
+              "y": 14.1508
+            },
+            {
+              "x": -74.635,
+              "y": 14.2148
+            },
+            {
+              "x": -74.6404,
+              "y": 14.4691
+            },
+            {
+              "x": -74.0412,
+              "y": 14.1342
+            },
+            {
+              "x": -74.042,
+              "y": 13.7958
+            },
+            {
+              "x": -73.5514,
+              "y": 13.5737
+            },
+            {
+              "x": -73.5632,
+              "y": 13.4664
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "FloorAnchor",
+      "nombre": "Floor (3)",
+      "ruta": "SceneData/Floor (3)",
+      "anchorID": -1378238022,
+      "groupNum": 2,
+      "defaultF": 1614,
+      "flipped": false,
+      "xOffset": 0.101,
+      "yOffset": 0,
+      "mundoX": -138.53,
+      "mundoY": 67.15,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -141.723,
+              "y": 63.4767
+            },
+            {
+              "x": -147.7106,
+              "y": 66.4623
+            },
+            {
+              "x": -145.4457,
+              "y": 67.5905
+            },
+            {
+              "x": -145.4428,
+              "y": 67.6776
+            },
+            {
+              "x": -144.6108,
+              "y": 68.0924
+            },
+            {
+              "x": -144.5227,
+              "y": 68.0515
+            },
+            {
+              "x": -141.9976,
+              "y": 69.3245
+            },
+            {
+              "x": -138.9835,
+              "y": 67.8118
+            },
+            {
+              "x": -138.866,
+              "y": 67.8667
+            },
+            {
+              "x": -138.8656,
+              "y": 67.927
+            },
+            {
+              "x": -138.1321,
+              "y": 68.3026
+            },
+            {
+              "x": -138.085,
+              "y": 68.2787
+            },
+            {
+              "x": -137.9562,
+              "y": 68.3332
+            },
+            {
+              "x": -138.8421,
+              "y": 69.3997
+            },
+            {
+              "x": -135.7239,
+              "y": 70.965
+            },
+            {
+              "x": -131.8591,
+              "y": 69.0137
+            },
+            {
+              "x": -131.5716,
+              "y": 68.5606
+            },
+            {
+              "x": -133.2487,
+              "y": 67.7285
+            },
+            {
+              "x": -135.1969,
+              "y": 66.7379
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (2)",
+      "ruta": "SceneData/Wall  (2)",
+      "anchorID": 1437831496,
+      "groupNum": -1,
+      "defaultF": 1585,
+      "flipped": false,
+      "xOffset": 0.424,
+      "yOffset": 0.276,
+      "mundoX": -140.94,
+      "mundoY": 69.41,
+      "poligonos": [
+        {
+          "objeto": "Wall  (2)",
+          "puntos": [
+            {
+              "x": -142.0019,
+              "y": 69.3228
+            },
+            {
+              "x": -142.0013,
+              "y": 71.6916
+            },
+            {
+              "x": -141.3021,
+              "y": 71.3435
+            },
+            {
+              "x": -141.2998,
+              "y": 70.0227
+            },
+            {
+              "x": -140.3439,
+              "y": 69.5263
+            },
+            {
+              "x": -139.0466,
+              "y": 67.9357
+            },
+            {
+              "x": -139.0494,
+              "y": 67.848
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "FloorAnchor",
+      "nombre": "Floor (4)",
+      "ruta": "SceneData/Floor (4)",
+      "anchorID": -1157105292,
+      "groupNum": 2,
+      "defaultF": 1614,
+      "flipped": false,
+      "xOffset": 0.101,
+      "yOffset": 0,
+      "mundoX": -146.59,
+      "mundoY": 71.71,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -150.1095,
+              "y": 70.1898
+            },
+            {
+              "x": -150.115,
+              "y": 71.7655
+            },
+            {
+              "x": -144.9856,
+              "y": 74.3295
+            },
+            {
+              "x": -142.6975,
+              "y": 73.1934
+            },
+            {
+              "x": -143.5345,
+              "y": 72.7645
+            },
+            {
+              "x": -141.9096,
+              "y": 71.9391
+            },
+            {
+              "x": -147.7253,
+              "y": 68.9916
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (7)",
+      "ruta": "SceneData/Wall  (7)",
+      "anchorID": -713362256,
+      "groupNum": -1,
+      "defaultF": 1585,
+      "flipped": false,
+      "xOffset": 0.424,
+      "yOffset": 0.276,
+      "mundoX": -137.56,
+      "mundoY": 75.66,
+      "poligonos": [
+        {
+          "objeto": "Wall  (7)",
+          "puntos": [
+            {
+              "x": -139.7635,
+              "y": 75.6984
+            },
+            {
+              "x": -139.7655,
+              "y": 77.869
+            },
+            {
+              "x": -135.9969,
+              "y": 75.9782
+            },
+            {
+              "x": -135.9954,
+              "y": 73.8188
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (6)",
+      "ruta": "SceneData/Wall  (6)",
+      "anchorID": -262743088,
+      "groupNum": -1,
+      "defaultF": 1585,
+      "flipped": true,
+      "xOffset": 0.424,
+      "yOffset": 0.276,
+      "mundoX": -147.83,
+      "mundoY": 74.11,
+      "poligonos": [
+        {
+          "objeto": "Wall  (6)",
+          "puntos": [
+            {
+              "x": -145.1352,
+              "y": 74.2462
+            },
+            {
+              "x": -145.13,
+              "y": 75.9525
+            },
+            {
+              "x": -146.2035,
+              "y": 75.9595
+            },
+            {
+              "x": -149.496,
+              "y": 74.3131
+            },
+            {
+              "x": -149.4985,
+              "y": 72.7866
+            },
+            {
+              "x": -149.9629,
+              "y": 72.5354
+            },
+            {
+              "x": -150.1057,
+              "y": 72.6064
+            },
+            {
+              "x": -150.1063,
+              "y": 71.7593
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "FloorAnchor",
+      "nombre": "Floor (5)",
+      "ruta": "SceneData/Floor (5)",
+      "anchorID": -1510212471,
+      "groupNum": 2,
+      "defaultF": 1614,
+      "flipped": false,
+      "xOffset": 0.101,
+      "yOffset": 0,
+      "mundoX": -139.74,
+      "mundoY": 74.05,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -143.626,
+              "y": 73.7436
+            },
+            {
+              "x": -139.7585,
+              "y": 75.7043
+            },
+            {
+              "x": -135.896,
+              "y": 73.7717
+            },
+            {
+              "x": -139.7096,
+              "y": 71.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (4)",
+      "ruta": "SceneData/Wall  (4)",
+      "anchorID": -855580554,
+      "groupNum": -1,
+      "defaultF": 1585,
+      "flipped": true,
+      "xOffset": 0.424,
+      "yOffset": 0.276,
+      "mundoX": -142.01,
+      "mundoY": 75.71,
+      "poligonos": [
+        {
+          "objeto": "Wall  (4)",
+          "puntos": [
+            {
+              "x": -139.9093,
+              "y": 75.6054
+            },
+            {
+              "x": -139.9079,
+              "y": 77.869
+            },
+            {
+              "x": -143.6142,
+              "y": 76.0134
+            },
+            {
+              "x": -143.6143,
+              "y": 73.7532
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (8)",
+      "ruta": "SceneData/Wall  (8)",
+      "anchorID": -1617645948,
+      "groupNum": -1,
+      "defaultF": 1585,
+      "flipped": false,
+      "xOffset": 0.424,
+      "yOffset": 0.276,
+      "mundoX": -133.78,
+      "mundoY": 71.96,
+      "poligonos": [
+        {
+          "objeto": "Wall  (8)",
+          "puntos": [
+            {
+              "x": -135.7297,
+              "y": 70.9682
+            },
+            {
+              "x": -135.7258,
+              "y": 75.8325
+            },
+            {
+              "x": -131.6608,
+              "y": 73.8056
+            },
+            {
+              "x": -131.6581,
+              "y": 73.3351
+            },
+            {
+              "x": -131.5079,
+              "y": 73.2586
+            },
+            {
+              "x": -131.5061,
+              "y": 70.3475
+            },
+            {
+              "x": -131.7803,
+              "y": 70.194
+            },
+            {
+              "x": -131.7845,
+              "y": 68.9891
+            },
+            {
+              "x": -131.9997,
+              "y": 69.1007
+            },
+            {
+              "x": -131.9954,
+              "y": 73.2271
+            },
+            {
+              "x": -134.1506,
+              "y": 74.3208
+            },
+            {
+              "x": -134.157,
+              "y": 70.1779
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (5)",
+      "ruta": "SceneData/Wall  (5)",
+      "anchorID": -76192111,
+      "groupNum": -1,
+      "defaultF": 1585,
+      "flipped": false,
+      "xOffset": 0.424,
+      "yOffset": 0.276,
+      "mundoX": -144.48,
+      "mundoY": 75.07,
+      "poligonos": [
+        {
+          "objeto": "Wall  (5)",
+          "puntos": [
+            {
+              "x": -144.9838,
+              "y": 74.3348
+            },
+            {
+              "x": -144.9896,
+              "y": 75.9525
+            },
+            {
+              "x": -143.8332,
+              "y": 75.9551
+            },
+            {
+              "x": -143.8332,
+              "y": 73.7563
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (3)",
+      "ruta": "SceneData/Wall  (3)",
+      "anchorID": 1968251935,
+      "groupNum": -1,
+      "defaultF": 1585,
+      "flipped": true,
+      "xOffset": 0.424,
+      "yOffset": 0.276,
+      "mundoX": -137.96,
+      "mundoY": 71.04,
+      "poligonos": [
+        {
+          "objeto": "Wall  (3)",
+          "puntos": [
+            {
+              "x": -135.8782,
+              "y": 70.883
+            },
+            {
+              "x": -135.8815,
+              "y": 73.3912
+            },
+            {
+              "x": -139.605,
+              "y": 71.5319
+            },
+            {
+              "x": -139.6,
+              "y": 71.2691
+            },
+            {
+              "x": -139.3641,
+              "y": 71.1498
+            },
+            {
+              "x": -139.3644,
+              "y": 70.1496
+            },
+            {
+              "x": -138.7638,
+              "y": 69.4398
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level58",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (1)",
+      "ruta": "SceneData/Wall  (1)",
+      "anchorID": 1824362585,
+      "groupNum": -1,
+      "defaultF": 1585,
+      "flipped": true,
+      "xOffset": 0.424,
+      "yOffset": 0.276,
+      "mundoX": -145.07,
+      "mundoY": 68.9,
+      "poligonos": [
+        {
+          "objeto": "Wall  (1)",
+          "puntos": [
+            {
+              "x": -142.1392,
+              "y": 69.2431
+            },
+            {
+              "x": -142.1251,
+              "y": 71.7594
+            },
+            {
+              "x": -147.5794,
+              "y": 69.0394
+            },
+            {
+              "x": -147.57,
+              "y": 66.5277
+            },
+            {
+              "x": -145.4497,
+              "y": 67.5866
+            },
+            {
+              "x": -145.4451,
+              "y": 67.6779
+            },
+            {
+              "x": -144.6129,
+              "y": 68.0951
+            },
+            {
+              "x": -144.5239,
+              "y": 68.0535
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallR (1)",
+      "ruta": "SceneData/2F/WallR (1)",
+      "anchorID": 1325877990,
+      "groupNum": -1,
+      "defaultF": 1598,
+      "flipped": false,
+      "xOffset": 0.13,
+      "yOffset": 0.022,
+      "mundoX": -110.792,
+      "mundoY": 55.723,
+      "poligonos": [
+        {
+          "objeto": "WallR (1)",
+          "puntos": [
+            {
+              "x": -115.0074,
+              "y": 56.7932
+            },
+            {
+              "x": -115.0025,
+              "y": 56.8891
+            },
+            {
+              "x": -108.9178,
+              "y": 56.8367
+            },
+            {
+              "x": -108.9151,
+              "y": 53.7384
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL",
+      "ruta": "SceneData/1F/WallL",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": true,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -120.002,
+      "mundoY": 48.44,
+      "poligonos": [
+        {
+          "objeto": "WallL",
+          "puntos": [
+            {
+              "x": -128.2228,
+              "y": 45.0778
+            },
+            {
+              "x": -128.2312,
+              "y": 46.6251
+            },
+            {
+              "x": -131.0107,
+              "y": 43.7061
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallR",
+      "ruta": "SceneData/2F/ShopL/WallR",
+      "anchorID": 1325877990,
+      "groupNum": -1,
+      "defaultF": 1595,
+      "flipped": false,
+      "xOffset": 0.13,
+      "yOffset": 0.055,
+      "mundoX": -122.721,
+      "mundoY": 54.419,
+      "poligonos": [
+        {
+          "objeto": "WallR",
+          "puntos": [
+            {
+              "x": -124.2287,
+              "y": 54.5605
+            },
+            {
+              "x": -124.2243,
+              "y": 55.9683
+            },
+            {
+              "x": -121.209,
+              "y": 54.4364
+            },
+            {
+              "x": -121.2098,
+              "y": 53.0438
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/2F/ShopL/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 2,
+      "defaultF": 1609,
+      "flipped": false,
+      "xOffset": 0.111,
+      "yOffset": 0.089,
+      "mundoX": -125.57,
+      "mundoY": 51.54,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -121.1311,
+              "y": 52.2841
+            },
+            {
+              "x": -126.8691,
+              "y": 49.3436
+            },
+            {
+              "x": -127.7715,
+              "y": 49.8222
+            },
+            {
+              "x": -127.7958,
+              "y": 50.0894
+            },
+            {
+              "x": -129.7591,
+              "y": 51.0606
+            },
+            {
+              "x": -128.1602,
+              "y": 51.8645
+            },
+            {
+              "x": -128.1577,
+              "y": 51.9826
+            },
+            {
+              "x": -124.2262,
+              "y": 54.1988
+            },
+            {
+              "x": -122.72,
+              "y": 53.3324
+            },
+            {
+              "x": -122.272,
+              "y": 52.9474
+            },
+            {
+              "x": -121.9734,
+              "y": 52.7944
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL",
+      "ruta": "SceneData/2F/ShopR/WallL",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 794,
+      "flipped": true,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -117.29,
+      "mundoY": 53.97,
+      "poligonos": [
+        {
+          "objeto": "WallL",
+          "puntos": [
+            {
+              "x": -115.8753,
+              "y": 54.2621
+            },
+            {
+              "x": -115.8779,
+              "y": 56.0666
+            },
+            {
+              "x": -118.79,
+              "y": 54.625
+            },
+            {
+              "x": -118.7963,
+              "y": 52.7957
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallR",
+      "ruta": "SceneData/1F/WallR",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": false,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -120.004,
+      "mundoY": 48.569,
+      "poligonos": [
+        {
+          "objeto": "WallR",
+          "puntos": [
+            {
+              "x": -125.5049,
+              "y": 47.7956
+            },
+            {
+              "x": -125.5061,
+              "y": 48.1732
+            },
+            {
+              "x": -124.2422,
+              "y": 48.8985
+            },
+            {
+              "x": -124.2416,
+              "y": 47.1606
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallR",
+      "ruta": "SceneData/1F/WallR",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": false,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -120.002,
+      "mundoY": 48.44,
+      "poligonos": [
+        {
+          "objeto": "WallR",
+          "puntos": [
+            {
+              "x": -111.7811,
+              "y": 45.0778
+            },
+            {
+              "x": -111.7728,
+              "y": 46.6251
+            },
+            {
+              "x": -108.9933,
+              "y": 43.7061
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallR",
+      "ruta": "SceneData/2F/ShopR/WallR",
+      "anchorID": 1325877990,
+      "groupNum": -1,
+      "defaultF": 794,
+      "flipped": false,
+      "xOffset": 0.13,
+      "yOffset": 0.022,
+      "mundoX": -113.491,
+      "mundoY": 53.755,
+      "poligonos": [
+        {
+          "objeto": "WallR",
+          "puntos": [
+            {
+              "x": -115.8731,
+              "y": 54.2585
+            },
+            {
+              "x": -115.876,
+              "y": 55.8991
+            },
+            {
+              "x": -111.6099,
+              "y": 53.7515
+            },
+            {
+              "x": -111.6141,
+              "y": 51.7704
+            },
+            {
+              "x": -114.2585,
+              "y": 53.0991
+            },
+            {
+              "x": -114.2618,
+              "y": 53.4636
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/2F/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 2,
+      "defaultF": 1614,
+      "flipped": false,
+      "xOffset": 0.182,
+      "yOffset": 0.324,
+      "mundoX": -120,
+      "mundoY": 51.8,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -112.448,
+              "y": 47.4294
+            },
+            {
+              "x": -119.7526,
+              "y": 51.0786
+            },
+            {
+              "x": -120.2505,
+              "y": 51.0697
+            },
+            {
+              "x": -127.5265,
+              "y": 47.4376
+            },
+            {
+              "x": -130.2646,
+              "y": 48.8347
+            },
+            {
+              "x": -128.5172,
+              "y": 49.7145
+            },
+            {
+              "x": -127.143,
+              "y": 49.0223
+            },
+            {
+              "x": -127.1012,
+              "y": 49.0232
+            },
+            {
+              "x": -126.8711,
+              "y": 49.1407
+            },
+            {
+              "x": -126.8592,
+              "y": 49.2616
+            },
+            {
+              "x": -120.9945,
+              "y": 52.2077
+            },
+            {
+              "x": -120.8987,
+              "y": 52.1574
+            },
+            {
+              "x": -120.8457,
+              "y": 52.1558
+            },
+            {
+              "x": -120.3898,
+              "y": 52.3946
+            },
+            {
+              "x": -120.2268,
+              "y": 52.3946
+            },
+            {
+              "x": -120.2198,
+              "y": 52.4563
+            },
+            {
+              "x": -119.7471,
+              "y": 52.4516
+            },
+            {
+              "x": -119.7448,
+              "y": 52.3899
+            },
+            {
+              "x": -119.6039,
+              "y": 52.3899
+            },
+            {
+              "x": -119.1387,
+              "y": 52.1518
+            },
+            {
+              "x": -119.0896,
+              "y": 52.1536
+            },
+            {
+              "x": -118.9988,
+              "y": 52.2006
+            },
+            {
+              "x": -113.1385,
+              "y": 49.2531
+            },
+            {
+              "x": -113.1419,
+              "y": 49.1428
+            },
+            {
+              "x": -112.8984,
+              "y": 49.0205
+            },
+            {
+              "x": -112.8567,
+              "y": 49.0172
+            },
+            {
+              "x": -111.488,
+              "y": 49.7126
+            },
+            {
+              "x": -109.7374,
+              "y": 48.8343
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL",
+      "ruta": "SceneData/1F/WallL",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": true,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -120.004,
+      "mundoY": 48.569,
+      "poligonos": [
+        {
+          "objeto": "WallL",
+          "puntos": [
+            {
+              "x": -114.5031,
+              "y": 47.7956
+            },
+            {
+              "x": -114.5019,
+              "y": 48.1732
+            },
+            {
+              "x": -115.7658,
+              "y": 48.8985
+            },
+            {
+              "x": -115.7664,
+              "y": 47.1606
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL (1)",
+      "ruta": "SceneData/2F/WallL (1)",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 1598,
+      "flipped": true,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -129.57,
+      "mundoY": 54.94,
+      "poligonos": [
+        {
+          "objeto": "WallL (1)",
+          "puntos": [
+            {
+              "x": -124.9893,
+              "y": 56.7949
+            },
+            {
+              "x": -124.9877,
+              "y": 56.8751
+            },
+            {
+              "x": -131.0939,
+              "y": 56.8446
+            },
+            {
+              "x": -131.0763,
+              "y": 53.7657
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/2F/ShopR/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 2,
+      "defaultF": 1603,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -114.56,
+      "mundoY": 51.71,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -109.8903,
+              "y": 50.9033
+            },
+            {
+              "x": -112.8173,
+              "y": 49.2624
+            },
+            {
+              "x": -118.8199,
+              "y": 52.2379
+            },
+            {
+              "x": -118.8262,
+              "y": 52.409
+            },
+            {
+              "x": -115.8664,
+              "y": 53.8989
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL",
+      "ruta": "SceneData/2F/ShopL/WallL",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 1595,
+      "flipped": true,
+      "xOffset": 0.449,
+      "yOffset": 0.055,
+      "mundoX": -126.477,
+      "mundoY": 53.728,
+      "poligonos": [
+        {
+          "objeto": "WallL",
+          "puntos": [
+            {
+              "x": -124.2306,
+              "y": 54.5663
+            },
+            {
+              "x": -124.2275,
+              "y": 55.8302
+            },
+            {
+              "x": -130.1166,
+              "y": 52.9221
+            },
+            {
+              "x": -130.1003,
+              "y": 50.8897
+            },
+            {
+              "x": -128.1619,
+              "y": 51.8574
+            },
+            {
+              "x": -128.1533,
+              "y": 52.5231
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level59",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/1F/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 2,
+      "defaultF": 1614,
+      "flipped": false,
+      "xOffset": 0.178,
+      "yOffset": 0.076,
+      "mundoX": -120,
+      "mundoY": 45.86,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -108.8993,
+              "y": 43.1701
+            },
+            {
+              "x": -131.0882,
+              "y": 43.1711
+            },
+            {
+              "x": -131.0891,
+              "y": 43.587
+            },
+            {
+              "x": -130.9432,
+              "y": 43.7391
+            },
+            {
+              "x": -128.2236,
+              "y": 45.089
+            },
+            {
+              "x": -127.7788,
+              "y": 44.8674
+            },
+            {
+              "x": -127.6848,
+              "y": 44.8674
+            },
+            {
+              "x": -125.4911,
+              "y": 45.9768
+            },
+            {
+              "x": -125.4921,
+              "y": 47.7932
+            },
+            {
+              "x": -124.2386,
+              "y": 47.1551
+            },
+            {
+              "x": -124.237,
+              "y": 47.0876
+            },
+            {
+              "x": -123.7759,
+              "y": 46.8603
+            },
+            {
+              "x": -123.71,
+              "y": 46.857
+            },
+            {
+              "x": -123.2522,
+              "y": 47.0925
+            },
+            {
+              "x": -123.1415,
+              "y": 47.0305
+            },
+            {
+              "x": -121.8905,
+              "y": 47.6714
+            },
+            {
+              "x": -121.8861,
+              "y": 47.7628
+            },
+            {
+              "x": -121.4988,
+              "y": 47.958
+            },
+            {
+              "x": -121.4945,
+              "y": 48.068
+            },
+            {
+              "x": -121.2341,
+              "y": 48.2041
+            },
+            {
+              "x": -121.0953,
+              "y": 48.2718
+            },
+            {
+              "x": -120.8709,
+              "y": 48.45
+            },
+            {
+              "x": -120.8692,
+              "y": 48.5802
+            },
+            {
+              "x": -120.6328,
+              "y": 48.5785
+            },
+            {
+              "x": -120.5968,
+              "y": 48.6042
+            },
+            {
+              "x": -119.3777,
+              "y": 48.6117
+            },
+            {
+              "x": -119.3509,
+              "y": 48.5728
+            },
+            {
+              "x": -119.1245,
+              "y": 48.5716
+            },
+            {
+              "x": -119.118,
+              "y": 48.4525
+            },
+            {
+              "x": -118.8796,
+              "y": 48.2612
+            },
+            {
+              "x": -118.5031,
+              "y": 48.0723
+            },
+            {
+              "x": -118.4962,
+              "y": 47.9487
+            },
+            {
+              "x": -118.103,
+              "y": 47.7528
+            },
+            {
+              "x": -118.1044,
+              "y": 47.6639
+            },
+            {
+              "x": -116.8547,
+              "y": 47.0361
+            },
+            {
+              "x": -116.7497,
+              "y": 47.0868
+            },
+            {
+              "x": -116.2838,
+              "y": 46.8527
+            },
+            {
+              "x": -116.2244,
+              "y": 46.8555
+            },
+            {
+              "x": -115.7627,
+              "y": 47.0817
+            },
+            {
+              "x": -115.7592,
+              "y": 47.1604
+            },
+            {
+              "x": -114.5131,
+              "y": 47.8009
+            },
+            {
+              "x": -114.5086,
+              "y": 45.9595
+            },
+            {
+              "x": -114.1112,
+              "y": 45.7567
+            },
+            {
+              "x": -114.1145,
+              "y": 45.6695
+            },
+            {
+              "x": -112.8583,
+              "y": 45.0365
+            },
+            {
+              "x": -112.7529,
+              "y": 45.0947
+            },
+            {
+              "x": -112.2874,
+              "y": 44.8608
+            },
+            {
+              "x": -112.2298,
+              "y": 44.8572
+            },
+            {
+              "x": -111.7739,
+              "y": 45.082
+            },
+            {
+              "x": -109.0455,
+              "y": 43.7233
+            },
+            {
+              "x": -108.9148,
+              "y": 43.5904
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level60",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 2,
+      "defaultF": 1614,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -204.69,
+      "mundoY": -26.83,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -205.1844,
+              "y": -27.7202
+            },
+            {
+              "x": -205.1711,
+              "y": -25.5694
+            },
+            {
+              "x": -202.993,
+              "y": -26.6603
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level60",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Wall",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 1596,
+      "flipped": false,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -202.06,
+      "mundoY": -24.81,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -202.7782,
+              "y": -26.7813
+            },
+            {
+              "x": -202.7838,
+              "y": -23.1649
+            },
+            {
+              "x": -201.2612,
+              "y": -23.17
+            },
+            {
+              "x": -201.2551,
+              "y": -27.5452
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level60",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Floor",
+      "anchorID": 1348423301,
+      "groupNum": 2,
+      "defaultF": 1604,
+      "flipped": false,
+      "xOffset": 0.139,
+      "yOffset": 0.253,
+      "mundoX": -201.5,
+      "mundoY": -29.18,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -200.5447,
+              "y": -30.732
+            },
+            {
+              "x": -203.7587,
+              "y": -32.3198
+            },
+            {
+              "x": -203.764,
+              "y": -31.9132
+            },
+            {
+              "x": -206.4273,
+              "y": -30.5734
+            },
+            {
+              "x": -205.579,
+              "y": -30.1726
+            },
+            {
+              "x": -205.6579,
+              "y": -29.7807
+            },
+            {
+              "x": -205.15,
+              "y": -29.6129
+            },
+            {
+              "x": -205.1464,
+              "y": -27.8132
+            },
+            {
+              "x": -202.9338,
+              "y": -26.688
+            },
+            {
+              "x": -201.1295,
+              "y": -27.5979
+            },
+            {
+              "x": -200.7636,
+              "y": -27.4149
+            },
+            {
+              "x": -199.993,
+              "y": -27.4299
+            },
+            {
+              "x": -198.7551,
+              "y": -26.8019
+            },
+            {
+              "x": -195.7461,
+              "y": -28.3065
+            },
+            {
+              "x": -198.7748,
+              "y": -29.8237
+            },
+            {
+              "x": -196.8325,
+              "y": -30.878
+            },
+            {
+              "x": -198.4644,
+              "y": -31.7944
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level60",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Wall",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 1596,
+      "flipped": true,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -206.539,
+      "mundoY": -26.6,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -206.145,
+              "y": -28.7239
+            },
+            {
+              "x": -206.1424,
+              "y": -23.163
+            },
+            {
+              "x": -206.8437,
+              "y": -23.1578
+            },
+            {
+              "x": -206.8996,
+              "y": -29.1016
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level60",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Wall",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 1585,
+      "flipped": false,
+      "xOffset": 0.449,
+      "yOffset": 0.163,
+      "mundoX": -204.213,
+      "mundoY": -24.512,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -205.1915,
+              "y": -25.5421
+            },
+            {
+              "x": -205.1671,
+              "y": -23.1641
+            },
+            {
+              "x": -203.1733,
+              "y": -23.161
+            },
+            {
+              "x": -203.1943,
+              "y": -26.5602
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level60",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Wall",
+      "anchorID": 1325877990,
+      "groupNum": -1,
+      "defaultF": 1596,
+      "flipped": true,
+      "xOffset": 0.13,
+      "yOffset": 0.022,
+      "mundoX": -198.383,
+      "mundoY": -23.83,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -194.9685,
+              "y": -23.1664
+            },
+            {
+              "x": -200.2735,
+              "y": -23.1632
+            },
+            {
+              "x": -200.2599,
+              "y": -25.8146
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level63",
+      "clase": "WallpaperAnchor",
+      "nombre": "WallL (1)",
+      "ruta": "SceneData/Ice Cream/Interior/WallL (1)",
+      "anchorID": 961984868,
+      "groupNum": -1,
+      "defaultF": 1854,
+      "flipped": true,
+      "xOffset": 0.449,
+      "yOffset": 0,
+      "mundoX": -225.214,
+      "mundoY": -92.4294,
+      "poligonos": [
+        {
+          "objeto": "WallL (1)",
+          "puntos": [
+            {
+              "x": -224.6971,
+              "y": -92.871
+            },
+            {
+              "x": -224.6964,
+              "y": -91.3839
+            },
+            {
+              "x": -225.7054,
+              "y": -91.8767
+            },
+            {
+              "x": -225.7012,
+              "y": -93.3866
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level63",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Ice Cream/Interior/Floor",
+      "anchorID": 0,
+      "groupNum": 0,
+      "defaultF": 1611,
+      "flipped": false,
+      "xOffset": 0.469,
+      "yOffset": 0.039,
+      "mundoX": -220.422,
+      "mundoY": -92.2644,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -222.7012,
+              "y": -94.8939
+            },
+            {
+              "x": -225.6995,
+              "y": -93.3931
+            },
+            {
+              "x": -224.694,
+              "y": -92.8921
+            },
+            {
+              "x": -223.6805,
+              "y": -92.8899
+            },
+            {
+              "x": -222.5467,
+              "y": -92.5578
+            },
+            {
+              "x": -221.859,
+              "y": -92.2175
+            },
+            {
+              "x": -221.8469,
+              "y": -91.176
+            },
+            {
+              "x": -220.6946,
+              "y": -91.5446
+            },
+            {
+              "x": -220.0896,
+              "y": -91.5926
+            },
+            {
+              "x": -219.7387,
+              "y": -91.8341
+            },
+            {
+              "x": -218.977,
+              "y": -92.2631
+            },
+            {
+              "x": -218.5104,
+              "y": -92.2512
+            },
+            {
+              "x": -218.5183,
+              "y": -92.7357
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level67",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Police Station/Interior/Wall",
+      "anchorID": 1888021236,
+      "groupNum": -1,
+      "defaultF": 1601,
+      "flipped": true,
+      "xOffset": 0.075,
+      "yOffset": 0.009,
+      "mundoX": -219.548,
+      "mundoY": -71.1543,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -222.5048,
+              "y": -71.2311
+            },
+            {
+              "x": -220.2964,
+              "y": -70.1348
+            },
+            {
+              "x": -222.4898,
+              "y": -69.0248
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level67",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Police Station/Interior/Floor",
+      "anchorID": 1416476646,
+      "groupNum": 0,
+      "defaultF": 1607,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -219.548,
+      "mundoY": -71.1543,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -217.9396,
+              "y": -73.7141
+            },
+            {
+              "x": -222.8036,
+              "y": -71.4097
+            },
+            {
+              "x": -220.3364,
+              "y": -70.1242
+            },
+            {
+              "x": -217.9167,
+              "y": -71.1753
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level67",
+      "clase": "FloorAnchor",
+      "nombre": "Floor (1)",
+      "ruta": "SceneData/Police Station/Interior (1)/Floor (1)",
+      "anchorID": -650264031,
+      "groupNum": 0,
+      "defaultF": 1607,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -219.548,
+      "mundoY": -67.6843,
+      "poligonos": [
+        {
+          "objeto": "Floor (1)",
+          "puntos": [
+            {
+              "x": -218.567,
+              "y": -69.7435
+            },
+            {
+              "x": -220.5462,
+              "y": -68.7547
+            },
+            {
+              "x": -220.5443,
+              "y": -68.5669
+            },
+            {
+              "x": -218.5585,
+              "y": -67.5726
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level67",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Police Station/Interior (1)/Wall",
+      "anchorID": -650526334,
+      "groupNum": -1,
+      "defaultF": 1854,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -219.548,
+      "mundoY": -67.6843,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -222.5048,
+              "y": -67.7611
+            },
+            {
+              "x": -220.2964,
+              "y": -66.6648
+            },
+            {
+              "x": -222.4898,
+              "y": -65.5548
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level67",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Police Station/Interior (1)/Floor",
+      "anchorID": 344347246,
+      "groupNum": 0,
+      "defaultF": 1867,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -219.548,
+      "mundoY": -67.6843,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -220.8238,
+              "y": -68.6284
+            },
+            {
+              "x": -222.2341,
+              "y": -67.9154
+            },
+            {
+              "x": -222.1929,
+              "y": -67.6032
+            },
+            {
+              "x": -220.5512,
+              "y": -66.7762
+            },
+            {
+              "x": -218.7624,
+              "y": -67.6525
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level68",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/Coffee Shop/Interior/Floor",
+      "anchorID": 0,
+      "groupNum": 0,
+      "defaultF": 128,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -180.387,
+      "mundoY": -51.696,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -180.9753,
+              "y": -50.9831
+            },
+            {
+              "x": -181.9427,
+              "y": -51.477
+            },
+            {
+              "x": -181.9325,
+              "y": -51.9285
+            },
+            {
+              "x": -178.385,
+              "y": -53.6953
+            },
+            {
+              "x": -178.3791,
+              "y": -52.2363
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level68",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Coffee Shop/Interior/Wall",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 0,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -180.387,
+      "mundoY": -51.696,
+      "poligonos": []
+    },
+    {
+      "nivel": "level69",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall (3)",
+      "ruta": "SceneData/ConvenienceStore/Background/Wall (3)",
+      "anchorID": 811591129,
+      "groupNum": -1,
+      "defaultF": 1586,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -219.6995,
+      "mundoY": -48.3188,
+      "poligonos": [
+        {
+          "objeto": "Wall (3)",
+          "puntos": [
+            {
+              "x": -220.0561,
+              "y": -47.3798
+            },
+            {
+              "x": -220.0769,
+              "y": -48.8842
+            },
+            {
+              "x": -219.3502,
+              "y": -49.2601
+            },
+            {
+              "x": -219.3148,
+              "y": -47.7509
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level69",
+      "clase": "FloorAnchor",
+      "nombre": "Floor (1)",
+      "ruta": "SceneData/Arcade/Floor (1)",
+      "anchorID": 0,
+      "groupNum": 0,
+      "defaultF": 1602,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -213.53,
+      "mundoY": -48.62,
+      "poligonos": [
+        {
+          "objeto": "Floor (1)",
+          "puntos": [
+            {
+              "x": -211.915,
+              "y": -46.6779
+            },
+            {
+              "x": -212.7392,
+              "y": -47.0986
+            },
+            {
+              "x": -213.25,
+              "y": -47.0575
+            },
+            {
+              "x": -215.0928,
+              "y": -46.1407
+            },
+            {
+              "x": -215.1149,
+              "y": -48.7022
+            },
+            {
+              "x": -213.3558,
+              "y": -49.5819
+            },
+            {
+              "x": -213.0075,
+              "y": -49.6828
+            },
+            {
+              "x": -212.6895,
+              "y": -49.6356
+            },
+            {
+              "x": -211.7764,
+              "y": -49.1793
+            },
+            {
+              "x": -211.7736,
+              "y": -46.6709
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level69",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall (2)",
+      "ruta": "SceneData/ConvenienceStore/Background/Wall (2)",
+      "anchorID": -1335398632,
+      "groupNum": -1,
+      "defaultF": 1586,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -224.6185,
+      "mundoY": -47.4565,
+      "poligonos": [
+        {
+          "objeto": "Wall (2)",
+          "puntos": [
+            {
+              "x": -224.9149,
+              "y": -46.4935
+            },
+            {
+              "x": -224.9414,
+              "y": -48.3027
+            },
+            {
+              "x": -225.8865,
+              "y": -48.769
+            },
+            {
+              "x": -225.8866,
+              "y": -47.7476
+            },
+            {
+              "x": -225.0129,
+              "y": -48.163
+            },
+            {
+              "x": -224.9666,
+              "y": -47.1867
+            },
+            {
+              "x": -225.312,
+              "y": -47.0278
+            },
+            {
+              "x": -225.3203,
+              "y": -46.7064
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level69",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall (2)",
+      "ruta": "SceneData/PostOffice/SecondFloor/Wall (2)",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -217.331,
+      "mundoY": -47.485,
+      "poligonos": [
+        {
+          "objeto": "Wall (2)",
+          "puntos": [
+            {
+              "x": -217.6358,
+              "y": -47.2318
+            },
+            {
+              "x": -217.6309,
+              "y": -47.7429
+            },
+            {
+              "x": -217.0256,
+              "y": -48.0274
+            },
+            {
+              "x": -217.0318,
+              "y": -46.938
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level69",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/Arcade/Wall",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 1594,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -214.633,
+      "mundoY": -44.556,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -214.8966,
+              "y": -43.4225
+            },
+            {
+              "x": -216.836,
+              "y": -44.3837
+            },
+            {
+              "x": -216.8441,
+              "y": -42.4522
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level69",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall",
+      "ruta": "SceneData/PostOffice/FirstFloor/Wall",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 1590,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -216.125,
+      "mundoY": -52.77,
+      "poligonos": [
+        {
+          "objeto": "Wall",
+          "puntos": [
+            {
+              "x": -215.5396,
+              "y": -51.8502
+            },
+            {
+              "x": -213.9116,
+              "y": -52.6618
+            },
+            {
+              "x": -213.914,
+              "y": -51.0336
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level69",
+      "clase": "FloorAnchor",
+      "nombre": "Floor (2)",
+      "ruta": "SceneData/Arcade/Floor (2)",
+      "anchorID": 0,
+      "groupNum": 0,
+      "defaultF": 1603,
+      "flipped": false,
+      "xOffset": 0.172,
+      "yOffset": 0.062,
+      "mundoX": -213.53,
+      "mundoY": -45.85,
+      "poligonos": [
+        {
+          "objeto": "Floor (2)",
+          "puntos": [
+            {
+              "x": -212.7601,
+              "y": -44.0993
+            },
+            {
+              "x": -213.2917,
+              "y": -44.1624
+            },
+            {
+              "x": -214.8712,
+              "y": -43.401
+            },
+            {
+              "x": -216.883,
+              "y": -44.4058
+            },
+            {
+              "x": -216.876,
+              "y": -45.0882
+            },
+            {
+              "x": -213.3558,
+              "y": -46.8119
+            },
+            {
+              "x": -213.0075,
+              "y": -46.9128
+            },
+            {
+              "x": -212.6895,
+              "y": -46.8656
+            },
+            {
+              "x": -211.7764,
+              "y": -46.4094
+            },
+            {
+              "x": -211.7632,
+              "y": -43.6508
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level69",
+      "clase": "FloorAnchor",
+      "nombre": "Floor",
+      "ruta": "SceneData/PostOffice/FirstFloor/Floor",
+      "anchorID": 0,
+      "groupNum": 0,
+      "defaultF": 1607,
+      "flipped": false,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -216.125,
+      "mundoY": -52.77,
+      "poligonos": [
+        {
+          "objeto": "Floor",
+          "puntos": [
+            {
+              "x": -216.8407,
+              "y": -51.186
+            },
+            {
+              "x": -217.77,
+              "y": -51.7819
+            },
+            {
+              "x": -218.4555,
+              "y": -52.6937
+            },
+            {
+              "x": -215.7806,
+              "y": -54.0619
+            },
+            {
+              "x": -213.9084,
+              "y": -53.1221
+            },
+            {
+              "x": -213.9048,
+              "y": -52.6643
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level69",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall (1)",
+      "ruta": "SceneData/PostOffice/SecondFloor/Wall (1)",
+      "anchorID": 0,
+      "groupNum": -1,
+      "defaultF": 752,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0,
+      "mundoX": -218.282,
+      "mundoY": -47.449,
+      "poligonos": [
+        {
+          "objeto": "Wall (1)",
+          "puntos": [
+            {
+              "x": -218.5936,
+              "y": -47.2412
+            },
+            {
+              "x": -218.5985,
+              "y": -47.7523
+            },
+            {
+              "x": -219.2038,
+              "y": -48.0368
+            },
+            {
+              "x": -219.1976,
+              "y": -46.9474
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level70",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (9)",
+      "ruta": "SceneData/Apartment/GameObject/Apartment A (1)/Wall  (9)",
+      "anchorID": -1617645948,
+      "groupNum": -1,
+      "defaultF": 2486,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0.039,
+      "mundoX": -147.026,
+      "mundoY": 35.635,
+      "poligonos": [
+        {
+          "objeto": "Wall  (9)",
+          "puntos": [
+            {
+              "x": -146.1011,
+              "y": 34.7996
+            },
+            {
+              "x": -146.0964,
+              "y": 37.3337
+            },
+            {
+              "x": -148.0844,
+              "y": 38.31
+            },
+            {
+              "x": -148.0764,
+              "y": 33.8125
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level70",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (8)",
+      "ruta": "SceneData/Apartment/GameObject/Apartment A (1)/Wall  (8)",
+      "anchorID": 194393757,
+      "groupNum": -1,
+      "defaultF": 2486,
+      "flipped": false,
+      "xOffset": 0.26,
+      "yOffset": 0.401,
+      "mundoX": -143.639,
+      "mundoY": 33.579,
+      "poligonos": [
+        {
+          "objeto": "Wall  (8)",
+          "puntos": [
+            {
+              "x": -146.1022,
+              "y": 34.8072
+            },
+            {
+              "x": -146.1029,
+              "y": 37.3573
+            },
+            {
+              "x": -145.2423,
+              "y": 36.9869
+            },
+            {
+              "x": -145.2341,
+              "y": 35.5182
+            },
+            {
+              "x": -142.818,
+              "y": 34.3748
+            },
+            {
+              "x": -139.4101,
+              "y": 32.6317
+            },
+            {
+              "x": -139.4001,
+              "y": 32.3588
+            },
+            {
+              "x": -139.5059,
+              "y": 32.293
+            },
+            {
+              "x": -139.5095,
+              "y": 31.5107
+            },
+            {
+              "x": -142.1066,
+              "y": 32.8146
+            },
+            {
+              "x": -142.111,
+              "y": 33.9158
+            },
+            {
+              "x": -142.8565,
+              "y": 34.3171
+            },
+            {
+              "x": -142.8669,
+              "y": 33.1905
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level70",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (8)",
+      "ruta": "SceneData/Apartment/GameObject/Apartment A/Wall  (8)",
+      "anchorID": 194393757,
+      "groupNum": -1,
+      "defaultF": 2486,
+      "flipped": false,
+      "xOffset": 0.26,
+      "yOffset": 0.4,
+      "mundoX": -143.639,
+      "mundoY": 28.579,
+      "poligonos": [
+        {
+          "objeto": "Wall  (10)",
+          "puntos": [
+            {
+              "x": -146.1022,
+              "y": 29.8072
+            },
+            {
+              "x": -146.1029,
+              "y": 32.3573
+            },
+            {
+              "x": -145.2573,
+              "y": 31.9907
+            },
+            {
+              "x": -145.2595,
+              "y": 29.3848
+            }
+          ]
+        },
+        {
+          "objeto": "Wall  (8)",
+          "puntos": [
+            {
+              "x": -145.383,
+              "y": 29.4488
+            },
+            {
+              "x": -145.3901,
+              "y": 32.0444
+            },
+            {
+              "x": -145.2423,
+              "y": 31.9869
+            },
+            {
+              "x": -145.2341,
+              "y": 30.5182
+            },
+            {
+              "x": -142.818,
+              "y": 29.3748
+            },
+            {
+              "x": -139.4101,
+              "y": 27.6317
+            },
+            {
+              "x": -139.4001,
+              "y": 27.3588
+            },
+            {
+              "x": -139.5059,
+              "y": 27.293
+            },
+            {
+              "x": -139.5095,
+              "y": 26.5107
+            },
+            {
+              "x": -142.1066,
+              "y": 27.8146
+            },
+            {
+              "x": -142.111,
+              "y": 28.9158
+            },
+            {
+              "x": -142.8565,
+              "y": 29.3171
+            },
+            {
+              "x": -142.8669,
+              "y": 28.1905
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level70",
+      "clase": "WallpaperAnchor",
+      "nombre": "Wall  (9)",
+      "ruta": "SceneData/Apartment/GameObject/Apartment A/Wall  (9)",
+      "anchorID": -1617645948,
+      "groupNum": -1,
+      "defaultF": 2486,
+      "flipped": true,
+      "xOffset": 0,
+      "yOffset": 0.039,
+      "mundoX": -147.026,
+      "mundoY": 30.635,
+      "poligonos": [
+        {
+          "objeto": "Wall  (9)",
+          "puntos": [
+            {
+              "x": -146.1011,
+              "y": 29.7996
+            },
+            {
+              "x": -146.0964,
+              "y": 32.3337
+            },
+            {
+              "x": -148.0844,
+              "y": 33.31
+            },
+            {
+              "x": -148.0764,
+              "y": 28.8125
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level70",
+      "clase": "FloorAnchor",
+      "nombre": "Floor (3)",
+      "ruta": "SceneData/Apartment/GameObject/Apartment A (1)/Floor (3)",
+      "anchorID": -1378238022,
+      "groupNum": 2,
+      "defaultF": 1614,
+      "flipped": false,
+      "xOffset": 0.101,
+      "yOffset": 0,
+      "mundoX": -144.62,
+      "mundoY": 31.44,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -145.5431,
+              "y": 29.5555
+            },
+            {
+              "x": -145.6762,
+              "y": 29.3077
+            },
+            {
+              "x": -148.0542,
+              "y": 30.4651
+            },
+            {
+              "x": -148.0436,
+              "y": 33.837
+            },
+            {
+              "x": -146.0956,
+              "y": 34.8086
+            },
+            {
+              "x": -142.7876,
+              "y": 33.1557
+            },
+            {
+              "x": -142.717,
+              "y": 33.1824
+            },
+            {
+              "x": -142.1962,
+              "y": 32.926
+            },
+            {
+              "x": -142.1907,
+              "y": 32.8575
+            },
+            {
+              "x": -139.6596,
+              "y": 31.5928
+            },
+            {
+              "x": -140.5284,
+              "y": 31.1534
+            },
+            {
+              "x": -140.5434,
+              "y": 30.3367
+            },
+            {
+              "x": -140.7889,
+              "y": 30.2114
+            },
+            {
+              "x": -140.799,
+              "y": 29.9057
+            },
+            {
+              "x": -142.7281,
+              "y": 28.9437
+            },
+            {
+              "x": -142.9987,
+              "y": 29.089
+            },
+            {
+              "x": -143.8205,
+              "y": 28.6881
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nivel": "level70",
+      "clase": "FloorAnchor",
+      "nombre": "Floor (3)",
+      "ruta": "SceneData/Apartment/GameObject/Apartment A/Floor (3)",
+      "anchorID": -1378238022,
+      "groupNum": 2,
+      "defaultF": 1614,
+      "flipped": false,
+      "xOffset": 0.101,
+      "yOffset": 0,
+      "mundoX": -144.62,
+      "mundoY": 26.44,
+      "poligonos": [
+        {
+          "objeto": "New Sprite",
+          "puntos": [
+            {
+              "x": -145.5431,
+              "y": 24.5555
+            },
+            {
+              "x": -145.6762,
+              "y": 24.3077
+            },
+            {
+              "x": -148.0542,
+              "y": 25.4651
+            },
+            {
+              "x": -148.0436,
+              "y": 28.837
+            },
+            {
+              "x": -146.0956,
+              "y": 29.8086
+            },
+            {
+              "x": -142.7876,
+              "y": 28.1557
+            },
+            {
+              "x": -142.717,
+              "y": 28.1824
+            },
+            {
+              "x": -142.1962,
+              "y": 27.926
+            },
+            {
+              "x": -142.1907,
+              "y": 27.8575
+            },
+            {
+              "x": -139.6596,
+              "y": 26.5928
+            },
+            {
+              "x": -140.5284,
+              "y": 26.1534
+            },
+            {
+              "x": -140.5434,
+              "y": 25.3367
+            },
+            {
+              "x": -140.7889,
+              "y": 25.2114
+            },
+            {
+              "x": -140.799,
+              "y": 24.9057
+            },
+            {
+              "x": -142.7281,
+              "y": 23.9437
+            },
+            {
+              "x": -142.9987,
+              "y": 24.089
+            },
+            {
+              "x": -143.8205,
+              "y": 23.6881
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

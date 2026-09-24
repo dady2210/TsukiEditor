@@ -7,25 +7,86 @@
 // The real sublocationSave keys are Int32s; until we fully walk that dict,
 // we map location IDs to standard generic names since they can vary.
 const SUBLOC_NAMES = {
-    0:  "�?� Tsuki's Treehouse",
-    1:  "🚂 Train Station",
-    2:  "🦒 Chi's House",
-    3:  "�?� Moca's House",
-    4:  "�?� Yori's General Store",
-    5:  "🧜�?♀�? Mermaid Coast",
-    6:  "🥕 Tsuki's Farm",
-    7:  "�?��? Town Hall",
-    8:  "�?� Bobo's Ramen Restaurant",
-    9:  "�?� Momo's Tea House",
-    10: "🌻 Rosemary's Plant Shop",
-    11: "🧰 Dawn's Workshop",
-    12: "🎷 Scarlett's Lounge"
+    0:      "🏡 Casa del Árbol de Tsuki (level2)",
+    "0_hc": "🏡 Casa del Árbol Homecoming 3 Pisos (level28)",
+    1:      "🦊 Tienda de Yori (level3)",
+    2:      "🦒 Casa de Chi (level6)",
+    3:      "🐢 Casa de Moca (level7)",
+    4:      "🎣 Muelle de Yori / Costa (level5)",
+    5:      "🌱 Tienda de Rosemary (level11)",
+    6:      "🥕 Granja de Tsuki (level4)",
+    7:      "🚂 Escena de Apertura / Tren (level15)",
+    8:      "🏛️ Ayuntamiento de Aldea Hongo (level8)",
+    9:      "🍵 Casa de Té de Momo (level10)",
+    10:     "🚉 Estación de Tren (level9)",
+    11:     "🧰 Taller de Dawn (level12)",
+    12:     "🥊 Dojo de Ken (level55)",
+    13:     "🎷 Salón de Scarlett (level13)",
+    14:     "🚆 En Tránsito / Viaje en Tren (level48)",
+    15:     "🚇 Estación de Subterráneo (level52)",
+    16:     "🏙️ Gran Ciudad: Ayuntamiento (level49)",
+    17:     "🚏 Gran Ciudad: Salida de la Ciudad (level50)",
+    18:     "🕳️ Gran Ciudad: El Agujero (level51)",
+    19:     "🛏️ Gran Ciudad: Hotel Cápsula (level53)",
+    20:     "🛗 Gran Ciudad: Lobby de Apartamentos (level54)",
+    21:     "🍸 Gran Ciudad: Bar La Cuerva (level55)",
+    22:     "🏙️ Gran Ciudad: Penthouse de la Ciudad (level58)",
+    23:     "🛍️ Gran Ciudad: Centro Comercial (level59)",
+    24:     "🚪 Gran Ciudad: Entrada al Centro Comercial (level60)",
+    25:     "🧶 Gran Ciudad: Tienda de Alfombras (level61)",
+    26:     "🍷 Gran Ciudad: Vinatería (level62)",
+    27:     "🍦 Gran Ciudad: Heladería (level63)",
+    28:     "💍 Gran Ciudad: Joyería (level64)",
+    29:     "📮 Gran Ciudad: Oficina de Correos (level69)",
+    30:     "🧋 Gran Ciudad: Tienda de Bubble Tea (level65)",
+    31:     "👟 Gran Ciudad: Zapatería (level66)",
+    32:     "🚓 Gran Ciudad: Estación de Policía (level67)",
+    33:     "☕ Gran Ciudad: Cafetería (level68)",
+    34:     "🏢 Gran Ciudad: Apartamento de la Ciudad (level70)",
+    39:     "✨ Ático de Ensueño / Homecoming (level39)"
 };
+
+// Los mapas que existen como data/maps/map_*.json. No todos son decorables —de hecho
+// solo seis guardan muebles en los saves de prueba—, pero todos se pueden VISITAR, que
+// es lo que hace falta para recorrer la ciudad.
+const MAPAS_VISITABLES = [0, "0_hc", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                          21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 39];
+
+// Un `const` de nivel superior NO queda colgado de `window`, asi que otros ficheros
+// no lo verian. Se exponen a mano porque travel_system.js los necesita.
+try { window.SUBLOC_NAMES = SUBLOC_NAMES; window.MAPAS_VISITABLES = MAPAS_VISITABLES; }
+catch (e) { /* fuera del navegador */ }
 
 // Furniture IDs considered "ground" / floor layer (rendered below everything)
 const GROUND_IDS   = new Set([306, 411]);     // Plot, Soil Hydrator
 // Seed / Crop IDs that sit ON TOP of a Plot (FURN_306)
-const SEED_IDS     = new Set([342, 345, 1208, 1230, 1231, 1232, 1233, 1237, 1238, 1301]);
+const SEED_IDS     = new Set([342, 345, 1208, 1230, 1231, 1232, 1233, 1237, 1238]);
+// La caja de cultivo NO es una semilla. Estaba metida en SEED_IDS y eso hacía que el
+// parser la tratase como tal: al no encontrarle parcela le forzaba x=-1,y=-1 y se perdía
+// la posición que sí trae el csave (groupPosition.grid). Se dibuja aparte, en
+// _drawCropBoxFixture, así que tampoco entra en la capa de muebles normales.
+const CROP_BOX_ID  = 1301;
+const CROP_BOX_SIZE = { w: 3, l: 3 };
+// Césped del suelo, una textura por estación. Son las del juego (images/tilesets);
+// antes el fondo se pintaba con un color plano y en otoño e invierno ni siquiera se
+// intentaba la textura.
+// SeasonID tal y como lo numera el juego, no como apetece: lo dice el `SeasonData`
+// extraído (`data/weather.json`: 0 Summer, 1 Autumn, 2 Winter, 3 Spring) y lo confirman
+// los saves (mes 8 -> season 0). Aquí estaba corrido una posición —0 primavera, 1 verano,
+// 2 otoño, 3 invierno—, así que el césped, el color del suelo y la copa del árbol salían
+// SIEMPRE una estación por detrás: hierba de otoño en invierno, de invierno en primavera.
+// `play_scenery.js` ya se corrigió en su día; `map.js` se quedó con lo viejo, y es el que
+// pinta el editor y el play con `?scenery=off`.
+const SEASON_GRASS = {
+    0: 'images/tilesets/DreamHouse_Environment_Grass_Summer_27.png',            // verano
+    1: 'images/tilesets/DreamHouse_Environment_Reusables_AutumnGrass_165.png',  // otoño
+    2: 'images/tilesets/DreamHouse_Environment_Grass_Winter_182.png',           // invierno
+    3: 'images/tilesets/DreamHouse_Environment_Reusables_SpringGrass_167.png',  // primavera
+};
+
+// Desplazamiento del pivot de los sprites de parcela respecto al centro de su rombo,
+// en píxeles de sprite (ppu 150). Ver _drawPlotTile.
+const PLOT_PIVOT_DY = 29;
 // Harvest action ID
 const HARVEST_ID   = 900;
 
@@ -276,70 +337,35 @@ class IsometricMap {
         img.onerror = () => {
             this._imgCache[cacheKey] = null;
         };
-        img.src = 'images/npcs/' + path;
+        // Los fotogramas de las ACTIVIDADES vienen con la ruta entera desde la raíz
+        // (`images/npcs/...` o `images/activities/...`), porque salen de dos sitios:
+        // unos estaban ya en el port y otros hubo que sacarlos de los bundles. Los de
+        // siempre siguen llegando como `Personaje/fotograma`, relativos a images/npcs.
+        img.src = (path.indexOf('images/') === 0) ? path : ('images/npcs/' + path);
         return this._imgCache[cacheKey];
     }
 
     // Tileset Image Loader (for Wallpapers/Floors)
-    _getMaskByName(maskFilename, loc) {
-        if (!maskFilename) return null;
-        if (!maskFilename.endsWith('.png')) maskFilename += '.png';
+    /**
+     * Numero de `Exportado_levelN` del que salen las mascaras de este mapa.
+     *
+     * No vale `loc === 0 ? 2 : loc`: la Casa del Arbol sirve dos escenas bajo el mismo
+     * mapId 0 (level2 con dos pisos, level28 con tres), y `MapDef` es quien sabe cual
+     * esta activa. Sin esto, la casa ampliada se recortaba con las mascaras de la normal.
+     */
+    _exportDirDe(loc) {
         const META = (window.MAP_META && window.MAP_META[loc]) || {};
-        let exportDir = META.exportDir != null ? META.exportDir : (loc === 0 ? 2 : loc);
-        const cacheKey = 'mask_' + exportDir + '_' + maskFilename;
-        if (this._imgCache[cacheKey] !== undefined) {
-            return this._imgCache[cacheKey];
-        }
-        this._imgCache[cacheKey] = false;
-        const img = new Image();
-        img.onload = () => {
-            this._imgCache[cacheKey] = img;
-            this._bakedBgKey = null;
-            this.draw();
-        };
-        img.onerror = () => {
-            this._imgCache[cacheKey] = false;
-        };
-        img.src = 'images/maps/Exportado_level' + exportDir + '/' + maskFilename;
-        return false;
-    }
-
-    _getMaskImage(type, floorKey, loc) {
-        // U1: resolver exportDir/assembled/mask via MAP_META y surface.mask si existe, fallback viejo
-        const META = (window.MAP_META && window.MAP_META[loc]) || {};
-        let exportDir = META.exportDir != null ? META.exportDir : (loc === 0 ? 2 : loc);
-        // buscar surface para este loc/type/floorKey
-        let surface = null;
-        if (window.mapsAtlas) {
-            // heuristic: floorKey mapea a groupNum para floor; para wall usa fNum
-            surface = window.mapsAtlas.find(s => {
-                if (String(s.mapId) !== String(loc)) return false;
-                if (type === 'floor' && s.kind === 'floor' && s.groupNum === floorKey) return true;
-                if (type === 'wall') {
-                    const fNum = Math.floor(floorKey / 2);
-                    const expectFlipped = (floorKey % 2) === 0; // wallL is flipped true, wallR false; floorKey even->L, odd->R
-                    // Para loc 0 usamos lógica wallL/R, para farm group 3 ambos walls
-                    if (s.kind === 'wall' && s.groupNum === fNum && s.flipped === expectFlipped) return true;
-                    // fallback group 3 farm exact
-                    if (String(loc) === '6' && s.kind === 'wall' && s.groupNum === 3) return true;
-                }
-                return false;
-            }) || null;
-            if (surface && surface.mask) {
-                return this._getMaskByName(surface.mask, loc);
-            }
-        }
-        let maskName = 'mask_' + type + '_' + floorKey;
-        if (type === 'wall' && String(loc) === '0') {
-            const isRight = (floorKey % 2) !== 0;
-            const fNum = Math.floor(floorKey / 2);
-            maskName = 'mask_wall' + (isRight ? 'R' : 'L') + '_' + fNum;
-        }
-        return this._getMaskByName(maskName, loc);
+        if (META.exportDir != null) return META.exportDir;
+        try {
+            const cfg = window.MapDef && window.MapDef.config ? window.MapDef.config(loc) : null;
+            const m = cfg && cfg.assetsDir ? String(cfg.assetsDir).match(/level(\d+)/) : null;
+            if (m) return Number(m[1]);
+        } catch (e) { /* MapDef aun sin cargar */ }
+        return (loc === 0 ? 2 : loc);
     }
 
     _getTilesetTexture(type, id) {
-        if (!id || id <= 0) return null;
+        if (id == null || id === '' || Number(id) < 0) return null;
         const cacheKey = `${type}_${id}`;
         
         if (this._patternCache[cacheKey]) {
@@ -361,44 +387,77 @@ class IsometricMap {
         return null;
     }
 
+    /**
+     * ¿Este mapa dice, para este tipo de superficie, a qué grupo pertenece cada
+     * entrada del csave? Si alguna superficie trae `anchorID`, la correspondencia
+     * es conocida y no hay que adivinar por índice para las demás.
+     */
+    _mapDeclaresAnchors(surf, kind) {
+        const mapId = surf && surf.mapId;
+        if (mapId == null) return false;
+        const key = kind + ':' + mapId;
+        if (!this._anchorDeclCache) this._anchorDeclCache = {};
+        if (this._anchorDeclCache[key] === undefined) {
+            this._anchorDeclCache[key] = (window.mapsAtlas || []).some(
+                s => String(s.mapId) === String(mapId) && s.kind === kind && s.anchorID != null);
+        }
+        return this._anchorDeclCache[key];
+    }
+
     getSurfaceCoveringId(surf, targetLoc) {
         if (!surf) return null;
         const isFloor = surf.kind === 'floor';
         if (isFloor) {
             const floorDict = this.app && this.app.parser && this.app.parser.floors;
-            if (floorDict && floorDict[targetLoc] && floorDict[targetLoc].length) {
-                const fList = floorDict[targetLoc];
-                const match = fList.find(f => (surf.anchorID != null && Number(f.key) === Number(surf.anchorID)) || Number(f.key) === Number(surf.groupNum));
-                if (match && match.id > 0) return match.id;
-                if (fList[surf.groupNum] && fList[surf.groupNum].id > 0) return fList[surf.groupNum].id;
+            const fList = (floorDict && floorDict[targetLoc]) || null;
+            if (fList && fList.length) {
+                if (surf.anchorID != null) {
+                    const m = fList.find(f => Number(f.key) === Number(surf.anchorID));
+                    if (m && m.id != null && m.id !== '' && Number(m.id) >= 0) return m.id;
+                } else if (!this._mapDeclaresAnchors(surf, 'floor')) {
+                    // Sin anclas no queda más que emparejar por posición. Con ellas NO:
+                    // el csave solo guarda los grupos decorados, así que a un grupo sin
+                    // entrada propia se le colaba el revestimiento de otro.
+                    const match = fList.find(f => Number(f.key) === Number(surf.groupNum));
+                    if (match && match.id != null && match.id !== '' && Number(match.id) >= 0) return match.id;
+                    if (fList[surf.groupNum] && fList[surf.groupNum].id != null && fList[surf.groupNum].id !== '' && Number(fList[surf.groupNum].id) >= 0) return fList[surf.groupNum].id;
+                }
             }
-            if (surf.defaultCoverId !== undefined) return surf.defaultCoverId;
-            return (surf.groupNum < 2) ? (surf.groupNum === 0 ? 69 : 750) : null;
+            if (surf.defaultCoverId !== undefined && surf.defaultCoverId !== null) {
+                if (surf.defaultCoverId === -1) return null;
+                return surf.defaultCoverId;
+            }
+            // Fallback para Casa del Árbol (targetLoc 0)
+            if (Number(targetLoc) === 0) return 0;
+            return null;
         } else {
             const wpDict = this.app && this.app.parser && this.app.parser.wallpapers;
             if (wpDict && wpDict[targetLoc] && wpDict[targetLoc].length) {
                 const wList = wpDict[targetLoc];
                 if (surf.anchorID != null) {
                     const match = wList.find(w => Number(w.key) === Number(surf.anchorID));
-                    if (match && match.id > 0) return match.id;
-                }
-                // Unity Treehouse ordering:
-                // 0: Floor 0 Left (flipped=true)
-                // 1: Floor 1 Left (flipped=true)
-                // 2: Floor 1 Right (flipped=false)
-                // 3: Floor 0 Right (flipped=false)
-                if (Number(targetLoc) === 0 && wList.length >= 4) {
-                    const idx = surf.flipped ? (surf.groupNum === 0 ? 0 : 1) : (surf.groupNum === 0 ? 3 : 2);
-                    if (wList[idx] && wList[idx].id > 0) return wList[idx].id;
-                } else {
-                    const idx = (surf.groupNum * 2) + (surf.flipped ? 0 : 1);
-                    if (wList[idx] && wList[idx].id > 0) return wList[idx].id;
+                    if (match && match.id != null && match.id !== '' && Number(match.id) >= 0) return match.id;
+                } else if (!this._mapDeclaresAnchors(surf, 'wall')) {
+                    // Unity Treehouse ordering:
+                    // 0: Floor 0 Left (flipped=true)
+                    // 1: Floor 1 Left (flipped=true)
+                    // 2: Floor 1 Right (flipped=false)
+                    // 3: Floor 0 Right (flipped=false)
+                    if (Number(targetLoc) === 0 && wList.length >= 4) {
+                        const idx = surf.flipped ? (surf.groupNum === 0 ? 0 : 1) : (surf.groupNum === 0 ? 3 : 2);
+                        if (wList[idx] && wList[idx].id != null && wList[idx].id !== '' && Number(wList[idx].id) >= 0) return wList[idx].id;
+                    } else {
+                        const idx = (surf.groupNum * 2) + (surf.flipped ? 0 : 1);
+                        if (wList[idx] && wList[idx].id != null && wList[idx].id !== '' && Number(wList[idx].id) >= 0) return wList[idx].id;
+                    }
                 }
             }
-            if (surf.defaultCoverId !== undefined) return surf.defaultCoverId;
+            if (surf.defaultCoverId !== undefined && surf.defaultCoverId !== null) {
+                if (surf.defaultCoverId === -1) return null;
+                return surf.defaultCoverId;
+            }
             if (Number(targetLoc) === 0) {
-                if (surf.groupNum === 0) return surf.flipped ? 755 : 2127;
-                if (surf.groupNum === 1) return surf.flipped ? 752 : 418;
+                return 1; // Bark
             }
             return null;
         }
@@ -406,6 +465,7 @@ class IsometricMap {
 
     // ── Size helpers ──────────────────────────────────────────────────────
     getSize(item_id) {
+        if (item_id === CROP_BOX_ID) return { ...CROP_BOX_SIZE };
         if (GROUND_IDS.has(item_id) || SEED_IDS.has(item_id)) return { ...PLOT_SIZE };
 
         // Tamaño real verificado en juego: gana sobre items_db
@@ -443,6 +503,34 @@ class IsometricMap {
     }
 
     getImage(item_id, orientation, placement) {
+        // EL REPRODUCTOR DE CASETES (mueble 406) tiene DOS estados, no uno.
+        //
+        // `MusicPlayer` declara `Sprite open` y `Sprite close`, y el prefab los trae:
+        // `Cassette Player_0` es la tapa CERRADA -se ve el casete por la ventanilla- y
+        // `Cassette Player_1` la tapa ABIERTA y vacía. En el port son `FURN_406.png` y
+        // `FURN_406_0.png`.
+        //
+        // El cargador de abajo prueba SIEMPRE `_0` primero, así que salía siempre
+        // abierto. Cuál toca depende de si hay casete puesto (`MusicPlayerSave.musicID`).
+        //
+        // No hay animación de fotogramas entre los dos: el prefab lleva tres componentes
+        // —Transform, el MonoBehaviour y un PolygonCollider2D— y ningún `Animator` ni
+        // `SimpleAnim`. El cambio de estado ES el cambio de sprite.
+        if (Number(item_id) === 406 && window.MixtapePlayer) {
+            const puesto = window.MixtapePlayer.caseteDe(placement);
+            const ori406 = Number(orientation);
+            const atras = ori406 === 2 || ori406 === 3;
+            const archivo = puesto ? `FURN_406${atras ? '_BACK' : ''}` : 'FURN_406_0';
+            const clave = 'CASETE_' + archivo;
+            if (this._imgCache[clave] !== undefined) return this._imgCache[clave];
+            this._imgCache[clave] = false;
+            const img = new Image();
+            img.onload = () => { this._imgCache[clave] = img; this.draw(); };
+            img.onerror = () => { this._imgCache[clave] = null; };
+            img.src = `images/items/${archivo}.png?v=5`;
+            return this._imgCache[clave];
+        }
+
         // Light profile from prefab metadata (LIGHT_PROFILES)
         const profile = window.LIGHT_PROFILES && window.LIGHT_PROFILES[String(item_id)];
         let targetSprite = null;
@@ -471,11 +559,11 @@ class IsometricMap {
             this._imgCache[cacheKey] = false;
 
             const candidates = [
-                `images/items/${targetSprite}.png?v=5`,
-                `data/prefab_exports/${item_id}/${targetSprite}.png?v=5`,
                 isBack ? `images/items/FURN_${item_id}_BACK.png?v=5` : `images/items/FURN_${item_id}_0.png?v=5`,
                 isBack ? `images/items/FURN_${item_id}_0.png?v=5` : `images/items/FURN_${item_id}.png?v=5`,
-                `images/items/FURN_${item_id}.png?v=5`
+                `images/items/FURN_${item_id}.png?v=5`,
+                `images/items/${targetSprite}.png?v=5`,
+                `data/prefab_exports/${item_id}/${targetSprite}.png?v=5`
             ];
 
             const tryLoadIndex = (idx) => {
@@ -668,9 +756,16 @@ class IsometricMap {
     // ─── Coordinate transforms ───────────────────────────────────────────────
     surfaceFor(mapId, groupNum, isWall, flipped) {
         if (!window.mapsAtlas) return null;
+        let effMapId = mapId;
+        let effGroup = groupNum;
+        if (typeof mapId === 'string' && mapId.startsWith('train_vagon_')) {
+            effMapId = 14;
+            const vi = parseInt(mapId.split('_')[2], 10) - 1;
+            if (effGroup == null || effGroup === 0) effGroup = vi;
+        }
         return window.mapsAtlas.find(s => 
-            (s.mapId == null || String(s.mapId) === String(mapId)) && 
-            Number(s.groupNum) === Number(groupNum) && 
+            (s.mapId == null || String(s.mapId) === String(effMapId)) && 
+            Number(s.groupNum) === Number(effGroup) && 
             s.kind === (isWall ? 'wall' : 'floor') && 
             (!isWall || !!s.flipped === !!flipped)
         ) || null;
@@ -701,16 +796,154 @@ class IsometricMap {
     }
 
     _getSurfaceCellUnits(surf) {
-        // En Unity, la grilla isométrica usa estrictamente stepX=0.25 y stepY=0.125 unidades de mundo.
-        // A PPU 150, eso equivale a diamantes de 75px de ancho x 37.5px de alto sin escalar.
-        // En versiones anteriores, surf.cell almacenaba valores medidos en fondos ya escalados a 0.75 (~56-58, ~28).
-        // Si cell.w > 70, ya es la dimensión nativa en px; de lo contrario normalizamos a 75x37.5.
-        const cellW = (surf && surf.cell && surf.cell.w > 70) ? surf.cell.w : 75;
-        const cellH = (surf && surf.cell && surf.cell.h > 35) ? surf.cell.h : 37.5;
-        return {
-            cw_u: cellW / 150, // 0.5 (cw_u / 2 = 0.25)
-            ch_u: cellH / 150  // 0.25 (ch_u / 2 = 0.125)
+        // La cuenta vive en `castle_core.js` para que el editor use LA MISMA. Estuvo
+        // solo aquí, y el editor leía el `cell` crudo: en las 62 paredes que guardan
+        // `37.5 x 37.5` eso es la MITAD del paso horizontal, así que los muebles de
+        // pared caían en otra columna que en play.
+        return window.Castle.Iso.cellUnits(surf);
+    }
+
+    /**
+     * Mobiliario que el juego coloca solo en este mapa (ver default_layouts.js).
+     * Se memoriza por mapa y por estado del save: recalcularlo en cada repintado
+     * costaría, y solo cambia cuando el jugador mueve o borra algo.
+     */
+    _layoutPlacements(mapId) {
+        if (!window.DefaultLayouts || !window.DefaultLayouts.byMap) return [];
+        const saved = (this.app && this.app.parser && this.app.parser.placements) || [];
+        const key = mapId + '|' + saved.length + '|' + (window.DefaultLayouts.showConditional ? 1 : 0)
+                  + '|' + (this._layoutOverrideTick || 0);
+        if (this._layoutCache && this._layoutCache.key === key) return this._layoutCache.list;
+        const list = window.DefaultLayouts.placementsFor(mapId, saved);
+        this._layoutCache = { key, list };
+        return list;
+    }
+
+    /**
+     * ¿Está desplegado el Homecoming (el piso extra de la Casa del Árbol)?
+     *
+     * Lo manda `sublocations[0].currSLocData`: 1 = casa ampliada. Antes se miraba
+     * `homecomingUpdates`, y eso estaba mal: no es una bandera de la partida sino el
+     * número de tandas de contenido publicadas — vale 6 en los dos saves de prueba,
+     * así que `=== 1` daba siempre falso y el piso no salía nunca, ni en una partida
+     * que sí lo tiene construido.
+     */
+    _homecomingActivo() {
+        return this._estadoHomecoming() !== 'oculto';
+    }
+
+    /**
+     * En que punto esta la ampliacion. Tres estados, no dos:
+     *
+     *   'oculto'  no hay ampliacion: el piso 4 no existe
+     *   'obra'    el piso ya se ve, pero esta EN OBRA: no se puede decorar
+     *   'listo'   terminado y decorable
+     *
+     * El interruptor del piso es `sublocations[0].currSLocData`. Lo que separa 'obra'
+     * de 'listo' es el cronometro `Home2Construction`, de 1440 minutos: mientras
+     * corre, el juego tapa el piso y no deja poner nada.
+     *
+     * Si el save no trae el cronometro se entiende 'listo', que es como estaba antes:
+     * mejor dejar decorar que bloquear un piso por un dato que no existe.
+     */
+    _estadoHomecoming() {
+        const p = this.app && this.app.parser;
+        let puesto = false;
+        if (p && typeof p.getHomeCurrSLocData === 'function') {
+            const v = p.getHomeCurrSLocData();
+            if (v != null) puesto = Number(v) === 1;
+        } else {
+            try { if (window.Flags) puesto = window.Flags.get('homecomingUpdates') >= 1; }
+            catch (e) { /* sin Flags */ }
+        }
+        if (!puesto) return 'oculto';
+        if (p && typeof p.getTempTimerStatus === 'function') {
+            let t = null;
+            try { t = p.getTempTimerStatus('Home2Construction'); } catch (e) { t = null; }
+            if (t && !t.done) return 'obra';
+        }
+        return 'listo';
+    }
+
+    /** ¿Se puede decorar el piso extra ahora mismo? */
+    _homecomingDecorable() {
+        return this._estadoHomecoming() === 'listo';
+    }
+
+    /**
+     * Pone la Casa del Arbol en su escena correcta.
+     *
+     * La ampliacion NO es una capa sobre la casa normal: son dos escenas distintas de
+     * Unity, level2 con dos pisos y level28 con tres. Se comprobo que no hay una
+     * traslacion unica entre ellas —los sprites comunes se desplazan entre -17.8 y
+     * -23.9 en X—, porque al meter un piso la casa se reestructura y cada planta queda
+     * a otra altura.
+     *
+     * Por eso `map_0_hc.json` re-ancla CADA grupo a su piso del arte nuevo
+     * (0 -> Floor_L1, 1 -> Floor_L2, 4 -> Floor_L3) conservando `rows`, `cols` y
+     * `cell`. Como en el save un mueble guarda su CELDA dentro del grupo y no una
+     * coordenada del mundo, al cambiar de escena cada mueble sigue en la misma celda
+     * de la misma habitacion: no se mueve respecto a la sala.
+     *
+     * Se llama al dibujar, que es barato: solo hace algo cuando el estado cambia.
+     */
+    _sincronizarEscenaCasa() {
+        if (!window.MapDef || typeof window.MapDef.usarVariante !== 'function') return;
+        const quiere = (this._estadoHomecoming() !== 'oculto') ? '0_hc' : null;
+        if (this._varianteCasa === quiere) return;
+        this._varianteCasa = quiere;
+
+        const aplicar = () => {
+            window.MapDef.usarVariante(0, quiere);
+            try { window.MapDef.syncAtlas(0); } catch (e) { /* atlas aun sin cargar */ }
+            if (this._sceneFullCache) delete this._sceneFullCache[0];
+            this._bakedBgCanvas = null;
+            this._bakedBgKey = null;
+            this._layoutCache = null;
+            this._renderCache = null;
+            try { this.draw(); } catch (e) { /* aun sin lienzo */ }
         };
+        if (quiere && typeof window.MapDef.load === 'function' && !window.MapDef.get(quiere)) {
+            window.MapDef.load(quiere).then(aplicar).catch(() => { this._varianteCasa = undefined; });
+        } else {
+            aplicar();
+        }
+    }
+
+    _getMapAnchorPx(mapId) {
+        // Ancla mundo->pixel del *_Ensamblado.png del mapa. Cada nivel tiene la suya
+        // (se deriva con tools/derive_surfaces.py); (1235,1257) es la de level2 y solo
+        // vale como ultimo recurso para mapas cuyo JSON aun no la declara.
+        const cfg = (window.MapDef && mapId != null) ? window.MapDef.config(mapId) : null;
+        return (cfg && cfg.origin_px) ? cfg.origin_px : { x: 1235, y: 1257 };
+    }
+
+    _hasRealFloor(mapId, groupNum) {
+        // Un poly de <=4 puntos con todas las coordenadas en multiplos exactos de 0.25 es
+        // un placeholder generado (rombo de rows/cols redondos), no geometria del juego;
+        // la real viene de colliders de Unity o de vertices movidos a mano, con 4 decimales.
+        // Mismo criterio que tools/derive_surfaces.py::is_synthetic.
+        const list = (window.mapsAtlas || []).filter(s =>
+            String(s.mapId) === String(mapId) && s.kind === 'floor' &&
+            Number(s.groupNum) === Number(groupNum));
+        return list.some(s => {
+            const poly = s.poly || [];
+            if (poly.length < 3) return false;
+            if (poly.length > 4) return true;
+            return !poly.every(p => Math.abs(p.x * 4 - Math.round(p.x * 4)) < 1e-9 &&
+                                    Math.abs(p.y * 4 - Math.round(p.y * 4)) < 1e-9);
+        });
+    }
+
+    _getSurfaceOrigin(surf, mapId) {
+        // origin (mundo) manda; origin_px es el respaldo y necesita el ancla del mapa.
+        if (!surf) return { ox: 0, oy: 0 };
+        if (surf.origin) return { ox: surf.origin.x, oy: surf.origin.y };
+        if (surf.origin_px) {
+            const a = this._getMapAnchorPx(mapId);
+            return { ox: (surf.origin_px.x - a.x) / 150, oy: (a.y - surf.origin_px.y) / 150 };
+        }
+        return { ox: 0, oy: 0 };
     }
 
     getIsoCoords(x, y, floorNum = 0, mapId) {
@@ -722,18 +955,12 @@ class IsometricMap {
         const u = _bgo * this.scale;
         const surf = this.surfaceFor(mapId, floorNum, false, false);
         if (surf) {
-            let ox = 0, oy = 0;
-            if (surf.origin) {
-                ox = surf.origin.x;
-                oy = surf.origin.y;
-            } else if (surf.origin_px) {
-                ox = (surf.origin_px.x - 1235) / 150;
-                oy = (1257 - surf.origin_px.y) / 150;
-            }
-            const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
-            
-            const worldX = ox + (x - y) * (cw_u / 2);
-            const worldY = oy + (x + y) * (ch_u / 2);
+            const { ox, oy } = this._getSurfaceOrigin(surf, mapId);
+            // Origen + celda + formula, de una vez y en castle_core, para que el
+            // editor use exactamente lo mismo. Ver `puntoEnSuperficie`.
+            const _w = window.Castle.Iso.puntoEnSuperficie(surf, x, y, { x: ox, y: oy });
+            const worldX = _w.x;
+            const worldY = _w.y;
             
             return {
                 x: this.offsetX + worldX * 150 * u,
@@ -756,7 +983,7 @@ class IsometricMap {
             const sel = document.getElementById('select-location');
             mapId = sel ? parseInt(sel.value, 10) : 0;
         }
-        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const layerRadio = this._layerRadio();
         if (layerRadio && layerRadio.value === 'wall') {
             return {
                 x: Math.floor((screenX - 100) / this.gridSize),
@@ -767,14 +994,7 @@ class IsometricMap {
         if (surf) {
             const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
             const u = _bgo * this.scale;
-            let ox = 0, oy = 0;
-            if (surf.origin) {
-                ox = surf.origin.x;
-                oy = surf.origin.y;
-            } else if (surf.origin_px) {
-                ox = (surf.origin_px.x - 1235) / 150;
-                oy = (1257 - surf.origin_px.y) / 150;
-            }
+            const { ox, oy } = this._getSurfaceOrigin(surf, mapId);
             const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
 
             const worldX = (screenX - this.offsetX) / (150 * u);
@@ -805,21 +1025,63 @@ class IsometricMap {
     }
 
     // ── Draw ──────────────────────────────────────────────────────────────
+    /** Textura de césped de la estación indicada (0 primavera … 3 invierno). */
+    seasonGrassImage(season) {
+        return this.getBackgroundImage(SEASON_GRASS[season] || SEASON_GRASS[1]);
+    }
+
+    /**
+     * Patrón de césped anclado al mundo: se desplaza y escala con la cámara, así que
+     * no "nada" bajo el mapa al mover o hacer zoom. Devuelve null mientras carga, para
+     * que quien lo pida caiga al color plano de siempre.
+     */
+    seasonGrassPattern(ctx, season) {
+        const img = this.seasonGrassImage(season);
+        if (!img || !img.complete || img.naturalWidth <= 0) return null;
+        const pat = ctx.createPattern(img, 'repeat');
+        if (!pat) return null;
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const k = _bgo * this.scale;
+        try {
+            pat.setTransform(new DOMMatrix().translateSelf(this.offsetX, this.offsetY).scaleSelf(k));
+        } catch (e) {
+            // Sin setTransform el césped no acompaña a la cámara, pero se ve.
+        }
+        return pat;
+    }
+
+    /**
+     * Ruta canonica de una imagen de fondo.
+     *
+     * `backgroundPathFor()` devuelve dos formas distintas para el MISMO fichero segun
+     * si el JSON del mapa ya esta cargado: "images/maps/..." si lo esta y
+     * "../maps/..." si todavia no. Cacheando por la cadena cruda salian dos entradas
+     * para la misma imagen, y `_clampCamera` —que busca por `backgroundPathFor()`— no
+     * encontraba la que habia horneado el dibujado y se salia sin ajustar la camara.
+     *
+     * El efecto era que al cambiar de mapa se quedaba el encuadre del anterior. En
+     * mapas parecidos no se notaba, pero al ir de Aldea Hongo (2674x2455) a la
+     * Estacion de Tren (6064x4586) te quedabas mirando un hueco vacio: parecia que el
+     * mapa no cargaba.
+     */
+    _rutaFondoCanonica(imgName) {
+        const n = String(imgName || '');
+        if (n.startsWith('images/') || n.startsWith('data/')) return n;
+        if (n.startsWith('../maps/')) return n.replace('../maps/', 'images/maps/');
+        return 'images/all_sprites/' + n;
+    }
+
     getBackgroundImage(imgName) {
         if (!this._bgCache) this._bgCache = {};
-        if (this._bgCache[imgName] !== undefined) return this._bgCache[imgName];
-        
+        // Se cachea por la ruta ya resuelta, no por la que llega.
+        const clave = this._rutaFondoCanonica(imgName);
+        if (this._bgCache[clave] !== undefined) return this._bgCache[clave];
+
         const img = new Image();
-        this._bgCache[imgName] = false;
-        img.onload = () => { this._bgCache[imgName] = img; this.draw(); };
-        img.onerror = () => { this._bgCache[imgName] = null; };
-        if (imgName.startsWith('images/') || imgName.startsWith('data/')) {
-            img.src = imgName;
-        } else if (imgName.startsWith('../maps/')) {
-            img.src = imgName.replace('../maps/', 'images/maps/');
-        } else {
-            img.src = `images/all_sprites/${imgName}`;
-        }
+        this._bgCache[clave] = false;
+        img.onload = () => { this._bgCache[clave] = img; this.draw(); };
+        img.onerror = () => { this._bgCache[clave] = null; };
+        img.src = clave;
         return false;
     }
 
@@ -941,6 +1203,12 @@ class IsometricMap {
         if (!this._cellColocationGroups) {
             this._cellColocationGroups = new Map();
             for (const item of this.app.parser.placements) {
+                // La semilla enlazada a una parcela comparte casilla con ella, pero no se
+                // dibuja por su cuenta (la pinta _drawCropOnPlot encima de la parcela).
+                // Si cuenta como "otro objeto en la celda", el abanico de abajo separa la
+                // parcela de su propio cultivo un cuarto de casilla y el bancal se ve
+                // duplicado, como dos capas superpuestas.
+                if (item.linkedPlot && SEED_IDS.has(item.item_id)) continue;
                 if (!item.isWall && item.item_id > 0 && item.x >= 0 && item.y >= 0) {
                     const key = `${item.cluster != null ? item.cluster : 0}_${item.floor != null ? item.floor : 0}_${item.x}_${item.y}`;
                     if (!this._cellColocationGroups.has(key)) this._cellColocationGroups.set(key, []);
@@ -1000,24 +1268,27 @@ class IsometricMap {
         const u = _bgo * this.scale;
         const surf = this.surfaceFor(mapId, floorNum, true, flipped);
         if (surf) {
-            let ox = 0, oy = 0;
-            if (surf.origin) {
-                ox = surf.origin.x;
-                oy = surf.origin.y;
-            } else if (surf.origin_px) {
-                ox = (surf.origin_px.x - 1235) / 150;
-                oy = (1257 - surf.origin_px.y) / 150;
-            }
+            const { ox, oy } = this._getSurfaceOrigin(surf, mapId);
             const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
-            
-            let worldX, worldY;
-            if (!flipped) {
-                worldX = ox + wx * (cw_u / 2);
-                worldY = oy - wx * (ch_u / 2) + wy * ch_u;
-            } else {
-                worldX = ox - wx * (cw_u / 2);
-                worldY = oy - wx * (ch_u / 2) + wy * ch_u;
-            }
+
+            // `CastleTools.WallIsoPoint` (RVA 0x3116180), tal cual:
+            //
+            //     x = 0.25 * u
+            //     y = 0.25 * v + (volteada ? +0.125 : -0.125) * u
+            //
+            // con `u` a lo largo de la pared y `v` hacia arriba. A PPU 150 eso es
+            // cw_u/2 = 0.25 y ch_u = 0.25, que es lo que devuelve _getSurfaceCellUnits.
+            //
+            // La rama volteada estaba mal en DOS sitios: restaba en la x —o sea que la
+            // pared izquierda crecia hacia el lado contrario— y usaba el mismo signo
+            // negativo en la y. Las dos caras van en +x; lo que cambia es el signo del
+            // termino que las inclina.
+            // El volteo lo pone la PARED, no el mueble: `puntoEnSuperficie` lo saca de
+            // `surf.flipped`. El editor lo elegia con una cadena `||` que con `false`
+            // sigue buscando y podia acabar usando el del mueble.
+            const _w2 = window.Castle.Iso.puntoEnSuperficie(surf, wx, wy, { x: ox, y: oy });
+            const worldX = _w2.x;
+            const worldY = _w2.y;
             
             return {
                 x: this.offsetX + worldX * 150 * u,
@@ -1057,14 +1328,7 @@ class IsometricMap {
         if (window.mapsAtlas && (isPlay || isGrid)) {
             const surf = this.surfaceFor(mapId, floorNum, true, flipped);
             if (surf) {
-                let ox = 0, oy = 0;
-                if (surf.origin) {
-                    ox = surf.origin.x;
-                    oy = surf.origin.y;
-                } else if (surf.origin_px) {
-                    ox = (surf.origin_px.x - 1235) / 150;
-                    oy = (1257 - surf.origin_px.y) / 150;
-                }
+                const { ox, oy } = this._getSurfaceOrigin(surf, mapId);
                 const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
                 const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
                 const u = _bgo * this.scale;
@@ -1073,14 +1337,11 @@ class IsometricMap {
                 const worldX = (screenX - this.offsetX) / factor;
                 const worldY = (this.offsetY - screenY) / factor;
 
-                let wx, wy;
-                if (!flipped) {
-                    wx = (worldX - ox) / (cw_u / 2);
-                    wy = (worldY - (oy - wx * (ch_u / 2))) / ch_u;
-                } else {
-                    wx = (ox - worldX) / (cw_u / 2);
-                    wy = (worldY - (oy - wx * (ch_u / 2))) / ch_u;
-                }
+                // Inversa exacta de getWallIsoCoords.
+                // La inversa exacta de `Castle.Iso.wallPoint`, en el mismo sitio.
+                const celda = window.Castle.Iso.wallCell(worldX - ox, worldY - oy, flipped, cw_u, ch_u);
+                const wx = celda.u;
+                const wy = celda.v;
                 return { x: wx, y: wy };
             }
         }
@@ -1117,7 +1378,7 @@ class IsometricMap {
     }
 
     _pointerToRawGrid(mouseX, mouseY, placement) {
-        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const layerRadio = this._layerRadio();
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
         if (placement && placement.isWall) {
             if (!isWallLayer) return this.screenToWallGrid(mouseX, mouseY, !!placement.flipped, null, placement.floor);
@@ -1142,33 +1403,102 @@ class IsometricMap {
         return furnitureStackRole(this._itemLabel(p.item_id));
     }
 
+    /**
+     * Pasa un offset de sub-rejilla (unidades de mundo) a las unidades de `lift`, que es
+     * lo que usa el resto del dibujado: los sitios que lo consumen hacen
+     * `lift * this.CELL_H * this.scale` para sacar píxeles, y un metro de mundo son
+     * `150 * bgScale` píxeles sin escalar.
+     */
+    _liftDeMundo(v) {
+        const bgo = (window.atlasConfig && window.atlasConfig.bgScale) ? window.atlasConfig.bgScale : 0.75;
+        return v * 150 * bgo / this.CELL_H;
+    }
+
+    /**
+     * El mueble sobre el que se apoya cada pieza, y a qué altura.
+     *
+     * Antes esto se adivinaba dos veces: qué se apoyaba sobre qué, por solape de cajas y
+     * unas reglas de «rol»; y cuánto subía, con un 0,95 si el nombre del mueble contenía
+     * «table/mesa/desk/cama/bed» y un 0,62 en cualquier otro caso.
+     *
+     * Ahora los dos datos salen del juego (`data/furniture_subgroups.json`, ver
+     * `furniture_subgroups.js`):
+     *
+     *   · qué muebles sostienen a otros → `hasSubGroup`, exacto, son 365 de 2644;
+     *   · cuánto suben → `SubGroupData.Offset(orientación del mueble base)`, que además
+     *     lleva componente horizontal, que antes se ignoraba.
+     *
+     * Y cuando la pieza dice de quién se apoya —las del layout traen `parentItemId`, y
+     * las del save `parentPlacementID` vía `GridPointer.PointerType.Placement`— no se
+     * adivina nada: se usa ese padre y ya está.
+     *
+     * La heurística vieja se queda de reserva para cuando los datos aún no han cargado.
+     */
     _computeStackInfo(items) {
         const info = new Map();
         if (!items || !items.length) return info;
+        const SG = window.FurnitureSubgroups;
+        const hayDatos = !!(SG && SG.datos);
+
         const meta = items.map(p => {
             const sz = this.getRotatedSize(p.item_id, p.orientation);
             return { p, w: sz.w || 1, l: sz.l || 1, area: (sz.w || 1) * (sz.l || 1), role: this._stackRole(p) };
         });
+        const porID = new Map();
+        for (const m of meta) {
+            if (m.p.placementID != null) porID.set(String(m.p.placementID), m);
+        }
+
+        const anotar = (a, base) => {
+            if (!base) return;
+            let lift, liftX = 0;
+            const off = hayDatos ? SG.offsetDe(base.p.item_id, base.p.orientation) : null;
+            if (off) {
+                lift = this._liftDeMundo(off.y);
+                liftX = this._liftDeMundo(off.x);
+            } else {
+                // Sin dato del juego: la aproximación de siempre.
+                const etiqueta = this._itemLabel(base.p.item_id).toLowerCase();
+                lift = /\btable\b|\bmesa\b|desk|cama|\bbed\b/.test(etiqueta) ? 0.95 : 0.62;
+            }
+            info.set(a.p, { lift, liftX, base: base.p, exacto: !!off });
+        };
+
         for (const a of meta) {
-            let base = null;
-            let best = -1;
+            // 1) La pieza dice de quién se apoya. No hay nada que adivinar.
+            if (a.p.parentPlacementID != null) {
+                const padre = porID.get(String(a.p.parentPlacementID));
+                if (padre) { anotar(a, padre); continue; }
+            }
+            if (a.p.parentItemId != null && hayDatos && SG.sostiene(a.p.parentItemId)) {
+                anotar(a, { p: { item_id: a.p.parentItemId, orientation: a.p.parentOrientation } });
+                continue;
+            }
+
+            // 2) Si no, se busca debajo por solape, pero exigiendo que el candidato
+            //    SOSTENGA de verdad (hasSubGroup) en vez de deducirlo del nombre.
+            let base = null, best = -1;
             for (const b of meta) {
                 if (a.p === b.p) continue;
                 const overlap = a.p.floor === b.p.floor && a.p.x < b.p.x + b.w && a.p.x + a.w > b.p.x
                     && a.p.y < b.p.y + b.l && a.p.y + a.l > b.p.y;
                 if (!overlap) continue;
-                const aOnB = (b.role.surface && !a.role.surface)
-                    || (a.role.topper && !b.role.topper)
-                    || (!a.role.surface && !a.role.topper && b.area > a.area);
-                if (!aOnB) continue;
-                const score = (b.role.surface ? 10 : 0) + b.area;
+                const sostiene = hayDatos ? SG.sostiene(b.p.item_id) : b.role.surface;
+                if (hayDatos) {
+                    // Con datos: solo cuenta lo que el juego marca como superficie, y la
+                    // pieza de encima no puede ser a su vez la base de esta.
+                    if (!sostiene) continue;
+                    if (SG.sostiene(a.p.item_id) && b.area <= a.area) continue;
+                } else {
+                    const aOnB = (b.role.surface && !a.role.surface)
+                        || (a.role.topper && !b.role.topper)
+                        || (!a.role.surface && !a.role.topper && b.area > a.area);
+                    if (!aOnB) continue;
+                }
+                const score = (sostiene ? 10 : 0) + b.area;
                 if (score > best) { best = score; base = b; }
             }
-            if (base) {
-                const baseLabel = this._itemLabel(base.p.item_id).toLowerCase();
-                const lift = /\btable\b|\bmesa\b|desk|cama|\bbed\b/.test(baseLabel) ? 0.95 : 0.62;
-                info.set(a.p, { lift, base: base.p });
-            }
+            anotar(a, base);
         }
         return info;
     }
@@ -1256,15 +1586,23 @@ class IsometricMap {
             [wx + w, wy + h],
             [wx + w / 2, wy + h / 2]
         ];
-        const centerRelX = (wx + w / 2) * (cw_u / 2);
-        const centerRelY = - (wx + w / 2) * (ch_u / 2) - (wy + h / 2) * ch_u;
-        if (!this._pointInPoly(centerRelX, centerRelY, surf.poly)) return false;
+        // El `poly` de una pared va en coordenadas de MUNDO relativas a su origen
+        // (`tools/sync_surface_anchors.py`: `p.x - origen.x`), que es justo lo que
+        // devuelve `Castle.Iso.wallPoint`. Aquí la cuenta estaba escrita a mano, con el
+        // signo del término vertical cambiado y fijando la cara no volteada, y por eso
+        // NUNCA daba dentro: de los 36 muebles de pared de los saves de prueba, cero
+        // caían en su polígono. Con la fórmula buena caen los 36, en ambas caras.
+        //
+        // No se notaba porque el que llama cae al recorte rectangular cuando esto falla:
+        // el arrastre dejaba poner muebles fuera de la forma real de la pared.
+        const flipped = !!surf.flipped;
+        const c = window.Castle.Iso.wallPoint(wx + w / 2, wy + h / 2, flipped, cw_u, ch_u);
+        if (!this._pointInPoly(c.x, c.y, surf.poly)) return false;
 
         let insideCount = 0;
         for (const [x, y] of corners) {
-            const relX = x * (cw_u / 2);
-            const relY = - x * (ch_u / 2) - y * ch_u;
-            if (this._pointInPoly(relX, relY, surf.poly)) insideCount++;
+            const q = window.Castle.Iso.wallPoint(x, y, flipped, cw_u, ch_u);
+            if (this._pointInPoly(q.x, q.y, surf.poly)) insideCount++;
         }
         return insideCount >= 3;
     }
@@ -1303,7 +1641,7 @@ class IsometricMap {
             }
         }
 
-        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const layerRadio = this._layerRadio();
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
         if (isWallLayer) {
             return {
@@ -1336,7 +1674,7 @@ class IsometricMap {
         const y = (this._dragSnap && this._dragSnap.y != null) ? this._dragSnap.y : p.y;
         this.ctx.save();
         this.ctx.globalAlpha = 0.85;
-        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const layerRadio = this._layerRadio();
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
         if (p.isWall && isWallLayer) {
             const sz = this.getWallSize(p.item_id);
@@ -1411,12 +1749,9 @@ class IsometricMap {
         const sel = document.getElementById('select-location');
         const targetLoc = sel && sel.value !== "" ? parseInt(sel.value, 10) : 0;
 
-        const showHC = (() => {
-            try { if (window.Flags) return window.Flags.get('homecomingUpdates') === 1; } catch(e) {}
-            if (this.app && this.app.parser && this.app.parser.generalVars && this.app.parser.generalVars.homecomingUpdates) return this.app.parser.generalVars.homecomingUpdates.value === 1;
-            if (this.app && this.app.parser && typeof this.app.parser.getHomeCurrSLocData === 'function') return this.app.parser.getHomeCurrSLocData() === 1;
-            return false;
-        })();
+        // Para COLOCAR cosas no basta con que el piso se vea: durante la obra el
+        // grupo 4 esta a la vista pero tapado, y el juego no deja poner nada ahi.
+        const showHC = this._homecomingDecorable();
 
         // Infer preferredKind if not explicitly given
         if (!preferredKind) {
@@ -1436,14 +1771,7 @@ class IsometricMap {
             if (!surf) return null;
             const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
             const u = _bgo * this.scale;
-            let ox = 0, oy = 0;
-            if (surf.origin) {
-                ox = surf.origin.x;
-                oy = surf.origin.y;
-            } else if (surf.origin_px) {
-                ox = (surf.origin_px.x - 1235) / 150;
-                oy = (1257 - surf.origin_px.y) / 150;
-            }
+            const { ox, oy } = this._getSurfaceOrigin(surf, surf.mapId != null ? surf.mapId : targetLoc);
             const { cw_u, ch_u } = this._getSurfaceCellUnits(surf);
 
             const worldX = (screenX - this.offsetX) / (150 * u);
@@ -1492,10 +1820,12 @@ class IsometricMap {
                 const rows = wSurf.rows || 16;
                 if (wx >= -0.25 && wx <= cols + 0.25 && wy >= -0.25 && wy <= rows + 0.25) {
                     const { cw_u, ch_u } = this._getSurfaceCellUnits(wSurf);
-                    const relX = wx * (cw_u / 2);
-                    const relY = - wx * (ch_u / 2) - wy * ch_u;
+                    // Misma corrección: se calculaba `isFlipped` justo arriba y luego la
+                    // cuenta lo ignoraba, con el signo vertical cambiado además. El test
+                    // fallaba siempre, así que ninguna pared llegaba a seleccionarse.
+                    const rel = window.Castle.Iso.wallPoint(wx, wy, isFlipped, cw_u, ch_u);
                     if (wSurf.poly && wSurf.poly.length > 2) {
-                        if (!this._pointInPoly(relX, relY, wSurf.poly)) continue;
+                        if (!this._pointInPoly(rel.x, rel.y, wSurf.poly)) continue;
                     }
                     return {
                         kind: 'wall',
@@ -1995,45 +2325,139 @@ class IsometricMap {
                 this._playAnimTimer = null;
                 return;
             }
-            if (this._activeFurnitureActors > 0 || (window.RoutineScheduler && window.RoutineScheduler.currentSchedule && window.RoutineScheduler.currentSchedule.ambientActors && window.RoutineScheduler.currentSchedule.ambientActors.length > 0)) {
+            const targetLocStr = document.getElementById('select-location')?.value;
+            const targetLoc = (this.locationId != null) ? this.locationId : (targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 0);
+            const def = window.MapDef && window.MapDef.get(targetLoc);
+            const hasInteractiveProps = def && def.logic && def.logic.interactive_props && def.logic.interactive_props.some(p => p.anim);
+            const hasNpcActs = def && def.logic && def.logic.npc_activities && def.logic.npc_activities.length > 0;
+            const isTrainActive = (targetLoc === 10 || targetLoc === 15) && window.Train && typeof window.Train.posicion === 'function' &&
+                ['entrando', 'saliendo', 'de largo'].includes(window.Train.posicion()?.tramo);
+            if (this._activeFurnitureActors > 0 || hasInteractiveProps || hasNpcActs || isTrainActive || (window.RoutineScheduler && window.RoutineScheduler.currentSchedule && window.RoutineScheduler.currentSchedule.ambientActors && window.RoutineScheduler.currentSchedule.ambientActors.length > 0)) {
                 this.draw();
             }
-        }, 300);
+        }, 125);
+    }
+
+    /**
+     * El radio de capa (piso/pared) del editor, memorizado.
+     *
+     * `querySelector('input[name=...]:checked')` cuesta unos 0,34 ms con los ~6700 nodos
+     * que tiene la página, y se llamaba UNA VEZ POR OBJETO en cada repintado: con 30
+     * muebles eran 10 ms de fotograma tirados solo en buscar un radio que no cambia
+     * mientras se dibuja. Se resuelve una vez por dibujado.
+     */
+    _layerRadio() {
+        if (this._lrTick !== this._drawTick) {
+            this._lrTick = this._drawTick;
+            this._lrValue = document.querySelector('input[name="map-layer"]:checked');
+        }
+        return this._lrValue;
+    }
+
+    /**
+     * Ruta del fondo ensamblado de un mapa. La usan el dibujado y el límite de cámara,
+     * y **tiene que ser la misma cadena** en los dos: getBackgroundImage() cachea por
+     * ruta, así que dos formas distintas de nombrar el mismo PNG lo descargarían dos veces.
+     */
+    backgroundPathFor(loc) {
+        // En las estaciones el fondo es la capa SIN el tren: el `_Ensamblado.png`
+        // original lo lleva horneado dentro y entonces no se puede mover. El tren se
+        // pinta aparte en `_dibujarCapaTren()`. Si el indice no esta cargado, se sigue
+        // usando el ensamblado de siempre.
+        const capas = (window.Train && typeof window.Train.capas === 'function')
+            ? window.Train.capas(loc) : null;
+        if (capas) {
+            if (Number(loc) === 14 && capas.vagon) return capas.vagon;
+            if (capas.fondo) return capas.fondo;
+        }
+
+        const cfg = (window.MapDef && window.MapDef.config(loc)) || null;
+        if (cfg && cfg.assembled && cfg.assetsDir) {
+            return cfg.assetsDir.replace(/^(?:\.\.\/)+/, '') + '/' + cfg.assembled;
+        }
+        const meta = (window.MAP_META && window.MAP_META[loc]) || {};
+        // Si la entrada trae `assetsDir` (viene del JSON del mapa), esa manda: es la
+        // unica que sabe que el mapa 10 se dibuja con el arte de level9.
+        if (meta.assetsDir && meta.assembled) {
+            return meta.assetsDir.replace(/^(?:\.\.\/)+/, '') + '/' + meta.assembled;
+        }
+        const dir = meta.exportDir != null ? meta.exportDir : (loc === 0 ? 2 : loc);
+        // Misma forma que la rama del JSON, para que la clave de cache coincida.
+        return 'images/maps/Exportado_level' + dir + '/' + (meta.assembled || ('level' + dir + '_Ensamblado.png'));
     }
 
     _clampCamera() {
         if (!document.body.classList.contains('play-mode')) return;
+        const targetLocStr = document.getElementById('select-location')?.value;
+        const targetLoc = targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 0;
 
-        if (!this._bgCache) return;
-        let bgImg = null;
-        for (let k in this._bgCache) {
-            if (k.includes('level') && this._bgCache[k] && this._bgCache[k].width > 0) {
-                bgImg = this._bgCache[k];
-                break;
-            }
-        }
-        if (!bgImg) return;
-        
+        // El fondo del mapa que toca. Antes se rebuscaba en la caché la primera entrada
+        // que contuviera 'level', que podía ser la de otro mapa, y el límite solo se
+        // aplicaba a la Casa del Árbol: en el resto se podía alejar sin fin y el
+        // repintado se volvía lentísimo en equipos modestos.
+        const bgImg = this._bgCache
+            && this._bgCache[this._rutaFondoCanonica(this.backgroundPathFor(targetLoc))];
+        if (!bgImg || !bgImg.width) return;
+
         const bgScale = (window.atlasConfig && window.atlasConfig.bgScale) || 0.75;
         const cw = this.canvas.width;
         const ch = this.canvas.height;
-        
+
+        // El ancla mundo->pixel del mapa, la misma que usa el dibujado.
+        const cfgCam = (window.MapDef && window.MapDef.config(targetLoc)) || null;
+        const originPx = {
+            x: (cfgCam && cfgCam.origin_px ? cfgCam.origin_px.x : (targetLoc === 0 ? 1235 : bgImg.width / 2)),
+            y: (cfgCam && cfgCam.origin_px ? cfgCam.origin_px.y : (targetLoc === 0 ? 1257 : bgImg.height / 2)),
+        };
+
         const bgW = bgImg.width * bgScale;
         const bgH = bgImg.height * bgScale;
+
+        // Que se encuadra: el arte entero, o solo el trozo que interesa.
+        //
+        // En la Estación de Tren el lienzo abarca TODO el recorrido del tren, así que
+        // encuadrarlo completo dejaba la estación diminuta y se perdía el efecto de
+        // llegada: se veía el sprite del tren cruzando de lejos. El horneado deja en
+        // `train_layers.json` el recuadro de la estación y se usa ése, que además fija
+        // el tope de alejamiento.
+        const capasEnc = (window.Train && typeof window.Train.capas === 'function')
+            ? window.Train.capas(targetLoc) : null;
+        const enc = capasEnc && capasEnc.encuadre;
+        const encW = enc ? (enc.x1 - enc.x0) : bgImg.width;
+        const encH = enc ? (enc.y1 - enc.y0) : bgImg.height;
+        let encCx = enc ? (enc.x0 + enc.x1) / 2 : bgImg.width / 2;
+        let encCy = enc ? (enc.y0 + enc.y1) / 2 : bgImg.height / 2;
+
+        const vagonActual = (window.Train && typeof window.Train.vagonActual === 'function')
+            ? window.Train.vagonActual() : 1;
+        const enEstacion = (targetLoc === 10 || targetLoc === 15);
+        const trenParado = window.Train && typeof window.Train.estado === 'function' && window.Train.estado() && window.Train.estado().status === 2;
+        const verTecho = window.Train && typeof window.Train.techoAbierto === 'function' && window.Train.techoAbierto();
+
+        if (targetLoc === 14) {
+            encCx = originPx.x + (vagonActual - 1) * 1200.0;
+            encCy = originPx.y - (vagonActual - 1) * 600.0;
+        } else if (enEstacion && trenParado && verTecho && capasEnc && capasEnc.centros) {
+            const wc = capasEnc.centros[vagonActual] || capasEnc.centros[1];
+            if (wc) {
+                encCx = originPx.x + wc.x * 150.0;
+                encCy = originPx.y - wc.y * 150.0;
+            }
+        }
+
+        // Mínimo: que quepa lo encuadrado, con margen configurable o 15 % por defecto.
+        let zoomMinFactor = (capasEnc && typeof capasEnc.zoom_min === 'number') ? capasEnc.zoom_min : 1.15;
+        if (enEstacion && trenParado && verTecho) {
+            zoomMinFactor = 1.45;
+        }
+        const targetScale = Math.min(cw / (encW * bgScale), ch / (encH * bgScale)) * zoomMinFactor;
+        // La Casa del Árbol se queda como estaba (apenas deja acercarse); los demás mapas
+        // son mucho mayores y sí necesitan acercarse para trabajar en ellos.
+        const maxZoom = (targetLoc === 0) ? 1.3 : 3.0;
+        this.scale = Math.max(targetScale, Math.min(this.scale, targetScale * maxZoom));
         
-        // Tsuki Odyssey: Permitimos ver la casa entera sin cortes.
-        // targetScale usa Math.min para asegurar que SIEMPRE quepa en pantalla,
-        // logrando exactamente lo que se ve en la captura del usuario (casa completa).
-        let targetScale = Math.min(cw / bgW, ch / bgH);
-        
-        // Añadimos un poco más de zoom base (1.15x del mínimo) como pidió el usuario
-        targetScale = targetScale * 1.15;
-        
-        // Restringimos el zoom severamente: no zoom out, solo un poco de zoom in (hasta 1.3x).
-        this.scale = Math.max(targetScale, Math.min(this.scale, targetScale * 1.3));
-        
-        const drawnW = bgW * this.scale;
-        const drawnH = bgH * this.scale;
+        const drawnW = encW * bgScale * this.scale;
+        const drawnH = encH * bgScale * this.scale;
         
         // Clampeamos el paneo al 10% (0.1) como pidió el usuario.
         // Usamos min/max dinámicos para centrar si la imagen es pequeña,
@@ -2043,13 +2467,468 @@ class IsometricMap {
         const maxPanY = drawnH * 0.35;
         const defaultCenterX = cw / 2;
         const defaultCenterY = ch / 2;
-        this.offsetX = Math.max(defaultCenterX - maxPanX, Math.min(this.offsetX, defaultCenterX + maxPanX));
-        this.offsetY = Math.max(defaultCenterY - maxPanY, Math.min(this.offsetY, defaultCenterY + maxPanY));
+
+        // Encuadre inicial de cada mapa o al cambiar de vagón.
+        const encKey = targetLoc === 14
+            ? (targetLoc + '_' + vagonActual)
+            : (enEstacion && trenParado && verTecho
+                ? (targetLoc + '_' + vagonActual + '_open')
+                : targetLoc);
+        if (this._mapaEncuadrado !== encKey) {
+            this._mapaEncuadrado = encKey;
+            this.scale = targetScale;
+            const sNuevo = bgScale * this.scale;
+            this.offsetX = defaultCenterX - (encCx - originPx.x) * sNuevo;
+            this.offsetY = defaultCenterY - (encCy - originPx.y) * sNuevo;
+            return;
+        }
+
+        const sActual = bgScale * this.scale;
+        const baseCenterX = defaultCenterX - (encCx - originPx.x) * sActual;
+        const baseCenterY = defaultCenterY - (encCy - originPx.y) * sActual;
+        this.offsetX = Math.max(baseCenterX - maxPanX, Math.min(this.offsetX, baseCenterX + maxPanX));
+        this.offsetY = Math.max(baseCenterY - maxPanY, Math.min(this.offsetY, baseCenterY + maxPanY));
+    }
+
+    /**
+     * Pinta el tren de una estacion, corrido por la via.
+     *
+     * La capa `_Tren.png` tiene el mismo tamano y el mismo origen que el fondo, asi que
+     * con desplazamiento cero cae exactamente donde estaba en el `_Ensamblado.png`.
+     * Lo que la mueve es `Train.desplazamiento()`, en unidades de mundo sobre la
+     * diagonal isometrica, que se pasan a pixeles igual que todo lo demas:
+     *
+     *     px = origen.x + x * 150      py = origen.y - y * 150
+     *
+     * Cuando el tren esta parado (`Waiting`) el desplazamiento es 0 y la estacion se ve
+     * igual que siempre.
+     */
+    _dibujarCapaTren(ctx, targetLoc, dx, dy, s) {
+        if (!window.Train || typeof window.Train.capas !== 'function') return;
+        const capas = window.Train.capas(targetLoc);
+        if (!capas || !capas.tren) return;
+
+        const studioActive = window.TrainStudio && typeof window.TrainStudio.isActive === 'function' && window.TrainStudio.isActive(targetLoc);
+        const hideTren = studioActive && window.TrainStudio.isLayerHidden && window.TrainStudio.isLayerHidden('tren');
+        const hideEncima = studioActive && window.TrainStudio.isLayerHidden && window.TrainStudio.isLayerHidden('encima');
+
+        const img = this.getBackgroundImage(capas.tren);
+        const off = studioActive
+            ? window.TrainStudio.getDesplazamiento(targetLoc)
+            : window.Train.desplazamiento(targetLoc);
+
+        if (!hideTren && img && img.complete && img.width) {
+            if (off && off.tramo === 'fuera') {
+                // Fuera de escena: no se dibuja el tren (para no romper la magia del trayecto)
+            } else {
+                const mx = off ? off.x * 150 * s : 0;
+                const my = off ? off.y * 150 * s : 0;
+                ctx.drawImage(img, dx + mx, dy - my, img.width * s, img.height * s);
+
+                // Efecto de apertura de techo circular (Iris reveal) cuando el tren está detenido
+                const reveal = (window.Train && typeof window.Train.revealProgress === 'function')
+                    ? window.Train.revealProgress() : 0;
+                const vagonActual = (window.Train && typeof window.Train.vagonActual === 'function')
+                    ? window.Train.vagonActual() : 1;
+                const centros = capas.centros;
+                const wc = centros ? (centros[vagonActual] || centros[1]) : null;
+
+                if (reveal > 0.001 && wc && capas.tren_sin_techo) {
+                    const imgSinTecho = this.getBackgroundImage(capas.tren_sin_techo);
+                    if (imgSinTecho && imgSinTecho.complete && imgSinTecho.width) {
+                        const cfgCam = (window.MapDef && window.MapDef.config(targetLoc)) || null;
+                        const originPxX = cfgCam && cfgCam.origin_px ? cfgCam.origin_px.x : (targetLoc === 10 ? 1207 : (img.width / 2));
+                        const originPxY = cfgCam && cfgCam.origin_px ? cfgCam.origin_px.y : (targetLoc === 10 ? 3300 : (img.height / 2));
+                        const circleCx = (dx + mx) + (originPxX + wc.x * 150.0) * s;
+                        const circleCy = (dy - my) + (originPxY - wc.y * 150.0) * s;
+                        const maxRadius = 380 * s;
+                        const curRadius = maxRadius * reveal;
+
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(circleCx, circleCy, curRadius, 0, Math.PI * 2);
+                        ctx.clip();
+
+                        // 1. Dibujar el interior del vagón (tren sin techo)
+                        ctx.drawImage(imgSinTecho, dx + mx, dy - my, imgSinTecho.width * s, imgSinTecho.height * s);
+
+                        // 2. Grilla isométrica decorable
+                        this._drawWagonGrid(ctx, targetLoc, vagonActual, circleCx, circleCy, s);
+
+                        // 3. Muebles y props del vagón
+                        this._drawWagonPlacements(ctx, targetLoc, vagonActual, circleCx, circleCy, s);
+
+                        // 4. NPCs en el tren
+                        this._drawWagonNpcs(ctx, targetLoc, vagonActual, circleCx, circleCy, s);
+
+                        ctx.restore();
+
+                        // 5. Borde / halo luminoso del círculo de apertura
+                        if (curRadius > 4) {
+                            ctx.save();
+                            ctx.beginPath();
+                            ctx.arc(circleCx, circleCy, curRadius, 0, Math.PI * 2);
+                            ctx.lineWidth = Math.max(2, 3.5 * s);
+                            ctx.strokeStyle = 'rgba(255, 235, 170, 0.9)';
+                            ctx.shadowColor = 'rgba(255, 200, 80, 0.7)';
+                            ctx.shadowBlur = 10 * s;
+                            ctx.stroke();
+                            ctx.restore();
+                        }
+                    }
+                }
+            }
+        }
+
+        // Y encima, lo que el juego pinta DESPUES del tren: el edificio de la estacion,
+        // los pilares y los arboles. Sin esto el tren les pasa por delante y sus luces
+        // —que deberian quedar medio tapadas— se ven como manchas blancas sueltas.
+        if (!hideEncima && capas.encima) {
+            const arriba = this.getBackgroundImage(capas.encima);
+            if (arriba && arriba.complete && arriba.width) {
+                ctx.drawImage(arriba, dx, dy, arriba.width * s, arriba.height * s);
+            }
+        }
+
+        const isAnimating = (studioActive && off && off.animando) ||
+            (document.body.classList.contains('play-mode') && off && (off.tramo === 'entrando' || off.tramo === 'saliendo' || off.tramo === 'de largo'));
+
+        if (isAnimating) {
+            if (!this._trenRafId) {
+                this._trenRafId = requestAnimationFrame(() => {
+                    this._trenRafId = null;
+                    this.draw();
+                });
+            }
+        }
+    }
+
+    /** Dibuja la grilla de colocación isométrica para el vagón revelado */
+    _drawWagonGrid(ctx, targetLoc, vagonActual, circleCx, circleCy, s) {
+        const cw_u = 0.5, ch_u = 0.25;
+        const halfW = (cw_u / 2) * 150 * s;
+        const halfH = (ch_u / 2) * 150 * s;
+        
+        ctx.save();
+        ctx.translate(circleCx, circleCy);
+        
+        const pt = (gx, gy) => ({
+            x: (gx - gy) * halfW,
+            y: -(gx + gy) * halfH
+        });
+        const minGx = -6, maxGx = 6;
+        const minGy = -6, maxGy = 6;
+        
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(0, 255, 120, 0.40)';
+        ctx.beginPath();
+        for (let gx = minGx; gx <= maxGx; gx++) {
+            const p1 = pt(gx, minGy);
+            const p2 = pt(gx, maxGy);
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+        }
+        for (let gy = minGy; gy <= maxGy; gy++) {
+            const p1 = pt(minGx, gy);
+            const p2 = pt(maxGx, gy);
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+        }
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    /** Dibuja el mobiliario / placements colocados en el vagón revelado */
+    _drawWagonPlacements(ctx, targetLoc, vagonActual, circleCx, circleCy, s) {
+        if (!this.app || !this.app.parser || !this.app.parser.placements) return;
+        const targetCluster = 'train_vagon_' + (vagonActual + 1);
+        const wagonPlacements = this.app.parser.placements.filter(
+            p => String(p.cluster) === String(targetCluster) && Number(p.item_id) > 0 && !p.isWall
+        );
+        if (wagonPlacements.length === 0) return;
+
+        const cw_u = 0.5, ch_u = 0.25;
+        const halfW = (cw_u / 2) * 150 * s;
+        const halfH = (ch_u / 2) * 150 * s;
+
+        const sorted = [...wagonPlacements].sort((a, b) => {
+            return ((b.x || 0) + (b.y || 0)) - ((a.x || 0) + (a.y || 0));
+        });
+
+        for (const p of sorted) {
+            const img = (typeof this.getItemCustomImage === 'function')
+                ? this.getItemCustomImage(p.item_id)
+                : ((typeof this.getItemImage === 'function') ? this.getItemImage(p.item_id) : null);
+            if (!img || !img.complete || !img.naturalWidth) continue;
+
+            const isoX = circleCx + ((p.x || 0) - 6 - ((p.y || 0) - 6)) * halfW;
+            const isoY = circleCy - ((p.x || 0) - 6 + ((p.y || 0) - 6)) * halfH;
+
+            const itemScale = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) * this.scale;
+            const iw = img.naturalWidth * itemScale;
+            const ih = img.naturalHeight * itemScale;
+
+            ctx.save();
+            ctx.translate(isoX, isoY);
+            if (p.flipped) ctx.scale(-1, 1);
+            ctx.drawImage(img, -iw * 0.5, -ih, iw, ih);
+            ctx.restore();
+        }
+    }
+
+    /** Dibuja los NPCs activos en el tren sobre sus asientos en el vagón revelado */
+    _drawWagonNpcs(ctx, targetLoc, vagonActual, circleCx, circleCy, s) {
+        if (!this.app || !this.app.parser || typeof this.app.parser.getNpcsOnTrain !== 'function') return;
+        const trainNpcData = this.app.parser.getNpcsOnTrain();
+        const npcs = (trainNpcData && trainNpcData.npcs) || [];
+        if (!npcs || npcs.length === 0) return;
+
+        const slots = [
+            { x: -55 * s, y: -15 * s, flip: false, defaultAnim: 'Sit' },
+            { x: 55 * s,  y: 10 * s,  flip: true,  defaultAnim: 'Sit' },
+            { x: -20 * s, y: -35 * s, flip: false, defaultAnim: 'Idle' },
+            { x: 25 * s,  y: -20 * s, flip: true,  defaultAnim: 'Sit' },
+        ];
+
+        const npcsForWagon = [];
+        npcs.forEach((npcId, idx) => {
+            if ((idx % 3) === vagonActual) {
+                npcsForWagon.push(String(npcId));
+            }
+        });
+
+        const u = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) * this.scale;
+        npcsForWagon.forEach((npcId, slotIdx) => {
+            const slot = slots[slotIdx % slots.length];
+            const npcDef = (window.NPC_DB && window.NPC_DB[npcId]) || (window.NPC_DB && window.NPC_DB['0']);
+            if (!npcDef) return;
+
+            let frames = null;
+            if (window.resolveNpcAnimFrames) {
+                frames = window.resolveNpcAnimFrames(npcId, slot.defaultAnim)
+                      || window.resolveNpcAnimFrames(npcId, 'Idle')
+                      || window.resolveNpcAnimFrames(npcId, 'Walk');
+            }
+            const spritePath = (frames && frames[0]) || (npcDef.name ? (npcDef.name + '/Idle_0') : 'Tsuki/Idle_0');
+            const npcImg = this.getNpcSprite(spritePath);
+            if (!npcImg || !npcImg.complete || !npcImg.naturalWidth) return;
+
+            const nw = npcImg.naturalWidth * u;
+            const nh = npcImg.naturalHeight * u;
+            const posX = circleCx + slot.x;
+            const posY = circleCy + slot.y;
+
+            ctx.save();
+            ctx.translate(posX, posY);
+            if (slot.flip) ctx.scale(-1, 1);
+            ctx.drawImage(npcImg, -nw * 0.5, -nh, nw, nh);
+            ctx.restore();
+        });
+    }
+
+    /**
+     * Dibuja el paisaje exterior con parallax detrás de las ventanas del vagón (mapa 14).
+     * El scroll sigue la diagonal isométrica (1, 0.5) normalizada (DirMag = 1.118034).
+     * Rota cíclicamente entre las 4 fases (Country, Bridge, Tunnel, City) cada 10 s.
+     */
+    _dibujarFondoViaje(ctx, targetLoc, dx, dy, s) {
+        if (targetLoc !== 14) return;
+        const capas = (window.Train && typeof window.Train.capas === 'function')
+            ? window.Train.capas(targetLoc) : null;
+        const fondoPath = (capas && capas.fondo) || 'images/maps/Exportado_level48/level48_Fondo.png';
+        const img = this.getBackgroundImage(fondoPath);
+        if (!img || !img.complete || !img.width) return;
+
+        const cw = this.canvas.width, ch = this.canvas.height;
+        const now = (typeof performance !== 'undefined' && performance.now)
+            ? performance.now() / 1000 : Date.now() / 1000;
+        const fase = (window.Train && typeof window.Train.faseViaje === 'function')
+            ? window.Train.faseViaje(now) : { clave: 'Country' };
+
+        const ux = 0.894427, uy = 0.447214;
+        const vel = 260 * s;
+        const anchoScroll = img.width * s;
+        const altoScroll = img.height * s;
+        const mod = (now * vel) % (anchoScroll > 0 ? anchoScroll : 1000);
+
+        const offX = mod * ux;
+        const offY = mod * uy;
+
+        ctx.save();
+        for (let i = -1; i <= 2; i++) {
+            const px = dx - offX + i * anchoScroll * ux;
+            const py = dy + offY - i * altoScroll * uy;
+            ctx.drawImage(img, px, py, anchoScroll, altoScroll);
+        }
+
+        if (fase.clave === 'Tunnel') {
+            ctx.fillStyle = 'rgba(12, 10, 20, 0.88)';
+            ctx.fillRect(0, 0, cw, ch);
+            const lamp = (now * 1.8) % 1.0;
+            if (lamp < 0.12) {
+                ctx.fillStyle = 'rgba(255, 200, 110, 0.18)';
+                ctx.fillRect(0, 0, cw, ch);
+            }
+        } else if (fase.clave === 'Bridge') {
+            ctx.fillStyle = 'rgba(60, 120, 170, 0.15)';
+            ctx.fillRect(0, 0, cw, ch);
+        } else if (fase.clave === 'City') {
+            ctx.fillStyle = 'rgba(170, 110, 70, 0.12)';
+            ctx.fillRect(0, 0, cw, ch);
+        }
+        ctx.restore();
+
+        if (document.body.classList.contains('play-mode') && !this._viajeRafId) {
+            this._viajeRafId = requestAnimationFrame(() => {
+                this._viajeRafId = null;
+                this.draw();
+            });
+        }
+    }
+
+    /**
+     * Vuelca un lienzo horneado en pantalla recortando al área visible.
+     * (dx,dy) es dónde caería su esquina superior izquierda y `s` la escala.
+     */
+    _blitBaked(ctx, src, dx, dy, s) {
+        const cw = this.canvas.width, ch = this.canvas.height;
+        let sx = Math.floor(Math.max(0, (0 - dx) / s));
+        let sy = Math.floor(Math.max(0, (0 - dy) / s));
+        const sx2 = Math.ceil(Math.min(src.width, (cw - dx) / s));
+        const sy2 = Math.ceil(Math.min(src.height, (ch - dy) / s));
+        const sw = sx2 - sx, sh = sy2 - sy;
+        if (sw <= 0 || sh <= 0) return;          // fuera de pantalla: nada que pintar
+        ctx.drawImage(src, sx, sy, sw, sh, dx + sx * s, dy + sy * s, sw * s, sh * s);
+    }
+
+    /**
+     * Copia de la escena para mover la cámara sin reconstruirla.
+     *
+     * Mientras se arrastra, lo único que cambia es DÓNDE se mira: el contenido es el
+     * mismo. Se dibuja una vez en un lienzo con margen alrededor y los fotogramas
+     * siguientes son un solo `drawImage` desplazado. Cuando el arrastre se sale del
+     * margen, se vuelve a capturar. Al soltar, la copia se tira y se dibuja normal.
+     *
+     * Efecto secundario aceptado: los personajes y las animaciones quedan congelados
+     * mientras arrastras. Vuelven en cuanto sueltas.
+     */
+    _panMargin() {
+        const m = Math.round(Math.min(this.canvas.width, this.canvas.height) * 0.4);
+        return Math.max(120, Math.min(360, m));
+    }
+
+    /** Vuelca la copia desplazada. false si no sirve (zoom distinto o fuera de margen). */
+    _panBlit(force) {
+        const pc = this._panCache;
+        if (!pc || !this._panCanvas) return false;
+        if (pc.scale !== this.scale) return false;
+        const dx = this.offsetX - pc.ox;
+        const dy = this.offsetY - pc.oy;
+        if (!force && (Math.abs(dx) > pc.m || Math.abs(dy) > pc.m)) return false;
+        const ctx = this.ctx;
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.drawImage(this._panCanvas, -pc.m + dx, -pc.m + dy);
+        this._panOverlays();
+        return true;
+    }
+
+    /** Recoloca el panel flotante del objeto seleccionado (editor). */
+    _updateFloatUI() {
+        const floatUI = document.getElementById('floating-ui');
+        if (!floatUI) return;
+        if (!this.selectedPlacement) { floatUI.style.display = 'none'; return; }
+        floatUI.style.display = 'block';
+        const layerRadio = this._layerRadio();
+        let x, y;
+        if (layerRadio && layerRadio.value === 'wall') {
+            x = 100 + this.selectedPlacement.x * this.gridSize;
+            y = 100 + this.selectedPlacement.y * this.gridSize;
+        } else {
+            const iso = this.getIsoCoords(this.selectedPlacement.x, this.selectedPlacement.y, this.selectedPlacement.floor);
+            x = iso.x; y = iso.y;
+        }
+        floatUI.style.left = x + 'px';
+        floatUI.style.top = y + 'px';
+    }
+
+    /** Lo que NO va en la copia porque vive fuera del lienzo o se mueve solo. */
+    _panOverlays() {
+        this._updateFloatUI();
+        const targetLoc = this._lastTargetLoc || 0;
+        const studioLights = window.TrainStudio && typeof window.TrainStudio.showLights === 'function' && window.TrainStudio.showLights(targetLoc);
+        if ((document.body.classList.contains('play-mode') || studioLights)
+            && window.Lighting && typeof window.Lighting.renderHalos === 'function') {
+            window.Lighting.renderHalos(null, targetLoc);
+        }
+        this._drawCropHarvestFx();
+        if (this.app?.farmingSystem?.renderFloatingRewards) {
+            this.app.farmingSystem.renderFloatingRewards(this.ctx);
+        }
+    }
+
+    /** Redibuja la escena en el lienzo de copia y la vuelca. */
+    _panCapture() {
+        const cw = this.canvas.width, ch = this.canvas.height;
+        const m = this._panMargin();
+        let c = this._panCanvas;
+        if (!c) c = this._panCanvas = document.createElement('canvas');
+        if (c.width !== cw + 2 * m || c.height !== ch + 2 * m) {
+            c.width = cw + 2 * m;
+            c.height = ch + 2 * m;
+            this._panCtx = c.getContext('2d');
+        }
+        if (!this._panCtx) this._panCtx = c.getContext('2d');
+
+        const realCanvas = this.canvas, realCtx = this.ctx;
+        const ox = this.offsetX, oy = this.offsetY;
+        this._offscreenPass = true;
+        try {
+            this.canvas = c;
+            this.ctx = this._panCtx;
+            this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            this.ctx.clearRect(0, 0, c.width, c.height);
+            this.offsetX = ox + m;
+            this.offsetY = oy + m;
+            this._drawScene();
+        } finally {
+            this._offscreenPass = false;
+            this.canvas = realCanvas;
+            this.ctx = realCtx;
+            this.offsetX = ox;
+            this.offsetY = oy;
+        }
+        this._panCache = { ox, oy, scale: this.scale, m };
+        this._panBlit(true);
     }
 
     _drawImmediate() {
         if (!this.app || !this.app.parser || !this.app.parser.placements) return;
+        const targetLocStr = document.getElementById('select-location')?.value;
+        const targetLoc = (this.locationId != null) ? this.locationId : (targetLocStr !== undefined && targetLocStr !== "" ? parseInt(targetLocStr, 10) : 0);
+        let isTrainMoving = false;
+        if ((targetLoc === 10 || targetLoc === 15) && window.Train && typeof window.Train.posicion === 'function') {
+            const p = window.Train.posicion();
+            if (p && (p.tramo === 'entrando' || p.tramo === 'saliendo' || p.tramo === 'de largo')) {
+                isTrainMoving = true;
+            }
+        }
+        if (this.isPanDragging && !this.isItemDragging && !this.isGridDragging && !isTrainMoving) {
+            if (this._panBlit()) return;
+            this._panCapture();
+            return;
+        }
+        this._panCache = null;
+        this._drawScene();
+    }
+
+    _drawScene() {
+        if (!this.app || !this.app.parser || !this.app.parser.placements) return;
+        this._drawTick = (this._drawTick | 0) + 1;   // invalida los memos por fotograma
         this._cellColocationGroups = null;
+        // Los vecinos de cada parcela se recalculan por fotograma: al poner o quitar
+        // una, las de alrededor cambian de sprite y el borde tiene que seguirlas.
+        this._plotCellCache = null;
 
         const ctx = this.ctx;
         const targetLocStr = document.getElementById('select-location')?.value;
@@ -2067,22 +2946,34 @@ class IsometricMap {
         let isGrid = document.body.classList.contains('grid-mode');
         let bgActive = (isPlay || isGrid) && targetLoc === 0;
 
-        if (bgActive) {
-            ctx.fillStyle = '#c1cba6';
+        const curSeason = (window.GameTime ? window.GameTime.now().season : (this.app && this.app.parser ? this.app.parser.getClock().season : 0));
+        // Numeración del juego: 0 verano, 1 otoño, 2 invierno, 3 primavera. Ver SEASON_GRASS.
+        const seasonalGroundColors = {
+            0: '#98B870', // verano
+            1: '#E2B36B', // otoño
+            2: '#E0E9F0', // invierno
+            3: '#9EBE72'  // primavera
+        };
+        const activeGroundColor = seasonalGroundColors[curSeason] || '#98B870';
+
+        if (isPlay && window.PlayScenery && !window.PlayScenery.settled(targetLoc)) window.PlayScenery.prepare(targetLoc);
+        const sceneryOn = !!(isPlay && window.PlayScenery && window.PlayScenery.ready(targetLoc));
+
+        if (bgActive || isPlay) {
+            // El suelo va con la textura de la estación; el color plano queda solo
+            // como respaldo mientras la imagen carga.
+            ctx.fillStyle = this.seasonGrassPattern(ctx, curSeason) || activeGroundColor;
             ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         } else {
             ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
         
+        if (String(targetLoc) === '0') this._sincronizarEscenaCasa();
+
         if (isPlay) {
             // B: visible = floors del atlas para ese mapId, respetar homecoming_only
             const allFloors = (window.mapsAtlas || []).filter(s => String(s.mapId) === String(targetLoc) && s.kind === 'floor');
-            const showHC = (() => {
-                try { if (window.Flags) return window.Flags.get('homecomingUpdates') === 1; } catch(e) {}
-                if (this.app && this.app.parser && this.app.parser.generalVars && this.app.parser.generalVars.homecomingUpdates) return this.app.parser.generalVars.homecomingUpdates.value === 1;
-                if (this.app && this.app.parser && typeof this.app.parser.getHomeCurrSLocData === 'function') return this.app.parser.getHomeCurrSLocData() === 1;
-                return false;
-            })();
+            const showHC = this._homecomingActivo();
             visibleFloors = allFloors.filter(s => {
                 if ((s.homecoming_only || s.groupNum === 4) && !showHC) return false;
                 return true;
@@ -2100,7 +2991,7 @@ class IsometricMap {
         // bgImage is now drawn inside the floor layer (after tilesets)
         const targetFloor = visibleFloors[0];
         
-        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const layerRadio = this._layerRadio();
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
         let targetWallGroup = document.getElementById('select-wall-group')?.value;
         if (!targetWallGroup && this.app && this.app.parser) {
@@ -2173,20 +3064,24 @@ class IsometricMap {
                 y: ay * this.scale + this.offsetY
             });
 
-            if ((isPlay || isGrid) && window.mapsAtlas) {
-            // 1, 2, 3: BAKED BACKGROUND (House level2 / Farm level4)
-            const targetLoc = document.getElementById('select-location') ? parseInt(document.getElementById('select-location').value) : 0;
-            // Layered scenery (map_def.js/play_scenery.js): kick async bake once per map.
-            if (isPlay && window.PlayScenery && !window.PlayScenery.settled(targetLoc)) window.PlayScenery.prepare(targetLoc);
-            const sceneryOn = !!(isPlay && window.PlayScenery && window.PlayScenery.ready(targetLoc));
-            const META2 = (window.MAP_META && window.MAP_META[targetLoc]) || {};
-            const bgExportDir2 = META2.exportDir != null ? META2.exportDir : (targetLoc === 0 ? 2 : targetLoc);
-            const bgAssembled2 = META2.assembled || ('level' + bgExportDir2 + '_Ensamblado.png');
-            const bgPath = '../maps/Exportado_level' + bgExportDir2 + '/' + bgAssembled2;
+            // El fondo horneado —cesped, suelos y papel pintado, recortados por el
+            // poligono de cada ancla— se usa tambien en el EDITOR, no solo en play. Antes
+            // el editor caia a la rama de abajo, que pinta un rombo generico por piso con
+            // el suelo del save y NINGUNA pared, asi que las dos vistas no se parecian.
+            // Con los datos del atlas delante no hay motivo para dibujar distinto.
+            const hayAtlas = !!(window.mapsAtlas
+                && window.mapsAtlas.some(x => String(x.mapId) === String(targetLoc)));
+            if ((isPlay || isGrid || hayAtlas) && window.mapsAtlas) {
+            // 1, 2, 3: BAKED BACKGROUND (House level2 / Farm level4 / Other Maps)
+            const mapDefCfg = (window.MapDef && window.MapDef.config(targetLoc)) || null;
+            // Misma ruta que usa _clampCamera: getBackgroundImage() cachea por cadena,
+            // y dos formas distintas de nombrar el mismo PNG lo bajarían dos veces.
+            const bgPath = this.backgroundPathFor(targetLoc);
             const bgImg = this.getBackgroundImage(bgPath);
             
-            const grassPath = '../maps/Exportado_level2/SpringGrass.png';
-            const grassImg = (targetLoc === 0) ? this.getBackgroundImage(grassPath) : null;
+            // El césped de la Casa del Árbol sale de la textura de la estación, no de
+            // una primavera fija: antes otoño e invierno se horneaban de color plano.
+            const grassImg = (targetLoc === 0) ? this.seasonGrassImage(curSeason) : null;
             const grassLoaded = (!grassImg || (grassImg.complete && grassImg.width > 0)) ? '1' : '0';
             
             // Only bake if bgImg is loaded and we haven't baked this combination yet
@@ -2195,12 +3090,17 @@ class IsometricMap {
             const wpStr = wpDict && wpDict[targetLoc] ? wpDict[targetLoc].map(x => x.id).join(',') : '';
             const flStr = floorDict && floorDict[targetLoc] ? floorDict[targetLoc].map(x => x.id).join(',') : '';
             const atlasCount = (window.mapsAtlas || []).filter(s => String(s.mapId) === String(targetLoc)).length;
-            const bakeKey = targetLoc + '_' + wpStr + '_' + flStr + '_' + atlasCount + '_g' + grassLoaded + '_sc' + (sceneryOn ? '1' : '0');
+            const bakeKey = targetLoc + '_' + wpStr + '_' + flStr + '_' + atlasCount + '_g' + grassLoaded + '_sc' + (sceneryOn ? '1' : '0') + '_s' + curSeason;
             
             if (bgImg && bgImg.complete && bgImg.width > 0) {
-                // En level2 (árbol), el centro (0, 0) de Unity está en el píxel (1235, 1257) de la imagen ensamblada
-                const originPxX = (targetLoc === 0 ? 1235 : bgImg.width / 2);
-                const originPxY = (targetLoc === 0 ? 1257 : bgImg.height / 2);
+                // Ancla mundo->pixel del ensamblado: cada mapa la declara en su JSON
+                // (config.origin_px, derivada por tools/derive_surfaces.py). En level2 vale
+                // (1235,1257). El centro de la imagen es solo un respaldo para mapas sin JSON,
+                // y casi siempre esta desplazado respecto al origen real de Unity.
+                const originPxX = (mapDefCfg && mapDefCfg.origin_px ? mapDefCfg.origin_px.x
+                    : (targetLoc === 0 ? 1235 : bgImg.width / 2));
+                const originPxY = (mapDefCfg && mapDefCfg.origin_px ? mapDefCfg.origin_px.y
+                    : (targetLoc === 0 ? 1257 : bgImg.height / 2));
 
                 if (!this._bakedBgCanvas || this._bakedBgKey !== bakeKey) {
                     // Bake the background to a temporary offscreen canvas
@@ -2211,43 +3111,40 @@ class IsometricMap {
                     
                     let allLoaded = true;
 
-                    // Fill background with spring grass pattern for Treehouse (level2)
+                    // Suelo de la Casa del Árbol: la textura de césped que toque a la
+                    // estación, y el color plano solo si aún no ha cargado.
                     if (targetLoc === 0) {
-                        if (grassImg && grassImg.complete && grassImg.width > 0) {
-                            const grassPattern = bCtx.createPattern(grassImg, 'repeat');
-                            if (grassPattern) {
-                                bCtx.fillStyle = grassPattern;
-                                bCtx.fillRect(0, 0, tempBaked.width, tempBaked.height);
-                            }
+                        const grassPattern = (grassImg && grassImg.complete && grassImg.width > 0)
+                            ? bCtx.createPattern(grassImg, 'repeat') : null;
+                        if (grassPattern) {
+                            bCtx.fillStyle = grassPattern;
                         } else {
+                            bCtx.fillStyle = activeGroundColor;
                             allLoaded = false;
                         }
+                        bCtx.fillRect(0, 0, tempBaked.width, tempBaked.height);
                     }
                     if (!this._sceneFullCache) this._sceneFullCache = {};
-                    if (this._sceneFullCache[targetLoc]) {
-                        // Restaurar superficies en window.mapsAtlas si no están presentes
-                        const cached = this._sceneFullCache[targetLoc];
-                        if (cached && cached.surfaces) {
-                            if (!window.mapsAtlas) window.mapsAtlas = [];
-                            const mapIdNum = cached.mapId !== undefined ? cached.mapId : targetLoc;
-                            const hasSurfs = window.mapsAtlas.some(s => String(s.mapId) === String(targetLoc));
-                            if (!hasSurfs) {
-                                cached.surfaces.forEach(s => { s.mapId = mapIdNum; });
-                                window.mapsAtlas = window.mapsAtlas.filter(s => String(s.mapId) !== String(targetLoc));
-                                window.mapsAtlas.push(...cached.surfaces);
-                            }
+                    const effTargetLoc = (window.MapDef && window.MapDef.efectivo) ? window.MapDef.efectivo(targetLoc) : targetLoc;
+                    if (this._sceneFullCache[effTargetLoc]) {
+                        if (window.MapDef && typeof window.MapDef.syncAtlas === 'function') {
+                            window.MapDef.syncAtlas(targetLoc);
                         }
-                    } else if (this._sceneFullCache[targetLoc] === undefined) {
-                        this._sceneFullCache[targetLoc] = null; // Prevent multiple fetches
+                    } else if (this._sceneFullCache[effTargetLoc] === undefined) {
+                        this._sceneFullCache[effTargetLoc] = null; // Prevent multiple fetches
                         if (location.protocol !== 'file:') {
-                            fetch(`data/maps/map_${targetLoc}.json?v=${Date.now()}`).then(r=>r.ok?r.json():null).then(unifiedMap=>{
+                            ((window.MapDef && window.MapDef.load)
+                                ? window.MapDef.load(effTargetLoc)
+                                : fetch(`data/maps/map_${effTargetLoc}.json`).then(r=>r.ok?r.json():null)
+                            ).then(unifiedMap=>{
                                 if(unifiedMap){
-                                    this._sceneFullCache[targetLoc] = unifiedMap;
+                                    this._sceneFullCache[effTargetLoc] = unifiedMap;
                                     
-                                    // Make sure mapId is on every surface and merge without wiping other maps
-                                    if(unifiedMap.surfaces) {
+                                    if (window.MapDef && typeof window.MapDef.syncAtlas === 'function') {
+                                        window.MapDef.syncAtlas(targetLoc);
+                                    } else if (unifiedMap.surfaces) {
                                         if (!window.mapsAtlas) window.mapsAtlas = [];
-                                        const mapIdNum = unifiedMap.mapId !== undefined ? unifiedMap.mapId : targetLoc;
+                                        const mapIdNum = parseInt(targetLoc, 10);
                                         unifiedMap.surfaces.forEach(s => {
                                             s.mapId = mapIdNum;
                                         });
@@ -2257,12 +3154,26 @@ class IsometricMap {
                                     
                                     if(unifiedMap.meta || unifiedMap.config) {
                                         if(!window.MAP_META) window.MAP_META = {};
-                                        window.MAP_META[targetLoc] = unifiedMap.meta || unifiedMap.config;
+                                        // MEZCLAR, no reemplazar. Sustituir la entrada por
+                                        // `config` borraba `exportDir`, `export` y `name`, que
+                                        // es lo unico que tiene `maps_atlas.js` y de lo que
+                                        // depende el respaldo de `backgroundPathFor`.
+                                        //
+                                        // El caso feo era la Estacion de Tren: su mapa es el 10
+                                        // pero su arte es level9, asi que al perder
+                                        // `exportDir: 9` la ruta pasaba a ser
+                                        // "Exportado_level10/level9_Ensamblado.png", que no
+                                        // existe. La imagen se cacheaba como nula y el mapa
+                                        // salia vacio.
+                                        window.MAP_META[targetLoc] = Object.assign(
+                                            {}, window.MAP_META[targetLoc] || {},
+                                            unifiedMap.meta || unifiedMap.config || {});
                                     }
                                     
                                     this._renderCache = null;
                                     this._bakedBgCanvas = null;
                                     this._bakedBgKey = null;
+                                    this._anchorDeclCache = null;   // el atlas acaba de cambiar
                                     this.draw();
                                 }
                             }).catch(console.error);
@@ -2274,58 +3185,49 @@ class IsometricMap {
                         if (!surf) return;
                         const isFloor = surf.kind === 'floor';
                         const coverId = this.getSurfaceCoveringId(surf, targetLoc);
-                        if (!coverId || coverId <= 0) return;
+                        if (coverId == null || coverId === '' || Number(coverId) < 0) return;
 
                         const tex = this._getTilesetTexture(isFloor ? 'floor' : 'wall', coverId);
                         if (!tex || !tex.img || !tex.img.complete || tex.img.width === 0) {
-                            allLoaded = false;
+                            // Solo se espera si de verdad está cargando. Si el PNG no
+                            // existe, esperarlo dejaría el fondo rehorneándose sin fin.
+                            if (!(tex && tex.error)) allLoaded = false;
                             return;
                         }
 
-                        // Determine mask image cleanly
-                        let maskImg = null;
-                        if (surf.mask) {
-                            maskImg = this._getMaskByName(surf.mask, targetLoc);
-                        } else if (isFloor) {
-                            maskImg = this._getMaskByName(`mask_floor_${surf.groupNum}.png`, targetLoc);
-                        } else {
-                            maskImg = this._getMaskByName(`mask_wall${surf.flipped ? 'L' : 'R'}_${surf.groupNum}.png`, targetLoc);
-                        }
+                        // El revestimiento se recorta con el POLIGONO del ancla, que es
+                        // el contorno exacto que trae el spline de su SpriteShapeController.
+                        // Ya no hay mascaras PNG: solo existian para seis superficies de la
+                        // Casa del Arbol, habia que mantenerlas a mano y ocultaban el error
+                        // cuando el poligono estaba mal.
+                        //
+                        // Un suelo puede venir partido en varios trozos (`polys`), y
+                        // entonces se pinta sobre la union de todos.
+                        const anillos = (surf.polys && surf.polys.length)
+                            ? surf.polys
+                            : ((surf.poly && surf.poly.length) ? [surf.poly] : []);
+                        if (!anillos.length) return;
 
-                        const hasMask = (maskImg && maskImg.complete && maskImg.width > 0);
-                        if (!hasMask && maskImg === false) {
-                            allLoaded = false;
+                        if (!this._patronScratch) {
+                            this._patronScratch = document.createElement('canvas');
                         }
-
-                        // Scratch canvas for pattern masking
-                        if (!this._maskScratchCanvas) {
-                            this._maskScratchCanvas = document.createElement('canvas');
+                        const scratch = this._patronScratch;
+                        if (scratch.width !== bgImg.width || scratch.height !== bgImg.height) {
+                            scratch.width = bgImg.width;
+                            scratch.height = bgImg.height;
                         }
-                        if (this._maskScratchCanvas.width !== bgImg.width || this._maskScratchCanvas.height !== bgImg.height) {
-                            this._maskScratchCanvas.width = bgImg.width;
-                            this._maskScratchCanvas.height = bgImg.height;
-                        }
-                        const mCtx = this._maskScratchCanvas.getContext('2d');
+                        const mCtx = scratch.getContext('2d');
                         mCtx.globalCompositeOperation = 'source-over';
                         mCtx.clearRect(0, 0, bgImg.width, bgImg.height);
-
-                        // Fill with pattern directly (image already has perspective)
-                        const pat = mCtx.createPattern(tex.img, 'repeat');
-                        mCtx.fillStyle = pat;
+                        mCtx.fillStyle = mCtx.createPattern(tex.img, 'repeat');
                         mCtx.fillRect(0, 0, bgImg.width, bgImg.height);
 
-                        if (hasMask) {
-                            mCtx.globalCompositeOperation = 'destination-in';
-                            mCtx.drawImage(maskImg, 0, 0, bgImg.width, bgImg.height);
-                            bCtx.globalCompositeOperation = 'source-over';
-                            bCtx.drawImage(this._maskScratchCanvas, 0, 0);
-                            mCtx.globalCompositeOperation = 'source-over';
-                        } else if (surf.poly && surf.poly.length > 0) {
-                            bCtx.save();
-                            bCtx.beginPath();
-                            const wOx = surf.origin ? surf.origin.x : (surf.origin_px ? (surf.origin_px.x - 1235) / 150 : 0);
-                            const wOy = surf.origin ? surf.origin.y : (surf.origin_px ? (1257 - surf.origin_px.y) / 150 : 0);
-                            surf.poly.forEach((pt, i) => {
+                        const { ox: wOx, oy: wOy } =
+                            this._getSurfaceOrigin(surf, surf.mapId != null ? surf.mapId : targetLoc);
+                        bCtx.save();
+                        bCtx.beginPath();
+                        anillos.forEach(anillo => {
+                            anillo.forEach((pt, i) => {
                                 const px = (pt.x !== undefined ? pt.x : pt[0]);
                                 const py = (pt.y !== undefined ? pt.y : pt[1]);
                                 const bx = originPxX + (wOx + px) * 150;
@@ -2334,10 +3236,10 @@ class IsometricMap {
                                 else bCtx.lineTo(bx, by);
                             });
                             bCtx.closePath();
-                            bCtx.clip();
-                            bCtx.drawImage(this._maskScratchCanvas, 0, 0);
-                            bCtx.restore();
-                        }
+                        });
+                        bCtx.clip();
+                        bCtx.drawImage(scratch, 0, 0);
+                        bCtx.restore();
                     };
 
                     const currentSurfaces = (window.mapsAtlas || []).filter(s => String(s.mapId) === String(targetLoc));
@@ -2363,12 +3265,16 @@ class IsometricMap {
                 // Draw the baked background directly to screen centered on (0, 0)
                 const bgScale = _bgo;
                 const s = bgScale * this.scale;
-                const drawW = this._bakedBgCanvas.width * s;
-                const drawH = this._bakedBgCanvas.height * s;
                 const dx = this.offsetX - originPxX * s;
                 const dy = this.offsetY - originPxY * s;
-                // Ground layer: grass + coverings
-                ctx.drawImage(this._bakedBgCanvas, dx, dy, drawW, drawH);
+                // Ground layer: grass + coverings.
+                // Se vuelca SOLO el trozo que entra en pantalla. El fondo horneado mide
+                // unos 2500x2500 px y volcarlo entero escalado en cada repintado era, de
+                // En el viaje (mapa 14), el paisaje con scroll parallax se dibuja detrás del vagón
+                this._dibujarFondoViaje(ctx, targetLoc, dx, dy, s);
+                this._blitBaked(ctx, this._bakedBgCanvas, dx, dy, s);
+                // El tren, encima del fondo y corrido por la via segun el reloj.
+                this._dibujarCapaTren(ctx, targetLoc, dx, dy, s);
                 // Layered scenery: far layer on top of grass (trees, rocks, flowers, vegetation)
                 if (sceneryOn) window.PlayScenery.drawFar(ctx, targetLoc, this.offsetX, this.offsetY, s);
                 }
@@ -2436,14 +3342,8 @@ class IsometricMap {
                 for (const surf of surfaces) {
                     if (!surf) continue;
                     const u = _bgo * this.scale;
-                    let worldOx = 0, worldOy = 0;
-                    if (surf.origin) {
-                        worldOx = surf.origin.x;
-                        worldOy = surf.origin.y;
-                    } else if (surf.origin_px) {
-                        worldOx = (surf.origin_px.x - 1235) / 150;
-                        worldOy = (1257 - surf.origin_px.y) / 150;
-                    }
+                    const { ox: worldOx, oy: worldOy } =
+                        this._getSurfaceOrigin(surf, surf.mapId != null ? surf.mapId : targetLoc);
                     const sScreenX = this.offsetX + worldOx * 150 * u;
                     const sScreenY = this.offsetY - worldOy * 150 * u;
                     const isFloor = surf.kind === 'floor';
@@ -2533,25 +3433,32 @@ class IsometricMap {
             if (window.RoutineScheduler && (isPlay || isGrid)) {
                 window.RoutineScheduler.evaluateSchedule(targetLoc, (this.app.parser && this.app.parser.placements) || []);
             }
+            const matchCluster = (c) => (c === targetLoc || String(c) === String(targetLoc) || (Number(targetLoc) === 14 && typeof c === 'string' && c.startsWith('train_vagon_')));
             let itemHash = 0;
             if (this.app.parser.placements) {
                 for (const p of this.app.parser.placements) {
-                    if (p.cluster === targetLoc) itemHash += (p.x || 0) + (p.y || 0) + (p.item_id || 0) + (p.floor || 0) + (p.flipped ? 1 : 0) + (p.orientation || 0);
+                    if (matchCluster(p.cluster)) itemHash += (p.x || 0) + (p.y || 0) + (p.item_id || 0) + (p.floor || 0) + (p.flipped ? 1 : 0) + (p.orientation || 0);
                 }
             }
             const atlasHash = (window.mapsAtlas || []).map(s => String(s.origin?.x || s.origin_px?.x || 0) + ',' + String(s.origin?.y || s.origin_px?.y || 0)).join(';');
-            const cacheKey = this.app.parser.placements.length + '_' + targetLoc + '_' + targetFloor + '_' + visibleFloors.join(',') + '_' + isPlay + '_' + isGrid + '_' + itemHash + '_' + atlasHash;
+            // El mobiliario que pone el juego (bancos y gacha del ayuntamiento, etc.)
+            // no está en el .csave; se añade aquí como placements normales.
+            const layoutPlacements = this._layoutPlacements(targetLoc);
+            for (const p of layoutPlacements) itemHash += (p.x || 0) + (p.y || 0) + (p.item_id || 0);
+            const cacheKey = this.app.parser.placements.length + '_' + layoutPlacements.length + '_' + targetLoc + '_' + targetFloor + '_' + visibleFloors.join(',') + '_' + isPlay + '_' + isGrid + '_' + itemHash + '_' + atlasHash;
             if (!this._renderCache || this._renderCache.key !== cacheKey || this.isItemDragging) {
+                const fuente = this.app.parser.placements.concat(layoutPlacements);
                 // D: paredes usan surface wall del mismo groupNum, no filtrar por visibleFloors de piso
-                const allWalls = this.app.parser.placements.filter(
-                    p => p.cluster === targetLoc && p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
+                const allWalls = fuente.filter(
+                    p => matchCluster(p.cluster) && p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
                 );
-                const all = this.app.parser.placements.filter(
-                    p => (isPlay || isGrid ? visibleFloors.includes(String(p.floor)) : String(p.floor) === String(targetFloor)) && p.cluster === targetLoc && !p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
+                const all = fuente.filter(
+                    p => (isPlay || isGrid ? (Number(targetLoc) === 14 || visibleFloors.includes(String(p.floor))) : String(p.floor) === String(targetFloor)) && matchCluster(p.cluster) && !p.isWall && p.item_id !== -1 && !this.isCovering(p.item_id)
                 );
                 const ground  = all.filter(p => GROUND_IDS.has(p.item_id));
                 const seeds   = all.filter(p => SEED_IDS.has(p.item_id) && p.x !== -1 && p.y !== -1 && !p.linkedPlot);
-                const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id));
+                const regular = all.filter(p => !GROUND_IDS.has(p.item_id) && !SEED_IDS.has(p.item_id)
+                                                && p.item_id !== CROP_BOX_ID);
                 this._stackInfo = this._computeStackInfo(regular);
                 const sortByZ = (a, b) => {
                     const fb = Number(b.floor||0), fa = Number(a.floor||0);
@@ -2576,10 +3483,28 @@ class IsometricMap {
                 const _ms = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) * this.scale;
                 window.PlayScenery.drawMid(ctx, targetLoc, this.offsetX, this.offsetY, _ms);
             }
-            for (const p of ground)  this._drawPlacement(p, 'ground');
-            for (const p of seeds)   this._drawPlacement(p, 'seed');
-            for (const p of regular) this._drawPlacement(p, 'regular');
-            for (const p of allWalls) this._drawWallPlacementIso(p);
+            // Las PAREDES van DETRAS del mobiliario de su mismo piso, no delante de
+            // todo. Un poster esta colgado en el plano de la pared, que es lo mas al
+            // fondo de la habitacion: cualquier cosa que este en el suelo -un mueble, un
+            // NPC sentado en el sofa- esta por delante.
+            //
+            // Antes se pintaban las paredes AL FINAL, despues de todo el mobiliario, y
+            // por eso los posters tapaban a Moca sentada: al vecino sentado lo dibuja su
+            // propio mueble, en la pasada `regular`, o sea antes que las paredes. Los NPC
+            // sueltos no se veian afectados porque van despues de esta pasada entera.
+            //
+            // Se hace PISO A PISO: las paredes del piso de arriba no deben quedar detras
+            // del mobiliario del de abajo. Dentro de cada piso se conserva el orden de
+            // siempre (suelo, semillas, resto).
+            const pisoDe = (p) => Number(p.floor || 0);
+            const pisos = [...new Set([...allWalls, ...ground, ...seeds, ...regular].map(pisoDe))]
+                .sort((a, b) => a - b);
+            for (const f of pisos) {
+                for (const p of allWalls) if (pisoDe(p) === f) this._drawWallPlacementIso(p);
+                for (const p of ground)   if (pisoDe(p) === f) this._drawPlacement(p, 'ground');
+                for (const p of seeds)    if (pisoDe(p) === f) this._drawPlacement(p, 'seed');
+                for (const p of regular)  if (pisoDe(p) === f) this._drawPlacement(p, 'regular');
+            }
 
             // ── Draw CropBox 1301 on Granja if present ──
             if (targetLoc === 6) {
@@ -2589,29 +3514,125 @@ class IsometricMap {
             // ── ACTOR SLOT: Ambient / Free-Roaming Character (Tsuki) ──
             if (isPlay || isGrid) {
                 this._drawAmbientActors(targetLoc, targetFloor);
+                this._drawMapNpcActivities(targetLoc);
+                this._dibujarObjetosDeEscena(targetLoc);
+                if (Number(targetLoc) === 14) {
+                    const u = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) * this.scale;
+                    const centros14 = [
+                        { vagon: 0, x: 0, y: 1 },
+                        { vagon: 1, x: 8, y: 5 },
+                        { vagon: 2, x: 16, y: 9 }
+                    ];
+                    centros14.forEach(c => {
+                        const cx = this.offsetX + c.x * 150 * u;
+                        const cy = this.offsetY - c.y * 150 * u;
+                        this._drawWagonNpcs(ctx, targetLoc, c.vagon, cx, cy, u);
+                    });
+                }
+                // Las visuales ANIMADAS de la escena (`SimpleAnim`): el alfarero de la
+                // Casa del Arbol, la bandera del Ayuntamiento, las cuatro ruedas del
+                // tren, las dos capas de la fuente del Centro Comercial, la cinta
+                // transportadora. No pueden ir en el horneado por capas -cambian de
+                // sprite cada pocos cuadros- asi que las pinta `play_scenery` en vivo,
+                // con la misma transformacion con la que las habria horneado.
+                if (sceneryOn && window.PlayScenery && window.PlayScenery.drawAnimadas) {
+                    const _as = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) * this.scale;
+                    window.PlayScenery.drawAnimadas(ctx, targetLoc, this.offsetX, this.offsetY, _as);
+                }
+                // Lo que se mueve por MATERIAL en vez de por fotogramas -el agua del
+                // muelle, que corre, y la copa de los arboles, que se mece- NO se pinta
+                // aqui: lo pinta `drawLayer` dentro de su propia capa, entre los dos
+                // trozos horneados. El agua es lo mas al fondo de la suya, asi que
+                // pintarla al final taparia el muelle entero.
+                this._drawMapInteractiveProps(targetLoc);
+                this._drawMapSubscenes(targetLoc);
+                this._dibujarObraHomecoming(targetLoc);
+                this._situarGacha(targetLoc);
             }
 
-            // 6. FOREGROUND: layered scenery near layer replaces the static
+            // El cartel del tren se refresca SIEMPRE, tambien fuera del modo play:
+            // es quien se encarga de borrarse al salir de la estacion o del modo.
+            if (window.Train && typeof window.Train.actualizarHUD === 'function') {
+                try { window.Train.actualizarHUD(targetLoc); } catch (e) { /* sin partida */ }
+            }
+
+            // 6. FOREGROUND: layered scenery replaces the static
             // foreground overlay when the bake is ready (same canopy art, no double-draw).
             if ((isPlay || isGrid) && targetLoc === 0) {
-                if (window.PlayScenery && window.PlayScenery.ready(targetLoc)) {
-                    const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
-                    window.PlayScenery.drawNear(ctx, targetLoc, this.offsetX, this.offsetY, _bgo * this.scale);
-                } else {
-                    const fgPath = '../maps/Exportado_level2/level2_Foreground.png';
+                const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                const s = _bgo * this.scale;
+
+                // Fallback static foreground canopy (only when layered scenery is not active)
+                if (!sceneryOn) {
+                    let fgPath = '../maps/Exportado_level2/level2_Foreground.png';
+                    let isSeasonal = false;
+                    // 1 otoño, 2 invierno, 3 primavera. En verano (0) va la copa normal.
+                    if (curSeason === 1) {
+                        fgPath = '../maps/Exportado_level2/TreehouseFall_Autumn.png';
+                        isSeasonal = true;
+                    } else if (curSeason === 2) {
+                        fgPath = '../maps/Exportado_level2/TreehouseSnow_Winter.png';
+                        isSeasonal = true;
+                    } else if (curSeason === 3) {
+                        fgPath = '../maps/Exportado_level2/TreehouseSpring_Sakura.png';
+                        isSeasonal = true;
+                    }
                     const fgImg = this.getBackgroundImage(fgPath);
                     if (fgImg && fgImg.complete && fgImg.width > 0) {
-                        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
-                        const originPxX = 1235;
-                        const originPxY = 1257;
-                        const s = _bgo * this.scale;
                         const drawW = fgImg.width * s;
                         const drawH = fgImg.height * s;
-                        const dx = this.offsetX - originPxX * s;
-                        const dy = this.offsetY - originPxY * s;
-                        ctx.drawImage(fgImg, dx, dy, drawW, drawH);
+                        if (isSeasonal) {
+                            // Exact alignment with Unity T2 TREEHOUSE SLICED_0 in assembled space: (380.25, 245.55)
+                            const originPxX = 1235;
+                            const originPxY = 1257;
+                            const dx = this.offsetX - (originPxX - 380.25) * s;
+                            const dy = this.offsetY - (originPxY - 245.55) * s;
+                            ctx.drawImage(fgImg, dx, dy, drawW, drawH);
+                        } else {
+                            const originPxX = 1235;
+                            const originPxY = 1257;
+                            const dx = this.offsetX - originPxX * s;
+                            const dy = this.offsetY - originPxY * s;
+                            ctx.drawImage(fgImg, dx, dy, drawW, drawH);
+                        }
                     }
                 }
+
+                // Draw seasonal branch decorations (Autumn, Winter, Spring Sakura)
+                let branchLPath = null;
+                let branchRPath = null;
+                if (curSeason === 1) {
+                    branchLPath = '../maps/Exportado_level2/TreehouseFall_Autumn_BranchL.png';
+                    branchRPath = '../maps/Exportado_level2/TreehouseFall_Autumn_BranchR.png';
+                } else if (curSeason === 2) {
+                    branchLPath = '../maps/Exportado_level2/TreehouseSnow_Winter_BranchL.png';
+                    branchRPath = '../maps/Exportado_level2/TreehouseSnow_Winter_BranchR.png';
+                } else if (curSeason === 3) {
+                    branchLPath = '../maps/Exportado_level2/TreehouseSpring_Sakura_BranchL.png';
+                    branchRPath = '../maps/Exportado_level2/TreehouseSpring_Sakura_BranchR.png';
+                }
+                if (branchLPath) {
+                    const bL = this.getBackgroundImage(branchLPath);
+                    if (bL && bL.complete && bL.width > 0) {
+                        const bx = this.offsetX + (-4.26 * 150 * s);
+                        const by = this.offsetY - (-2.598 * 150 * s);
+                        ctx.drawImage(bL, bx - (bL.width * s / 2), by - (bL.height * s / 2), bL.width * s, bL.height * s);
+                    }
+                }
+                if (branchRPath) {
+                    const bR = this.getBackgroundImage(branchRPath);
+                    if (bR && bR.complete && bR.width > 0) {
+                        const bx = this.offsetX + (4.395 * 150 * s);
+                        const by = this.offsetY - (-2.338 * 150 * s);
+                        ctx.drawImage(bR, bx - (bR.width * s / 2), by - (bR.height * s / 2), bR.width * s, bR.height * s);
+                    }
+                }
+                if (window.PlayScenery && window.PlayScenery.ready(targetLoc)) {
+                    window.PlayScenery.drawNear(ctx, targetLoc, this.offsetX, this.offsetY, s);
+                }
+            } else if (window.PlayScenery && window.PlayScenery.ready(targetLoc)) {
+                const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+                window.PlayScenery.drawNear(ctx, targetLoc, this.offsetX, this.offsetY, _bgo * this.scale);
             }
             const dragGhost = (this.isItemDragging && this.selectedPlacement) ? this.selectedPlacement : (typeof this.isItemDragging === 'object' ? this.isItemDragging : null);
             if (dragGhost) {
@@ -2630,38 +3651,20 @@ class IsometricMap {
             this._drawMapHud(targetLoc, false, targetWallGroup, targetFloor);
         }
 
-        if (this.hoveredPlacement) this._drawTooltip(this.hoveredPlacement);
-
-        const floatUI = document.getElementById('floating-ui');
-        if (floatUI) {
-            if (this.selectedPlacement) {
-                floatUI.style.display = 'block';
-                const layerRadio = document.querySelector('input[name="map-layer"]:checked');
-                const isWallLayer = layerRadio && layerRadio.value === 'wall';
-                
-                let screenPos = { x: 0, y: 0 };
-                if (isWallLayer) {
-                    screenPos.x = 100 + this.selectedPlacement.x * this.gridSize;
-                    screenPos.y = 100 + this.selectedPlacement.y * this.gridSize;
-                } else {
-                    const iso = this.getIsoCoords(this.selectedPlacement.x, this.selectedPlacement.y, this.selectedPlacement.floor);
-                    screenPos.x = iso.x;
-                    screenPos.y = iso.y;
-                }
-                
-                floatUI.style.left = screenPos.x + 'px';
-                floatUI.style.top = screenPos.y + 'px';
-            } else {
-                floatUI.style.display = 'none';
-            }
+        // El rótulo con el id y las coordenadas es del editor. En modo juego el hover
+        // solo existe para encender el cultivo, así que ahí no se muestra.
+        if (this.hoveredPlacement && !document.body.classList.contains('play-mode')) {
+            this._drawTooltip(this.hoveredPlacement);
         }
 
-        if (document.body.classList.contains('play-mode') && window.Lighting && typeof window.Lighting.renderHalos === 'function') {
-            window.Lighting.renderHalos(null, targetLoc);
-        }
+        // En la pasada a la copia de paneo el lienzo es otro y el desplazamiento está
+        // corrido por el margen, así que la UI flotante se coloca en el volcado, con la
+        // cámara de verdad. Igual que las luces, que viven en su propio lienzo.
+        if (!this._offscreenPass) this._updateFloatUI();
 
-        if (this.app?.farmingSystem?.renderFloatingRewards) {
-            this.app.farmingSystem.renderFloatingRewards(this.ctx);
+        if (!this._offscreenPass) this._panOverlays();
+        if (!this._offscreenPass && window.TrainStudio && typeof window.TrainStudio.renderGizmo === 'function') {
+            window.TrainStudio.renderGizmo(this.ctx, targetLoc);
         }
     }
     _updateLocationLabel(locId) {
@@ -2671,6 +3674,10 @@ class IsometricMap {
         // Update the label next to the dropdown
         const label = document.getElementById('location-label');
         if (label) label.textContent = friendlyName;
+        if (window.TrainStudio) {
+            window.TrainStudio.ensureUI();
+            window.TrainStudio.syncVisibility();
+        }
     }
 
 
@@ -2723,7 +3730,7 @@ class IsometricMap {
     }
 
     _drawPlacement(p, layer) {
-        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const layerRadio = this._layerRadio();
         if (layerRadio && layerRadio.value === 'wall' && p.isWall) {
             const drawOffsetX = 100;
             const drawOffsetY = 100;
@@ -2797,9 +3804,23 @@ class IsometricMap {
 
         const stack = (this._stackInfo && this._stackInfo.get(p)) || null;
         const lift = stack ? stack.lift : 0;
+        const liftX = stack ? (stack.liftX || 0) : 0;
 
         const isHovered  = p === this.hoveredPlacement;
         const isSelected = p === this.selectedPlacement;
+
+        // Los muebles que pone el juego se marcan en el editor (en modo play no, ahí
+        // deben verse como uno más). Cian = movible, naranja = fijo (canOverride:false).
+        if (p.isLayout && !document.body.classList.contains('play-mode')
+            && (isHovered || isSelected || this._showLayoutMarks)) {
+            const c = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
+            ctx.save();
+            ctx.fillStyle = p.canOverride ? 'rgba(0, 200, 255, 0.85)' : 'rgba(255, 140, 0, 0.9)';
+            ctx.beginPath();
+            ctx.arc(c.x, c.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
 
         // ── Draw grid footprint BEFORE sprite transforms (getIsoCoords returns absolute screen coords) ──
         if (document.body.classList.contains('play-mode') && this.app.tsukiPort && this.app.tsukiPort.isHammerMode && !p.isWall && (this.app.tsukiPort.showGrid || isSelected)) {
@@ -2808,9 +3829,11 @@ class IsometricMap {
             const pt3 = this.getIsoCoords(p.x + w, p.y + l, p.floor, p.cluster);
             const pt4 = this.getIsoCoords(p.x,     p.y + l, p.floor, p.cluster);
             // B: mismo lift que el blit (el sprite se pinta bajo translate -lift*CELL_H*scale)
-            if (lift) {
+            if (lift || liftX) {
                 const liftShift = lift * this.CELL_H * this.scale;
+                const liftShiftX = liftX * this.CELL_H * this.scale;
                 pt1.y -= liftShift; pt2.y -= liftShift; pt3.y -= liftShift; pt4.y -= liftShift;
+                pt1.x += liftShiftX; pt2.x += liftShiftX; pt3.x += liftShiftX; pt4.x += liftShiftX;
             }
             ctx.save();
             ctx.beginPath();
@@ -2854,7 +3877,10 @@ class IsometricMap {
 
 
         ctx.save();
-        if (lift) ctx.translate(0, -lift * this.CELL_H * this.scale);
+        // El offset de sub-rejilla tiene componente horizontal ademas de altura
+        // (`SubGroupData.Offset`, RVA 0x5919244). Antes solo se subia.
+        if (lift || liftX) ctx.translate(liftX * this.CELL_H * this.scale,
+                                         -lift * this.CELL_H * this.scale);
         const off = this._getPlacementRenderOffset(p);
         if (off.x || off.y) ctx.translate(off.x, off.y);
         
@@ -2873,7 +3899,15 @@ class IsometricMap {
         }
 
         let hideBox = false;
-        if (document.body.classList.contains('play-mode') && layer !== 'ground') {
+        // Con el sprite de parcela puesto no pintamos ni el rombo de color ni su
+        // sombra: eso era el "footprint" del editor colándose en el modo juego.
+        const plotSprite = (layer === 'ground') && this.plotAutotileState(p)
+            && !!this._drawPlotTileReady(p);
+        if (plotSprite) {
+            // En juego, el sprite manda y no se pinta nada más. En el editor se deja el
+            // contorno cuando la parcela está señalada, que si no no se sabe cuál es.
+            hideBox = document.body.classList.contains('play-mode') || !(isSelected || isHovered);
+        } else if (document.body.classList.contains('play-mode') && layer !== 'ground') {
             const _imgCheck = this.getImage(p.item_id, p.orientation);
             if (_imgCheck) hideBox = true;
         }
@@ -2897,13 +3931,20 @@ class IsometricMap {
         }
 
         if (layer === 'ground') {
-            this._drawDirtTexture(p.x, p.y, w, l, p.floor, p.cluster);
+            // El sprite del juego ya trae su tierra; la textura sintética solo se usa
+            // como respaldo cuando no hay tabla de auto-tiling.
+            if (!this._drawPlotTile(p, w, l)) {
+                this._drawDirtTexture(p.x, p.y, w, l, p.floor, p.cluster);
+            }
         }
 
-        const img = this.getImage(p.item_id, p.orientation);
+        // Con la pieza de auto-tiling puesta NO se dibuja además el sprite suelto del
+        // mueble (FURN_306.png): son la misma parcela, y pintar los dos era lo que hacía
+        // que se vieran dos bancales superpuestos, el unido y el de parcelas sueltas.
+        const img = plotSprite ? null : this.getImage(p.item_id, p.orientation);
         if (img) {
             this._drawSpriteOnTile(img, p.x, p.y, w, l, p.orientation, p.item_id, p.floor, p.cluster, p);
-        } else {
+        } else if (!plotSprite) {
             const anchor = this.getIsoCoords(p.x, p.y, p.floor, p.cluster);
             const name   = this._shortName(p.item_id);
             ctx.save();
@@ -2969,12 +4010,234 @@ class IsometricMap {
         ctx.restore();
     }
 
+    // ── Auto-tiling de las parcelas ─────────────────────────────────────────
+    // El juego no dibuja cada parcela suelta: el prefab `Plot` lleva 47 estados, cada
+    // uno con una condición sobre los 8 vecinos y el sprite que le corresponde. Por eso
+    // dos parcelas contiguas se ven como un único bancal, sin junta. La tabla la extrae
+    // tools/extract_plots.py a data/plots_autotile.json.
+    //
+    /**
+     * Qué parcela vecina mira cada dirección del `check`.
+     *
+     * T/R/B/L son las cuatro **aristas** del rombo (las que comparten lado y a las que
+     * hay que quitarles el borde); TL/TR/BR/BL los cuatro **vértices**, que solo se
+     * tocan en una esquina. Confundir unas con otras es lo que hacía que las parcelas
+     * del interior recibieran el sprite de parcela suelta y el bancal saliera cortado
+     * y como duplicado.
+     *
+     * En esta proyección +x va arriba-derecha y +y arriba-izquierda, y los sprites
+     * están dibujados con T en la arista de arriba-izquierda, girando en el sentido
+     * del reloj. Comprobado contra las piezas que el juego nombra (FarmPlots_20..23,
+     * las de un solo vecino): es la única de las ocho orientaciones posibles en la que
+     * el borde sigue el contorno del campo.
+     */
+    _plotNeighbourOffsets() {
+        const d = PLOT_SIZE.w, e = PLOT_SIZE.l;
+        return {
+            T:  [0, e],   R:  [d, 0],   B:  [0, -e],  L:  [-d, 0],   // aristas
+            TL: [-d, e],  TR: [d, e],   BR: [d, -e],  BL: [-d, -e],  // vértices
+        };
+    }
+
+    /** Conjunto "x,y" de las parcelas del mismo mapa y piso, para mirar vecinos. */
+    _plotCells(p) {
+        const key = `${p.cluster}|${p.floor}`;
+        if (!this._plotCellCache) this._plotCellCache = {};
+        if (!this._plotCellCache[key]) {
+            const set = new Set();
+            for (const q of (this.app?.parser?.placements || [])) {
+                if (!GROUND_IDS.has(q.item_id)) continue;
+                if (String(q.cluster) !== String(p.cluster)) continue;
+                if (String(q.floor) !== String(p.floor)) continue;
+                set.add(`${q.x},${q.y}`);
+            }
+            this._plotCellCache[key] = set;
+        }
+        return this._plotCellCache[key];
+    }
+
+    /** Estado de auto-tiling que le toca a esta parcela, o null si no hay tabla. */
+    plotAutotileState(p) {
+        const db = window.PLOTS_AUTOTILE;
+        if (!db || !db.states || !GROUND_IDS.has(p.item_id)) return null;
+        const cells = this._plotCells(p);
+        const off = this._plotNeighbourOffsets();
+        const vec = {};
+        for (const d in off) vec[d] = cells.has(`${p.x + off[d][0]},${p.y + off[d][1]}`) ? 1 : 0;
+        for (const st of db.states) {
+            let ok = true;
+            for (const d in vec) {
+                const c = st.check[d];
+                if (c !== 2 && c !== vec[d]) { ok = false; break; }
+            }
+            if (ok) return st;
+        }
+        return null;
+    }
+
+    getPlotImage(name) {
+        const db = window.PLOTS_AUTOTILE;
+        if (!db) return null;
+        const key = `PLOT_${name}`;
+        if (this._imgCache[key] !== undefined) return this._imgCache[key];
+        this._imgCache[key] = false;
+        const img = new Image();
+        img.onload = () => { this._imgCache[key] = img; this.draw(); };
+        img.onerror = () => { this._imgCache[key] = null; };
+        img.src = `${db.dir}/${name}.png`;
+        return false;
+    }
+
+    /**
+     * Opacidad del pixel (px,py) de una imagen, en píxeles de la propia imagen.
+     * Se usa para acertar el ratón sobre el dibujo del cultivo y no sobre su caja:
+     * el lienzo del cultivo mide 98x264 y casi todo es transparente.
+     */
+    imageAlphaAt(img, px, py) {
+        if (!img || !img.complete || !img.naturalWidth) return 0;
+        px |= 0; py |= 0;
+        if (px < 0 || py < 0 || px >= img.naturalWidth || py >= img.naturalHeight) return 0;
+        if (!this._alphaCtx) {
+            const c = document.createElement('canvas');
+            c.width = 1; c.height = 1;
+            this._alphaCtx = c.getContext('2d', { willReadFrequently: true });
+        }
+        const g = this._alphaCtx;
+        try {
+            g.clearRect(0, 0, 1, 1);
+            g.drawImage(img, px, py, 1, 1, 0, 0, 1, 1);
+            return g.getImageData(0, 0, 1, 1).data[3];
+        } catch (e) {
+            return 255;   // imagen de otro origen: se da por opaca
+        }
+    }
+
+    /** ¿Está ya cargado el sprite que le toca a esta parcela? */
+    _drawPlotTileReady(p) {
+        const st = this.plotAutotileState(p);
+        if (!st) return false;
+        const img = this.getPlotImage(st.sprite);
+        return !!(img && img.complete && img.naturalWidth > 0);
+    }
+
+    /** Dibuja la parcela con su sprite. Devuelve true si lo consiguió. */
+    _drawPlotTile(p, w, l) {
+        const st = this.plotAutotileState(p);
+        if (!st) return false;
+        const img = this.getPlotImage(st.sprite);
+        if (!img || !img.complete || img.naturalWidth <= 0) return false;
+        const anchor = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+        const dw = st.w * u, dh = st.h * u;
+        // El pivot de estos sprites no cae en el centro del rombo sino 29 px por debajo
+        // (medido sobre FarmPlots_46, la pieza interior limpia: su fila más ancha —el eje
+        // del rombo— está en y=39 y el pivot en y=68). Como todos comparten anclaje, con
+        // una única corrección encajan entre sí; esto solo centra el conjunto en su casilla.
+        this.ctx.drawImage(img,
+            anchor.x - st.pivot.x * dw,
+            anchor.y - (1 - st.pivot.y) * dh + PLOT_PIVOT_DY * u,
+            dw, dh);
+        return true;
+    }
+
+    // ── Sprites reales de los cultivos ──────────────────────────────────────
+    // data/crops_db.json lo genera tools/extract_crops.py desde el bundle de
+    // muebles: etapas de crecimiento y animación de cosecha de cada semilla.
+    // Los frames de un cultivo comparten lienzo y pivot (el extractor los alinea
+    // al exportarlos), así que todos se pintan en el mismo rectángulo.
+    cropDef(cropId) {
+        const db = window.CROPS_DB;
+        return (db && db[String(cropId)]) || null;
+    }
+
+    /** Frame `idx` del rol pedido ('stage' | 'harvest' | 'strange' | 'rotten' | …). */
+    getCropFrame(cropId, role, idx) {
+        const def = this.cropDef(cropId);
+        const anim = def && def.anims && def.anims[role];
+        if (!anim || !anim.frames.length) return null;
+        const name = anim.frames[Math.max(0, Math.min(anim.frames.length - 1, idx | 0))];
+        const key = `CROPFRAME_${name}`;
+        if (this._imgCache[key] !== undefined) return this._imgCache[key];
+        this._imgCache[key] = false;
+        const img = new Image();
+        img.onload = () => { this._imgCache[key] = img; this.draw(); };
+        img.onerror = () => { this._imgCache[key] = null; };
+        img.src = `${def.dir}/${name}.png`;
+        return false;
+    }
+
+    /** Reparte el avance del cultivo entre las etapas que tenga (3, u 8 las uvas). */
+    cropStageIndex(def, status) {
+        const n = (def.anims.stage && def.anims.stage.frames.length) || 1;
+        if (!status || status.isReady) return n - 1;
+        return Math.max(0, Math.min(n - 1, Math.floor((status.progress || 0) * n)));
+    }
+
+    /** Pinta un frame con su pivot sobre el centro de la parcela. */
+    _blitCropFrame(img, def, anchor, u, yOffset = 0) {
+        const dw = def.frameW * u;
+        const dh = def.frameH * u;
+        // pivot.y viene de Unity (0 = abajo); en pantalla se mide desde arriba
+        this.ctx.drawImage(img,
+            anchor.x - def.pivot.x * dw,
+            anchor.y - (1 - def.pivot.y) * dh + yOffset,
+            dw, dh);
+    }
+
+    /**
+     * Lanza la animación de cosecha sobre la parcela. Va en una capa aparte
+     * porque `harvestPlot()` ya ha borrado el cultivo cuando esto se dibuja.
+     */
+    playCropHarvestFx(p, cropId, role = 'harvest') {
+        const def = this.cropDef(cropId);
+        if (!def) return false;
+        const anim = def.anims && (def.anims[role] || def.anims.harvest);
+        if (!anim || !anim.frames.length) return false;
+        const actual = def.anims[role] ? role : 'harvest';
+        const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
+        for (let i = 0; i < anim.frames.length; i++) this.getCropFrame(cropId, actual, i);
+        (this._cropFx || (this._cropFx = [])).push({
+            x: p.x, y: p.y, w, l, floor: p.floor, cluster: p.cluster,
+            cropId, role: actual, fps: anim.fps || 12, n: anim.frames.length,
+            start: performance.now()
+        });
+        this._tickCropFx();
+        return true;
+    }
+
+    _tickCropFx() {
+        if (this._cropFxRaf) return;
+        const step = () => {
+            this._cropFxRaf = null;
+            if (!this._cropFx || !this._cropFx.length) return;
+            this.draw();
+            if (this._cropFx && this._cropFx.length) this._cropFxRaf = requestAnimationFrame(step);
+        };
+        this._cropFxRaf = requestAnimationFrame(step);
+    }
+
+    _drawCropHarvestFx() {
+        if (!this._cropFx || !this._cropFx.length) return;
+        const now = performance.now();
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const u = _bgo * this.scale;
+        for (let i = this._cropFx.length - 1; i >= 0; i--) {
+            const fx = this._cropFx[i];
+            const idx = Math.floor((now - fx.start) / 1000 * fx.fps);
+            if (idx >= fx.n) { this._cropFx.splice(i, 1); continue; }
+            const def = this.cropDef(fx.cropId);
+            const img = this.getCropFrame(fx.cropId, fx.role, idx);
+            if (!def || !img || !img.complete) continue;
+            this._blitCropFrame(img, def, this._tileCenter(fx.x, fx.y, fx.w, fx.l, fx.floor, fx.cluster), u);
+        }
+    }
+
     _drawCropOnPlot(p, w, l) {
         if (!p || p.planted_id == null || p.planted_id <= 0 || p.planted_id === 4294967295) return;
-        
+
         const farming = this.app?.farmingSystem;
         const status = farming ? farming.getCropStatus(p) : null;
-        const plantedImg = this.getCropImage(p.planted_id);
         const ctx = this.ctx;
 
         const anchor = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
@@ -2988,6 +4251,33 @@ class IsometricMap {
 
         ctx.save();
 
+        // Sprite del juego, si el cultivo está en crops_db.json
+        const cdef = this.cropDef(p.planted_id);
+        if (cdef) {
+            const frame = this.getCropFrame(p.planted_id, 'stage', this.cropStageIndex(cdef, status));
+            if (frame && frame.complete && frame.naturalWidth > 0) {
+                // El cultivo va clavado en la tierra: no flota ni rebota. Lo único que
+                // se mueve es su animación de cosecha, y esa la pinta _drawCropHarvestFx.
+                // El resplandor solo al apuntar el cultivo con el ratón: así indica que
+                // se puede cosechar, en vez de estar encendido en toda la granja a la vez.
+                const senalado = (this.hoveredPlacement === p) && isReady && !isRotten;
+                // Ojo con ctx.filter: en cuanto se toca, Chrome mete el contexto en una
+                // ruta lenta y cada save()/restore() posterior cuesta muchísimo más. Con
+                // 25 parcelas poniendo filter='none' por fotograma, save() se comía un
+                // tercio del tiempo de dibujado. Solo se toca si de verdad hay filtro.
+                if (isRotten) ctx.filter = 'grayscale(60%) sepia(80%) hue-rotate(320deg) brightness(80%)';
+                else if (senalado) { ctx.shadowColor = '#f1c40f'; ctx.shadowBlur = 10 * this.scale; }
+                p._cropFrame = frame;   // lo usa el acierto del ratón para mirar su alfa
+                this._blitCropFrame(frame, cdef, anchor, u, 0);
+                if (isRotten) ctx.filter = 'none';
+                if (senalado) ctx.shadowBlur = 0;
+                this._drawCropBubble(ctx, anchor, def, status, isReady, isRotten, p);
+                ctx.restore();
+                return;
+            }
+        }
+
+        const plantedImg = this.getCropImage(p.planted_id);
         if (plantedImg && plantedImg.complete && plantedImg.naturalWidth > 0) {
             let stageScale = 1.0;
             let yOffset = 0;
@@ -3002,9 +4292,6 @@ class IsometricMap {
                 yOffset = 1 * this.scale;
             } else if (stage === 3) {
                 stageScale = 1.0;
-                if (isReady) {
-                    yOffset = Math.sin(Date.now() / 250) * 2.5 * this.scale;
-                }
             } else if (stage === 4) {
                 stageScale = 0.9;
                 ctx.filter = 'grayscale(60%) sepia(80%) hue-rotate(320deg) brightness(80%)';
@@ -3023,9 +4310,9 @@ class IsometricMap {
             ctx.fill();
             ctx.restore();
 
-            if (isReady && !isRotten) {
+            if (isReady && !isRotten && this.hoveredPlacement === p) {
                 ctx.shadowColor = '#f1c40f';
-                ctx.shadowBlur = 8 * this.scale;
+                ctx.shadowBlur = 10 * this.scale;
             }
 
             ctx.drawImage(plantedImg, dx, dy, dw, dh);
@@ -3036,43 +4323,33 @@ class IsometricMap {
             ctx.fillText(stage === 0 ? '🌱' : (def.icon || '🥕'), anchor.x, anchor.y - 10 * this.scale);
         }
 
-        // ── Indicador flotante / Burbuja de Cosecha lista ──
-        if (isReady && !isRotten) {
-            const bubbleY = anchor.y - 38 * this.scale + Math.sin(Date.now() / 250) * 2 * this.scale;
-            const radius = 13 * this.scale;
-
-            ctx.beginPath();
-            ctx.arc(anchor.x, bubbleY, radius, 0, Math.PI * 2);
-            ctx.fillStyle = '#fff9e6';
-            ctx.fill();
-            ctx.strokeStyle = '#f39c12';
-            ctx.lineWidth = 2 * this.scale;
-            ctx.stroke();
-
-            ctx.font = `${Math.max(10, Math.round(14 * this.scale))}px sans-serif`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(def.icon || '🥕', anchor.x, bubbleY + 1 * this.scale);
-        } else if (isRotten) {
-            const bubbleY = anchor.y - 36 * this.scale;
-            ctx.font = `${Math.max(10, Math.round(14 * this.scale))}px sans-serif`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('🍂', anchor.x, bubbleY);
-        } else if (status && (this.hoveredPlacement === p || this.selectedPlacement === p)) {
-            const infoY = anchor.y - 32 * this.scale;
-            ctx.font = `bold ${Math.max(8, Math.round(10 * this.scale))}px "Quicksand", sans-serif`;
-            ctx.fillStyle = '#ffffff';
-            ctx.strokeStyle = 'rgba(0,0,0,0.8)';
-            ctx.lineWidth = 3;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'bottom';
-            const progressText = `${Math.round(status.progress * 100)}% (${status.minutesLeft}m)`;
-            ctx.strokeText(progressText, anchor.x, infoY);
-            ctx.fillText(progressText, anchor.x, infoY);
-        }
+        this._drawCropBubble(ctx, anchor, def, status, isReady, isRotten, p);
 
         ctx.restore();
+    }
+
+    /**
+     * Aviso de estado del cultivo. Solo al apuntarlo con el ratón.
+     *
+     * Antes cada parcela llevaba encima una burbuja con el icono del cultivo subiendo
+     * y bajando. Era invención nuestra —el juego no la tiene— y con la granja llena
+     * llenaba la pantalla de globos flotando, así que se quitó.
+     */
+    _drawCropBubble(ctx, anchor, def, status, isReady, isRotten, p) {
+        if (!status) return;
+        if (this.hoveredPlacement !== p && this.selectedPlacement !== p) return;
+        const infoY = anchor.y - 32 * this.scale;
+        ctx.font = `bold ${Math.max(8, Math.round(10 * this.scale))}px "Quicksand", sans-serif`;
+        ctx.fillStyle = '#ffffff';
+        ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+        ctx.lineWidth = 3;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        const texto = isRotten ? 'podrido'
+            : (isReady ? `${def.name || 'listo'} · listo`
+                       : `${Math.round(status.progress * 100)}% (${status.minutesLeft}m)`);
+        ctx.strokeText(texto, anchor.x, infoY);
+        ctx.fillText(texto, anchor.x, infoY);
     }
 
     _drawCropBoxFixture() {
@@ -3080,10 +4357,18 @@ class IsometricMap {
         const p = this.app.parser.placements.find(x => x.item_id === 1301 && Number(x.subloc_id ?? x.cluster) === 6);
         if (!p) return;
 
+        // El csave SÍ guarda su posición, en groupPosition.grid como cualquier mueble.
+        // Lo que pasaba es que 1301 estaba metido en SEED_IDS: el parser la tomaba por
+        // semilla, no le encontraba parcela y le forzaba -1,-1 (ver la nota de SEED_IDS).
+        // Esta rama queda solo como red de seguridad para saves que de verdad no la
+        // traigan; la posición de reserva sale de logic.cropbox del mapa.
         if (p.x === -1 || p.y === -1) {
-            p.x = 21;
-            p.y = 15;
-            p.floor = '0';
+            const def = (window.MapDef && window.MapDef.get && window.MapDef.get(6))
+                     || (this.app && this.app.mapDefs && this.app.mapDefs[6]) || null;
+            const spot = (def && def.logic && def.logic.cropbox) || { x: 21, y: 15, floor: '0' };
+            p.x = spot.x;
+            p.y = spot.y;
+            p.floor = String(spot.floor != null ? spot.floor : '0');
             p.cluster = 6;
         }
 
@@ -3211,12 +4496,21 @@ class IsometricMap {
         }
 
         // Layer 1 Base Sprite:
-        // When seating furniture is viewed from rear and has a character sitting on it,
-        // use the base seat sprite (without backrest) so character is drawn between seat and backrest.
-        const useSeatingLayers = (isBack && activeAct && seatProfile && seatProfile.has_backrest);
+        // Multilayer Seating Logic (Front & Back Views):
+        // In back view: back_base_sprite is drawn behind the character, and backrest_sprite is drawn on top.
+        // In front view: front_base_sprite is drawn behind the character, and foreground_sprite is drawn on top.
+        const useBackLayers = Boolean(isBack && activeAct && seatProfile && (seatProfile.has_backrest || seatProfile.backrest_sprite));
+        const useFrontLayers = Boolean(!isBack && activeAct && seatProfile && (seatProfile.has_foreground || seatProfile.foreground_sprite || seatProfile.front_base_sprite));
+        const useSeatingLayers = useBackLayers || useFrontLayers;
+
         let baseSpriteImg = img;
-        if (useSeatingLayers && seatProfile.back_base_sprite) {
+        if (useBackLayers && seatProfile.back_base_sprite) {
             const customBase = this.getItemCustomImage(seatProfile.back_base_sprite);
+            if (customBase && customBase.complete && customBase.naturalWidth > 0) {
+                baseSpriteImg = customBase;
+            }
+        } else if (useFrontLayers && seatProfile.front_base_sprite) {
+            const customBase = this.getItemCustomImage(seatProfile.front_base_sprite);
             if (customBase && customBase.complete && customBase.naturalWidth > 0) {
                 baseSpriteImg = customBase;
             }
@@ -3370,20 +4664,35 @@ class IsometricMap {
                         isStatic = (actDef.anim.isStatic || actDef.anim.mode === 'static');
                     }
 
+                    // Igual que con los sueltos: las actividades que salen del SAVE traen
+                    // los fotogramas con su ruta ya resuelta, del prefab de la actividad.
+                    let framesDirectos = null;
+                    if (actDef.anim && Array.isArray(actDef.anim.frames) && actDef.anim.frames.length) {
+                        const atras = isBack && Array.isArray(actDef.anim.framesBack)
+                                      && actDef.anim.framesBack.length;
+                        framesDirectos = atras ? actDef.anim.framesBack : actDef.anim.frames;
+                        animFps = actDef.anim.fps || animFps;
+                        animMode = actDef.anim.mode || animMode;
+                    }
+
                     const animName = isBack ? (animBack || animFront) : (animFront || animBack);
-                    if (animName) {
+                    if (animName || framesDirectos) {
                         const charKey = (actActor && actActor.npcKey) || actDef.npcKey || '0';
-                        let frames = null;
-                        if (window.resolveNpcAnimFrames) {
+                        let frames = framesDirectos;
+                        if (!frames && window.resolveNpcAnimFrames) {
                             frames = window.resolveNpcAnimFrames(charKey, animName);
                         }
-                        if (!frames || !frames.length) {
+                        if ((!frames || !frames.length) && animName) {
                             const ext = animName.endsWith('.png') ? '' : (isStatic ? '.png' : '_0.png');
                             frames = [animName.includes('/') ? animName : (((actActor && actActor.actorName) || actDef.npcName || 'Tsuki') + '/' + animName + ext)];
                         }
 
-                        const currentFrame = window.getAnimationFrame ? window.getAnimationFrame(frames, animFps, animMode) : frames[0];
-                        const charImg = this.getNpcSprite(currentFrame);
+                        // Sin fotogramas no hay vecino que pintar, pero el MUEBLE sí:
+                        // salir de la función aquí lo dejaría sin dibujar.
+                        const currentFrame = (frames && frames.length)
+                            ? (window.getAnimationFrame ? window.getAnimationFrame(frames, animFps, animMode) : frames[0])
+                            : null;
+                        const charImg = currentFrame ? this.getNpcSprite(currentFrame) : null;
                         if (charImg && charImg.complete && charImg.naturalWidth > 0) {
                             this._activeFurnitureActors = (this._activeFurnitureActors || 0) + 1;
                             const isTsuki = (actActor && (actActor.charId === 0 || actActor.npcKey === '0')) || (!actActor && (actDef.npcKey === '0' || actDef.npcName === 'Tsuki'));
@@ -3425,14 +4734,31 @@ class IsometricMap {
                             const sw = charImg.width * u;
                             const sh = charImg.height * u;
 
-                            // Layer 2: Draw Character on seat
+                            // Layer 2: Draw Character on seat, con su atrezo
+                            if (window.PlayNpcs && window.PlayNpcs.pintarExtras) {
+                                window.PlayNpcs.pintarExtras(ctx, actDef, cx, cy, u, true);
+                            }
                             ctx.drawImage(charImg, cx - sw * 0.5, cy - sh * 0.5, sw, sh);
+                            if (window.PlayNpcs && window.PlayNpcs.pintarExtras) {
+                                window.PlayNpcs.pintarExtras(ctx, actDef, cx, cy, u, false);
+                            }
 
-                            // Layer 3: Draw Furniture Backrest Foreground (ON TOP of Character)
-                            if (useSeatingLayers && seatProfile.backrest_sprite) {
+                            // Layer 3: Draw Furniture Foreground / Backrest (ON TOP of Character)
+                            if (useBackLayers && seatProfile.backrest_sprite) {
                                 const backrestImg = this.getItemCustomImage(seatProfile.backrest_sprite);
                                 if (backrestImg && backrestImg.complete && backrestImg.naturalWidth > 0) {
                                     ctx.drawImage(backrestImg,
+                                        anchorX - (drawW * pivotX),
+                                        anchorY - (drawH * (1 - pivotY)),
+                                        drawW,
+                                        drawH
+                                    );
+                                }
+                            } else if (useFrontLayers && (seatProfile.foreground_sprite || seatProfile.backrest_sprite)) {
+                                const fgSprite = seatProfile.foreground_sprite || seatProfile.backrest_sprite;
+                                const fgImg = this.getItemCustomImage(fgSprite);
+                                if (fgImg && fgImg.complete && fgImg.naturalWidth > 0) {
+                                    ctx.drawImage(fgImg,
                                         anchorX - (drawW * pivotX),
                                         anchorY - (drawH * (1 - pivotY)),
                                         drawW,
@@ -3465,12 +4791,19 @@ class IsometricMap {
         const u = _bgo * this.scale;
 
         let actorsToDraw = [];
+        const def = window.MapDef && window.MapDef.get(targetLoc);
+        const mapNpcActs = (def && def.logic && def.logic.npc_activities) || [];
+        const activeNpcKeys = new Set(mapNpcActs.map(a => String(a.npcKey || '0')));
 
         if (window.RoutineScheduler) {
             const schedActors = window.RoutineScheduler.getAmbientActors(targetLoc, targetFloor);
             for (const sa of schedActors) {
                 // If this is Tsuki and Tsuki is already on furniture, skip Tsuki
                 if (sa.charId === 0 && this._tsukiOnFurniture) continue;
+                // If NPC is already pinned by map's fixed npc_activities (e.g. Benny at desk), don't duplicate.
+                // Compare npcKey against npcKey: activeNpcKeys is built from npc_activities[].npcKey,
+                // and charId only coincides with it for the actors defined so far.
+                if (activeNpcKeys.has(String(sa.npcKey != null ? sa.npcKey : sa.charId))) continue;
                 actorsToDraw.push(sa);
             }
         } else {
@@ -3515,7 +4848,27 @@ class IsometricMap {
             const actDef = actor.actDef || (window.ACTIVITIES_DB && (window.ACTIVITIES_DB.activities?.[String(actor.activityId)] || (window.ACTIVITIES_DB.free_activities && window.ACTIVITIES_DB.free_activities.find(f => String(f.id) === String(actor.activityId))))) || (window.ACTIVITIES_DB && window.ACTIVITIES_DB.activities && window.ACTIVITIES_DB.activities['101']);
             if (!actDef || !actDef.anim || actDef.category === 'bed') continue;
 
-            const tileCoords = this.getIsoCoords(gx, gy, floorNum, targetLoc);
+            // LOS QUE PASEAN NO VAN EN LA REJILLA. Un `WalkingActivityBehaviour` no se
+            // sienta en una casilla: anda por la acera, en coordenadas de mundo. Por eso
+            // se resuelve ANTES del piso, que para ellos no significa nada.
+            let paseo = null;
+            if (window.PlayWalkers && window.PlayWalkers.esPaseo(actDef)) {
+                const mapaDef = window.MapDef && window.MapDef.get(targetLoc);
+                paseo = window.PlayWalkers.posicion(
+                    String(actor.charId) + ':' + String(actor.activityId),
+                    actDef, mapaDef, this._ahoraMs());
+                if (!paseo) continue;          // este mapa no tiene acera
+            }
+
+            // Un gridPos solo significa algo si el piso de ese groupNum tiene geometria real:
+            // getIsoCoords lo ancla en surf.origin, y en los mapas cuyo piso sigue siendo un
+            // placeholder el actor acabaria flotando fuera del edificio. Ahi los NPCs los
+            // aporta logic.npc_activities, que va en coordenadas de mundo.
+            if (!paseo && !this._hasRealFloor(targetLoc, floorNum)) continue;
+
+            const tileCoords = paseo
+                ? { x: this.offsetX + paseo.x * 150 * u, y: this.offsetY - paseo.y * 150 * u }
+                : this.getIsoCoords(gx, gy, floorNum, targetLoc);
             if (!tileCoords) continue;
 
             ctx.save();
@@ -3546,21 +4899,39 @@ class IsometricMap {
                 isStatic = (actDef.anim.isStatic || actDef.anim.mode === 'static');
             }
 
+            // Las actividades que salen del SAVE traen los fotogramas ya resueltos, con
+            // su ruta: vienen del prefab de la actividad, y 1958 de los 6788 no están en
+            // `NPC_DB` porque hubo que sacarlos de los bundles. `anim.frames` gana sobre
+            // el nombre de animación de siempre.
+            let frames = null;
+            if (paseo) {
+                // Andar o estar quieto, y hacia que lado: lo decide el paseo, no la
+                // orientacion guardada, porque el que anda cambia de cara al dar la vuelta.
+                const f = window.PlayWalkers.fotogramas(actDef, paseo, this._ahoraMs());
+                frames = f.frames; animFps = f.fps; animMode = f.mode;
+            } else if (actDef.anim && Array.isArray(actDef.anim.frames) && actDef.anim.frames.length) {
+                const atras = isBack && Array.isArray(actDef.anim.framesBack)
+                              && actDef.anim.framesBack.length;
+                frames = atras ? actDef.anim.framesBack : actDef.anim.frames;
+                animFps = actDef.anim.fps || animFps;
+                animMode = actDef.anim.mode || animMode;
+            }
+
             const animName = isBack ? (animBack || animFront) : (animFront || animBack);
-            if (!animName) {
+            if (!frames && !animName) {
                 ctx.restore();
                 continue;
             }
 
             const charKey = actor.npcKey || actDef.npcKey || '0';
-            let frames = null;
-            if (window.resolveNpcAnimFrames) {
+            if (!frames && window.resolveNpcAnimFrames) {
                 frames = window.resolveNpcAnimFrames(charKey, animName);
             }
-            if (!frames || !frames.length) {
+            if ((!frames || !frames.length) && animName) {
                 const ext = animName.endsWith('.png') ? '' : (isStatic ? '.png' : '_0.png');
                 frames = [animName.includes('/') ? animName : ((actor.actorName || actDef.npcName || 'Tsuki') + '/' + animName + ext)];
             }
+            if (!frames || !frames.length) { ctx.restore(); continue; }
 
             const currentFrame = window.getAnimationFrame ? window.getAnimationFrame(frames, animFps, animMode) : frames[0];
             const charImg = this.getNpcSprite(currentFrame);
@@ -3579,7 +4950,13 @@ class IsometricMap {
                 // Draw character grounded on tileCoords
                 const cx = tileCoords.x;
                 const cy = tileCoords.y - sh * 0.45;
+                if (window.PlayNpcs && window.PlayNpcs.pintarExtras) {
+                    window.PlayNpcs.pintarExtras(ctx, actDef, cx, cy, u, true);
+                }
                 ctx.drawImage(charImg, cx - sw * 0.5, cy - sh * 0.5, sw, sh);
+                if (window.PlayNpcs && window.PlayNpcs.pintarExtras) {
+                    window.PlayNpcs.pintarExtras(ctx, actDef, cx, cy, u, false);
+                }
 
                 if (this._interactiveActors) {
                     const actorCharId = (actor.charId !== undefined) ? actor.charId : (actDef.npcID || 0);
@@ -3596,9 +4973,482 @@ class IsometricMap {
         }
     }
 
+    /** El instante para todo lo que se mueve en este cuadro. */
+    _ahoraMs() {
+        return (typeof performance !== 'undefined' && performance.now)
+            ? performance.now() : Date.now();
+    }
+
+    _getGameHour() {
+        if (window.GameTime && typeof window.GameTime.now === 'function') {
+            const t = window.GameTime.now();
+            if (t && t.hour != null) return t.hour;
+        }
+        if (this.app && this.app.parser && typeof this.app.parser.getClock === 'function') {
+            const t = this.app.parser.getClock();
+            if (t && t.hour != null) return t.hour;
+        }
+        return new Date().getHours();
+    }
+
+    _selectNpcActivities(activities) {
+        // Las npc_activities de un mapa son ALTERNATIVAS de un mismo personaje, no cosas
+        // simultaneas: Benny hace papeleo, duerme y da discursos, pero solo una a la vez.
+        // Sin esta seleccion se dibujaban los tres Bennys a la vez, dos de ellos encima
+        // del otro porque papeleo y siesta comparten position.
+        const hour = this._getGameHour();
+        // Mismo corte de noche que RoutineScheduler.getPeriod()
+        const isNight = hour >= 22 || hour < 7;
+
+        const byNpc = new Map();
+        for (const act of activities) {
+            const key = String(act.npcKey || '0');
+            if (!byNpc.has(key)) byNpc.set(key, []);
+            byNpc.get(key).push(act);
+        }
+
+        const out = [];
+        byNpc.forEach(list => {
+            if (list.length === 1) { out.push(list[0]); return; }
+            const bed = list.filter(a => a.isBed);
+            const awake = list.filter(a => !a.isBed);
+            const pool = (isNight && bed.length) ? bed : (awake.length ? awake : list);
+            // Indexar por hora da variedad a lo largo del dia y es estable dentro de la
+            // hora, asi que no parpadea entre frames.
+            out.push(pool[Math.abs(hour) % pool.length]);
+        });
+        return out;
+    }
+
+    /**
+     * Los objetos interactivos que el juego coloca en las escenas.
+     *
+     * Solo se dibujan los que el escenario NO trae ya pintados: montones de nieve, huevos
+     * y objetos sueltos. Los arboles, faroles y campanillas ya estan en el
+     * `_Ensamblado.png`, asi que aqui solo se les atiende el toque.
+     *
+     * Los montones y los huevos ademas pasan por el sorteo del dia
+     * (`seeded_scene_objects.js`). Ver LOGICAS_PENDIENTES.md 2 y 2bis.
+     */
+    _dibujarObjetosDeEscena(targetLoc) {
+        const SO = window.SceneObjects;
+        if (!SO || !SO.datos) return;
+        const lista = SO.de(targetLoc);
+        if (!lista.length) return;
+        const reloj = (window.GameTime && window.GameTime.now) ? window.GameTime.now() : null;
+
+        // Lo que el SAVE ya da por recogido hoy. Una vez por mapa y por día: si no, lo
+        // que cogiste antes de guardar volvería a aparecer al recargar la partida.
+        const claveSave = SO.claveMapa(targetLoc) + '|' + (reloj ? (reloj.day | 0) : 0);
+        if (SO._saveLeido !== claveSave && typeof SO.cargarRecogidosDelSave === 'function') {
+            SO._saveLeido = claveSave;
+            SO.cargarRecogidosDelSave(targetLoc, reloj);
+        }
+
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const s = _bgo * this.scale;
+        const ctx = this.ctx;
+        const now = performance.now();
+        let conBucle = 0;
+
+        lista.forEach((o, i) => {
+            if (!SO.visible(o, targetLoc, i, reloj)) return;
+
+            // Los que se sacuden o se columpian se dibujan con sus propios sprites, que
+            // se sacaron del `_Ensamblado.png` (marcados `layer: 'skip'` en los visuals)
+            // justo para poder rotarlos. Los de escenas superpuestas nunca estuvieron en
+            // el fondo: estos son su primer dibujado.
+            if (o.familia === 'shake' || o.familia === 'swing') {
+                const ang = SO.anguloDe(targetLoc, i);
+                (o.sprites || []).forEach(sp => {
+                    if (!sp.dir) return;
+                    const img = this.getBackgroundImage('images/maps/' + sp.dir + '/' + sp.sp + '.png');
+                    if (!img || !img.complete || img.naturalWidth === 0) return;
+                    const rw = sp.rw || img.naturalWidth, rh = sp.rh || img.naturalHeight;
+                    const ppu = sp.ppu || 150;
+                    const w = (img.naturalWidth / ppu) * 150 * s;
+                    const h = (img.naturalHeight / ppu) * 150 * s;
+                    // el pivote del sprite es el punto por el que cuelga: eje de giro
+                    const pvx = (sp.px == null ? 0.5 : sp.px) * w;
+                    const pvy = (1 - (sp.py == null ? 0.5 : sp.py)) * h;
+                    const x = this.offsetX + (sp.x * 150 * s);
+                    const y = this.offsetY - (sp.y * 150 * s);
+                    ctx.save();
+                    ctx.translate(x, y);
+                    if (ang) ctx.rotate(ang);
+                    ctx.drawImage(img, -pvx, -pvy, w, h);
+                    ctx.restore();
+                });
+                return;
+            }
+
+            // Los que tienen animacion propia se dibujan con su fotograma de ahora.
+            // OJO: el sprite del monticulo es `Snow_Mound_*`, NO `FURN_886`. 886 es el
+            // ITEM que suelta al recogerlo, que es otra cosa.
+            const a = o.anim;
+            if (a && a.frames && a.frames.length) {
+                conBucle++;
+                const i2 = Math.floor((now / 1000) * (a.fps || 4)) % a.frames.length;
+                const dir = a.dirs && a.dirs[i2];
+                if (!dir) return;
+                const img = this.getBackgroundImage('images/maps/' + dir + '/' + a.frames[i2] + '.png');
+                if (!img || !img.complete || img.naturalWidth === 0) return;
+                const ppu = a.ppu || 150;
+                const w = (img.naturalWidth / ppu) * 150 * s;
+                const h = (img.naturalHeight / ppu) * 150 * s;
+                const pvx = (a.px == null ? 0.5 : a.px) * w;
+                const pvy = (1 - (a.py == null ? 0.5 : a.py)) * h;
+                ctx.drawImage(img, this.offsetX + (o.x * 150 * s) - pvx,
+                                   this.offsetY - (o.y * 150 * s) - pvy, w, h);
+                return;
+            }
+
+            // Los recogibles tambien se sacaron del fondo (`layer: 'skip'`), para que
+            // puedan desaparecer al recogerlos o cuando el sorteo del dia no los saca.
+            if (o.sprites && o.sprites.length) {
+                o.sprites.forEach(sp => {
+                    if (!sp.dir) return;
+                    const img = this.getBackgroundImage('images/maps/' + sp.dir + '/' + sp.sp + '.png');
+                    if (!img || !img.complete || img.naturalWidth === 0) return;
+                    const ppu = sp.ppu || 150;
+                    const w = (img.naturalWidth / ppu) * 150 * s;
+                    const h = (img.naturalHeight / ppu) * 150 * s;
+                    const pvx = (sp.px == null ? 0.5 : sp.px) * w;
+                    const pvy = (1 - (sp.py == null ? 0.5 : sp.py)) * h;
+                    ctx.drawImage(img, this.offsetX + (sp.x * 150 * s) - pvx,
+                                       this.offsetY - (sp.y * 150 * s) - pvy, w, h);
+                });
+                return;
+            }
+
+            if (!SO.DIBUJA[o.clase]) return;
+            const idImg = o.item != null ? o.item : null;
+            if (idImg == null) return;
+            const img = this.getBackgroundImage('images/items/FURN_' + idImg + '.png');
+            if (!img || !img.complete || img.naturalWidth === 0) return;
+            const x = this.offsetX + (o.x * 150 * s);
+            const y = this.offsetY - (o.y * 150 * s);
+            const w = img.naturalWidth * s;
+            const h = img.naturalHeight * s;
+            ctx.drawImage(img, x - w / 2, y - h * 0.92, w, h);
+        });
+
+        // Las animaciones ambientales (bandera, ruedas, fuente, cinta) van en bucle: hay
+        // que seguir repintando mientras se vean. `playOnTap` es false en las 19, o sea
+        // que no son del toque sino continuas.
+        //
+        // Y con ellas todo lo demás que se mueve solo, que no son fotogramas y por eso
+        // no entraba en esta cuenta:
+        //   * el agua del muelle y la copa de los árboles, que van por MATERIAL y se
+        //     mueven de forma continua mientras se vean;
+        //   * la puerta corredera, sólo mientras está abriéndose o cerrándose.
+        // Sin esto se quedaban quietas: el port sólo repinta cuando algo se lo pide.
+        let sigueVivo = conBucle > 0;
+        if (!sigueVivo && window.PlayScenery && window.PlayScenery.tieneMaterialVivo) {
+            sigueVivo = window.PlayScenery.tieneMaterialVivo(targetLoc);
+        }
+        if (!sigueVivo && window.PlayDoors && window.PlayDoors.animando) {
+            sigueVivo = window.PlayDoors.animando(targetLoc);
+        }
+        if (!sigueVivo && window.PlayTrain && window.PlayTrain.animando) {
+            sigueVivo = window.PlayTrain.animando();
+        }
+        // Los que pasean no paran nunca: mientras el mapa tenga acera, hay que repintar.
+        // Sin esto el vecino se quedaria congelado a mitad de la acera, que es el mismo
+        // fallo que tuvieron el agua y la copa del arbol.
+        if (!sigueVivo && window.PlayWalkers && window.PlayWalkers.animando) {
+            sigueVivo = window.PlayWalkers.animando(window.MapDef && window.MapDef.get(targetLoc));
+        }
+        if (sigueVivo && this._bucleAmbienteRaf === undefined
+            && typeof requestAnimationFrame === 'function') {
+            this._bucleAmbienteRaf = requestAnimationFrame(() => {
+                this._bucleAmbienteRaf = undefined;
+                try { this.draw(); } catch (e) { /* aun sin lienzo */ }
+            });
+        }
+    }
+
+    _drawMapNpcActivities(targetLoc) {
+        const def = window.MapDef && window.MapDef.get(targetLoc);
+        const all = def && def.logic && def.logic.npc_activities;
+        if (!all || !all.length) return;
+        const activities = this._selectNpcActivities(all);
+
+        const ctx = this.ctx;
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const s = _bgo * this.scale;
+        const now = performance.now();
+
+        activities.forEach(act => {
+            const npcKey = String(act.npcKey || '0');
+            const npc = (window.NPC_DB && window.NPC_DB[npcKey]) || (window.NPC_DB && window.NPC_DB['0']);
+            if (!npc) return;
+
+            const animName = act.anim;
+            const frames = npc.animations && npc.animations[animName];
+            if (!frames || !frames.length) return;
+
+            const fps = act.fps || 4.0;
+            const frameDur = fps > 0 ? (1000 / fps) : 9999999;
+            const frameIdx = fps > 0 ? (Math.floor(now / frameDur) % frames.length) : 0;
+            const frameFile = frames[frameIdx];
+
+            const npcFolder = npc.name || 'Tsuki';
+            const imgPath = 'images/npcs/' + npcFolder + '/' + frameFile;
+            const img = this.getBackgroundImage(imgPath);
+            if (!img || !img.complete || img.naturalWidth === 0) return;
+
+            const posX = act.position && act.position.x != null ? act.position.x : (act.x || 0);
+            const posY = act.position && act.position.y != null ? act.position.y : (act.y || 0);
+            const screenX = this.offsetX + (posX * 150 * s);
+            const screenY = this.offsetY - (posY * 150 * s);
+            const w = img.naturalWidth * s;
+            const h = img.naturalHeight * s;
+
+            ctx.save();
+            ctx.translate(screenX, screenY);
+            if (act.flipX) ctx.scale(-1, 1);
+            if (act.rotation) ctx.rotate(-(act.rotation * Math.PI / 180));
+            ctx.drawImage(img, -w / 2, -h * 0.92, w, h);
+            ctx.restore();
+
+            // Registrarlos como clicables: sin esto los NPC fijos del mapa no abrian
+            // dialogo (solo lo hacian los de mueble y los ambientales), que es por lo
+            // que tocar a Benny en el Ayuntamiento no hacia nada.
+            if (this._interactiveActors) {
+                this._interactiveActors.push({
+                    charId: parseInt(npcKey, 10),
+                    name: act.npcName || npc.name,
+                    bounds: {
+                        minX: screenX - w / 2, maxX: screenX + w / 2,
+                        minY: screenY - h * 0.92, maxY: screenY + h * 0.08
+                    }
+                });
+            }
+        });
+    }
+
+    _drawMapInteractiveProps(targetLoc) {
+        const def = window.MapDef && window.MapDef.get(targetLoc);
+        const props = def && def.logic && def.logic.interactive_props;
+        if (!props || !props.length) return;
+
+        const ctx = this.ctx;
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const s = _bgo * this.scale;
+        const now = performance.now();
+        const baseDir = (def.config && def.config.assetsDir ? def.config.assetsDir : 'images/maps/Exportado_level8').replace(/^\.\.\//, '').replace(/^\.\.\//, '');
+
+        props.forEach(p => {
+            let frameFile = null;
+            if (p.anim && p.anim.type === 'SimpleAnim' && p.anim.frames && p.anim.frames.length) {
+                const fps = p.anim.fps || 8.0;
+                const frameDur = fps > 0 ? (1000 / fps) : 9999999;
+                const idx = fps > 0 ? (Math.floor(now / frameDur) % p.anim.frames.length) : 0;
+                frameFile = p.anim.frames[idx];
+            } else if (p.sprite) {
+                frameFile = p.sprite;
+            }
+            if (!frameFile) return;
+
+            const cleanFile = frameFile.endsWith('.png') ? frameFile : (frameFile + '.png');
+            // p.dir permite frames de otra carpeta (items, otro nivel...), que es lo que
+            // hace falta desde que el selector de visuales ofrece el catalogo entero.
+            const dir = (p.dir || baseDir).replace(/^(\.\.\/)+/, '');
+            const imgPath = dir + '/' + cleanFile;
+            const img = this.getBackgroundImage(imgPath);
+            if (!img || !img.complete || img.naturalWidth === 0) return;
+
+            const posX = p.position && p.position.x != null ? p.position.x : (p.x || 0);
+            const posY = p.position && p.position.y != null ? p.position.y : (p.y || 0);
+
+            const ppu = def.config?.ppu || 150;
+            const screenX = this.offsetX + (posX * ppu * s);
+            const screenY = this.offsetY - (posY * ppu * s);
+            const w = img.naturalWidth * s;
+            const h = img.naturalHeight * s;
+
+            // Flag pole pivot: flagpole base is at x: ~0.038, y: ~0.303
+            const px = (p.id === 'flag') ? 0.03759 : 0.5;
+            const py = (p.id === 'flag') ? 0.30282 : 0.5;
+
+            ctx.save();
+            ctx.drawImage(img, screenX - w * px, screenY - h * (1 - py), w, h);
+            ctx.restore();
+        });
+    }
+
+    /**
+     * Le dice al sistema de gacha dónde ha quedado la máquina en pantalla, para que
+     * pueda pintar las bolas encima en su propio lienzo. Si en este mapa no hay
+     * ninguna, la oculta.
+     */
+    _situarGacha(targetLoc) {
+        if (!window.Gacha) return;
+        const todos = this._layoutPlacements(targetLoc)
+            .concat((this.app?.parser?.placements) || []);
+        const g = todos.find(p => p.cluster === targetLoc && !p.isWall
+                                  && window.Gacha.esGacha(p.item_id));
+        if (!g) { window.Gacha.ocultar(); return; }
+        const { w, l } = this.getRotatedSize(g.item_id, g.orientation);
+        const c = this._tileCenter(g.x, g.y, w, l, g.floor, g.cluster);
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        window.Gacha.situar(g, c.x, c.y, _bgo * this.scale);
+    }
+
+    /**
+     * Decoración de festival del mapa (`logic.subscenes`).
+     *
+     * Estaba extraída desde hace tiempo y no la pintaba nadie: los banderines de
+     * Halloween, la nieve de Navidad, el Año Nuevo Lunar y el Festival de Verano del
+     * ayuntamiento. Cada clave se traduce a un eventID y solo se dibuja si ese
+     * festival cae hoy (ver events_system.js).
+     */
+    /**
+     * Tapa el segundo piso mientras dura la obra.
+     *
+     * El juego, mientras corre `Home2Construction` (1440 min), muestra el piso ya
+     * levantado pero cubierto, y no deja poner nada encima. El bloqueo de colocacion
+     * va en `_hitTestPlaySurface`; esto es la parte visible.
+     *
+     * LOS SPRITES SON LOS DEL JUEGO. Estan en level32, que no es un mapa sino una
+     * SUBESCENA llamada `SubsceneData/Construction Boundary`: dos lonas verdes
+     * (`construction_0` y `construction_1`) con un cartelito. Se copiaron a
+     * images/homecoming/.
+     *
+     * Lo que NO es exacto es la POSICION. En el juego esa subescena vive en el marco
+     * de coordenadas de level32/level28 —sus piezas estan en (-20,-30)— mientras que
+     * map_0 usa level2, centrado en el origen. Colocarlas donde el juego las pone
+     * exige cambiar el mapa entero a level28, que es lo que hace el juego al ampliar
+     * la casa. Mientras tanto se encajan sobre el poligono del piso 4, que comunica
+     * el estado aunque el encuadre no sea el del juego.
+     */
+    _dibujarObraHomecoming(targetLoc) {
+        if (String(targetLoc) !== '0') return;                 // solo la Casa del Arbol
+        if (this._estadoHomecoming() !== 'obra') return;
+
+        const surfaces = (window.mapsAtlas || []).filter(s =>
+            String(s.mapId) === String(targetLoc) && s.kind === 'floor'
+            && (s.homecoming_only || s.groupNum === 4));
+        if (!surfaces.length) return;
+
+        const ctx = this.ctx;
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale) || 0.75;
+        const u = _bgo * this.scale;
+
+        for (const surf of surfaces) {
+            const poly = surf.poly || [];
+            if (poly.length < 3) continue;
+            const { ox, oy } = this._getSurfaceOrigin(surf, surf.mapId != null ? surf.mapId : targetLoc);
+            const sx = this.offsetX + ox * 150 * u;
+            const sy = this.offsetY - oy * 150 * u;
+
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            for (const pt of poly) {
+                const px = (pt.x !== undefined ? pt.x : pt[0]) * 150 * u;
+                const py = -(pt.y !== undefined ? pt.y : pt[1]) * 150 * u;
+                if (px < minX) minX = px; if (px > maxX) maxX = px;
+                if (py < minY) minY = py; if (py > maxY) maxY = py;
+            }
+            const w = maxX - minX, h = maxY - minY;
+            if (!(w > 0 && h > 0)) continue;
+
+            const lona = this._spriteObra('construction_0');
+            const cartel = this._spriteObra('construction_1');
+            ctx.save();
+            ctx.translate(sx, sy);
+            if (lona && lona.complete && lona.naturalWidth) {
+                // La lona cubre el ancho del piso, conservando su proporcion, y se
+                // apoya en el borde inferior del poligono.
+                const escala = w / lona.naturalWidth;
+                const lh = lona.naturalHeight * escala;
+                ctx.drawImage(lona, minX, maxY - lh, w, lh);
+                if (cartel && cartel.complete && cartel.naturalWidth) {
+                    const ch = cartel.naturalHeight * escala * 0.8;
+                    const cw = cartel.naturalWidth * escala * 0.8;
+                    ctx.drawImage(cartel, minX - cw * 0.15, maxY - lh - ch * 0.15, cw, ch);
+                }
+            } else {
+                // Respaldo mientras cargan las imagenes.
+                ctx.fillStyle = 'rgba(122, 156, 106, 0.92)';
+                ctx.fillRect(minX, minY, w, h);
+            }
+            ctx.restore();
+
+            // Cuanto falta, para que se entienda que es temporal.
+            const p = this.app && this.app.parser;
+            let falta = '';
+            if (p && typeof p.getTempTimerStatus === 'function') {
+                const t = p.getTempTimerStatus('Home2Construction');
+                if (t && !t.done) {
+                    const hh = Math.floor(t.minutesLeft / 60), mm = t.minutesLeft % 60;
+                    falta = hh ? (hh + ' h ' + mm + ' min') : (mm + ' min');
+                }
+            }
+            if (!falta) continue;
+            const cx = sx + (minX + maxX) / 2, cy = sy + maxY - h * 0.25;
+            const texto = 'En obra · faltan ' + falta;
+            ctx.save();
+            ctx.font = 'bold ' + Math.max(11, Math.round(14 * u)) + 'px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            const ancho = ctx.measureText(texto).width + 16 * u;
+            const alto = Math.max(19, 24 * u);
+            ctx.fillStyle = 'rgba(48, 60, 40, 0.82)';
+            ctx.fillRect(cx - ancho / 2, cy - alto / 2, ancho, alto);
+            ctx.fillStyle = '#f2ead2';
+            ctx.fillText(texto, cx, cy);
+            ctx.restore();
+        }
+    }
+
+    _cacheObra = {};
+    _spriteObra(nombre) {
+        if (this._cacheObra[nombre] !== undefined) return this._cacheObra[nombre];
+        const img = new Image();
+        img.onerror = () => { this._cacheObra[nombre] = null; };
+        img.onload = () => { try { this.draw(); } catch (e) { /* aun sin mapa */ } };
+        img.src = 'images/homecoming/' + nombre + '.png';
+        this._cacheObra[nombre] = img;
+        return img;
+    }
+
+    _drawMapSubscenes(targetLoc) {
+        const def = window.MapDef && window.MapDef.get(targetLoc);
+        const subs = def && def.logic && def.logic.subscenes;
+        if (!subs || !window.VillageEvents) return;
+
+        const ctx = this.ctx;
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const s = _bgo * this.scale;
+        const ppu = def.config?.ppu || 150;
+        const baseDir = (def.config?.assetsDir || 'images/maps/Exportado_level8')
+            .replace(/^(\.\.\/)+/, '');
+
+        for (const clave of Object.keys(subs)) {
+            if (!window.VillageEvents.subescenaActiva(clave)) continue;
+            for (const p of (subs[clave] || [])) {
+                if (!p || !p.sprite) continue;
+                const archivo = p.sprite.endsWith('.png') ? p.sprite : (p.sprite + '.png');
+                const img = this.getBackgroundImage((p.dir || baseDir).replace(/^(\.\.\/)+/, '') + '/' + archivo);
+                if (!img || !img.complete || img.naturalWidth === 0) continue;
+                const sx = this.offsetX + ((p.x || 0) * ppu * s);
+                const sy = this.offsetY - ((p.y || 0) * ppu * s);
+                const escX = (p.scale && p.scale.x != null ? p.scale.x : 1) * (p.flipX ? -1 : 1);
+                const escY = (p.scale && p.scale.y != null ? p.scale.y : 1);
+                const w = img.naturalWidth * s * Math.abs(escX);
+                const h = img.naturalHeight * s * escY;
+                ctx.save();
+                if (escX < 0) { ctx.translate(sx, 0); ctx.scale(-1, 1); ctx.translate(-sx, 0); }
+                ctx.drawImage(img, sx - w / 2, sy - h / 2, w, h);
+                ctx.restore();
+            }
+        }
+    }
+
     _drawTooltip(p) {
         const ctx  = this.ctx;
-        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const layerRadio = this._layerRadio();
         const isWallLayer = layerRadio && layerRadio.value === 'wall' && p.isWall;
 
         let center;
@@ -3692,19 +5542,14 @@ class IsometricMap {
         const locVal = document.getElementById('select-location')?.value;
         const targetLoc = locVal !== "" && locVal != null ? parseInt(locVal, 10) : 0;
 
-        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const layerRadio = this._layerRadio();
         const isWallLayer = !isPlay && layerRadio && layerRadio.value === 'wall';
 
         let visibleFloors = ['0', '1', '2', '3'];
         if (isPlay) {
             if (window.mapsAtlas) {
                 const allFloors = window.mapsAtlas.filter(s => s.kind === 'floor' && String(s.mapId) === String(targetLoc));
-                const showHC = (() => {
-                    try { if (window.Flags) return window.Flags.get('homecomingUpdates') === 1; } catch(e) {}
-                    if (this.app && this.app.parser && this.app.parser.generalVars && this.app.parser.generalVars.homecomingUpdates) return this.app.parser.generalVars.homecomingUpdates.value === 1;
-                    if (this.app && this.app.parser && typeof this.app.parser.getHomeCurrSLocData === 'function') return this.app.parser.getHomeCurrSLocData() === 1;
-                    return false;
-                })();
+                const showHC = this._homecomingActivo();
                 const vf = allFloors.filter(s => !((s.homecoming_only || s.groupNum === 4) && !showHC)).map(s => String(s.groupNum));
                 if (vf.length > 0) visibleFloors = vf;
             }
@@ -3718,8 +5563,10 @@ class IsometricMap {
 
         const candidates = [];
 
-        for (let i = 0; i < this.app.parser.placements.length; i++) {
-            const p = this.app.parser.placements[i];
+        // Los del save y, detrás, los que pone el juego: así al solaparse gana el del save.
+        const buscables = this._layoutPlacements(targetLoc).concat(this.app.parser.placements);
+        for (let i = 0; i < buscables.length; i++) {
+            const p = buscables[i];
             if (p.cluster !== targetLoc || p.item_id === -1 || this.isCovering(p.item_id)) continue;
 
             if (p.isWall) {
@@ -3784,7 +5631,10 @@ class IsometricMap {
                 const { w, l } = this.getRotatedSize(p.item_id, p.orientation);
                 const stack = (this._stackInfo && this._stackInfo.get(p)) || null;
                 const lift = stack ? stack.lift : 0;
+                const liftX = stack ? (stack.liftX || 0) : 0;
                 const liftShift = lift * this.CELL_H * this.scale;
+                // Componente horizontal del offset de sub-rejilla (`SubGroupData.Offset`).
+                const liftShiftX = liftX * this.CELL_H * this.scale;
                 // Hit test anchor matches sprite draw anchor: footprint center
                 const center = this._tileCenter(p.x, p.y, w, l, p.floor, p.cluster);
                 const off = this._getPlacementRenderOffset(p);
@@ -3802,7 +5652,7 @@ class IsometricMap {
                     const pivotX = flipH ? (1 - pivot.x) : pivot.x;
                     const pivotY = pivot.y;
 
-                    const left = center.x - drawW * pivotX;
+                    const left = center.x + liftShiftX - drawW * pivotX;
                     const boxTop = center.y - liftShift - drawH * (1 - pivotY);
                     if (screenX >= left && screenX <= left + drawW && screenY >= boxTop && screenY <= boxTop + drawH) {
                         hit = true;
@@ -3820,21 +5670,55 @@ class IsometricMap {
                         pt3.x += off.x; pt3.y += off.y;
                         pt4.x += off.x; pt4.y += off.y;
                     }
-                    if (liftShift) {
+                    if (liftShift || liftShiftX) {
                         pt1.y -= liftShift; pt2.y -= liftShift; pt3.y -= liftShift; pt4.y -= liftShift;
+                        pt1.x += liftShiftX; pt2.x += liftShiftX; pt3.x += liftShiftX; pt4.x += liftShiftX;
                     }
                     if (this._pointInPoly(screenX, screenY, [pt1, pt2, pt3, pt4])) {
                         hit = true;
                     }
                 }
 
+                // El cultivo se dibuja ENCIMA de la parcela y sobresale bastante por
+                // arriba, así que pinchar la zanahoria caía fuera del rombo. Su dibujo
+                // cuenta también como zona sensible, pero mirando la OPACIDAD del pixel:
+                // su lienzo es 98x264 y casi todo transparente, y con la caja entera se
+                // robaban clics de medio campo.
+                let cropHit = false;
+                if (GROUND_IDS.has(p.item_id)
+                    && p.planted_id > 0 && p.planted_id !== 4294967295) {
+                    const cdef = this.cropDef(p.planted_id);
+                    const frame = p._cropFrame;
+                    if (cdef && frame && frame.complete && frame.naturalWidth > 0) {
+                        const dw = cdef.frameW * u, dh = cdef.frameH * u;
+                        const left = center.x - cdef.pivot.x * dw;
+                        const top = center.y - liftShift - (1 - cdef.pivot.y) * dh;
+                        if (screenX >= left && screenX <= left + dw
+                            && screenY >= top && screenY <= top + dh) {
+                            const ix = (screenX - left) / dw * frame.naturalWidth;
+                            const iy = (screenY - top) / dh * frame.naturalHeight;
+                            if (this.imageAlphaAt(frame, ix, iy) > 24) {
+                                hit = true;
+                                cropHit = true;
+                            }
+                        }
+                    }
+                }
+
                 if (hit) {
                     const floorNum = Number(p.floor || 0);
-                    let baseScore = 2000;
-                    if (GROUND_IDS.has(p.item_id)) baseScore = 100;
-                    else if (SEED_IDS.has(p.item_id)) baseScore = 200;
-
-                    const score = floorNum * 10000 + baseScore + (p.x + p.y) * 10 + (lift || 0) * 5;
+                    let score;
+                    if (cropHit) {
+                        // Acertar el dibujo del cultivo manda sobre la tierra de las
+                        // parcelas de detrás, que si no se quedaban el clic; y entre dos
+                        // cultivos gana el de delante (menor x+y).
+                        score = floorNum * 10000 + 1000 - (p.x + p.y) + (lift || 0) * 5;
+                    } else {
+                        let baseScore = 2000;
+                        if (GROUND_IDS.has(p.item_id)) baseScore = 100;
+                        else if (SEED_IDS.has(p.item_id)) baseScore = 200;
+                        score = floorNum * 10000 + baseScore + (p.x + p.y) * 10 + (lift || 0) * 5;
+                    }
                     candidates.push({ placement: p, score });
                 }
             }
@@ -3846,7 +5730,7 @@ class IsometricMap {
     }
 
     _hitTest(gridX, gridY, targetFloor, targetLoc, screenX, screenY) {
-        const layerRadio = document.querySelector('input[name="map-layer"]:checked');
+        const layerRadio = this._layerRadio();
         const isWallLayer = layerRadio && layerRadio.value === 'wall';
         let targetWallGroup = document.getElementById('select-wall-group')?.value;
         if (!targetWallGroup && this.app && this.app.parser) {
@@ -3856,8 +5740,9 @@ class IsometricMap {
         targetWallGroup = targetWallGroup || '0';
         
         let found = [];
-        for (let i = this.app.parser.placements.length - 1; i >= 0; i--) {
-            const p = this.app.parser.placements[i];
+        const _todos = this._layoutPlacements(targetLoc).concat(this.app.parser.placements);
+        for (let i = _todos.length - 1; i >= 0; i--) {
+            const p = _todos[i];
             if (p.cluster !== targetLoc || p.item_id === -1) continue;
             
             if (isWallLayer) {
@@ -4139,6 +6024,10 @@ class IsometricMap {
                 return;
             }
             
+            if (window.BubbleSystem) {
+                window.BubbleSystem.closeBubbles();
+            }
+
             const factor = e.deltaY > 0 ? 0.9 : 1.1;
             const rect   = this.canvas.getBoundingClientRect();
             const mx = e.clientX - rect.left;
@@ -4176,7 +6065,11 @@ class IsometricMap {
                 const mouseX = e.clientX - rect.left;
                 const mouseY = e.clientY - rect.top;
 
-                // Módulo 2: Interacción con Personajes en Modo Play
+                if (window.TrainStudio && window.TrainStudio.onMouseDown && window.TrainStudio.onMouseDown(e, mouseX, mouseY)) {
+                    return;
+                }
+
+                // Módulo 2: Interacción con Personajes en Modo Play (Burbujas Flotantes & Diálogos)
                 const isPlay = document.body.classList.contains('play-mode');
                 if (isPlay && this._interactiveActors && this._interactiveActors.length > 0) {
                     // Check top-most actor first (reverse order)
@@ -4184,7 +6077,16 @@ class IsometricMap {
                         const actor = this._interactiveActors[i];
                         const b = actor.bounds;
                         if (mouseX >= b.minX && mouseX <= b.maxX && mouseY >= b.minY && mouseY <= b.maxY) {
-                            if (window.DialogueManager) {
+                            if (window.BubbleSystem) {
+                                const screenX = rect.left + (b.minX + b.maxX) / 2;
+                                const screenY = rect.top + b.minY - 14;
+                                window.BubbleSystem.showBubbles({
+                                    npcId: actor.charId,
+                                    npcName: actor.name,
+                                    screenX: screenX,
+                                    screenY: screenY
+                                });
+                            } else if (window.DialogueManager) {
                                 window.DialogueManager.startDialogue(actor.charId, actor.name);
                             }
                             this.selectedPlacement = null;
@@ -4192,6 +6094,64 @@ class IsometricMap {
                             return;
                         }
                     }
+                }
+
+                if (window.BubbleSystem) {
+                    window.BubbleSystem.closeBubbles();
+                }
+
+                // Módulo 5: Interacción con el Tablón de Pesca en el Ayuntamiento (Mapa 8)
+                const targetLoc = document.getElementById('select-location') ? parseInt(document.getElementById('select-location').value) : 0;
+                if (isPlay && targetLoc === 8) {
+                    const atlasX = (mouseX - this.offsetX) / this.scale;
+                    const atlasY = (mouseY - this.offsetY) / this.scale;
+                    if (atlasX >= 370 && atlasX <= 660 && atlasY >= 1140 && atlasY <= 1530) {
+                        if (window.BountySystem) {
+                            window.BountySystem.open();
+                            this.selectedPlacement = null;
+                            if (this.app) this.app.closeItemEditor();
+                            return;
+                        }
+                    }
+                }
+
+                // Módulo 6: el reproductor de casetes (mueble 406). En el juego es un
+                // mueble que se TOCA, no parte de la interfaz: saca sus burbujas
+                // `PlayMusic` / `EjectMusic`.
+                //
+                // Hace falta buscarlo APARTE, con `allowPlayWithoutHammer`, porque en
+                // modo play `_findPlacementAtScreen` devuelve null a secas si no estás
+                // en modo martillo —para que no se puedan arrastrar los muebles jugando—
+                // y así el toque no llegaba nunca. Esto no reabre el arrastre: sólo mira
+                // si lo que hay debajo del dedo es un reproductor, y si no lo es sigue
+                // por donde iba.
+                // Y el BUZÓN (mueble 1622), que en el juego es otro mueble que se toca:
+                // `MailboxFurniture.QuickTap()` abre el sobre. Va por el mismo camino y
+                // con la misma búsqueda, así que se resuelven juntos: una sola pasada de
+                // `_findPlacementAtScreen`, que es la parte cara.
+                if (isPlay && (window.MixtapePlayer || window.PlayMail)) {
+                    const mueble = this._findPlacementAtScreen(mouseX, mouseY, true);
+                    const atendido = mueble && (
+                        (window.MixtapePlayer && window.MixtapePlayer.intentarToque(
+                            mueble, e.clientX, e.clientY - 18))
+                        || (window.PlayMail && window.PlayMail.intentarToque(
+                            mueble, e.clientX, e.clientY - 18)));
+                    if (atendido) {
+                        this.selectedPlacement = null;
+                        if (this.app) this.app.closeItemEditor();
+                        return;
+                    }
+                }
+
+                // Módulo 7: la puerta corredera de la Casa de Moca (`SceneDoor`). No es
+                // un mueble del save, es parte de la escena, así que no la encuentra
+                // `_findPlacementAtScreen`: su caja la apunta `play_scenery` al pintarla,
+                // igual que hacen los NPC con `_interactiveActors`.
+                if (isPlay && window.PlayDoors && window.PlayDoors.intentarToque(
+                        targetLoc, mouseX, mouseY, e.clientX, e.clientY - 18)) {
+                    this.selectedPlacement = null;
+                    if (this.app) this.app.closeItemEditor();
+                    return;
                 }
 
                 const clickedPlacement = this._findPlacementAtScreen(mouseX, mouseY) || this.hoveredPlacement;
@@ -4214,6 +6174,9 @@ class IsometricMap {
 
                     this.draw();
                 } else {
+                    if (window.BubbleSystem) {
+                        window.BubbleSystem.closeBubbles();
+                    }
                     this.isPanDragging  = true;
                     this.dragStartX     = e.clientX - this.offsetX;
                     this.dragStartY     = e.clientY - this.offsetY;
@@ -4228,6 +6191,10 @@ class IsometricMap {
             const rect   = this.canvas.getBoundingClientRect();
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
+
+            if (window.TrainStudio && window.TrainStudio.onMouseMove && window.TrainStudio.onMouseMove(e, mouseX, mouseY)) {
+                return;
+            }
 
             if (this.isPanDragging) {
                 this.offsetX = e.clientX - this.dragStartX;
@@ -4337,13 +6304,35 @@ class IsometricMap {
                     }
                 }
 
-                if (hoveredActor) {
+                const targetLoc = document.getElementById('select-location') ? parseInt(document.getElementById('select-location').value) : 0;
+                let hoveredBoard = false;
+                if (isPlay && targetLoc === 8) {
+                    const atlasX = (mouseX - this.offsetX) / this.scale;
+                    const atlasY = (mouseY - this.offsetY) / this.scale;
+                    if (atlasX >= 370 && atlasX <= 660 && atlasY >= 1140 && atlasY <= 1530) {
+                        hoveredBoard = true;
+                    }
+                }
+
+                if (hoveredActor || hoveredBoard) {
                     this.canvas.style.cursor = 'pointer';
                 } else if (!this.isPanDragging && !this.isItemDragging) {
                     this.canvas.style.cursor = '';
                 }
 
-                const top = this._findPlacementAtScreen(mouseX, mouseY);
+                let top = this._findPlacementAtScreen(mouseX, mouseY);
+                if (!top && isPlay) {
+                    // En modo juego el acierto normal está desactivado (es para el editor),
+                    // pero el cultivo necesita saber si lo están apuntando para encender su
+                    // resplandor de "listo para cosechar". Solo se admite para parcelas
+                    // plantadas, así que nada más cambia de comportamiento.
+                    const cand = this._findPlacementAtScreen(mouseX, mouseY, true);
+                    if (cand && GROUND_IDS.has(cand.item_id)
+                        && cand.planted_id > 0 && cand.planted_id !== 4294967295) {
+                        top = cand;
+                        this.canvas.style.cursor = 'pointer';
+                    }
+                }
                 if (this.hoveredPlacement !== top) {
                     this.hoveredPlacement = top;
                     this.draw();
@@ -4351,8 +6340,18 @@ class IsometricMap {
             }
         });
 
-        this.canvas.addEventListener('mouseup', () => {
+        this.canvas.addEventListener('mouseup', (e) => {
+            if (window.TrainStudio && window.TrainStudio.onMouseUp) {
+                window.TrainStudio.onMouseUp();
+            }
+            // Los objetos de escena van primero: si se toco uno, no cuenta como paneo.
+            if (!this.isItemDragging && !this.isGridDragging && e
+                && this._tocarObjetoDeEscena(e.clientX, e.clientY)) {
+                this.isPanDragging = false;
+                return;
+            }
             const wasItemDragging = this.isItemDragging;
+            const wasPanning = this.isPanDragging;
             this.isPanDragging  = false;
             this.isItemDragging = false;
             this.isGridDragging = false;
@@ -4360,14 +6359,22 @@ class IsometricMap {
             if (wasItemDragging && document.body.classList.contains('play-mode') && this.app.tsukiPort && typeof this.app.tsukiPort.triggerAutosave === 'function') {
                 this.app.tsukiPort.triggerAutosave();
             }
+            // Al soltar hay que repintar de verdad: si no, se queda en pantalla la copia
+            // del paneo y con ella los personajes congelados.
+            if (wasPanning) this.draw();
         });
 
         this.canvas.addEventListener('mouseleave', () => {
+            if (window.TrainStudio && window.TrainStudio.onMouseUp) {
+                window.TrainStudio.onMouseUp();
+            }
+            const wasPanning = this.isPanDragging;
             this.isPanDragging  = false;
             this.isItemDragging = false;
             this.isGridDragging = false;
             this._dragSnap = null;
             if (this.hoveredPlacement) { this.hoveredPlacement = null; this.draw(); }
+            else if (wasPanning) this.draw();
         });
 
         // Touch support for mobile panning and dragging
@@ -4529,13 +6536,23 @@ class IsometricMap {
                 this.initialPinchDistance = null;
             }
             if (e.touches.length === 0) {
+                // Igual que con el raton: el toque sobre un objeto de escena manda.
+                const t = (e.changedTouches && e.changedTouches[0]) || null;
+                if (t && !this.isItemDragging && !this.isGridDragging
+                    && this._tocarObjetoDeEscena(t.clientX, t.clientY)) {
+                    this.isPanDragging = false;
+                    this.isItemDragging = false;
+                    return;
+                }
                 const wasItemDragging = this.isItemDragging;
+                const wasPanning = this.isPanDragging;
                 this.isPanDragging  = false;
                 this.isItemDragging = false;
                 this._dragSnap = null;
                 if (wasItemDragging && document.body.classList.contains('play-mode') && this.app.tsukiPort && typeof this.app.tsukiPort.triggerAutosave === 'function') {
                     this.app.tsukiPort.triggerAutosave();
                 }
+                if (wasPanning) this.draw();   // soltar el dedo: volver al dibujado real
             }
         });
 
@@ -4575,6 +6592,43 @@ class IsometricMap {
         this.getImage(p.item_id, newOri);
         
         this.draw();
+    }
+
+    /**
+     * `QuickTap` sobre el mundo: traduce el clic a coordenada de mundo y busca que objeto
+     * de escena hay debajo. Es la puerta de entrada de los 198 objetos interactivos.
+     *
+     * La discriminacion toque/arrastre la hace `isQuickTap`, que es la del propio juego.
+     */
+    _tocarObjetoDeEscena(clientX, clientY) {
+        const SO = window.SceneObjects;
+        if (!SO || !SO.datos) return false;
+        if (!document.body.classList.contains('play-mode')) return false;
+        if (!this.isQuickTap(clientX, clientY)) return false;
+
+        const loc = (this.app && this.app.parser && this.app.parser.currentSLocation != null)
+            ? this.app.parser.currentSLocation : 0;
+        const rect = this.canvas.getBoundingClientRect();
+        const px = clientX - rect.left, py = clientY - rect.top;
+        const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
+        const s = _bgo * this.scale;
+        // inversa de  px = offsetX + wx*150*s   /   py = offsetY - wy*150*s
+        const wx = (px - this.offsetX) / (150 * s);
+        const wy = (this.offsetY - py) / (150 * s);
+
+        const reloj = (window.GameTime && window.GameTime.now) ? window.GameTime.now() : null;
+        const hit = SO.enPunto(loc, wx, wy, reloj);
+        if (!hit) return false;
+
+        // Dónde ha tocado el dedo, en coordenadas de pantalla: el buzón abre una
+        // burbuja y tiene que salir donde se ha tocado, no en la esquina.
+        const aviso = SO.tocar(loc, hit.indice, reloj, this.app,
+                               { x: clientX, y: clientY - 18 });
+        if (aviso && this.app && typeof this.app.showToast === 'function') {
+            this.app.showToast(aviso, 'info');
+        }
+        this.draw();
+        return true;
     }
 
     // P5 / CastleManager integration: discriminate between quick tap and drag gesture

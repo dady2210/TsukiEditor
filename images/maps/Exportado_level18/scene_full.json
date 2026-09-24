@@ -1,0 +1,331 @@
+{
+  "kind": "map",
+  "id": "level18",
+  "name": "level18",
+  "source": "C:\\Users\\Andres\\Desktop\\Tsuki_Odyssey\\AssetPack\\assets\\bin\\Data\\level18",
+  "layout": {
+    "front": [
+      {
+        "sp": "TownhallSnow_BountyBoard",
+        "go": "TownhallSnow_BountyBoard",
+        "x": -4.798000335693359,
+        "y": 0.029999732971191406,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 226.0,
+        "rh": 154.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 1.506666660308838,
+        "sz_y": 1.0266666412353516,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "TownHallWinter/TownhallSnow_BountyBoard",
+        "go_path_id": 2,
+        "tr_path_id": 9,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "TownhallSnow_1",
+        "go": "TownhallSnow_1",
+        "x": 4.435000419616699,
+        "y": 1.819000244140625,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 592.0,
+        "rh": 420.0,
+        "ox": 2.0,
+        "oy": 44.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 3.946666717529297,
+        "sz_y": 2.799999952316284,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "TownHallWinter/TownhallSnow_1",
+        "go_path_id": 3,
+        "tr_path_id": 10,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "TownhallSnow_Mailbox",
+        "go": "TownhallSnow_Mail",
+        "x": -3.7080001831054688,
+        "y": 0.13500022888183594,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 76.0,
+        "rh": 51.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 0.5066666603088379,
+        "sz_y": 0.3400000035762787,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "TownHallWinter/TownhallSnow_Mail",
+        "go_path_id": 4,
+        "tr_path_id": 11,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "TownhallSnow_0",
+        "go": "TownhallSnow_0",
+        "x": -0.7759990692138672,
+        "y": 3.5419998168945312,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 981.0,
+        "rh": 525.0,
+        "ox": 0.0,
+        "oy": 3.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 6.539999961853027,
+        "sz_y": 3.5,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "TownHallWinter/TownhallSnow_0",
+        "go_path_id": 5,
+        "tr_path_id": 12,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "Snow_Mound_0",
+        "go": "Sprite",
+        "x": -5.510000228881836,
+        "y": -1.0399999618530273,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 106.0,
+        "rh": 67.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": -1,
+        "draw_mode": 0,
+        "sz_x": 0.800000011920929,
+        "sz_y": 0.800000011920929,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "Snowmound (5)/Sprite",
+        "go_path_id": 6,
+        "tr_path_id": 13,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      }
+    ],
+    "back": [],
+    "fx": []
+  },
+  "hierarchy": [
+    {
+      "path": "TownHallWinter",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "TownhallSnow_BountyBoard",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "TownhallSnow_1",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "TownhallSnow_Mail",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "TownhallSnow_0",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Sprite",
+      "components": [
+        "Shader",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Snowmound (5)",
+      "components": [
+        "AudioClip",
+        "Sprite",
+        "Sprite"
+      ]
+    }
+  ],
+  "colliders": [],
+  "logic": {
+    "walkable": [],
+    "blockers": [],
+    "triggers": [],
+    "interaction_nodes": [],
+    "grids": [],
+    "camera_confines": [],
+    "lights": [],
+    "scripts": [],
+    "animators": [],
+    "audio": [],
+    "particles": []
+  },
+  "animation": {
+    "controllers": []
+  },
+  "audio": [],
+  "particles": [],
+  "catalog": {},
+  "raw": {
+    "level": "level18",
+    "origin_offset": {
+      "x": -20.0,
+      "y": 15.0
+    },
+    "grid_system": [],
+    "interaction_nodes": [],
+    "walkable_bounds": [],
+    "camera_confines": [],
+    "lighting_volumes": [],
+    "special_scripts": [],
+    "animator_nodes": [],
+    "audio_sources": [],
+    "particle_systems": []
+  }
+}

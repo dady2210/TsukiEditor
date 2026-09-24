@@ -39,8 +39,8 @@ const SLOCATION_NAMES = {
     5:"RosemarysShop", 6:"Farm", 7:"OpeningScene", 8:"TownHall",
     9:"MomosTeaHouse", 10:"TrainStation", 11:"DawnsShop", 12:"Dojo",
     13:"ScarlettsLounge", 14:"Travelling", 15:"SubwayStation", 16:"CityHall",
-    17:"Exit", 18:"Skytower", 19:"CapsuleHotel", 20:"ApartmentLobby",
-    21:"TheHole", 22:"Penthouse", 23:"ShoppingMall", 24:"MallEntrance",
+    17:"Exit", 18:"TheHole", 19:"CapsuleHotel", 20:"ApartmentLobby",
+    21:"TheRaven", 22:"Penthouse", 23:"ShoppingMall", 24:"MallEntrance",
     25:"RugShop", 26:"Winery", 27:"IceCreamShop", 28:"JewelryStore",
     29:"PostOffice", 30:"BubbleTea", 31:"ShoeStore", 32:"PoliceStation",
     33:"CoffeeShop", 34:"Apartment"
@@ -184,6 +184,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             this.gameUI = new window.GameUI(this);
             this.gameUI.init();
         }
+        if (window.FarmingSystem) {
+            this.farmingSystem = new window.FarmingSystem(this);
+        }
         window.addEventListener('resize', () => this.map.resize());
 
         this.navItems   = document.querySelectorAll('.nav-item');
@@ -225,6 +228,13 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         this._bindLampClick();
         this._bindFarmButtons();
         this._bindClockControls();
+        if (window.GameTime && typeof window.GameTime.onHourChanged === 'function') {
+            window.GameTime.onHourChanged((payload) => {
+                if (window.shopManager) {
+                    window.shopManager.checkAndRollAllShops(payload.hour, payload.day || 46250);
+                }
+            });
+        }
         // Soporte Playtest desde Web Editor / map_editor_2
         window.addEventListener('storage', (e) => {
             if (e.key === 'dev_deleted_placements' || e.key === 'dev_active_layout') {
@@ -239,7 +249,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             }
         });
         try {
-            const devSave = sessionStorage.getItem('dev_active_csave') || localStorage.getItem('dev_active_csave');
+            const isTestMode = window.location.search.includes('test=true');
+            if (!isTestMode) {
+                localStorage.removeItem('dev_deleted_placements');
+                sessionStorage.removeItem('dev_deleted_placements');
+            }
+            const devSave = isTestMode ? (sessionStorage.getItem('dev_active_csave') || localStorage.getItem('dev_active_csave')) : null;
             if (devSave && !this.parser) {
                 const binStr = atob(devSave);
                 const len = binStr.length;
@@ -271,7 +286,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             return sel;
         };
         const go = (id) => {
-            const label = id === 6 ? (typeof SUBLOC_NAMES !== 'undefined' && SUBLOC_NAMES[6] ? SUBLOC_NAMES[6] : 'Granja') : (typeof SUBLOC_NAMES !== 'undefined' && SUBLOC_NAMES[0] ? SUBLOC_NAMES[0] : 'Casa');
+            id = parseInt(id, 10);
+            const label = (typeof SUBLOC_NAMES !== 'undefined' && SUBLOC_NAMES[id]) ? SUBLOC_NAMES[id] : ('Ubicación ' + id);
             const sel = ensureOption(id, label);
             if (sel) { sel.value = String(id); sel.dispatchEvent(new Event('change')); }
             if (this.parser) this.parser.currentSLocation = id;
@@ -281,12 +297,89 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             } else if (window.Lighting && this.parser) {
                 window.Lighting.apply(this.parser.getClock(), id);
             }
-            if (this.map) this.map.draw();
+            if (this.map) {
+                this.map._bakedBgCanvas = null;
+                this.map._bakedBgKey = null;
+                this.map._renderCache = null;
+            }
+            if (window.MapDef) {
+                window.MapDef.load(id).then(() => {
+                    window.MapDef.syncAtlas(id);
+                    if (this.map) {
+                        this.map._bakedBgCanvas = null;
+                        this.map._bakedBgKey = null;
+                        this.map._renderCache = null;
+                        this.map.draw();
+                    }
+                }).catch(() => {
+                    if (this.map) this.map.draw();
+                });
+            } else if (this.map) {
+                this.map.draw();
+            }
         };
+        this.goLocation = go;
+        window.goLocation = go;
         const bHome = document.getElementById('btn-map-home');
         const bFarm = document.getElementById('btn-map-farm');
         if (bHome) bHome.addEventListener('click', () => go(0));
         if (bFarm) bFarm.addEventListener('click', () => go(6));
+
+        const bShops = document.getElementById('btn-hud-shops');
+        const bJunker = document.getElementById('btn-hud-junker');
+        if (bShops && !bShops._bound) {
+            bShops._bound = true;
+            bShops.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.shopUI) window.shopUI.open('yori_1');
+            });
+        }
+        if (bJunker && !bJunker._bound) {
+            bJunker._bound = true;
+            bJunker.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.junkerUI) window.junkerUI.open();
+            });
+        }
+
+        const bCropBox = document.getElementById('btn-hud-cropbox');
+        if (bCropBox && !bCropBox._bound) {
+            bCropBox._bound = true;
+            bCropBox.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (this.farmingSystem) this.farmingSystem.openCropBoxUI();
+            });
+        }
+
+        const bNews = document.getElementById('btn-hud-newspaper');
+        if (bNews && !bNews._bound) {
+            bNews._bound = true;
+            bNews.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.NewspaperSystem) window.NewspaperSystem.checkMorningDispatch(true);
+            });
+        }
+
+        const bBounty = document.getElementById('btn-hud-bounty');
+        if (bBounty && !bBounty._bound) {
+            bBounty._bound = true;
+            bBounty.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.BountySystem) window.BountySystem.open();
+            });
+        }
+
+        const bSickle = document.getElementById('btn-hud-sickle');
+        if (bSickle && !bSickle._bound) {
+            bSickle._bound = true;
+            bSickle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (this.farmingSystem) {
+                    this.farmingSystem.harvestAll(6);
+                }
+            });
+        }
+
         // select-location change también actualiza currentSLocation + lighting
         const sel = document.getElementById('select-location');
         if (sel && !sel._p4aHooked) {
@@ -296,6 +389,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 if (this.parser) this.parser.currentSLocation = isNaN(v) ? 0 : v;
                 const now = window.GameTime ? window.GameTime.now() : (this.parser ? this.parser.getClock() : { hour: 12 });
                 if (window.Lighting) window.Lighting.apply(now, v);
+                if (this.farmingSystem) this.farmingSystem.updateSickleButtonBadge();
+                const bountyBtn = document.getElementById('btn-hud-bounty');
+                if (bountyBtn) bountyBtn.style.display = (v === 8) ? 'inline-flex' : 'none';
             });
         }
     }
@@ -315,6 +411,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             this._refreshClockHUD();
             const inpHour = document.getElementById('input-hour');
             if (inpHour) inpHour.value = clk.hour;
+            if (window.shopManager && clk) {
+                window.shopManager.checkAndRollAllShops(clk.hour, this.parser.generalVars?.day?.value || 46250);
+            }
+            if (window.NewspaperSystem && clk && clk.hour >= 8) {
+                window.NewspaperSystem.checkMorningDispatch();
+            }
             this.showToast(`Hora manual: ${String(clk.hour).padStart(2, '0')}:${String(clk.minute != null ? clk.minute : 0).padStart(2, '0')} (clic en hora para volver a hora real)`, 'info');
         };
 
@@ -351,6 +453,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     const now = window.GameTime ? window.GameTime.now() : this.parser.getClock();
                     if (window.Lighting) window.Lighting.apply(now, this.parser.currentSLocation || 0);
                     if (this.map) this.map.draw();
+                    if (window.shopManager && now) {
+                        window.shopManager.checkAndRollAllShops(now.hour, now.day || 46250);
+                    }
                     this.showToast(`Hora sincronizada con dispositivo: ${this._formatClock(now)}`, 'info');
                     return;
                 }
@@ -363,6 +468,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 this._refreshClockHUD();
                 const inpHour = document.getElementById('input-hour');
                 if (inpHour) inpHour.value = nxtH;
+                if (window.shopManager) {
+                    window.shopManager.checkAndRollAllShops(nxtH, cur.day || 46250);
+                }
                 this.showToast(`Hora manual: ${String(nxtH).padStart(2, '0')}:00 (clic para avanzar / volver a hora real)`, 'info');
             });
         }
@@ -370,13 +478,36 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const btnReroll = document.getElementById('btn-reroll-routine');
         if (btnReroll && !btnReroll._bound) {
             btnReroll._bound = true;
-            btnReroll.addEventListener('click', (e) => {
+            btnReroll.addEventListener('click', async (e) => {
                 e.stopPropagation();
+                // Recargar activities_db.json en vivo por si el usuario guardó calibración en el editor
+                try {
+                    const r = await fetch('data/activities_db.json?v=' + Date.now());
+                    if (r.ok) window.ACTIVITIES_DB = await r.json();
+                } catch(err) {}
+
                 if (window.RoutineScheduler) {
                     window.RoutineScheduler.reroll();
                     this.showToast('🎲 Nueva rutina asignada aleatoriamente', 'success');
                 }
             });
+
+            // Auto-sincronizar cuando el usuario vuelve a la pestaña del juego desde el editor
+            if (!window._actDbFocusBound) {
+                window._actDbFocusBound = true;
+                window.addEventListener('focus', () => {
+                    fetch('data/activities_db.json?v=' + Date.now())
+                        .then(r => r.ok ? r.json() : null)
+                        .then(d => {
+                            if (d) {
+                                window.ACTIVITIES_DB = d;
+                                if (window.mapInstance && typeof window.mapInstance.draw === 'function') {
+                                    window.mapInstance.draw();
+                                }
+                            }
+                        }).catch(() => {});
+                });
+            }
         }
 
         const selPreset = document.getElementById('select-time-preset');
@@ -412,6 +543,39 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const cy = (e.clientY - rect.top) * (canvas.height / rect.height);
             const p = (this.map && (this.map.hoveredPlacement || this.map._findPlacementAtScreen(cx, cy, true))) || null;
             if (!p) return;
+
+            // ── La máquina de gacha (mueble 344 / 1932) ──
+            // El juego ofrece dos cosas al tocarla: gastar un ticket o darle un golpe.
+            if (window.Gacha && window.Gacha.esGacha(p.item_id)) {
+                e.stopPropagation(); e.preventDefault();
+                this.abrirGacha(p);
+                return;
+            }
+
+            // ── Farming interaction: Click to harvest crop or open CropBox ──
+            if (this.farmingSystem) {
+                if (p.item_id === 1301) {
+                    e.stopPropagation(); e.preventDefault();
+                    this.farmingSystem.openCropBoxUI();
+                    return;
+                }
+                if (p.item_id === 306 || p.item_id === 411 || (p.planted_id > 0)) {
+                    const st = this.farmingSystem.getCropStatus(p);
+                    if (st && st.hasCrop) {
+                        e.stopPropagation(); e.preventDefault();
+                        if (st.isReady) {
+                            const res = this.farmingSystem.harvestPlot(p);
+                            if (res.success) {
+                                this.farmingSystem.updateSickleButtonBadge();
+                                this.map.draw();
+                            }
+                        } else {
+                            this.showToast(`🌱 ${st.def.name}: Creciendo (${Math.round(st.progress * 100)}% · faltan ${st.minutesLeft}m)`, 'info');
+                        }
+                        return;
+                    }
+                }
+            }
             const profile = window.LIGHT_PROFILES && window.LIGHT_PROFILES[String(p.item_id)];
             const beh = window.BEHAVIORS && window.BEHAVIORS[String(p.item_id)];
             const isBehLamp = beh && beh.interact === 'light_toggle';
@@ -443,8 +607,11 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
     _formatClock(c) {
         const hh = String(c.hour != null ? c.hour : 0).padStart(2, '0') + ':' + String(c.minute != null ? c.minute : 0).padStart(2, '0');
-        // season no se pisa salvo dump confirme calendario real — solo display
-        const seasonNames = ['Primavera','Verano','Otoño','Invierno'];
+        // El dump ya confirma el calendario: el `SeasonData` del juego (extraído en
+        // `data/weather.json`) numera 0 Summer, 1 Autumn, 2 Winter, 3 Spring, y los saves
+        // lo respaldan (mes 8 -> season 0). Estaba al revés y el reloj decía "Primavera"
+        // en verano.
+        const seasonNames = ['Verano','Otoño','Invierno','Primavera'];
         const sName = seasonNames[c.season] || `S${c.season}`;
         return `Día ${c.day} · ${hh} · ${sName} M${c.month}`;
     }
@@ -466,6 +633,13 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 if (window.Lighting) {
                     const now = window.GameTime ? window.GameTime.now() : (this.parser ? this.parser.getClock() : null);
                     window.Lighting.apply(now, this.parser ? this.parser.currentSLocation || 0 : 0);
+                }
+                // La música pasa de la pista de día a la de noche en el mismo momento
+                // que el velo, porque usa la misma rampa. Si cada una tuviera su
+                // horario, se oiría el cambio antes o después de verlo.
+                if (window.MapMusic) {
+                    const loc = parseInt(this.selectLocation && this.selectLocation.value, 10) || 0;
+                    window.MapMusic.alEntrar(loc);
                 }
                 if (this.map) this.map.draw();
             }
@@ -511,6 +685,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                     if (window.Timers) window.Timers.tick(c);
                     if (this.map) this.map.draw();
                 });
+                // El trabajo del día: encargos, periódico, clima, punchcard y lo recogido.
+                // Antes el cambio de día solo repintaba. Ver day_cycle.js.
+                if (window.DayCycle) window.DayCycle.enganchar();
             }
         }
         this._clockTimer = setInterval(() => this._syncClockFromDevice(), 10000);
@@ -556,16 +733,26 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             const hudTop = document.getElementById('port-hud-top');
             if (hudTop) hudTop.style.display = 'flex';
             if (this.tsukiPort) this.tsukiPort.enterPlayMode();
+            if (window.MapDef) {
+                const targetLoc = (this.parser && this.parser.currentSLocation != null) ? this.parser.currentSLocation : 0;
+                window.MapDef.load(targetLoc).then(() => {
+                    window.MapDef.syncAtlas(targetLoc);
+                    if (this.map) {
+                        this.map._renderCache = null;
+                        this.map.draw();
+                    }
+                }).catch(console.error);
+            }
             // Preload all covering textures for the current location
             if (this.map) {
                 const parser = this.parser;
                 if (parser && parser.wallpapers) {
                     const locId = 0; // Treehouse is the only one we need immediately
-                    (parser.wallpapers[locId] || []).forEach(w => { if (w.id > 0) this.map._getTilesetTexture('wallpaper', w.id); });
+                    (parser.wallpapers[locId] || []).forEach(w => { if (w.id != null && w.id !== '' && Number(w.id) >= 0) this.map._getTilesetTexture('wallpaper', w.id); });
                 }
                 if (parser && parser.floors) {
                     const locId = 0;
-                    (parser.floors[locId] || []).forEach(f => { if (f.id > 0) this.map._getTilesetTexture('floor', f.id); });
+                    (parser.floors[locId] || []).forEach(f => { if (f.id != null && f.id !== '' && Number(f.id) >= 0) this.map._getTilesetTexture('floor', f.id); });
                 }
             }
             if (this.parser && this.map) {
@@ -592,6 +779,16 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 const mapBtn = document.querySelector('[data-target="tab-map"]');
                 if (mapBtn && !mapBtn.classList.contains('active')) {
                     mapBtn.click();
+                }
+                const bountyBtn = document.getElementById('btn-hud-bounty');
+                if (bountyBtn) {
+                    const curLoc = this.parser.currentSLocation != null ? this.parser.currentSLocation : 0;
+                    bountyBtn.style.display = (curLoc === 8) ? 'inline-flex' : 'none';
+                }
+                if (window.NewspaperSystem) {
+                    setTimeout(() => {
+                        window.NewspaperSystem.checkMorningDispatch();
+                    }, 600);
                 }
             } else {
                 const hc = document.getElementById('port-hud-carrots');
@@ -765,6 +962,24 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         });
         document.getElementById('btn-save-cache')?.addEventListener('click', () => {
             this.saveSession({ silent: false });
+        });
+
+        // NUEVA PARTIDA. La lógica estaba escrita y probada (`new_game.js`,
+        // `tools/test_partida_nueva.js`) y el botón seguía deshabilitado con «Aún no
+        // implementado»: solo faltaba conectarlo.
+        //
+        // YA NO PIDE FICHERO. Antes partía de un .csave tuyo porque fabricar uno byte a
+        // byte pedía acertar el marcador y el tipo de los 101 campos de `TsukiSave`, y uno
+        // mal deja el fichero ilegible. Eso lo resuelve `data/csave_plantilla.json`, que
+        // lleva la FORMA del fichero —marcadores, ids y nombres de tipo, que es lo único
+        // que no se puede deducir— con los valores al día uno.
+        //
+        // Con una partida abierta se sigue ofreciendo reiniciar ESA, que no es lo mismo:
+        // conserva tus muebles y tus amistades. Sin nada abierto, se fabrica una entera.
+        document.getElementById('btn-new-game')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!this.parser) { this.partidaDesdeCero(); return; }
+            this.empezarPartidaNueva();
         });
 
         // Export/Import Parcial (modal) — los botones existían en el HTML y la
@@ -993,8 +1208,32 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
 
 
         // Map
-        this.selectLocation.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw();
-                document.getElementById('nav-play').className = 'btn-primary'; if (this.renderWallpapersTab) this.renderWallpapersTab(); });
+        this.selectLocation.addEventListener('change', () => { 
+            const locId = parseInt(this.selectLocation.value, 10) || 0;
+            // La música de la sala. Cada nivel declara su par día/noche en el binario
+            // (`data/map_music.json`); los veinte mapas de la Gran Ciudad declaran
+            // `clipID 0` en los dos, o sea que ahí el juego se calla y el port también.
+            if (window.MapMusic) window.MapMusic.alEntrar(locId);
+            if (this.map) {
+                this.map.selectedPlacement = null; 
+                this.map._bakedBgCanvas = null;
+                this.map._bakedBgKey = null;
+                this.map._renderCache = null;
+            }
+            this.closeItemEditor(); 
+            if (window.MapDef) {
+                window.MapDef.load(locId).then(() => {
+                    window.MapDef.syncAtlas(locId);
+                    if (this.map) this.map.draw();
+                }).catch(() => {
+                    if (this.map) this.map.draw();
+                });
+            } else if (this.map) {
+                this.map.draw();
+            }
+            document.getElementById('nav-play').className = 'btn-primary'; 
+            if (this.renderWallpapersTab) this.renderWallpapersTab(); 
+        });
         this.selectFloor.addEventListener('change', () => { this.map.selectedPlacement = null; this.closeItemEditor(); this.map.draw();
                 document.getElementById('nav-play').className = 'btn-primary'; });
 
@@ -1286,6 +1525,9 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         _bindFarm('btn-add-plot',        () => this.farmAddItem(306, 1,  'Parcela de tierra (FURN_306)'));
         _bindFarm('btn-add-seeds',       () => this.farmAddItem(342, 10, 'Semillas de Zanahoria (FURN_342)'));
         _bindFarm('btn-auto-harvest',    () => this.farmAutoHarvest());
+        _bindFarm('btn-mature-all-crops', () => {
+            if (this.farmingSystem) this.farmingSystem.matureAll();
+        });
         _bindFarm('btn-collect-carrots', () => this.farmCollectCarrots(9999));
         
         const btnClean = document.getElementById('btn-clean-seeds');
@@ -1324,6 +1566,43 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         });
     }
 
+    farmAddItem(itemId, qty = 1, name = 'Item') {
+        if (!this.parser) {
+            this.showToast('Carga un save primero.', 'error');
+            return;
+        }
+        try {
+            this.parser.injectInventoryItem(itemId, qty, false, 1);
+            this.showToast(`🌾 Añadido al inventario: ${qty}x ${name}`, 'success');
+            this.renderInventory();
+        } catch (e) {
+            this.showToast(`Error al añadir ítem: ${e.message}`, 'error');
+        }
+    }
+
+    farmAutoHarvest() {
+        if (!this.farmingSystem) {
+            this.showToast('Sistema de granja no disponible.', 'error');
+            return;
+        }
+        this.farmingSystem.harvestAll(6);
+    }
+
+    /** Los dos sitios donde se ve el total de zanahorias: el HUD y la pestaña de variables. */
+    refreshCarrotsUI() {
+        if (!this.parser) return;
+        this.populateVarsTab();
+        const hudCarrots = document.getElementById('port-hud-carrots');
+        if (hudCarrots) hudCarrots.textContent = this.parser.getPlayerCarrots();
+    }
+
+    farmCollectCarrots(amount = 9999) {
+        if (!this.parser) return;
+        this.parser.addPlayerCarrots(amount);
+        this.showToast(`🥕 ¡Añadidas +${amount} zanahorias al jugador!`, 'success');
+        this.refreshCarrotsUI();
+    }
+
     // ─── File Load ────────────────────────────────────────────────────
 
     loadFile(file, fileHandle = null) {
@@ -1350,6 +1629,11 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 this.parseData();
                 this.dropZone.classList.add('hidden');
                 this.appContainer.classList.remove('hidden');
+                // Si venía de pulsar «Nueva Partida» sin tener nada cargado, ahora sí.
+                if (this._empezarTrasCargar) {
+                    this._empezarTrasCargar = false;
+                    setTimeout(() => this.empezarPartidaNueva(), 0);
+                }
 
                 // Respaldo inicial en caché persistente IndexedDB
                 if (window.SaveStorage) {
@@ -1396,7 +1680,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     async saveSession({ silent = false } = {}) {
         if (!this.parser) return false;
         try {
-            this.applyGeneralVars();
+            // Los campos de la pestaña de variables solo mandan cuando el guardado lo
+            // pide el usuario desde el editor. En el autoguardado silencioso NO: ahí
+            // los campos son un espejo viejo del save cargado y volcarlos deshacía todo
+            // lo que hubiera cambiado el juego —las zanahorias de una cosecha, la hora,
+            // los peces pescados—, porque volvían al valor que tenía el formulario.
+            if (!silent) this.applyGeneralVars();
             const buffer = this.parser.getBuffer();
             const meta = {
                 carrots: this.parser.generalVars?.carrots?.value,
@@ -1473,6 +1762,14 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     }
 
     _syncDeletedPlacements() {
+        const isTestMode = window.location.search.includes('test=true');
+        if (!isTestMode) {
+            try {
+                localStorage.removeItem('dev_deleted_placements');
+                sessionStorage.removeItem('dev_deleted_placements');
+            } catch(e) {}
+            return;
+        }
         if (!this.parser || !this.parser.placements) return;
         try {
             const delStr = sessionStorage.getItem('dev_deleted_placements') || localStorage.getItem('dev_deleted_placements');
@@ -1494,7 +1791,130 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
     }
 
+    /**
+     * Deja la partida cargada en el día uno.
+     *
+     * Enseña antes lo que va a vaciar: `NewGame.previsualizar()` lo saca del propio save,
+     * no de una lista a ojo. El fichero original no se toca —esto trabaja sobre el árbol
+     * en memoria— así que para quedárselo hay que exportar.
+     */
+    empezarPartidaNueva() {
+        if (!window.NewGame) { this.showToast('Falta new_game.js'); return; }
+        const prev = window.NewGame.previsualizar();
+        if (!prev.ok) { this.showToast('No se puede: ' + prev.motivo); return; }
+        const listas = Object.entries(prev.de.listasConContenido || {});
+        const resumen = listas.length
+            ? listas.map(([n, t]) => n + ' (' + t + ')').join(', ')
+            : 'nada que vaciar';
+        const texto = 'Empezar de cero sobre esta partida.\n\n'
+            + 'Se vacía: ' + resumen + '\n'
+            + 'Vuelve al día ' + prev.a.dia + ', ' + prev.a.estacion + ', tutorial desde el paso 0.\n'
+            + 'Se respetan tus ajustes.\n\n'
+            + 'El .csave del disco NO se toca: esto cambia la partida abierta, y para '
+            + 'quedártela hay que exportarla.';
+        if (!confirm(texto)) return;
+
+        // La secuencia de arranque del juego: logo, pantalla de carga y, al levantarse,
+        // la Escena de Apertura —el tren, `level15`—, que es donde está Tsuki en una
+        // partida nueva y donde empieza el tutorial. El trabajo de verdad va DENTRO,
+        // tapado por la pantalla de carga, que es para lo que está.
+        const hacerlo = () => {
+            const r = window.NewGame.empezar();
+            if (!r.ok) { this.showToast('No se pudo: ' + r.motivo); return false; }
+            this.parseData();
+            const sel = document.getElementById('select-location');
+            if (sel && window.PlayOpening) {
+                const inicial = window.PlayOpening.mapaInicial();
+                if ([...sel.options].some(o => String(o.value) === String(inicial))) {
+                    sel.value = inicial;
+                    sel.dispatchEvent(new Event('change'));
+                }
+            }
+            if (this.map) this.map.draw();
+            return true;
+        };
+
+        if (window.PlayOpening) {
+            window.PlayOpening.reproducir(hacerlo)
+                .then(() => {
+                    this.showToast('Partida nueva lista. Exporta para guardarla.');
+                    // Y el diálogo con el que arranca todo: Chi contándole a Tsuki qué
+                    // ha pasado con sus muebles. Va después del fundido, no durante:
+                    // durante la pantalla de carga no se vería.
+                    setTimeout(() => {
+                        if (window.PlayOpening.dialogoInicial) window.PlayOpening.dialogoInicial();
+                    }, 400);
+                })
+                .catch(() => { hacerlo(); });
+        } else {
+            if (hacerlo()) this.showToast('Partida nueva lista. Exporta para guardarla.');
+        }
+    }
+
+    /**
+     * Fabrica una partida nueva SIN ningún fichero de partida.
+     *
+     * `NewGame.fabricar()` construye el árbol entero desde `data/csave_plantilla.json` y
+     * lo serializa; los bytes pasan por el mismo camino que un save de verdad, así que
+     * si algo estuviera mal se vería aquí y no en el móvil.
+     *
+     * Después va la misma secuencia de arranque que la otra: logo, pantalla de carga,
+     * la Escena de Apertura y el diálogo de Chi.
+     */
+    partidaDesdeCero() {
+        if (!window.NewGame || typeof window.NewGame.fabricar !== 'function') {
+            this.showToast('Falta new_game.js');
+            return;
+        }
+        const instalar = (r) => {
+            if (!r || !r.ok || !r.parser) throw new Error('no se pudo fabricar la partida');
+            this.parser = r.parser;
+            this.fileName = 'partida-nueva.csave';
+            if (this.fileNameDisplay) this.fileNameDisplay.textContent = this.fileName;
+            // Fabricada, no abierta de un fichero: no hay `fileHandle` al que guardar.
+            this.fileHandle = null;
+            if (window.SaveStorage) window.SaveStorage.fileHandle = null;
+            this.parseData();
+            if (this.dropZone) this.dropZone.classList.add('hidden');
+            if (this.appContainer) this.appContainer.classList.remove('hidden');
+            const sel = document.getElementById('select-location');
+            if (sel && window.PlayOpening) {
+                const inicial = window.PlayOpening.mapaInicial();
+                if ([...sel.options].some(o => String(o.value) === String(inicial))) {
+                    sel.value = inicial;
+                    sel.dispatchEvent(new Event('change'));
+                }
+            }
+            if (this.map) { this.map.resize(); this.map.draw(); }
+            return true;
+        };
+
+        const arrancar = () => window.NewGame.fabricar().then(instalar);
+
+        if (window.PlayOpening) {
+            // El trabajo va DENTRO de la pantalla de carga, que es para lo que está.
+            window.PlayOpening.reproducir(arrancar)
+                .then(() => {
+                    this.showToast('Partida nueva creada de cero. Exporta para guardarla.');
+                    setTimeout(() => {
+                        if (window.PlayOpening.dialogoInicial) window.PlayOpening.dialogoInicial();
+                    }, 400);
+                })
+                .catch(err => this.showToast('No se pudo crear la partida: ' + err.message, 'error'));
+        } else {
+            arrancar()
+                .then(() => this.showToast('Partida nueva creada de cero. Exporta para guardarla.'))
+                .catch(err => this.showToast('No se pudo crear la partida: ' + err.message, 'error'));
+        }
+    }
+
     parseData() {
+        // Al cargar otra partida hay que olvidar lo que se guardó en memoria de la
+        // anterior. La puerta corredera lee su estado del save UNA vez y se lo queda;
+        // sin esto, abrir una partida con la puerta abierta y luego otra con la puerta
+        // cerrada dejaría la puerta abierta.
+        if (window.PlayDoors && window.PlayDoors.olvidar) window.PlayDoors.olvidar();
+
         // General vars
         this.parser.parseGeneralVars();
         if (window.GameTime && window.GameTime.bindParser) {
@@ -1513,7 +1933,22 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         const locSet = new Set(Array.from(this.parser.clusters));
         // P4a: siempre ofrecer Casa (0) y Granja (6) aunque el save no tenga placements allí
         locSet.add(0); locSet.add(6);
-        Array.from(locSet).sort((a,b) => a-b).forEach(c => {
+        // Y TODOS los mapas que existen, no solo los que tienen muebles en el save.
+        // Antes la lista salia de `parser.clusters`, o sea de las sublocaciones con
+        // placements; como la ciudad entera esta vacia en los cuatro saves de prueba,
+        // ninguno de sus 21 mapas aparecia y no habia manera de abrirlos.
+        if (typeof MAPAS_VISITABLES !== 'undefined') {
+            for (const id of MAPAS_VISITABLES) locSet.add(id);
+        }
+        // Los vagones del tren son cluster de texto ('train_vagon_1'), asi que no se
+        // pueden ordenar restando: van al final.
+        Array.from(locSet).sort((a, b) => {
+            const na = typeof a === 'number' || /^\d+$/.test(a), nb = typeof b === 'number' || /^\d+$/.test(b);
+            if (na && nb) return Number(a) - Number(b);
+            if (na) return -1;
+            if (nb) return 1;
+            return String(a).localeCompare(String(b));
+        }).forEach(c => {
             const opt = document.createElement('option');
             opt.value = c;
             const friendlyName = (typeof SUBLOC_NAMES !== 'undefined' && SUBLOC_NAMES[c])
@@ -1563,6 +1998,25 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         if (this.renderTrainExtra) this.renderTrainExtra();
         if (this.renderExperimentalStructures) this.renderExperimentalStructures();
         if (this.renderExtraVars) this.renderExtraVars();
+
+        // Module 3: Tiendas & Dawn's Junker
+        if (typeof ShopManager !== 'undefined') {
+            if (!window.shopManager) {
+                window.shopManager = new ShopManager(this);
+                window.junkerManager = new JunkerManager(this, window.shopManager);
+                window.shopUI = new ShopUI(window.shopManager);
+                window.junkerUI = new JunkerUI(window.junkerManager);
+            } else {
+                window.shopManager.app = this;
+                window.junkerManager.app = this;
+                window.shopManager.loadShopsFromSave();
+            }
+        }
+
+        // Module 4: Farming System Badge
+        if (this.farmingSystem) {
+            this.farmingSystem.updateSickleButtonBadge();
+        }
     }
 
     // ─── General Variables Tab ────────────────────────────────────────
@@ -1783,16 +2237,21 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
             if (filter && !name.toLowerCase().includes(filter) && !String(npc.charId).includes(filter)) return;
 
             const tr = document.createElement('tr');
-            const friendPct = Math.min(100, Math.round(npc.friendship / 100));
-            const barColor = npc.friendship >= 5000 ? '#496800' : npc.friendship >= 2000 ? '#FF8C00' : '#6f4627';
+            // La amistad va de 0 a 50, no a 10000: en el save gordo el máximo es 50
+            // y 18 de los 35 vecinos están ahí. Antes la barra se dividía entre 100 y
+            // no se movía nunca del 0.
+            const MAX_AMISTAD = 50;
+            const friendPct = Math.min(100, Math.round(npc.friendship * 100 / MAX_AMISTAD));
+            const barColor = npc.friendship >= MAX_AMISTAD ? '#496800'
+                           : npc.friendship >= MAX_AMISTAD * 0.5 ? '#FF8C00' : '#6f4627';
             tr.innerHTML = `
                 <td style="font-weight:700;">${npc.charId}</td>
                 <td>${name}</td>
                 <td>
                     <div class="npc-friend-bar">
-                        <div class="npc-friend-fill" style="width:${Math.min(100, npc.friendship/100)}%; background:${barColor};"></div>
+                        <div class="npc-friend-fill" style="width:${friendPct}%; background:${barColor};"></div>
                     </div>
-                    <input type="number" class="inv-input" id="npc-friendship-${idx}" value="${npc.friendship}" min="0" max="99999" style="width:90px;margin-top:4px;">
+                    <input type="number" class="inv-input" id="npc-friendship-${idx}" value="${npc.friendship}" min="0" max="${MAX_AMISTAD}" style="width:90px;margin-top:4px;"> <span style="font-size:.8em;color:#8a7a63">/ ${MAX_AMISTAD}</span>
                 </td>
                 <td>
                     <input type="number" class="inv-input" id="npc-pester-${idx}" value="${npc.pester}" min="0" max="999" style="width:70px;">
@@ -1819,7 +2278,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     }
 
     maxNPCSingle(idx) {
-        this.parser.setNPCFriendship(idx, 99999);
+        // 50 es el tope real del juego, no 99999.
+        this.parser.setNPCFriendship(idx, 50);
         this.showToast(`💛 Amistad máxima: ${CHAR_NAMES[this.parser.npcSaves[idx]?.charId] || idx}`);
         this.renderNPCTab();
     }
@@ -1944,7 +2404,7 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
     }
 
     maxAllFriendship() {
-        this.parser.npcSaves.forEach((_, idx) => this.parser.setNPCFriendship(idx, 99999));
+        this.parser.npcSaves.forEach((_, idx) => this.parser.setNPCFriendship(idx, 50));
         
         let conditionUpdates = 0;
         if (typeof this.parser.unlockAllNPCConditions === 'function') {
@@ -2660,6 +3120,120 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         });
     }
 
+    /**
+     * Rellena el bloque "Mueble del juego" del editor. Solo sale cuando la pieza
+     * viene de default_layouts.json; los muebles del save no lo ven.
+     */
+    _fillLayoutItemUI(placement) {
+        const box = document.getElementById('layout-item-ui');
+        if (!box) return;
+        if (!placement || !placement.isLayout) { box.classList.add('hidden'); return; }
+        box.classList.remove('hidden');
+
+        const info = document.getElementById('layout-item-info');
+        if (info) {
+            const origen = placement.layoutSource === 'conditional'
+                ? 'capa condicional (festival)' : 'capa fija del mapa';
+            info.textContent = (placement.name || 'Mueble #' + placement.item_id)
+                + ' — ' + origen + ', placementID ' + placement.placementID;
+        }
+
+        const ov = document.getElementById('edit-item-can-override');
+        const hid = document.getElementById('edit-item-layout-hidden');
+        const guardado = (window.DefaultLayouts &&
+            window.DefaultLayouts._ov(placement.cluster, placement.placementID)) || {};
+
+        if (ov) {
+            ov.checked = !!placement.canOverride;
+            ov.onchange = () => {
+                placement.canOverride = ov.checked;
+                window.DefaultLayouts?.setOverride(placement.cluster, placement.placementID,
+                    { canOverride: ov.checked });
+                this.showToast(ov.checked ? 'Ahora el jugador puede moverlo'
+                                          : 'Marcado como fijo', 'success');
+                if (this.map) this.map.draw();
+            };
+        }
+        if (hid) {
+            hid.checked = !!guardado.hidden;
+            hid.onchange = () => {
+                window.DefaultLayouts?.setOverride(placement.cluster, placement.placementID,
+                    { hidden: hid.checked });
+                if (this.map) {
+                    this.map._layoutOverrideTick = (this.map._layoutOverrideTick || 0) + 1;
+                    this.map._layoutCache = null;
+                    this.map._renderCache = null;
+                    if (hid.checked) this.map.selectedPlacement = null;
+                    this.map.draw();
+                }
+                this.showToast(hid.checked ? 'Oculto en este mapa' : 'Visible de nuevo', 'success');
+            };
+        }
+    }
+
+    /**
+     * Menú de la máquina de gacha. Las dos opciones son las del juego
+     * (`Gachapon.UseTicket` y `Gachapon.HitMachine`); golpearla lleva cuenta y a
+     * partir del tercer golpe Benny se queja, como su `bennyReaction`.
+     */
+    abrirGacha(placement) {
+        const G = window.Gacha;
+        if (!G) return;
+        let modal = document.getElementById('gacha-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'gacha-modal';
+            modal.style.cssText = 'position:fixed;inset:0;z-index:9000;display:flex;'
+                + 'align-items:center;justify-content:center;background:rgba(0,0,0,0.45);';
+            modal.innerHTML = '<div style="background:#fdf6e3;border:3px solid #8b6b4a;'
+                + 'border-radius:14px;padding:22px;max-width:380px;text-align:center;'
+                + 'font-family:inherit;box-shadow:0 8px 24px rgba(0,0,0,.35)">'
+                + '<h3 style="margin:0 0 4px">🎰 GachaBoy</h3>'
+                + '<div id="gacha-sub" style="font-size:.85em;color:#6b5b45;margin-bottom:14px"></div>'
+                + '<div id="gacha-res" style="min-height:52px;margin-bottom:12px"></div>'
+                + '<button id="gacha-pull" class="btn-primary" style="width:100%;margin-bottom:8px">'
+                + 'Usar un ticket 🎟️</button>'
+                + '<button id="gacha-hit" class="btn-primary" style="width:100%;margin-bottom:8px;'
+                + 'background:#c0844a">Darle un golpe 👊</button>'
+                + '<button id="gacha-close" class="btn-text" style="width:100%">Cerrar</button>'
+                + '</div>';
+            document.body.appendChild(modal);
+            modal.addEventListener('click', ev => { if (ev.target === modal) modal.remove(); });
+            document.getElementById('gacha-close').onclick = () => modal.remove();
+        }
+        const sub = document.getElementById('gacha-sub');
+        const res = document.getElementById('gacha-res');
+        const pintaSub = () => {
+            const n = G.golpes(placement);
+            sub.textContent = G.sets.length
+                ? (G.sets.length + ' colecciones · ' + n + ' golpes')
+                : 'sin datos de premios';
+        };
+        pintaSub();
+        res.innerHTML = '';
+
+        document.getElementById('gacha-pull').onclick = () => {
+            const r = G.usar(placement, 0);
+            if (!r.ok) { res.innerHTML = '<span style="color:#a33">' + r.motivo + '</span>'; return; }
+            const it = (window.ITEMS_DB && window.ITEMS_DB[String(r.premio.furnitureID)]) || {};
+            const nombre = it.furn_name || it.item_name || ('Mueble #' + r.premio.furnitureID);
+            const colores = { Common: '#7f8c8d', Rare: '#2980b9', Epic: '#8e44ad', Legendary: '#d4a017' };
+            res.innerHTML = '<div style="font-size:.8em;color:#6b5b45">' + r.premio.setName + '</div>'
+                + '<div style="font-weight:bold;margin:4px 0">' + nombre + '</div>'
+                + '<div style="color:' + (colores[r.premio.rarityName] || '#555') + ';font-weight:bold">'
+                + r.premio.rarityName + (r.premio.forzado ? ' (primer tiro)' : '') + '</div>';
+            this.refreshCarrotsUI?.();
+            pintaSub();
+        };
+        document.getElementById('gacha-hit').onclick = () => {
+            const r = G.golpear(placement);
+            res.innerHTML = r.regana
+                ? '<div style="color:#a33">Benny: «¡¿Qué haces?! Esa máquina es del pueblo.»</div>'
+                : '<div style="color:#6b5b45">La máquina se tambalea. (' + r.hits + ')</div>';
+            pintaSub();
+        };
+    }
+
     openItemEditor(placement) {
         this.editItemId.value  = placement.item_id;
         this.editItemX.value   = placement.x;
@@ -2679,6 +3253,8 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                 currentIcon.parentNode.replaceChild(newIcon.firstChild, currentIcon);
             }
         };
+
+        this._fillLayoutItemUI(placement);
 
         const shinyBtn = document.getElementById('btn-make-shiny');
         if (shinyBtn) {

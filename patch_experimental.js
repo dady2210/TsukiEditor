@@ -1,12 +1,16 @@
 // patch_experimental.js
-document.addEventListener("DOMContentLoaded", () => {
-    let db = window.ITEMS_DB || {};
+document.addEventListener("DOMContentLoaded", async () => {
+    if ((!window.ITEMS_DB || Object.keys(window.ITEMS_DB).length === 0) && typeof window.loadItemsDB === 'function') {
+        try { await window.loadItemsDB(); } catch(e) {}
+    }
+    let db = window.ITEMS_DB || window.ITEM_NAMES || window.KNOWN_ITEMS || {};
     let dbSize = Object.keys(db).length;
     
     if (dbSize > 0) {
+        window.ITEMS_DB = db;
         console.log(`[Experimental] Base de datos de items unificada cargada: ${dbSize} entradas.`);
     } else {
-        console.warn("[Experimental] No se encontró ITEMS_DB. Asegúrate de incluir data/items_db.js en el HTML.");
+        console.warn("[Experimental] No se encontró ITEMS_DB. Asegúrate de incluir data/items_db.json en el proyecto.");
     }
 
     const btnPreview = document.getElementById('btn-batch-preview');

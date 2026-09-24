@@ -1,0 +1,531 @@
+{
+  "kind": "map",
+  "id": "level42",
+  "name": "level42",
+  "source": "C:\\Users\\Andres\\Desktop\\Tsuki_Odyssey\\AssetPack\\assets\\bin\\Data\\level42",
+  "layout": {
+    "front": [
+      {
+        "sp": "summerfestdeco_townhall_2",
+        "go": "summerfestdeco_townhall_2",
+        "x": 0.5899999737739563,
+        "y": 3.328000068664551,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.9763785600662231,
+        "rw": 77.0,
+        "rh": 197.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 0.5133333206176758,
+        "sz_y": 1.3133333921432495,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/summerfestdeco_townhall_2",
+        "go_path_id": 2,
+        "tr_path_id": 17,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -3.811000108718872,
+        "y": 1.8119999021291733,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern (2)/GameObject/Target/Glow (3)",
+        "go_path_id": 5,
+        "tr_path_id": 20,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_0",
+        "go": "summerfestdeco_townhall_0",
+        "x": 6.341000080108643,
+        "y": 0.45899997651576996,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.8399999737739563,
+        "rw": 74.0,
+        "rh": 121.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": true,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern (3)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 6,
+        "tr_path_id": 21,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "summerfestdeco_townhall_2",
+        "go": "summerfestdeco_townhall_2 (1)",
+        "x": 1.7289999723434448,
+        "y": 2.7880001068115234,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.9763785600662231,
+        "rw": 77.0,
+        "rh": 197.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 0.5133333206176758,
+        "sz_y": 1.3133333921432495,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/summerfestdeco_townhall_2 (1)",
+        "go_path_id": 9,
+        "tr_path_id": 24,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": 6.341000080108643,
+        "y": 0.1289999634027481,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern (3)/GameObject/Target/Glow (2)",
+        "go_path_id": 10,
+        "tr_path_id": 25,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "lanterns_0",
+        "go": "summerfestdeco_townhall_0",
+        "x": -3.811000108718872,
+        "y": 2.1420000046491623,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.8399999737739563,
+        "rw": 74.0,
+        "rh": 121.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 0.4933333396911621,
+        "sz_y": 0.8533333539962769,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": true,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern (2)/GameObject/Target/summerfestdeco_townhall_0",
+        "go_path_id": 12,
+        "tr_path_id": 27,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (2)",
+        "x": -3.811000108718872,
+        "y": 1.8119999915361404,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern (2)/GameObject/Target/Glow (2)",
+        "go_path_id": 13,
+        "tr_path_id": 28,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": 6.341000080108643,
+        "y": 0.12899987399578094,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 0.9150943160057068,
+          "g": 0.8599956631660461,
+          "b": 0.7035866379737854,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Lantern (3)/GameObject/Target/Glow (3)",
+        "go_path_id": 14,
+        "tr_path_id": 29,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      }
+    ],
+    "back": [],
+    "fx": []
+  },
+  "hierarchy": [
+    {
+      "path": "Lantern (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_2",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "SceneData",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_2 (1)",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_townhall_0",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    }
+  ],
+  "colliders": [],
+  "logic": {
+    "walkable": [],
+    "blockers": [],
+    "triggers": [],
+    "interaction_nodes": [],
+    "grids": [],
+    "camera_confines": [],
+    "lights": [],
+    "scripts": [],
+    "animators": [],
+    "audio": [],
+    "particles": []
+  },
+  "animation": {
+    "controllers": []
+  },
+  "audio": [],
+  "particles": [],
+  "catalog": {},
+  "raw": {
+    "level": "level42",
+    "origin_offset": {
+      "x": -20.0,
+      "y": 15.0
+    },
+    "grid_system": [],
+    "interaction_nodes": [],
+    "walkable_bounds": [],
+    "camera_confines": [],
+    "lighting_volumes": [],
+    "special_scripts": [],
+    "animator_nodes": [],
+    "audio_sources": [],
+    "particle_systems": []
+  }
+}

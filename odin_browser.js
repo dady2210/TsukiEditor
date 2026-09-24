@@ -514,4 +514,18 @@ this.writeByte(0x07); // EndOfArray
     }
 }
 
+if (typeof module !== 'undefined') {
+    module.exports = {
+        OdinReader,
+        OdinWriter,
+        OdinNode,
+        OdinList,
+        OdinPrimitive,
+        OdinPrimitiveArray,
+        OdinString,
+        OdinRawBlock
+    };
+}
+
+
 

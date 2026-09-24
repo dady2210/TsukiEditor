@@ -1,0 +1,22 @@
+{
+  "10": {
+    "nivel": "level9",
+    "parada": 0.9408,
+    "encuadre": {
+      "x0": 0,
+      "y0": 550,
+      "x1": 4175,
+      "y1": 4586
+    },
+    "fondo": "images/maps/Exportado_level9/level9_SinTren.png",
+    "tren": "images/maps/Exportado_level9/level9_Tren.png",
+    "encima": "images/maps/Exportado_level9/level9_Encima.png",
+    "mundo": {
+      "x0": 7.742000341415405,
+      "y0": 8.339801788330078,
+      "x1": 31.973000526428223,
+      "y1": 20.575400590896606
+    },
+    "recorrido": 48.462
+  }
+}

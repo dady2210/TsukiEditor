@@ -1,0 +1,802 @@
+{
+ "meta": {
+  "fuente": "sharedassets1.assets (ScriptableObject por personaje)",
+  "nota": "conditionID = indice dentro de este array, tal y como lo calcula NPCCondition.get_ID(). El orden es significativo.",
+  "personajes": 14,
+  "condiciones": 84,
+  "sinCondiciones": [
+   "Adrian",
+   "Afina",
+   "Alexander",
+   "Amos",
+   "Antwaun",
+   "Apple",
+   "August",
+   "Austin",
+   "Autumn",
+   "Barclay",
+   "Basil",
+   "Blocked Number",
+   "Boris",
+   "Breezy",
+   "Brentley",
+   "Caleb",
+   "Cameron",
+   "Carlson",
+   "Cassius",
+   "Chad",
+   "Charlie",
+   "Cinder",
+   "Clementine",
+   "Clyde",
+   "ColorAdjustments",
+   "Corey",
+   "Cyrus",
+   "Devin",
+   "Duncan",
+   "Elijah",
+   "Elliot",
+   "Emiko",
+   "Emile",
+   "Ezra",
+   "Floyd",
+   "Flynn",
+   "GameObject Profile",
+   "Gary",
+   "George",
+   "Hudson",
+   "Imogen",
+   "Ivy",
+   "Jace",
+   "Jacob",
+   "Jared",
+   "Jones",
+   "Jude",
+   "Juliet",
+   "Kaden",
+   "Kaira",
+   "Katy",
+   "Ken",
+   "Kiyo",
+   "Leon",
+   "Lucas",
+   "Luna",
+   "Marcus",
+   "Martin",
+   "Miki",
+   "Millie",
+   "Momo",
+   "Oli",
+   "Ophelia",
+   "Otto",
+   "Owens",
+   "Pat",
+   "Pawru",
+   "Phyllis",
+   "Priscilla",
+   "Ratthew",
+   "Ray",
+   "Remi",
+   "Rhoden",
+   "Rian",
+   "Romeo",
+   "Rudolph",
+   "Rylene",
+   "Slorchy",
+   "Spring",
+   "Stella",
+   "Teresa",
+   "The Conductor",
+   "Theo",
+   "Toby",
+   "Tofu",
+   "Tom",
+   "Tucker",
+   "Vision",
+   "Wilson",
+   "Winter"
+  ]
+ },
+ "npcs": {
+  "Benny": {
+   "pathID": 1788,
+   "character": 7,
+   "npcID": 6,
+   "offset": 896,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "PenStolen",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 1,
+     "conditionName": "PenReplaced",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 2,
+     "conditionName": "Feud",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 3,
+     "conditionName": "editPier",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 4,
+     "conditionName": "PunchedGacha",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 5,
+     "conditionName": "editTownHall",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 6,
+     "conditionName": "bannedEdit",
+     "expires": true,
+     "defaultExpireTime": 1440.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Bobo": {
+   "pathID": 1790,
+   "character": 8,
+   "npcID": 7,
+   "offset": 796,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "Post Intro",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 1,
+     "conditionName": "First Ramen",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 2,
+     "conditionName": "Pan",
+     "expires": true,
+     "defaultExpireTime": 240.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 3,
+     "conditionName": "WeirdRamen",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 4,
+     "conditionName": "bobocold",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 5,
+     "conditionName": "boiledsyrup",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Camille": {
+   "pathID": 1793,
+   "character": 19,
+   "npcID": 18,
+   "offset": 480,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "ShownAd",
+     "expires": true,
+     "defaultExpireTime": 180.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Chi": {
+   "pathID": 1794,
+   "character": 2,
+   "npcID": 1,
+   "offset": 876,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "GaveTape",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 1,
+     "conditionName": "FixedWeathervane",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 2,
+     "conditionName": "WritingPhase",
+     "expires": true,
+     "defaultExpireTime": 1440.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 3,
+     "conditionName": "Writing1A",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 4,
+     "conditionName": "Writing1B",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 5,
+     "conditionName": "WritingEvil",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 2
+    },
+    {
+     "conditionID": 6,
+     "conditionName": "LostPapers",
+     "expires": false,
+     "defaultExpireTime": 1440.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 7,
+     "conditionName": "PapersFound",
+     "expires": true,
+     "defaultExpireTime": 1440.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 8,
+     "conditionName": "Writing3A",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 9,
+     "conditionName": "Writing3B",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 10,
+     "conditionName": "Writing2A",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 11,
+     "conditionName": "Writing2B",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 12,
+     "conditionName": "Writing2C",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 13,
+     "conditionName": "Writing2D",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 14,
+     "conditionName": "Writing3C",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 15,
+     "conditionName": "Writing3D",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 16,
+     "conditionName": "Brokenweathervane",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 17,
+     "conditionName": "RefusedToGiveTape",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 18,
+     "conditionName": "lotc2pickup",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 19,
+     "conditionName": "lotc3pickup",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 20,
+     "conditionName": "editUnlocked",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Dawn": {
+   "pathID": 1796,
+   "character": 14,
+   "npcID": 13,
+   "offset": 780,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "Shocked",
+     "expires": true,
+     "defaultExpireTime": 240.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 1,
+     "conditionName": "Junker",
+     "expires": true,
+     "defaultExpireTime": 1080.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 2,
+     "conditionName": "stewstart",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 3,
+     "conditionName": "winestart",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 4,
+     "conditionName": "repeatupgrade",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 5,
+     "conditionName": "editShack",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 6,
+     "conditionName": "liedAboutRosemary",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 7,
+     "conditionName": "confrontedFertiliser",
+     "expires": true,
+     "defaultExpireTime": 1440.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 8,
+     "conditionName": "bannedFromShack",
+     "expires": true,
+     "defaultExpireTime": 1440.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Draper": {
+   "pathID": 1798,
+   "character": 12,
+   "npcID": 11,
+   "offset": 456,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "ShownAd",
+     "expires": true,
+     "defaultExpireTime": 180.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 1,
+     "conditionName": "Cheated",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 2,
+     "conditionName": "Confronted",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 3,
+     "conditionName": "PeeOnHouse",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Elfie": {
+   "pathID": 1799,
+   "character": 5,
+   "npcID": 4,
+   "offset": 816,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "CalledMiserable",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 2
+    },
+    {
+     "conditionID": 1,
+     "conditionName": "FishTalk",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 2,
+     "conditionName": "GaveFish",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 3,
+     "conditionName": "OpenedUp",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 4,
+     "conditionName": "FamilyTalk",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 5,
+     "conditionName": "SharedParsnap",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 6,
+     "conditionName": "GaveRod",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 7,
+     "conditionName": "RodTalk",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Moca": {
+   "pathID": 1804,
+   "character": 10,
+   "npcID": 9,
+   "offset": 912,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "Bonsai",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 1,
+     "conditionName": "ConfessedToBonsai",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 2,
+     "conditionName": "RefusedToGiveGlue",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 3,
+     "conditionName": "BonsaiFailed",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 3
+    },
+    {
+     "conditionID": 4,
+     "conditionName": "Introduced",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 5,
+     "conditionName": "GlueStarted",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 6,
+     "conditionName": "MusicTrack",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 7,
+     "conditionName": "editUnlocked",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Olson": {
+   "pathID": 1806,
+   "character": 13,
+   "npcID": 12,
+   "offset": 412,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "ShownAd",
+     "expires": true,
+     "defaultExpireTime": 180.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 1,
+     "conditionName": "Cheated",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 2,
+     "conditionName": "Confronted",
+     "expires": true,
+     "defaultExpireTime": 720.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 3,
+     "conditionName": "ShitOnHouse",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Paige": {
+   "pathID": 1807,
+   "character": 16,
+   "npcID": 15,
+   "offset": 840,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "employed",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Pipi": {
+   "pathID": 1808,
+   "character": 4,
+   "npcID": 3,
+   "offset": 872,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "Artist",
+     "expires": true,
+     "defaultExpireTime": 2880.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 1,
+     "conditionName": "Introduce",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 2,
+     "conditionName": "Chaos Happy",
+     "expires": true,
+     "defaultExpireTime": 2880.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 3,
+     "conditionName": "Chaos Angry",
+     "expires": true,
+     "defaultExpireTime": 2880.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 4,
+     "conditionName": "Wall Assets",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 5,
+     "conditionName": "pipicandy",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Rosemary": {
+   "pathID": 1811,
+   "character": 9,
+   "npcID": 8,
+   "offset": 880,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "BonsaiUnlocked",
+     "expires": true,
+     "defaultExpireTime": 480.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 1,
+     "conditionName": "Introduced",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 2,
+     "conditionName": "peststart",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 3,
+     "conditionName": "crackpot",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 4,
+     "conditionName": "pinehunt",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 5,
+     "conditionName": "lieConfront",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    },
+    {
+     "conditionID": 6,
+     "conditionName": "lieBanned",
+     "expires": true,
+     "defaultExpireTime": 1440.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Scarlett": {
+   "pathID": 1813,
+   "character": 18,
+   "npcID": 17,
+   "offset": 744,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "ladyfeet",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    }
+   ]
+  },
+  "Yori": {
+   "pathID": 1819,
+   "character": 1,
+   "npcID": 0,
+   "offset": 836,
+   "conditions": [
+    {
+     "conditionID": 0,
+     "conditionName": "Intro",
+     "expires": false,
+     "defaultExpireTime": 0.0,
+     "emotion": 0
+    }
+   ]
+  }
+ }
+}

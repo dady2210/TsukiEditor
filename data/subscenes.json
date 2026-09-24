@@ -1,0 +1,200 @@
+{
+ "0": [
+  {
+   "escena": "HomeSpring",
+   "clase": "SeasonalSubscene",
+   "apaga": 1,
+   "season": 3
+  },
+  {
+   "escena": "HomeWinter",
+   "clase": "SeasonalSubscene",
+   "apaga": 1,
+   "season": 2
+  },
+  {
+   "escena": "HomeAutumn",
+   "clase": "SeasonalSubscene",
+   "apaga": 1,
+   "season": 1
+  }
+ ],
+ "1": [
+  {
+   "escena": "YoriShopWinter",
+   "clase": "SeasonalSubscene",
+   "apaga": 3,
+   "season": 2
+  },
+  {
+   "escena": "YoriLNY",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 2
+  },
+  {
+   "escena": "YoriChristmas",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 1
+  },
+  {
+   "escena": "YoriSummerFest",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 4
+  }
+ ],
+ "6": [
+  {
+   "escena": "FarmWinter",
+   "clase": "SeasonalSubscene",
+   "apaga": 0,
+   "season": 2
+  }
+ ],
+ "4": [
+  {
+   "escena": "PierSummerFest",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 4
+  }
+ ],
+ "2": [
+  {
+   "escena": "ChiSummerFest",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 4
+  },
+  {
+   "escena": "ChiSnow",
+   "clase": "SeasonalSubscene",
+   "apaga": 0,
+   "season": 2
+  }
+ ],
+ "3": [
+  {
+   "escena": "MocaSummerFest",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 4
+  },
+  {
+   "escena": "MocaWinter",
+   "clase": "SeasonalSubscene",
+   "apaga": 0,
+   "season": 2
+  }
+ ],
+ "8": [
+  {
+   "escena": "TownHallSummerFest",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 4
+  },
+  {
+   "escena": "TownHallHalloween",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 0
+  },
+  {
+   "escena": "TownhallWinter",
+   "clase": "SeasonalSubscene",
+   "apaga": 0,
+   "season": 2
+  },
+  {
+   "escena": "TownHallLNY",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 2
+  }
+ ],
+ "10": [
+  {
+   "escena": "TrainStationWinter",
+   "clase": "SeasonalSubscene",
+   "apaga": 0,
+   "season": 2
+  },
+  {
+   "escena": "TrainStationSummerFest",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 4
+  }
+ ],
+ "9": [
+  {
+   "escena": "MomoWinter",
+   "clase": "SeasonalSubscene",
+   "apaga": 0,
+   "season": 2
+  },
+  {
+   "escena": "MomoSummerFest",
+   "clase": "EventSubscene",
+   "apaga": 2,
+   "eventNum": 4
+  },
+  {
+   "escena": "MomoLNY",
+   "clase": "EventSubscene",
+   "apaga": 2,
+   "eventNum": 2
+  },
+  {
+   "escena": "MomoHalloween",
+   "clase": "EventSubscene",
+   "apaga": 2,
+   "eventNum": 0
+  }
+ ],
+ "5": [
+  {
+   "escena": "RosemarySummerFest",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 4
+  },
+  {
+   "escena": "RosemaryWinter",
+   "clase": "SeasonalSubscene",
+   "apaga": 3,
+   "season": 2
+  }
+ ],
+ "11": [
+  {
+   "escena": "DawnWinter",
+   "clase": "SeasonalSubscene",
+   "apaga": 0,
+   "season": 2
+  }
+ ],
+ "13": [
+  {
+   "escena": "ScarlettSummerFest",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 4
+  },
+  {
+   "escena": "ScarlettLNY",
+   "clase": "EventSubscene",
+   "apaga": 0,
+   "eventNum": 2
+  },
+  {
+   "escena": "ScarlettWinter",
+   "clase": "SeasonalSubscene",
+   "apaga": 0,
+   "season": 2
+  }
+ ]
+}

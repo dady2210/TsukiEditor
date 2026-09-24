@@ -1,0 +1,117 @@
+{
+ "_fuente": "libil2cpp.so (arm64) + rva_all.json. Los literales se LEEN del binario y se cotejan; si no cuadran, la herramienta no escribe.",
+ "_nota": "Esto es lo que de los minijuegos estaba en codigo y no en assets. Los patrones del taiko no son literales sino la forma del bucle de `HighlightDrum`; la cabecera de la herramienta explica como se leyeron y las `anclas` fijan las instrucciones que lo sostienen.",
+ "metodos": {
+  "DrumGame.<HighlightDrum>d__38::MoveNext": "0x57084f0",
+  "Fishing::GetCatchTime": "0x597046c",
+  "Fishing::Leeway": "0x59707cc",
+  "Fishing::RollRarity": "0x5970ad0",
+  "Fishing::WaitLogic": "0x5970578",
+  "Fishing::ctor": "0x5971e70"
+ },
+ "anclas": {
+  "0x5708800": "scvtf s1, w20, #2     (Simple: i/4)",
+  "0x5708828": "cmp w20, #4           (Simple tiene cuatro golpes)",
+  "0x570884c": "scvtf s1, w23, #3     (Complex: i/8)",
+  "0x57088a4": "cmp w23, #7           (Complex recorre siete posiciones)",
+  "0x5970538": "fmov s0, #-3.0        (Random.Range(-3, ...) en GetCatchTime)",
+  "0x5970540": "fmov s1, #3.0         (Random.Range(..., 3))",
+  "0x5970548": "fmov s1, #5.0         (el 5 de 5/rate)",
+  "0x5970558": "mov w8, #0x43c80000   (fishCatchTime = 400f cuando no pica)",
+  "0x59708a4": "fmov s0, #-2.0        (fishCatchTime - 2, la ventana de Leeway)",
+  "0x5971e74": "mov w8, #0x40400000   (leeway = 3f, en Fishing::ctor)"
+ },
+ "pesca": {
+  "rateMinimo": 0.01,
+  "sinPicarSegundos": 400.0,
+  "formula": "5 / FishRate + Random(-3, 3)",
+  "numerador": 5.0,
+  "aleatorio": [
+   -3.0,
+   3.0
+  ],
+  "leeway": 3.0,
+  "ventanaSegundos": 2.0,
+  "sfxAlPicar": 8,
+  "rarezas": [
+   "Common",
+   "Rare",
+   "Epic",
+   "Legendary"
+  ],
+  "umbrales": [
+   {
+    "rareza": "Epic",
+    "menorQue": 0.04
+   },
+   {
+    "rareza": "Rare",
+    "menorQue": 0.12
+   },
+   {
+    "rareza": "Common",
+    "menorQue": null
+   }
+  ]
+ },
+ "taiko": {
+  "ventanaCompases": 0.1,
+  "alcanceCompases": 0.85,
+  "patrones": {
+   "Simple": {
+    "division": 4,
+    "golpes": [
+     {
+      "pos": 0,
+      "nota": "Don"
+     },
+     {
+      "pos": 1,
+      "nota": "Don"
+     },
+     {
+      "pos": 2,
+      "nota": "Don"
+     },
+     {
+      "pos": 3,
+      "nota": "Don"
+     }
+    ]
+   },
+   "Complex": {
+    "division": 8,
+    "golpes": [
+     {
+      "pos": 0,
+      "nota": "Don"
+     },
+     {
+      "pos": 1,
+      "nota": null
+     },
+     {
+      "pos": 2,
+      "nota": "Kah"
+     },
+     {
+      "pos": 3,
+      "nota": null
+     },
+     {
+      "pos": 4,
+      "nota": "Don"
+     },
+     {
+      "pos": 5,
+      "nota": "Kah"
+     },
+     {
+      "pos": 6,
+      "nota": "Kah"
+     }
+    ]
+   }
+  }
+ }
+}

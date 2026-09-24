@@ -1,0 +1,9510 @@
+{
+ "0": [
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": -0.291,
+   "y": 2.563,
+   "nivel": "level2",
+   "nombre": "Tsuki Egg",
+   "sprites": [
+    {
+     "sp": "egg11",
+     "x": -0.291,
+     "y": 2.563,
+     "o": 0,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64,
+     "rh": 64,
+     "sx": 1,
+     "sy": 1,
+     "sl": 5,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 0.4266666769981384,
+     "sz_y": 0.4266666769981384,
+     "dir": "Exportado_level2"
+    }
+   ],
+   "objectId": -567689368,
+   "eggId": 249
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -3.965,
+   "y": 5.702,
+   "nivel": "level2",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": -3.965,
+     "y": 5.702,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194,
+     "rh": 180,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 8,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level2"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_51",
+     "x": -3.951,
+     "y": 6.609,
+     "o": 0,
+     "px": 0.49432769417762756,
+     "py": 0.22422732412815094,
+     "rw": 509,
+     "rh": 356,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 5,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 3.3933334350585938,
+     "sz_y": 2.373333215713501,
+     "dir": "Exportado_level2"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "PotGuyObject",
+   "familia": "ui",
+   "x": -1.482,
+   "y": -5.131,
+   "nivel": "level2",
+   "nombre": "Pot Guy",
+   "sprites": [
+    {
+     "sp": "PotteryMan_1",
+     "x": -1.482,
+     "y": -5.131,
+     "o": 2
+    }
+   ],
+   "objectId": 2039548301
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -1.482,
+   "y": -5.131,
+   "nivel": "level2",
+   "nombre": "Guy",
+   "sprites": [
+    {
+     "sp": "PotteryMan_1",
+     "x": -1.482,
+     "y": -5.131,
+     "o": 2
+    }
+   ],
+   "anim": {
+    "frames": [
+     "PotteryMan_42",
+     "PotteryMan_43",
+     "PotteryMan_44",
+     "PotteryMan_45",
+     "PotteryMan_46",
+     "PotteryMan_47",
+     "PotteryMan_48",
+     "PotteryMan_49",
+     "PotteryMan_50",
+     "PotteryMan_51",
+     "PotteryMan_0",
+     "PotteryMan_1",
+     "PotteryMan_2",
+     "PotteryMan_1"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_level28",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_level2",
+     "Exportado_subescenas",
+     "Exportado_level2"
+    ],
+    "px": 0.512,
+    "py": -0.95714,
+    "ppu": 150.0
+   }
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 4.606,
+   "y": 5.448,
+   "nivel": "level2",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk6",
+     "x": 4.606,
+     "y": 5.448,
+     "o": 0,
+     "px": 0.4794156849384308,
+     "py": 0.23548802733421326,
+     "rw": 217,
+     "rh": 229,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 6,
+     "oy": 3,
+     "draw_mode": 0,
+     "sz_x": 1.4466667175292969,
+     "sz_y": 1.5266666412353516,
+     "dir": "Exportado_level2"
+    },
+    {
+     "sp": "Leaves4",
+     "x": 4.357,
+     "y": 6.583,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451,
+     "rh": 352,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 7,
+     "oy": 18,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level2"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.12,
+   "y": 4.46,
+   "nivel": "level2",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": 6.12,
+     "y": 4.46,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239,
+     "rh": 226,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 13,
+     "oy": 2,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level2"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": 6.12,
+     "y": 5.554,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486,
+     "rh": 384,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level2"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -5.945,
+   "y": 4.634,
+   "nivel": "level2",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": -5.945,
+     "y": 4.634,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237,
+     "rh": 242,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 3,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level2"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -5.795,
+     "y": 5.794,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485,
+     "rh": 351,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level2"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.862,
+   "y": 2.566,
+   "nivel": "level2",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": -6.862,
+     "y": 2.566,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237,
+     "rh": 242,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 3,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level2"
+    },
+    {
+     "sp": "Leaves2",
+     "x": -6.712,
+     "y": 3.726,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429,
+     "rh": 321,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level2"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.72,
+   "y": -7.096,
+   "nivel": "level2",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": -6.72,
+     "y": -7.096,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220,
+     "rh": 218,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level2"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -6.61,
+     "y": -6.106,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485,
+     "rh": 351,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level2"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "Dialogue",
+   "familia": "ui",
+   "x": -1.482,
+   "y": -5.131,
+   "nivel": "level2",
+   "nombre": "GameObject",
+   "sprites": []
+  }
+ ],
+ "1": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.56,
+   "y": 5.32,
+   "nivel": "level3",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": -6.56,
+     "y": 5.32,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level3"
+    },
+    {
+     "sp": "Leaves5",
+     "x": -6.546,
+     "y": 6.227,
+     "o": 0,
+     "px": 0.512877345085144,
+     "py": 0.20986308157444,
+     "rw": 453.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 3.0199999809265137,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.8,
+   "y": -6.89,
+   "nivel": "level3",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": 6.8,
+     "y": -6.89,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239.0,
+     "rh": 226.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 13.0,
+     "oy": 2.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level3"
+    },
+    {
+     "sp": "Leaves2",
+     "x": 6.8,
+     "y": -5.796,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429.0,
+     "rh": 321.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.64,
+   "y": -6.82,
+   "nivel": "level3",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk5",
+     "x": -6.64,
+     "y": -6.82,
+     "o": 0,
+     "px": 0.5317492485046387,
+     "py": 0.29529237747192383,
+     "rw": 239.0,
+     "rh": 213.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 5.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.4199999570846558,
+     "dir": "Exportado_level3"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -6.585,
+     "y": -5.691,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SceneItemPickup",
+   "familia": "collect",
+   "x": 5.025,
+   "y": 0.062,
+   "nivel": "level3",
+   "nombre": "ChiBook3",
+   "sprites": [
+    {
+     "sp": "LOTC II",
+     "x": 5.023,
+     "y": 0.043,
+     "o": 2,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64.0,
+     "rh": 64.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 9,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0267510414123535,
+     "oy": 8.033500671386719,
+     "draw_mode": 0,
+     "sz_x": 0.6399999856948853,
+     "sz_y": 0.6399999856948853,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": 1800274369,
+   "item": 20
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.75,
+   "y": 2.4,
+   "nivel": "level3",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": -6.75,
+     "y": 2.4,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239.0,
+     "rh": 226.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 13.0,
+     "oy": 2.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level3"
+    },
+    {
+     "sp": "Leaves3",
+     "x": -6.75,
+     "y": 3.494,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 4.34,
+   "y": 5.38,
+   "nivel": "level3",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": 4.34,
+     "y": 5.38,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220.0,
+     "rh": 218.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level3"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 4.45,
+     "y": 6.37,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -4.52,
+   "y": -7.15,
+   "nivel": "level3",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk8",
+     "x": -4.52,
+     "y": -7.15,
+     "o": 0,
+     "px": 0.48371002078056335,
+     "py": 0.26181647181510925,
+     "rw": 219.0,
+     "rh": 209.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 1.4600000381469727,
+     "sz_y": 1.3933333158493042,
+     "dir": "Exportado_level3"
+    },
+    {
+     "sp": "Leaves2",
+     "x": -4.823,
+     "y": -6.064,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429.0,
+     "rh": 321.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": -0.227,
+   "y": 3.024,
+   "nivel": "level3",
+   "nombre": "Imprinted Egg",
+   "sprites": [
+    {
+     "sp": "egg00",
+     "x": -0.227,
+     "y": 3.024,
+     "o": 1,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64.0,
+     "rh": 64.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 2,
+     "ppu": 150.0,
+     "angle": -0.0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 0.4266666769981384,
+     "sz_y": 0.4266666769981384,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": -423526496,
+   "eggId": 238
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.44,
+   "y": 4.55,
+   "nivel": "level3",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": 6.44,
+     "y": 4.55,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237.0,
+     "rh": 242.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 3.0,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level3"
+    },
+    {
+     "sp": "Leaves4",
+     "x": 6.59,
+     "y": 5.71,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 18.0,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.93,
+   "y": -4.06,
+   "nivel": "level3",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": -6.93,
+     "y": -4.06,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level3"
+    },
+    {
+     "sp": "Leaves3",
+     "x": -6.916,
+     "y": -3.153,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -4.73,
+   "y": 3.81,
+   "nivel": "level3",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk6",
+     "x": -4.73,
+     "y": 3.81,
+     "o": 0,
+     "px": 0.4794156849384308,
+     "py": 0.23548802733421326,
+     "rw": 217.0,
+     "rh": 229.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 6.0,
+     "oy": 3.0,
+     "draw_mode": 0,
+     "sz_x": 1.4466667175292969,
+     "sz_y": 1.5266666412353516,
+     "dir": "Exportado_level3"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -4.979,
+     "y": 4.945,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level3"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "PaigeSummerNote",
+   "familia": "ui",
+   "x": 1.03,
+   "y": 3.15,
+   "nivel": "level3",
+   "nombre": "PaigeNote",
+   "sprites": [
+    {
+     "sp": "T2 Yori's Shop SLICED_17",
+     "x": 1.03,
+     "y": 3.15,
+     "o": 1
+    }
+   ],
+   "objectId": 46853280
+  },
+  {
+   "clase": "Snowmound",
+   "familia": "collect",
+   "x": -1.67,
+   "y": -5.53,
+   "nivel": "level24",
+   "nombre": "Snowmound",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": -1.67,
+     "y": -5.53,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "objectId": 1892403621,
+   "item": 886,
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -1.67,
+   "y": -5.53,
+   "nivel": "level24",
+   "nombre": "Sprite",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": -1.67,
+     "y": -5.53,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -5.48,
+   "y": -0.815,
+   "nivel": "level43",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_2",
+     "x": -5.48,
+     "y": -1.015,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -5.48,
+     "y": -1.345,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -5.48,
+     "y": -1.345,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -4.931,
+   "y": -1.106,
+   "nivel": "level43",
+   "nombre": "Lantern (2)",
+   "sprites": [
+    {
+     "sp": "lanterns_2",
+     "x": -4.931,
+     "y": -1.306,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -4.931,
+     "y": -1.636,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -4.931,
+     "y": -1.636,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 4.87,
+   "y": -1.337,
+   "nivel": "level43",
+   "nombre": "Lantern (2)",
+   "sprites": [
+    {
+     "sp": "lanterns_2",
+     "x": 4.87,
+     "y": -1.537,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 4.87,
+     "y": -1.867,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 4.87,
+     "y": -1.867,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 5.16,
+   "y": -1.197,
+   "nivel": "level43",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_2",
+     "x": 5.16,
+     "y": -1.397,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 5.16,
+     "y": -1.727,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 5.16,
+     "y": -1.727,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  }
+ ],
+ "6": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -2.389,
+   "y": 5.79,
+   "nivel": "level4",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": -2.389,
+     "y": 5.79,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193,
+     "rh": 219,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 2,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level4"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": -2.199,
+     "y": 6.96,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486,
+     "rh": 384,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.64,
+   "y": -0.16,
+   "nivel": "level4",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk8",
+     "x": -6.64,
+     "y": -0.16,
+     "o": 0,
+     "px": 0.48371002078056335,
+     "py": 0.26181647181510925,
+     "rw": 219,
+     "rh": 209,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 0,
+     "draw_mode": 0,
+     "sz_x": 1.4600000381469727,
+     "sz_y": 1.3933333158493042,
+     "dir": "Exportado_level4"
+    },
+    {
+     "sp": "Leaves4",
+     "x": -6.943,
+     "y": 0.926,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451,
+     "rh": 352,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 7,
+     "oy": 18,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -0.193,
+   "y": 4.653,
+   "nivel": "level4",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk8",
+     "x": -0.193,
+     "y": 4.653,
+     "o": 0,
+     "px": 0.48371002078056335,
+     "py": 0.26181647181510925,
+     "rw": 219,
+     "rh": 209,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 0,
+     "draw_mode": 0,
+     "sz_x": 1.4600000381469727,
+     "sz_y": 1.3933333158493042,
+     "dir": "Exportado_level4"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": -0.496,
+     "y": 5.739,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486,
+     "rh": 384,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.0,
+   "y": -3.91,
+   "nivel": "level4",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": 6.0,
+     "y": -3.91,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194,
+     "rh": 180,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 8,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level4"
+    },
+    {
+     "sp": "Leaves2",
+     "x": 6.014,
+     "y": -3.003,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429,
+     "rh": 321,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 3.78,
+   "y": -7.64,
+   "nivel": "level4",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": 3.78,
+     "y": -7.64,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237,
+     "rh": 242,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 3,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level4"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 3.93,
+     "y": -6.48,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485,
+     "rh": 351,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 0.85,
+   "y": 5.53,
+   "nivel": "level4",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": 0.85,
+     "y": 5.53,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239,
+     "rh": 226,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 13,
+     "oy": 2,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level4"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": 0.85,
+     "y": 6.624,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486,
+     "rh": 384,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 5.96,
+   "y": 4.96,
+   "nivel": "level4",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk8",
+     "x": 5.96,
+     "y": 4.96,
+     "o": 0,
+     "px": 0.48371002078056335,
+     "py": 0.26181647181510925,
+     "rw": 219,
+     "rh": 209,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 0,
+     "draw_mode": 0,
+     "sz_x": 1.4600000381469727,
+     "sz_y": 1.3933333158493042,
+     "dir": "Exportado_level4"
+    },
+    {
+     "sp": "Leaves2",
+     "x": 5.657,
+     "y": 6.046,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429,
+     "rh": 321,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.8,
+   "y": -6.31,
+   "nivel": "level4",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": -6.8,
+     "y": -6.31,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237,
+     "rh": 242,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 3,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level4"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": -6.65,
+     "y": -5.15,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486,
+     "rh": 384,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.87,
+   "y": 3.44,
+   "nivel": "level4",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": 6.87,
+     "y": 3.44,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220,
+     "rh": 218,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level4"
+    },
+    {
+     "sp": "Leaves2",
+     "x": 6.98,
+     "y": 4.43,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429,
+     "rh": 321,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": -5.228,
+   "y": 4.876,
+   "nivel": "level4",
+   "nombre": "Floral Egg",
+   "sprites": [
+    {
+     "sp": "egg03",
+     "x": -5.228,
+     "y": 4.876,
+     "o": 0,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64,
+     "rh": 64,
+     "sx": 1,
+     "sy": 1,
+     "sl": -2,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 0.4266666769981384,
+     "sz_y": 0.4266666769981384,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 71795583,
+   "eggId": 241
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -4.37,
+   "y": -7.18,
+   "nivel": "level4",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk8",
+     "x": -4.37,
+     "y": -7.18,
+     "o": 0,
+     "px": 0.48371002078056335,
+     "py": 0.26181647181510925,
+     "rw": 219,
+     "rh": 209,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 0,
+     "draw_mode": 0,
+     "sz_x": 1.4600000381469727,
+     "sz_y": 1.3933333158493042,
+     "dir": "Exportado_level4"
+    },
+    {
+     "sp": "Leaves5",
+     "x": -4.673,
+     "y": -6.094,
+     "o": 0,
+     "px": 0.512877345085144,
+     "py": 0.20986308157444,
+     "rw": 453,
+     "rh": 352,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 0,
+     "draw_mode": 0,
+     "sz_x": 3.0199999809265137,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level4"
+    }
+   ],
+   "objectId": 0
+  }
+ ],
+ "4": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 3.94,
+   "y": 4.5,
+   "nivel": "level5",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": 3.94,
+     "y": 4.5,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level5"
+    },
+    {
+     "sp": "Leaves3",
+     "x": 4.13,
+     "y": 5.67,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level5"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -3.09,
+   "y": 5.62,
+   "nivel": "level5",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": -3.09,
+     "y": 5.62,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level5"
+    },
+    {
+     "sp": "Leaves4",
+     "x": -3.076,
+     "y": 6.527,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 18.0,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level5"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 5.39,
+   "y": 5.318,
+   "nivel": "level5",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": 5.39,
+     "y": 5.318,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level5"
+    },
+    {
+     "sp": "Leaves4",
+     "x": 5.404,
+     "y": 6.225,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 18.0,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level5"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.59,
+   "y": 4.09,
+   "nivel": "level5",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk5",
+     "x": 6.59,
+     "y": 4.09,
+     "o": 0,
+     "px": 0.5317492485046387,
+     "py": 0.29529237747192383,
+     "rw": 239.0,
+     "rh": 213.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 5.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.4199999570846558,
+     "dir": "Exportado_level5"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": 6.645,
+     "y": 5.219,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486.0,
+     "rh": 384.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level5"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -2.942,
+   "y": 0.591,
+   "nivel": "level44",
+   "nombre": "Lantern (4)",
+   "sprites": [
+    {
+     "sp": "lanterns_6",
+     "x": -2.942,
+     "y": 0.391,
+     "o": -4,
+     "rw": 55.0,
+     "rh": 52.0,
+     "px": 0.51902,
+     "py": 0.80467,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -2.942,
+     "y": 0.263,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -2.942,
+     "y": 0.263,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -2.593,
+   "y": 0.466,
+   "nivel": "level44",
+   "nombre": "Lantern (5)",
+   "sprites": [
+    {
+     "sp": "lanterns_6",
+     "x": -2.593,
+     "y": 0.266,
+     "o": -4,
+     "rw": 55.0,
+     "rh": 52.0,
+     "px": 0.51902,
+     "py": 0.80467,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -2.593,
+     "y": 0.138,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -2.593,
+     "y": 0.138,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -3.25,
+   "y": 0.745,
+   "nivel": "level44",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_6",
+     "x": -3.25,
+     "y": 0.545,
+     "o": -4,
+     "rw": 55.0,
+     "rh": 52.0,
+     "px": 0.51902,
+     "py": 0.80467,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -3.25,
+     "y": 0.417,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -3.25,
+     "y": 0.417,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -0.399,
+   "y": -0.766,
+   "nivel": "level44",
+   "nombre": "Lantern (5)",
+   "sprites": [
+    {
+     "sp": "lanterns_6",
+     "x": -0.399,
+     "y": -0.966,
+     "o": -4,
+     "rw": 55.0,
+     "rh": 52.0,
+     "px": 0.51902,
+     "py": 0.80467,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -0.399,
+     "y": -1.094,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -0.399,
+     "y": -1.094,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -1.056,
+   "y": -0.487,
+   "nivel": "level44",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_6",
+     "x": -1.056,
+     "y": -0.687,
+     "o": -4,
+     "rw": 55.0,
+     "rh": 52.0,
+     "px": 0.51902,
+     "py": 0.80467,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -1.056,
+     "y": -0.815,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -1.056,
+     "y": -0.815,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -0.748,
+   "y": -0.641,
+   "nivel": "level44",
+   "nombre": "Lantern (4)",
+   "sprites": [
+    {
+     "sp": "lanterns_6",
+     "x": -0.748,
+     "y": -0.841,
+     "o": -4,
+     "rw": 55.0,
+     "rh": 52.0,
+     "px": 0.51902,
+     "py": 0.80467,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -0.748,
+     "y": -0.969,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -0.748,
+     "y": -0.969,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -6.803,
+   "y": 5.707,
+   "nivel": "level44",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": -6.803,
+     "y": 5.507,
+     "o": -1,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -6.803,
+     "y": 5.177,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -6.803,
+     "y": 5.177,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -4.837,
+   "y": 6.873,
+   "nivel": "level44",
+   "nombre": "Lantern (5)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": -4.837,
+     "y": 6.673,
+     "o": -3,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -4.837,
+     "y": 6.343,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -4.837,
+     "y": 6.343,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -5.423,
+   "y": 6.602,
+   "nivel": "level44",
+   "nombre": "Lantern (4)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": -5.423,
+     "y": 6.402,
+     "o": -2,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -5.423,
+     "y": 6.072,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -5.423,
+     "y": 6.072,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -6.254,
+   "y": 5.416,
+   "nivel": "level44",
+   "nombre": "Lantern (2)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": -6.254,
+     "y": 5.216,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -6.254,
+     "y": 4.886,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -6.254,
+     "y": 4.886,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  }
+ ],
+ "2": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 1.46,
+   "y": 6.0,
+   "nivel": "level6",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": 1.46,
+     "y": 6.0,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239.0,
+     "rh": 226.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 13.0,
+     "oy": 2.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level6"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 1.46,
+     "y": 7.094,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level6"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 4.99,
+   "y": 6.15,
+   "nivel": "level6",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": 4.99,
+     "y": 6.15,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level6"
+    },
+    {
+     "sp": "Leaves3",
+     "x": 5.18,
+     "y": 7.32,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level6"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -0.14,
+   "y": 7.3,
+   "nivel": "level6",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": -0.14,
+     "y": 7.3,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level6"
+    },
+    {
+     "sp": "Leaves3",
+     "x": -0.126,
+     "y": 8.207,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level6"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.21,
+   "y": 4.54,
+   "nivel": "level6",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk5",
+     "x": 6.21,
+     "y": 4.54,
+     "o": 0,
+     "px": 0.5317492485046387,
+     "py": 0.29529237747192383,
+     "rw": 239.0,
+     "rh": 213.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 5.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.4199999570846558,
+     "dir": "Exportado_level6"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 6.265,
+     "y": 5.669,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level6"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": -6.051,
+   "y": 1.74,
+   "nivel": "level6",
+   "nombre": "Maculated Egg",
+   "sprites": [
+    {
+     "sp": "egg09",
+     "x": -6.051,
+     "y": 1.74,
+     "o": -1,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64.0,
+     "rh": 64.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": -4,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 1.0,
+     "sz_y": 1.0,
+     "dir": "Exportado_level6"
+    }
+   ],
+   "objectId": -880544183,
+   "eggId": 247
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -7.23,
+   "y": -4.78,
+   "nivel": "level6",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk6",
+     "x": -7.23,
+     "y": -4.78,
+     "o": 0,
+     "px": 0.4794156849384308,
+     "py": 0.23548802733421326,
+     "rw": 217.0,
+     "rh": 229.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 6.0,
+     "oy": 3.0,
+     "draw_mode": 0,
+     "sz_x": 1.4466667175292969,
+     "sz_y": 1.5266666412353516,
+     "dir": "Exportado_level6"
+    },
+    {
+     "sp": "Leaves4",
+     "x": -7.479,
+     "y": -3.645,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 18.0,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level6"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -5.77,
+   "y": -6.13,
+   "nivel": "level6",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": -5.77,
+     "y": -6.13,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239.0,
+     "rh": 226.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 13.0,
+     "oy": 2.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level6"
+    },
+    {
+     "sp": "Leaves3",
+     "x": -5.77,
+     "y": -5.036,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level6"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 3.13,
+   "y": 6.97,
+   "nivel": "level6",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": 3.13,
+     "y": 6.97,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level6"
+    },
+    {
+     "sp": "Leaves5",
+     "x": 3.144,
+     "y": 7.877,
+     "o": 0,
+     "px": 0.512877345085144,
+     "py": 0.20986308157444,
+     "rw": 453.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 3.0199999809265137,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level6"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "Snowmound",
+   "familia": "collect",
+   "x": 4.87,
+   "y": 2.33,
+   "nivel": "level20",
+   "nombre": "Snowmound (1)",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": 4.87,
+     "y": 2.33,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "objectId": 392402063,
+   "item": 886,
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": 4.87,
+   "y": 2.33,
+   "nivel": "level20",
+   "nombre": "Sprite",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": 4.87,
+     "y": 2.33,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 3.297,
+   "y": 3.968,
+   "nivel": "level45",
+   "nombre": "Lantern (4)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 3.297,
+     "y": 3.768,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.297,
+     "y": 3.438,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.297,
+     "y": 3.438,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  }
+ ],
+ "3": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.74,
+   "y": -6.88,
+   "nivel": "level7",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": -6.74,
+     "y": -6.88,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220.0,
+     "rh": 218.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level7"
+    },
+    {
+     "sp": "Leaves4",
+     "x": -6.63,
+     "y": -5.89,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 18.0,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level7"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 1.46,
+   "y": 5.58,
+   "nivel": "level7",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk5",
+     "x": 1.46,
+     "y": 5.58,
+     "o": 0,
+     "px": 0.5317492485046387,
+     "py": 0.29529237747192383,
+     "rw": 239.0,
+     "rh": 213.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 5.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.4199999570846558,
+     "dir": "Exportado_level7"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": 1.515,
+     "y": 6.709,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486.0,
+     "rh": 384.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level7"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 5.71,
+   "y": 4.31,
+   "nivel": "level7",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk5",
+     "x": 5.71,
+     "y": 4.31,
+     "o": 0,
+     "px": 0.5317492485046387,
+     "py": 0.29529237747192383,
+     "rw": 239.0,
+     "rh": 213.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 5.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.4199999570846558,
+     "dir": "Exportado_level7"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_51",
+     "x": 5.765,
+     "y": 5.439,
+     "o": 0,
+     "px": 0.49432769417762756,
+     "py": 0.22422732412815094,
+     "rw": 509.0,
+     "rh": 356.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 5.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.3933334350585938,
+     "sz_y": 2.373333215713501,
+     "dir": "Exportado_level7"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.6,
+   "y": 2.3,
+   "nivel": "level7",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": 6.6,
+     "y": 2.3,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220.0,
+     "rh": 218.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level7"
+    },
+    {
+     "sp": "Leaves2",
+     "x": 6.71,
+     "y": 3.29,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429.0,
+     "rh": 321.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level7"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SceneDoor",
+   "familia": "ui",
+   "x": 0.0,
+   "y": 0.0,
+   "nivel": "level7",
+   "nombre": "Door",
+   "sprites": [
+    {
+     "sp": "DreamHouse_Environment_MocaHouse_New_7",
+     "x": 0.0,
+     "y": 0.0,
+     "o": -2
+    },
+    {
+     "sp": "DreamHouse_Environment_MocaHouse_New_11",
+     "x": 0.0,
+     "y": 0.0,
+     "o": 1
+    }
+   ],
+   "objectId": 1626592435
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 3.69,
+   "y": 5.06,
+   "nivel": "level7",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": 3.69,
+     "y": 5.06,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239.0,
+     "rh": 226.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 13.0,
+     "oy": 2.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level7"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": 3.69,
+     "y": 6.154,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486.0,
+     "rh": 384.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level7"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -4.17,
+   "y": 5.46,
+   "nivel": "level7",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": -4.17,
+     "y": 5.46,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level7"
+    },
+    {
+     "sp": "Leaves5",
+     "x": -4.156,
+     "y": 6.367,
+     "o": 0,
+     "px": 0.512877345085144,
+     "py": 0.20986308157444,
+     "rw": 453.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 3.0199999809265137,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level7"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": 2.357,
+   "y": -1.087,
+   "nivel": "level7",
+   "nombre": "Diamondback Egg",
+   "sprites": [
+    {
+     "sp": "egg10",
+     "x": 2.357,
+     "y": -1.087,
+     "o": -3,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64.0,
+     "rh": 64.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": -4,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 0.4266666769981384,
+     "sz_y": 0.4266666769981384,
+     "dir": "Exportado_level7"
+    }
+   ],
+   "objectId": -762294932,
+   "eggId": 248
+  },
+  {
+   "clase": "Snowmound",
+   "familia": "collect",
+   "x": -5.98,
+   "y": -2.19,
+   "nivel": "level25",
+   "nombre": "Snowmound (6)",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": -5.98,
+     "y": -2.19,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "objectId": 1403786817,
+   "item": 886,
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -5.98,
+   "y": -2.19,
+   "nivel": "level25",
+   "nombre": "Sprite",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": -5.98,
+     "y": -2.19,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -6.618,
+   "y": 0.622,
+   "nivel": "level46",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": -6.618,
+     "y": 0.422,
+     "o": -1,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -6.618,
+     "y": 0.092,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -6.618,
+     "y": 0.092,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 3.683,
+   "y": -0.432,
+   "nivel": "level46",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 3.683,
+     "y": -0.632,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.683,
+     "y": -0.962,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.683,
+     "y": -0.962,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 4.813,
+   "y": 0.068,
+   "nivel": "level46",
+   "nombre": "Lantern (2)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 4.813,
+     "y": -0.132,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 4.813,
+     "y": -0.462,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 4.813,
+     "y": -0.462,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -6.069,
+   "y": 0.331,
+   "nivel": "level46",
+   "nombre": "Lantern (2)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": -6.069,
+     "y": 0.131,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -6.069,
+     "y": -0.199,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -6.069,
+     "y": -0.199,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  }
+ ],
+ "8": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 4.95,
+   "y": 5.17,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": 4.95,
+     "y": 5.17,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239,
+     "rh": 226,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 13,
+     "oy": 2,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "Leaves4",
+     "x": 4.95,
+     "y": 6.264,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451,
+     "rh": 352,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 7,
+     "oy": 18,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 5.373,
+   "y": -4.13,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": 5.373,
+     "y": -4.13,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237,
+     "rh": 242,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 3,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": 5.523,
+     "y": -2.97,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486,
+     "rh": 384,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.539,
+   "y": 4.282,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": 6.539,
+     "y": 4.282,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194,
+     "rh": 180,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 8,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_51",
+     "x": 6.553,
+     "y": 5.189,
+     "o": 0,
+     "px": 0.49432769417762756,
+     "py": 0.22422732412815094,
+     "rw": 509,
+     "rh": 356,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 5,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 3.3933334350585938,
+     "sz_y": 2.373333215713501,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "GachaponEgg",
+   "familia": "collect",
+   "x": -7.39,
+   "y": 0.71,
+   "nivel": "level8",
+   "nombre": "GachaponEgg",
+   "sprites": [
+    {
+     "sp": "egg12",
+     "x": -7.39,
+     "y": 0.71,
+     "o": 0,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64,
+     "rh": 64,
+     "sx": 0.6000000238418579,
+     "sy": 0.6000000238418579,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 1,
+     "sz_y": 1,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 269255787,
+   "eggId": 250
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -3.966,
+   "y": 4.478,
+   "nivel": "level8",
+   "nombre": "Flag",
+   "sprites": [
+    {
+     "sp": "DreamHouse_Environment_TownHall_Final_7",
+     "x": -3.966,
+     "y": 4.478,
+     "o": 0
+    }
+   ],
+   "anim": {
+    "frames": [
+     "DreamHouse_Environment_TownHall_Final_7",
+     "DreamHouse_Environment_TownHall_Final_8",
+     "DreamHouse_Environment_TownHall_Final_9",
+     "DreamHouse_Environment_TownHall_Final_10",
+     "DreamHouse_Environment_TownHall_Final_11",
+     "DreamHouse_Environment_TownHall_Final_12"
+    ],
+    "fps": 8,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": 6.42,
+   "y": -1.71,
+   "nivel": "level8",
+   "nombre": "Chicky Egg",
+   "sprites": [
+    {
+     "sp": "egg02",
+     "x": 6.42,
+     "y": -1.71,
+     "o": 0,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64,
+     "rh": 64,
+     "sx": 1,
+     "sy": 1,
+     "sl": -4,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 0.4266666769981384,
+     "sz_y": 0.4266666769981384,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 107531386,
+   "eggId": 240
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -5.03,
+   "y": -7.8,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": -5.03,
+     "y": -7.8,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194,
+     "rh": 180,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 8,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "Leaves2",
+     "x": -5.016,
+     "y": -6.893,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429,
+     "rh": 321,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.54,
+   "y": 4.188,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": -6.54,
+     "y": 4.188,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194,
+     "rh": 180,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 8,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "Leaves3",
+     "x": -6.526,
+     "y": 5.095,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448,
+     "rh": 342,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 1,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.85,
+   "y": -5.98,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": 6.85,
+     "y": -5.98,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239,
+     "rh": 226,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 13,
+     "oy": 2,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 6.85,
+     "y": -4.886,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485,
+     "rh": 351,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "HomeUpgradeBlueprint",
+   "familia": "ui",
+   "x": 1.177,
+   "y": 2.551,
+   "nivel": "level8",
+   "nombre": "HomeUpgrade",
+   "sprites": [
+    {
+     "sp": "DreamHouse_Environment_TownHall_Final_19",
+     "x": 1.177,
+     "y": 2.551,
+     "o": 0
+    },
+    {
+     "sp": "HomeUpgrade",
+     "x": 1.177,
+     "y": 2.551,
+     "o": -1
+    },
+    {
+     "sp": "Square",
+     "x": 1.196,
+     "y": 2.066,
+     "o": -1
+    }
+   ],
+   "objectId": -267692846
+  },
+  {
+   "clase": "MailboxObject",
+   "familia": "ui",
+   "x": -3.694,
+   "y": -0.262,
+   "nivel": "level8",
+   "nombre": "Mailbox",
+   "sprites": [
+    {
+     "sp": "DreamHouse_Environment_TownHall_Final_18",
+     "x": -3.694,
+     "y": -0.262,
+     "o": 0
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 2.76,
+   "y": 4.92,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": 2.76,
+     "y": 4.92,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237,
+     "rh": 242,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 3,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": 2.91,
+     "y": 6.08,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486,
+     "rh": 384,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -5.03,
+   "y": 5.28,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk8",
+     "x": -5.03,
+     "y": 5.28,
+     "o": 0,
+     "px": 0.48371002078056335,
+     "py": 0.26181647181510925,
+     "rw": 219,
+     "rh": 209,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 0,
+     "draw_mode": 0,
+     "sz_x": 1.4600000381469727,
+     "sz_y": 1.3933333158493042,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "Leaves3",
+     "x": -5.333,
+     "y": 6.366,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448,
+     "rh": 342,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 1,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 3.55,
+   "y": -6.59,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk5",
+     "x": 3.55,
+     "y": -6.59,
+     "o": 0,
+     "px": 0.5317492485046387,
+     "py": 0.29529237747192383,
+     "rw": 239,
+     "rh": 213,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11,
+     "oy": 5,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.4199999570846558,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_51",
+     "x": 3.605,
+     "y": -5.461,
+     "o": 0,
+     "px": 0.49432769417762756,
+     "py": 0.22422732412815094,
+     "rw": 509,
+     "rh": 356,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 5,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 3.3933334350585938,
+     "sz_y": 2.373333215713501,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "BountyBoardObject",
+   "familia": "ui",
+   "x": -4.788,
+   "y": -0.542,
+   "nivel": "level8",
+   "nombre": "BountyBoard",
+   "sprites": [
+    {
+     "sp": "DreamHouse_Environment_TownHall_Final_14",
+     "x": -4.788,
+     "y": -0.542,
+     "o": 0
+    }
+   ],
+   "objectId": -1937129303
+  },
+  {
+   "clase": "SceneItemPickup",
+   "familia": "collect",
+   "x": 3.49,
+   "y": -4.42,
+   "nivel": "level8",
+   "nombre": "ChiBook2",
+   "sprites": [
+    {
+     "sp": "LOTC I",
+     "x": 3.49,
+     "y": -4.42,
+     "o": 2,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64,
+     "rh": 64,
+     "sx": 1,
+     "sy": 1,
+     "sl": 9,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 2.076120376586914,
+     "oy": 11.026750564575195,
+     "draw_mode": 0,
+     "sz_x": 0.6399999856948853,
+     "sz_y": 0.6399999856948853,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0,
+   "item": 19
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 5.467,
+   "y": -7.23,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": 5.467,
+     "y": -7.23,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194,
+     "rh": 180,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 8,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "Leaves3",
+     "x": 5.481,
+     "y": -6.323,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448,
+     "rh": 342,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 1,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.9,
+   "y": -6.96,
+   "nivel": "level8",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": -6.9,
+     "y": -6.96,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220,
+     "rh": 218,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level8"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -6.79,
+     "y": -5.97,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485,
+     "rh": 351,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level8"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "Snowmound",
+   "familia": "collect",
+   "x": -5.51,
+   "y": -1.04,
+   "nivel": "level18",
+   "nombre": "Snowmound (5)",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": -5.51,
+     "y": -1.04,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "objectId": 723767583,
+   "item": 886,
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -5.51,
+   "y": -1.04,
+   "nivel": "level18",
+   "nombre": "Sprite",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": -5.51,
+     "y": -1.04,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 6.341,
+   "y": 0.659,
+   "nivel": "level42",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 6.341,
+     "y": 0.459,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 6.341,
+     "y": 0.129,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 6.341,
+     "y": 0.129,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -3.811,
+   "y": 2.342,
+   "nivel": "level42",
+   "nombre": "Lantern (2)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": -3.811,
+     "y": 2.142,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -3.811,
+     "y": 1.812,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -3.811,
+     "y": 1.812,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  }
+ ],
+ "10": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.06,
+   "y": -5.45,
+   "nivel": "level9",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": -6.06,
+     "y": -5.45,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193,
+     "rh": 219,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 2,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level9"
+    },
+    {
+     "sp": "Leaves4",
+     "x": -5.87,
+     "y": -4.28,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451,
+     "rh": 352,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 7,
+     "oy": 18,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level9"
+    }
+   ],
+   "objectId": -1262338064
+  },
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": 6.22,
+   "y": 4.12,
+   "nivel": "level9",
+   "nombre": "Lovely Egg",
+   "sprites": [
+    {
+     "sp": "egg05",
+     "x": 6.22,
+     "y": 4.12,
+     "o": 0,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64,
+     "rh": 64,
+     "sx": 1,
+     "sy": 1,
+     "sl": -3,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 0.4266666769981384,
+     "sz_y": 0.4266666769981384,
+     "dir": "Exportado_level9"
+    }
+   ],
+   "objectId": -340533384,
+   "eggId": 243
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.09,
+   "y": 3.47,
+   "nivel": "level9",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk6",
+     "x": -6.09,
+     "y": 3.47,
+     "o": 0,
+     "px": 0.4794156849384308,
+     "py": 0.23548802733421326,
+     "rw": 217,
+     "rh": 229,
+     "sx": 1,
+     "sy": 1,
+     "sl": -2,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 6,
+     "oy": 3,
+     "draw_mode": 0,
+     "sz_x": 1.4466667175292969,
+     "sz_y": 1.5266666412353516,
+     "dir": "Exportado_level9"
+    },
+    {
+     "sp": "Leaves5",
+     "x": -6.339,
+     "y": 4.605,
+     "o": 0,
+     "px": 0.512877345085144,
+     "py": 0.20986308157444,
+     "rw": 453,
+     "rh": 352,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 0,
+     "draw_mode": 0,
+     "sz_x": 3.0199999809265137,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level9"
+    }
+   ],
+   "objectId": -1262338064
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -3.57,
+   "y": 5.21,
+   "nivel": "level9",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk5",
+     "x": -3.57,
+     "y": 5.21,
+     "o": -1,
+     "px": 0.5317492485046387,
+     "py": 0.29529237747192383,
+     "rw": 239,
+     "rh": 213,
+     "sx": 1,
+     "sy": 1,
+     "sl": -2,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 11,
+     "oy": 5,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.4199999570846558,
+     "dir": "Exportado_level9"
+    },
+    {
+     "sp": "Leaves3",
+     "x": -3.515,
+     "y": 6.339,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448,
+     "rh": 342,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 1,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level9"
+    }
+   ],
+   "objectId": -1262338064
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 5.47,
+   "y": -8.26,
+   "nivel": "level9",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": 5.47,
+     "y": -8.26,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193,
+     "rh": 219,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 2,
+     "oy": 4,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level9"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_50",
+     "x": 5.66,
+     "y": -7.09,
+     "o": 0,
+     "px": 0.5124467015266418,
+     "py": 0.26954206824302673,
+     "rw": 464,
+     "rh": 355,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 7,
+     "oy": 6,
+     "draw_mode": 0,
+     "sz_x": 3.0933332443237305,
+     "sz_y": 2.366666555404663,
+     "dir": "Exportado_level9"
+    }
+   ],
+   "objectId": -1262338064
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.65,
+   "y": -3.08,
+   "nivel": "level9",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": 6.65,
+     "y": -3.08,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220,
+     "rh": 218,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level9"
+    },
+    {
+     "sp": "Leaves2",
+     "x": 6.76,
+     "y": -2.09,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429,
+     "rh": 321,
+     "sx": 1,
+     "sy": 1,
+     "sl": 0,
+     "ppu": 150,
+     "angle": 0,
+     "ox": 0,
+     "oy": 1,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level9"
+    }
+   ],
+   "objectId": -1262338064
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 6.209,
+   "y": 2.78,
+   "nivel": "level71",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 6.209,
+     "y": 2.58,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 6.209,
+     "y": 2.25,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 6.209,
+     "y": 2.25,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 3.27,
+   "y": -5.211,
+   "nivel": "level71",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_6",
+     "x": 3.27,
+     "y": -5.411,
+     "o": 3,
+     "rw": 55.0,
+     "rh": 52.0,
+     "px": 0.51902,
+     "py": 0.80467,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.27,
+     "y": -5.539,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.27,
+     "y": -5.539,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": -3.2222,
+   "y": 1.2498,
+   "nivel": "level71",
+   "nombre": "Lantern (2)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": -3.2222,
+     "y": 1.0498,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -3.2222,
+     "y": 0.7198,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": -3.2222,
+     "y": 0.7198,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 3.578,
+   "y": -4.898,
+   "nivel": "level71",
+   "nombre": "Lantern (4)",
+   "sprites": [
+    {
+     "sp": "lanterns_6",
+     "x": 3.578,
+     "y": -5.098,
+     "o": 2,
+     "rw": 55.0,
+     "rh": 52.0,
+     "px": 0.51902,
+     "py": 0.80467,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.578,
+     "y": -5.226,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.578,
+     "y": -5.226,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 3.7511,
+   "y": -2.4173,
+   "nivel": "level71",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 3.7511,
+     "y": -2.6173,
+     "o": 3,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.7511,
+     "y": -2.9473,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.7511,
+     "y": -2.9473,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 3.2661,
+   "y": -2.1283,
+   "nivel": "level71",
+   "nombre": "Lantern (2)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 3.2661,
+     "y": -2.3283,
+     "o": 3,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.2661,
+     "y": -2.6583,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.2661,
+     "y": -2.6583,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 4.2161,
+   "y": -2.6293,
+   "nivel": "level71",
+   "nombre": "Lantern (4)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 4.2161,
+     "y": -2.8293,
+     "o": 3,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 4.2161,
+     "y": -3.1593,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 4.2161,
+     "y": -3.1593,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 3.927,
+   "y": -4.57,
+   "nivel": "level71",
+   "nombre": "Lantern (5)",
+   "sprites": [
+    {
+     "sp": "lanterns_6",
+     "x": 3.927,
+     "y": -4.77,
+     "o": 1,
+     "rw": 55.0,
+     "rh": 52.0,
+     "px": 0.51902,
+     "py": 0.80467,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.927,
+     "y": -4.898,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.927,
+     "y": -4.898,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  }
+ ],
+ "9": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.58,
+   "y": 4.74,
+   "nivel": "level10",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk5",
+     "x": -6.58,
+     "y": 4.74,
+     "o": 0,
+     "px": 0.5317492485046387,
+     "py": 0.29529237747192383,
+     "rw": 239.0,
+     "rh": 213.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 5.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.4199999570846558,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -6.525,
+     "y": 5.869,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 2.782,
+   "y": 5.14,
+   "nivel": "level10",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": 2.782,
+     "y": 5.14,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237.0,
+     "rh": 242.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 3.0,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "Leaves2",
+     "x": 2.932,
+     "y": 6.3,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429.0,
+     "rh": 321.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.55,
+   "y": -5.84,
+   "nivel": "level10",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": -6.55,
+     "y": -5.84,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239.0,
+     "rh": 226.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 13.0,
+     "oy": 2.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "Leaves3",
+     "x": -6.55,
+     "y": -4.746,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 1.12,
+   "y": 6.08,
+   "nivel": "level10",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": 1.12,
+     "y": 6.08,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220.0,
+     "rh": 218.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": 1.23,
+     "y": 7.07,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486.0,
+     "rh": 384.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 4.18,
+   "y": 4.34,
+   "nivel": "level10",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": 4.18,
+     "y": 4.34,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "Leaves5",
+     "x": 4.37,
+     "y": 5.51,
+     "o": 0,
+     "px": 0.512877345085144,
+     "py": 0.20986308157444,
+     "rw": 453.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 3.0199999809265137,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -2.347,
+   "y": 3.059,
+   "nivel": "level10",
+   "nombre": "BannerAnim",
+   "sprites": [
+    {
+     "sp": "DreamHouse_Environment_MomoTeaHouseBobo_26",
+     "x": -2.347,
+     "y": 3.059,
+     "o": 102
+    }
+   ],
+   "anim": {
+    "frames": [
+     "DreamHouse_Environment_MomoTeaHouseBobo_26",
+     "DreamHouse_Environment_MomoTeaHouseBobo_27",
+     "DreamHouse_Environment_MomoTeaHouseBobo_28",
+     "DreamHouse_Environment_MomoTeaHouseBobo_29",
+     "DreamHouse_Environment_MomoTeaHouseBobo_30",
+     "DreamHouse_Environment_MomoTeaHouseBobo_31",
+     "DreamHouse_Environment_MomoTeaHouseBobo_32",
+     "DreamHouse_Environment_MomoTeaHouseBobo_33"
+    ],
+    "fps": 8,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level10",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas"
+    ]
+   }
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -5.06,
+   "y": 5.666,
+   "nivel": "level10",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": -5.06,
+     "y": 5.666,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239.0,
+     "rh": 226.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 13.0,
+     "oy": 2.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "Leaves3",
+     "x": -5.06,
+     "y": 6.76,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 5.35,
+   "y": 2.77,
+   "nivel": "level10",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": 5.35,
+     "y": 2.77,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239.0,
+     "rh": 226.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 13.0,
+     "oy": 2.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "Leaves2",
+     "x": 5.35,
+     "y": 3.864,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429.0,
+     "rh": 321.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.86,
+   "y": 1.64,
+   "nivel": "level10",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": 6.86,
+     "y": 1.64,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237.0,
+     "rh": 242.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 3.0,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_50",
+     "x": 7.01,
+     "y": 2.8,
+     "o": 0,
+     "px": 0.5124467015266418,
+     "py": 0.26954206824302673,
+     "rw": 464.0,
+     "rh": 355.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 6.0,
+     "draw_mode": 0,
+     "sz_x": 3.0933332443237305,
+     "sz_y": 2.366666555404663,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 5.99,
+   "y": 5.16,
+   "nivel": "level10",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": 5.99,
+     "y": 5.16,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "Leaves3",
+     "x": 6.004,
+     "y": 6.067,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": 6.0,
+   "y": -2.49,
+   "nivel": "level10",
+   "nombre": "Fiery Egg",
+   "sprites": [
+    {
+     "sp": "egg08",
+     "x": 6.0,
+     "y": -2.49,
+     "o": 0,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64.0,
+     "rh": 64.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": -0.0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 0.4266666769981384,
+     "sz_y": 0.4266666769981384,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": -538702663,
+   "eggId": 246
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -5.4,
+   "y": -7.9,
+   "nivel": "level10",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": -5.4,
+     "y": -7.9,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237.0,
+     "rh": 242.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 3.0,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_50",
+     "x": -5.25,
+     "y": -6.74,
+     "o": 0,
+     "px": 0.5124467015266418,
+     "py": 0.26954206824302673,
+     "rw": 464.0,
+     "rh": 355.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 6.0,
+     "draw_mode": 0,
+     "sz_x": 3.0933332443237305,
+     "sz_y": 2.366666555404663,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "Snowmound",
+   "familia": "collect",
+   "x": -2.222,
+   "y": -6.35,
+   "nivel": "level26",
+   "nombre": "Snowmound (2)",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": -2.222,
+     "y": -6.35,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "objectId": 390643450,
+   "item": 886,
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -2.222,
+   "y": -6.35,
+   "nivel": "level26",
+   "nombre": "Sprite",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": -2.222,
+     "y": -6.35,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 6.5701,
+   "y": -5.1203,
+   "nivel": "level47",
+   "nombre": "Lantern (4)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 6.5701,
+     "y": -5.3203,
+     "o": 3,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 6.5701,
+     "y": -5.6503,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 6.5701,
+     "y": -5.6503,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 5.6201,
+   "y": -4.6193,
+   "nivel": "level47",
+   "nombre": "Lantern (2)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 5.6201,
+     "y": -4.8193,
+     "o": 3,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 5.6201,
+     "y": -5.1493,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 5.6201,
+     "y": -5.1493,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 6.1051,
+   "y": -4.9083,
+   "nivel": "level47",
+   "nombre": "Lantern (3)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 6.1051,
+     "y": -5.1083,
+     "o": 3,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 6.1051,
+     "y": -5.4383,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 6.1051,
+     "y": -5.4383,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 6.9631,
+   "y": -5.3403,
+   "nivel": "level47",
+   "nombre": "Lantern (5)",
+   "sprites": [
+    {
+     "sp": "lanterns_0",
+     "x": 6.9631,
+     "y": -5.5403,
+     "o": 3,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 6.9631,
+     "y": -5.8703,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 6.9631,
+     "y": -5.8703,
+     "o": 1,
+     "rw": 128.0,
+     "rh": 128.0,
+     "px": 0.5,
+     "py": 0.5,
+     "ppu": 128.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": 1531799662
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 1.7635,
+   "y": -1.3667,
+   "nivel": "level47",
+   "nombre": "Lantern (5)",
+   "sprites": [
+    {
+     "sp": "lanterns_2",
+     "x": 1.7635,
+     "y": -1.5667,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 1.7635,
+     "y": -1.8967,
+     "o": 99,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 128.0,
+     "rh": 128.0,
+     "sx": 5.0,
+     "sy": 5.0,
+     "sl": 9,
+     "ppu": 128.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 0.4533333480358124,
+     "sz_y": 0.6866666674613953,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "white",
+     "x": 1.7635,
+     "y": -1.8967,
+     "o": 99,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 128.0,
+     "rh": 128.0,
+     "sx": 5.0,
+     "sy": 5.0,
+     "sl": 9,
+     "ppu": 128.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 0.4533333480358124,
+     "sz_y": 0.6866666674613953,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": -1970416364
+  },
+  {
+   "clase": "Lantern",
+   "familia": "swing",
+   "x": 3.935,
+   "y": -2.437,
+   "nivel": "level47",
+   "nombre": "Lantern (4)",
+   "sprites": [
+    {
+     "sp": "lanterns_2",
+     "x": 3.935,
+     "y": -2.637,
+     "o": 0,
+     "rw": 74.0,
+     "rh": 121.0,
+     "px": 0.5,
+     "py": 0.84,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "white",
+     "x": 3.935,
+     "y": -2.967,
+     "o": 99,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 128.0,
+     "rh": 128.0,
+     "sx": 0.800000011920929,
+     "sy": 0.8999999761581421,
+     "sl": 9,
+     "ppu": 128.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 0.4533333480358124,
+     "sz_y": 0.6866666674613953,
+     "dir": "Exportado_level10"
+    },
+    {
+     "sp": "white",
+     "x": 3.935,
+     "y": -2.967,
+     "o": 99,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 128.0,
+     "rh": 128.0,
+     "sx": 0.800000011920929,
+     "sy": 0.8999999761581421,
+     "sl": 9,
+     "ppu": 128.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 0.4533333480358124,
+     "sz_y": 0.6866666674613953,
+     "dir": "Exportado_level10"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": -1970416364
+  }
+ ],
+ "5": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.42,
+   "y": 4.1,
+   "nivel": "level11",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": 6.42,
+     "y": 4.1,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level11"
+    },
+    {
+     "sp": "Leaves4",
+     "x": 6.434,
+     "y": 5.007,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 18.0,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level11"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -5.04,
+   "y": 5.27,
+   "nivel": "level11",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": -5.04,
+     "y": 5.27,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239.0,
+     "rh": 226.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 13.0,
+     "oy": 2.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level11"
+    },
+    {
+     "sp": "Leaves3",
+     "x": -5.04,
+     "y": 6.364,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level11"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": -2.684,
+   "y": 0.477,
+   "nivel": "level11",
+   "nombre": "Cosmic Egg",
+   "sprites": [
+    {
+     "sp": "egg06",
+     "x": -2.684,
+     "y": 0.477,
+     "o": 0,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64.0,
+     "rh": 64.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": -7,
+     "ppu": 150.0,
+     "angle": -0.0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 0.4266666769981384,
+     "sz_y": 0.4266666769981384,
+     "dir": "Exportado_level11"
+    }
+   ],
+   "objectId": 2053240858,
+   "eggId": 244
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.93,
+   "y": 3.99,
+   "nivel": "level11",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": -6.93,
+     "y": 3.99,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237.0,
+     "rh": 242.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 3.0,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level11"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -6.78,
+     "y": 5.15,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level11"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -1.61,
+   "y": 5.5,
+   "nivel": "level11",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk5",
+     "x": -1.61,
+     "y": 5.5,
+     "o": 0,
+     "px": 0.5317492485046387,
+     "py": 0.29529237747192383,
+     "rw": 239.0,
+     "rh": 213.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 5.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.4199999570846558,
+     "dir": "Exportado_level11"
+    },
+    {
+     "sp": "Leaves2",
+     "x": -1.555,
+     "y": 6.629,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429.0,
+     "rh": 321.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level11"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.96,
+   "y": 1.43,
+   "nivel": "level11",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": 6.96,
+     "y": 1.43,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220.0,
+     "rh": 218.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level11"
+    },
+    {
+     "sp": "Leaves3",
+     "x": 7.07,
+     "y": 2.42,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level11"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 4.8,
+   "y": 5.01,
+   "nivel": "level11",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": 4.8,
+     "y": 5.01,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level11"
+    },
+    {
+     "sp": "Leaves5",
+     "x": 4.99,
+     "y": 6.18,
+     "o": 0,
+     "px": 0.512877345085144,
+     "py": 0.20986308157444,
+     "rw": 453.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 3.0199999809265137,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level11"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -2.98,
+   "y": 4.56,
+   "nivel": "level11",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk6",
+     "x": -2.98,
+     "y": 4.56,
+     "o": 0,
+     "px": 0.4794156849384308,
+     "py": 0.23548802733421326,
+     "rw": 217.0,
+     "rh": 229.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 6.0,
+     "oy": 3.0,
+     "draw_mode": 0,
+     "sz_x": 1.4466667175292969,
+     "sz_y": 1.5266666412353516,
+     "dir": "Exportado_level11"
+    },
+    {
+     "sp": "Leaves4",
+     "x": -3.229,
+     "y": 5.695,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 18.0,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level11"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "Snowmound",
+   "familia": "collect",
+   "x": -1.81,
+   "y": -3.76,
+   "nivel": "level22",
+   "nombre": "Snowmound (4)",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": -1.81,
+     "y": -3.76,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "objectId": 1108248122,
+   "item": 886,
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -1.81,
+   "y": -3.76,
+   "nivel": "level22",
+   "nombre": "Sprite",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": -1.81,
+     "y": -3.76,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "Windchime",
+   "familia": "swing",
+   "x": 2.864,
+   "y": 3.454,
+   "nivel": "level41",
+   "nombre": "Windchime (6)",
+   "sprites": [
+    {
+     "sp": "windChimes_0",
+     "x": 2.864,
+     "y": 3.312,
+     "o": 0,
+     "rw": 52.0,
+     "rh": 43.0,
+     "px": 0.5,
+     "py": 0.9734,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "windChimes_3",
+     "x": 2.864,
+     "y": 3.048,
+     "o": 0,
+     "rw": 33.0,
+     "rh": 94.0,
+     "px": 0.45747,
+     "py": 0.96662,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": -1103961586
+  }
+ ],
+ "11": [
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": -0.291,
+   "y": 4.383,
+   "nivel": "level12",
+   "nombre": "Wooden Egg",
+   "sprites": [
+    {
+     "sp": "egg04",
+     "x": -0.291,
+     "y": 4.383,
+     "o": 0,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64.0,
+     "rh": 64.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": -5,
+     "ppu": 150.0,
+     "angle": -0.0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 0.4266666769981384,
+     "sz_y": 0.4266666769981384,
+     "dir": "Exportado_level12"
+    }
+   ],
+   "objectId": -39038485,
+   "eggId": 242
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.41,
+   "y": 3.673,
+   "nivel": "level12",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk8",
+     "x": -6.41,
+     "y": 3.673,
+     "o": 0,
+     "px": 0.48371002078056335,
+     "py": 0.26181647181510925,
+     "rw": 219.0,
+     "rh": 209.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 1.4600000381469727,
+     "sz_y": 1.3933333158493042,
+     "dir": "Exportado_level12"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_51",
+     "x": -6.713,
+     "y": 4.759,
+     "o": 0,
+     "px": 0.49432769417762756,
+     "py": 0.22422732412815094,
+     "rw": 509.0,
+     "rh": 356.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 5.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.3933334350585938,
+     "sz_y": 2.373333215713501,
+     "dir": "Exportado_level12"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SimpleInvoke",
+   "familia": "anim",
+   "x": -5.513,
+   "y": 2.184,
+   "nivel": "level12",
+   "nombre": "Node 1",
+   "sprites": [
+    {
+     "sp": "junker_12",
+     "x": -5.513,
+     "y": 2.184,
+     "o": 1
+    },
+    {
+     "sp": "StrongLight",
+     "x": -5.513,
+     "y": 2.184,
+     "o": 0
+    },
+    {
+     "sp": "ConeLightDown",
+     "x": -5.513,
+     "y": 2.997,
+     "o": 0
+    },
+    {
+     "sp": "junker_2",
+     "x": -5.513,
+     "y": 2.184,
+     "o": 0
+    },
+    {
+     "sp": "junker_11",
+     "x": -5.513,
+     "y": 2.184,
+     "o": 1
+    }
+   ]
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -3.1,
+   "y": 5.89,
+   "nivel": "level12",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk8",
+     "x": -3.1,
+     "y": 5.89,
+     "o": 0,
+     "px": 0.48371002078056335,
+     "py": 0.26181647181510925,
+     "rw": 219.0,
+     "rh": 209.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 1.4600000381469727,
+     "sz_y": 1.3933333158493042,
+     "dir": "Exportado_level12"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": -3.403,
+     "y": 6.976,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486.0,
+     "rh": 384.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level12"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "Junker",
+   "familia": "ui",
+   "x": -3.752,
+   "y": 2.98,
+   "nivel": "level12",
+   "nombre": "Junker",
+   "sprites": [
+    {
+     "sp": "junker_17",
+     "x": -3.752,
+     "y": 2.98,
+     "o": -2
+    },
+    {
+     "sp": "junker_18",
+     "x": -3.752,
+     "y": 2.98,
+     "o": 0
+    },
+    {
+     "sp": "junker_19",
+     "x": -3.752,
+     "y": 2.98,
+     "o": 0
+    },
+    {
+     "sp": "junker_20",
+     "x": -3.752,
+     "y": 2.98,
+     "o": 0
+    },
+    {
+     "sp": "junker_21",
+     "x": -3.752,
+     "y": 2.98,
+     "o": 0
+    },
+    {
+     "sp": "junker_6",
+     "x": -3.154,
+     "y": 3.54,
+     "o": 0
+    },
+    {
+     "sp": "StrongLight",
+     "x": -3.154,
+     "y": 3.549,
+     "o": 0
+    },
+    {
+     "sp": "junker_10",
+     "x": -3.154,
+     "y": 3.54,
+     "o": 0
+    },
+    {
+     "sp": "junker_3",
+     "x": -3.15,
+     "y": 3.188,
+     "o": -4
+    },
+    {
+     "sp": "junker_4",
+     "x": -3.178,
+     "y": 3.4,
+     "o": -3
+    },
+    {
+     "sp": "junker_5",
+     "x": -3.178,
+     "y": 2.96,
+     "o": -3
+    },
+    {
+     "sp": "junker_1",
+     "x": -2.632,
+     "y": 2.959,
+     "o": 0
+    },
+    {
+     "sp": "junker_9",
+     "x": -2.632,
+     "y": 2.959,
+     "o": 0
+    },
+    {
+     "sp": "junker_27",
+     "x": -2.6716,
+     "y": 2.8428,
+     "o": 0
+    },
+    {
+     "sp": "junker_14",
+     "x": -3.585,
+     "y": 2.787,
+     "o": -1
+    },
+    {
+     "sp": "mouthExplode_0",
+     "x": -3.178,
+     "y": 3.14,
+     "o": 1
+    },
+    {
+     "sp": "mouthExplode_20",
+     "x": -3.178,
+     "y": 3.14,
+     "o": 3
+    },
+    {
+     "sp": "StrongLight",
+     "x": -3.178,
+     "y": 3.14,
+     "o": 2
+    },
+    {
+     "sp": "junker_13",
+     "x": -3.752,
+     "y": 2.98,
+     "o": -1
+    },
+    {
+     "sp": "Square",
+     "x": -4.136,
+     "y": 2.991,
+     "o": 1
+    },
+    {
+     "sp": "Square",
+     "x": -4.061,
+     "y": 2.943,
+     "o": 1
+    },
+    {
+     "sp": "Square",
+     "x": -3.983,
+     "y": 2.881,
+     "o": 1
+    },
+    {
+     "sp": "junker_12",
+     "x": -5.513,
+     "y": 2.184,
+     "o": 1
+    },
+    {
+     "sp": "StrongLight",
+     "x": -5.513,
+     "y": 2.184,
+     "o": 0
+    },
+    {
+     "sp": "ConeLightDown",
+     "x": -5.513,
+     "y": 2.997,
+     "o": 0
+    },
+    {
+     "sp": "junker_2",
+     "x": -5.513,
+     "y": 2.184,
+     "o": 0
+    },
+    {
+     "sp": "junker_11",
+     "x": -5.513,
+     "y": 2.184,
+     "o": 1
+    },
+    {
+     "sp": "junker_12",
+     "x": -4.638,
+     "y": 1.7465,
+     "o": 1
+    },
+    {
+     "sp": "ConeLightDown",
+     "x": -4.638,
+     "y": 2.5595,
+     "o": 0
+    },
+    {
+     "sp": "junker_2",
+     "x": -4.638,
+     "y": 1.7465,
+     "o": 0
+    },
+    {
+     "sp": "junker_11",
+     "x": -4.638,
+     "y": 1.7465,
+     "o": 1
+    },
+    {
+     "sp": "junker_12",
+     "x": -3.763,
+     "y": 1.309,
+     "o": 1
+    },
+    {
+     "sp": "junker_2",
+     "x": -3.763,
+     "y": 1.309,
+     "o": 0
+    },
+    {
+     "sp": "ConeLightDown",
+     "x": -3.763,
+     "y": 2.122,
+     "o": 0
+    },
+    {
+     "sp": "junker_11",
+     "x": -3.763,
+     "y": 1.309,
+     "o": 1
+    },
+    {
+     "sp": "junker_16",
+     "x": -3.752,
+     "y": 2.98,
+     "o": 0
+    },
+    {
+     "sp": "junker_22",
+     "x": -3.752,
+     "y": 2.98,
+     "o": -2
+    }
+   ],
+   "objectId": 1364397954
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -3.134,
+   "y": 3.144,
+   "nivel": "level12",
+   "nombre": "MouthMalfunction",
+   "sprites": [
+    {
+     "sp": "Dawn'sShop_Final_13",
+     "x": -3.134,
+     "y": 3.144,
+     "o": -1
+    }
+   ],
+   "anim": {
+    "frames": [
+     "Dawn'sShop_Final_12",
+     "Dawn'sShop_Final_13",
+     "Dawn'sShop_Final_14"
+    ],
+    "fps": 8,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas"
+    ],
+    "px": 0.60579,
+    "py": 0.26866,
+    "ppu": 150.0
+   }
+  },
+  {
+   "clase": "SimpleInvoke",
+   "familia": "anim",
+   "x": -4.638,
+   "y": 1.7465,
+   "nivel": "level12",
+   "nombre": "Node 2",
+   "sprites": [
+    {
+     "sp": "junker_12",
+     "x": -4.638,
+     "y": 1.7465,
+     "o": 1
+    },
+    {
+     "sp": "ConeLightDown",
+     "x": -4.638,
+     "y": 2.5595,
+     "o": 0
+    },
+    {
+     "sp": "junker_2",
+     "x": -4.638,
+     "y": 1.7465,
+     "o": 0
+    },
+    {
+     "sp": "junker_11",
+     "x": -4.638,
+     "y": 1.7465,
+     "o": 1
+    }
+   ]
+  },
+  {
+   "clase": "SimpleInvoke",
+   "familia": "anim",
+   "x": -3.763,
+   "y": 1.309,
+   "nivel": "level12",
+   "nombre": "Node 3",
+   "sprites": [
+    {
+     "sp": "junker_12",
+     "x": -3.763,
+     "y": 1.309,
+     "o": 1
+    },
+    {
+     "sp": "junker_2",
+     "x": -3.763,
+     "y": 1.309,
+     "o": 0
+    },
+    {
+     "sp": "ConeLightDown",
+     "x": -3.763,
+     "y": 2.122,
+     "o": 0
+    },
+    {
+     "sp": "junker_11",
+     "x": -3.763,
+     "y": 1.309,
+     "o": 1
+    }
+   ]
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -5.298,
+   "y": 4.9,
+   "nivel": "level12",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": -5.298,
+     "y": 4.9,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237.0,
+     "rh": 242.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 3.0,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level12"
+    },
+    {
+     "sp": "Leaves4",
+     "x": -5.148,
+     "y": 6.06,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 18.0,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level12"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 5.91,
+   "y": 4.56,
+   "nivel": "level12",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": 5.91,
+     "y": 4.56,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220.0,
+     "rh": 218.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level12"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 6.02,
+     "y": 5.55,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level12"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 5.9,
+   "y": -3.794,
+   "nivel": "level12",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": 5.9,
+     "y": -3.794,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level12"
+    },
+    {
+     "sp": "Leaves3",
+     "x": 5.914,
+     "y": -2.887,
+     "o": 0,
+     "px": 0.49777752161026,
+     "py": 0.1949615478515625,
+     "rw": 448.0,
+     "rh": 342.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.986666679382324,
+     "sz_y": 2.2799999713897705,
+     "dir": "Exportado_level12"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "Snowmound",
+   "familia": "collect",
+   "x": 2.42,
+   "y": -1.92,
+   "nivel": "level27",
+   "nombre": "Snowmound (3)",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": 2.42,
+     "y": -1.92,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "objectId": -1638049899,
+   "item": 886,
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": 2.42,
+   "y": -1.92,
+   "nivel": "level27",
+   "nombre": "Sprite",
+   "sprites": [
+    {
+     "sp": "Snow_Mound_0",
+     "x": 2.42,
+     "y": -1.92,
+     "o": 0
+    }
+   ],
+   "condicion": {
+    "tipo": "estacion",
+    "valor": 2
+   },
+   "anim": {
+    "frames": [
+     "Snow_Mound_0",
+     "Snow_Mound_1",
+     "Snow_Mound_2",
+     "Snow_Mound_3",
+     "Snow_Mound_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8",
+     "Exportado_level8"
+    ]
+   }
+  }
+ ],
+ "13": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 0.33,
+   "y": 4.69,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": 0.33,
+     "y": 4.69,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 0.44,
+     "y": 5.68,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -4.0,
+   "y": 4.51,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": -4.0,
+     "y": 4.51,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -4.0,
+     "y": 5.604,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 6.14,
+   "y": -5.54,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": 6.14,
+     "y": -5.54,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 6.195,
+     "y": -4.411,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.64,
+   "y": 5.24,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": -6.64,
+     "y": 5.24,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -6.585,
+     "y": 6.369,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 3.18,
+   "y": 5.75,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": 3.18,
+     "y": 5.75,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 3.29,
+     "y": 6.74,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.58,
+   "y": -6.03,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": -6.58,
+     "y": -6.03,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -6.566,
+     "y": -5.123,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 4.45,
+   "y": -7.45,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": 4.45,
+     "y": -7.45,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 4.64,
+     "y": -6.28,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": 7.1,
+   "y": -3.96,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": 7.1,
+     "y": -3.96,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": 7.155,
+     "y": -2.831,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -1.84,
+   "y": -7.02,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": -1.84,
+     "y": -7.02,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -1.73,
+     "y": -6.03,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -3.53,
+   "y": -8.79,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": -3.53,
+     "y": -8.79,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -3.833,
+     "y": -7.704,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -6.15,
+   "y": 2.79,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": -6.15,
+     "y": 2.79,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -6.399,
+     "y": 3.925,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -5.19,
+   "y": 5.93,
+   "nivel": "level13",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk1",
+     "x": -5.19,
+     "y": 5.93,
+     "o": 0,
+     "px": 0.49680665135383606,
+     "py": 0.22552518546581268,
+     "rw": 193.0,
+     "rh": 219.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 2.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 1.2866666316986084,
+     "sz_y": 1.4600000381469727,
+     "dir": "Exportado_level13"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -5.135,
+     "y": 7.059,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level13"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "Windchime",
+   "familia": "swing",
+   "x": -2.9798,
+   "y": 3.0227,
+   "nivel": "level40",
+   "nombre": "Windchime (2)",
+   "sprites": [
+    {
+     "sp": "windChimes_0",
+     "x": -2.9798,
+     "y": 2.8807,
+     "o": 1,
+     "rw": 52.0,
+     "rh": 43.0,
+     "px": 0.5,
+     "py": 0.9734,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "windChimes_3",
+     "x": -2.9798,
+     "y": 2.6167,
+     "o": 1,
+     "rw": 33.0,
+     "rh": 94.0,
+     "px": 0.45747,
+     "py": 0.96662,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": -1103961586
+  },
+  {
+   "clase": "Windchime",
+   "familia": "swing",
+   "x": -4.807,
+   "y": -0.558,
+   "nivel": "level40",
+   "nombre": "Windchime (4)",
+   "sprites": [
+    {
+     "sp": "windChimes_0",
+     "x": -4.807,
+     "y": -0.7,
+     "o": 1,
+     "rw": 52.0,
+     "rh": 43.0,
+     "px": 0.5,
+     "py": 0.9734,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "windChimes_3",
+     "x": -4.807,
+     "y": -0.964,
+     "o": 1,
+     "rw": 33.0,
+     "rh": 94.0,
+     "px": 0.45747,
+     "py": 0.96662,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": -1103961586
+  },
+  {
+   "clase": "Windchime",
+   "familia": "swing",
+   "x": -0.6,
+   "y": -5.987,
+   "nivel": "level40",
+   "nombre": "Windchime (3)",
+   "sprites": [
+    {
+     "sp": "windChimes_0",
+     "x": -0.6,
+     "y": -6.129,
+     "o": 0,
+     "rw": 52.0,
+     "rh": 43.0,
+     "px": 0.5,
+     "py": 0.9734,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "windChimes_3",
+     "x": -0.6,
+     "y": -6.393,
+     "o": 0,
+     "rw": 33.0,
+     "rh": 94.0,
+     "px": 0.45747,
+     "py": 0.96662,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": -1103961586
+  },
+  {
+   "clase": "Windchime",
+   "familia": "swing",
+   "x": -5.284,
+   "y": -5.006,
+   "nivel": "level40",
+   "nombre": "Windchime (5)",
+   "sprites": [
+    {
+     "sp": "windChimes_0",
+     "x": -5.284,
+     "y": -5.148,
+     "o": 0,
+     "rw": 52.0,
+     "rh": 43.0,
+     "px": 0.5,
+     "py": 0.9734,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "windChimes_3",
+     "x": -5.284,
+     "y": -5.412,
+     "o": 0,
+     "rw": 33.0,
+     "rh": 94.0,
+     "px": 0.45747,
+     "py": 0.96662,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": -1103961586
+  },
+  {
+   "clase": "Windchime",
+   "familia": "swing",
+   "x": 4.912,
+   "y": 2.179,
+   "nivel": "level40",
+   "nombre": "Windchime",
+   "sprites": [
+    {
+     "sp": "windChimes_0",
+     "x": 4.912,
+     "y": 2.037,
+     "o": 1,
+     "rw": 52.0,
+     "rh": 43.0,
+     "px": 0.5,
+     "py": 0.9734,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "windChimes_3",
+     "x": 4.912,
+     "y": 1.773,
+     "o": 1,
+     "rw": 33.0,
+     "rh": 94.0,
+     "px": 0.45747,
+     "py": 0.96662,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": -1103961586
+  },
+  {
+   "clase": "Windchime",
+   "familia": "swing",
+   "x": -3.605,
+   "y": 3.338,
+   "nivel": "level40",
+   "nombre": "Windchime (1)",
+   "sprites": [
+    {
+     "sp": "windChimes_0",
+     "x": -3.605,
+     "y": 3.196,
+     "o": 1,
+     "rw": 52.0,
+     "rh": 43.0,
+     "px": 0.5,
+     "py": 0.9734,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    },
+    {
+     "sp": "windChimes_3",
+     "x": -3.605,
+     "y": 2.932,
+     "o": 1,
+     "rw": 33.0,
+     "rh": 94.0,
+     "px": 0.45747,
+     "py": 0.96662,
+     "ppu": 150.0,
+     "dir": "Exportado_subescenas"
+    }
+   ],
+   "condicion": {
+    "tipo": "evento",
+    "valor": 4
+   },
+   "objectId": -1103961586
+  }
+ ],
+ "7": [
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -1.354,
+   "y": -5.992,
+   "nivel": "level15",
+   "nombre": "Wheels",
+   "sprites": [
+    {
+     "sp": "DreamHouse_Environment_TrainRide_11",
+     "x": -1.354,
+     "y": -5.992,
+     "o": 0
+    }
+   ],
+   "anim": {
+    "frames": [
+     "DreamHouse_Environment_TrainRide_11",
+     "DreamHouse_Environment_TrainRide_12",
+     "DreamHouse_Environment_TrainRide_13",
+     "DreamHouse_Environment_TrainRide_14",
+     "DreamHouse_Environment_TrainRide_15"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level15",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": 1.145,
+   "y": -5.992,
+   "nivel": "level15",
+   "nombre": "Wheels (1)",
+   "sprites": [
+    {
+     "sp": "DreamHouse_Environment_TrainRide_11",
+     "x": 1.145,
+     "y": -5.992,
+     "o": 0
+    }
+   ],
+   "anim": {
+    "frames": [
+     "DreamHouse_Environment_TrainRide_11",
+     "DreamHouse_Environment_TrainRide_12",
+     "DreamHouse_Environment_TrainRide_13",
+     "DreamHouse_Environment_TrainRide_14",
+     "DreamHouse_Environment_TrainRide_15"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level15",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": 5.174,
+   "y": -5.992,
+   "nivel": "level15",
+   "nombre": "Wheels",
+   "sprites": [
+    {
+     "sp": "DreamHouse_Environment_TrainRide_11",
+     "x": 5.174,
+     "y": -5.992,
+     "o": 0
+    }
+   ],
+   "anim": {
+    "frames": [
+     "DreamHouse_Environment_TrainRide_11",
+     "DreamHouse_Environment_TrainRide_12",
+     "DreamHouse_Environment_TrainRide_13",
+     "DreamHouse_Environment_TrainRide_14",
+     "DreamHouse_Environment_TrainRide_15"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level15",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": 7.673,
+   "y": -5.992,
+   "nivel": "level15",
+   "nombre": "Wheels",
+   "sprites": [
+    {
+     "sp": "DreamHouse_Environment_TrainRide_11",
+     "x": 7.673,
+     "y": -5.992,
+     "o": 0
+    }
+   ],
+   "anim": {
+    "frames": [
+     "DreamHouse_Environment_TrainRide_11",
+     "DreamHouse_Environment_TrainRide_12",
+     "DreamHouse_Environment_TrainRide_13",
+     "DreamHouse_Environment_TrainRide_14",
+     "DreamHouse_Environment_TrainRide_15"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level15",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas"
+    ]
+   }
+  }
+ ],
+ "0_hc": [
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -11.44,
+   "y": -39.07,
+   "nivel": "level28",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk5",
+     "x": -11.44,
+     "y": -39.07,
+     "o": 0,
+     "px": 0.5317492485046387,
+     "py": 0.29529237747192383,
+     "rw": 239.0,
+     "rh": 213.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 5.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.4199999570846558,
+     "dir": "Exportado_level28"
+    },
+    {
+     "sp": "Leaves5",
+     "x": -11.385,
+     "y": -37.941,
+     "o": 0,
+     "px": 0.512877345085144,
+     "py": 0.20986308157444,
+     "rw": 453.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 0.0,
+     "draw_mode": 0,
+     "sz_x": 3.0199999809265137,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level28"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -28.69,
+   "y": -28.48,
+   "nivel": "level28",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": -28.69,
+     "y": -28.48,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237.0,
+     "rh": 242.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 3.0,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level28"
+    },
+    {
+     "sp": "Leaves2",
+     "x": -28.54,
+     "y": -27.32,
+     "o": 0,
+     "px": 0.4902317523956299,
+     "py": 0.19200652837753296,
+     "rw": 429.0,
+     "rh": 321.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 2.859999895095825,
+     "sz_y": 2.140000104904175,
+     "dir": "Exportado_level28"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -12.22,
+   "y": -23.04,
+   "nivel": "level28",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": -12.22,
+     "y": -23.04,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level28"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_51",
+     "x": -12.206,
+     "y": -22.133,
+     "o": 0,
+     "px": 0.49432769417762756,
+     "py": 0.22422732412815094,
+     "rw": 509.0,
+     "rh": 356.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 5.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.3933334350585938,
+     "sz_y": 2.373333215713501,
+     "dir": "Exportado_level28"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "PotGuyObject",
+   "familia": "ui",
+   "x": -25.159,
+   "y": -35.464,
+   "nivel": "level28",
+   "nombre": "Pot Guy",
+   "sprites": [
+    {
+     "sp": "PotteryMan_50",
+     "x": -25.159,
+     "y": -35.464,
+     "o": 2
+    }
+   ],
+   "objectId": 2039548301
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -26.405,
+   "y": -39.3,
+   "nivel": "level28",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk2",
+     "x": -26.405,
+     "y": -39.3,
+     "o": 0,
+     "px": 0.5472299456596375,
+     "py": 0.26989999413490295,
+     "rw": 220.0,
+     "rh": 218.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 1.5,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.4666666984558105,
+     "sz_y": 1.4533333778381348,
+     "dir": "Exportado_level28"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -26.295,
+     "y": -38.31,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level28"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -26.1,
+   "y": -22.88,
+   "nivel": "level28",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk3",
+     "x": -26.1,
+     "y": -22.88,
+     "o": 0,
+     "px": 0.5162459015846252,
+     "py": 0.28227296471595764,
+     "rw": 237.0,
+     "rh": 242.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 3.0,
+     "oy": 3.5,
+     "draw_mode": 0,
+     "sz_x": 1.5800000429153442,
+     "sz_y": 1.6133333444595337,
+     "dir": "Exportado_level28"
+    },
+    {
+     "sp": "Leaves1",
+     "x": -25.95,
+     "y": -21.72,
+     "o": 0,
+     "px": 0.5022657513618469,
+     "py": 0.17805172502994537,
+     "rw": 485.0,
+     "rh": 351.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 0.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 3.2333333492279053,
+     "sz_y": 2.3399999141693115,
+     "dir": "Exportado_level28"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": -25.159,
+   "y": -35.464,
+   "nivel": "level28",
+   "nombre": "Guy",
+   "sprites": [
+    {
+     "sp": "PotteryMan_50",
+     "x": -25.159,
+     "y": -35.464,
+     "o": 2
+    }
+   ],
+   "anim": {
+    "frames": [
+     "PotteryMan_42",
+     "PotteryMan_43",
+     "PotteryMan_44",
+     "PotteryMan_45",
+     "PotteryMan_46",
+     "PotteryMan_47",
+     "PotteryMan_48",
+     "PotteryMan_49",
+     "PotteryMan_50",
+     "PotteryMan_51",
+     "PotteryMan_0",
+     "PotteryMan_1",
+     "PotteryMan_2",
+     "PotteryMan_1"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_level28",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_level2",
+     "Exportado_subescenas",
+     "Exportado_level2"
+    ],
+    "px": 0.512,
+    "py": -0.95714,
+    "ppu": 150.0
+   }
+  },
+  {
+   "clase": "SeededEgg",
+   "familia": "collect",
+   "x": -24.162,
+   "y": -28.105,
+   "nivel": "level28",
+   "nombre": "Tsuki Egg",
+   "sprites": [
+    {
+     "sp": "egg11",
+     "x": -24.162,
+     "y": -28.105,
+     "o": 0,
+     "px": 0.5,
+     "py": 0.5,
+     "rw": 64.0,
+     "rh": 64.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 6,
+     "ppu": 150.0,
+     "angle": -0.0,
+     "ox": 11.076120376586914,
+     "oy": 7.0267510414123535,
+     "draw_mode": 0,
+     "sz_x": 0.4266666769981384,
+     "sz_y": 0.4266666769981384,
+     "dir": "Exportado_level28"
+    }
+   ],
+   "objectId": 1599141413,
+   "eggId": 249
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -28.3,
+   "y": -38.43,
+   "nivel": "level28",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk6",
+     "x": -28.3,
+     "y": -38.43,
+     "o": 0,
+     "px": 0.4794156849384308,
+     "py": 0.23548802733421326,
+     "rw": 217.0,
+     "rh": 229.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 6.0,
+     "oy": 3.0,
+     "draw_mode": 0,
+     "sz_x": 1.4466667175292969,
+     "sz_y": 1.5266666412353516,
+     "dir": "Exportado_level28"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": -28.549,
+     "y": -37.295,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486.0,
+     "rh": 384.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level28"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "Dialogue",
+   "familia": "ui",
+   "x": -25.159,
+   "y": -35.464,
+   "nivel": "level28",
+   "nombre": "GameObject",
+   "sprites": []
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -27.93,
+   "y": -23.56,
+   "nivel": "level28",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk4",
+     "x": -27.93,
+     "y": -23.56,
+     "o": 0,
+     "px": 0.5198392868041992,
+     "py": 0.33857014775276184,
+     "rw": 194.0,
+     "rh": 180.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 8.0,
+     "oy": 1.0,
+     "draw_mode": 0,
+     "sz_x": 1.2933332920074463,
+     "sz_y": 1.2000000476837158,
+     "dir": "Exportado_level28"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_51",
+     "x": -27.916,
+     "y": -22.653,
+     "o": 0,
+     "px": 0.49432769417762756,
+     "py": 0.22422732412815094,
+     "rw": 509.0,
+     "rh": 356.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 5.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.3933334350585938,
+     "sz_y": 2.373333215713501,
+     "dir": "Exportado_level28"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -13.18,
+   "y": -28.24,
+   "nivel": "level28",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk6",
+     "x": -13.18,
+     "y": -28.24,
+     "o": 0,
+     "px": 0.4794156849384308,
+     "py": 0.23548802733421326,
+     "rw": 217.0,
+     "rh": 229.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 6.0,
+     "oy": 3.0,
+     "draw_mode": 0,
+     "sz_x": 1.4466667175292969,
+     "sz_y": 1.5266666412353516,
+     "dir": "Exportado_level28"
+    },
+    {
+     "sp": "Leaves4",
+     "x": -13.429,
+     "y": -27.105,
+     "o": 0,
+     "px": 0.4664250612258911,
+     "py": 0.2552526295185089,
+     "rw": 451.0,
+     "rh": 352.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 7.0,
+     "oy": 18.0,
+     "draw_mode": 0,
+     "sz_x": 3.006666660308838,
+     "sz_y": 2.3466665744781494,
+     "dir": "Exportado_level28"
+    }
+   ],
+   "objectId": 0
+  },
+  {
+   "clase": "TreeProp",
+   "familia": "shake",
+   "x": -11.72,
+   "y": -28.91,
+   "nivel": "level28",
+   "nombre": "TreeProp",
+   "sprites": [
+    {
+     "sp": "Trunk7",
+     "x": -11.72,
+     "y": -28.91,
+     "o": 0,
+     "px": 0.5314943790435791,
+     "py": 0.2466207891702652,
+     "rw": 239.0,
+     "rh": 226.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 13.0,
+     "oy": 2.0,
+     "draw_mode": 0,
+     "sz_x": 1.59333336353302,
+     "sz_y": 1.506666660308838,
+     "dir": "Exportado_level28"
+    },
+    {
+     "sp": "DreamHouse_Environment_Reusables_49",
+     "x": -11.72,
+     "y": -27.816,
+     "o": 0,
+     "px": 0.4960399866104126,
+     "py": 0.26689448952674866,
+     "rw": 486.0,
+     "rh": 384.0,
+     "sx": 1.0,
+     "sy": 1.0,
+     "sl": 0,
+     "ppu": 150.0,
+     "angle": 0.0,
+     "ox": 11.0,
+     "oy": 4.0,
+     "draw_mode": 0,
+     "sz_x": 3.240000009536743,
+     "sz_y": 2.559999942779541,
+     "dir": "Exportado_level28"
+    }
+   ],
+   "objectId": 0
+  }
+ ],
+ "20": [
+  {
+   "clase": "Elevator",
+   "familia": "ui",
+   "x": -2.68,
+   "y": -0.19,
+   "nivel": "level54",
+   "nombre": "Elevator",
+   "sprites": [
+    {
+     "sp": "elevator_0",
+     "x": -2.68,
+     "y": -0.19,
+     "o": -3
+    },
+    {
+     "sp": "elevator_2",
+     "x": -2.68,
+     "y": -0.19,
+     "o": -3
+    },
+    {
+     "sp": "elevator_3",
+     "x": -2.68,
+     "y": -0.19,
+     "o": -3
+    },
+    {
+     "sp": "elevator_4",
+     "x": -2.68,
+     "y": -0.19,
+     "o": -3
+    }
+   ],
+   "objectId": -1300195954
+  }
+ ],
+ "23": [
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": 0.04,
+   "y": -4.91,
+   "nivel": "level59",
+   "nombre": "Top",
+   "sprites": [
+    {
+     "sp": "mallFountain_0",
+     "x": 0.04,
+     "y": -4.91,
+     "o": 0
+    }
+   ],
+   "anim": {
+    "frames": [
+     "mallFountain_0",
+     "mallFountain_1",
+     "mallFountain_2",
+     "mallFountain_3",
+     "mallFountain_4"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level59",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_subescenas"
+    ]
+   }
+  },
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": 0.018,
+   "y": -5.423,
+   "nivel": "level59",
+   "nombre": "Level",
+   "sprites": [
+    {
+     "sp": "mallFountain_5",
+     "x": 0.018,
+     "y": -5.423,
+     "o": 0
+    }
+   ],
+   "anim": {
+    "frames": [
+     "mallFountain_5",
+     "mallFountain_6",
+     "mallFountain_7"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_level59",
+     "Exportado_level67",
+     "Exportado_subescenas"
+    ]
+   }
+  }
+ ],
+ "29": [
+  {
+   "clase": "SimpleAnim",
+   "familia": "loop",
+   "x": 3.984,
+   "y": -2.353,
+   "nivel": "level69",
+   "nombre": "Belt",
+   "sprites": [
+    {
+     "sp": "ConveyorBelt_Anim_2",
+     "x": 3.984,
+     "y": -2.353,
+     "o": 51
+    }
+   ],
+   "anim": {
+    "frames": [
+     "ConveyorBelt_Anim_0",
+     "ConveyorBelt_Anim_1",
+     "ConveyorBelt_Anim_2"
+    ],
+    "fps": 4,
+    "playOnTap": false,
+    "stopOnLastFrame": false,
+    "dirs": [
+     "Exportado_subescenas",
+     "Exportado_subescenas",
+     "Exportado_level69"
+    ],
+    "px": 0.50401,
+    "py": 0.42817,
+    "ppu": 150.0
+   }
+  },
+  {
+   "clase": "MailboxObject",
+   "familia": "ui",
+   "x": -0.8,
+   "y": -2.03,
+   "nivel": "level69",
+   "nombre": "Mailbox",
+   "sprites": [],
+   "objectId": 732112365
+  }
+ ]
+}

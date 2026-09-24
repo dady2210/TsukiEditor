@@ -29,6 +29,16 @@ class TsukiPort {
         this.btnHammerGrid = document.getElementById('btn-hammer-grid');
         this.btnHammerFlip = document.getElementById('btn-hammer-flip');
         
+        this.mapModal = document.getElementById('play-map-modal');
+        this.mapOverlay = document.getElementById('play-map-overlay');
+        this.btnMapModalClose = document.getElementById('btn-map-modal-close');
+        this.btnMapMenu = document.getElementById('btn-map-menu');
+        this.pmDestinationsGrid = document.getElementById('pm-destinations-grid');
+        this.pmTabVillage = document.getElementById('pm-tab-village');
+        this.pmTabCity = document.getElementById('pm-tab-city');
+        this.pmCurrentLocationHint = document.getElementById('pm-current-location-hint');
+        this.currentMapZone = 'village';
+        
         this.currentCategory = 1; // 1 = Furniture (default)
         this.showGrid = true;
         this.autosaveEnabled = true; // Por defecto activado guardando en caché local silenciosa
@@ -73,6 +83,47 @@ class TsukiPort {
             });
         }
         
+        if (this.btnPhone) {
+            this.btnPhone.title = 'Mapa de Viaje (Teléfono)';
+            this.btnPhone.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleMapModal();
+            });
+        }
+
+        if (this.btnMapMenu) {
+            this.btnMapMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.openMapModal();
+            });
+        }
+
+        if (this.btnMapModalClose) {
+            this.btnMapModalClose.addEventListener('click', () => this.closeMapModal());
+        }
+
+        if (this.mapOverlay) {
+            this.mapOverlay.addEventListener('click', () => this.closeMapModal());
+        }
+
+        if (this.pmTabVillage) {
+            this.pmTabVillage.addEventListener('click', () => {
+                this.currentMapZone = 'village';
+                this.pmTabVillage.classList.add('active');
+                if (this.pmTabCity) this.pmTabCity.classList.remove('active');
+                this.renderMapDestinations();
+            });
+        }
+
+        if (this.pmTabCity) {
+            this.pmTabCity.addEventListener('click', () => {
+                this.currentMapZone = 'city';
+                this.pmTabCity.classList.add('active');
+                if (this.pmTabVillage) this.pmTabVillage.classList.remove('active');
+                this.renderMapDestinations();
+            });
+        }
+
         if (this.btnSettings) {
             this.btnSettings.title = 'Configuración';
             this.btnSettings.addEventListener('click', (e) => {
@@ -88,11 +139,21 @@ class TsukiPort {
                     this.closeSettingsModal();
                 }
             }
+            if (this.mapModal && !this.mapModal.classList.contains('hidden')) {
+                if (!this.mapModal.contains(e.target) && !(this.btnPhone && this.btnPhone.contains(e.target)) && !(this.btnMapMenu && this.btnMapMenu.contains(e.target))) {
+                    this.closeMapModal();
+                }
+            }
         });
 
-        // Prevent clicks inside modal from propagating out
+        // Prevent clicks inside modals from propagating out
         if (this.settingsModal) {
             this.settingsModal.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
+        if (this.mapModal) {
+            this.mapModal.addEventListener('click', (e) => {
                 e.stopPropagation();
             });
         }
@@ -237,6 +298,120 @@ class TsukiPort {
         if (!this.settingsModal) return;
         this.settingsModal.classList.add('hidden');
         if (this.btnSettings) this.btnSettings.classList.remove('active');
+    }
+
+    toggleMapModal() {
+        if (!this.mapModal) return;
+        if (this.mapModal.classList.contains('hidden')) {
+            this.openMapModal();
+        } else {
+            this.closeMapModal();
+        }
+    }
+
+    openMapModal() {
+        if (!this.mapModal) return;
+        this.closeSettingsModal();
+        this.mapModal.classList.remove('hidden');
+        if (this.mapOverlay) this.mapOverlay.classList.remove('hidden');
+        if (this.btnPhone) this.btnPhone.classList.add('active');
+        this.renderMapDestinations();
+    }
+
+    closeMapModal() {
+        if (!this.mapModal) return;
+        this.mapModal.classList.add('hidden');
+        if (this.mapOverlay) this.mapOverlay.classList.add('hidden');
+        if (this.btnPhone) this.btnPhone.classList.remove('active');
+    }
+
+    renderMapDestinations() {
+        if (!this.pmDestinationsGrid) return;
+        this.pmDestinationsGrid.innerHTML = '';
+
+        const curLocId = parseInt(document.getElementById('select-location')?.value || '0', 10);
+        const curLocName = (typeof SUBLOC_NAMES !== 'undefined' && SUBLOC_NAMES[curLocId]) || ('Ubicación ' + curLocId);
+        if (this.pmCurrentLocationHint) {
+            this.pmCurrentLocationHint.textContent = `📍 Ubicación actual: ${curLocName}`;
+        }
+
+        const VILLAGE_LOCATIONS = [
+            { id: 0, name: "Casa del Árbol de Tsuki", icon: "🏡", desc: "Planta baja, pisos superiores y tronco", tag: "Hogar" },
+            { id: 1, name: "Tienda de Yori", icon: "🦊", desc: "Artículos, muebles y tienda de Pipi", tag: "Tienda" },
+            { id: 2, name: "Casa de Chi", icon: "🦒", desc: "Biblioteca y rincón de lectura de Chi", tag: "Vecino" },
+            { id: 3, name: "Casa de Moca", icon: "🐢", desc: "Bonsáis, té y equipo de música de Moca", tag: "Vecino" },
+            { id: 4, name: "Muelle / Costa", icon: "🎣", desc: "Pesca marítima y costa de sirenas", tag: "Pesca" },
+            { id: 5, name: "Tienda de Rosemary", icon: "🌱", desc: "Semillas, flores y macetas de jardín", tag: "Vivero" },
+            { id: 6, name: "Granja de Tsuki", icon: "🥕", desc: "Parcelas de zanahorias y cobertizo", tag: "Cultivo" },
+            { id: 8, name: "Ayuntamiento", icon: "🏛️", desc: "Despacho del Alcalde Benny y tablón de anuncios", tag: "Oficina" },
+            { id: 9, name: "Casa de Té de Momo", icon: "🍵", desc: "Puesto de ramen de Bobo y salón de té de Momo", tag: "Comida" },
+            { id: 10, name: "Estación de Tren", icon: "🚉", desc: "Llegada del tren a la Gran Ciudad y Floyd", tag: "Viaje" },
+            { id: 11, name: "Taller de Dawn", icon: "🧰", desc: "Máquina Junker y mejoras de Dawn", tag: "Taller" },
+            { id: 12, name: "Dojo / Bar de Ken", icon: "🥊", desc: "Bar nocturno y rincón de entrenamiento de Ken", tag: "Noche" },
+            { id: 13, name: "Salón de Scarlett", icon: "🎷", desc: "Lounge bar, música en vivo y bebidas finas", tag: "Lounge" }
+        ];
+
+        const CITY_LOCATIONS = [
+            { id: 14, name: "En Tránsito / Tren", icon: "🚆", desc: "Vagón del tren a toda marcha", tag: "Tren" },
+            { id: 15, name: "Estación Subterráneo", icon: "🚇", desc: "Llegada al metro metropolitano", tag: "Transporte" },
+            { id: 16, name: "Ayuntamiento Urbano", icon: "🏢", desc: "Sede de gobierno de la Gran Ciudad", tag: "Gobierno" },
+            { id: 17, name: "Salida de la Ciudad", icon: "🛣️", desc: "Acceso metropolitano y autopista", tag: "Salida" },
+            { id: 18, name: "El Agujero (The Hole)", icon: "🕳️", desc: "Callejón y bar clandestino subterráneo", tag: "Subterráneo" },
+            { id: 19, name: "Hotel Cápsula", icon: "🛏️", desc: "Alojamiento futurista para viajeros", tag: "Hotel" },
+            { id: 20, name: "Lobby de Apartamentos", icon: "🛎️", desc: "Recepción y vestíbulo residencial", tag: "Residencia" },
+            { id: 21, name: "Bar La Cuerva (The Raven)", icon: "🍸", desc: "Elegante bar nocturno y club de jazz", tag: "Bar" },
+            { id: 22, name: "Penthouse de la Ciudad", icon: "🌆", desc: "Apartamento de lujo en las alturas", tag: "Exclusivo" },
+            { id: 23, name: "Centro Comercial", icon: "🛍️", desc: "Galería comercial y tiendas departamentales", tag: "Compras" },
+            { id: 24, name: "Entrada al Centro Comercial", icon: "🚪", desc: "Acceso y exteriores del centro comercial", tag: "Compras" },
+            { id: 25, name: "Tienda de Alfombras", icon: "🧶", desc: "Tapicería y alfombras tejidas", tag: "Tienda" },
+            { id: 26, name: "Vinatería", icon: "🍷", desc: "Selección de vinos y licores", tag: "Bar" },
+            { id: 27, name: "Heladería", icon: "🍨", desc: "Postres y helados artesanales", tag: "Dulces" },
+            { id: 28, name: "Joyería", icon: "💎", desc: "Gemas, relojes y alhajas finas", tag: "Lujo" },
+            { id: 29, name: "Oficina de Correos", icon: "📬", desc: "Envío y recepción de paquetes", tag: "Servicio" },
+            { id: 30, name: "Bubble Tea", icon: "🧋", desc: "Bebidas de té con perlas de tapioca", tag: "Bebidas" },
+            { id: 31, name: "Zapatería", icon: "👞", desc: "Calzado elegante y botas", tag: "Moda" },
+            { id: 32, name: "Estación de Policía", icon: "👮", desc: "Comisaría metropolitana de seguridad", tag: "Seguridad" },
+            { id: 33, name: "Cafetería Urbana", icon: "☕", desc: "Espresso y repostería recién horneada", tag: "Café" },
+            { id: 34, name: "Apartamento Urbano", icon: "🛋️", desc: "Vivienda moderna en el centro", tag: "Vivienda" }
+        ];
+
+        const list = this.currentMapZone === 'city' ? CITY_LOCATIONS : VILLAGE_LOCATIONS;
+
+        list.forEach(loc => {
+            const isCurrent = (loc.id === curLocId);
+            const card = document.createElement('div');
+            card.className = `pm-card ${isCurrent ? 'current' : ''}`;
+            card.title = `Viajar a ${loc.name}`;
+
+            card.innerHTML = `
+                <div class="pm-card-top">
+                    <span class="pm-card-icon">${loc.icon}</span>
+                    <span class="pm-card-badge" style="${isCurrent ? 'background:#27ae60;' : 'background:#8c8273;'}">
+                        ${isCurrent ? '📍 AQUÍ' : loc.tag}
+                    </span>
+                </div>
+                <div class="pm-card-title">${loc.name}</div>
+                <div class="pm-card-desc">${loc.desc}</div>
+                <div class="pm-card-footer">
+                    <span>${isCurrent ? 'Estás aquí' : '▶ Viajar ahora'}</span>
+                    <span style="font-size: 0.65rem; opacity: 0.7;">ID: ${loc.id}</span>
+                </div>
+            `;
+
+            card.addEventListener('click', () => {
+                this.closeMapModal();
+                if (this.app && typeof this.app.goLocation === 'function') {
+                    this.app.goLocation(loc.id);
+                } else if (typeof window.goLocation === 'function') {
+                    window.goLocation(loc.id);
+                }
+                if (this.app && typeof this.app.showToast === 'function') {
+                    this.app.showToast(`🧭 Viajando a: ${loc.name}...`);
+                }
+            });
+
+            this.pmDestinationsGrid.appendChild(card);
+        });
     }
 
     setToggleState(btn, isOn) {

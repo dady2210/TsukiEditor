@@ -1,0 +1,1279 @@
+{
+ "_fuente": "compressedBlob de cada Shader, descomprimido con LZ4",
+ "_nota": "El `.shadergraph` NO viaja en la build; el shader GENERADO si, y en esta build va en GLSL porque es de Android (GLES3). `declara` son las propiedades del shader: OJO, un material puede traer valores de propiedades que su shader NO declara, restos de un shader anterior, y esos no los lee nadie. `globales` son los uniforms que el codigo usa y no salen del material: los pone el juego con SetGlobalFloat.",
+ "shaders": {
+  "Shader Graphs/AbstractArt": {
+   "fichero": "sharedassets70.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "_Seed",
+    "_Steps",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_RendererColor",
+    "_Seed",
+    "_Steps"
+   ],
+   "globales": [
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_AbstractArt.glsl"
+  },
+  "Shader Graphs/Bounds": {
+   "fichero": "sharedassets62.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_RendererColor"
+   ],
+   "globales": [
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Bounds.glsl"
+  },
+  "Shader Graphs/Clouds": {
+   "fichero": "sharedassets39.assets",
+   "declara": [
+    "White",
+    "_Bottom",
+    "_MainTex",
+    "_Middle1",
+    "_Middle2",
+    "_Top",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Bottom",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_Middle1",
+    "_Middle2",
+    "_RendererColor",
+    "_TimeParameters",
+    "_Top"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Clouds.glsl"
+  },
+  "Shader Graphs/Color": {
+   "fichero": "sharedassets14.assets",
+   "declara": [
+    "_Color",
+    "_QueueControl",
+    "_QueueOffset",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Color"
+   ],
+   "globales": [],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Color.glsl"
+  },
+  "Shader Graphs/ColorSwapTiled": {
+   "fichero": "sharedassets49.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_CameraPosition",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_MainTex_ST",
+    "_RendererColor"
+   ],
+   "globales": [
+    "_CameraPosition",
+    "_GlobalMipBias",
+    "_MainTex_ST",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_ColorSwapTiled.glsl"
+  },
+  "Shader Graphs/Concrete": {
+   "fichero": "8757dc46e0a6245559edf7051bb5ccbd",
+   "declara": [
+    "White",
+    "_Delta",
+    "_Hue",
+    "_HueSpan",
+    "_Line",
+    "_LineDarkness",
+    "_MainTex",
+    "_Patch",
+    "_RidgeScale",
+    "_Saturation",
+    "_Scale",
+    "_Threshold",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Delta",
+    "_GlobalMipBias",
+    "_Hue",
+    "_HueSpan",
+    "_Line",
+    "_LineDarkness",
+    "_MainTex",
+    "_MainTex_ST",
+    "_Patch",
+    "_RendererColor",
+    "_RidgeScale",
+    "_Saturation",
+    "_Scale",
+    "_Threshold"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_MainTex_ST",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Concrete.glsl"
+  },
+  "Shader Graphs/ConcreteReveal": {
+   "fichero": "sharedassets70.assets",
+   "declara": [
+    "White",
+    "_Delta",
+    "_Hue",
+    "_HueSpan",
+    "_Line",
+    "_LineDarkness",
+    "_MainTex",
+    "_Patch",
+    "_RevealOffset",
+    "_RevealThreshold",
+    "_RidgeScale",
+    "_Saturation",
+    "_Scale",
+    "_Threshold",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Delta",
+    "_GlobalMipBias",
+    "_Hue",
+    "_HueSpan",
+    "_Line",
+    "_LineDarkness",
+    "_MainTex",
+    "_MainTex_ST",
+    "_Patch",
+    "_RendererColor",
+    "_RevealOffset",
+    "_RevealThreshold",
+    "_RidgeScale",
+    "_Saturation",
+    "_Scale",
+    "_Threshold",
+    "unity_BaseInstanceID"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_MainTex_ST",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_ConcreteReveal.glsl"
+  },
+  "Shader Graphs/Cosmic": {
+   "fichero": "duplicateassetisolation_assets_all_7a42fe53d9712b1c81bcc2bbbbf83353.bundle",
+   "declara": [
+    "White",
+    "_Background",
+    "_MainTex",
+    "_Shade",
+    "_StarsBig",
+    "_StarsSmall",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Background",
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_StarsBig",
+    "_StarsSmall",
+    "_TimeParameters"
+   ],
+   "globales": [
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Cosmic.glsl"
+  },
+  "Shader Graphs/Distort": {
+   "fichero": "globalgamemanagers.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "_Scale",
+    "_SpeedDamper",
+    "_StrengthDamper",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor",
+    "_Scale",
+    "_SpeedDamper",
+    "_StrengthDamper",
+    "_TimeParameters"
+   ],
+   "globales": [
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Distort.glsl"
+  },
+  "Shader Graphs/DistortVertex": {
+   "fichero": "sharedassets1.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "_Scale",
+    "_SpeedDamper",
+    "_StrengthDamper",
+    "_UVDistortDamper",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor",
+    "_Scale",
+    "_SpeedDamper",
+    "_StrengthDamper",
+    "_TimeParameters",
+    "_UVDistortDamper"
+   ],
+   "globales": [
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_DistortVertex.glsl"
+  },
+  "Shader Graphs/Fade": {
+   "fichero": "sharedassets39.assets",
+   "declara": [
+    "White",
+    "_FadeColor",
+    "_MainTex",
+    "_Offset",
+    "_Threshold",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_FadeColor",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_Offset",
+    "_RendererColor",
+    "_Threshold"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Fade.glsl"
+  },
+  "Shader Graphs/FadeWorld": {
+   "fichero": "sharedassets39.assets",
+   "declara": [
+    "White",
+    "_FadeColor",
+    "_MainTex",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_FadeColor",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor",
+    "_WorldSpaceCameraPos",
+    "unity_OrthoParams"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_FadeWorld.glsl"
+  },
+  "Shader Graphs/Fill": {
+   "fichero": "sharedassets12.assets",
+   "declara": [
+    "White",
+    "_Alpha",
+    "_FillColor",
+    "_MainTex",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Alpha",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Fill.glsl"
+  },
+  "Shader Graphs/FillVertex": {
+   "fichero": "furniture_assets_all_22d367c8beca55276af4138414a20260.bundle",
+   "declara": [
+    "White",
+    "_MainTex",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_FillVertex.glsl"
+  },
+  "Shader Graphs/Foam": {
+   "fichero": "sharedassets4.assets",
+   "declara": [
+    "White",
+    "_Distort",
+    "_DistortDamper",
+    "_MainTex",
+    "_Speed",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Distort",
+    "_DistortDamper",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor",
+    "_Speed",
+    "_TimeParameters"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Foam.glsl"
+  },
+  "Shader Graphs/FullBaseLighting": {
+   "fichero": "sharedassets15.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalColor",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor"
+   ],
+   "globales": [
+    "_GlobalColor",
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_FullBaseLighting.glsl"
+  },
+  "Shader Graphs/GenericWindow": {
+   "fichero": "ad667f8c1a99840bdb8d44b7f1262520",
+   "declara": [
+    "White",
+    "_Edge",
+    "_MainTex",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Edge",
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_ScreenParams"
+   ],
+   "globales": [
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_ScreenParams"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_GenericWindow.glsl"
+  },
+  "Shader Graphs/GenericWindowReveal": {
+   "fichero": "sharedassets70.assets",
+   "declara": [
+    "White",
+    "_Edge",
+    "_MainTex",
+    "_RevealOffset",
+    "_RevealThreshold",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Edge",
+    "_ProjectionParams",
+    "_RendererColor",
+    "_RevealOffset",
+    "_RevealThreshold",
+    "_ScaledScreenParams",
+    "_ScreenParams",
+    "unity_BaseInstanceID"
+   ],
+   "globales": [
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_ScreenParams"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_GenericWindowReveal.glsl"
+  },
+  "Shader Graphs/Line": {
+   "fichero": "2986de1289ad84e549867cfc18469b6e",
+   "declara": [
+    "White",
+    "_Fuzz",
+    "_LineColor",
+    "_MainTex",
+    "_NoiseClip",
+    "_NoiseScale",
+    "_NoiseThreshold",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Fuzz",
+    "_GlobalMipBias",
+    "_LineColor",
+    "_MainTex",
+    "_NoiseClip",
+    "_NoiseScale",
+    "_NoiseThreshold",
+    "_RendererColor"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Line.glsl"
+  },
+  "Shader Graphs/LineReveal": {
+   "fichero": "sharedassets70.assets",
+   "declara": [
+    "White",
+    "_Fuzz",
+    "_LineColor",
+    "_MainTex",
+    "_NoiseClip",
+    "_NoiseScale",
+    "_NoiseThreshold",
+    "_RevealOffset",
+    "_RevealThreshold",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Fuzz",
+    "_GlobalMipBias",
+    "_LineColor",
+    "_MainTex",
+    "_NoiseClip",
+    "_NoiseScale",
+    "_NoiseThreshold",
+    "_RendererColor",
+    "_RevealOffset",
+    "_RevealThreshold",
+    "unity_BaseInstanceID"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_LineReveal.glsl"
+  },
+  "Shader Graphs/LineworkDodge": {
+   "fichero": "b90f3e2f9605749a093914f5e13ecc71",
+   "declara": [
+    "White",
+    "_BlueChannel",
+    "_GreenChannel",
+    "_MainTex",
+    "_RedChannel",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_BlueChannel",
+    "_GlobalMipBias",
+    "_GreenChannel",
+    "_MainTex",
+    "_RedChannel",
+    "_RendererColor"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_LineworkDodge.glsl"
+  },
+  "Shader Graphs/NightLights": {
+   "fichero": "sharedassets49.assets",
+   "declara": [
+    "White",
+    "_LightColor",
+    "_MainTex",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_CameraPosition",
+    "_GlobalMipBias",
+    "_LightColor",
+    "_MainTex",
+    "_MainTex_ST",
+    "_Night",
+    "_RendererColor"
+   ],
+   "globales": [
+    "_CameraPosition",
+    "_GlobalMipBias",
+    "_MainTex_ST",
+    "_Night",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_NightLights.glsl"
+  },
+  "Shader Graphs/NoiseLine": {
+   "fichero": "sharedassets62.assets",
+   "declara": [
+    "White",
+    "_Color",
+    "_LineColor",
+    "_LineHighlight",
+    "_LineThickness",
+    "_LineVariation",
+    "_MainTex",
+    "_Scale",
+    "_Swizz",
+    "_Threshold",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalMipBias",
+    "_LineColor",
+    "_LineThickness",
+    "_LineVariation",
+    "_MainTex",
+    "_MainTex_ST",
+    "_RendererColor",
+    "_Scale",
+    "_Swizz",
+    "_Threshold"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_MainTex_ST",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_NoiseLine.glsl"
+  },
+  "Shader Graphs/RGBSwap": {
+   "fichero": "616102f3b9db546b19ca4aa0f9df951a",
+   "declara": [
+    "White",
+    "_BlueChannel",
+    "_GreenChannel",
+    "_MainTex",
+    "_RedChannel",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_BlueChannel",
+    "_GlobalMipBias",
+    "_GreenChannel",
+    "_MainTex",
+    "_RedChannel",
+    "_RendererColor"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_RGBSwap.glsl"
+  },
+  "Shader Graphs/RadialLight": {
+   "fichero": "sharedassets8.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "_Slide",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_RendererColor",
+    "_Slide"
+   ],
+   "globales": [
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_RadialLight.glsl"
+  },
+  "Shader Graphs/Reveal": {
+   "fichero": "sharedassets9.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "_RevealOffset",
+    "_RevealThreshold",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor",
+    "_RevealOffset",
+    "_RevealThreshold",
+    "unity_BaseInstanceID"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Reveal.glsl"
+  },
+  "Shader Graphs/RevealReverse": {
+   "fichero": "sharedassets70.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "_RevealOffset",
+    "_RevealThreshold",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor",
+    "_RevealOffset",
+    "_RevealThreshold"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_RevealReverse.glsl"
+  },
+  "Shader Graphs/SDF URP Unlit": {
+   "fichero": "sharedassets14.assets",
+   "declara": [
+    "_AUTOMATIC_SMOOTHING",
+    "_BaseA",
+    "_BaseB",
+    "_ColorA",
+    "_ColorB",
+    "_ContoursManualSmoothing",
+    "_Cutoff",
+    "_MainTex",
+    "_QueueControl",
+    "_QueueOffset",
+    "_SUPERSAMPLE",
+    "_TWO_CONTOURS",
+    "_USEVERTEXCOLORS",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_AUTOMATIC_SMOOTHING_ON",
+    "_AlphaToMaskAvailable",
+    "_BaseA",
+    "_ColorA",
+    "_ContoursManualSmoothing",
+    "_Cutoff",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_USEVERTEXCOLORS",
+    "_USEVERTEXCOLORS2",
+    "_USEVERTEXCOLORSç"
+   ],
+   "globales": [
+    "_AUTOMATIC_SMOOTHING_ON",
+    "_AlphaToMaskAvailable",
+    "_GlobalMipBias",
+    "_USEVERTEXCOLORS2",
+    "_USEVERTEXCOLORSç"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_SDF_URP_Unlit.glsl"
+  },
+  "Shader Graphs/Shafts": {
+   "fichero": "furniture_assets_all_22d367c8beca55276af4138414a20260.bundle",
+   "declara": [
+    "White",
+    "_MainTex",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor",
+    "_TimeParameters"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Shafts.glsl"
+  },
+  "Shader Graphs/Spray": {
+   "fichero": "furniture_assets_all_22d367c8beca55276af4138414a20260.bundle",
+   "declara": [
+    "White",
+    "_MainTex",
+    "_Placing",
+    "_Power",
+    "_TempTint",
+    "_Transition",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalMipBias",
+    "_MainTex",
+    "_Placing",
+    "_Power",
+    "_RendererColor",
+    "_TempTint",
+    "_TimeParameters",
+    "_Transition"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Spray.glsl"
+  },
+  "Shader Graphs/SprayUI": {
+   "fichero": "sharedassets14.assets",
+   "declara": [
+    "_ClipRect",
+    "_ColorMask",
+    "_MainTex",
+    "_Stencil",
+    "_StencilComp",
+    "_StencilOp",
+    "_StencilReadMask",
+    "_StencilWriteMask",
+    "_UIMaskSoftnessX",
+    "_UIMaskSoftnessY",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_ClipRect",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_ScreenParams",
+    "_UIMaskSoftnessX",
+    "_UIMaskSoftnessY"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_ScreenParams"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_SprayUI.glsl"
+  },
+  "Shader Graphs/Stripe": {
+   "fichero": "globalgamemanagers.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "_MainTex_ST",
+    "_Outline",
+    "_Rotation",
+    "_Speed",
+    "_StripeColor",
+    "_StripeNum",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalMipBias",
+    "_MainTex",
+    "_MainTex_ST",
+    "_Outline",
+    "_RendererColor",
+    "_Rotation",
+    "_Speed",
+    "_StripeColor",
+    "_StripeNum",
+    "_TimeParameters"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Stripe.glsl"
+  },
+  "Shader Graphs/StrongLight": {
+   "fichero": "sharedassets12.assets",
+   "declara": [
+    "White",
+    "_MainTex",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_StrongLight.glsl"
+  },
+  "Shader Graphs/Tar": {
+   "fichero": "sharedassets50.assets",
+   "declara": [
+    "White",
+    "_Darkness",
+    "_DistortStrength",
+    "_MainTex",
+    "_NoiseScale",
+    "_NoiseStrength",
+    "_Tar",
+    "_TextureRamp",
+    "_TextureScale",
+    "_TextureStrength",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Darkness",
+    "_DistortStrength",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_NoiseScale",
+    "_RendererColor",
+    "_Tar",
+    "_TextureRamp",
+    "_TextureScale",
+    "_TextureStrength"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Tar.glsl"
+  },
+  "Shader Graphs/Water": {
+   "fichero": "globalgamemanagers.assets",
+   "declara": [
+    "White",
+    "_BaseDistortDamper",
+    "_BaseOffset",
+    "_BaseSpeedDamper",
+    "_CausticColor",
+    "_CausticScale",
+    "_MainTex",
+    "_NormalDistort",
+    "_SecondaryTex",
+    "_Speed",
+    "_SpeedY",
+    "_TintA",
+    "_TintB",
+    "_WaterScale",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_BaseDistortDamper",
+    "_BaseOffset",
+    "_BaseSpeedDamper",
+    "_CausticColor",
+    "_CausticScale",
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_MainTex",
+    "_RendererColor",
+    "_SecondaryTex",
+    "_Speed",
+    "_TimeParameters",
+    "_TintA",
+    "_TintB",
+    "_WaterScale"
+   ],
+   "globales": [
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Water.glsl"
+  },
+  "Shader Graphs/Windows": {
+   "fichero": "de1117e2c31bb420eb7b350bf7939ad3",
+   "declara": [
+    "White",
+    "_Glass",
+    "_GreenChannel",
+    "_MainTex",
+    "_RedChannel",
+    "_Threshold",
+    "unity_Lightmaps",
+    "unity_LightmapsInd",
+    "unity_ShadowMasks"
+   ],
+   "uniforms": [
+    "_Glass",
+    "_GlobalMipBias",
+    "_GreenChannel",
+    "_MainTex",
+    "_ProjectionParams",
+    "_RedChannel",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_ScreenParams"
+   ],
+   "globales": [
+    "_GlobalMipBias",
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_ScreenParams"
+   ],
+   "programas": [
+    "vertice",
+    "fragmento",
+    "vertice",
+    "fragmento"
+   ],
+   "glsl": "Shader_Graphs_Windows.glsl"
+  }
+ }
+}

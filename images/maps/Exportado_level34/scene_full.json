@@ -1,0 +1,568 @@
+{
+  "kind": "map",
+  "id": "level34",
+  "name": "level34",
+  "source": "C:\\Users\\Andres\\Desktop\\Tsuki_Odyssey\\AssetPack\\assets\\bin\\Data\\level34",
+  "layout": {
+    "front": [
+      {
+        "sp": "Lantern_3_Off",
+        "go": "Pumpkin",
+        "x": 3.5840001106262207,
+        "y": 2.89900004863739,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.949999988079071,
+        "rw": 132.0,
+        "rh": 266.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 7,
+        "draw_mode": 0,
+        "sz_x": 0.5933333039283752,
+        "sz_y": 0.5600000023841858,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/LNY/Lantern/Pumpkin",
+        "go_path_id": 1,
+        "tr_path_id": 15,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": -5.677000045776367,
+        "y": -1.1230000257492065,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5333333611488342,
+          "b": 0.6392157077789307,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/LNY/Lantern (1)/Glow (3)",
+        "go_path_id": 4,
+        "tr_path_id": 18,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": 5.544000148773193,
+        "y": -1.371999979019165,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5333333611488342,
+          "b": 0.6392157077789307,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/LNY/Lantern (2)/Glow (3)",
+        "go_path_id": 5,
+        "tr_path_id": 19,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "Lantern_1_Off",
+        "go": "Pumpkin",
+        "x": 5.544000148773193,
+        "y": -0.9819999933242798,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.9200000166893005,
+        "rw": 96.0,
+        "rh": 169.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": -2,
+        "draw_mode": 0,
+        "sz_x": 0.5933333039283752,
+        "sz_y": 0.5600000023841858,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/LNY/Lantern (2)/Pumpkin",
+        "go_path_id": 6,
+        "tr_path_id": 20,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (3)",
+        "x": 3.5840001106262207,
+        "y": 2.2800000607967377,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5333333611488342,
+          "b": 0.6376010179519653,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/LNY/Lantern/Glow (3)",
+        "go_path_id": 7,
+        "tr_path_id": 21,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow",
+        "x": -5.673000045586377,
+        "y": -1.0100000277161598,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5333333611488342,
+          "b": 0.6392157077789307,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/LNY/Lantern (1)/Glow",
+        "go_path_id": 8,
+        "tr_path_id": 22,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow",
+        "x": 5.548000148963183,
+        "y": -1.2589999809861183,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5333333611488342,
+          "b": 0.6392157077789307,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/LNY/Lantern (2)/Glow",
+        "go_path_id": 10,
+        "tr_path_id": 24,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow",
+        "x": 3.5860001107212156,
+        "y": 2.324000060558319,
+        "angle": 0.0,
+        "sx": 1.3899999856948853,
+        "sy": 1.399999976158142,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.5333333611488342,
+          "b": 0.6376010179519653,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/LNY/Lantern/Glow",
+        "go_path_id": 11,
+        "tr_path_id": 25,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "Lantern_1_Off",
+        "go": "Pumpkin",
+        "x": -5.677000045776367,
+        "y": -0.7330000400543213,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.9200000166893005,
+        "rw": 96.0,
+        "rh": 169.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": -2,
+        "draw_mode": 0,
+        "sz_x": 0.5933333039283752,
+        "sz_y": 0.5600000023841858,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/LNY/Lantern (1)/Pumpkin",
+        "go_path_id": 13,
+        "tr_path_id": 27,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      }
+    ],
+    "back": [],
+    "fx": []
+  },
+  "hierarchy": [
+    {
+      "path": "Pumpkin",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "SceneData",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (2)",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Pumpkin",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (3)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern (1)",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Lantern",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Pumpkin",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "LNY",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    }
+  ],
+  "colliders": [],
+  "logic": {
+    "walkable": [],
+    "blockers": [],
+    "triggers": [],
+    "interaction_nodes": [],
+    "grids": [],
+    "camera_confines": [],
+    "lights": [],
+    "scripts": [],
+    "animators": [],
+    "audio": [],
+    "particles": []
+  },
+  "animation": {
+    "controllers": []
+  },
+  "audio": [],
+  "particles": [],
+  "catalog": {},
+  "raw": {
+    "level": "level34",
+    "origin_offset": {
+      "x": 0.0,
+      "y": 15.0
+    },
+    "grid_system": [],
+    "interaction_nodes": [],
+    "walkable_bounds": [],
+    "camera_confines": [],
+    "lighting_volumes": [],
+    "special_scripts": [],
+    "animator_nodes": [],
+    "audio_sources": [],
+    "particle_systems": []
+  }
+}

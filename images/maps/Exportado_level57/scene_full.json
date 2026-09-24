@@ -1,0 +1,163 @@
+{
+  "kind": "map",
+  "id": "level57",
+  "name": "level57",
+  "source": "C:\\Users\\Andres\\Desktop\\Tsuki_Odyssey\\AssetPack\\assets\\bin\\Data\\level57",
+  "layout": {
+    "front": [
+      {
+        "sp": "T2 Train Station_11",
+        "go": "Snow",
+        "x": 0.0,
+        "y": 0.0,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": -1.0062700510025024,
+        "py": 3.366666793823242,
+        "rw": 311.0,
+        "rh": 243.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 9.613333702087402,
+        "sz_y": 4.753333568572998,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "TrainStationWinter/Snow",
+        "go_path_id": 1,
+        "tr_path_id": 4,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "T2 Train Station_10",
+        "go": "Snow",
+        "x": 0.0,
+        "y": 0.0,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": 0.34646326303482056,
+        "py": -0.024894773960113525,
+        "rw": 1442.0,
+        "rh": 713.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 9.613333702087402,
+        "sz_y": 4.753333568572998,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "TrainStationWinter/Snow",
+        "go_path_id": 3,
+        "tr_path_id": 6,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      }
+    ],
+    "back": [],
+    "fx": []
+  },
+  "hierarchy": [
+    {
+      "path": "Snow",
+      "components": [
+        "Texture2D",
+        "Texture2D"
+      ]
+    },
+    {
+      "path": "TrainStationWinter",
+      "components": [
+        "Texture2D",
+        "Texture2D"
+      ]
+    },
+    {
+      "path": "Snow",
+      "components": [
+        "Texture2D",
+        "Texture2D"
+      ]
+    }
+  ],
+  "colliders": [],
+  "logic": {
+    "walkable": [],
+    "blockers": [],
+    "triggers": [],
+    "interaction_nodes": [],
+    "grids": [],
+    "camera_confines": [],
+    "lights": [],
+    "scripts": [],
+    "animators": [],
+    "audio": [],
+    "particles": []
+  },
+  "animation": {
+    "controllers": []
+  },
+  "audio": [],
+  "particles": [],
+  "catalog": {},
+  "raw": {
+    "level": "level57",
+    "origin_offset": {
+      "x": -40.0,
+      "y": -30.0
+    },
+    "grid_system": [],
+    "interaction_nodes": [],
+    "walkable_bounds": [],
+    "camera_confines": [],
+    "lighting_volumes": [],
+    "special_scripts": [],
+    "animator_nodes": [],
+    "audio_sources": [],
+    "particle_systems": []
+  }
+}

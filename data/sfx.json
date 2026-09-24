@@ -1,0 +1,1086 @@
+{
+ "_fuente": "los 136 AudioClip de sharedassets1.assets",
+ "_nota": "Al reves que la musica: los efectos SI estan en los assets normales. Vorbis del FSB5 descodificado a WAV y recodificado a Ogg, porque la libreria nativa que sacaria el Vorbis intacto no esta instalada. `SFXClip` es el indice en `AudioData.sfx`; aqui se indexa por NOMBRE, que es lo que el port necesita para pedir un efecto concreto.",
+ "efectos": [
+  {
+   "nombre": "Bell1",
+   "archivo": "Bell1.ogg",
+   "segundos": 2.91,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28329
+  },
+  {
+   "nombre": "Bell2",
+   "archivo": "Bell2.ogg",
+   "segundos": 2.91,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28687
+  },
+  {
+   "nombre": "Bell3",
+   "archivo": "Bell3.ogg",
+   "segundos": 2.91,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 27859
+  },
+  {
+   "nombre": "Bell4",
+   "archivo": "Bell4.ogg",
+   "segundos": 2.91,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28020
+  },
+  {
+   "nombre": "Bell5",
+   "archivo": "Bell5.ogg",
+   "segundos": 2.672,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26584
+  },
+  {
+   "nombre": "Bell6",
+   "archivo": "Bell6.ogg",
+   "segundos": 2.672,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26435
+  },
+  {
+   "nombre": "Bell7",
+   "archivo": "Bell7.ogg",
+   "segundos": 2.672,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25551
+  },
+  {
+   "nombre": "Blue - Normal",
+   "archivo": "Blue_Normal.ogg",
+   "segundos": 2.088,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 19000
+  },
+  {
+   "nombre": "Blue - Special",
+   "archivo": "Blue_Special.ogg",
+   "segundos": 2.088,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 19156
+  },
+  {
+   "nombre": "Red - Normal",
+   "archivo": "Red_Normal.ogg",
+   "segundos": 2.088,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 19442
+  },
+  {
+   "nombre": "Red - Special",
+   "archivo": "Red_Special.ogg",
+   "segundos": 2.088,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 19578
+  },
+  {
+   "nombre": "SprayCanShake",
+   "archivo": "SprayCanShake.ogg",
+   "segundos": 0.762,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 12066
+  },
+  {
+   "nombre": "SprayCanUse",
+   "archivo": "SprayCanUse.ogg",
+   "segundos": 0.913,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 13145
+  },
+  {
+   "nombre": "TaikoCue",
+   "archivo": "TaikoCue.ogg",
+   "segundos": 2.08,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 22318
+  },
+  {
+   "nombre": "appThemeMap",
+   "archivo": "appThemeMap.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 27086
+  },
+  {
+   "nombre": "bagClose",
+   "archivo": "bagClose.ogg",
+   "segundos": 0.576,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 9610
+  },
+  {
+   "nombre": "bagOpen",
+   "archivo": "bagOpen.ogg",
+   "segundos": 0.47,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 8447
+  },
+  {
+   "nombre": "bagReceiveItem",
+   "archivo": "bagReceiveItem.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28289
+  },
+  {
+   "nombre": "bedBlanket",
+   "archivo": "bedBlanket.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25736
+  },
+  {
+   "nombre": "bedPillow",
+   "archivo": "bedPillow.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26745
+  },
+  {
+   "nombre": "bite",
+   "archivo": "bite.ogg",
+   "segundos": 0.459,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 9325
+  },
+  {
+   "nombre": "boboFryingPan",
+   "archivo": "boboFryingPan.ogg",
+   "segundos": 5.432,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 46986
+  },
+  {
+   "nombre": "bountyBoardClose",
+   "archivo": "bountyBoardClose.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 27059
+  },
+  {
+   "nombre": "bountyBoardOpen",
+   "archivo": "bountyBoardOpen.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 27358
+  },
+  {
+   "nombre": "bubbleUI",
+   "archivo": "bubbleUI.ogg",
+   "segundos": 0.344,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 7074
+  },
+  {
+   "nombre": "bubblepop",
+   "archivo": "bubblepop.ogg",
+   "segundos": 0.033,
+   "hz": 96000,
+   "canales": 1,
+   "bytes": 4101
+  },
+  {
+   "nombre": "buy",
+   "archivo": "buy.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28030
+  },
+  {
+   "nombre": "cameraShutter",
+   "archivo": "cameraShutter.ogg",
+   "segundos": 0.344,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 8095
+  },
+  {
+   "nombre": "cardOpen",
+   "archivo": "cardOpen.ogg",
+   "segundos": 0.659,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 9968
+  },
+  {
+   "nombre": "cassetteClose",
+   "archivo": "cassetteClose.ogg",
+   "segundos": 0.225,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 6054
+  },
+  {
+   "nombre": "cassetteEject",
+   "archivo": "cassetteEject.ogg",
+   "segundos": 0.374,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 7464
+  },
+  {
+   "nombre": "cassetteLoad",
+   "archivo": "cassetteLoad.ogg",
+   "segundos": 0.364,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 7213
+  },
+  {
+   "nombre": "catch",
+   "archivo": "catch.ogg",
+   "segundos": 1.273,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 16127
+  },
+  {
+   "nombre": "chiGooglyEyes",
+   "archivo": "chiGooglyEyes.ogg",
+   "segundos": 2.001,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 20037
+  },
+  {
+   "nombre": "cleanStain",
+   "archivo": "cleanStain.ogg",
+   "segundos": 0.625,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 10023
+  },
+  {
+   "nombre": "click",
+   "archivo": "click.ogg",
+   "segundos": 0.044,
+   "hz": 15843,
+   "canales": 1,
+   "bytes": 3857
+  },
+  {
+   "nombre": "cropAnim",
+   "archivo": "cropAnim.ogg",
+   "segundos": 1.361,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 15168
+  },
+  {
+   "nombre": "cropBoxClose",
+   "archivo": "cropBoxClose.ogg",
+   "segundos": 2.727,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 27372
+  },
+  {
+   "nombre": "cropBoxOpen",
+   "archivo": "cropBoxOpen.ogg",
+   "segundos": 1.361,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 15470
+  },
+  {
+   "nombre": "dailySmack",
+   "archivo": "dailySmack.ogg",
+   "segundos": 0.875,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 11149
+  },
+  {
+   "nombre": "dawnWield",
+   "archivo": "dawnWield.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28230
+  },
+  {
+   "nombre": "dialogueBubbleOpen",
+   "archivo": "dialogueBubbleOpen.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 24208
+  },
+  {
+   "nombre": "dialoguePoof",
+   "archivo": "dialoguePoof.ogg",
+   "segundos": 1.361,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 14377
+  },
+  {
+   "nombre": "ding",
+   "archivo": "ding.ogg",
+   "segundos": 0.312,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 6740
+  },
+  {
+   "nombre": "ding2",
+   "archivo": "ding2.ogg",
+   "segundos": 1.009,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 13390
+  },
+  {
+   "nombre": "ding3",
+   "archivo": "ding3.ogg",
+   "segundos": 1.191,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 14589
+  },
+  {
+   "nombre": "editButtonClose",
+   "archivo": "editButtonClose.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26418
+  },
+  {
+   "nombre": "editButtonOpen",
+   "archivo": "editButtonOpen.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25279
+  },
+  {
+   "nombre": "eggzooka",
+   "archivo": "eggzooka.ogg",
+   "segundos": 1.501,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 18823
+  },
+  {
+   "nombre": "elevatorAlarm",
+   "archivo": "elevatorAlarm.ogg",
+   "segundos": 2.466,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 32382
+  },
+  {
+   "nombre": "elevatorAlarmEnd",
+   "archivo": "elevatorAlarmEnd.ogg",
+   "segundos": 1.424,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 8681
+  },
+  {
+   "nombre": "elevatorButton",
+   "archivo": "elevatorButton.ogg",
+   "segundos": 1.486,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 14866
+  },
+  {
+   "nombre": "elevatorDoorsClose",
+   "archivo": "elevatorDoorsClose.ogg",
+   "segundos": 2.972,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 24183
+  },
+  {
+   "nombre": "elevatorDoorsOpen",
+   "archivo": "elevatorDoorsOpen.ogg",
+   "segundos": 2.972,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25809
+  },
+  {
+   "nombre": "farmMultiple",
+   "archivo": "farmMultiple.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25963
+  },
+  {
+   "nombre": "farmSingle",
+   "archivo": "farmSingle.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26423
+  },
+  {
+   "nombre": "fart",
+   "archivo": "fart.ogg",
+   "segundos": 0.534,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 10664
+  },
+  {
+   "nombre": "gachaBoyBreak",
+   "archivo": "gachaBoyBreak.ogg",
+   "segundos": 2.972,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28653
+  },
+  {
+   "nombre": "gachaBoyImpact",
+   "archivo": "gachaBoyImpact.ogg",
+   "segundos": 1.001,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 12159
+  },
+  {
+   "nombre": "gachaReveal",
+   "archivo": "gachaReveal.ogg",
+   "segundos": 2.646,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28683
+  },
+  {
+   "nombre": "gachaRevealRare",
+   "archivo": "gachaRevealRare.ogg",
+   "segundos": 2.646,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28868
+  },
+  {
+   "nombre": "gachaRoll",
+   "archivo": "gachaRoll.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 29617
+  },
+  {
+   "nombre": "gachaTap1",
+   "archivo": "gachaTap1.ogg",
+   "segundos": 0.798,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 11161
+  },
+  {
+   "nombre": "gachaTap2",
+   "archivo": "gachaTap2.ogg",
+   "segundos": 0.779,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 11003
+  },
+  {
+   "nombre": "giftboxDrop",
+   "archivo": "giftboxDrop.ogg",
+   "segundos": 1.001,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 13651
+  },
+  {
+   "nombre": "giftboxOpen",
+   "archivo": "giftboxOpen.ogg",
+   "segundos": 5.991,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 62727
+  },
+  {
+   "nombre": "gloamrootFailedHarvest",
+   "archivo": "gloamrootFailedHarvest.ogg",
+   "segundos": 1.361,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 16687
+  },
+  {
+   "nombre": "grab",
+   "archivo": "grab.ogg",
+   "segundos": 0.583,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 9165
+  },
+  {
+   "nombre": "heavyRain",
+   "archivo": "heavyRain.ogg",
+   "segundos": 167.24,
+   "hz": 96000,
+   "canales": 1,
+   "bytes": 1679524
+  },
+  {
+   "nombre": "hoeButtonClose",
+   "archivo": "hoeButtonClose.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 23845
+  },
+  {
+   "nombre": "hoeButtonOpen",
+   "archivo": "hoeButtonOpen.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26233
+  },
+  {
+   "nombre": "homecomingBag",
+   "archivo": "homecomingBag.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 29795
+  },
+  {
+   "nombre": "homecomingFurniture",
+   "archivo": "homecomingFurniture.ogg",
+   "segundos": 2.91,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 36623
+  },
+  {
+   "nombre": "homecomingHomeUpgrade",
+   "archivo": "homecomingHomeUpgrade.ogg",
+   "segundos": 2.75,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 29334
+  },
+  {
+   "nombre": "homecomingIntro",
+   "archivo": "homecomingIntro.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28003
+  },
+  {
+   "nombre": "homecomingOffer",
+   "archivo": "homecomingOffer.ogg",
+   "segundos": 6.767,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 59989
+  },
+  {
+   "nombre": "homecomingOpen",
+   "archivo": "homecomingOpen.ogg",
+   "segundos": 2.75,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28630
+  },
+  {
+   "nombre": "homecomingPlot",
+   "archivo": "homecomingPlot.ogg",
+   "segundos": 1.126,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 14964
+  },
+  {
+   "nombre": "homecomingSale",
+   "archivo": "homecomingSale.ogg",
+   "segundos": 5.432,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 53624
+  },
+  {
+   "nombre": "junkerEat",
+   "archivo": "junkerEat.ogg",
+   "segundos": 9.375,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 91084
+  },
+  {
+   "nombre": "junkerEatFail",
+   "archivo": "junkerEatFail.ogg",
+   "segundos": 7.5,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 74370
+  },
+  {
+   "nombre": "junkerEatRecipe",
+   "archivo": "junkerEatRecipe.ogg",
+   "segundos": 11.826,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 100503
+  },
+  {
+   "nombre": "junkerReset",
+   "archivo": "junkerReset.ogg",
+   "segundos": 2.876,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 29708
+  },
+  {
+   "nombre": "junkerSelect",
+   "archivo": "junkerSelect.ogg",
+   "segundos": 2.972,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 27463
+  },
+  {
+   "nombre": "junkerUnselect",
+   "archivo": "junkerUnselect.ogg",
+   "segundos": 2.972,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26852
+  },
+  {
+   "nombre": "junkerWireChaser",
+   "archivo": "junkerWireChaser.ogg",
+   "segundos": 0.459,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 8333
+  },
+  {
+   "nombre": "lever",
+   "archivo": "lever.ogg",
+   "segundos": 2.731,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 27616
+  },
+  {
+   "nombre": "leverActivate",
+   "archivo": "leverActivate.ogg",
+   "segundos": 1.376,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 17639
+  },
+  {
+   "nombre": "leverCancel",
+   "archivo": "leverCancel.ogg",
+   "segundos": 1.543,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 18739
+  },
+  {
+   "nombre": "leverClose",
+   "archivo": "leverClose.ogg",
+   "segundos": 2.001,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 21654
+  },
+  {
+   "nombre": "lightRain",
+   "archivo": "lightRain.ogg",
+   "segundos": 40.853,
+   "hz": 96000,
+   "canales": 1,
+   "bytes": 461974
+  },
+  {
+   "nombre": "lightning",
+   "archivo": "lightning.ogg",
+   "segundos": 7.989,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 70114
+  },
+  {
+   "nombre": "lightning2",
+   "archivo": "lightning2.ogg",
+   "segundos": 10.831,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 92629
+  },
+  {
+   "nombre": "lightning3",
+   "archivo": "lightning3.ogg",
+   "segundos": 10.76,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 95389
+  },
+  {
+   "nombre": "mailboxClose",
+   "archivo": "mailboxClose.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26105
+  },
+  {
+   "nombre": "mailboxOpen",
+   "archivo": "mailboxOpen.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 27712
+  },
+  {
+   "nombre": "mocaSlidingDoorClose",
+   "archivo": "mocaSlidingDoorClose.ogg",
+   "segundos": 1.424,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 11963
+  },
+  {
+   "nombre": "mocaSlidingDoorOpen",
+   "archivo": "mocaSlidingDoorOpen.ogg",
+   "segundos": 1.424,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 12365
+  },
+  {
+   "nombre": "mouthExplode",
+   "archivo": "mouthExplode.ogg",
+   "segundos": 3.001,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 30338
+  },
+  {
+   "nombre": "move",
+   "archivo": "move.ogg",
+   "segundos": 0.655,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 9578
+  },
+  {
+   "nombre": "moveItem",
+   "archivo": "moveItem.ogg",
+   "segundos": 0.168,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 5451
+  },
+  {
+   "nombre": "newspaperClose",
+   "archivo": "newspaperClose.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 29422
+  },
+  {
+   "nombre": "newspaperOpen",
+   "archivo": "newspaperOpen.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28650
+  },
+  {
+   "nombre": "nodeExplode",
+   "archivo": "nodeExplode.ogg",
+   "segundos": 3.001,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 30547
+  },
+  {
+   "nombre": "parsnapPopup",
+   "archivo": "parsnapPopup.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26605
+  },
+  {
+   "nombre": "pedestalPlace",
+   "archivo": "pedestalPlace.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26990
+  },
+  {
+   "nombre": "phoneAppClose",
+   "archivo": "phoneAppClose.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25356
+  },
+  {
+   "nombre": "phoneAppOpen",
+   "archivo": "phoneAppOpen.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25533
+  },
+  {
+   "nombre": "phoneAppSwitchTab",
+   "archivo": "phoneAppSwitchTab.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25402
+  },
+  {
+   "nombre": "phoneAppTap",
+   "archivo": "phoneAppTap.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25137
+  },
+  {
+   "nombre": "phoneAppTravel",
+   "archivo": "phoneAppTravel.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26573
+  },
+  {
+   "nombre": "phoneButtonClose",
+   "archivo": "phoneButtonClose.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25816
+  },
+  {
+   "nombre": "phoneButtonOpen",
+   "archivo": "phoneButtonOpen.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25144
+  },
+  {
+   "nombre": "place",
+   "archivo": "place.ogg",
+   "segundos": 0.875,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 10729
+  },
+  {
+   "nombre": "placeItem",
+   "archivo": "placeItem.ogg",
+   "segundos": 0.041,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 4481
+  },
+  {
+   "nombre": "plotPickUp",
+   "archivo": "plotPickUp.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26377
+  },
+  {
+   "nombre": "plotPlantAll",
+   "archivo": "plotPlantAll.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 27879
+  },
+  {
+   "nombre": "plotPutDown",
+   "archivo": "plotPutDown.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 25048
+  },
+  {
+   "nombre": "poof",
+   "archivo": "poof.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 26557
+  },
+  {
+   "nombre": "punchChick",
+   "archivo": "punchChick.ogg",
+   "segundos": 0.287,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 6893
+  },
+  {
+   "nombre": "recast",
+   "archivo": "recast.ogg",
+   "segundos": 0.776,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 12159
+  },
+  {
+   "nombre": "rosemarySquirt",
+   "archivo": "rosemarySquirt.ogg",
+   "segundos": 2.001,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 21303
+  },
+  {
+   "nombre": "rustle",
+   "archivo": "rustle.ogg",
+   "segundos": 2.701,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 28626
+  },
+  {
+   "nombre": "select",
+   "archivo": "select.ogg",
+   "segundos": 0.206,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 6346
+  },
+  {
+   "nombre": "sell",
+   "archivo": "sell.ogg",
+   "segundos": 0.875,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 12968
+  },
+  {
+   "nombre": "settingsButtonClose",
+   "archivo": "settingsButtonClose.ogg",
+   "segundos": 0.376,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 7116
+  },
+  {
+   "nombre": "settingsButtonOpen",
+   "archivo": "settingsButtonOpen.ogg",
+   "segundos": 0.376,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 7820
+  },
+  {
+   "nombre": "settle",
+   "archivo": "settle.ogg",
+   "segundos": 0.292,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 6545
+  },
+  {
+   "nombre": "stamp",
+   "archivo": "stamp.ogg",
+   "segundos": 0.601,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 9046
+  },
+  {
+   "nombre": "switch",
+   "archivo": "switch.ogg",
+   "segundos": 0.054,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 4485
+  },
+  {
+   "nombre": "tick",
+   "archivo": "tick.ogg",
+   "segundos": 0.077,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 4622
+  },
+  {
+   "nombre": "trainBrake",
+   "archivo": "trainBrake.ogg",
+   "segundos": 5.882,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 46808
+  },
+  {
+   "nombre": "tsukiRake",
+   "archivo": "tsukiRake.ogg",
+   "segundos": 2.001,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 22503
+  },
+  {
+   "nombre": "unselect",
+   "archivo": "unselect.ogg",
+   "segundos": 0.21,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 6024
+  },
+  {
+   "nombre": "whirr",
+   "archivo": "whirr.ogg",
+   "segundos": 0.208,
+   "hz": 44100,
+   "canales": 1,
+   "bytes": 6179
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "sp": "construction_1",
+    "go": "construction_1",
+    "x": -20.0,
+    "y": -30.0,
+    "angle": 0.0,
+    "sx": 1.0,
+    "sy": 1.0,
+    "o": -1,
+    "px": -1.4444665908813477,
+    "py": -0.7924309968948364,
+    "rw": 244.0,
+    "rh": 469.0,
+    "ox": 0.0,
+    "oy": 0.0,
+    "ppu": 150.0,
+    "sl": 9,
+    "draw_mode": 0,
+    "sz_x": 1.6266666650772095,
+    "sz_y": 3.126666784286499,
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "SubsceneData/Construction Boundary/construction_1",
+    "go_path_id": 1,
+    "tr_path_id": 4,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null
+  },
+  {
+    "sp": "construction_0",
+    "go": "Construction Boundary",
+    "x": -20.0,
+    "y": -30.0,
+    "angle": 0.0,
+    "sx": 1.0,
+    "sy": 1.0,
+    "o": -1,
+    "px": 0.6031988263130188,
+    "py": -0.32418370246887207,
+    "rw": 891.0,
+    "rh": 643.0,
+    "ox": 0.0,
+    "oy": 9.0,
+    "ppu": 150.0,
+    "sl": 9,
+    "draw_mode": 0,
+    "sz_x": 5.940000057220459,
+    "sz_y": 4.2866668701171875,
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "SubsceneData/Construction Boundary",
+    "go_path_id": 3,
+    "tr_path_id": 6,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null
+  }
+]

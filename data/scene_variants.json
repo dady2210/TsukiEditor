@@ -1,0 +1,386 @@
+{
+  "_nota": "Las variantes de escena por ESTACION y por EVENTO. Salen de los ConditionalSubscene del binario (tools/cs_timed_objects -- subescenas) cruzados con el indice de escenas de la build (BuildSettings de globalgamemanagers), que es quien dice que levelN es cada una. SeasonID: 0 verano, 1 otonio, 2 invierno, 3 primavera. `objetosApagados` son los GameObject de la escena BASE que la variante apaga, porque los sustituye.",
+  "variantes": [
+    {
+      "mapaBase": "0",
+      "nivelBase": "level2",
+      "escena": "HomeAutumn",
+      "nivel": "level29",
+      "tipo": "estacion",
+      "valor": 1,
+      "extraido": true,
+      "objetosApagados": [
+        "Canopy"
+      ],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "0_hc",
+      "nivelBase": "level28",
+      "escena": "Home2Autumn",
+      "nivel": "level31",
+      "tipo": "estacion",
+      "valor": 1,
+      "extraido": true,
+      "objetosApagados": [
+        "Canopy"
+      ],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "0",
+      "nivelBase": "level2",
+      "escena": "HomeWinter",
+      "nivel": "level19",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [
+        "Canopy"
+      ],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "0_hc",
+      "nivelBase": "level28",
+      "escena": "Home2Winter",
+      "nivel": "level30",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [
+        "Canopy"
+      ],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "1",
+      "nivelBase": "level3",
+      "escena": "YoriShopWinter",
+      "nivel": "level24",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [
+        "Moss",
+        "Moss",
+        "Moss"
+      ],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "10",
+      "nivelBase": "level9",
+      "escena": "TrainStationWinter",
+      "nivel": "level57",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "11",
+      "nivelBase": "level12",
+      "escena": "DawnWinter",
+      "nivel": "level27",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "13",
+      "nivelBase": "level13",
+      "escena": "ScarlettWinter",
+      "nivel": "level23",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "2",
+      "nivelBase": "level6",
+      "escena": "ChiSnow",
+      "nivel": "level20",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "3",
+      "nivelBase": "level7",
+      "escena": "MocaWinter",
+      "nivel": "level25",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "5",
+      "nivelBase": "level11",
+      "escena": "RosemaryWinter",
+      "nivel": "level22",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [
+        "Moss",
+        "Moss (1)",
+        "Moss (2)"
+      ],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "6",
+      "nivelBase": "level4",
+      "escena": "FarmWinter",
+      "nivel": "level21",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "8",
+      "nivelBase": "level8",
+      "escena": "TownhallWinter",
+      "nivel": "level18",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "9",
+      "nivelBase": "level10",
+      "escena": "MomoWinter",
+      "nivel": "level26",
+      "tipo": "estacion",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "0",
+      "nivelBase": "level2",
+      "escena": "HomeSpring",
+      "nivel": "level37",
+      "tipo": "estacion",
+      "valor": 3,
+      "extraido": true,
+      "objetosApagados": [
+        "Canopy"
+      ],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "0_hc",
+      "nivelBase": "level28",
+      "escena": "Home2Spring",
+      "nivel": "level38",
+      "tipo": "estacion",
+      "valor": 3,
+      "extraido": true,
+      "objetosApagados": [
+        "Canopy"
+      ],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "8",
+      "nivelBase": "level8",
+      "escena": "TownHallHalloween",
+      "nivel": "level17",
+      "tipo": "evento",
+      "valor": 0,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "9",
+      "nivelBase": "level10",
+      "escena": "MomoHalloween",
+      "nivel": "level16",
+      "tipo": "evento",
+      "valor": 0,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": [
+        "Lantern",
+        "Lantern"
+      ]
+    },
+    {
+      "mapaBase": "1",
+      "nivelBase": "level3",
+      "escena": "YoriChristmas",
+      "nivel": "level56",
+      "tipo": "evento",
+      "valor": 1,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "1",
+      "nivelBase": "level3",
+      "escena": "YoriLNY",
+      "nivel": "level34",
+      "tipo": "evento",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "13",
+      "nivelBase": "level13",
+      "escena": "ScarlettLNY",
+      "nivel": "level36",
+      "tipo": "evento",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "8",
+      "nivelBase": "level8",
+      "escena": "TownHallLNY",
+      "nivel": "level35",
+      "tipo": "evento",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "9",
+      "nivelBase": "level10",
+      "escena": "MomoLNY",
+      "nivel": "level33",
+      "tipo": "evento",
+      "valor": 2,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": [
+        "Lantern",
+        "Lantern"
+      ]
+    },
+    {
+      "mapaBase": "1",
+      "nivelBase": "level3",
+      "escena": "YoriSummerFest",
+      "nivel": "level43",
+      "tipo": "evento",
+      "valor": 4,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "10",
+      "nivelBase": "level9",
+      "escena": "TrainStationSummerFest",
+      "nivel": "level71",
+      "tipo": "evento",
+      "valor": 4,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "13",
+      "nivelBase": "level13",
+      "escena": "ScarlettSummerFest",
+      "nivel": "level40",
+      "tipo": "evento",
+      "valor": 4,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "2",
+      "nivelBase": "level6",
+      "escena": "ChiSummerFest",
+      "nivel": "level45",
+      "tipo": "evento",
+      "valor": 4,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "3",
+      "nivelBase": "level7",
+      "escena": "MocaSummerFest",
+      "nivel": "level46",
+      "tipo": "evento",
+      "valor": 4,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "4",
+      "nivelBase": "level5",
+      "escena": "PierSummerFest",
+      "nivel": "level44",
+      "tipo": "evento",
+      "valor": 4,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "5",
+      "nivelBase": "level11",
+      "escena": "RosemarySummerFest",
+      "nivel": "level41",
+      "tipo": "evento",
+      "valor": 4,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "8",
+      "nivelBase": "level8",
+      "escena": "TownHallSummerFest",
+      "nivel": "level42",
+      "tipo": "evento",
+      "valor": 4,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": []
+    },
+    {
+      "mapaBase": "9",
+      "nivelBase": "level10",
+      "escena": "MomoSummerFest",
+      "nivel": "level47",
+      "tipo": "evento",
+      "valor": 4,
+      "extraido": true,
+      "objetosApagados": [],
+      "sceneObjectsApagados": [
+        "Lantern",
+        "Lantern"
+      ]
+    }
+  ]
+}

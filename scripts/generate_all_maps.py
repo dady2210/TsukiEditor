@@ -824,6 +824,57 @@ for m_def in MAPS_DEFINITIONS:
                 "poly": []
             })
 
+    # NUNCA degradar lo ya conseguido.
+    # Este generador solo tiene geometría real hardcodeada para el mapa 0, y encima la
+    # saca de unity_bounds_level2, que hoy viene vacío porque extract_all_maps.py
+    # sobreescribió el map_metadata.json de level2. Sin esta fusión, reejecutarlo borra
+    # los polys reales de los map_*.json (los derivados por tools/derive_surfaces.py y
+    # los ajustados a mano en map_editor_2.html).
+    existing_path = OUT_DIR / f"map_{map_id}.json"
+    existing = {}
+    if existing_path.exists():
+        with open(existing_path, "r", encoding="utf-8") as ef:
+            existing = json.load(ef)
+    def _is_synthetic(poly):
+        # Mismo criterio que tools/derive_surfaces.py: los placeholders salen de
+        # rows/cols redondos y caen en múltiplos exactos de 0.25; la geometría real
+        # (colliders de Unity o vértices movidos a mano) trae 4 decimales.
+        if not poly or len(poly) > 4:
+            return False
+        return all(abs(v * 4 - round(v * 4)) < 1e-9
+                   for pt in poly for v in (pt.get("x", 0), pt.get("y", 0)))
+
+    def _is_real(surf):
+        poly = surf.get("poly") or []
+        return len(poly) >= 3 and not _is_synthetic(poly)
+
+    if existing.get("surfaces"):
+        def _key(p):
+            return (p.get("id") or (p.get("kind"), p.get("groupNum"), bool(p.get("flipped"))))
+
+        prev_by_key = {_key(p): p for p in existing["surfaces"]}
+        seen = set()
+        for s in surfaces:
+            k = _key(s)
+            seen.add(k)
+            prev = prev_by_key.get(k)
+            # Una surface con geometría real en disco manda sobre lo que genere este
+            # script: puede venir de derive_surfaces.py o de un ajuste a mano en el
+            # editor, y ambos están verificados contra el ensamblado. Un placeholder
+            # sintético también se conserva si lo generado viene vacío: peor es quedarse
+            # sin nada, porque sin poly map.js deja de validar límites.
+            if prev and (_is_real(prev)
+                         or (len(prev.get("poly") or []) >= 3 and len(s.get("poly") or []) < 3)):
+                s["poly"] = prev["poly"]
+                for f in ("origin", "origin_px"):
+                    if prev.get(f):
+                        s[f] = prev[f]
+        # Y no se pierden las surfaces que solo existen en disco (p.ej. floor_5 del mapa 0,
+        # que MAPS_DEFINITIONS no declara).
+        for k, prev in prev_by_key.items():
+            if k not in seen:
+                surfaces.append(prev)
+
     # Asegurar origin y origin_px en todas las superficies
     for s in surfaces:
         if "origin_px" not in s or not s["origin_px"]:
@@ -852,11 +903,17 @@ for m_def in MAPS_DEFINITIONS:
             "lighting": lighting,
             "camera": {"zoom": 40, "minZoom": 15, "maxZoom": 80}
         },
+        # origin_px (ancla del ensamblado) se conserva más abajo si ya existía
         "surfaces": surfaces,
         "visuals": visuals,
         "colliders": colliders,
         "logic": logic
     }
+
+    # El ancla mundo->pixel del *_Ensamblado.png no se sabe calcular aquí; si el mapa ya
+    # la tenía (tools/derive_surfaces.py), se conserva en vez de perderla.
+    if (existing.get("config") or {}).get("origin_px"):
+        map_json_obj["config"]["origin_px"] = existing["config"]["origin_px"]
 
     out_file = OUT_DIR / f"map_{map_id}.json"
     with open(out_file, "w", encoding="utf-8") as of:

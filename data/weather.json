@@ -1,0 +1,227 @@
+{
+ "_fuente": "WeatherData (pathID 1899) y SeasonData (pathID 1888) de sharedassets1.assets",
+ "_nota": "El gradiente es un tinte sobre la escena indexado por el progreso del temporal (0=empieza, 1=termina), no el color de la lluvia.",
+ "weather": {
+  "heavyWeatherFrequency": 0.1,
+  "gradients": {
+   "rainColor": {
+    "color": [
+     {
+      "t": 0.0,
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+     },
+     {
+      "t": 0.06177,
+      "r": 0.8349,
+      "g": 0.8974,
+      "b": 1.0
+     },
+     {
+      "t": 0.94118,
+      "r": 0.8066,
+      "g": 0.9248,
+      "b": 1.0
+     },
+     {
+      "t": 1.0,
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+     }
+    ],
+    "alpha": [
+     {
+      "t": 0.0,
+      "a": 1.0
+     },
+     {
+      "t": 1.0,
+      "a": 1.0
+     }
+    ]
+   },
+   "heavyRainColor": {
+    "color": [
+     {
+      "t": 0.0,
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+     },
+     {
+      "t": 0.06177,
+      "r": 0.7314,
+      "g": 0.7942,
+      "b": 0.8962
+     },
+     {
+      "t": 0.28824,
+      "r": 0.6465,
+      "g": 0.7062,
+      "b": 0.8208
+     },
+     {
+      "t": 0.72354,
+      "r": 0.6241,
+      "g": 0.7184,
+      "b": 0.8019
+     },
+     {
+      "t": 0.94118,
+      "r": 0.7357,
+      "g": 0.8571,
+      "b": 0.934
+     },
+     {
+      "t": 1.0,
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+     }
+    ],
+    "alpha": [
+     {
+      "t": 0.0,
+      "a": 1.0
+     },
+     {
+      "t": 1.0,
+      "a": 1.0
+     }
+    ]
+   },
+   "snowColor": {
+    "color": [
+     {
+      "t": 0.0,
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+     },
+     {
+      "t": 1.0,
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+     }
+    ],
+    "alpha": [
+     {
+      "t": 0.0,
+      "a": 1.0
+     },
+     {
+      "t": 1.0,
+      "a": 1.0
+     }
+    ]
+   },
+   "heavySnowColor": {
+    "color": [
+     {
+      "t": 0.0,
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+     },
+     {
+      "t": 1.0,
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0
+     }
+    ],
+    "alpha": [
+     {
+      "t": 0.0,
+      "a": 1.0
+     },
+     {
+      "t": 1.0,
+      "a": 1.0
+     }
+    ]
+   }
+  }
+ },
+ "seasons": [
+  {
+   "SeasonID": 0,
+   "seasonName": "Summer",
+   "from": {
+    "day": 1,
+    "month": 6
+   },
+   "to": {
+    "day": 1,
+    "month": 9
+   },
+   "weatherType": 1,
+   "weatherName": "Rain",
+   "chanceOfWeather": 0.25,
+   "trunks": 8,
+   "leaves": 8,
+   "rocks": 24,
+   "flowers": 12
+  },
+  {
+   "SeasonID": 1,
+   "seasonName": "Autumn",
+   "from": {
+    "day": 1,
+    "month": 9
+   },
+   "to": {
+    "day": 1,
+    "month": 12
+   },
+   "weatherType": 1,
+   "weatherName": "Rain",
+   "chanceOfWeather": 0.25,
+   "trunks": 8,
+   "leaves": 8,
+   "rocks": 24,
+   "flowers": 12
+  },
+  {
+   "SeasonID": 2,
+   "seasonName": "Winter",
+   "from": {
+    "day": 1,
+    "month": 12
+   },
+   "to": {
+    "day": 1,
+    "month": 3
+   },
+   "weatherType": 2,
+   "weatherName": "Snow",
+   "chanceOfWeather": 0.5,
+   "trunks": 8,
+   "leaves": 8,
+   "rocks": 24,
+   "flowers": 12
+  },
+  {
+   "SeasonID": 3,
+   "seasonName": "Spring",
+   "from": {
+    "day": 1,
+    "month": 3
+   },
+   "to": {
+    "day": 1,
+    "month": 6
+   },
+   "weatherType": 1,
+   "weatherName": "Rain",
+   "chanceOfWeather": 0.5,
+   "trunks": 8,
+   "leaves": 8,
+   "rocks": 24,
+   "flowers": 12
+  }
+ ]
+}

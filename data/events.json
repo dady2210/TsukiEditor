@@ -1,0 +1,173 @@
+{
+ "_fuente": "VillageEventData (pathID 1898) de sharedassets1.assets",
+ "events": [
+  {
+   "eventID": 0,
+   "id": "EVENT_HALLOWEEN",
+   "name_en": "Halloween",
+   "name_es": "Halloween",
+   "from": {
+    "day": 16,
+    "month": 10
+   },
+   "to": {
+    "day": 1,
+    "month": 11
+   }
+  },
+  {
+   "eventID": 1,
+   "id": "EVENT_CHRISTMAS",
+   "name_en": "Christmas",
+   "name_es": "Navidad",
+   "from": {
+    "day": 13,
+    "month": 12
+   },
+   "to": {
+    "day": 29,
+    "month": 12
+   }
+  },
+  {
+   "eventID": 2,
+   "id": "EVENT_LUNAR_NEW_YEAR",
+   "name_en": "Lunar New Year",
+   "name_es": "Año Nuevo Lunar",
+   "from": {
+    "day": 11,
+    "month": 1
+   },
+   "to": {
+    "day": 25,
+    "month": 1
+   }
+  },
+  {
+   "eventID": 3,
+   "id": "EVENT_EGG_MONTH",
+   "name_en": "Egg Month",
+   "name_es": "Mes del Huevo",
+   "from": {
+    "day": 1,
+    "month": 5
+   },
+   "to": {
+    "day": 21,
+    "month": 5
+   }
+  },
+  {
+   "eventID": 4,
+   "id": "EVENT_SUMMER_FESTIVAL",
+   "name_en": "Summer Festival",
+   "name_es": "Festival de Verano",
+   "from": {
+    "day": 10,
+    "month": 8
+   },
+   "to": {
+    "day": 28,
+    "month": 8
+   }
+  },
+  {
+   "eventID": 5,
+   "id": "EVENT_JESTER_FESTIVAL",
+   "name_en": "Jester Festival",
+   "name_es": "Festival de Bufoneada",
+   "from": {
+    "day": 1,
+    "month": 4
+   },
+   "to": {
+    "day": 16,
+    "month": 4
+   }
+  },
+  {
+   "eventID": 6,
+   "id": "EVENT_MARINE_MATTERS",
+   "name_en": "Marine Matters",
+   "name_es": "Importancia Marina",
+   "from": {
+    "day": 5,
+    "month": 6
+   },
+   "to": {
+    "day": 20,
+    "month": 6
+   }
+  },
+  {
+   "eventID": 7,
+   "id": "EVENT_WILD_WEST",
+   "name_en": "Wild West",
+   "name_es": "Salvaje Oeste",
+   "from": {
+    "day": 12,
+    "month": 9
+   },
+   "to": {
+    "day": 30,
+    "month": 9
+   }
+  },
+  {
+   "eventID": 8,
+   "id": "EVENT_THE_GREAT_FORAGE",
+   "name_en": "The Great Forage",
+   "name_es": "La Gran Recolección",
+   "from": {
+    "day": 15,
+    "month": 11
+   },
+   "to": {
+    "day": 30,
+    "month": 11
+   }
+  },
+  {
+   "eventID": 9,
+   "id": "EVENT_VALENTINE'S",
+   "name_en": "Valentine's",
+   "name_es": "Valentine's",
+   "from": {
+    "day": 7,
+    "month": 2
+   },
+   "to": {
+    "day": 21,
+    "month": 2
+   }
+  },
+  {
+   "eventID": 10,
+   "id": "EVENT_FATE'S_FOLLY",
+   "name_en": "Fate's Folly",
+   "name_es": "Fate's Folly",
+   "from": {
+    "day": 5,
+    "month": 3
+   },
+   "to": {
+    "day": 19,
+    "month": 3
+   }
+  },
+  {
+   "eventID": 11,
+   "id": "EVENT_JUNGLE_JAMBOREE",
+   "name_en": "Jungle Jamboree",
+   "name_es": "Jungle Jamboree",
+   "from": {
+    "day": 5,
+    "month": 7
+   },
+   "to": {
+    "day": 25,
+    "month": 7
+   }
+  }
+ ]
+}

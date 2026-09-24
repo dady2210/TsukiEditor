@@ -1,0 +1,512 @@
+{
+ "meta": {
+  "fuente": "sharedassets1.assets — ProgressionTool",
+  "complejas": 9,
+  "custom": 4,
+  "finDelArray": 2592,
+  "nota": "un grupo se cumple si se cumplen TODAS sus condiciones; la compuesta si pasa algun grupo (Or) o al menos `value` (AtLeast). Se anidan: hay condiciones de tipo Complex dentro de los grupos. Las Custom solo traen nombre: su Check() es codigo, no datos."
+ },
+ "complexConditions": [
+  {
+   "index": 0,
+   "conditionName": "Ramen Pester",
+   "checkType": "AtLeast",
+   "value": 2,
+   "groups": [
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 6,
+      "fc": 14,
+      "type": "Activity"
+     },
+     {
+      "t": 21,
+      "c": 0,
+      "v": 8,
+      "fc": 14,
+      "type": "Pester"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 3,
+      "fc": 2,
+      "type": "Activity"
+     },
+     {
+      "t": 21,
+      "c": 0,
+      "v": 9,
+      "fc": 2,
+      "type": "Pester"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 2,
+      "fc": 10,
+      "type": "Activity"
+     },
+     {
+      "t": 21,
+      "c": 0,
+      "v": 9,
+      "fc": 10,
+      "type": "Pester"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 16,
+      "fc": 1,
+      "type": "Activity"
+     },
+     {
+      "t": 21,
+      "c": 0,
+      "v": 9,
+      "fc": 1,
+      "type": "Pester"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 15,
+      "fc": 4,
+      "type": "Activity"
+     },
+     {
+      "t": 21,
+      "c": 0,
+      "v": 9,
+      "fc": 4,
+      "type": "Pester"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 10,
+      "fc": 5,
+      "type": "Activity"
+     },
+     {
+      "t": 21,
+      "c": 0,
+      "v": 9,
+      "fc": 5,
+      "type": "Pester"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 10,
+      "fc": 9,
+      "type": "Activity"
+     },
+     {
+      "t": 21,
+      "c": 0,
+      "v": 9,
+      "fc": 9,
+      "type": "Pester"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 3,
+      "fc": 13,
+      "type": "Activity"
+     },
+     {
+      "t": 21,
+      "c": 0,
+      "v": 9,
+      "fc": 13,
+      "type": "Pester"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 5,
+      "fc": 12,
+      "type": "Activity"
+     },
+     {
+      "t": 21,
+      "c": 0,
+      "v": 9,
+      "fc": 12,
+      "type": "Pester"
+     }
+    ]
+   ]
+  },
+  {
+   "index": 1,
+   "conditionName": "Tsuki Duck Float",
+   "checkType": "Or",
+   "value": 0,
+   "groups": [
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 10,
+      "type": "Activity"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 11,
+      "type": "Activity"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 90,
+      "type": "Activity"
+     }
+    ]
+   ]
+  },
+  {
+   "index": 2,
+   "conditionName": "JunkerMalfunction",
+   "checkType": "Or",
+   "value": 0,
+   "groups": [
+    [
+     {
+      "t": 9,
+      "c": 1,
+      "v": 3,
+      "fc": 14,
+      "v2": 1,
+      "bv": 1,
+      "type": "FriendConditionLevel"
+     }
+    ]
+   ]
+  },
+  {
+   "index": 3,
+   "conditionName": "Trick or Treat Complete",
+   "checkType": "Or",
+   "value": 0,
+   "groups": [
+    [
+     {
+      "t": 37,
+      "c": 0,
+      "v": 0,
+      "type": "VillageEventTask"
+     },
+     {
+      "t": 37,
+      "c": 0,
+      "v": 0,
+      "v2": 1,
+      "type": "VillageEventTask"
+     },
+     {
+      "t": 37,
+      "c": 0,
+      "v": 0,
+      "v2": 2,
+      "type": "VillageEventTask"
+     },
+     {
+      "t": 37,
+      "c": 0,
+      "v": 0,
+      "v2": 3,
+      "type": "VillageEventTask"
+     },
+     {
+      "t": 37,
+      "c": 0,
+      "v": 0,
+      "v2": 4,
+      "type": "VillageEventTask"
+     },
+     {
+      "t": 37,
+      "c": 0,
+      "v": 0,
+      "v2": 5,
+      "type": "VillageEventTask"
+     },
+     {
+      "t": 37,
+      "c": 2,
+      "v": 0,
+      "v2": 6,
+      "type": "VillageEventTask"
+     }
+    ]
+   ]
+  },
+  {
+   "index": 4,
+   "conditionName": "HasUndeliveredGift",
+   "checkType": "Or",
+   "value": 0,
+   "groups": [
+    [
+     {
+      "t": 4,
+      "c": 0,
+      "v": 202,
+      "type": "ItemRequired"
+     }
+    ],
+    [
+     {
+      "t": 4,
+      "c": 0,
+      "v": 203,
+      "type": "ItemRequired"
+     }
+    ],
+    [
+     {
+      "t": 4,
+      "c": 0,
+      "v": 204,
+      "type": "ItemRequired"
+     }
+    ],
+    [
+     {
+      "t": 4,
+      "c": 0,
+      "v": 205,
+      "type": "ItemRequired"
+     }
+    ],
+    [
+     {
+      "t": 4,
+      "c": 0,
+      "v": 206,
+      "type": "ItemRequired"
+     }
+    ],
+    [
+     {
+      "t": 4,
+      "c": 0,
+      "v": 207,
+      "type": "ItemRequired"
+     }
+    ],
+    [
+     {
+      "t": 4,
+      "c": 0,
+      "v": 208,
+      "type": "ItemRequired"
+     }
+    ],
+    [
+     {
+      "t": 4,
+      "c": 0,
+      "v": 209,
+      "type": "ItemRequired"
+     }
+    ],
+    [
+     {
+      "t": 4,
+      "c": 0,
+      "v": 210,
+      "type": "ItemRequired"
+     }
+    ]
+   ]
+  },
+  {
+   "index": 5,
+   "conditionName": "HasAcquiredAllGifts",
+   "checkType": "Or",
+   "value": 0,
+   "groups": [
+    [
+     {
+      "t": 25,
+      "c": 0,
+      "v": 202,
+      "type": "ItemCollected"
+     },
+     {
+      "t": 25,
+      "c": 0,
+      "v": 203,
+      "type": "ItemCollected"
+     },
+     {
+      "t": 25,
+      "c": 0,
+      "v": 204,
+      "type": "ItemCollected"
+     },
+     {
+      "t": 25,
+      "c": 0,
+      "v": 205,
+      "type": "ItemCollected"
+     },
+     {
+      "t": 25,
+      "c": 0,
+      "v": 206,
+      "type": "ItemCollected"
+     },
+     {
+      "t": 25,
+      "c": 0,
+      "v": 207,
+      "type": "ItemCollected"
+     },
+     {
+      "t": 25,
+      "c": 0,
+      "v": 208,
+      "type": "ItemCollected"
+     },
+     {
+      "t": 25,
+      "c": 0,
+      "v": 209,
+      "type": "ItemCollected"
+     },
+     {
+      "t": 25,
+      "c": 0,
+      "v": 210,
+      "type": "ItemCollected"
+     }
+    ]
+   ]
+  },
+  {
+   "index": 6,
+   "conditionName": "HasDeliveredAllGifts",
+   "checkType": "Or",
+   "value": 0,
+   "groups": [
+    [
+     {
+      "t": 22,
+      "c": 2,
+      "v": 4,
+      "type": "Complex"
+     },
+     {
+      "t": 22,
+      "c": 0,
+      "v": 5,
+      "type": "Complex"
+     }
+    ]
+   ]
+  },
+  {
+   "index": 7,
+   "conditionName": "DawnWeld",
+   "checkType": "Or",
+   "value": 0,
+   "groups": [
+    [
+     {
+      "t": 29,
+      "c": 0,
+      "v": 20,
+      "v2": 1,
+      "type": "Newspaper"
+     }
+    ],
+    [
+     {
+      "t": 42,
+      "c": 0,
+      "v": 0,
+      "fc": 14,
+      "st": 3,
+      "v2": 4,
+      "type": "Custom"
+     }
+    ]
+   ]
+  },
+  {
+   "index": 8,
+   "conditionName": "TaikoGame",
+   "checkType": "Or",
+   "value": 0,
+   "groups": [
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 237,
+      "type": "Activity"
+     }
+    ],
+    [
+     {
+      "t": 12,
+      "c": 0,
+      "v": 236,
+      "type": "Activity"
+     }
+    ]
+   ]
+  }
+ ],
+ "customConditions": [
+  {
+   "index": 0,
+   "clase": "JunkerBroken",
+   "rid": 8350427032623251591
+  },
+  {
+   "index": 1,
+   "clase": "SummerTaikoWindow",
+   "rid": 6593602110103224533
+  },
+  {
+   "index": 2,
+   "clase": "DieOnWrymcraftPedestal",
+   "rid": 8722141066840506477
+  },
+  {
+   "index": 3,
+   "clase": "RegularLampOn",
+   "rid": 8722141554533204001
+  }
+ ]
+}

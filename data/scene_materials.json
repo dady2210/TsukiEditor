@@ -1,0 +1,3365 @@
+{
+ "_fuente": "m_Materials[0] de cada SpriteRenderer de cada nivel",
+ "_nota": "Los materiales que NO son `Sprite-Unlit-Default` son los cuatro shaders propios del juego. No son animacion de fotogramas: el sprite es uno y quieto, y lo que se mueve es el material. Va en fichero APARTE y no dentro de data/maps/map_*.json porque el editor rehace `visuals` al guardar y se llevaria por delante cualquier campo que no entienda.",
+ "_clave": "porMapa[mapId][nombre del GameObject] = nombre del material",
+ "_ambiguos": "Nombres de GameObject que en su mapa llevan mas de un material, asi que el nombre no los identifica. Quedan FUERA de porMapa a proposito: es preferible no decir nada a decir el de al lado. Son todos escaparates de la Gran Ciudad.",
+ "materiales": {
+  "Hedge": {
+   "shader": "Shader Graphs/DistortVertex",
+   "animado": true,
+   "globales": [
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_BumpScale": 1.0,
+     "_Cutoff": 0.5,
+     "_DetailNormalMapScale": 1.0,
+     "_DstBlend": 0.0,
+     "_EnableExternalAlpha": 0.0,
+     "_GlossMapScale": 1.0,
+     "_Glossiness": 0.5,
+     "_GlossyReflections": 1.0,
+     "_Metallic": 0.0,
+     "_Mode": 0.0,
+     "_NoiseSpeed": 0.01,
+     "_NormalNoise": 0.0,
+     "_OcclusionStrength": 1.0,
+     "_Parallax": 0.02,
+     "_Scale": 4.0,
+     "_SmoothnessTextureChannel": 0.0,
+     "_SpecularHighlights": 1.0,
+     "_SpeedDamper": 5.0,
+     "_SrcBlend": 1.0,
+     "_Strength": 0.0015,
+     "_StrengthDamper": 100.0,
+     "_UVDistortDamper": 5.0,
+     "_UVSec": 0.0,
+     "_ZWrite": 1.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_EmissionColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Scale": 4.0,
+     "_SpeedDamper": 5.0,
+     "_StrengthDamper": 100.0,
+     "_UVDistortDamper": 5.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_BumpScale": 1.0,
+     "_Cutoff": 0.5,
+     "_DetailNormalMapScale": 1.0,
+     "_DstBlend": 0.0,
+     "_EnableExternalAlpha": 0.0,
+     "_GlossMapScale": 1.0,
+     "_Glossiness": 0.5,
+     "_GlossyReflections": 1.0,
+     "_Metallic": 0.0,
+     "_Mode": 0.0,
+     "_NoiseSpeed": 0.01,
+     "_NormalNoise": 0.0,
+     "_OcclusionStrength": 1.0,
+     "_Parallax": 0.02,
+     "_SmoothnessTextureChannel": 0.0,
+     "_SpecularHighlights": 1.0,
+     "_SrcBlend": 1.0,
+     "_Strength": 0.0015,
+     "_UVSec": 0.0,
+     "_ZWrite": 1.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_EmissionColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "FloorMaterial": {
+   "shader": "Shader Graphs/Stripe",
+   "animado": true,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_BumpScale": 1.0,
+     "_Cutoff": 0.5,
+     "_DetailNormalMapScale": 1.0,
+     "_Direction": 0.5,
+     "_DstBlend": 0.0,
+     "_EnableExternalAlpha": 0.0,
+     "_GlossMapScale": 1.0,
+     "_Glossiness": 0.5,
+     "_GlossyReflections": 1.0,
+     "_Metallic": 0.0,
+     "_Mode": 0.0,
+     "_OcclusionStrength": 1.0,
+     "_Outline": 0.0,
+     "_OutlineSize": 1.0,
+     "_Parallax": 0.02,
+     "_Rotation": 0.0,
+     "_SmoothnessTextureChannel": 0.0,
+     "_SpecularHighlights": 1.0,
+     "_Speed": 0.5,
+     "_SrcBlend": 1.0,
+     "_StencilRef": 32.0,
+     "_StripeNum": 10.0,
+     "_StripeRotation": 0.0,
+     "_Tiling": 8.0,
+     "_UVSec": 0.0,
+     "_ZWrite": 1.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_EmissionColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_InvalidColor": [
+      1.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Offset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_OutlineColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_StripeColor": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Outline": 0.0,
+     "_Rotation": 0.0,
+     "_Speed": 0.5,
+     "_StripeNum": 10.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_StripeColor": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_BumpScale": 1.0,
+     "_Cutoff": 0.5,
+     "_DetailNormalMapScale": 1.0,
+     "_Direction": 0.5,
+     "_DstBlend": 0.0,
+     "_EnableExternalAlpha": 0.0,
+     "_GlossMapScale": 1.0,
+     "_Glossiness": 0.5,
+     "_GlossyReflections": 1.0,
+     "_Metallic": 0.0,
+     "_Mode": 0.0,
+     "_OcclusionStrength": 1.0,
+     "_OutlineSize": 1.0,
+     "_Parallax": 0.02,
+     "_SmoothnessTextureChannel": 0.0,
+     "_SpecularHighlights": 1.0,
+     "_SrcBlend": 1.0,
+     "_StencilRef": 32.0,
+     "_StripeRotation": 0.0,
+     "_Tiling": 8.0,
+     "_UVSec": 0.0,
+     "_ZWrite": 1.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_EmissionColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_InvalidColor": [
+      1.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Offset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_OutlineColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "Reveal": {
+   "shader": "Shader Graphs/Reveal",
+   "animado": false,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_RevealThreshold": 0.0,
+     "_Threshold": 0.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Offset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_RevealThreshold": 0.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_Threshold": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Offset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "Radial": {
+   "shader": "Shader Graphs/RadialLight",
+   "animado": false,
+   "globales": [
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_BumpScale": 1.0,
+     "_ColorMask": 15.0,
+     "_Cutoff": 0.5,
+     "_DetailNormalMapScale": 1.0,
+     "_DstBlend": 0.0,
+     "_EnableExternalAlpha": 0.0,
+     "_GlossMapScale": 1.0,
+     "_Glossiness": 0.5,
+     "_GlossyReflections": 1.0,
+     "_Metallic": 0.0,
+     "_Mode": 0.0,
+     "_OcclusionStrength": 1.0,
+     "_Parallax": 0.02,
+     "_Slide": 0.5,
+     "_SmoothnessTextureChannel": 0.0,
+     "_SpecularHighlights": 1.0,
+     "_SrcBlend": 1.0,
+     "_UVSec": 0.0,
+     "_ZWrite": 1.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_ColorB": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_EmissionColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_TintColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Slide": 0.5
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_BumpScale": 1.0,
+     "_ColorMask": 15.0,
+     "_Cutoff": 0.5,
+     "_DetailNormalMapScale": 1.0,
+     "_DstBlend": 0.0,
+     "_EnableExternalAlpha": 0.0,
+     "_GlossMapScale": 1.0,
+     "_Glossiness": 0.5,
+     "_GlossyReflections": 1.0,
+     "_Metallic": 0.0,
+     "_Mode": 0.0,
+     "_OcclusionStrength": 1.0,
+     "_Parallax": 0.02,
+     "_SmoothnessTextureChannel": 0.0,
+     "_SpecularHighlights": 1.0,
+     "_SrcBlend": 1.0,
+     "_UVSec": 0.0,
+     "_ZWrite": 1.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_ColorB": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_EmissionColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_TintColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "Foam": {
+   "shader": "Shader Graphs/Foam",
+   "animado": true,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_Brightness": -0.75,
+     "_BumpScale": 1.0,
+     "_Cutoff": 0.5,
+     "_DetailNormalMapScale": 1.0,
+     "_DistortDamper": 1.0,
+     "_DstBlend": 0.0,
+     "_EffectOffset": 0.0,
+     "_EffectSize": -0.1,
+     "_EnableExternalAlpha": 0.0,
+     "_FoamSpeed": 0.285,
+     "_FoamStrength": 1.0,
+     "_GRADIENT": 0.0,
+     "_GlossMapScale": 1.0,
+     "_Glossiness": 0.5,
+     "_GlossyReflections": 1.0,
+     "_Metallic": 0.0,
+     "_Mode": 0.0,
+     "_Multiplier": 1.0,
+     "_ONLY": 1.0,
+     "_ORDER": 0.0,
+     "_OcclusionStrength": 1.0,
+     "_Offset": 0.0,
+     "_Opacity": -2.04,
+     "_Parallax": 0.02,
+     "_Scale": 1.5,
+     "_SmoothnessTextureChannel": 0.0,
+     "_SpecularHighlights": 1.0,
+     "_Speed": 5.0,
+     "_SpeedX": 7.51,
+     "_SpeedY": 7.46,
+     "_SrcBlend": 1.0,
+     "_UVSec": 0.0,
+     "_ZWrite": 1.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_EmissionColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {
+     "_Distort": {
+      "nombre": "flowmap",
+      "escala": [
+       1.0,
+       1.0
+      ],
+      "offset": [
+       0.0,
+       0.0
+      ]
+     }
+    }
+   },
+   "lee": {
+    "floats": {
+     "_DistortDamper": 1.0,
+     "_Speed": 5.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_Brightness": -0.75,
+     "_BumpScale": 1.0,
+     "_Cutoff": 0.5,
+     "_DetailNormalMapScale": 1.0,
+     "_DstBlend": 0.0,
+     "_EffectOffset": 0.0,
+     "_EffectSize": -0.1,
+     "_EnableExternalAlpha": 0.0,
+     "_FoamSpeed": 0.285,
+     "_FoamStrength": 1.0,
+     "_GRADIENT": 0.0,
+     "_GlossMapScale": 1.0,
+     "_Glossiness": 0.5,
+     "_GlossyReflections": 1.0,
+     "_Metallic": 0.0,
+     "_Mode": 0.0,
+     "_Multiplier": 1.0,
+     "_ONLY": 1.0,
+     "_ORDER": 0.0,
+     "_OcclusionStrength": 1.0,
+     "_Offset": 0.0,
+     "_Opacity": -2.04,
+     "_Parallax": 0.02,
+     "_Scale": 1.5,
+     "_SmoothnessTextureChannel": 0.0,
+     "_SpecularHighlights": 1.0,
+     "_SpeedX": 7.51,
+     "_SpeedY": 7.46,
+     "_SrcBlend": 1.0,
+     "_UVSec": 0.0,
+     "_ZWrite": 1.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_EmissionColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "Fill": {
+   "shader": "Shader Graphs/Fill",
+   "animado": false,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_Alpha": 1.0,
+     "_EnableExternalAlpha": 0.0,
+     "_Fill": 0.0,
+     "_Float": 1.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_FillColor": [
+      0.3098,
+      0.3098,
+      0.302,
+      0.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Alpha": 1.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_FillColor": [
+      0.3098,
+      0.3098,
+      0.302,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_Fill": 0.0,
+     "_Float": 1.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "StrongLights": {
+   "shader": "Shader Graphs/StrongLight",
+   "animado": false,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_AlphaClip": 0.0,
+     "_Blend": 2.0,
+     "_BlendOp": 0.0,
+     "_CameraFadingEnabled": 0.0,
+     "_CameraFarFadeDistance": 2.0,
+     "_CameraNearFadeDistance": 1.0,
+     "_ColorMode": 1.0,
+     "_Cull": 2.0,
+     "_Cutoff": 0.5,
+     "_DistortionBlend": 0.5,
+     "_DistortionEnabled": 0.0,
+     "_DistortionStrength": 1.0,
+     "_DistortionStrengthScaled": 0.1,
+     "_DstBlend": 1.0,
+     "_EnableExternalAlpha": 0.0,
+     "_FlipbookBlending": 0.0,
+     "_FlipbookMode": 0.0,
+     "_Mode": 0.0,
+     "_QueueOffset": 0.0,
+     "_SampleGI": 0.0,
+     "_SoftParticlesEnabled": 0.0,
+     "_SoftParticlesFarFadeDistance": 1.0,
+     "_SoftParticlesNearFadeDistance": 0.0,
+     "_SrcBlend": 5.0,
+     "_Surface": 1.0,
+     "_ZWrite": 0.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_BaseColor": [
+      0.0792,
+      1.0,
+      0.0,
+      1.0
+     ],
+     "_BaseColorAddSubDiff": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_CameraFadeParams": [
+      0.0,
+      null,
+      0.0,
+      0.0
+     ],
+     "_Color": [
+      0.0792,
+      1.0,
+      0.0,
+      1.0
+     ],
+     "_EmissionColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_SoftParticleFadeParams": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_AlphaClip": 0.0,
+     "_Blend": 2.0,
+     "_BlendOp": 0.0,
+     "_CameraFadingEnabled": 0.0,
+     "_CameraFarFadeDistance": 2.0,
+     "_CameraNearFadeDistance": 1.0,
+     "_ColorMode": 1.0,
+     "_Cull": 2.0,
+     "_Cutoff": 0.5,
+     "_DistortionBlend": 0.5,
+     "_DistortionEnabled": 0.0,
+     "_DistortionStrength": 1.0,
+     "_DistortionStrengthScaled": 0.1,
+     "_DstBlend": 1.0,
+     "_EnableExternalAlpha": 0.0,
+     "_FlipbookBlending": 0.0,
+     "_FlipbookMode": 0.0,
+     "_Mode": 0.0,
+     "_QueueOffset": 0.0,
+     "_SampleGI": 0.0,
+     "_SoftParticlesEnabled": 0.0,
+     "_SoftParticlesFarFadeDistance": 1.0,
+     "_SoftParticlesNearFadeDistance": 0.0,
+     "_SrcBlend": 5.0,
+     "_Surface": 1.0,
+     "_ZWrite": 0.0
+    },
+    "colores": {
+     "_BaseColor": [
+      0.0792,
+      1.0,
+      0.0,
+      1.0
+     ],
+     "_BaseColorAddSubDiff": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_CameraFadeParams": [
+      0.0,
+      null,
+      0.0,
+      0.0
+     ],
+     "_Color": [
+      0.0792,
+      1.0,
+      0.0,
+      1.0
+     ],
+     "_EmissionColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_SoftParticleFadeParams": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   }
+  },
+  "Windows": {
+   "shader": "Shader Graphs/Windows",
+   "animado": false,
+   "globales": [
+    "_GlobalMipBias",
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_ScreenParams"
+   ],
+   "props": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_Threshold": 0.01
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Glass": [
+      0.6651,
+      0.9967,
+      1.0,
+      0.1216
+     ],
+     "_GreenChannel": [
+      0.7294,
+      0.7412,
+      0.7725,
+      0.0
+     ],
+     "_RedChannel": [
+      0.6078,
+      0.6235,
+      0.6314,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Threshold": 0.01
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Glass": [
+      0.6651,
+      0.9967,
+      1.0,
+      0.1216
+     ],
+     "_GreenChannel": [
+      0.7294,
+      0.7412,
+      0.7725,
+      0.0
+     ],
+     "_RedChannel": [
+      0.6078,
+      0.6235,
+      0.6314,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "CityView": {
+   "shader": "Shader Graphs/ColorSwapTiled",
+   "animado": false,
+   "globales": [
+    "_CameraPosition",
+    "_GlobalMipBias",
+    "_MainTex_ST",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {},
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {}
+  },
+  "LineworkDodge": {
+   "shader": "Shader Graphs/LineworkDodge",
+   "animado": false,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_Dist": 25.0,
+     "_EnableExternalAlpha": 0.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_BlueChannel": [
+      0.7594,
+      0.7642,
+      0.4722,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_GreenChannel": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RedChannel": [
+      0.3786,
+      0.4434,
+      0.3856,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_BlueChannel": [
+      0.7594,
+      0.7642,
+      0.4722,
+      1.0
+     ],
+     "_GreenChannel": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RedChannel": [
+      0.3786,
+      0.4434,
+      0.3856,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_Dist": 25.0,
+     "_EnableExternalAlpha": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "NightLights": {
+   "shader": "Shader Graphs/NightLights",
+   "animado": false,
+   "globales": [
+    "_CameraPosition",
+    "_GlobalMipBias",
+    "_MainTex_ST",
+    "_Night",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_Night": 1.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_LightColor": [
+      0.8824,
+      0.8157,
+      0.6863,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_LightColor": [
+      0.8824,
+      0.8157,
+      0.6863,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_Night": 1.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "GenericWindow": {
+   "shader": "Shader Graphs/GenericWindow",
+   "animado": false,
+   "globales": [
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_ScreenParams"
+   ],
+   "props": {
+    "floats": {
+     "_Edge": 0.05,
+     "_EnableExternalAlpha": 0.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Edge": 0.05
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "WindowLeft": {
+   "shader": "Shader Graphs/GenericWindowReveal",
+   "animado": false,
+   "globales": [
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_ScreenParams"
+   ],
+   "props": {
+    "floats": {
+     "_Edge": 0.1,
+     "_RevealThreshold": 63.95
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -142.48,
+      28.54,
+      0.0,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Edge": 0.1,
+     "_RevealThreshold": 63.95
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -142.48,
+      28.54,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {}
+  },
+  "RevealMiddle": {
+   "shader": "Shader Graphs/Reveal",
+   "animado": false,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_RevealThreshold": 47.4,
+     "_Threshold": 0.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Offset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -144.519,
+      31.109,
+      0.0,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_RevealThreshold": 47.4
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -144.519,
+      31.109,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_Threshold": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Offset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "RevealLeft": {
+   "shader": "Shader Graphs/Reveal",
+   "animado": false,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_RevealThreshold": 63.95,
+     "_Threshold": 0.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Offset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -142.48,
+      28.54,
+      0.0,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_RevealThreshold": 63.95
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -142.48,
+      28.54,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_Threshold": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Offset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "WindowRight": {
+   "shader": "Shader Graphs/GenericWindowReveal",
+   "animado": false,
+   "globales": [
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_ScreenParams"
+   ],
+   "props": {
+    "floats": {
+     "_Edge": 0.1,
+     "_RevealThreshold": 104.77
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -140.69,
+      30.29,
+      0.0,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Edge": 0.1,
+     "_RevealThreshold": 104.77
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -140.69,
+      30.29,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {}
+  },
+  "RevealRight": {
+   "shader": "Shader Graphs/Reveal",
+   "animado": false,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_RevealThreshold": 104.77,
+     "_Threshold": 0.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Offset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -140.69,
+      30.29,
+      0.0,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_RevealThreshold": 104.77
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -140.69,
+      30.29,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_Threshold": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Offset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "WindowMiddle": {
+   "shader": "Shader Graphs/GenericWindowReveal",
+   "animado": false,
+   "globales": [
+    "_ProjectionParams",
+    "_RendererColor",
+    "_ScaledScreenParams",
+    "_ScreenParams"
+   ],
+   "props": {
+    "floats": {
+     "_Edge": 0.1,
+     "_Opaque": 0.0,
+     "_RevealThreshold": 47.4
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -144.519,
+      31.109,
+      0.0,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Edge": 0.1,
+     "_RevealThreshold": 47.4
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -144.519,
+      31.109,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_Opaque": 0.0
+    }
+   }
+  },
+  "RevealRightReverse": {
+   "shader": "Shader Graphs/RevealReverse",
+   "animado": false,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_RevealThreshold": 104.77
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -140.69,
+      30.29,
+      0.0,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_RevealThreshold": 104.77
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RevealOffset": [
+      -140.69,
+      30.29,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {}
+  },
+  "Fade": {
+   "shader": "Shader Graphs/Fade",
+   "animado": false,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_Offset": 0.3,
+     "_Threshold": 0.5
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_FadeColor": [
+      0.8,
+      0.8706,
+      0.9137,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Offset": 0.3,
+     "_Threshold": 0.5
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_FadeColor": [
+      0.8,
+      0.8706,
+      0.9137,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "Clouds": {
+   "shader": "Shader Graphs/Clouds",
+   "animado": true,
+   "globales": [
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Bottom": [
+      0.6084,
+      0.8141,
+      0.8774,
+      0.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Middle1": [
+      0.9623,
+      0.9305,
+      0.9305,
+      0.0
+     ],
+     "_Middle2": [
+      0.9104,
+      0.9565,
+      1.0,
+      0.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Top": [
+      0.9528,
+      0.9483,
+      0.9483,
+      0.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Bottom": [
+      0.6084,
+      0.8141,
+      0.8774,
+      0.0
+     ],
+     "_Middle1": [
+      0.9623,
+      0.9305,
+      0.9305,
+      0.0
+     ],
+     "_Middle2": [
+      0.9104,
+      0.9565,
+      1.0,
+      0.0
+     ],
+     "_Top": [
+      0.9528,
+      0.9483,
+      0.9483,
+      0.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "Distort": {
+   "shader": "Shader Graphs/Distort",
+   "animado": true,
+   "globales": [
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_NormalNoise": 0.1,
+     "_Offset": 1.0,
+     "_Scale": 3.0,
+     "_Speed": 4.12,
+     "_SpeedDamper": 3.0,
+     "_StrengthDamper": 500.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "_Scale": 3.0,
+     "_SpeedDamper": 3.0,
+     "_StrengthDamper": 500.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_NormalNoise": 0.1,
+     "_Offset": 1.0,
+     "_Speed": 4.12
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "Water": {
+   "shader": "Shader Graphs/Water",
+   "animado": true,
+   "globales": [
+    "_GlobalDistort",
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "_BaseDistortDamper": 12.0,
+     "_BaseSpeedDamper": 5.0,
+     "_CausticScale": 0.2,
+     "_EnableExternalAlpha": 0.0,
+     "_NormalDistort": 0.2,
+     "_SpeedX": 2.0,
+     "_SpeedY": 2.0,
+     "_WaterScale": 1.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_BaseOffset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_CausticColor": [
+      0.0283,
+      0.0283,
+      0.0283,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Speed": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_TintA": [
+      0.5804,
+      0.7412,
+      0.8588,
+      1.0
+     ],
+     "_TintB": [
+      0.5529,
+      0.7162,
+      0.8314,
+      1.0
+     ]
+    },
+    "texturas": {
+     "_MainTex": {
+      "nombre": "DreamHouse_Environment_WaterTileBlue",
+      "escala": [
+       1.0,
+       1.0
+      ],
+      "offset": [
+       0.0,
+       0.0
+      ]
+     },
+     "_SecondaryTex": {
+      "nombre": "DreamHouse_Environment_WaterTileWhite",
+      "escala": [
+       1.0,
+       1.0
+      ],
+      "offset": [
+       0.0,
+       0.0
+      ]
+     }
+    }
+   },
+   "lee": {
+    "floats": {
+     "_BaseDistortDamper": 12.0,
+     "_BaseSpeedDamper": 5.0,
+     "_CausticScale": 0.2,
+     "_NormalDistort": 0.2,
+     "_SpeedY": 2.0,
+     "_WaterScale": 1.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_BaseOffset": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_CausticColor": [
+      0.0283,
+      0.0283,
+      0.0283,
+      1.0
+     ],
+     "_Speed": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "_TintA": [
+      0.5804,
+      0.7412,
+      0.8588,
+      1.0
+     ],
+     "_TintB": [
+      0.5529,
+      0.7162,
+      0.8314,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "_EnableExternalAlpha": 0.0,
+     "_SpeedX": 2.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "BaseLighting": {
+   "shader": "Shader Graphs/FullBaseLighting",
+   "animado": false,
+   "globales": [
+    "_GlobalColor",
+    "_GlobalMipBias",
+    "_RendererColor"
+   ],
+   "props": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_BumpScale": 1.0,
+     "_Cutoff": 0.5,
+     "_DetailNormalMapScale": 1.0,
+     "_DstBlend": 0.0,
+     "_EnableExternalAlpha": 0.0,
+     "_GlossMapScale": 1.0,
+     "_Glossiness": 0.5,
+     "_GlossyReflections": 1.0,
+     "_Metallic": 0.0,
+     "_Mode": 0.0,
+     "_OcclusionStrength": 1.0,
+     "_Parallax": 0.02,
+     "_SmoothnessTextureChannel": 0.0,
+     "_SpecularHighlights": 1.0,
+     "_SrcBlend": 1.0,
+     "_UVSec": 0.0,
+     "_ZWrite": 1.0
+    },
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_EmissionColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_GlobalColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "colores": {
+     "White": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_BumpScale": 1.0,
+     "_Cutoff": 0.5,
+     "_DetailNormalMapScale": 1.0,
+     "_DstBlend": 0.0,
+     "_EnableExternalAlpha": 0.0,
+     "_GlossMapScale": 1.0,
+     "_Glossiness": 0.5,
+     "_GlossyReflections": 1.0,
+     "_Metallic": 0.0,
+     "_Mode": 0.0,
+     "_OcclusionStrength": 1.0,
+     "_Parallax": 0.02,
+     "_SmoothnessTextureChannel": 0.0,
+     "_SpecularHighlights": 1.0,
+     "_SrcBlend": 1.0,
+     "_UVSec": 0.0,
+     "_ZWrite": 1.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_EmissionColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_GlobalColor": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   }
+  },
+  "Sprites-Default": {
+   "shader": "Sprites/Default",
+   "animado": false,
+   "globales": [],
+   "props": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_EnableExternalAlpha": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "texturas": {}
+   },
+   "lee": {
+    "floats": {
+     "PixelSnap": 0.0,
+     "_EnableExternalAlpha": 0.0
+    },
+    "colores": {
+     "_Color": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_Flip": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "_RendererColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "restosDeOtroShader": {}
+  }
+ },
+ "porMapa": {
+  "0": {
+   "PropSprite": "Hedge",
+   "WallpaperBR": "FloorMaterial",
+   "Canopy": "Hedge",
+   "DreamHouse_Environment_TsukiHome_2": "Hedge",
+   "WallpaperTR": "FloorMaterial",
+   "DreamHouse_Environment_TsukiHome_6": "Hedge"
+  },
+  "0_hc": {
+   "PropSprite": "Hedge",
+   "Canopy": "Hedge",
+   "New Sprite (1)": "Hedge",
+   "New Sprite": "Hedge"
+  },
+  "1": {
+   "PropSprite": "Hedge",
+   "Moss": "Hedge"
+  },
+  "10": {
+   "Window (2)": "Reveal",
+   "Roof": "Reveal",
+   "PropSprite": "Hedge",
+   "Lightmaps_3 (1)": "Reveal",
+   "CarriageInterior_21": "Reveal",
+   "New Sprite (7)": "Radial",
+   "Door": "Reveal",
+   "Lightmaps_3": "Reveal",
+   "Carriage (1)": "Reveal",
+   "New Sprite (8)": "Reveal",
+   "New Sprite (5)": "Radial",
+   "Carriage (2)": "Reveal",
+   "Door (1)": "Reveal",
+   "GameObject (2)": "Reveal",
+   "Head": "Reveal",
+   "Carriage": "Reveal",
+   "New Sprite (6)": "Radial"
+  },
+  "11": {
+   "PropSprite": "Hedge",
+   "Foam": "Foam",
+   "NodeTop": "Fill",
+   "Foam (2)": "Foam",
+   "Icon": "Fill",
+   "NodeLight": "StrongLights",
+   "Tongue": "Fill",
+   "ExplosionLight": "StrongLights",
+   "Foam (4)": "Foam",
+   "Light2": "Radial",
+   "Light3": "Radial",
+   "Foam (1)": "Foam",
+   "Light1": "Radial",
+   "Square": "StrongLights"
+  },
+  "12": {
+   "Main (4)": "Radial",
+   "Main (6)": "Radial",
+   "Main (2)": "Radial",
+   "Main (1)": "Radial",
+   "Main (5)": "Radial",
+   "Main (3)": "Radial"
+  },
+  "13": {
+   "PropSprite": "Hedge",
+   "New Sprite": "Radial",
+   "New Sprite (2)": "Radial",
+   "New Sprite (3)": "Radial",
+   "New Sprite (5)": "Radial"
+  },
+  "14": {
+   "Door (1)": "Reveal",
+   "Foam (17)": "Foam",
+   "Foam (18)": "Foam",
+   "GameObject (2)": "Reveal",
+   "Foam (15)": "Foam",
+   "Window (2)": "Reveal",
+   "Foam (19)": "Foam",
+   "Foam (4)": "Foam",
+   "Door": "Reveal",
+   "CarriageInterior_20": "Reveal",
+   "Foam (20)": "Foam",
+   "Foam (5)": "Foam",
+   "Foam (6)": "Foam",
+   "Head": "Reveal",
+   "Foam (16)": "Foam",
+   "Foam (8)": "Foam",
+   "Foam (11)": "Foam",
+   "Foam (13)": "Foam",
+   "Carriage (1)": "Reveal",
+   "Foam (09)": "Foam",
+   "Foam (26)": "Foam",
+   "Foam (23)": "Foam",
+   "Foam (22)": "Foam",
+   "Foam (12)": "Foam",
+   "Carriage (2)": "Reveal",
+   "Lightmaps_3 (1)": "Reveal",
+   "Foam (7)": "Foam",
+   "Foam (14)": "Foam",
+   "Roof": "Reveal",
+   "Lightmaps_3": "Reveal",
+   "New Sprite (7)": "Radial",
+   "CarriageInterior_21": "Reveal",
+   "Foam (08)": "Foam",
+   "Foam (10)": "Foam",
+   "New Sprite (5)": "Radial",
+   "Carriage": "Reveal",
+   "Foam (21)": "Foam",
+   "Foam (24)": "Foam",
+   "New Sprite (6)": "Radial",
+   "New Sprite (8)": "Reveal",
+   "Foam (25)": "Foam"
+  },
+  "15": {
+   "Window (2)": "Reveal",
+   "Window": "Windows",
+   "Door (1)": "Reveal",
+   "Head": "Reveal",
+   "New Sprite (7)": "Radial",
+   "Roof": "Reveal",
+   "Carriage": "Reveal",
+   "Carriage (1)": "Reveal",
+   "CarriageInterior_21": "Reveal",
+   "Carriage (2)": "Reveal",
+   "New Sprite (5)": "Radial",
+   "New Sprite (8)": "Reveal",
+   "Door": "Reveal",
+   "New Sprite (6)": "Radial",
+   "GameObject (2)": "Reveal",
+   "Lightmaps_3": "Reveal"
+  },
+  "16": {
+   "windows_3 (1)": "Windows",
+   "Window": "Windows",
+   "windows_3 (2)": "Windows",
+   "windows_3": "Windows",
+   "Bushes": "Hedge"
+  },
+  "17": {
+   "Square": "CityView",
+   "roofingTest2_4": "LineworkDodge"
+  },
+  "18": {
+   "Square (1)": "NightLights",
+   "Square": "CityView"
+  },
+  "19": {
+   "EdgeB": "LineworkDodge",
+   "EdgeT": "LineworkDodge",
+   "Window": "Windows",
+   "EdgeL": "LineworkDodge",
+   "CornerT": "LineworkDodge",
+   "Curb": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "EdgeR": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "CornerR": "LineworkDodge",
+   "Length": "LineworkDodge",
+   "Width": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "Ledge": "LineworkDodge"
+  },
+  "2": {
+   "PropSprite": "Hedge"
+  },
+  "20": {
+   "CornerR": "LineworkDodge",
+   "EdgeR": "LineworkDodge",
+   "EdgeB": "LineworkDodge",
+   "EdgeL": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "CornerT": "LineworkDodge",
+   "EdgeT": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "EntranceStandard_2": "Windows",
+   "Length": "LineworkDodge",
+   "stairs_1": "LineworkDodge",
+   "Width": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "stairs_0": "LineworkDodge",
+   "Doorway": "LineworkDodge",
+   "Window": "Windows",
+   "Ledge": "LineworkDodge"
+  },
+  "21": {
+   "Main (4)": "Radial",
+   "Main (6)": "Radial",
+   "Main (2)": "Radial",
+   "Main (1)": "Radial",
+   "Main (5)": "Radial",
+   "Main (3)": "Radial"
+  },
+  "22": {
+   "EdgeL": "LineworkDodge",
+   "EdgeT": "LineworkDodge",
+   "CornerR": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "EdgeB": "LineworkDodge",
+   "CornerT": "LineworkDodge",
+   "EdgeR": "LineworkDodge",
+   "Length": "LineworkDodge",
+   "Width": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "Window": "Windows",
+   "Ledge": "LineworkDodge"
+  },
+  "23": {
+   "Light (4)": "Radial",
+   "Light (5)": "Radial",
+   "Light": "Radial",
+   "Light (3)": "Radial",
+   "Light (1)": "Radial",
+   "Light (2)": "Radial"
+  },
+  "24": {
+   "roofingTest2_4": "LineworkDodge",
+   "Mall Entrance_2 (2)": "Windows"
+  },
+  "25": {
+   "CornerR": "LineworkDodge",
+   "Rugs (5)": "LineworkDodge",
+   "Window": "Windows",
+   "CornerT": "LineworkDodge",
+   "GameObject": "LineworkDodge",
+   "Rugs (1)": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "Rugs (4)": "LineworkDodge",
+   "EdgeR": "LineworkDodge",
+   "Square": "LineworkDodge",
+   "Rugs (2)": "LineworkDodge",
+   "EdgeT": "LineworkDodge",
+   "EdgeB": "LineworkDodge",
+   "EdgeL": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "Rugs": "LineworkDodge",
+   "Door Glass": "Windows",
+   "Rugs (3)": "LineworkDodge",
+   "Rugs (7)": "LineworkDodge",
+   "Rugs (6)": "LineworkDodge",
+   "Rugs (8)": "LineworkDodge",
+   "Length": "LineworkDodge",
+   "Width": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "Window (1)": "Windows",
+   "Window (2)": "Windows",
+   "Ledge": "LineworkDodge"
+  },
+  "26": {
+   "Curb (2)": "LineworkDodge",
+   "EdgeB": "LineworkDodge",
+   "EdgeR": "LineworkDodge",
+   "L2": "Windows",
+   "CornerR": "LineworkDodge",
+   "EdgeT": "LineworkDodge",
+   "EdgeL": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "GameObject": "LineworkDodge",
+   "stairs_0": "LineworkDodge",
+   "CornerT": "LineworkDodge",
+   "stairs_1": "LineworkDodge",
+   "Square": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "Curb (1)": "LineworkDodge",
+   "Curb": "LineworkDodge",
+   "Entrance6": "Windows",
+   "Length": "LineworkDodge",
+   "Width": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "Doorway": "LineworkDodge",
+   "Window": "Windows",
+   "Ledge": "LineworkDodge"
+  },
+  "27": {
+   "EdgeL": "LineworkDodge",
+   "EdgeB": "LineworkDodge",
+   "EdgeR": "LineworkDodge",
+   "CornerR": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "GameObject": "Windows",
+   "Head": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "CornerT": "LineworkDodge",
+   "Driver": "LineworkDodge",
+   "EdgeT": "LineworkDodge",
+   "Arm": "LineworkDodge",
+   "Car": "Windows",
+   "Shell": "Windows",
+   "Square": "LineworkDodge",
+   "Length": "LineworkDodge",
+   "Width": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "Window": "Windows",
+   "Ledge": "LineworkDodge",
+   "EntranceBig": "Windows"
+  },
+  "28": {
+   "EdgeL": "LineworkDodge",
+   "EdgeB": "LineworkDodge",
+   "EdgeR": "LineworkDodge",
+   "CornerR": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "EdgeT": "LineworkDodge",
+   "CornerT": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "Square": "LineworkDodge",
+   "Length": "LineworkDodge",
+   "Door2": "Windows",
+   "Width": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "Window": "Windows",
+   "Ledge": "LineworkDodge"
+  },
+  "29": {
+   "Capsule Hotel_12 (15)": "LineworkDodge",
+   "Capsule Hotel_12 (14)": "LineworkDodge",
+   "Capsule Hotel_12 (1)": "LineworkDodge",
+   "Window (6)": "GenericWindow",
+   "Window": "GenericWindow",
+   "Capsule Hotel_12": "LineworkDodge",
+   "Capsule Hotel_12 (2)": "LineworkDodge",
+   "Capsule Hotel_12 (6)": "LineworkDodge",
+   "Window (3)": "GenericWindow",
+   "Window (1)": "GenericWindow",
+   "Capsule Hotel_12 (13)": "LineworkDodge",
+   "Window (8)": "GenericWindow",
+   "Capsule Hotel_12 (4)": "LineworkDodge",
+   "Capsule Hotel_12 (12)": "LineworkDodge",
+   "Window (2)": "GenericWindow",
+   "Capsule Hotel_12 (17)": "LineworkDodge",
+   "Window (7)": "GenericWindow",
+   "Capsule Hotel_12 (9)": "LineworkDodge",
+   "Capsule Hotel_12 (10)": "LineworkDodge",
+   "Capsule Hotel_12 (3)": "LineworkDodge",
+   "Capsule Hotel_12 (16)": "LineworkDodge",
+   "Capsule Hotel_12 (5)": "LineworkDodge",
+   "Capsule Hotel_12 (7)": "LineworkDodge",
+   "Window (11)": "GenericWindow",
+   "Capsule Hotel_12 (11)": "LineworkDodge",
+   "Window (4)": "GenericWindow",
+   "Capsule Hotel_12 (8)": "LineworkDodge",
+   "Capsule Hotel_12 (18)": "LineworkDodge",
+   "Window (10)": "GenericWindow",
+   "Window (5)": "GenericWindow",
+   "Window (9)": "GenericWindow"
+  },
+  "3": {
+   "PropSprite": "Hedge"
+  },
+  "30": {
+   "CornerR": "LineworkDodge",
+   "EdgeB": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "CornerT": "LineworkDodge",
+   "EdgeR": "LineworkDodge",
+   "EdgeT": "LineworkDodge",
+   "EdgeL": "LineworkDodge",
+   "carTest_1 (6)": "LineworkDodge",
+   "EntranceStandard_2": "Windows",
+   "Length": "LineworkDodge",
+   "Width": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "Window": "Windows",
+   "Ledge": "LineworkDodge",
+   "Entrance10": "Windows"
+  },
+  "31": {
+   "CornerR": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "CornerT": "LineworkDodge",
+   "EdgeL": "LineworkDodge",
+   "EdgeT": "LineworkDodge",
+   "EdgeB": "LineworkDodge",
+   "Curb": "LineworkDodge",
+   "EdgeR": "LineworkDodge",
+   "Square": "LineworkDodge",
+   "Length": "LineworkDodge",
+   "Width": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "Window": "Windows",
+   "Ledge": "LineworkDodge",
+   "EntranceBig": "Windows"
+  },
+  "32": {
+   "EdgeB": "LineworkDodge",
+   "CornerT": "LineworkDodge",
+   "CornerR": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "EdgeL": "LineworkDodge",
+   "5_BBT_gym_office_export1_32 (1)": "Windows",
+   "EdgeT": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "windows_0 (1)": "Windows",
+   "5_BBT_gym_office_export1_32 (2)": "Windows",
+   "EdgeR": "LineworkDodge",
+   "Window (2)": "GenericWindow",
+   "Window (3)": "GenericWindow",
+   "Window (1)": "GenericWindow",
+   "Window (4)": "GenericWindow",
+   "5_BBT_gym_office_export1_32": "Windows",
+   "windows_0": "Windows",
+   "Length": "LineworkDodge",
+   "Entrance12": "Windows",
+   "Width": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "Entrance14": "Windows",
+   "Ledge": "LineworkDodge"
+  },
+  "33": {
+   "Light": "Radial",
+   "CornerR": "LineworkDodge",
+   "CornerB": "LineworkDodge",
+   "EdgeT": "LineworkDodge",
+   "CornerT": "LineworkDodge",
+   "Light2": "Radial",
+   "Curb2": "LineworkDodge",
+   "EdgeL": "LineworkDodge",
+   "CornerL": "LineworkDodge",
+   "EdgeR": "LineworkDodge",
+   "EdgeB": "LineworkDodge",
+   "Light1": "Radial",
+   "CoffeeShop_0": "LineworkDodge",
+   "Entrance6": "Windows",
+   "Length": "LineworkDodge",
+   "stairs_1": "LineworkDodge",
+   "Width": "LineworkDodge",
+   "CoffeeShop_1": "LineworkDodge",
+   "Defect": "LineworkDodge",
+   "stairs_0": "LineworkDodge",
+   "Doorway": "LineworkDodge",
+   "Window": "Windows",
+   "Ledge": "LineworkDodge",
+   "Entrance7": "Windows"
+  },
+  "34": {
+   "BalconyEdgeL (1)": "RevealMiddle",
+   "Apartment_export_3": "RevealRight",
+   "StudL (2)": "RevealLeft",
+   "Apartment_export_25": "RevealRight",
+   "PillarR_End": "RevealRight",
+   "Apartment_export_22": "RevealLeft",
+   "WindowR_Left (1)": "RevealRight",
+   "LedgeR_Left (1)": "RevealMiddle",
+   "StudR": "RevealRight",
+   "StudL": "RevealLeft",
+   "Balcony": "RevealRight",
+   "PillarL_CS_Bottom": "RevealLeft",
+   "PillarL": "RevealMiddle",
+   "Apartment_export_45 (3)": "RevealRightReverse",
+   "BalconyEdgeR": "RevealRight",
+   "PillarR_Start": "RevealRight",
+   "Pipes": "RevealRightReverse",
+   "Apartment_export_45": "RevealRightReverse",
+   "LedgeL_CS": "RevealLeft",
+   "WindowL": "RevealLeft",
+   "Apartment_export_47": "RevealRight",
+   "LedgeL": "RevealLeft",
+   "Apartment_export_45 (2)": "RevealRightReverse",
+   "PillarR": "RevealRight",
+   "StudL (1)": "RevealLeft",
+   "LedgeR_Right": "RevealRight"
+  },
+  "39": {
+   "Pillar (2)": "Fade",
+   "Square": "Clouds",
+   "Cloud": "Clouds",
+   "Cloud (1)": "Clouds",
+   "Dreamhouse_BG_Clouds-Bush_0": "Clouds"
+  },
+  "4": {
+   "Foam (34)": "Foam",
+   "Foam (3)": "Foam",
+   "Foam (33)": "Foam",
+   "Foam (32)": "Foam",
+   "Foam (1)": "Foam",
+   "PropSprite": "Distort",
+   "Foam (30)": "Foam",
+   "Foam (25)": "Foam",
+   "Foam (23)": "Foam",
+   "Foam (14)": "Foam",
+   "Foam (15)": "Foam",
+   "Foam (8)": "Foam",
+   "Foam (12)": "Foam",
+   "Foam (6)": "Foam",
+   "Foam (24)": "Foam",
+   "Foam (31)": "Foam",
+   "Foam (20)": "Foam",
+   "Foam (26)": "Foam",
+   "Foam (29)": "Foam",
+   "Foam (5)": "Foam",
+   "Foam (28)": "Foam",
+   "Foam (18)": "Foam",
+   "Foam (21)": "Foam",
+   "Foam (7)": "Foam",
+   "Foam (19)": "Foam",
+   "Water": "Water",
+   "Foam (22)": "Foam",
+   "Foam (2)": "Foam",
+   "Foam (27)": "Foam",
+   "Foam (9)": "Foam",
+   "Foam (13)": "Foam",
+   "Foam": "Foam",
+   "Foam (10)": "Foam",
+   "Foam (4)": "Foam",
+   "Foam (11)": "Foam"
+  },
+  "5": {
+   "Foam (5)": "Foam",
+   "Foam (2)": "Foam",
+   "Foam (8)": "Foam",
+   "Moss (1)": "Hedge",
+   "Foam (6)": "Foam",
+   "Foam (9)": "Foam",
+   "Foam (11)": "Foam",
+   "Foam (10)": "Foam",
+   "Moss (2)": "Hedge",
+   "Foam (3)": "Foam",
+   "Foam (4)": "Foam",
+   "Foam (12)": "Foam",
+   "Foam (7)": "Foam",
+   "Water (1)": "Water",
+   "Moss": "Hedge"
+  },
+  "6": {
+   "PropSprite": "Hedge",
+   "Foam (15)": "Foam",
+   "Foam (7)": "Foam",
+   "Foam (10)": "Foam",
+   "Foam (21)": "Foam",
+   "Foam (13)": "Foam",
+   "Foam (5)": "Foam",
+   "Foam (20)": "Foam",
+   "Foam (4)": "Foam",
+   "Foam (23)": "Foam",
+   "Foam (12)": "Foam",
+   "Foam (11)": "Foam",
+   "Foam (17)": "Foam",
+   "Foam (2)": "Foam",
+   "Foam (6)": "Foam",
+   "Foam (9)": "Foam",
+   "Foam (18)": "Foam",
+   "Foam (16)": "Foam",
+   "Foam (8)": "Foam",
+   "Foam (22)": "Foam",
+   "Foam (19)": "Foam",
+   "Foam (3)": "Foam",
+   "Foam (14)": "Foam"
+  },
+  "7": {
+   "DreamHouse_Environment_TrainRide_4": "BaseLighting",
+   "FGLight": "StrongLights",
+   "Telephone Pole 2 (1)": "BaseLighting",
+   "Light": "StrongLights",
+   "Telephone Pole 2": "BaseLighting",
+   "Telephone Pole 2 (4)": "BaseLighting",
+   "DreamHouse_Environment_TrainRide_17": "BaseLighting",
+   "Wheels": "BaseLighting",
+   "DreamHouse_Environment_TrainRide_3 (1)": "BaseLighting",
+   "Telephone Pole 2 (3)": "BaseLighting",
+   "BGLight": "StrongLights",
+   "Train": "BaseLighting",
+   "Telephone Pole 2 (2)": "BaseLighting",
+   "DreamHouse_Environment_TrainRide_19": "BaseLighting",
+   "Wheels (1)": "BaseLighting",
+   "DreamHouse_Environment_TrainRide_10": "BaseLighting",
+   "TrainBacking": "BaseLighting",
+   "DreamHouse_Environment_TrainRide_18": "BaseLighting",
+   "DreamHouse_Environment_TrainRide_6": "BaseLighting",
+   "DreamHouse_Environment_TrainRide_23": "BaseLighting",
+   "Ground": "BaseLighting",
+   "DreamHouse_Environment_TrainRide_3": "BaseLighting",
+   "DreamHouse_Environment_TrainRide_22": "BaseLighting",
+   "Train (1)": "BaseLighting"
+  },
+  "8": {
+   "PropSprite": "Hedge",
+   "Square": "Radial"
+  },
+  "9": {
+   "PropSprite": "Hedge",
+   "New Sprite (1)": "Radial",
+   "New Sprite (2)": "Radial"
+  }
+ },
+ "ambiguos": {
+  "32": {
+   "Window": [
+    "GenericWindow",
+    "Windows"
+   ]
+  },
+  "34": {
+   "Square": [
+    "GenericWindow",
+    "WindowLeft",
+    "WindowMiddle",
+    "WindowRight"
+   ],
+   "Square (8)": [
+    "GenericWindow",
+    "WindowLeft"
+   ],
+   "Square (3)": [
+    "GenericWindow",
+    "WindowLeft",
+    "WindowMiddle",
+    "WindowRight"
+   ],
+   "Square (2)": [
+    "GenericWindow",
+    "WindowLeft",
+    "WindowMiddle",
+    "WindowRight"
+   ],
+   "Square (1)": [
+    "GenericWindow",
+    "WindowLeft",
+    "WindowMiddle",
+    "WindowRight"
+   ],
+   "Square (5)": [
+    "GenericWindow",
+    "WindowLeft"
+   ],
+   "WindowR_Left (2)": [
+    "RevealLeft",
+    "RevealMiddle"
+   ],
+   "Square (9)": [
+    "GenericWindow",
+    "WindowLeft"
+   ],
+   "PillarL_End (1)": [
+    "RevealLeft",
+    "RevealMiddle"
+   ],
+   "Square (6)": [
+    "GenericWindow",
+    "WindowLeft"
+   ],
+   "Square (7)": [
+    "GenericWindow",
+    "WindowLeft"
+   ],
+   "Pillar": [
+    "RevealLeft",
+    "RevealMiddle"
+   ],
+   "Square (4)": [
+    "GenericWindow",
+    "WindowLeft"
+   ],
+   "Balcony_CS": [
+    "RevealMiddle",
+    "RevealRight"
+   ],
+   "StudR (1)": [
+    "RevealMiddle",
+    "RevealRight"
+   ],
+   "PillarL_Start": [
+    "RevealMiddle",
+    "RevealRight"
+   ],
+   "PillarL (1)": [
+    "RevealLeft",
+    "RevealRight"
+   ],
+   "PillarL_CS_Top": [
+    "RevealMiddle",
+    "RevealRight"
+   ],
+   "StudR (2)": [
+    "RevealMiddle",
+    "RevealRight"
+   ]
+  },
+  "5": {
+   "PropSprite": [
+    "Distort",
+    "Hedge"
+   ]
+  },
+  "7": {
+   "New Sprite": [
+    "BaseLighting",
+    "Sprites-Default"
+   ]
+  }
+ }
+}

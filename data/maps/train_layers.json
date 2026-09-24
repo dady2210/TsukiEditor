@@ -1,0 +1,100 @@
+{
+  "10": {
+    "nivel": "level9",
+    "parada": -16,
+    "recorrido": 60,
+    "zoom_min": 1.15,
+    "luces_offset_px": [
+      -277,
+      -75
+    ],
+    "encuadre": {
+      "x0": 0,
+      "y0": 1700,
+      "x1": 3400,
+      "y1": 4584
+    },
+    "fondo": "images/maps/Exportado_level9/level9_SinTren.png",
+    "tren": "images/maps/Exportado_level9/level9_Tren.png",
+    "encima": "images/maps/Exportado_level9/level9_Encima.png",
+    "luces": "images/maps/Exportado_level9/level9_Luces.png",
+    "mundo": {
+      "x0": 7.742000341415405,
+      "y0": 8.339801788330078,
+      "x1": 31.973000526428223,
+      "y1": 20.575400590896606
+    },
+    "luces_offset_world": [
+      -1.85,
+      0.5
+    ],
+    "tren_sin_techo": "images/maps/Exportado_level9/level9_TrenSinTecho.png",
+    "centros": [
+      {
+        "vagon": 0,
+        "x": 11.6,
+        "y": 10.61
+      },
+      {
+        "vagon": 1,
+        "x": 19.6,
+        "y": 14.61
+      },
+      {
+        "vagon": 2,
+        "x": 27.6,
+        "y": 18.61
+      }
+    ]
+  },
+  "14": {
+    "nivel": "level48",
+    "fondo": "images/maps/Exportado_level48/level48_Fondo.png",
+    "vagon": "images/maps/Exportado_level48/level48_Vagon.png",
+    "centros": [
+      {
+        "vagon": 0,
+        "x": 0,
+        "y": 1
+      },
+      {
+        "vagon": 1,
+        "x": 8,
+        "y": 5
+      },
+      {
+        "vagon": 2,
+        "x": 16,
+        "y": 9
+      }
+    ]
+  },
+  "15": {
+    "nivel": "level52",
+    "parada": 0,
+    "encuadre": null,
+    "fondo": "images/maps/Exportado_level52/level52_SinTren.png",
+    "tren": "images/maps/Exportado_level52/level52_Tren.png",
+    "encima": "images/maps/Exportado_level52/level52_Encima.png",
+    "mundo": {
+      "x0": -24.05799698829651,
+      "y0": -7.945194244384766,
+      "x1": -8.050296783447266,
+      "y1": -0.3849954605102539
+    },
+    "recorrido": 32.015,
+    "tren_sin_techo": "images/maps/Exportado_level52/level52_TrenSinTecho.png",
+    "centros": [
+      {
+        "vagon": 0,
+        "x": -20.2,
+        "y": -5.67
+      },
+      {
+        "vagon": 1,
+        "x": -12.2,
+        "y": -1.67
+      }
+    ]
+  }
+}

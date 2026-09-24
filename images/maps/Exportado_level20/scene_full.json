@@ -1,0 +1,278 @@
+{
+  "kind": "map",
+  "id": "level20",
+  "name": "level20",
+  "source": "C:\\Users\\Andres\\Desktop\\Tsuki_Odyssey\\AssetPack\\assets\\bin\\Data\\level20",
+  "layout": {
+    "front": [
+      {
+        "sp": "ChiSnow_2",
+        "go": "ChiSnow (2)",
+        "x": -4.763000259399416,
+        "y": 4.328000116348266,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 539.0,
+        "rh": 466.0,
+        "ox": 6.0,
+        "oy": 6.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 6.413333415985107,
+        "sz_y": 2.573333263397217,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "ChiSnow (2)",
+        "go_path_id": 1,
+        "tr_path_id": 7,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "ChiSnow_1",
+        "go": "ChiSnow (1)",
+        "x": -3.571000823974611,
+        "y": 6.188999938964844,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 437.0,
+        "rh": 466.0,
+        "ox": 11.0,
+        "oy": 7.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 6.413333415985107,
+        "sz_y": 2.573333263397217,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "ChiSnow (1)",
+        "go_path_id": 2,
+        "tr_path_id": 8,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "ChiSnow_0",
+        "go": "ChiSnow",
+        "x": 0.6560003662109359,
+        "y": 5.3799999237060545,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 846.0,
+        "rh": 448.0,
+        "ox": 2.0,
+        "oy": 11.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 6.413333415985107,
+        "sz_y": 2.573333263397217,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "ChiSnow",
+        "go_path_id": 3,
+        "tr_path_id": 9,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "Snow_Mound_0",
+        "go": "Sprite",
+        "x": 4.870000114440916,
+        "y": 2.3299999713897703,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 106.0,
+        "rh": 67.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 0.800000011920929,
+        "sz_y": 0.800000011920929,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "Snowmound (1)/Sprite",
+        "go_path_id": 6,
+        "tr_path_id": 12,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      }
+    ],
+    "back": [],
+    "fx": []
+  },
+  "hierarchy": [
+    {
+      "path": "ChiSnow (2)",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "ChiSnow (1)",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "ChiSnow",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "ChiSnow",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Snowmound (1)",
+      "components": [
+        "Texture2D",
+        "Shader",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Sprite",
+      "components": [
+        "Texture2D",
+        "Sprite",
+        "Sprite"
+      ]
+    }
+  ],
+  "colliders": [],
+  "logic": {
+    "walkable": [],
+    "blockers": [],
+    "triggers": [],
+    "interaction_nodes": [],
+    "grids": [],
+    "camera_confines": [],
+    "lights": [],
+    "scripts": [],
+    "animators": [],
+    "audio": [],
+    "particles": []
+  },
+  "animation": {
+    "controllers": []
+  },
+  "audio": [],
+  "particles": [],
+  "catalog": {},
+  "raw": {
+    "level": "level20",
+    "origin_offset": {
+      "x": -19.49,
+      "y": -1.8
+    },
+    "grid_system": [],
+    "interaction_nodes": [],
+    "walkable_bounds": [],
+    "camera_confines": [],
+    "lighting_volumes": [],
+    "special_scripts": [],
+    "animator_nodes": [],
+    "audio_sources": [],
+    "particle_systems": []
+  }
+}

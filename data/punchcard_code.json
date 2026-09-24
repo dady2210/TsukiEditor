@@ -1,0 +1,15 @@
+{
+ "_fuente": "PunchcardReward::Claim del binario (rva_all.json + capstone)",
+ "_nota": "La direccion que dio Ghidra (UNK_012e0890) estaba desplazada 0x100000: la tabla esta en 0x11e0890. El port usaba el multiplicador tal cual, o sea 0 tickets con el modificador a 0, donde el juego da 1.",
+ "metodo": "0x57f884c",
+ "zanahoriasPorMultiplicador": 200,
+ "itemTicketGacha": 1,
+ "itemReroll": 322,
+ "rerollsPorModificador": [
+  1,
+  1,
+  2,
+  3
+ ],
+ "tablaEn": "0x11e0890"
+}

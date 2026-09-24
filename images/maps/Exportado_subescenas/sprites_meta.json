@@ -1,0 +1,268 @@
+{
+ "windChimes_0": {
+  "rw": 52.0,
+  "rh": 43.0,
+  "px": 0.5,
+  "py": 0.9734,
+  "ppu": 150.0
+ },
+ "windChimes_3": {
+  "rw": 33.0,
+  "rh": 94.0,
+  "px": 0.45747,
+  "py": 0.96662,
+  "ppu": 150.0
+ },
+ "white": {
+  "rw": 128.0,
+  "rh": 128.0,
+  "px": 0.5,
+  "py": 0.5,
+  "ppu": 128.0
+ },
+ "lanterns_0": {
+  "rw": 74.0,
+  "rh": 121.0,
+  "px": 0.5,
+  "py": 0.84,
+  "ppu": 150.0
+ },
+ "lanterns_2": {
+  "rw": 74.0,
+  "rh": 121.0,
+  "px": 0.5,
+  "py": 0.84,
+  "ppu": 150.0
+ },
+ "lanterns_6": {
+  "rw": 55.0,
+  "rh": 52.0,
+  "px": 0.51902,
+  "py": 0.80467,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_MomoTeaHouseBobo_31": {
+  "rw": 247.0,
+  "rh": 172.0,
+  "px": 0.5,
+  "py": 0.49564,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_MomoTeaHouseBobo_28": {
+  "rw": 249.0,
+  "rh": 175.0,
+  "px": 0.50422,
+  "py": 0.49914,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_MomoTeaHouseBobo_33": {
+  "rw": 246.0,
+  "rh": 174.0,
+  "px": 0.5,
+  "py": 0.5,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_MomoTeaHouseBobo_27": {
+  "rw": 246.0,
+  "rh": 174.0,
+  "px": 0.5,
+  "py": 0.5,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_MomoTeaHouseBobo_32": {
+  "rw": 245.0,
+  "rh": 174.0,
+  "px": 0.5,
+  "py": 0.5,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_MomoTeaHouseBobo_29": {
+  "rw": 248.0,
+  "rh": 172.0,
+  "px": 0.50242,
+  "py": 0.49477,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_MomoTeaHouseBobo_30": {
+  "rw": 248.0,
+  "rh": 170.0,
+  "px": 0.5,
+  "py": 0.48853,
+  "ppu": 150.0
+ },
+ "Dawn'sShop_Final_14": {
+  "rw": 134.0,
+  "rh": 213.0,
+  "px": 0.6097,
+  "py": 0.31141,
+  "ppu": 150.0
+ },
+ "Dawn'sShop_Final_12": {
+  "rw": 133.0,
+  "rh": 246.0,
+  "px": 0.60579,
+  "py": 0.26866,
+  "ppu": 150.0
+ },
+ "Dawn'sShop_Final_13": {
+  "rw": 137.0,
+  "rh": 181.0,
+  "px": 0.61825,
+  "py": 0.36492,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_TrainRide_12": {
+  "rw": 215.0,
+  "rh": 76.0,
+  "px": 0.5,
+  "py": 0.5,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_TrainRide_13": {
+  "rw": 213.0,
+  "rh": 76.0,
+  "px": 0.5,
+  "py": 0.5,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_TrainRide_14": {
+  "rw": 216.0,
+  "rh": 74.0,
+  "px": 0.5,
+  "py": 0.5,
+  "ppu": 150.0
+ },
+ "DreamHouse_Environment_TrainRide_15": {
+  "rw": 211.0,
+  "rh": 74.0,
+  "px": 0.5,
+  "py": 0.5,
+  "ppu": 150.0
+ },
+ "PotteryMan_48": {
+  "rw": 100.0,
+  "rh": 108.0,
+  "px": 0.482,
+  "py": 0.08333,
+  "ppu": 150.0
+ },
+ "PotteryMan_51": {
+  "rw": 96.0,
+  "rh": 101.0,
+  "px": 0.53281,
+  "py": 0.07228,
+  "ppu": 150.0
+ },
+ "PotteryMan_49": {
+  "rw": 100.0,
+  "rh": 99.0,
+  "px": 0.491,
+  "py": 0.05909,
+  "ppu": 150.0
+ },
+ "PotteryMan_47": {
+  "rw": 100.0,
+  "rh": 100.0,
+  "px": 0.485,
+  "py": 0.092,
+  "ppu": 150.0
+ },
+ "PotteryMan_46": {
+  "rw": 101.0,
+  "rh": 95.0,
+  "px": 0.49109,
+  "py": 0.09737,
+  "ppu": 150.0
+ },
+ "PotteryMan_44": {
+  "rw": 57.0,
+  "rh": 46.0,
+  "px": 0.45263,
+  "py": 0.00109,
+  "ppu": 150.0
+ },
+ "PotteryMan_2": {
+  "rw": 90.0,
+  "rh": 97.0,
+  "px": 0.55167,
+  "py": 0.04072,
+  "ppu": 150.0
+ },
+ "PotteryMan_43": {
+  "rw": 35.0,
+  "rh": 28.0,
+  "px": 0.54286,
+  "py": -0.25,
+  "ppu": 150.0
+ },
+ "PotteryMan_42": {
+  "rw": 25.0,
+  "rh": 14.0,
+  "px": 0.512,
+  "py": -0.95714,
+  "ppu": 150.0
+ },
+ "PotteryMan_45": {
+  "rw": 107.0,
+  "rh": 63.0,
+  "px": 0.48598,
+  "py": 0.15476,
+  "ppu": 150.0
+ },
+ "PotteryMan_0": {
+  "rw": 92.0,
+  "rh": 100.0,
+  "px": 0.54239,
+  "py": 0.0695,
+  "ppu": 150.0
+ },
+ "mallFountain_7": {
+  "rw": 586.0,
+  "rh": 337.0,
+  "px": 0.49242,
+  "py": 0.48277,
+  "ppu": 150.0
+ },
+ "mallFountain_3": {
+  "rw": 211.0,
+  "rh": 264.0,
+  "px": 0.56846,
+  "py": 0.13655,
+  "ppu": 150.0
+ },
+ "mallFountain_1": {
+  "rw": 108.0,
+  "rh": 348.0,
+  "px": 0.52337,
+  "py": 0.06556,
+  "ppu": 150.0
+ },
+ "mallFountain_4": {
+  "rw": 169.0,
+  "rh": 208.0,
+  "px": 0.49476,
+  "py": 0.17419,
+  "ppu": 150.0
+ },
+ "mallFountain_2": {
+  "rw": 142.0,
+  "rh": 349.0,
+  "px": 0.45629,
+  "py": 0.08229,
+  "ppu": 150.0
+ },
+ "ConveyorBelt_Anim_0": {
+  "rw": 374.0,
+  "rh": 142.0,
+  "px": 0.50401,
+  "py": 0.42817,
+  "ppu": 150.0
+ },
+ "ConveyorBelt_Anim_1": {
+  "rw": 374.0,
+  "rh": 142.0,
+  "px": 0.50401,
+  "py": 0.42817,
+  "ppu": 150.0
+ }
+}

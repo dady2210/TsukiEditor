@@ -2,7 +2,7 @@
   "activities": {
     "101": {
       "id": 101,
-      "name": "Sentarse a Descansar",
+      "name": "Tsuki: Tsuki-SitResting",
       "category": "chair",
       "npcID": -1,
       "npcKey": "0",
@@ -11,15 +11,15 @@
       "layer": "on_seat",
       "anim": {
         "front": "Tsuki-SitResting",
-        "back": "Tsuki-SitBellyOutBack",
+        "back": "Tsuki_AntiqueCabinetBack",
         "fps": 2.5,
         "mode": "pingpong"
       },
       "offset": {
-        "x": 0,
-        "y": 0.22
+        "x": 0.09,
+        "y": 0.2
       },
-      "description": "Tsuki sentado comodamente respirando y parpadeando"
+      "description": "Tsuki interactuando con Item 163 (Nido de Jardín / Garden Nest)"
     },
     "102": {
       "id": 102,
@@ -83,6 +83,27 @@
         "y": 0.15
       },
       "description": "Tsuki sumergido en agua tibia relajandose"
+    },
+    "105": {
+      "id": 105,
+      "name": "Descansar en Nido de Jardín",
+      "category": "chair",
+      "npcID": -1,
+      "npcKey": "0",
+      "npcName": "Tsuki",
+      "type": "furniture_sit",
+      "layer": "on_seat",
+      "anim": {
+        "front": "Tsuki-HangingGardenChair",
+        "back": "Tsuki-HangingGardenChair",
+        "fps": 2,
+        "mode": "pingpong"
+      },
+      "offset": {
+        "x": 0.09,
+        "y": 0.2
+      },
+      "description": "Tsuki descansando placenteramente en el nido de jardín colgante"
     },
     "201": {
       "id": 201,
@@ -202,7 +223,8 @@
       201,
       202,
       301,
-      302
+      302,
+      105
     ],
     "sofa": [
       101,
@@ -277,13 +299,73 @@
       "name": "Asiento Estándar"
     },
     "115": {
-      "x": 0,
-      "y": 0.53,
+      "x": 0.02,
+      "y": 0.37,
       "name": "Item #115"
     },
+    "163": {
+      "x": 0.09,
+      "y": 0.2
+    },
     "115:101": {
+      "x": 0.02,
+      "y": 0.37
+    },
+    "115:back": {
       "x": 0,
-      "y": 0.53
+      "y": 0.52
+    },
+    "115:101:back": {
+      "x": 0,
+      "y": 0.52
+    },
+    "115:front": {
+      "x": 0.02,
+      "y": 0.37
+    },
+    "115:102": {
+      "x": 0.02,
+      "y": 0.37
+    },
+    "115:103": {
+      "x": 0.02,
+      "y": 0.37
+    },
+    "115:201": {
+      "x": 0.02,
+      "y": 0.37
+    },
+    "115:202": {
+      "x": 0.02,
+      "y": 0.37
+    },
+    "115:302": {
+      "x": 0.02,
+      "y": 0.37
+    },
+    "163:front": {
+      "x": 0.09,
+      "y": 0.2
+    },
+    "163:101": {
+      "x": 0,
+      "y": 0.22
+    },
+    "163:102": {
+      "x": 0,
+      "y": 0.22
+    },
+    "163:back": {
+      "x": 0,
+      "y": 0.22
+    },
+    "163:101:front": {
+      "x": 0.09,
+      "y": 0.2
+    },
+    "163:101:back": {
+      "x": 0,
+      "y": 0.22
     }
   },
   "seating_profiles": {
@@ -683,12 +765,12 @@
       "backrest_sprite": "FURN_115_BACKREST.png",
       "offsets": {
         "front": {
-          "x": 0,
-          "y": 0.22
+          "x": 0.02,
+          "y": 0.37
         },
         "back": {
           "x": 0,
-          "y": 0.32
+          "y": 0.52
         }
       }
     },
@@ -779,6 +861,24 @@
         "back": {
           "x": 0,
           "y": 0.32
+        }
+      }
+    },
+    "163": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_163_BACK_BASE.png",
+      "backrest_sprite": "FURN_163_BACKREST.png",
+      "has_foreground": true,
+      "front_base_sprite": "FURN_163_FRONT_BASE.png",
+      "foreground_sprite": "FURN_163_FOREGROUND.png",
+      "offsets": {
+        "front": {
+          "x": 0.09,
+          "y": 0.2
+        },
+        "back": {
+          "x": 0,
+          "y": 0.22
         }
       }
     },
@@ -1814,6 +1914,24 @@
         "back": {
           "x": 0,
           "y": 0.32
+        }
+      }
+    },
+    "650": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_163_BACK_BASE.png",
+      "backrest_sprite": "FURN_163_BACKREST.png",
+      "has_foreground": true,
+      "front_base_sprite": "FURN_163_FRONT_BASE.png",
+      "foreground_sprite": "FURN_163_FOREGROUND.png",
+      "offsets": {
+        "front": {
+          "x": 0.09,
+          "y": 0.2
+        },
+        "back": {
+          "x": 0,
+          "y": 0.22
         }
       }
     },

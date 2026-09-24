@@ -1,0 +1,564 @@
+{
+ "_fuente": "AudioData.bgm (globalgamemanagers.assets #759), via tools/cs_scene_music",
+ "_nota": "`BGM.clipID` es el INDICE en este array. Lo usan `dayTrack`/`nightTrack` de cada nivel, los `CustomBGM` condicionales y el `bgm` de cada casete. `audio` es el nombre del AudioClip dentro del bundle de musica, que es por donde se cruza con data/music_tracks.json.",
+ "clips": [
+  {
+   "clipID": 0,
+   "audio": "LoadingScreen",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 1.4118
+  },
+  {
+   "clipID": 1,
+   "audio": "LoadingScreen_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 2,
+   "audio": "Home",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 3,
+   "audio": "Home_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 4,
+   "audio": "YoriShop",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 5,
+   "audio": "YoriShop_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 6,
+   "audio": "ChiHome",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 7,
+   "audio": "ChiHome_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 8,
+   "audio": "DawnShack",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 9,
+   "audio": "DawnShack_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 10,
+   "audio": "MocaHome",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 11,
+   "audio": "MocaHome_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 12,
+   "audio": "MomoTeaShop",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 13,
+   "audio": "MomoTeaShop_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 14,
+   "audio": "Pier",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 15,
+   "audio": "Pier_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 16,
+   "audio": "RosemaryShop",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 17,
+   "audio": "RosemaryShop_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 18,
+   "audio": "TownHall",
+   "segundos": 87.27,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 19,
+   "audio": "TownHall_Night",
+   "segundos": 122.18,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 20,
+   "audio": "Train",
+   "segundos": 71.32,
+   "sequentialTrack": 0,
+   "loop": 2,
+   "loopPoint": 5.04,
+   "barTime": 0
+  },
+  {
+   "clipID": 21,
+   "audio": "Train_Night",
+   "segundos": 159.75,
+   "sequentialTrack": 0,
+   "loop": 2,
+   "loopPoint": 87.75,
+   "barTime": 0
+  },
+  {
+   "clipID": 22,
+   "audio": "StealingScene",
+   "segundos": 42,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 23,
+   "audio": "MocaMixtape",
+   "segundos": 31.87,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 24,
+   "audio": "ScarlettLounge",
+   "segundos": 87.27,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 25,
+   "audio": "ScarlettLounge_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 26,
+   "audio": "ScarlettSong",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 27,
+   "audio": "GhostParty",
+   "segundos": 64,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 28,
+   "audio": "Coastal Mixtape",
+   "segundos": 69.82,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 29,
+   "audio": "SolemnMixtape",
+   "segundos": 112.91,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 30,
+   "audio": "ForestMixtape",
+   "segundos": 140,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 31,
+   "audio": "Festive Mixtape",
+   "segundos": 92.9,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 32,
+   "audio": "TrainStation_Day",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 3.6
+  },
+  {
+   "clipID": 33,
+   "audio": "TrainStation_Night",
+   "segundos": 112,
+   "sequentialTrack": 2,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 34,
+   "audio": "Summer75",
+   "segundos": 104.35,
+   "sequentialTrack": 0,
+   "loop": 1,
+   "loopPoint": 0,
+   "barTime": 2.087
+  },
+  {
+   "clipID": 35,
+   "audio": "TaikoTutorial1",
+   "segundos": 8.35,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 2.087
+  },
+  {
+   "clipID": 36,
+   "audio": "Summer75Instrumental",
+   "segundos": 104.35,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 2.087
+  },
+  {
+   "clipID": 37,
+   "audio": "TaikoTutorial2",
+   "segundos": 20.87,
+   "sequentialTrack": 0,
+   "loop": 1,
+   "loopPoint": 0,
+   "barTime": 2.087
+  },
+  {
+   "clipID": 38,
+   "audio": "TaikoTutorial3",
+   "segundos": 8.35,
+   "sequentialTrack": 0,
+   "loop": 1,
+   "loopPoint": 0,
+   "barTime": 2.087
+  },
+  {
+   "clipID": 39,
+   "audio": "Morning",
+   "segundos": 128,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 40,
+   "audio": "Afternoon",
+   "segundos": 64,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 41,
+   "audio": "Sunset",
+   "segundos": 164.57,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 42,
+   "audio": "Night",
+   "segundos": 90,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 43,
+   "audio": "TravellingToCity",
+   "segundos": 139.64,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 44,
+   "audio": "Subway",
+   "segundos": 130.17,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 45,
+   "audio": "The Hole",
+   "segundos": 130.17,
+   "sequentialTrack": 0,
+   "loop": 2,
+   "loopPoint": 14.1046,
+   "barTime": 0
+  },
+  {
+   "clipID": 46,
+   "audio": "Adrian's Song",
+   "segundos": 223.73,
+   "sequentialTrack": 0,
+   "loop": 2,
+   "loopPoint": 108,
+   "barTime": 0
+  },
+  {
+   "clipID": 47,
+   "audio": "Jazz Performance",
+   "segundos": 73.14,
+   "sequentialTrack": 0,
+   "loop": 2,
+   "loopPoint": 18.126,
+   "barTime": 0
+  },
+  {
+   "clipID": 48,
+   "audio": "Marine Mixtape",
+   "segundos": 151.06,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 49,
+   "audio": "Flowing Mixtape",
+   "segundos": 73.92,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 50,
+   "audio": "Tranquility Mixtape",
+   "segundos": 110.99,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 51,
+   "audio": "NewMoon",
+   "segundos": 76.8,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 52,
+   "audio": "FullMoon",
+   "segundos": 109.33,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 53,
+   "audio": "Poignant Love Mixtape",
+   "segundos": 136,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 54,
+   "audio": "Fantasy Mixtape",
+   "segundos": 88.62,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 55,
+   "audio": "Prank Mixtape",
+   "segundos": 72,
+   "sequentialTrack": 1,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 56,
+   "audio": "Eggcellent Mixtape",
+   "segundos": 51.2,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 57,
+   "audio": "PrimalMixtape",
+   "segundos": 76.8,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 58,
+   "audio": "Western Mixtape",
+   "segundos": 71.2,
+   "sequentialTrack": 0,
+   "loop": 2,
+   "loopPoint": 23.0882,
+   "barTime": 0
+  },
+  {
+   "clipID": 59,
+   "audio": "Autumn Mixtape",
+   "segundos": 106.67,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 60,
+   "audio": "LNY mixtape",
+   "segundos": 56,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  },
+  {
+   "clipID": 61,
+   "audio": "Rainy Mixtape",
+   "segundos": 98.46,
+   "sequentialTrack": 0,
+   "loop": 0,
+   "loopPoint": 0,
+   "barTime": 0
+  }
+ ]
+}

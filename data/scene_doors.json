@@ -1,0 +1,67 @@
+{
+ "_fuente": "SceneDoor de data/scene_objects.json + la jerarquia de images/maps/Exportado_<nivel>/layout.json + las curvas de data/scene_anim_clips.json",
+ "_nota": "`SceneDoor.ToggleDoor()` pone el bool `Open` de un Animator; el estado vive en `SceneDoor.DoorSave { bool open }`, dentro de `sublocations[...].sceneObjectSaves`. No cambian los sprites: se mueve el Transform de la puerta, y con el todos sus hijos. Las piezas se cruzan por GameObject Y sprite porque hay nombres repetidos en la escena.",
+ "puertas": [
+  {
+   "mapId": "3",
+   "nivel": "level7",
+   "nombre": "Door",
+   "raiz": "MocaDoor",
+   "icono": "doorway",
+   "piezas": [
+    {
+     "go": "DreamHouse_Environment_MocaHouse_Platform_1 (7)",
+     "sp": "DreamHouse_Environment_MocaHouse_New_11"
+    },
+    {
+     "go": "MocaDoor",
+     "sp": "DreamHouse_Environment_MocaHouse_New_7"
+    }
+   ],
+   "clips": {
+    "open": {
+     "duracion": 0.41667,
+     "fps": 60.0,
+     "fotogramas": [
+      [
+       0.0,
+       0.0,
+       0.0
+      ],
+      [
+       0.3333333432674408,
+       -0.638,
+       0.329
+      ],
+      [
+       0.4166666567325592,
+       -0.603,
+       0.308
+      ]
+     ]
+    },
+    "close": {
+     "duracion": 0.41667,
+     "fps": 60.0,
+     "fotogramas": [
+      [
+       0.0,
+       -0.638,
+       0.329
+      ],
+      [
+       0.3333333432674408,
+       0.007,
+       -0.01
+      ],
+      [
+       0.4166666567325592,
+       0.0,
+       0.0
+      ]
+     ]
+    }
+   }
+  }
+ ]
+}

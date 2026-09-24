@@ -1,0 +1,41 @@
+{
+ "_fuente": "Gachapon::RollGacha del binario (rva_all.json + capstone)",
+ "_nota": "Los cortes son inmediatos de `fmov` dentro del cuerpo, no literales en memoria: esta herramienta desensambla y comprueba que las instrucciones siguen donde estaban. Los dos umbrales si son literales y se releen. `GetRarity()` no existe en el dump; quien tira es `RollGacha`.",
+ "metodo": "0x5769ef0",
+ "rango": [
+  0,
+  100
+ ],
+ "cortes": [
+  {
+   "rareza": "Legendary",
+   "menorQue": 1
+  },
+  {
+   "rareza": "Epic",
+   "menorQue": 5
+  },
+  {
+   "rareza": "Rare",
+   "menorQue": 12
+  },
+  {
+   "rareza": "Common",
+   "menorQue": null
+  }
+ ],
+ "probabilidades": {
+  "Legendary": 0.01,
+  "Epic": 0.04,
+  "Rare": 0.07,
+  "Common": 0.88
+ },
+ "rarezas": [
+  "Common",
+  "Rare",
+  "Epic",
+  "Legendary"
+ ],
+ "umbralForzado": 0.95,
+ "umbralNormal": 0.8
+}

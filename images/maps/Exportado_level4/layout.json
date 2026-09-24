@@ -2,7 +2,7 @@
   {
     "sp": "Trunk2",
     "go": "PropSprite",
-    "x": 26.8700008392334,
+    "x": 6.870000839233398,
     "y": 3.440000057220459,
     "angle": 0.0,
     "sx": 1.0,
@@ -19,12 +19,36 @@
     "draw_mode": 0,
     "sz_x": 1.4666666984558105,
     "sz_y": 1.4533333778381348,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 2,
+    "tr_path_id": 135,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": 15.099771034700098,
+    "x": -4.9002289652999025,
     "y": -5.5160993039608,
     "angle": 151.99999947891038,
     "sx": 1.0,
@@ -41,12 +65,36 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 3,
+    "tr_path_id": 136,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (15)",
-    "x": 20.33899998664856,
+    "x": 0.33899998664855957,
     "y": -4.4029998779296875,
     "angle": -0.0,
     "sx": 0.4000000059604645,
@@ -63,12 +111,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (15)",
+    "go_path_id": 4,
+    "tr_path_id": 137,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": 14.960420578718185,
+    "x": -5.039579421281815,
     "y": -5.682765025412664,
     "angle": 59.99999955470795,
     "sx": 1.0,
@@ -85,12 +157,36 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 5,
+    "tr_path_id": 138,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (7)",
-    "x": 18.567999958992004,
+    "x": -1.4320000410079956,
     "y": -3.7939999103546143,
     "angle": -0.0,
     "sx": 1.0,
@@ -107,12 +203,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (7)",
+    "go_path_id": 7,
+    "tr_path_id": 140,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 21.185867980122566,
+    "x": 1.1858679801225662,
     "y": -6.310991927981377,
     "angle": 18.999999858014917,
     "sx": 1.0,
@@ -129,12 +249,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 8,
+    "tr_path_id": 141,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 14.23839783668518,
+    "x": -5.761602163314819,
     "y": 2.033858485519886,
     "angle": 113.99999694807542,
     "sx": 1.0,
@@ -151,12 +295,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 9,
+    "tr_path_id": 142,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": 22.192042037844658,
+    "x": 2.192042037844658,
     "y": -4.041164197027683,
     "angle": 48.99999950081295,
     "sx": 1.0,
@@ -173,12 +341,36 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 11,
+    "tr_path_id": 144,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_Reusables_49",
     "go": "PropSprite",
-    "x": 19.503999203443527,
+    "x": -0.4960007965564728,
     "y": 5.738999843597412,
     "angle": 0.0,
     "sx": 1.0,
@@ -195,12 +387,36 @@
     "draw_mode": 0,
     "sz_x": 3.240000009536743,
     "sz_y": 2.559999942779541,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 12,
+    "tr_path_id": 145,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (10)",
-    "x": 17.40000009536743,
+    "x": -2.5999999046325684,
     "y": -5.492000102996826,
     "angle": -0.0,
     "sx": 1.0,
@@ -217,12 +433,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (10)",
+    "go_path_id": 13,
+    "tr_path_id": 146,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks5",
     "go": "Rock",
-    "x": 24.260000228881836,
+    "x": 4.260000228881836,
     "y": -6.420000076293945,
     "angle": 0.0,
     "sx": 1.0,
@@ -239,12 +479,36 @@
     "draw_mode": 0,
     "sz_x": 0.6200000047683716,
     "sz_y": 0.3866666555404663,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 14,
+    "tr_path_id": 147,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves4",
     "go": "PropSprite",
-    "x": 13.056999653577805,
+    "x": -6.943000346422195,
     "y": 0.9259999692440033,
     "angle": 0.0,
     "sx": 1.0,
@@ -261,12 +525,36 @@
     "draw_mode": 0,
     "sz_x": 3.006666660308838,
     "sz_y": 2.3466665744781494,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 15,
+    "tr_path_id": 148,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": 20.704257488250732,
+    "x": 0.7042574882507324,
     "y": 6.047367118299007,
     "angle": 56.00000688317028,
     "sx": 1.0,
@@ -283,12 +571,36 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 16,
+    "tr_path_id": 149,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk8",
     "go": "PropSprite",
-    "x": 13.359999656677246,
+    "x": -6.640000343322754,
     "y": -0.1599999964237213,
     "angle": 0.0,
     "sx": 1.0,
@@ -305,12 +617,36 @@
     "draw_mode": 0,
     "sz_x": 1.4600000381469727,
     "sz_y": 1.3933333158493042,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 19,
+    "tr_path_id": 152,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "egg03",
     "go": "Sprite",
-    "x": 14.772000312805176,
+    "x": -5.227999687194824,
     "y": 4.875999927520752,
     "angle": -0.0,
     "sx": 1.0,
@@ -327,12 +663,36 @@
     "draw_mode": 0,
     "sz_x": 0.4266666769981384,
     "sz_y": 0.4266666769981384,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Floral Egg/Sprite",
+    "go_path_id": 20,
+    "tr_path_id": 153,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": 22.503245072439313,
+    "x": 2.503245072439313,
     "y": -6.174143940210342,
     "angle": 30.99999990561414,
     "sx": 1.0,
@@ -349,12 +709,36 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 23,
+    "tr_path_id": 156,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": 20.02094791829586,
+    "x": 0.02094791829586029,
     "y": 4.207548409700394,
     "angle": 56.00000688317028,
     "sx": 1.0,
@@ -371,12 +755,36 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 24,
+    "tr_path_id": 157,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 25.040031715372606,
+    "x": 5.040031715372606,
     "y": 4.900825574994087,
     "angle": 128.99999462900584,
     "sx": 1.0,
@@ -393,12 +801,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 25,
+    "tr_path_id": 158,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": 25.14946610480547,
+    "x": 5.1494661048054695,
     "y": 4.80598777346313,
     "angle": 4.9999999979998595,
     "sx": 1.0,
@@ -415,12 +847,36 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 26,
+    "tr_path_id": 159,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": 13.929248496890068,
+    "x": -6.070751503109932,
     "y": -2.157255657017231,
     "angle": 70.00000246792996,
     "sx": 1.0,
@@ -437,12 +893,36 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 27,
+    "tr_path_id": 160,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves2",
     "go": "PropSprite",
-    "x": 26.014000000432134,
+    "x": 6.014000000432134,
     "y": -3.0030000805854797,
     "angle": 0.0,
     "sx": 1.0,
@@ -459,12 +939,36 @@
     "draw_mode": 0,
     "sz_x": 2.859999895095825,
     "sz_y": 2.140000104904175,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 28,
+    "tr_path_id": 161,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": 17.40521680051461,
+    "x": -2.5947831994853914,
     "y": 6.4564597606658936,
     "angle": 28.00000078194765,
     "sx": 1.0,
@@ -481,12 +985,36 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 29,
+    "tr_path_id": 162,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (21)",
-    "x": 23.346999883651733,
+    "x": 3.3469998836517334,
     "y": -4.181000232696533,
     "angle": -0.0,
     "sx": 1.0,
@@ -503,12 +1031,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (21)",
+    "go_path_id": 30,
+    "tr_path_id": 163,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Farm_New_2",
     "go": "New Sprite (2)",
-    "x": 19.684999465942383,
+    "x": -0.3150005340576172,
     "y": -2.619999885559082,
     "angle": 0.0,
     "sx": 1.0,
@@ -525,12 +1077,36 @@
     "draw_mode": 0,
     "sz_x": 13.65333366394043,
     "sz_y": 13.65333366394043,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "New Sprite (2)",
+    "go_path_id": 31,
+    "tr_path_id": 164,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk7",
     "go": "PropSprite",
-    "x": 20.850000381469727,
+    "x": 0.8500003814697266,
     "y": 5.53000020980835,
     "angle": 0.0,
     "sx": 1.0,
@@ -547,12 +1123,36 @@
     "draw_mode": 0,
     "sz_x": 1.59333336353302,
     "sz_y": 1.506666660308838,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 32,
+    "tr_path_id": 165,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 14.312548384070396,
+    "x": -5.687451615929604,
     "y": -2.3983237594366074,
     "angle": 139.99999865087597,
     "sx": 1.0,
@@ -569,12 +1169,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 33,
+    "tr_path_id": 166,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk8",
     "go": "PropSprite",
-    "x": 15.630000114440918,
+    "x": -4.369999885559082,
     "y": -7.179999828338623,
     "angle": 0.0,
     "sx": 1.0,
@@ -591,12 +1215,36 @@
     "draw_mode": 0,
     "sz_x": 1.4600000381469727,
     "sz_y": 1.3933333158493042,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 34,
+    "tr_path_id": 167,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (13)",
-    "x": 16.990000009536743,
+    "x": -3.009999990463257,
     "y": -5.936999797821045,
     "angle": -0.0,
     "sx": 1.0,
@@ -613,12 +1261,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (13)",
+    "go_path_id": 35,
+    "tr_path_id": 168,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk8",
     "go": "PropSprite",
-    "x": 19.80699920654297,
+    "x": -0.19300079345703125,
     "y": 4.6529998779296875,
     "angle": 0.0,
     "sx": 1.0,
@@ -635,12 +1307,36 @@
     "draw_mode": 0,
     "sz_x": 1.4600000381469727,
     "sz_y": 1.3933333158493042,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 36,
+    "tr_path_id": 169,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": 24.752504348754883,
+    "x": 4.752504348754883,
     "y": 4.797373729059473,
     "angle": 86.99999625269963,
     "sx": 1.0,
@@ -657,12 +1353,36 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 37,
+    "tr_path_id": 170,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": 26.05267523555085,
+    "x": 6.052675235550851,
     "y": 3.618211828172207,
     "angle": 112.0000033466246,
     "sx": 1.0,
@@ -679,12 +1399,36 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 39,
+    "tr_path_id": 172,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": 20.54837260977365,
+    "x": 0.5483726097736508,
     "y": 6.4248455464839935,
     "angle": 171.99999678473498,
     "sx": 1.0,
@@ -701,12 +1445,36 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 40,
+    "tr_path_id": 173,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": 14.07005413369916,
+    "x": -5.929945866300841,
     "y": 1.9316864244174212,
     "angle": 61.000001383758836,
     "sx": 1.0,
@@ -723,12 +1491,36 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 43,
+    "tr_path_id": 176,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Farm_New_1",
     "go": "New Sprite (1)",
-    "x": 15.23900032043457,
+    "x": -4.76099967956543,
     "y": -1.2209999561309814,
     "angle": 0.0,
     "sx": 1.0,
@@ -745,12 +1537,36 @@
     "draw_mode": 0,
     "sz_x": 13.65333366394043,
     "sz_y": 13.65333366394043,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "New Sprite (1)",
+    "go_path_id": 44,
+    "tr_path_id": 177,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks2",
     "go": "Rock",
-    "x": 13.8100004196167,
+    "x": -6.189999580383301,
     "y": -3.119999885559082,
     "angle": 0.0,
     "sx": 1.0,
@@ -767,12 +1583,36 @@
     "draw_mode": 0,
     "sz_x": 0.47999998927116394,
     "sz_y": 0.47333332896232605,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 45,
+    "tr_path_id": 178,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": 14.0548607558012,
+    "x": -5.945139244198799,
     "y": -2.400071069598198,
     "angle": 42.9999989249458,
     "sx": 1.0,
@@ -789,12 +1629,36 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 48,
+    "tr_path_id": 181,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (5)",
-    "x": 19.4549999833107,
+    "x": -0.5450000166893005,
     "y": -3.489000082015991,
     "angle": -0.0,
     "sx": 1.0,
@@ -811,12 +1675,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (5)",
+    "go_path_id": 50,
+    "tr_path_id": 183,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks11",
     "go": "Rock",
-    "x": 20.95800018310547,
+    "x": 0.9580001831054688,
     "y": 5.59499979019165,
     "angle": 0.0,
     "sx": 1.0,
@@ -833,12 +1721,36 @@
     "draw_mode": 0,
     "sz_x": 0.5933333039283752,
     "sz_y": 0.3266666531562805,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 51,
+    "tr_path_id": 184,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks23",
     "go": "Rock",
-    "x": 26.329999923706055,
+    "x": 6.329999923706055,
     "y": 6.670000076293945,
     "angle": 0.0,
     "sx": 1.0,
@@ -855,12 +1767,36 @@
     "draw_mode": 0,
     "sz_x": 0.4933333396911621,
     "sz_y": 0.41333332657814026,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 52,
+    "tr_path_id": 185,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": 20.689696431159973,
+    "x": 0.6896964311599731,
     "y": -6.38675095140934,
     "angle": 99.99999877121698,
     "sx": 1.0,
@@ -877,12 +1813,36 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 53,
+    "tr_path_id": 186,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 15.101700958330184,
+    "x": -4.898299041669816,
     "y": -5.820223480463028,
     "angle": 25.9999986379697,
     "sx": 1.0,
@@ -899,12 +1859,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 55,
+    "tr_path_id": 188,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (20)",
-    "x": 23.032000064849854,
+    "x": 3.0320000648498535,
     "y": -4.223999977111816,
     "angle": -0.0,
     "sx": 1.0,
@@ -921,12 +1905,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (20)",
+    "go_path_id": 57,
+    "tr_path_id": 190,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Farm_New_6",
     "go": "New Sprite",
-    "x": 20.139999389648438,
+    "x": 0.1399993896484375,
     "y": 3.4170000553131104,
     "angle": 0.0,
     "sx": 1.0,
@@ -943,12 +1951,36 @@
     "draw_mode": 0,
     "sz_x": 13.65333366394043,
     "sz_y": 13.65333366394043,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "New Sprite",
+    "go_path_id": 58,
+    "tr_path_id": 191,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": 17.508885607123375,
+    "x": -2.491114392876625,
     "y": 6.186186148319393,
     "angle": 173.0000043024842,
     "sx": 1.0,
@@ -965,12 +1997,36 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 60,
+    "tr_path_id": 193,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 20.30342608690262,
+    "x": 0.3034260869026184,
     "y": 5.984245419502258,
     "angle": 139.99999865087597,
     "sx": 1.0,
@@ -987,12 +2043,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 63,
+    "tr_path_id": 196,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks8",
     "go": "Rock",
-    "x": 26.6299991607666,
+    "x": 6.629999160766602,
     "y": -4.579999923706055,
     "angle": 0.0,
     "sx": 1.0,
@@ -1009,12 +2089,36 @@
     "draw_mode": 0,
     "sz_x": 0.6466666460037231,
     "sz_y": 0.35333332419395447,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 64,
+    "tr_path_id": 197,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (4)",
-    "x": 20.02199999988079,
+    "x": 0.02199999988079071,
     "y": -3.4839999675750732,
     "angle": -0.0,
     "sx": 1.0,
@@ -1031,12 +2135,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (4)",
+    "go_path_id": 65,
+    "tr_path_id": 198,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (23)",
-    "x": 24.67899990081787,
+    "x": 4.678999900817871,
     "y": -3.9860000610351562,
     "angle": -0.0,
     "sx": 1.0,
@@ -1053,12 +2181,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (23)",
+    "go_path_id": 67,
+    "tr_path_id": 200,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 21.868132524192333,
+    "x": 1.8681325241923332,
     "y": -4.000629283487797,
     "angle": 159.99999570686523,
     "sx": 1.0,
@@ -1075,12 +2227,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 69,
+    "tr_path_id": 202,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk8",
     "go": "PropSprite",
-    "x": 25.959999084472656,
+    "x": 5.959999084472656,
     "y": 4.960000038146973,
     "angle": 0.0,
     "sx": 1.0,
@@ -1097,12 +2273,36 @@
     "draw_mode": 0,
     "sz_x": 1.4600000381469727,
     "sz_y": 1.3933333158493042,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 70,
+    "tr_path_id": 203,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 22.507790724746883,
+    "x": 2.507790724746883,
     "y": -5.383924067020416,
     "angle": 132.9999993149476,
     "sx": 1.0,
@@ -1119,12 +2319,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 71,
+    "tr_path_id": 204,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (12)",
-    "x": 18.539999961853027,
+    "x": -1.4600000381469727,
     "y": -5.465000152587891,
     "angle": -0.0,
     "sx": 1.0,
@@ -1141,12 +2365,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (12)",
+    "go_path_id": 73,
+    "tr_path_id": 206,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (11)",
-    "x": 17.996999979019165,
+    "x": -2.003000020980835,
     "y": -5.296000003814697,
     "angle": -0.0,
     "sx": 1.0,
@@ -1163,12 +2411,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (11)",
+    "go_path_id": 74,
+    "tr_path_id": 207,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": 17.400641927903052,
+    "x": -2.5993580720969476,
     "y": 5.951718330383301,
     "angle": 169.99999377074604,
     "sx": 1.0,
@@ -1185,12 +2457,36 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 75,
+    "tr_path_id": 208,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (17)",
-    "x": 21.998000025749207,
+    "x": 1.9980000257492065,
     "y": -4.553999900817871,
     "angle": -0.0,
     "sx": 0.550000011920929,
@@ -1207,12 +2503,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (17)",
+    "go_path_id": 76,
+    "tr_path_id": 209,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": 25.046779277268797,
+    "x": 5.046779277268797,
     "y": 4.688422285020351,
     "angle": 116.99999627771703,
     "sx": 1.0,
@@ -1229,12 +2549,36 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 77,
+    "tr_path_id": 210,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Farm_New_0",
     "go": "Shed",
-    "x": 16.437299728393555,
+    "x": -3.5627002716064453,
     "y": 3.398400068283081,
     "angle": 0.0,
     "sx": 1.0,
@@ -1251,12 +2595,36 @@
     "draw_mode": 0,
     "sz_x": 13.65333366394043,
     "sz_y": 13.65333366394043,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Shed",
+    "go_path_id": 79,
+    "tr_path_id": 212,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (2)",
-    "x": 21.070999145507812,
+    "x": 1.0709991455078125,
     "y": -3.821000099182129,
     "angle": -0.0,
     "sx": 1.0,
@@ -1273,12 +2641,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (2)",
+    "go_path_id": 80,
+    "tr_path_id": 213,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": 15.25552612543106,
+    "x": -4.744473874568939,
     "y": -5.671247014775872,
     "angle": 109.00000077336826,
     "sx": 1.0,
@@ -1295,12 +2687,36 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 81,
+    "tr_path_id": 214,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (6)",
-    "x": 18.95799994468689,
+    "x": -1.0420000553131104,
     "y": -3.6710000038146973,
     "angle": -0.0,
     "sx": 1.0,
@@ -1317,12 +2733,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (6)",
+    "go_path_id": 82,
+    "tr_path_id": 215,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves2",
     "go": "PropSprite",
-    "x": 26.980000838637352,
+    "x": 6.980000838637352,
     "y": 4.430000066757202,
     "angle": 0.0,
     "sx": 1.0,
@@ -1339,12 +2779,36 @@
     "draw_mode": 0,
     "sz_x": 2.859999895095825,
     "sz_y": 2.140000104904175,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 83,
+    "tr_path_id": 216,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks6",
     "go": "Rock",
-    "x": 22.049999237060547,
+    "x": 2.049999237060547,
     "y": -4.5,
     "angle": 0.0,
     "sx": 1.0,
@@ -1361,12 +2825,36 @@
     "draw_mode": 0,
     "sz_x": 0.5133333206176758,
     "sz_y": 0.40666666626930237,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 84,
+    "tr_path_id": 217,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (9)",
-    "x": 17.765000104904175,
+    "x": -2.234999895095825,
     "y": -4.254000186920166,
     "angle": -0.0,
     "sx": 1.0,
@@ -1383,12 +2871,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (9)",
+    "go_path_id": 85,
+    "tr_path_id": 218,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_Reusables_49",
     "go": "PropSprite",
-    "x": 13.349999815225601,
+    "x": -6.650000184774399,
     "y": -5.149999976158142,
     "angle": 0.0,
     "sx": 1.0,
@@ -1405,12 +2917,36 @@
     "draw_mode": 0,
     "sz_x": 3.240000009536743,
     "sz_y": 2.559999942779541,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 87,
+    "tr_path_id": 220,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (18)",
-    "x": 21.85199999809265,
+    "x": 1.8519999980926514,
     "y": -3.8889999389648438,
     "angle": -0.0,
     "sx": 1.0,
@@ -1427,12 +2963,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (18)",
+    "go_path_id": 88,
+    "tr_path_id": 221,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk1",
     "go": "PropSprite",
-    "x": 17.611000061035156,
+    "x": -2.3889999389648438,
     "y": 5.789999961853027,
     "angle": 0.0,
     "sx": 1.0,
@@ -1449,12 +3009,36 @@
     "draw_mode": 0,
     "sz_x": 1.2866666316986084,
     "sz_y": 1.4600000381469727,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 89,
+    "tr_path_id": 222,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": 21.984496604651213,
+    "x": 1.9844966046512127,
     "y": -3.684550553560257,
     "angle": 152.99999348116322,
     "sx": 1.0,
@@ -1471,12 +3055,36 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 90,
+    "tr_path_id": 223,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves5",
     "go": "PropSprite",
-    "x": 15.327000111341476,
+    "x": -4.672999888658524,
     "y": -6.093999862670898,
     "angle": 0.0,
     "sx": 1.0,
@@ -1493,12 +3101,36 @@
     "draw_mode": 0,
     "sz_x": 3.0199999809265137,
     "sz_y": 2.3466665744781494,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 91,
+    "tr_path_id": 224,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Farm_New_5",
     "go": "New Sprite (4)",
-    "x": 23.95490074157715,
+    "x": 3.9549007415771484,
     "y": 4.209000110626221,
     "angle": 0.0,
     "sx": 1.0,
@@ -1515,12 +3147,36 @@
     "draw_mode": 0,
     "sz_x": 13.65333366394043,
     "sz_y": 13.65333366394043,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "New Sprite (4)",
+    "go_path_id": 92,
+    "tr_path_id": 225,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves1",
     "go": "PropSprite",
-    "x": 23.930000692605972,
+    "x": 3.9300006926059723,
     "y": -6.479999899864197,
     "angle": 0.0,
     "sx": 1.0,
@@ -1537,12 +3193,36 @@
     "draw_mode": 0,
     "sz_x": 3.2333333492279053,
     "sz_y": 2.3399999141693115,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 93,
+    "tr_path_id": 226,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": 14.164048213046044,
+    "x": -5.835951786953956,
     "y": -2.002286270260811,
     "angle": 142.999997368459,
     "sx": 1.0,
@@ -1559,12 +3239,36 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 94,
+    "tr_path_id": 227,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_Reusables_49",
     "go": "PropSprite",
-    "x": 20.850000381469727,
+    "x": 0.8500003814697266,
     "y": 6.624000191688538,
     "angle": 0.0,
     "sx": 1.0,
@@ -1581,12 +3285,36 @@
     "draw_mode": 0,
     "sz_x": 3.240000009536743,
     "sz_y": 2.559999942779541,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 95,
+    "tr_path_id": 228,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": 22.95228984951973,
+    "x": 2.9522898495197296,
     "y": -5.928136985749006,
     "angle": 91.99999791385284,
     "sx": 1.0,
@@ -1603,12 +3331,36 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 96,
+    "tr_path_id": 229,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (16)",
-    "x": 20.883000016212463,
+    "x": 0.8830000162124634,
     "y": -4.473999977111816,
     "angle": -0.0,
     "sx": 0.550000011920929,
@@ -1625,12 +3377,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (16)",
+    "go_path_id": 100,
+    "tr_path_id": 233,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk4",
     "go": "PropSprite",
-    "x": 26.0,
+    "x": 6.0,
     "y": -3.9100000858306885,
     "angle": 0.0,
     "sx": 1.0,
@@ -1647,12 +3423,36 @@
     "draw_mode": 0,
     "sz_x": 1.2933332920074463,
     "sz_y": 1.2000000476837158,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 102,
+    "tr_path_id": 235,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": 20.998072737362236,
+    "x": 0.9980727373622358,
     "y": -5.902682393789291,
     "angle": 144.00000426312317,
     "sx": 1.0,
@@ -1669,12 +3469,36 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 103,
+    "tr_path_id": 236,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 17.15471324324608,
+    "x": -2.8452867567539215,
     "y": 6.182294058613479,
     "angle": 147.00000268574428,
     "sx": 1.0,
@@ -1691,12 +3515,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 104,
+    "tr_path_id": 237,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": 26.047986229299568,
+    "x": 6.047986229299568,
     "y": 3.9649577736854553,
     "angle": 173.99999756123512,
     "sx": 1.0,
@@ -1713,12 +3561,36 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 105,
+    "tr_path_id": 238,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Farm_New_9",
     "go": "New Sprite (5)",
-    "x": 25.60700035095215,
+    "x": 5.607000350952148,
     "y": 1.0499999523162842,
     "angle": 0.0,
     "sx": 1.0,
@@ -1735,12 +3607,36 @@
     "draw_mode": 0,
     "sz_x": 13.65333366394043,
     "sz_y": 13.65333366394043,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "New Sprite (5)",
+    "go_path_id": 106,
+    "tr_path_id": 239,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves2",
     "go": "PropSprite",
-    "x": 25.656999081373215,
+    "x": 5.656999081373215,
     "y": 6.046000003814697,
     "angle": 0.0,
     "sx": 1.0,
@@ -1757,12 +3653,36 @@
     "draw_mode": 0,
     "sz_x": 2.859999895095825,
     "sz_y": 2.140000104904175,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 107,
+    "tr_path_id": 240,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 26.234675958752632,
+    "x": 6.234675958752632,
     "y": 3.743189614266157,
     "angle": 173.99999756123512,
     "sx": 1.0,
@@ -1779,12 +3699,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 110,
+    "tr_path_id": 243,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Farm_New_7",
     "go": "Interior",
-    "x": 16.45729972794652,
+    "x": -3.54270027205348,
     "y": 3.9254000782966614,
     "angle": 0.0,
     "sx": 1.0,
@@ -1801,12 +3745,36 @@
     "draw_mode": 0,
     "sz_x": 3.8933334350585938,
     "sz_y": 2.5466666221618652,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Shed/Interior",
+    "go_path_id": 111,
+    "tr_path_id": 244,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": 22.051820755004883,
+    "x": 2.051820755004883,
     "y": -5.95211982820183,
     "angle": 59.99999955470795,
     "sx": 1.0,
@@ -1823,12 +3791,36 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 112,
+    "tr_path_id": 245,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": 25.7881421148777,
+    "x": 5.788142114877701,
     "y": 3.725420613773167,
     "angle": 140.9999969869366,
     "sx": 1.0,
@@ -1845,12 +3837,36 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 113,
+    "tr_path_id": 246,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (8)",
-    "x": 18.097000002861023,
+    "x": -1.902999997138977,
     "y": -3.986999988555908,
     "angle": -0.0,
     "sx": 1.0,
@@ -1867,12 +3883,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (8)",
+    "go_path_id": 114,
+    "tr_path_id": 247,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": 13.841224417090416,
+    "x": -6.158775582909584,
     "y": 2.0505837202072144,
     "angle": 110.99999884795356,
     "sx": 1.0,
@@ -1889,12 +3929,36 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 115,
+    "tr_path_id": 248,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": 20.34305928647518,
+    "x": 0.3430592864751816,
     "y": 4.255016468465328,
     "angle": 36.99999833383767,
     "sx": 1.0,
@@ -1911,12 +3975,36 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 116,
+    "tr_path_id": 249,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk3",
     "go": "PropSprite",
-    "x": 23.780000686645508,
+    "x": 3.780000686645508,
     "y": -7.639999866485596,
     "angle": 0.0,
     "sx": 1.0,
@@ -1933,12 +4021,36 @@
     "draw_mode": 0,
     "sz_x": 1.5800000429153442,
     "sz_y": 1.6133333444595337,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 117,
+    "tr_path_id": 250,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": 20.201563958544284,
+    "x": 0.2015639585442841,
     "y": 4.451690748333931,
     "angle": 168.00000559246428,
     "sx": 1.0,
@@ -1955,12 +4067,36 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 118,
+    "tr_path_id": 251,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": 14.268885545432568,
+    "x": -5.731114454567432,
     "y": -2.1889213174581528,
     "angle": 20.000002570976452,
     "sx": 1.0,
@@ -1977,12 +4113,36 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 120,
+    "tr_path_id": 253,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (22)",
-    "x": 24.056000232696533,
+    "x": 4.056000232696533,
     "y": -3.947000026702881,
     "angle": -0.0,
     "sx": 1.0,
@@ -1999,12 +4159,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (22)",
+    "go_path_id": 121,
+    "tr_path_id": 254,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_Reusables_49",
     "go": "PropSprite",
-    "x": 17.80100005865097,
+    "x": -2.1989999413490295,
     "y": 6.959999918937683,
     "angle": 0.0,
     "sx": 1.0,
@@ -2021,12 +4205,36 @@
     "draw_mode": 0,
     "sz_x": 3.240000009536743,
     "sz_y": 2.559999942779541,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 122,
+    "tr_path_id": 255,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk3",
     "go": "PropSprite",
-    "x": 13.199999809265137,
+    "x": -6.800000190734863,
     "y": -6.309999942779541,
     "angle": 0.0,
     "sx": 1.0,
@@ -2043,12 +4251,36 @@
     "draw_mode": 0,
     "sz_x": 1.5800000429153442,
     "sz_y": 1.6133333444595337,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 123,
+    "tr_path_id": 256,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (19)",
-    "x": 22.522000074386597,
+    "x": 2.5220000743865967,
     "y": -4.197000026702881,
     "angle": -0.0,
     "sx": 1.0,
@@ -2065,12 +4297,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (19)",
+    "go_path_id": 124,
+    "tr_path_id": 257,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Farm_New_8",
     "go": "New Sprite (6)",
-    "x": 23.391000747680664,
+    "x": 3.391000747680664,
     "y": 2.015000104904175,
     "angle": 0.0,
     "sx": 1.0,
@@ -2087,12 +4343,36 @@
     "draw_mode": 0,
     "sz_x": 13.65333366394043,
     "sz_y": 13.65333366394043,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "New Sprite (6)",
+    "go_path_id": 125,
+    "tr_path_id": 258,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Farm_New_10",
     "go": "BottomCliffs",
-    "x": 21.918100357055664,
+    "x": 1.918100357055664,
     "y": -3.6600000858306885,
     "angle": 0.0,
     "sx": 1.0,
@@ -2109,12 +4389,36 @@
     "draw_mode": 0,
     "sz_x": 13.65333366394043,
     "sz_y": 13.65333366394043,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "BottomCliffs",
+    "go_path_id": 126,
+    "tr_path_id": 259,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks6",
     "go": "Rock",
-    "x": 13.260000228881836,
+    "x": -6.739999771118164,
     "y": 5.070000171661377,
     "angle": 0.0,
     "sx": 1.0,
@@ -2131,12 +4435,36 @@
     "draw_mode": 0,
     "sz_x": 0.5133333206176758,
     "sz_y": 0.40666666626930237,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 127,
+    "tr_path_id": 260,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (3)",
-    "x": 20.354000091552734,
+    "x": 0.3540000915527344,
     "y": -3.447000026702881,
     "angle": -0.0,
     "sx": 1.0,
@@ -2153,12 +4481,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (3)",
+    "go_path_id": 129,
+    "tr_path_id": 262,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "circleBlur",
     "go": "Foam (14)",
-    "x": 16.812000036239624,
+    "x": -3.187999963760376,
     "y": -6.363999843597412,
     "angle": -0.0,
     "sx": 1.0,
@@ -2175,12 +4527,36 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Foam/Foam (14)",
+    "go_path_id": 130,
+    "tr_path_id": 263,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks4",
     "go": "Rock",
-    "x": 14.199999809265137,
+    "x": -5.800000190734863,
     "y": 2.640000104904175,
     "angle": 0.0,
     "sx": 1.0,
@@ -2197,12 +4573,36 @@
     "draw_mode": 0,
     "sz_x": 0.6600000262260437,
     "sz_y": 0.47999998927116394,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 131,
+    "tr_path_id": 264,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks24",
     "go": "Rock",
-    "x": 13.180000305175781,
+    "x": -6.819999694824219,
     "y": 3.7200000286102295,
     "angle": 0.0,
     "sx": 1.0,
@@ -2219,51 +4619,30 @@
     "draw_mode": 0,
     "sz_x": 0.36666667461395264,
     "sz_y": 0.3400000035762787,
-    "poly": []
-  },
-  {
-    "sp": "WoodBark",
-    "go": "WallpaperBL (1)",
-    "x": 15.616199493408203,
-    "y": 3.9238998889923096,
-    "angle": 0.0,
-    "sx": 1.0,
-    "sy": 1.0,
-    "o": 1,
-    "px": 0.5,
-    "py": 0.5,
-    "rw": 512,
-    "rh": 512,
-    "ox": 0,
-    "oy": 0,
-    "ppu": 150.0,
-    "sl": -8,
-    "draw_mode": 2,
-    "sz_x": 1.5535564422607422,
-    "sz_y": 2.1503894329071045,
-    "poly": [
-      [
-        {
-          "x": -0.7813148498535156,
-          "y": -0.41492199897766113
-        },
-        {
-          "x": -0.7735462188720703,
-          "y": 1.0819916725158691
-        },
-        {
-          "x": 0.8465805053710938,
-          "y": 0.44899559020996094
-        },
-        {
-          "x": 0.8322849273681641,
-          "y": -1.2346208095550537
-        },
-        {
-          "x": -0.7813148498535156,
-          "y": -0.41492199897766113
-        }
-      ]
-    ]
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 133,
+    "tr_path_id": 266,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   }
 ]

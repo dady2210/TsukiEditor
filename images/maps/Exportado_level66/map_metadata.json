@@ -1,0 +1,24 @@
+{
+  "level": "level66",
+  "origin_offset": {
+    "x": -180.0,
+    "y": -70.0
+  },
+  "grid_system": [],
+  "interaction_nodes": [],
+  "walkable_bounds": [],
+  "camera_confines": [],
+  "lighting_volumes": [],
+  "special_scripts": [],
+  "animator_nodes": [],
+  "audio_sources": [],
+  "particle_systems": [],
+  "origin_px": {
+    "x": 1246.0,
+    "y": 1604.0
+  },
+  "canvas": {
+    "width": 3106,
+    "height": 3059
+  }
+}

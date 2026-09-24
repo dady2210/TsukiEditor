@@ -16,13 +16,19 @@
     },
 
     now() {
+      const d = new Date();
+      const m = d.getMonth() + 1;
+      // SeasonID del juego: 0=Verano 1=Otonio 2=Invierno 3=Primavera. Lo dice el
+      // `SeasonData` del juego y lo confirman los saves (mes 8 -> season 0).
+      // NO es 0=primavera, que es lo que ponia aqui y rompia el escenario estacional.
+      const defaultSeason = (m >= 6 && m <= 8) ? 0 : (m >= 9 && m <= 11) ? 1 : (m === 12 || m <= 2) ? 2 : 3;
       if (!parserRef || !parserRef.getClock) {
-        const d = new Date();
-        return { hour: d.getHours(), minute: d.getMinutes(), day: d.getDate(), month: d.getMonth() + 1, season: 0, minutes: d.getHours() * 60 + d.getMinutes() };
+        return { hour: d.getHours(), minute: d.getMinutes(), day: d.getDate(), month: m, season: defaultSeason, minutes: d.getHours() * 60 + d.getMinutes() };
       }
       const c = parserRef.getClock();
-      const minute = c.minute != null ? (c.minute | 0) : new Date().getMinutes();
-      return { hour: c.hour|0, minute, day: c.day|0, month: c.month|0, season: c.season|0, minutes: (c.hour|0)*60 + minute };
+      const minute = c.minute != null ? (c.minute | 0) : d.getMinutes();
+      const season = c.season != null ? (c.season | 0) : defaultSeason;
+      return { hour: c.hour|0, minute, day: c.day|0, month: c.month|0, season, minutes: (c.hour|0)*60 + minute };
     },
 
     syncWithDevice: true, // Sincroniza con la hora real del dispositivo
@@ -35,18 +41,20 @@
       const minute = d.getMinutes();
       const day = d.getDate();
       const month = d.getMonth() + 1;
+      const season = (month >= 6 && month <= 8) ? 0 : (month >= 9 && month <= 11) ? 1 : (month === 12 || month <= 2) ? 2 : 3;
       const cur = parserRef.getClock();
-      const sig = `${hour}|${minute}|${day}|${month}`;
+      const sig = `${hour}|${minute}|${day}|${month}|${season}`;
       if (sig === lastSig && !force) return false;
       const hourChanged = cur.hour !== hour;
       const minuteChanged = cur.minute !== minute;
       const dayChanged = cur.day !== day;
       const monthChanged = cur.month !== month;
-      if (!hourChanged && !minuteChanged && !dayChanged && !monthChanged && lastSig !== null && !force) {
+      const seasonChanged = cur.season !== season;
+      if (!hourChanged && !minuteChanged && !dayChanged && !monthChanged && !seasonChanged && lastSig !== null && !force) {
         lastSig = sig;
         return false;
       }
-      parserRef.setClock({ hour, minute, day, month });
+      parserRef.setClock({ hour, minute, day, month, season });
       lastSig = sig;
       const next = parserRef.getClock();
       const payload = {
@@ -58,8 +66,21 @@
         minutes: (next.hour | 0) * 60 + (next.minute | 0)
       };
       if (minuteChanged) emit(listeners.minute, payload);
-      if (hourChanged) emit(listeners.hour, payload);
-      if (dayChanged) emit(listeners.day, payload);
+      if (hourChanged) {
+        emit(listeners.hour, payload);
+        if (typeof window !== 'undefined' && window.NewspaperSystem && (payload.hour === 8 || payload.hour > 8)) {
+          window.NewspaperSystem.checkMorningDispatch();
+        }
+      }
+      if (dayChanged) {
+        emit(listeners.day, payload);
+        if (typeof window !== 'undefined' && window.NewspaperSystem) {
+          window.NewspaperSystem.checkMorningDispatch();
+        }
+      }
+      if (seasonChanged) {
+        emit(listeners.season, payload);
+      }
       return true;
     },
 

@@ -1,0 +1,140 @@
+[
+  {
+    "sp": "DawnSnow_0",
+    "go": "DawnSnow_0",
+    "x": 3.486999988555908,
+    "y": 4.493999481201172,
+    "angle": -0.0,
+    "sx": 1.0,
+    "sy": 1.0,
+    "o": 0,
+    "px": 0.5,
+    "py": 0.5,
+    "rw": 168.0,
+    "rh": 217.0,
+    "ox": 0.0,
+    "oy": 3.0,
+    "ppu": 150.0,
+    "sl": 9,
+    "draw_mode": 0,
+    "sz_x": 6.413333415985107,
+    "sz_y": 2.573333263397217,
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DawnSnow_0",
+    "go_path_id": 2,
+    "tr_path_id": 7,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
+  },
+  {
+    "sp": "DawnSnow_1",
+    "go": "DawnSnow_1",
+    "x": -0.26499998569488525,
+    "y": 5.271999359130859,
+    "angle": 0.0,
+    "sx": 1.0,
+    "sy": 1.0,
+    "o": 0,
+    "px": 0.5,
+    "py": 0.5,
+    "rw": 962.0,
+    "rh": 386.0,
+    "ox": 0.0,
+    "oy": 1.0,
+    "ppu": 150.0,
+    "sl": 9,
+    "draw_mode": 0,
+    "sz_x": 6.413333415985107,
+    "sz_y": 2.573333263397217,
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DawnSnow_1",
+    "go_path_id": 3,
+    "tr_path_id": 8,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
+  },
+  {
+    "sp": "Snow_Mound_0",
+    "go": "Sprite",
+    "x": 2.4200000762939453,
+    "y": -1.9199981689453125,
+    "angle": 0.0,
+    "sx": 1.0,
+    "sy": 1.0,
+    "o": 0,
+    "px": 0.5,
+    "py": 0.5,
+    "rw": 106.0,
+    "rh": 67.0,
+    "ox": 0.0,
+    "oy": 0.0,
+    "ppu": 150.0,
+    "sl": 0,
+    "draw_mode": 0,
+    "sz_x": 0.800000011920929,
+    "sz_y": 0.800000011920929,
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Snowmound (3)/Sprite",
+    "go_path_id": 5,
+    "tr_path_id": 10,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
+  }
+]

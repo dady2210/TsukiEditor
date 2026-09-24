@@ -7,13 +7,17 @@
   "config": {
     "ppu": 150,
     "bgScale": 0.75,
-    "assetsDir": null,
-    "assembled": null,
+    "assetsDir": "../../images/maps/Exportado_level60",
+    "assembled": "level60_Ensamblado.png",
     "lighting": "exterior",
     "camera": {
       "zoom": 40,
       "minZoom": 15,
       "maxZoom": 80
+    },
+    "origin_px": {
+      "x": 1024.0,
+      "y": 1024.0
     }
   },
   "surfaces": [
@@ -25,24 +29,466 @@
       "flipped": false,
       "name": "Piso Principal - Entrada al Centro Comercial",
       "origin": {
-        "x": 0.0,
-        "y": 0.0
+        "x": -4.3325,
+        "y": -7.9513
       },
       "origin_px": {
-        "x": 0.0,
-        "y": 0.0
+        "x": 374.13,
+        "y": 2216.69
       },
       "cell": {
         "w": 58,
         "h": 28
       },
-      "rows": 16,
-      "cols": 16,
-      "defaultCoverId": null,
-      "poly": []
+      "rows": 10,
+      "cols": 55,
+      "defaultCoverId": -1,
+      "poly": [],
+      "defaultCoverSource": "color"
+    },
+    {
+      "id": "floor_1",
+      "kind": "floor",
+      "groupNum": 1,
+      "flipped": false,
+      "name": "Mall Entrance - Piso 1",
+      "origin": {
+        "x": -1.5525,
+        "y": -3.0763
+      },
+      "origin_px": {
+        "x": 791.12,
+        "y": 1485.44
+      },
+      "cell": {
+        "w": 75,
+        "h": 37.5
+      },
+      "rows": 28,
+      "cols": 31,
+      "defaultCoverId": -1,
+      "poly": [],
+      "defaultCoverSource": "color",
+      "anchorID": null
+    },
+    {
+      "sinRejilla": true,
+      "name": "Wall",
+      "id": "wall_libre_R_1",
+      "kind": "wall",
+      "groupNum": 0,
+      "anchorID": 961984868,
+      "flipped": false,
+      "origin": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "defaultCoverId": 1596,
+      "poly": [
+        {
+          "x": -2.7782,
+          "y": 3.2187
+        },
+        {
+          "x": -2.7838,
+          "y": 6.8351
+        },
+        {
+          "x": -1.2612,
+          "y": 6.83
+        },
+        {
+          "x": -1.2551,
+          "y": 2.4548
+        }
+      ],
+      "wallExists": false
+    },
+    {
+      "sinRejilla": true,
+      "name": "Wall",
+      "id": "wall_libre_L_2",
+      "kind": "wall",
+      "groupNum": 0,
+      "anchorID": 961984868,
+      "flipped": true,
+      "origin": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "defaultCoverId": 1596,
+      "poly": [
+        {
+          "x": -6.145,
+          "y": 1.2761
+        },
+        {
+          "x": -6.1424,
+          "y": 6.837
+        },
+        {
+          "x": -6.8437,
+          "y": 6.8422
+        },
+        {
+          "x": -6.8996,
+          "y": 0.8984
+        }
+      ],
+      "wallExists": false
+    },
+    {
+      "sinRejilla": true,
+      "name": "Wall",
+      "id": "wall_libre_R_3",
+      "kind": "wall",
+      "groupNum": 0,
+      "anchorID": 961984868,
+      "flipped": false,
+      "origin": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "defaultCoverId": 1585,
+      "poly": [
+        {
+          "x": -5.1915,
+          "y": 4.4579
+        },
+        {
+          "x": -5.1671,
+          "y": 6.8359
+        },
+        {
+          "x": -3.1733,
+          "y": 6.839
+        },
+        {
+          "x": -3.1943,
+          "y": 3.4398
+        }
+      ],
+      "wallExists": false
+    },
+    {
+      "sinRejilla": true,
+      "name": "Wall",
+      "id": "wall_libre_L_4",
+      "kind": "wall",
+      "groupNum": 0,
+      "anchorID": 1325877990,
+      "flipped": true,
+      "origin": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "defaultCoverId": 1596,
+      "poly": [
+        {
+          "x": 5.0315,
+          "y": 6.8336
+        },
+        {
+          "x": -0.2735,
+          "y": 6.8368
+        },
+        {
+          "x": -0.2599,
+          "y": 4.1854
+        }
+      ],
+      "wallExists": false
     }
   ],
-  "visuals": [],
+  "visuals": [
+    {
+      "sp": "Mall Entrance_3",
+      "go": "Stairs",
+      "x": 0.0,
+      "y": 0.0,
+      "angle": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "o": 1,
+      "px": -0.25481510162353516,
+      "py": 0.4733504056930542,
+      "rw": 757.0,
+      "rh": 488.0,
+      "ox": 0.0,
+      "oy": 0.0,
+      "ppu": 150.0,
+      "sl": -4,
+      "draw_mode": 0,
+      "sz_x": 8.133333206176758,
+      "sz_y": 7.0333333015441895,
+      "poly": []
+    },
+    {
+      "sp": "roofingTest2_4",
+      "go": "roofingTest2_4",
+      "x": -1.9800000190734863,
+      "y": -7.068000793457031,
+      "angle": 26.66599483766956,
+      "sx": -1.0,
+      "sy": 1.0,
+      "o": 0,
+      "px": 1.0,
+      "py": 0.550000011920929,
+      "rw": 69.0,
+      "rh": 53.0,
+      "ox": 0.0,
+      "oy": 0.0,
+      "ppu": 150.0,
+      "sl": 0,
+      "draw_mode": 2,
+      "sz_x": 10.079999923706055,
+      "sz_y": 0.35333332419395447,
+      "poly": []
+    },
+    {
+      "sp": "Mall Entrance_0",
+      "go": "Mall Entrance_2 (1)",
+      "x": 0.0,
+      "y": 0.0,
+      "angle": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "o": 0,
+      "px": 3.9860117435455322,
+      "py": 0.08478552103042603,
+      "rw": 257.0,
+      "rh": 1119.0,
+      "ox": 0.0,
+      "oy": 0.0,
+      "ppu": 150.0,
+      "sl": 0,
+      "draw_mode": 0,
+      "sz_x": 5.3466668128967285,
+      "sz_y": 6.433333396911621,
+      "poly": []
+    },
+    {
+      "sp": "Mall Entrance_7",
+      "go": "Mall Entrance_7",
+      "x": 0.0,
+      "y": 0.0,
+      "angle": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "o": 0,
+      "px": 0.16042211651802063,
+      "py": 0.028971552848815918,
+      "rw": 1220.0,
+      "rh": 1055.0,
+      "ox": 0.0,
+      "oy": 0.0,
+      "ppu": 150.0,
+      "sl": -4,
+      "draw_mode": 0,
+      "sz_x": 8.133333206176758,
+      "sz_y": 7.0333333015441895,
+      "poly": []
+    },
+    {
+      "sp": "Mall Entrance_3",
+      "go": "Stairs (2)",
+      "x": -4.981597900390625,
+      "y": -2.501100540161133,
+      "angle": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "o": 3,
+      "px": -0.25481510162353516,
+      "py": 0.4733504056930542,
+      "rw": 757.0,
+      "rh": 488.0,
+      "ox": 0.0,
+      "oy": 0.0,
+      "ppu": 150.0,
+      "sl": -4,
+      "draw_mode": 0,
+      "sz_x": 8.133333206176758,
+      "sz_y": 7.0333333015441895,
+      "poly": []
+    },
+    {
+      "sp": "Mall Entrance_4",
+      "go": "Stairs (1)",
+      "x": 0.0,
+      "y": 0.0,
+      "angle": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "o": 2,
+      "px": 0.18555641174316406,
+      "py": 0.8967149257659912,
+      "rw": 647.0,
+      "rh": 449.0,
+      "ox": 0.0,
+      "oy": 0.0,
+      "ppu": 150.0,
+      "sl": -4,
+      "draw_mode": 0,
+      "sz_x": 8.133333206176758,
+      "sz_y": 7.0333333015441895,
+      "poly": []
+    },
+    {
+      "sp": "Mall Entrance_1",
+      "go": "Mall Entrance_2 (2)",
+      "x": 0.0,
+      "y": 0.0,
+      "angle": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "o": 0,
+      "px": 2.1268630027770996,
+      "py": -0.46002137660980225,
+      "rw": 365.0,
+      "rh": 702.0,
+      "ox": 0.0,
+      "oy": 0.0,
+      "ppu": 150.0,
+      "sl": 0,
+      "draw_mode": 0,
+      "sz_x": 5.3466668128967285,
+      "sz_y": 6.433333396911621,
+      "poly": []
+    },
+    {
+      "sp": "Mall Entrance_2",
+      "go": "Mall Entrance_2",
+      "x": 0.0,
+      "y": 0.0,
+      "angle": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "o": 0,
+      "px": 1.2770261764526367,
+      "py": 1.0608601570129395,
+      "rw": 802.0,
+      "rh": 965.0,
+      "ox": 0.0,
+      "oy": 0.0,
+      "ppu": 150.0,
+      "sl": 0,
+      "draw_mode": 0,
+      "sz_x": 5.3466668128967285,
+      "sz_y": 6.433333396911621,
+      "poly": []
+    },
+    {
+      "sp": "SHAPE_0",
+      "go": "Road",
+      "esShape": true,
+      "x": -1.2282,
+      "y": -2.7567,
+      "angle": 0,
+      "sx": 1,
+      "sy": 1,
+      "o": 0,
+      "sl": -8,
+      "px": 0.0,
+      "py": 1.0,
+      "rw": 521,
+      "rh": 268,
+      "ox": 0,
+      "oy": 0,
+      "ppu": 64.0,
+      "draw_mode": 0,
+      "sz_x": 0,
+      "sz_y": 0,
+      "poly": [],
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "sp": "SHAPE_3",
+      "go": "Pavement",
+      "esShape": true,
+      "x": -6.8452,
+      "y": -0.0155,
+      "angle": 0,
+      "sx": 1,
+      "sy": 1,
+      "o": -1,
+      "sl": -5,
+      "px": 0.0,
+      "py": 1.0,
+      "rw": 1751,
+      "rh": 874,
+      "ox": 0,
+      "oy": 0,
+      "ppu": 128.0,
+      "draw_mode": 0,
+      "sz_x": 0,
+      "sz_y": 0,
+      "poly": [],
+      "color": {
+        "r": 0.772549033164978,
+        "g": 0.7647058963775635,
+        "b": 0.7098039388656616,
+        "a": 1
+      }
+    },
+    {
+      "sp": "LINE_0",
+      "go": "Line (1)",
+      "esLinea": true,
+      "x": -6.0813,
+      "y": 5.2843,
+      "angle": 0,
+      "sx": 1,
+      "sy": 1,
+      "o": -1,
+      "sl": -2,
+      "px": 0.0,
+      "py": 1.0,
+      "rw": 362,
+      "rh": 234,
+      "ox": 0,
+      "oy": 0,
+      "draw_mode": 0,
+      "sz_x": 0,
+      "sz_y": 0,
+      "poly": [],
+      "color": null,
+      "ppu": 150.0
+    }
+  ],
   "colliders": [],
-  "logic": {}
+  "logic": {
+    "environment": {
+      "ground_colors": {
+        "none": "#98B870",
+        "spring": "#9EBE72",
+        "summer": "#98B870",
+        "autumn": "#E2B36B",
+        "winter": "#E0E9F0"
+      }
+    },
+    "npc_activities": [
+      {
+        "id": "breezy_mall_entrance",
+        "name": "Breezy en la entrada al centro comercial",
+        "npcKey": "99",
+        "npcName": "Breezy",
+        "mode": "fixed_spot",
+        "furnitureId": null,
+        "isBed": false,
+        "position": {
+          "x": 2.061,
+          "y": -1.471
+        },
+        "rotation": 0,
+        "flipX": false,
+        "anim": "Breezy_WalkB",
+        "fps": 4.0
+      }
+    ]
+  }
 }

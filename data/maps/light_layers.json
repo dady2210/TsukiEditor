@@ -1,0 +1,38 @@
+{
+  "9": {
+    "nivel": "level10",
+    "luces": "images/maps/Exportado_level10/level10_Luces.png"
+  },
+  "11": {
+    "nivel": "level12",
+    "luces": "images/maps/Exportado_level12/level12_Luces.png"
+  },
+  "13": {
+    "nivel": "level13",
+    "luces": "images/maps/Exportado_level13/level13_Luces.png"
+  },
+  "7": {
+    "nivel": "level15",
+    "luces": "images/maps/Exportado_level15/level15_Luces.png"
+  },
+  "14": {
+    "nivel": "level48",
+    "luces": "images/maps/Exportado_level48/level48_Luces.png"
+  },
+  "15": {
+    "nivel": "level52",
+    "luces": "images/maps/Exportado_level52/level52_Luces.png"
+  },
+  "23": {
+    "nivel": "level59",
+    "luces": "images/maps/Exportado_level59/level59_Luces.png"
+  },
+  "33": {
+    "nivel": "level68",
+    "luces": "images/maps/Exportado_level68/level68_Luces.png"
+  },
+  "10": {
+    "nivel": "level9",
+    "luces": "images/maps/Exportado_level9/level9_Luces.png"
+  }
+}

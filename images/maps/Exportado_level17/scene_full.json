@@ -1,0 +1,439 @@
+{
+  "kind": "map",
+  "id": "level17",
+  "name": "level17",
+  "source": "C:\\Users\\Andres\\Desktop\\Tsuki_Odyssey\\AssetPack\\assets\\bin\\Data\\level17",
+  "layout": {
+    "front": [
+      {
+        "sp": "Halloween Decorations_3",
+        "go": "Halloween Decorations_4 (2)",
+        "x": 6.322954177856445,
+        "y": 0.6396666467189789,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.4780034124851227,
+        "py": 0.9588347673416138,
+        "rw": 44.0,
+        "rh": 108.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 1.0333333015441895,
+        "sz_y": 0.800000011920929,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "Halloween/Halloween Decorations_4 (2)",
+        "go_path_id": 1,
+        "tr_path_id": 10,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (4)",
+        "x": -3.1840457916259766,
+        "y": -0.7373332977294922,
+        "angle": 0.0,
+        "sx": 7.0,
+        "sy": 7.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.8777496814727783,
+          "b": 0.5330188274383545,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "Halloween/Jack O'Lantern (1)/Glow (4)",
+        "go_path_id": 2,
+        "tr_path_id": 11,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "white",
+        "go": "Glow (1)",
+        "x": -3.1800457914359868,
+        "y": -0.5063332915306091,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 1,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 128.0,
+        "rh": 128.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 128.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 2.3299999237060547,
+        "sz_y": 1.399999976158142,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 0.8777496814727783,
+          "b": 0.5330188274383545,
+          "a": 0.3686274588108063
+        },
+        "materials": [
+          "PPtr(m_FileID=5, m_PathID=2, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "Halloween/Jack O'Lantern (1)/Glow (1)",
+        "go_path_id": 3,
+        "tr_path_id": 12,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "Halloween Decorations_4",
+        "go": "Halloween Decorations_4",
+        "x": -3.4340457916259766,
+        "y": 2.0816667079925537,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 155.0,
+        "rh": 120.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 1.0333333015441895,
+        "sz_y": 0.800000011920929,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "Halloween/Halloween Decorations_4",
+        "go_path_id": 5,
+        "tr_path_id": 14,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "Halloween Decorations_2",
+        "go": "Halloween Decorations_4 (1)",
+        "x": 4.386954307556152,
+        "y": 1.8256666660308838,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.49013692140579224,
+        "py": 0.9548914432525635,
+        "rw": 44.0,
+        "rh": 60.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 1.0333333015441895,
+        "sz_y": 0.800000011920929,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "Halloween/Halloween Decorations_4 (1)",
+        "go_path_id": 6,
+        "tr_path_id": 15,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "PumpkinFace_1Light",
+        "go": "Carving",
+        "x": -3.2740460634231567,
+        "y": -0.5593339204788208,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 53.0,
+        "rh": 46.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 0.5866666436195374,
+        "sz_y": 0.5533333420753479,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "Halloween/Jack O'Lantern (1)/Carving",
+        "go_path_id": 7,
+        "tr_path_id": 16,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "Jack O'Lantern",
+        "go": "Pumpkin",
+        "x": -3.184045910835266,
+        "y": -0.7373334169387817,
+        "angle": 0.0,
+        "sx": -1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.501685380935669,
+        "py": 0.0535714291036129,
+        "rw": 88.0,
+        "rh": 84.0,
+        "ox": 0.5,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 0.5933333039283752,
+        "sz_y": 0.5600000023841858,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "Halloween/Jack O'Lantern (1)/Pumpkin",
+        "go_path_id": 9,
+        "tr_path_id": 18,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      }
+    ],
+    "back": [],
+    "fx": []
+  },
+  "hierarchy": [
+    {
+      "path": "Halloween Decorations_4 (2)",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (4)",
+      "components": [
+        "Texture2D",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Glow (1)",
+      "components": [
+        "Texture2D",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Halloween",
+      "components": [
+        "Shader",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Halloween Decorations_4",
+      "components": [
+        "AudioClip",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Halloween Decorations_4 (1)",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Carving",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Jack O'Lantern (1)",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Pumpkin",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    }
+  ],
+  "colliders": [],
+  "logic": {
+    "walkable": [],
+    "blockers": [],
+    "triggers": [],
+    "interaction_nodes": [],
+    "grids": [],
+    "camera_confines": [],
+    "lights": [],
+    "scripts": [],
+    "animators": [],
+    "audio": [],
+    "particles": []
+  },
+  "animation": {
+    "controllers": []
+  },
+  "audio": [],
+  "particles": [],
+  "catalog": {},
+  "raw": {
+    "level": "level17",
+    "origin_offset": {
+      "x": -20.0,
+      "y": 15.0
+    },
+    "grid_system": [],
+    "interaction_nodes": [],
+    "walkable_bounds": [],
+    "camera_confines": [],
+    "lighting_volumes": [],
+    "special_scripts": [],
+    "animator_nodes": [],
+    "audio_sources": [],
+    "particle_systems": []
+  }
+}

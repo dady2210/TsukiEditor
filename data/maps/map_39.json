@@ -14,6 +14,10 @@
       "zoom": 40,
       "minZoom": 15,
       "maxZoom": 80
+    },
+    "origin_px": {
+      "x": 2005.0,
+      "y": 1023.0
     }
   },
   "surfaces": [
@@ -23,7 +27,7 @@
       "groupNum": 2,
       "anchorID": null,
       "flipped": false,
-      "name": "Ático Principal (Homecoming)",
+      "name": "Zona 2 · sin revestimiento",
       "origin": {
         "x": 0.0,
         "y": 0.0
@@ -36,8 +40,8 @@
       "cols": 14,
       "poly": [],
       "origin_px": {
-        "x": 0.0,
-        "y": 0.0
+        "x": 1946.0,
+        "y": 1023.0
       }
     }
   ],
@@ -106,7 +110,8 @@
       "draw_mode": 0,
       "sz_x": 2.426666736602783,
       "sz_y": 1.2999999523162842,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "Dreamhouse_10",
@@ -128,7 +133,8 @@
       "draw_mode": 0,
       "sz_x": 0.4466666579246521,
       "sz_y": 0.6800000071525574,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "DreamhousePillar",
@@ -175,6 +181,29 @@
       "poly": []
     },
     {
+      "sp": "Square",
+      "go": "Square",
+      "x": 0.0,
+      "y": 0.0,
+      "angle": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "o": 49,
+      "px": 0.5,
+      "py": 0.5,
+      "rw": 256.0,
+      "rh": 256.0,
+      "ox": 0.0,
+      "oy": 0.0,
+      "ppu": 256.0,
+      "sl": 9,
+      "draw_mode": 2,
+      "sz_x": 13.649999618530273,
+      "sz_y": 13.649999618530273,
+      "poly": [],
+      "layer": "near"
+    },
+    {
       "sp": "Dreamhouse_9",
       "go": "Roof",
       "x": 0.0,
@@ -194,7 +223,8 @@
       "draw_mode": 0,
       "sz_x": 2.740000009536743,
       "sz_y": 1.7933332920074463,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "Dreamhouse_8",
@@ -216,7 +246,8 @@
       "draw_mode": 0,
       "sz_x": 2.2733333110809326,
       "sz_y": 2.059999942779541,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "Dreamhouse_Clouds_1",
@@ -238,7 +269,8 @@
       "draw_mode": 2,
       "sz_x": 13.65333366394043,
       "sz_y": 5.0,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "Dreamhouse_Clouds_1",
@@ -260,7 +292,8 @@
       "draw_mode": 2,
       "sz_x": 13.65333366394043,
       "sz_y": 5.0,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "Dreamhouse_0",
@@ -348,7 +381,8 @@
       "draw_mode": 0,
       "sz_x": 1.2400000095367432,
       "sz_y": 3.0799999237060547,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "DreamhousePillar",
@@ -414,7 +448,8 @@
       "draw_mode": 0,
       "sz_x": 1.2400000095367432,
       "sz_y": 3.0799999237060547,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "Dreamhouse_13",
@@ -436,7 +471,8 @@
       "draw_mode": 2,
       "sz_x": 2.680000066757202,
       "sz_y": 1.1799999475479126,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "Dreamhouse_12",
@@ -502,7 +538,8 @@
       "draw_mode": 0,
       "sz_x": 2.2733333110809326,
       "sz_y": 2.059999942779541,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "line",
@@ -546,7 +583,8 @@
       "draw_mode": 0,
       "sz_x": 13.65333366394043,
       "sz_y": 8.533333778381348,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     },
     {
       "sp": "Dreamhouse_13",
@@ -568,9 +606,20 @@
       "draw_mode": 2,
       "sz_x": 2.680000066757202,
       "sz_y": 1.1799999475479126,
-      "poly": []
+      "poly": [],
+      "layer": "near"
     }
   ],
   "colliders": [],
-  "logic": {}
+  "logic": {
+    "environment": {
+      "ground_colors": {
+        "none": "#98B870",
+        "spring": "#9EBE72",
+        "summer": "#98B870",
+        "autumn": "#E2B36B",
+        "winter": "#E0E9F0"
+      }
+    }
+  }
 }

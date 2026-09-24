@@ -1,0 +1,889 @@
+{
+  "kind": "map",
+  "id": "level32",
+  "name": "level32",
+  "source": "../AssetPack/assets/bin/Data/level32",
+  "layout": {
+    "front": [
+      {
+        "sp": "construction_1",
+        "go": "construction_1",
+        "x": -20.0,
+        "y": -30.0,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": -1,
+        "px": -1.4444665908813477,
+        "py": -0.7924309968948364,
+        "rw": 244.0,
+        "rh": 469.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 1.6266666650772095,
+        "sz_y": 3.126666784286499,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SubsceneData/Construction Boundary/construction_1",
+        "go_path_id": 1,
+        "tr_path_id": 4,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null
+      },
+      {
+        "sp": "construction_0",
+        "go": "Construction Boundary",
+        "x": -20.0,
+        "y": -30.0,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": -1,
+        "px": 0.6031988263130188,
+        "py": -0.32418370246887207,
+        "rw": 891.0,
+        "rh": 643.0,
+        "ox": 0.0,
+        "oy": 9.0,
+        "ppu": 150.0,
+        "sl": 9,
+        "draw_mode": 0,
+        "sz_x": 5.940000057220459,
+        "sz_y": 4.2866668701171875,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SubsceneData/Construction Boundary",
+        "go_path_id": 3,
+        "tr_path_id": 6,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null
+      }
+    ],
+    "back": [],
+    "fx": []
+  },
+  "hierarchy": [
+    {
+      "path": "construction_1",
+      "components": [
+        "Transform",
+        "SpriteRenderer"
+      ]
+    },
+    {
+      "path": "SubsceneData",
+      "components": [
+        "Transform",
+        "PreloadData"
+      ]
+    },
+    {
+      "path": "Construction Boundary",
+      "components": [
+        "RenderSettings",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Image",
+      "components": [
+        "CanvasRenderer",
+        "GameObject",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Police Station",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Coffee Shop",
+      "components": [
+        "CanvasRenderer",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Image (1)",
+      "components": [
+        "CanvasRenderer",
+        "Transform",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Ice Cream",
+      "components": [
+        "RectTransform",
+        "ParticleSystem",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "French Restaurant",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "City Hall",
+      "components": [
+        "CanvasRenderer",
+        "ParticleSystem",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Jewelry",
+      "components": [
+        "RectTransform",
+        "GameObject",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Penthouse",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Shoe Store",
+      "components": [
+        "CanvasRenderer",
+        "Transform",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Image (2)",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Subway",
+      "components": [
+        "RectTransform",
+        "GameObject",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Poof",
+      "components": [
+        "GameObject",
+        "GameObject",
+        "GameObject"
+      ]
+    },
+    {
+      "path": "Reticle",
+      "components": [
+        "CanvasRenderer",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Image (1)",
+      "components": [
+        "CanvasRenderer",
+        "ParticleSystemRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Bubble Tea",
+      "components": [
+        "CanvasRenderer",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Train",
+      "components": [
+        "RectTransform",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Text (TMP)",
+      "components": [
+        "CanvasRenderer",
+        "GameObject",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Image",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Winery",
+      "components": [
+        "RectTransform",
+        "GameObject",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Exit",
+      "components": [
+        "CanvasRenderer",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Sparkle",
+      "components": [
+        "GameObject",
+        "GameObject",
+        "GameObject"
+      ]
+    },
+    {
+      "path": "Mall",
+      "components": [
+        "CanvasRenderer",
+        "ParticleSystemRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "City",
+      "components": [
+        "RectTransform",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Capsule Hotel",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Rug Shop",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Train Station",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "FarmIcon",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Momo Tea House",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Yori Shop",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Farm",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Bottom",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Home",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Glow",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Pier",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Image",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "ScarlettsLounge",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Dawn Shop",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Spark",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "MushroomVillage",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Rosemary's Shop",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Image",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Town Hall",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Text (TMP)",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Chi House",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Moca House",
+      "components": [
+        "RectTransform",
+        "CanvasRenderer",
+        "MonoBehaviour",
+        "MonoBehaviour",
+        "MonoBehaviour"
+      ]
+    },
+    {
+      "path": "Text (TMP)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Fertiliser",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Image",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Fill",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "UV",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Image",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "DebugCheats",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Hand",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "time",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Background (2)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Reset NPCs Text",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Text (TMP)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Polygon",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Text (TMP)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "DateModification",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Background (1)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Water",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Image",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Add Day",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Reset NPCs Text",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Fill Area",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Clock",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Background",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Image (1)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Line",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Image",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Roll",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Fill",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Handle Slide Area",
+      "components": [
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Handle",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Slider",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Icon",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Image",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Add Month",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "CropTimer",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    }
+  ],
+  "colliders": [],
+  "logic": {
+    "walkable": [],
+    "blockers": [],
+    "triggers": [],
+    "interaction_nodes": [],
+    "grids": [],
+    "camera_confines": [],
+    "lights": [],
+    "scripts": [],
+    "animators": [],
+    "audio": [],
+    "particles": []
+  },
+  "animation": {
+    "controllers": []
+  },
+  "audio": [],
+  "particles": [],
+  "catalog": {},
+  "raw": {
+    "grid_system": [],
+    "interaction_nodes": [],
+    "walkable_bounds": [],
+    "camera_confines": [],
+    "lighting_volumes": [],
+    "special_scripts": [],
+    "animator_nodes": [],
+    "audio_sources": [],
+    "particle_systems": []
+  }
+}

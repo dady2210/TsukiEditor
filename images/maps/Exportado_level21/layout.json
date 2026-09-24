@@ -1,0 +1,94 @@
+[
+  {
+    "sp": "Farm_Snow_0",
+    "go": "Farm_Snow_0",
+    "x": -2.1930007934570312,
+    "y": 5.370999813079834,
+    "angle": -0.0,
+    "sx": 1.0,
+    "sy": 1.0,
+    "o": -1,
+    "px": 0.5,
+    "py": 0.5,
+    "rw": 507.0,
+    "rh": 348.0,
+    "ox": 0.0,
+    "oy": 0.0,
+    "ppu": 150.0,
+    "sl": -4,
+    "draw_mode": 0,
+    "sz_x": 3.380000114440918,
+    "sz_y": 2.319999933242798,
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "FarmWinter/Farm_Snow_0",
+    "go_path_id": 2,
+    "tr_path_id": 5,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
+  },
+  {
+    "sp": "Farm_Snow_1",
+    "go": "Farm_Snow_1",
+    "x": -2.1930007934570312,
+    "y": 5.370999813079834,
+    "angle": -0.0,
+    "sx": 1.0,
+    "sy": 1.0,
+    "o": -1,
+    "px": 1.6137046813964844,
+    "py": 0.875,
+    "rw": 413.0,
+    "rh": 226.0,
+    "ox": 0.0,
+    "oy": 0.0,
+    "ppu": 150.0,
+    "sl": -4,
+    "draw_mode": 0,
+    "sz_x": 2.753333330154419,
+    "sz_y": 1.506666660308838,
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "FarmWinter/Farm_Snow_0/Farm_Snow_1",
+    "go_path_id": 3,
+    "tr_path_id": 6,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
+  }
+]

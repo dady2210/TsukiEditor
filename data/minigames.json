@@ -1,0 +1,494 @@
+{
+ "_fuente": "los prefabs de TaikoGame / TaikoTutorial / Fishing / FishingTutorial del bundle de actividades, mas las constantes declaradas en dump.cs",
+ "_nota": "Lo que NO esta aqui esta en codigo: la secuencia de golpes de cada patron (`DrumGame.HighlightDrum`) y los tiempos de la pesca (`Fishing.GetCatchTime`, `Fishing.Leeway`). El `patrones` del taiko SI es dato: dice en que compas entra cada patron y de que tipo es.",
+ "constantes": {
+  "errorLeeway": 0.1,
+  "tapOffset": 1.08,
+  "drumRadius": 1.57,
+  "drumRadiusRatio": 0.72
+ },
+ "grados": [
+  "Perfect",
+  "Miss",
+  "Wrong",
+  "Early",
+  "Late",
+  "Absent",
+  "Frantic"
+ ],
+ "notas": {
+  "0": "Don",
+  "1": "Kah",
+  "2": "None"
+ },
+ "tambor": {
+  "beatXCurve": [
+   {
+    "t": 0.0,
+    "v": 1.05,
+    "in": -0.26736,
+    "out": -0.26736
+   },
+   {
+    "t": 1.0,
+    "v": 1.0,
+    "in": 0.05896,
+    "out": 0.05896
+   }
+  ],
+  "beatYCurve": [
+   {
+    "t": 0.0,
+    "v": 0.9,
+    "in": 0.51096,
+    "out": 0.51096
+   },
+   {
+    "t": 1.0,
+    "v": 1.0,
+    "in": -0.1016,
+    "out": -0.1016
+   }
+  ],
+  "redIndicator": null,
+  "blueIndicator": null
+ },
+ "juegos": {
+  "Fishing": [
+   {
+    "clase": "Fishing",
+    "activityID": 112,
+    "npcID": -1,
+    "bocadillo": [
+     {
+      "sprite": "BlurbPierFishing (2)_0",
+      "animType": 0,
+      "delay": 0.0,
+      "escalaIni": 1.0,
+      "escala": 1.0,
+      "bucle": false
+     },
+     {
+      "sprite": "BlurbPierFishing (2)_1",
+      "animType": 1,
+      "delay": 0.1,
+      "escalaIni": 1.0,
+      "escala": 1.0,
+      "bucle": false
+     },
+     {
+      "sprite": null,
+      "animType": 1,
+      "delay": 0.2,
+      "escalaIni": 2.0,
+      "escala": 1.0,
+      "bucle": false
+     }
+    ],
+    "tieneAgua": false,
+    "sprites": [
+     {
+      "clase": "AnimObject",
+      "sprite": null
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki-Fishing_18"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_Fishing_0 Idle"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_StickRod_0"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_FishingHand 2"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki-Fishing_16"
+     },
+     {
+      "clase": "RopeObject",
+      "sprite": null
+     }
+    ]
+   },
+   {
+    "clase": "Fishing",
+    "activityID": 92,
+    "npcID": -1,
+    "bocadillo": [
+     {
+      "sprite": "BlurbPierFishing (2)_0",
+      "animType": 0,
+      "delay": 0.0,
+      "escalaIni": 1.0,
+      "escala": 1.0,
+      "bucle": false
+     },
+     {
+      "sprite": "BlurbPierFishing (2)_1",
+      "animType": 1,
+      "delay": 0.1,
+      "escalaIni": 1.0,
+      "escala": 1.0,
+      "bucle": false
+     },
+     {
+      "sprite": null,
+      "animType": 1,
+      "delay": 0.2,
+      "escalaIni": 2.0,
+      "escala": 1.0,
+      "bucle": false
+     }
+    ],
+    "tieneAgua": false,
+    "sprites": [
+     {
+      "clase": "AnimObject",
+      "sprite": null
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki-Fishing_18"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_Fishing_0 Idle"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_StickRod_0"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_FishingHand 2"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki-Fishing_16"
+     },
+     {
+      "clase": "RopeObject",
+      "sprite": null
+     }
+    ]
+   },
+   {
+    "clase": "Fishing",
+    "activityID": 100,
+    "npcID": -1,
+    "bocadillo": [
+     {
+      "sprite": "BlurbPierFishing (2)_0",
+      "animType": 0,
+      "delay": 0.0,
+      "escalaIni": 1.0,
+      "escala": 1.0,
+      "bucle": false
+     },
+     {
+      "sprite": "BlurbPierFishing (2)_1",
+      "animType": 1,
+      "delay": 0.1,
+      "escalaIni": 1.0,
+      "escala": 1.0,
+      "bucle": false
+     },
+     {
+      "sprite": null,
+      "animType": 1,
+      "delay": 0.2,
+      "escalaIni": 2.0,
+      "escala": 1.0,
+      "bucle": false
+     }
+    ],
+    "tieneAgua": false,
+    "sprites": [
+     {
+      "clase": "AnimObject",
+      "sprite": null
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki-Fishing_18"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_Fishing_0 Idle"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_StickRod_0"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_FishingHand 2"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki-Fishing_16"
+     },
+     {
+      "clase": "RopeObject",
+      "sprite": null
+     }
+    ]
+   }
+  ],
+  "FishingTutorial": [
+   {
+    "clase": "FishingTutorial",
+    "activityID": 95,
+    "npcID": -1,
+    "bocadillo": [
+     {
+      "sprite": "BlurbPierFishing (2)_0",
+      "animType": 0,
+      "delay": 0.0,
+      "escalaIni": 1.0,
+      "escala": 1.0,
+      "bucle": false
+     },
+     {
+      "sprite": "BlurbPierFishing (2)_1",
+      "animType": 1,
+      "delay": 0.0,
+      "escalaIni": 1.0,
+      "escala": 1.0,
+      "bucle": false
+     },
+     {
+      "sprite": null,
+      "animType": 1,
+      "delay": 0.0,
+      "escalaIni": 2.0,
+      "escala": 1.0,
+      "bucle": false
+     }
+    ],
+    "tieneAgua": false,
+    "sprites": [
+     {
+      "clase": "AnimObject",
+      "sprite": null
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki-Fishing_18"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_Fishing_0 Idle"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_StickRod_0"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki_FishingHand 2"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "Tsuki-Fishing_16"
+     },
+     {
+      "clase": "RopeObject",
+      "sprite": null
+     }
+    ]
+   }
+  ],
+  "TaikoGame": [
+   {
+    "clase": "TaikoGame",
+    "activityID": 236,
+    "npcID": -1,
+    "yOffset": 0.0,
+    "xSize": 0.0,
+    "yHeight": 0.0,
+    "patrones": [
+     {
+      "patron": "Complex",
+      "compas": 7
+     },
+     {
+      "patron": "Simple",
+      "compas": 10
+     },
+     {
+      "patron": "Simple",
+      "compas": 13
+     },
+     {
+      "patron": "Complex",
+      "compas": 15
+     },
+     {
+      "patron": "Simple",
+      "compas": 19
+     },
+     {
+      "patron": "Complex",
+      "compas": 23
+     },
+     {
+      "patron": "Simple",
+      "compas": 27
+     },
+     {
+      "patron": "Simple",
+      "compas": 31
+     },
+     {
+      "patron": "Simple",
+      "compas": 39
+     },
+     {
+      "patron": "Simple",
+      "compas": 44
+     },
+     {
+      "patron": "Complex",
+      "compas": 47
+     }
+    ],
+    "lineas": {
+     "introLine": 7,
+     "perfectPerformance": 0,
+     "okayPerformance": 3,
+     "franticPerformance": 5,
+     "absentPerformance": 4,
+     "shitPerformance": 3
+    },
+    "parsnapID": 183,
+    "sprites": [
+     {
+      "clase": "Drum",
+      "sprite": null
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "light"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "ring"
+     },
+     {
+      "clase": "SimpleAnim",
+      "sprite": "MSTaikoMiniGame3_0"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "paige_tkmg_idle_0"
+     },
+     {
+      "clase": "SimpleAnim",
+      "sprite": "MSTaikoMiniGame_10"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "MSTaikoMiniGame_12"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "MSTaikoMiniGame_0_idle"
+     },
+     {
+      "clase": "SimpleAnim",
+      "sprite": "MSTaikoMiniGame3_45"
+     },
+     {
+      "clase": "SimpleAnim",
+      "sprite": "moca_tkmg_idle_0"
+     },
+     {
+      "clase": "SimpleAnim",
+      "sprite": "tkmg_benny_idle_0"
+     },
+     {
+      "clase": "SimpleAnim",
+      "sprite": "tkmg_dawn_idle_3"
+     },
+     {
+      "clase": "SimpleAnim",
+      "sprite": "MSTaikoMiniGame_0"
+     },
+     {
+      "clase": "SimpleAnim",
+      "sprite": "pipi_tkmg_idle_2"
+     },
+     {
+      "clase": "SimpleAnim",
+      "sprite": "tkmg_yori_bar_idle_2"
+     }
+    ]
+   }
+  ],
+  "TaikoTutorial": [
+   {
+    "clase": "TaikoTutorial",
+    "activityID": 237,
+    "npcID": -1,
+    "yOffset": 0.0,
+    "xSize": 0.0,
+    "yHeight": 0.0,
+    "dialogoIntro": [
+     0,
+     1,
+     2
+    ],
+    "lineas": {
+     "perfectTutorial1": 5,
+     "earlyTutorial": 3,
+     "lateTutorial": 4,
+     "tooManyTutorial1": 18,
+     "tooLittleTutorial1": 16,
+     "wrongTutorial1": 21,
+     "misstepLine": 17,
+     "perfectTutorial2": 12,
+     "tooManyTutorial2": 20,
+     "tooLittleTutorial2": 19,
+     "wrongTutorial2": 22,
+     "giveUp": 24
+    },
+    "eventID": 4,
+    "eventTaskID": 0,
+    "sprites": [
+     {
+      "clase": "Drum",
+      "sprite": null
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "light"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "ring"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "paige_tkmg_idle_0"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "MSTaikoMiniGame_12"
+     },
+     {
+      "clase": "SpriteObject",
+      "sprite": "MSTaikoMiniGame_0_idle"
+     }
+    ]
+   }
+  ]
+ }
+}

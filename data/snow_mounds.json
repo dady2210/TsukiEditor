@@ -1,0 +1,65 @@
+{
+  "8": {
+    "objectId": 723767583,
+    "x": -5.51,
+    "y": -1.04,
+    "item": 886,
+    "nivel_invierno": "level18",
+    "nivel_base": "level8",
+    "escena": "TownHallWinter"
+  },
+  "2": {
+    "objectId": 392402063,
+    "x": 4.87,
+    "y": 2.33,
+    "item": 886,
+    "nivel_invierno": "level20",
+    "nivel_base": "level6",
+    "escena": "ChiSnow"
+  },
+  "5": {
+    "objectId": 1108248122,
+    "x": -1.81,
+    "y": -3.76,
+    "item": 886,
+    "nivel_invierno": "level22",
+    "nivel_base": "level11",
+    "escena": "RosemaryWinter"
+  },
+  "1": {
+    "objectId": 1892403621,
+    "x": -1.67,
+    "y": -5.53,
+    "item": 886,
+    "nivel_invierno": "level24",
+    "nivel_base": "level3",
+    "escena": "YoriShopWinter"
+  },
+  "3": {
+    "objectId": 1403786817,
+    "x": -5.98,
+    "y": -2.19,
+    "item": 886,
+    "nivel_invierno": "level25",
+    "nivel_base": "level7",
+    "escena": "MocaWinter"
+  },
+  "9": {
+    "objectId": 390643450,
+    "x": -2.222,
+    "y": -6.35,
+    "item": 886,
+    "nivel_invierno": "level26",
+    "nivel_base": "level10",
+    "escena": "MomoWinter"
+  },
+  "11": {
+    "objectId": -1638049899,
+    "x": 2.42,
+    "y": -1.92,
+    "item": 886,
+    "nivel_invierno": "level27",
+    "nivel_base": "level12",
+    "escena": "DawnWinter"
+  }
+}

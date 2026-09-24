@@ -1,0 +1,370 @@
+{
+  "_nota": "Lo que el extractor NO captura: `SpriteShapeRenderer` y `LineRenderer`. `TsukiMapExtractor_v2` solo recorre SpriteRenderer, asi que la geometria generada en ejecucion -suelos, bordes, las paredes y cornisas de los edificios procedurales de la ciudad (`BaseBuilding`, `RandomBuilding` con su `seed`)- no esta en ningun `_Ensamblado.png`. En la aldea es un 5-8% de los renderers y no se nota; en la ciudad es un 14-29%, y la Entrada del Centro Comercial es un 50%: por eso sale casi vacia.",
+  "totales": {
+    "spriteRenderer": 4750,
+    "spriteShape": 664,
+    "lineRenderer": 880
+  },
+  "porNivel": [
+    {
+      "nivel": "level60",
+      "mapa": "24",
+      "spriteRenderer": 8,
+      "spriteShape": 8,
+      "lineRenderer": 1,
+      "pctShape": 50
+    },
+    {
+      "nivel": "level58",
+      "mapa": "22",
+      "spriteRenderer": 99,
+      "spriteShape": 40,
+      "lineRenderer": 50,
+      "pctShape": 29
+    },
+    {
+      "nivel": "level66",
+      "mapa": "31",
+      "spriteRenderer": 144,
+      "spriteShape": 54,
+      "lineRenderer": 92,
+      "pctShape": 27
+    },
+    {
+      "nivel": "level65",
+      "mapa": "30",
+      "spriteRenderer": 189,
+      "spriteShape": 49,
+      "lineRenderer": 90,
+      "pctShape": 21
+    },
+    {
+      "nivel": "level53",
+      "mapa": "19",
+      "spriteRenderer": 135,
+      "spriteShape": 32,
+      "lineRenderer": 49,
+      "pctShape": 19
+    },
+    {
+      "nivel": "level67",
+      "mapa": "32",
+      "spriteRenderer": 191,
+      "spriteShape": 44,
+      "lineRenderer": 71,
+      "pctShape": 19
+    },
+    {
+      "nivel": "level28",
+      "mapa": "0_hc",
+      "spriteRenderer": 77,
+      "spriteShape": 16,
+      "lineRenderer": 10,
+      "pctShape": 17
+    },
+    {
+      "nivel": "level54",
+      "mapa": "20",
+      "spriteRenderer": 265,
+      "spriteShape": 53,
+      "lineRenderer": 90,
+      "pctShape": 17
+    },
+    {
+      "nivel": "level70",
+      "mapa": "34",
+      "spriteRenderer": 251,
+      "spriteShape": 53,
+      "lineRenderer": 25,
+      "pctShape": 17
+    },
+    {
+      "nivel": "level63",
+      "mapa": "27",
+      "spriteRenderer": 223,
+      "spriteShape": 41,
+      "lineRenderer": 76,
+      "pctShape": 16
+    },
+    {
+      "nivel": "level68",
+      "mapa": "33",
+      "spriteRenderer": 216,
+      "spriteShape": 40,
+      "lineRenderer": 79,
+      "pctShape": 16
+    },
+    {
+      "nivel": "level49",
+      "mapa": "16",
+      "spriteRenderer": 78,
+      "spriteShape": 14,
+      "lineRenderer": 7,
+      "pctShape": 15
+    },
+    {
+      "nivel": "level59",
+      "mapa": "23",
+      "spriteRenderer": 93,
+      "spriteShape": 17,
+      "lineRenderer": 8,
+      "pctShape": 15
+    },
+    {
+      "nivel": "level7",
+      "mapa": "3",
+      "spriteRenderer": 61,
+      "spriteShape": 10,
+      "lineRenderer": 0,
+      "pctShape": 14
+    },
+    {
+      "nivel": "level61",
+      "mapa": "25",
+      "spriteRenderer": 169,
+      "spriteShape": 28,
+      "lineRenderer": 50,
+      "pctShape": 14
+    },
+    {
+      "nivel": "level69",
+      "mapa": "29",
+      "spriteRenderer": 205,
+      "spriteShape": 31,
+      "lineRenderer": 8,
+      "pctShape": 13
+    },
+    {
+      "nivel": "level62",
+      "mapa": "26",
+      "spriteRenderer": 208,
+      "spriteShape": 27,
+      "lineRenderer": 65,
+      "pctShape": 11
+    },
+    {
+      "nivel": "level50",
+      "mapa": "17",
+      "spriteRenderer": 18,
+      "spriteShape": 2,
+      "lineRenderer": 0,
+      "pctShape": 10
+    },
+    {
+      "nivel": "level51",
+      "mapa": "18",
+      "spriteRenderer": 32,
+      "spriteShape": 3,
+      "lineRenderer": 0,
+      "pctShape": 9
+    },
+    {
+      "nivel": "level2",
+      "mapa": "0",
+      "spriteRenderer": 77,
+      "spriteShape": 7,
+      "lineRenderer": 0,
+      "pctShape": 8
+    },
+    {
+      "nivel": "level6",
+      "mapa": "2",
+      "spriteRenderer": 69,
+      "spriteShape": 6,
+      "lineRenderer": 0,
+      "pctShape": 8
+    },
+    {
+      "nivel": "level9",
+      "mapa": "10",
+      "spriteRenderer": 159,
+      "spriteShape": 13,
+      "lineRenderer": 5,
+      "pctShape": 8
+    },
+    {
+      "nivel": "level64",
+      "mapa": "28",
+      "spriteRenderer": 145,
+      "spriteShape": 12,
+      "lineRenderer": 25,
+      "pctShape": 8
+    },
+    {
+      "nivel": "level3",
+      "mapa": "1",
+      "spriteRenderer": 103,
+      "spriteShape": 8,
+      "lineRenderer": 0,
+      "pctShape": 7
+    },
+    {
+      "nivel": "level13",
+      "mapa": "13",
+      "spriteRenderer": 112,
+      "spriteShape": 8,
+      "lineRenderer": 0,
+      "pctShape": 7
+    },
+    {
+      "nivel": "level39",
+      "mapa": "39",
+      "spriteRenderer": 40,
+      "spriteShape": 3,
+      "lineRenderer": 0,
+      "pctShape": 7
+    },
+    {
+      "nivel": "level52",
+      "mapa": "15",
+      "spriteRenderer": 140,
+      "spriteShape": 9,
+      "lineRenderer": 3,
+      "pctShape": 6
+    },
+    {
+      "nivel": "level4",
+      "mapa": "6",
+      "spriteRenderer": 101,
+      "spriteShape": 5,
+      "lineRenderer": 0,
+      "pctShape": 5
+    },
+    {
+      "nivel": "level8",
+      "mapa": "8",
+      "spriteRenderer": 77,
+      "spriteShape": 4,
+      "lineRenderer": 0,
+      "pctShape": 5
+    },
+    {
+      "nivel": "level10",
+      "mapa": "9",
+      "spriteRenderer": 97,
+      "spriteShape": 5,
+      "lineRenderer": 0,
+      "pctShape": 5
+    },
+    {
+      "nivel": "level11",
+      "mapa": "5",
+      "spriteRenderer": 83,
+      "spriteShape": 4,
+      "lineRenderer": 0,
+      "pctShape": 5
+    },
+    {
+      "nivel": "level12",
+      "mapa": "11",
+      "spriteRenderer": 144,
+      "spriteShape": 7,
+      "lineRenderer": 0,
+      "pctShape": 5
+    },
+    {
+      "nivel": "level48",
+      "mapa": "14",
+      "spriteRenderer": 376,
+      "spriteShape": 9,
+      "lineRenderer": 3,
+      "pctShape": 2
+    },
+    {
+      "nivel": "level5",
+      "mapa": "4",
+      "spriteRenderer": 71,
+      "spriteShape": 1,
+      "lineRenderer": 0,
+      "pctShape": 1
+    },
+    {
+      "nivel": "level55",
+      "mapa": "21",
+      "spriteRenderer": 78,
+      "spriteShape": 1,
+      "lineRenderer": 0,
+      "pctShape": 1
+    },
+    {
+      "nivel": "level15",
+      "mapa": "7",
+      "spriteRenderer": 65,
+      "spriteShape": 0,
+      "lineRenderer": 21,
+      "pctShape": 0
+    },
+    {
+      "nivel": "level40",
+      "mapa": null,
+      "spriteRenderer": 22,
+      "spriteShape": 0,
+      "lineRenderer": 6,
+      "pctShape": 0
+    },
+    {
+      "nivel": "level41",
+      "mapa": null,
+      "spriteRenderer": 5,
+      "spriteShape": 0,
+      "lineRenderer": 1,
+      "pctShape": 0
+    },
+    {
+      "nivel": "level42",
+      "mapa": null,
+      "spriteRenderer": 8,
+      "spriteShape": 0,
+      "lineRenderer": 2,
+      "pctShape": 0
+    },
+    {
+      "nivel": "level43",
+      "mapa": null,
+      "spriteRenderer": 16,
+      "spriteShape": 0,
+      "lineRenderer": 6,
+      "pctShape": 0
+    },
+    {
+      "nivel": "level44",
+      "mapa": null,
+      "spriteRenderer": 36,
+      "spriteShape": 0,
+      "lineRenderer": 13,
+      "pctShape": 0
+    },
+    {
+      "nivel": "level45",
+      "mapa": null,
+      "spriteRenderer": 3,
+      "spriteShape": 0,
+      "lineRenderer": 1,
+      "pctShape": 0
+    },
+    {
+      "nivel": "level46",
+      "mapa": null,
+      "spriteRenderer": 12,
+      "spriteShape": 0,
+      "lineRenderer": 6,
+      "pctShape": 0
+    },
+    {
+      "nivel": "level47",
+      "mapa": null,
+      "spriteRenderer": 21,
+      "spriteShape": 0,
+      "lineRenderer": 7,
+      "pctShape": 0
+    },
+    {
+      "nivel": "level71",
+      "mapa": null,
+      "spriteRenderer": 28,
+      "spriteShape": 0,
+      "lineRenderer": 10,
+      "pctShape": 0
+    }
+  ]
+}

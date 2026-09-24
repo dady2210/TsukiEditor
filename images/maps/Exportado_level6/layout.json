@@ -2,8 +2,8 @@
   {
     "sp": "Rocks20",
     "go": "Rock",
-    "x": -20.600000381469727,
-    "y": 5.869999885559082,
+    "x": -1.1100003814697281,
+    "y": 7.669999885559082,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -19,13 +19,37 @@
     "draw_mode": 0,
     "sz_x": 0.2933333218097687,
     "sz_y": 0.24666666984558105,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 2,
+    "tr_path_id": 105,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": -16.065487830433995,
-    "y": 0.9084505438804626,
+    "x": 3.424512169566004,
+    "y": 2.7084505438804625,
     "angle": 9.999999550033268,
     "sx": 1.0,
     "sy": 1.0,
@@ -41,13 +65,37 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 3,
+    "tr_path_id": 106,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": -14.144688531756401,
-    "y": 3.182436518371105,
+    "x": 5.345311468243597,
+    "y": 4.982436518371105,
     "angle": 61.999999801553486,
     "sx": 1.0,
     "sy": 1.0,
@@ -63,13 +111,37 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 5,
+    "tr_path_id": 108,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "egg09",
     "go": "Square",
-    "x": -25.541000366210938,
-    "y": -0.05999999865889549,
+    "x": -6.051000366210939,
+    "y": 1.7400000013411046,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -85,13 +157,37 @@
     "draw_mode": 0,
     "sz_x": 1.0,
     "sz_y": 1.0,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Maculated Egg/Square",
+    "go_path_id": 6,
+    "tr_path_id": 109,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": -26.253938233479857,
-    "y": -0.43583977222442627,
+    "x": -6.763938233479859,
+    "y": 1.3641602277755738,
     "angle": 57.999998535990535,
     "sx": 1.0,
     "sy": 1.0,
@@ -107,13 +203,37 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 7,
+    "tr_path_id": 110,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves3",
     "go": "PropSprite",
-    "x": -14.310000002384186,
-    "y": 5.519999861717224,
+    "x": 5.179999997615813,
+    "y": 7.319999861717224,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -129,13 +249,37 @@
     "draw_mode": 0,
     "sz_x": 2.986666679382324,
     "sz_y": 2.2799999713897705,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 8,
+    "tr_path_id": 111,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk6",
     "go": "PropSprite",
-    "x": -26.719999313354492,
-    "y": -6.579999923706055,
+    "x": -7.229999313354494,
+    "y": -4.779999923706055,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -151,13 +295,37 @@
     "draw_mode": 0,
     "sz_x": 1.4466667175292969,
     "sz_y": 1.5266666412353516,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 9,
+    "tr_path_id": 112,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_AO_2",
     "go": "AO (1)",
-    "x": -19.516000747680664,
-    "y": -0.09300000127404928,
+    "x": -0.026000747680665626,
+    "y": 1.7069999987259508,
     "angle": 0.0,
     "sx": 2.0,
     "sy": 2.0,
@@ -173,13 +341,37 @@
     "draw_mode": 0,
     "sz_x": 1.3666666746139526,
     "sz_y": 1.3333333730697632,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 0.250980406999588
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/AO (1)",
+    "go_path_id": 10,
+    "tr_path_id": 113,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": -16.23670196533203,
-    "y": 0.6078984960913658,
+    "x": 3.253298034667967,
+    "y": 2.4078984960913656,
     "angle": 164.9999936926643,
     "sx": 1.0,
     "sy": 1.0,
@@ -195,13 +387,37 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 11,
+    "tr_path_id": 114,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Trunk7",
     "go": "PropSprite",
-    "x": -25.260000228881836,
-    "y": -7.929999828338623,
+    "x": -5.7700002288818375,
+    "y": -6.129999828338623,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -217,13 +433,37 @@
     "draw_mode": 0,
     "sz_x": 1.59333336353302,
     "sz_y": 1.506666660308838,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 12,
+    "tr_path_id": 115,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": -26.597206741571426,
-    "y": 6.329445742070675,
+    "x": -7.107206741571428,
+    "y": 8.129445742070676,
     "angle": 130.00000521505882,
     "sx": 1.0,
     "sy": 1.0,
@@ -239,13 +479,37 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 14,
+    "tr_path_id": 117,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": -13.475671965628862,
-    "y": -1.9427043050527573,
+    "x": 6.014328034371136,
+    "y": -0.14270430505275722,
     "angle": 168.99999923405397,
     "sx": 1.0,
     "sy": 1.0,
@@ -261,13 +525,37 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 15,
+    "tr_path_id": 118,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves3",
     "go": "PropSprite",
-    "x": -19.615999160334468,
-    "y": 6.407000005245209,
+    "x": -0.12599916033446945,
+    "y": 8.20700000524521,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -283,13 +571,37 @@
     "draw_mode": 0,
     "sz_x": 2.986666679382324,
     "sz_y": 2.2799999713897705,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 16,
+    "tr_path_id": 119,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": -24.386673480272293,
-    "y": 3.821515053510666,
+    "x": -4.896673480272295,
+    "y": 5.621515053510666,
     "angle": 0.9999999742826002,
     "sx": 1.0,
     "sy": 1.0,
@@ -305,13 +617,37 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 17,
+    "tr_path_id": 120,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": -13.915811106562614,
-    "y": 3.1893083676695824,
+    "x": 5.574188893437384,
+    "y": 4.989308367669582,
     "angle": 9.00000152777376,
     "sx": 1.0,
     "sy": 1.0,
@@ -327,13 +663,37 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 19,
+    "tr_path_id": 122,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Leaves1",
     "go": "PropSprite",
-    "x": -18.030000686645508,
-    "y": 5.293999791145325,
+    "x": 1.4599993133544906,
+    "y": 7.0939997911453245,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -349,13 +709,37 @@
     "draw_mode": 0,
     "sz_x": 3.2333333492279053,
     "sz_y": 2.3399999141693115,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 21,
+    "tr_path_id": 124,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": -16.98966697603464,
-    "y": 4.498426228761673,
+    "x": 2.500333023965357,
+    "y": 6.298426228761673,
     "angle": 16.000002926297352,
     "sx": 1.0,
     "sy": 1.0,
@@ -371,13 +755,37 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 23,
+    "tr_path_id": 126,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_18",
     "go": "DreamHouse_Environment_ChiHouse_New 1_18",
-    "x": -19.489999771118164,
-    "y": -1.8029999732971191,
+    "x": 2.2888183437430598e-07,
+    "y": -0.002999973297119096,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -393,13 +801,37 @@
     "draw_mode": 0,
     "sz_x": 11.380000114440918,
     "sz_y": 7.333333492279053,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse_New 1_18",
+    "go_path_id": 24,
+    "tr_path_id": 127,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_4",
     "go": "DreamHouse_Environment_ChiHouse_New 1_4",
-    "x": -23.285999298095703,
-    "y": -1.3759999414905906,
+    "x": -3.7959992980957047,
+    "y": 0.42400005850940947,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -415,13 +847,37 @@
     "draw_mode": 0,
     "sz_x": 3.200000047683716,
     "sz_y": 1.6666666269302368,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/DreamHouse_Environment_ChiHouse_New 1_4",
+    "go_path_id": 25,
+    "tr_path_id": 128,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_13",
     "go": "Platform (1)",
-    "x": -17.26800012588501,
-    "y": -0.24700005259364843,
+    "x": 2.2219998741149887,
+    "y": 1.5529999474063516,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -437,13 +893,37 @@
     "draw_mode": 0,
     "sz_x": 6.826666831970215,
     "sz_y": 6.826666831970215,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/Platform/Platform (1)",
+    "go_path_id": 27,
+    "tr_path_id": 130,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk5",
     "go": "PropSprite",
-    "x": -13.279999732971191,
-    "y": 2.740000009536743,
+    "x": 6.210000267028807,
+    "y": 4.540000009536743,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -459,13 +939,37 @@
     "draw_mode": 0,
     "sz_x": 1.59333336353302,
     "sz_y": 1.4199999570846558,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 28,
+    "tr_path_id": 131,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": -15.93717923015356,
-    "y": 0.6479674093425274,
+    "x": 3.552820769846438,
+    "y": 2.447967409342527,
     "angle": 168.00000559246428,
     "sx": 1.0,
     "sy": 1.0,
@@ -481,13 +985,37 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 31,
+    "tr_path_id": 134,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Rocks12",
     "go": "Rock",
-    "x": -15.069999694824219,
-    "y": -6.809999942779541,
+    "x": 4.42000030517578,
+    "y": -5.009999942779541,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -503,13 +1031,37 @@
     "draw_mode": 0,
     "sz_x": 0.6133333444595337,
     "sz_y": 0.3799999952316284,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 32,
+    "tr_path_id": 135,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves4",
     "go": "PropSprite",
-    "x": -26.968999311327934,
-    "y": -5.444999933242798,
+    "x": -7.478999311327936,
+    "y": -3.644999933242798,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -525,13 +1077,37 @@
     "draw_mode": 0,
     "sz_x": 3.006666660308838,
     "sz_y": 2.3466665744781494,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 33,
+    "tr_path_id": 136,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves1",
     "go": "PropSprite",
-    "x": -13.224999733269215,
-    "y": 3.86899995803833,
+    "x": 6.265000266730784,
+    "y": 5.66899995803833,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -547,13 +1123,37 @@
     "draw_mode": 0,
     "sz_x": 3.2333333492279053,
     "sz_y": 2.3399999141693115,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 35,
+    "tr_path_id": 138,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_AO_0",
     "go": "AO",
-    "x": -19.815000534057617,
-    "y": -2.679999961517751,
+    "x": -0.32500053405761875,
+    "y": -0.8799999615177512,
     "angle": 0.0,
     "sx": 2.0,
     "sy": 2.0,
@@ -569,13 +1169,37 @@
     "draw_mode": 0,
     "sz_x": 1.3666666746139526,
     "sz_y": 1.3333333730697632,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 0.250980406999588
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/AO",
+    "go_path_id": 37,
+    "tr_path_id": 140,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": -26.123494654893875,
-    "y": 6.2559714168310165,
+    "x": -6.633494654893877,
+    "y": 8.055971416831017,
     "angle": 163.99999990125295,
     "sx": 1.0,
     "sy": 1.0,
@@ -591,13 +1215,37 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 38,
+    "tr_path_id": 141,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Rocks4",
     "go": "Rock",
-    "x": -13.510000228881836,
-    "y": 1.7599999904632568,
+    "x": 5.9799997711181625,
+    "y": 3.5599999904632567,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -613,13 +1261,37 @@
     "draw_mode": 0,
     "sz_x": 0.6600000262260437,
     "sz_y": 0.47999998927116394,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 40,
+    "tr_path_id": 143,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_12",
     "go": "Platform",
-    "x": -19.5310001373291,
-    "y": 0.7539999941363931,
+    "x": -0.041000137329103126,
+    "y": 2.553999994136393,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -635,13 +1307,37 @@
     "draw_mode": 0,
     "sz_x": 6.826666831970215,
     "sz_y": 6.826666831970215,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/Platform",
+    "go_path_id": 41,
+    "tr_path_id": 144,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk4",
     "go": "PropSprite",
-    "x": -19.6299991607666,
-    "y": 5.5,
+    "x": -0.13999916076660313,
+    "y": 7.3,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -657,13 +1353,37 @@
     "draw_mode": 0,
     "sz_x": 1.2933332920074463,
     "sz_y": 1.2000000476837158,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 44,
+    "tr_path_id": 147,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": -13.706614598631859,
-    "y": -2.2625283747911453,
+    "x": 5.78338540136814,
+    "y": -0.4625283747911453,
     "angle": 46.00000012031542,
     "sx": 1.0,
     "sy": 1.0,
@@ -679,13 +1399,37 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 47,
+    "tr_path_id": 150,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks14",
     "go": "Rock",
-    "x": -23.530000686645508,
-    "y": -6.730000019073486,
+    "x": -4.040000686645509,
+    "y": -4.9300000190734865,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -701,13 +1445,37 @@
     "draw_mode": 0,
     "sz_x": 0.5133333206176758,
     "sz_y": 0.41999998688697815,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 48,
+    "tr_path_id": 151,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_2",
     "go": "GameObject",
-    "x": -20.0,
-    "y": -0.014999999664723873,
+    "x": -0.5100000000000016,
+    "y": 1.7850000003352762,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -723,13 +1491,37 @@
     "draw_mode": 0,
     "sz_x": 13.65333366394043,
     "sz_y": 11.313333511352539,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject",
+    "go_path_id": 49,
+    "tr_path_id": 152,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk1",
     "go": "PropSprite",
-    "x": -14.5,
-    "y": 4.349999904632568,
+    "x": 4.989999999999998,
+    "y": 6.149999904632568,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -745,13 +1537,37 @@
     "draw_mode": 0,
     "sz_x": 1.2866666316986084,
     "sz_y": 1.4600000381469727,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 51,
+    "tr_path_id": 154,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": -24.75783689506352,
-    "y": 4.276529997587204,
+    "x": -5.267836895063521,
+    "y": 6.076529997587204,
     "angle": 86.00000193576297,
     "sx": 1.0,
     "sy": 1.0,
@@ -767,13 +1583,37 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 53,
+    "tr_path_id": 156,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Rocks2",
     "go": "Rock",
-    "x": -15.390000343322754,
-    "y": 4.920000076293945,
+    "x": 4.0999996566772445,
+    "y": 6.720000076293945,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -789,13 +1629,37 @@
     "draw_mode": 0,
     "sz_x": 0.47999998927116394,
     "sz_y": 0.47333332896232605,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 54,
+    "tr_path_id": 157,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": -17.264067888259888,
-    "y": 4.442792147397995,
+    "x": 2.2259321117401107,
+    "y": 6.242792147397995,
     "angle": 80.99999811161841,
     "sx": 1.0,
     "sy": 1.0,
@@ -811,13 +1675,37 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 55,
+    "tr_path_id": 158,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": -21.15180641412735,
-    "y": -6.574499785900116,
+    "x": -1.6618064141273514,
+    "y": -4.774499785900116,
     "angle": 18.999999858014917,
     "sx": 1.0,
     "sy": 1.0,
@@ -833,13 +1721,37 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 56,
+    "tr_path_id": 159,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": -13.463802590966225,
-    "y": -6.509481340646744,
+    "x": 6.026197409033774,
+    "y": -4.709481340646744,
     "angle": 137.99999446926486,
     "sx": 1.0,
     "sy": 1.0,
@@ -855,13 +1767,37 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 57,
+    "tr_path_id": 160,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": -21.31328670680523,
-    "y": 6.028113156557083,
+    "x": -1.8232867068052308,
+    "y": 7.828113156557083,
     "angle": 57.000000084097344,
     "sx": 1.0,
     "sy": 1.0,
@@ -877,13 +1813,37 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 60,
+    "tr_path_id": 163,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": -25.06896224617958,
-    "y": 3.845008999109268,
+    "x": -5.578962246179582,
+    "y": 5.645008999109268,
     "angle": 24.00000166769859,
     "sx": 1.0,
     "sy": 1.0,
@@ -899,13 +1859,37 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 62,
+    "tr_path_id": 165,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_6",
     "go": "DreamHouse_Environment_ChiHouse_New 1_4 (2)",
-    "x": -15.763999938964844,
-    "y": -3.3430000683292747,
+    "x": 3.7260000610351547,
+    "y": -1.5430000683292746,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -921,13 +1905,37 @@
     "draw_mode": 0,
     "sz_x": 3.200000047683716,
     "sz_y": 1.6666666269302368,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/DreamHouse_Environment_ChiHouse_New 1_4 (2)",
+    "go_path_id": 63,
+    "tr_path_id": 166,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_17",
     "go": "DreamHouse_Environment_ChiHouse_Shadow",
-    "x": -19.709999084472656,
-    "y": 0.15500000212341547,
+    "x": -0.2199990844726578,
+    "y": 1.9550000021234155,
     "angle": 0.0,
     "sx": 4.0,
     "sy": 4.0,
@@ -943,13 +1951,37 @@
     "draw_mode": 0,
     "sz_x": 3.4133334159851074,
     "sz_y": 3.4133334159851074,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/DreamHouse_Environment_ChiHouse_Shadow",
+    "go_path_id": 64,
+    "tr_path_id": 167,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": -14.034970094449818,
-    "y": 3.457501605153084,
+    "x": 5.45502990555018,
+    "y": 5.257501605153084,
     "angle": 28.00000078194765,
     "sx": 1.0,
     "sy": 1.0,
@@ -965,13 +1997,37 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 67,
+    "tr_path_id": 170,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": -21.70310662779957,
-    "y": -6.186482049524784,
+    "x": -2.213106627799572,
+    "y": -4.386482049524784,
     "angle": 112.0000033466246,
     "sx": 1.0,
     "sy": 1.0,
@@ -987,13 +2043,37 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 68,
+    "tr_path_id": 171,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk7",
     "go": "PropSprite",
-    "x": -18.030000686645508,
-    "y": 4.199999809265137,
+    "x": 1.4599993133544906,
+    "y": 5.9999998092651365,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1009,13 +2089,37 @@
     "draw_mode": 0,
     "sz_x": 1.59333336353302,
     "sz_y": 1.506666660308838,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 69,
+    "tr_path_id": 172,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_14",
     "go": "Ladder (2)",
-    "x": -21.4919995367527,
-    "y": 0.3990002730861306,
+    "x": -2.0019995367527024,
+    "y": 2.1990002730861304,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1031,13 +2135,37 @@
     "draw_mode": 0,
     "sz_x": 1.8600000143051147,
     "sz_y": 5.789999961853027,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/Ladder/Ladder (2)",
+    "go_path_id": 70,
+    "tr_path_id": 173,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks24",
     "go": "Rock",
-    "x": -26.799999237060547,
-    "y": 1.3799999952316284,
+    "x": -7.309999237060548,
+    "y": 3.1799999952316282,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1053,13 +2181,37 @@
     "draw_mode": 0,
     "sz_x": 0.36666667461395264,
     "sz_y": 0.3400000035762787,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 71,
+    "tr_path_id": 174,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": -13.923286363482475,
-    "y": -6.5018870532512665,
+    "x": 5.566713636517523,
+    "y": -4.701887053251267,
     "angle": 57.000000084097344,
     "sx": 1.0,
     "sy": 1.0,
@@ -1075,13 +2227,37 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 73,
+    "tr_path_id": 176,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": -13.719078086316586,
-    "y": -6.116940855979919,
+    "x": 5.770921913683413,
+    "y": -4.31694085597992,
     "angle": 130.00000521505882,
     "sx": 1.0,
     "sy": 1.0,
@@ -1097,13 +2273,37 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 75,
+    "tr_path_id": 178,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves3",
     "go": "PropSprite",
-    "x": -25.260000228881836,
-    "y": -6.835999846458435,
+    "x": -5.7700002288818375,
+    "y": -5.035999846458435,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1119,13 +2319,37 @@
     "draw_mode": 0,
     "sz_x": 2.986666679382324,
     "sz_y": 2.2799999713897705,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 76,
+    "tr_path_id": 179,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_5",
     "go": "DreamHouse_Environment_ChiHouse_New 1_4 (1)",
-    "x": -19.239999771118164,
-    "y": -1.6059996029362082,
+    "x": 0.2500002288818344,
+    "y": 0.1940003970637918,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1141,13 +2365,37 @@
     "draw_mode": 0,
     "sz_x": 3.200000047683716,
     "sz_y": 1.6666666269302368,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/DreamHouse_Environment_ChiHouse_New 1_4 (1)",
+    "go_path_id": 77,
+    "tr_path_id": 180,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": -17.077525839442387,
-    "y": 4.700142323970795,
+    "x": 2.412474160557611,
+    "y": 6.5001423239707945,
     "angle": 97.00000073732164,
     "sx": 1.0,
     "sy": 1.0,
@@ -1163,13 +2411,37 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 78,
+    "tr_path_id": 181,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": -13.333638787269592,
-    "y": -2.1962969228625298,
+    "x": 6.156361212730406,
+    "y": -0.3962969228625297,
     "angle": 112.0000033466246,
     "sx": 1.0,
     "sy": 1.0,
@@ -1185,13 +2457,37 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 80,
+    "tr_path_id": 183,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_3",
     "go": "Ladder (3)",
-    "x": -21.752999544143677,
-    "y": -1.0769997974857688,
+    "x": -2.2629995441436783,
+    "y": 0.7230002025142312,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1207,13 +2503,37 @@
     "draw_mode": 0,
     "sz_x": 1.8600000143051147,
     "sz_y": 5.789999961853027,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/Ladder/Ladder (3)",
+    "go_path_id": 84,
+    "tr_path_id": 187,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": -20.85380293428898,
-    "y": 6.020518869161606,
+    "x": -1.3638029342889801,
+    "y": 7.820518869161606,
     "angle": 137.99999446926486,
     "sx": 1.0,
     "sy": 1.0,
@@ -1229,13 +2549,37 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 85,
+    "tr_path_id": 188,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_1",
     "go": "Roof",
-    "x": -20.0,
-    "y": -0.014999999664723873,
+    "x": -0.5100000000000016,
+    "y": 1.7850000003352762,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1251,13 +2595,37 @@
     "draw_mode": 0,
     "sz_x": 6.826666831970215,
     "sz_y": 6.826666831970215,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/Roof",
+    "go_path_id": 86,
+    "tr_path_id": 189,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": -21.872982561588287,
-    "y": -6.391866482794285,
+    "x": -2.382982561588289,
+    "y": -4.591866482794285,
     "angle": 16.000002926297352,
     "sx": 1.0,
     "sy": 1.0,
@@ -1273,13 +2641,37 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 88,
+    "tr_path_id": 191,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Leaves5",
     "go": "PropSprite",
-    "x": -16.34600060991943,
-    "y": 6.077000081539154,
+    "x": 3.1439993900805696,
+    "y": 7.877000081539154,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1295,13 +2687,37 @@
     "draw_mode": 0,
     "sz_x": 3.0199999809265137,
     "sz_y": 2.3466665744781494,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 91,
+    "tr_path_id": 194,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers8",
     "go": "PropSprite",
-    "x": -21.10907842963934,
-    "y": 6.41305935382843,
+    "x": -1.619078429639341,
+    "y": 8.21305935382843,
     "angle": 130.00000521505882,
     "sx": 1.0,
     "sy": 1.0,
@@ -1317,13 +2733,37 @@
     "draw_mode": 0,
     "sz_x": 0.1599999964237213,
     "sz_y": 0.1666666716337204,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 93,
+    "tr_path_id": 196,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_AO_1",
     "go": "AO",
-    "x": -19.430999755859375,
-    "y": 0.6609999993816018,
+    "x": 0.05900024414062344,
+    "y": 2.4609999993816016,
     "angle": 0.0,
     "sx": 2.0,
     "sy": 2.0,
@@ -1339,13 +2779,37 @@
     "draw_mode": 0,
     "sz_x": 1.3666666746139526,
     "sz_y": 1.3333333730697632,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 0.250980406999588
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/AO",
+    "go_path_id": 95,
+    "tr_path_id": 198,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers12",
     "go": "PropSprite",
-    "x": -26.445008622016758,
-    "y": 6.60447633266449,
+    "x": -6.955008622016759,
+    "y": 8.40447633266449,
     "angle": 37.99999738600456,
     "sx": 1.0,
     "sy": 1.0,
@@ -1361,13 +2825,37 @@
     "draw_mode": 0,
     "sz_x": 0.1666666716337204,
     "sz_y": 0.18000000715255737,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 96,
+    "tr_path_id": 199,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 1
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_9",
     "go": "Weathervane (1)",
-    "x": -20.86100000143051,
-    "y": 4.180000171996653,
+    "x": -1.371000001430513,
+    "y": 5.980000171996653,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1383,13 +2871,37 @@
     "draw_mode": 0,
     "sz_x": 1.0266666412353516,
     "sz_y": 1.4333332777023315,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/Roof/Weathervane (1)",
+    "go_path_id": 97,
+    "tr_path_id": 200,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "DreamHouse_Environment_ChiHouse_New 1_7",
     "go": "DreamHouse_Environment_ChiHouse_New_2",
-    "x": -20.0,
-    "y": -0.014999999664723873,
+    "x": -0.5100000000000016,
+    "y": 1.7850000003352762,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1405,13 +2917,37 @@
     "draw_mode": 0,
     "sz_x": 0.6200000047683716,
     "sz_y": 5.099999904632568,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "DreamHouse_Environment_ChiHouse/GameObject/DreamHouse_Environment_ChiHouse_New_2",
+    "go_path_id": 98,
+    "tr_path_id": 201,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers7",
     "go": "PropSprite",
-    "x": -26.501942664384842,
-    "y": -0.7659784257411957,
+    "x": -7.0119426643848435,
+    "y": 1.0340215742588044,
     "angle": 166.99999766254348,
     "sx": 1.0,
     "sy": 1.0,
@@ -1427,13 +2963,37 @@
     "draw_mode": 0,
     "sz_x": 0.15333333611488342,
     "sz_y": 0.14000000059604645,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 99,
+    "tr_path_id": 202,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Rocks9",
     "go": "Rock",
-    "x": -19.049999237060547,
-    "y": 4.840000152587891,
+    "x": 0.44000076293945156,
+    "y": 6.6400001525878904,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1449,13 +3009,37 @@
     "draw_mode": 0,
     "sz_x": 0.5600000023841858,
     "sz_y": 0.3933333456516266,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Rock",
+    "go_path_id": 100,
+    "tr_path_id": 203,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Trunk4",
     "go": "PropSprite",
-    "x": -16.360000610351562,
-    "y": 5.170000076293945,
+    "x": 3.129999389648436,
+    "y": 6.970000076293945,
     "angle": 0.0,
     "sx": 1.0,
     "sy": 1.0,
@@ -1471,13 +3055,37 @@
     "draw_mode": 0,
     "sz_x": 1.2933332920074463,
     "sz_y": 1.2000000476837158,
-    "poly": []
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=3, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "TreeProp/PropSprite",
+    "go_path_id": 102,
+    "tr_path_id": 205,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   },
   {
     "sp": "Flowers2",
     "go": "PropSprite",
-    "x": -26.00948730111122,
-    "y": -0.7339810207486153,
+    "x": -6.519487301111223,
+    "y": 1.0660189792513848,
     "angle": 154.9999964350374,
     "sx": 1.0,
     "sy": 1.0,
@@ -1493,100 +3101,30 @@
     "draw_mode": 0,
     "sz_x": 0.11999999731779099,
     "sz_y": 0.12666666507720947,
-    "poly": []
-  },
-  {
-    "sp": "WoodBark",
-    "go": "WallpaperBL (3)",
-    "x": -15.604999542236328,
-    "y": -1.9729999443516135,
-    "angle": 0.0,
-    "sx": 1.0,
-    "sy": 1.0,
-    "o": 1,
-    "px": 0.5,
-    "py": 0.5,
-    "rw": 512,
-    "rh": 512,
-    "ox": 0,
-    "oy": 0,
-    "ppu": 150.0,
-    "sl": -8,
-    "draw_mode": 2,
-    "sz_x": 3.379992723464966,
-    "sz_y": 5.984811782836914,
-    "poly": [
-      [
-        {
-          "x": 1.7139816284179688,
-          "y": -1.3097071647644043
-        },
-        {
-          "x": 1.6820240020751953,
-          "y": 2.891751527786255
-        },
-        {
-          "x": -0.6532096862792969,
-          "y": 0.20810234546661377
-        },
-        {
-          "x": -1.2918891906738281,
-          "y": 0.5301249027252197
-        },
-        {
-          "x": -1.2918624877929688,
-          "y": -2.8409836292266846
-        },
-        {
-          "x": 1.7139816284179688,
-          "y": -1.3097071647644043
-        }
-      ]
-    ]
-  },
-  {
-    "sp": "WoodBark",
-    "go": "WallpaperBL (1)",
-    "x": -23.41699981689453,
-    "y": 0.7350000003352761,
-    "angle": 0.0,
-    "sx": 1.0,
-    "sy": 1.0,
-    "o": 1,
-    "px": 0.5,
-    "py": 0.5,
-    "rw": 512,
-    "rh": 512,
-    "ox": 0,
-    "oy": 0,
-    "ppu": 150.0,
-    "sl": -8,
-    "draw_mode": 2,
-    "sz_x": 4.462411403656006,
-    "sz_y": 7.262121200561523,
-    "poly": [
-      [
-        {
-          "x": -2.0630550384521484,
-          "y": -1.471669316291809
-        },
-        {
-          "x": -2.1141796112060547,
-          "y": 3.687972068786621
-        },
-        {
-          "x": 2.2534523010253906,
-          "y": 1.4618873596191406
-        },
-        {
-          "x": 2.2097549438476562,
-          "y": -3.6179888248443604
-        },
-        {
-          "x": -2.0630550384521484,
-          "y": -1.471669316291809
-        }
-      ]
-    ]
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Flower/PropSprite",
+    "go_path_id": 103,
+    "tr_path_id": 206,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
   }
 ]

@@ -1,0 +1,90 @@
+{
+  "_nota": "Quien mete una entrada en `locationsOnPhone`, o sea quien ABRE un sitio. Se rastreo con `tools/xrefs.py`: el unico que construye un `LocationLock` en juego normal es `TsukiExtensions.Unlock`, y estos son sus llamadores. NO es el dialogo: `Dialogue.UnlockLocation` existe pero no lo llama nadie directamente y los `responseEvent` estan todos vacios (ver data/dialogue_actions.json). `TsukiSave.UnlockLocations` solo lo llama `SkipTutorial`, que es la via de depuracion.",
+  "slocation": [
+    "Home",
+    "YorisShop",
+    "ChisHouse",
+    "MocasHouse",
+    "Pier",
+    "RosemarysShop",
+    "Farm",
+    "OpeningScene",
+    "TownHall",
+    "MomosTeaHouse",
+    "TrainStation",
+    "DawnsShop",
+    "Dojo",
+    "ScarlettsLounge",
+    "Travelling",
+    "SubwayStation",
+    "CityHall",
+    "Exit",
+    "Skytower",
+    "CapsuleHotel",
+    "ApartmentLobby",
+    "TheHole",
+    "Penthouse",
+    "ShoppingMall",
+    "MallEntrance",
+    "RugShop",
+    "Winery",
+    "IceCreamShop",
+    "JewelryStore",
+    "PostOffice",
+    "BubbleTea",
+    "ShoeStore",
+    "PoliceStation",
+    "CoffeeShop",
+    "Apartment"
+  ],
+  "fuentes": [
+    {
+      "metodo": "Tutorial.SetTutorialStepStatic",
+      "rva": "0x5878a98",
+      "abre": [
+        0,
+        1
+      ],
+      "abreNombres": [
+        "Home",
+        "YorisShop"
+      ],
+      "nota": "constantes en el codigo; es el arranque de la partida"
+    },
+    {
+      "metodo": "PipiTutorial.UnlockTownHall",
+      "rva": "0x586bc74",
+      "abre": [
+        8
+      ],
+      "abreNombres": [
+        "TownHall"
+      ],
+      "nota": "constante en el codigo"
+    },
+    {
+      "metodo": "NewspaperEntry.ValidateCompletion",
+      "rva": "0x592b76c",
+      "abre": null,
+      "nota": "abre la `location` de la propia noticia; el dato ya esta en data/newspapers.js (Home 208, Pier 2, MomosTeaHouse 2, MocasHouse 1, RosemarysShop 1). ES LA VIA PRINCIPAL DE LA ALDEA."
+    },
+    {
+      "metodo": "FixedApartmentKey.OnObtained",
+      "rva": "0x573b84c",
+      "abre": null,
+      "nota": "la llave del apartamento; el sitio va en registro"
+    },
+    {
+      "metodo": "TravelAndUnlock.ButtonAction",
+      "rva": "0x587a59c",
+      "abre": null,
+      "nota": "la Gran Ciudad, andando. El grafo esta en data/travel_graph.json"
+    },
+    {
+      "metodo": "Debugger.Start",
+      "rva": "0x594c1e4",
+      "abre": null,
+      "nota": "depuracion"
+    }
+  ]
+}

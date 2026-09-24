@@ -1,0 +1,455 @@
+{
+ "meta": {
+  "nota": "que nodo de dialogo enciende que condicion",
+  "personajes": 8,
+  "sinNombre": 0
+ },
+ "porPersonaje": {
+  "2": [
+   {
+    "graph": "ChiSigh",
+    "node": 3,
+    "conditionIDs": [
+     19
+    ],
+    "character": "Chi",
+    "conditionNames": [
+     "lotc3pickup"
+    ]
+   },
+   {
+    "graph": "ChiSigh",
+    "node": 5,
+    "conditionIDs": [
+     18
+    ],
+    "character": "Chi",
+    "conditionNames": [
+     "lotc2pickup"
+    ]
+   },
+   {
+    "graph": "ChiSigh",
+    "node": 8,
+    "conditionIDs": [
+     18
+    ],
+    "character": "Chi",
+    "conditionNames": [
+     "lotc2pickup"
+    ]
+   },
+   {
+    "graph": "ChiSigh",
+    "node": 10,
+    "conditionIDs": [
+     19
+    ],
+    "character": "Chi",
+    "conditionNames": [
+     "lotc3pickup"
+    ]
+   },
+   {
+    "graph": "Chi Generic",
+    "node": 69,
+    "conditionIDs": [
+     17
+    ],
+    "character": "Chi",
+    "conditionNames": [
+     "RefusedToGiveTape"
+    ]
+   }
+  ],
+  "5": [
+   {
+    "graph": "ElfiePhone",
+    "node": 13,
+    "conditionIDs": [
+     5
+    ],
+    "character": "Elfie",
+    "conditionNames": [
+     "SharedParsnap"
+    ]
+   }
+  ],
+  "7": [
+   {
+    "graph": "BennyGeneric",
+    "node": 104,
+    "conditionIDs": [
+     1
+    ],
+    "character": "Benny",
+    "conditionNames": [
+     "PenReplaced"
+    ]
+   }
+  ],
+  "8": [
+   {
+    "graph": "Bobo Intro",
+    "node": 5,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Bobo",
+    "conditionNames": [
+     "Post Intro"
+    ]
+   }
+  ],
+  "10": [
+   {
+    "graph": "MocaPanicked",
+    "node": 0,
+    "conditionIDs": [
+     5
+    ],
+    "character": "Moca",
+    "conditionNames": [
+     "GlueStarted"
+    ]
+   },
+   {
+    "graph": "MocaPanicked",
+    "node": 2,
+    "conditionIDs": [
+     1
+    ],
+    "character": "Moca",
+    "conditionNames": [
+     "ConfessedToBonsai"
+    ]
+   },
+   {
+    "graph": "MocaPanicked",
+    "node": 10,
+    "conditionIDs": [
+     1
+    ],
+    "character": "Moca",
+    "conditionNames": [
+     "ConfessedToBonsai"
+    ]
+   },
+   {
+    "graph": "MocaMusic",
+    "node": 22,
+    "conditionIDs": [
+     6
+    ],
+    "character": "Moca",
+    "conditionNames": [
+     "MusicTrack"
+    ]
+   },
+   {
+    "graph": "MocaMusic",
+    "node": 23,
+    "conditionIDs": [
+     6
+    ],
+    "character": "Moca",
+    "conditionNames": [
+     "MusicTrack"
+    ]
+   },
+   {
+    "graph": "MocaMusic",
+    "node": 24,
+    "conditionIDs": [
+     6
+    ],
+    "character": "Moca",
+    "conditionNames": [
+     "MusicTrack"
+    ]
+   },
+   {
+    "graph": "MocaMusic",
+    "node": 28,
+    "conditionIDs": [
+     6
+    ],
+    "character": "Moca",
+    "conditionNames": [
+     "MusicTrack"
+    ]
+   }
+  ],
+  "12": [
+   {
+    "graph": "DraperPee",
+    "node": 0,
+    "conditionIDs": [
+     3
+    ],
+    "character": "Draper",
+    "conditionNames": [
+     "PeeOnHouse"
+    ]
+   },
+   {
+    "graph": "DraperAd",
+    "node": 5,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Draper",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "DraperAd",
+    "node": 7,
+    "conditionIDs": [
+     0,
+     1
+    ],
+    "character": "Draper",
+    "conditionNames": [
+     "ShownAd",
+     "Cheated"
+    ]
+   },
+   {
+    "graph": "DraperAd",
+    "node": 14,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Draper",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "DraperAd",
+    "node": 16,
+    "conditionIDs": [
+     0,
+     1
+    ],
+    "character": "Draper",
+    "conditionNames": [
+     "ShownAd",
+     "Cheated"
+    ]
+   },
+   {
+    "graph": "DraperAd",
+    "node": 17,
+    "conditionIDs": [
+     0,
+     1
+    ],
+    "character": "Draper",
+    "conditionNames": [
+     "ShownAd",
+     "Cheated"
+    ]
+   },
+   {
+    "graph": "DraperAd",
+    "node": 25,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Draper",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "DraperAd",
+    "node": 27,
+    "conditionIDs": [
+     2
+    ],
+    "character": "Draper",
+    "conditionNames": [
+     "Confronted"
+    ]
+   },
+   {
+    "graph": "DraperHalloweenAd",
+    "node": 6,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Draper",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "DraperHalloweenAd",
+    "node": 8,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Draper",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   }
+  ],
+  "13": [
+   {
+    "graph": "OlsonHalloweenAd",
+    "node": 5,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "OlsonHalloweenAd",
+    "node": 7,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "OlsonShit",
+    "node": 10,
+    "conditionIDs": [
+     3
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "ShitOnHouse"
+    ]
+   },
+   {
+    "graph": "OlsonAd",
+    "node": 4,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "OlsonAd",
+    "node": 5,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "OlsonAd",
+    "node": 7,
+    "conditionIDs": [
+     1,
+     0
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "Cheated",
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "OlsonAd",
+    "node": 16,
+    "conditionIDs": [
+     1,
+     0
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "Cheated",
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "OlsonAd",
+    "node": 27,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "OlsonAd",
+    "node": 28,
+    "conditionIDs": [
+     2,
+     0
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "Confronted",
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "OlsonAd",
+    "node": 31,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "OlsonAd",
+    "node": 33,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Olson",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   }
+  ],
+  "19": [
+   {
+    "graph": "CamilleStrained",
+    "node": 6,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Camille",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   },
+   {
+    "graph": "ChameleonWater",
+    "node": 6,
+    "conditionIDs": [
+     0
+    ],
+    "character": "Camille",
+    "conditionNames": [
+     "ShownAd"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,94 @@
+[
+  {
+    "sp": "RosemarySnow",
+    "go": "RosemarySnow",
+    "x": -0.29599952697753906,
+    "y": 3.4169998168945312,
+    "angle": 0.0,
+    "sx": 1.0,
+    "sy": 1.0,
+    "o": 1,
+    "px": 0.5,
+    "py": 0.5,
+    "rw": 1024.0,
+    "rh": 1024.0,
+    "ox": 47.2000732421875,
+    "oy": 403.0,
+    "ppu": 150.0,
+    "sl": 9,
+    "draw_mode": 0,
+    "sz_x": 6.826666831970215,
+    "sz_y": 6.826666831970215,
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=1, m_PathID=2, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "RosemarySnow",
+    "go_path_id": 1,
+    "tr_path_id": 5,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
+  },
+  {
+    "sp": "Snow_Mound_0",
+    "go": "Sprite",
+    "x": -1.8099994659423828,
+    "y": -3.760000228881836,
+    "angle": 0.0,
+    "sx": 1.0,
+    "sy": 1.0,
+    "o": 0,
+    "px": 0.5,
+    "py": 0.5,
+    "rw": 106.0,
+    "rh": 67.0,
+    "ox": 0.0,
+    "oy": 0.0,
+    "ppu": 150.0,
+    "sl": 0,
+    "draw_mode": 0,
+    "sz_x": 0.800000011920929,
+    "sz_y": 0.800000011920929,
+    "poly": [],
+    "color": {
+      "r": 1.0,
+      "g": 1.0,
+      "b": 1.0,
+      "a": 1.0
+    },
+    "materials": [
+      "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+    ],
+    "flipX": false,
+    "flipY": false,
+    "active": true,
+    "path": "Snowmound (4)/Sprite",
+    "go_path_id": 4,
+    "tr_path_id": 8,
+    "border": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "tiling": null,
+    "sorting_group": null,
+    "mask_interaction": 0
+  }
+]

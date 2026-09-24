@@ -1,0 +1,1135 @@
+{
+ "_fuente": "prefabs GachaBoy / Gachaboy SP de furniture_assets_all_22d367c8beca55276af4138414a20260.bundle + atlas Gachaboy de duplicateassetisolation_assets_all_7a42fe53d9712b1c81bcc2bbbbf83353.bundle, premios de GachaData (pathID 1778)",
+ "sets": [
+  {
+   "name": "Super Bug Fighters",
+   "gachapon": [
+    {
+     "setID": 0,
+     "ID": 0,
+     "furnitureID": 362,
+     "bSkinID": 374,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 0,
+     "ID": 1,
+     "furnitureID": 359,
+     "bSkinID": 371,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 0,
+     "ID": 2,
+     "furnitureID": 367,
+     "bSkinID": 372,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 0,
+     "ID": 3,
+     "furnitureID": 373,
+     "bSkinID": 370,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 0,
+     "ID": 4,
+     "furnitureID": 368,
+     "bSkinID": 363,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 0,
+     "ID": 5,
+     "furnitureID": 361,
+     "bSkinID": 153,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 0,
+     "ID": 6,
+     "furnitureID": 360,
+     "bSkinID": 155,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 0,
+     "ID": 7,
+     "furnitureID": 365,
+     "bSkinID": 144,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 0,
+     "ID": 8,
+     "furnitureID": 364,
+     "bSkinID": 141,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 0,
+     "ID": 9,
+     "furnitureID": 369,
+     "bSkinID": 131,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 0,
+     "ID": 10,
+     "furnitureID": 187,
+     "bSkinID": 188,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 0,
+     "ID": 11,
+     "furnitureID": 126,
+     "bSkinID": 129,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 0,
+     "ID": 12,
+     "furnitureID": 356,
+     "bSkinID": 143,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 0,
+     "ID": 13,
+     "furnitureID": 170,
+     "bSkinID": 178,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 0,
+     "ID": 14,
+     "furnitureID": 132,
+     "bSkinID": 139,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 0,
+     "ID": 15,
+     "furnitureID": 159,
+     "bSkinID": 169,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 0,
+     "ID": 16,
+     "furnitureID": 357,
+     "bSkinID": 125,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 0,
+     "ID": 17,
+     "furnitureID": 366,
+     "bSkinID": 145,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 0,
+     "ID": 18,
+     "furnitureID": 358,
+     "bSkinID": 189,
+     "rarity": 3,
+     "rarityName": "Legendary"
+    }
+   ],
+   "forcedDraw": false,
+   "forcedFirstGacha": 0
+  },
+  {
+   "name": "Feesh",
+   "gachapon": [
+    {
+     "setID": 1,
+     "ID": 0,
+     "furnitureID": 460,
+     "bSkinID": 461,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 1,
+     "ID": 1,
+     "furnitureID": 438,
+     "bSkinID": 439,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 1,
+     "ID": 2,
+     "furnitureID": 448,
+     "bSkinID": 449,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 1,
+     "ID": 3,
+     "furnitureID": 466,
+     "bSkinID": 467,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 1,
+     "ID": 4,
+     "furnitureID": 458,
+     "bSkinID": 459,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 1,
+     "ID": 5,
+     "furnitureID": 440,
+     "bSkinID": 441,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 1,
+     "ID": 6,
+     "furnitureID": 444,
+     "bSkinID": 445,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 1,
+     "ID": 7,
+     "furnitureID": 436,
+     "bSkinID": 437,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 1,
+     "ID": 8,
+     "furnitureID": 456,
+     "bSkinID": 457,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 1,
+     "ID": 9,
+     "furnitureID": 442,
+     "bSkinID": 443,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 1,
+     "ID": 10,
+     "furnitureID": 452,
+     "bSkinID": 453,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 1,
+     "ID": 11,
+     "furnitureID": 432,
+     "bSkinID": 433,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 1,
+     "ID": 12,
+     "furnitureID": 450,
+     "bSkinID": 451,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 1,
+     "ID": 13,
+     "furnitureID": 434,
+     "bSkinID": 435,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 1,
+     "ID": 14,
+     "furnitureID": 464,
+     "bSkinID": 465,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 1,
+     "ID": 15,
+     "furnitureID": 446,
+     "bSkinID": 447,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 1,
+     "ID": 16,
+     "furnitureID": 462,
+     "bSkinID": 463,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 1,
+     "ID": 17,
+     "furnitureID": 454,
+     "bSkinID": 455,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 1,
+     "ID": 18,
+     "furnitureID": 468,
+     "bSkinID": 469,
+     "rarity": 3,
+     "rarityName": "Legendary"
+    }
+   ],
+   "forcedDraw": false,
+   "forcedFirstGacha": 0
+  },
+  {
+   "name": "Cosmic Beasts",
+   "gachapon": [
+    {
+     "setID": 2,
+     "ID": 0,
+     "furnitureID": 1209,
+     "bSkinID": 1211,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 2,
+     "ID": 1,
+     "furnitureID": 1212,
+     "bSkinID": 1213,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 2,
+     "ID": 2,
+     "furnitureID": 1214,
+     "bSkinID": 1215,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 2,
+     "ID": 3,
+     "furnitureID": 1216,
+     "bSkinID": 1217,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 2,
+     "ID": 4,
+     "furnitureID": 1218,
+     "bSkinID": 1219,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 2,
+     "ID": 5,
+     "furnitureID": 1220,
+     "bSkinID": 1221,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 2,
+     "ID": 6,
+     "furnitureID": 1222,
+     "bSkinID": 1223,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 2,
+     "ID": 7,
+     "furnitureID": 1224,
+     "bSkinID": 1225,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 2,
+     "ID": 8,
+     "furnitureID": 1226,
+     "bSkinID": 1227,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 2,
+     "ID": 9,
+     "furnitureID": 1228,
+     "bSkinID": 1229,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 2,
+     "ID": 10,
+     "furnitureID": 1245,
+     "bSkinID": 1246,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 2,
+     "ID": 11,
+     "furnitureID": 1243,
+     "bSkinID": 1244,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 2,
+     "ID": 12,
+     "furnitureID": 1247,
+     "bSkinID": 1248,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 2,
+     "ID": 13,
+     "furnitureID": 1241,
+     "bSkinID": 1242,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 2,
+     "ID": 14,
+     "furnitureID": 1239,
+     "bSkinID": 1240,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 2,
+     "ID": 15,
+     "furnitureID": 1251,
+     "bSkinID": 1252,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 2,
+     "ID": 16,
+     "furnitureID": 1253,
+     "bSkinID": 1254,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 2,
+     "ID": 17,
+     "furnitureID": 1249,
+     "bSkinID": 1250,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 2,
+     "ID": 18,
+     "furnitureID": 1255,
+     "bSkinID": 1256,
+     "rarity": 3,
+     "rarityName": "Legendary"
+    }
+   ],
+   "forcedDraw": false,
+   "forcedFirstGacha": 0
+  },
+  {
+   "name": "Lazy Daisy",
+   "gachapon": [
+    {
+     "setID": 3,
+     "ID": 0,
+     "furnitureID": 1894,
+     "bSkinID": 1895,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 3,
+     "ID": 1,
+     "furnitureID": 1896,
+     "bSkinID": 1897,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 3,
+     "ID": 2,
+     "furnitureID": 1898,
+     "bSkinID": 1899,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 3,
+     "ID": 3,
+     "furnitureID": 1900,
+     "bSkinID": 1901,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 3,
+     "ID": 4,
+     "furnitureID": 1902,
+     "bSkinID": 1903,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 3,
+     "ID": 5,
+     "furnitureID": 1904,
+     "bSkinID": 1905,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 3,
+     "ID": 6,
+     "furnitureID": 1906,
+     "bSkinID": 1907,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 3,
+     "ID": 7,
+     "furnitureID": 1908,
+     "bSkinID": 1909,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 3,
+     "ID": 8,
+     "furnitureID": 1910,
+     "bSkinID": 1911,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 3,
+     "ID": 9,
+     "furnitureID": 1912,
+     "bSkinID": 1913,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 3,
+     "ID": 10,
+     "furnitureID": 1914,
+     "bSkinID": 1915,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 3,
+     "ID": 11,
+     "furnitureID": 1916,
+     "bSkinID": 1917,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 3,
+     "ID": 12,
+     "furnitureID": 1918,
+     "bSkinID": 1919,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 3,
+     "ID": 13,
+     "furnitureID": 1920,
+     "bSkinID": 1921,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 3,
+     "ID": 14,
+     "furnitureID": 1922,
+     "bSkinID": 1923,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 3,
+     "ID": 15,
+     "furnitureID": 1924,
+     "bSkinID": 1925,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 3,
+     "ID": 16,
+     "furnitureID": 1926,
+     "bSkinID": 1927,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 3,
+     "ID": 17,
+     "furnitureID": 1928,
+     "bSkinID": 1929,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 3,
+     "ID": 18,
+     "furnitureID": 1930,
+     "bSkinID": 1931,
+     "rarity": 3,
+     "rarityName": "Legendary"
+    }
+   ],
+   "forcedDraw": false,
+   "forcedFirstGacha": 0
+  },
+  {
+   "name": "Pocket Lands",
+   "gachapon": [
+    {
+     "setID": 4,
+     "ID": 0,
+     "furnitureID": 1935,
+     "bSkinID": 1936,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 4,
+     "ID": 1,
+     "furnitureID": 1943,
+     "bSkinID": 1944,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 4,
+     "ID": 2,
+     "furnitureID": 1949,
+     "bSkinID": 1950,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 4,
+     "ID": 3,
+     "furnitureID": 1951,
+     "bSkinID": 1952,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 4,
+     "ID": 4,
+     "furnitureID": 1953,
+     "bSkinID": 1954,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 4,
+     "ID": 5,
+     "furnitureID": 1955,
+     "bSkinID": 1956,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 4,
+     "ID": 6,
+     "furnitureID": 1959,
+     "bSkinID": 1960,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 4,
+     "ID": 7,
+     "furnitureID": 1961,
+     "bSkinID": 1962,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 4,
+     "ID": 8,
+     "furnitureID": 1963,
+     "bSkinID": 1964,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 4,
+     "ID": 9,
+     "furnitureID": 1965,
+     "bSkinID": 1966,
+     "rarity": 0,
+     "rarityName": "Common"
+    },
+    {
+     "setID": 4,
+     "ID": 10,
+     "furnitureID": 1938,
+     "bSkinID": 1937,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 4,
+     "ID": 11,
+     "furnitureID": 1939,
+     "bSkinID": 1940,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 4,
+     "ID": 12,
+     "furnitureID": 1947,
+     "bSkinID": 1948,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 4,
+     "ID": 13,
+     "furnitureID": 1945,
+     "bSkinID": 1946,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 4,
+     "ID": 14,
+     "furnitureID": 1941,
+     "bSkinID": 1942,
+     "rarity": 1,
+     "rarityName": "Rare"
+    },
+    {
+     "setID": 4,
+     "ID": 15,
+     "furnitureID": 1957,
+     "bSkinID": 1958,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 4,
+     "ID": 16,
+     "furnitureID": 1967,
+     "bSkinID": 1968,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 4,
+     "ID": 17,
+     "furnitureID": 1969,
+     "bSkinID": 1970,
+     "rarity": 2,
+     "rarityName": "Epic"
+    },
+    {
+     "setID": 4,
+     "ID": 18,
+     "furnitureID": 1971,
+     "bSkinID": 1972,
+     "rarity": 3,
+     "rarityName": "Legendary"
+    }
+   ],
+   "forcedDraw": true,
+   "forcedFirstGacha": 0
+  }
+ ],
+ "machines": {
+  "344": {
+   "furnitureID": 344,
+   "force": 10.0,
+   "balls": 10,
+   "gridCollScale": 0.6909999847412109,
+   "gridHeightOffset": 0.14900000393390656,
+   "uiPosition": 0.6000000238418579
+  },
+  "1932": {
+   "furnitureID": 1932,
+   "force": 10.0,
+   "balls": 10,
+   "gridCollScale": 0.6919999718666077,
+   "gridHeightOffset": 0.0,
+   "uiPosition": 1.059999942779541
+  }
+ },
+ "body": {
+  "344": "Gachaboy_0",
+  "1932": "Gachagirl_0"
+ },
+ "cover": {
+  "344": "Gachaboy_1",
+  "1932": "Gachagirl_1"
+ },
+ "broken": {
+  "344": "Gachaboy_22",
+  "1932": "GachaboySP_0"
+ },
+ "ball": {
+  "normal": [
+   "Gachaboy_2",
+   "Gachaboy_3",
+   "Gachaboy_4",
+   "Gachaboy_5",
+   "Gachaboy_6",
+   "Gachaboy_7",
+   "Gachaboy_8",
+   "Gachaboy_9",
+   "Gachaboy_10",
+   "Gachaboy_11"
+  ],
+  "golden": [
+   "Gachaboy_12",
+   "Gachaboy_13",
+   "Gachaboy_14",
+   "Gachaboy_15",
+   "Gachaboy_16",
+   "Gachaboy_17",
+   "Gachaboy_18",
+   "Gachaboy_19",
+   "Gachaboy_20",
+   "Gachaboy_21"
+  ]
+ },
+ "sounds": [
+  "gachaRoll",
+  "gachaTap1",
+  "gachaTap2",
+  "gachaReveal",
+  "gachaRevealRare",
+  "gachaBoyImpact",
+  "gachaBoyBreak"
+ ],
+ "revealClips": [
+  "GachaIn",
+  "GachaOpen",
+  "GachaOut",
+  "GachaIdle",
+  "GachaBounce",
+  "GachaBounce2"
+ ],
+ "sprites": {
+  "Gachaboy_22": {
+   "w": 38,
+   "h": 33,
+   "pivot": {
+    "x": -0.0329,
+    "y": -1.5136
+   },
+   "ppu": 150.0,
+   "pathID": -8281795133381172676
+  },
+  "Gachaboy_5": {
+   "w": 27,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": -8137864803336281540
+  },
+  "Gachaboy_8": {
+   "w": 27,
+   "h": 26,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": -7678432571736612292
+  },
+  "Gachaboy_17": {
+   "w": 25,
+   "h": 26,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": -7653885272780463556
+  },
+  "Gachaboy_11": {
+   "w": 27,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": -6177773859724418500
+  },
+  "Gachaboy_19": {
+   "w": 28,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": -5120809342976286148
+  },
+  "Gachaboy_1": {
+   "w": 86,
+   "h": 96,
+   "pivot": {
+    "x": 0.5157,
+    "y": -0.206
+   },
+   "ppu": 150.0,
+   "pathID": -4717375592445140420
+  },
+  "Gachaboy_0": {
+   "w": 103,
+   "h": 90,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.2922
+   },
+   "ppu": 150.0,
+   "pathID": -4650577483818098116
+  },
+  "Gachaboy_9": {
+   "w": 28,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": -3172656792863333828
+  },
+  "Gachaboy_18": {
+   "w": 27,
+   "h": 26,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": -2014488164913077700
+  },
+  "Gachaboy_15": {
+   "w": 27,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": -1954243756024028612
+  },
+  "Gachaboy_10": {
+   "w": 26,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": -1216657371812879812
+  },
+  "Gachaboy_21": {
+   "w": 27,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 1038160932322320956
+  },
+  "Gachaboy_6": {
+   "w": 26,
+   "h": 26,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 1450469712010650172
+  },
+  "Gachaboy_12": {
+   "w": 26,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 1723500259843744316
+  },
+  "Gachaboy_14": {
+   "w": 27,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 2290971580386157116
+  },
+  "Gachaboy_3": {
+   "w": 27,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 2610964292858192444
+  },
+  "Gachaboy_16": {
+   "w": 26,
+   "h": 26,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 3787522419186836028
+  },
+  "Gachaboy_13": {
+   "w": 27,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 4426437043844719164
+  },
+  "Gachaboy_4": {
+   "w": 27,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 5153326708504371772
+  },
+  "Gachaboy_7": {
+   "w": 25,
+   "h": 26,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 5871030577002095164
+  },
+  "Gachaboy_2": {
+   "w": 26,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 6134488816315638332
+  },
+  "Gachaboy_20": {
+   "w": 26,
+   "h": 27,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 8307765651256549948
+  },
+  "Gachagirl_1": {
+   "w": 102,
+   "h": 110,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "ppu": 150.0,
+   "pathID": 4004444550205251635
+  },
+  "GachaboySP_0": {
+   "w": 93,
+   "h": 69,
+   "pivot": {
+    "x": 0.4758,
+    "y": -0.7435
+   },
+   "ppu": 150.0,
+   "pathID": 5102124427864875059
+  },
+  "Gachagirl_0": {
+   "w": 110,
+   "h": 109,
+   "pivot": {
+    "x": 0.5,
+    "y": 0.1009
+   },
+   "ppu": 150.0,
+   "pathID": 6342581680924434483
+  }
+ }
+}

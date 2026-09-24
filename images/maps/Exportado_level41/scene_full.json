@@ -1,0 +1,344 @@
+{
+  "kind": "map",
+  "id": "level41",
+  "name": "level41",
+  "source": "C:\\Users\\Andres\\Desktop\\Tsuki_Odyssey\\AssetPack\\assets\\bin\\Data\\level41",
+  "layout": {
+    "front": [
+      {
+        "sp": "windChimes_0",
+        "go": "windChimes_0",
+        "x": 2.864000082015991,
+        "y": 3.311999797821045,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.9733998775482178,
+        "rw": 52.0,
+        "rh": 43.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": -4,
+        "draw_mode": 0,
+        "sz_x": 0.3466666638851166,
+        "sz_y": 0.2866666615009308,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Windchime (6)/GameObject (1)/Target/windChimes_0",
+        "go_path_id": 1,
+        "tr_path_id": 10,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "summerfestdeco_rosemary_0",
+        "go": "summerfestdeco_rosemary_2 (2)",
+        "x": -0.6849994659423828,
+        "y": 0.007999420166015625,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": -2,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 71.0,
+        "rh": 56.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 1.7333333492279053,
+        "sz_y": 2.7733333110809326,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/summerfestdeco_rosemary_2 (2)",
+        "go_path_id": 2,
+        "tr_path_id": 11,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "windChimes_3",
+        "go": "windChimes_3",
+        "x": 2.864000082015991,
+        "y": 3.0479997992515564,
+        "angle": 0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.45746728777885437,
+        "py": 0.9666205644607544,
+        "rw": 33.0,
+        "rh": 94.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": -4,
+        "draw_mode": 0,
+        "sz_x": 0.2199999988079071,
+        "sz_y": 0.6266666650772095,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=4, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/Windchime (6)/GameObject (1)/Target/windChimes_0/windChimes_3",
+        "go_path_id": 4,
+        "tr_path_id": 13,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "summerfestdeco_rosemary_1",
+        "go": "summerfestdeco_rosemary_2 (3)",
+        "x": -1.2670001983642578,
+        "y": 0.5039997100830078,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": -2,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 81.0,
+        "rh": 98.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": 0,
+        "draw_mode": 0,
+        "sz_x": 1.7333333492279053,
+        "sz_y": 2.7733333110809326,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/summerfestdeco_rosemary_2 (3)",
+        "go_path_id": 7,
+        "tr_path_id": 16,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      },
+      {
+        "sp": "summerfestdeco_rosemary_2",
+        "go": "summerfestdeco_rosemary_2",
+        "x": 3.969999313354492,
+        "y": 3.0600013732910156,
+        "angle": -0.0,
+        "sx": 1.0,
+        "sy": 1.0,
+        "o": 0,
+        "px": 0.5,
+        "py": 0.5,
+        "rw": 260.0,
+        "rh": 416.0,
+        "ox": 0.0,
+        "oy": 0.0,
+        "ppu": 150.0,
+        "sl": -4,
+        "draw_mode": 0,
+        "sz_x": 1.7333333492279053,
+        "sz_y": 2.7733333110809326,
+        "poly": [],
+        "color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "materials": [
+          "PPtr(m_FileID=6, m_PathID=1, assetsfile=<SerializedFile>)"
+        ],
+        "flipX": false,
+        "flipY": false,
+        "active": true,
+        "path": "SceneData/summerfestdeco_rosemary_2",
+        "go_path_id": 9,
+        "tr_path_id": 18,
+        "border": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "tiling": null,
+        "sorting_group": null,
+        "mask_interaction": 0
+      }
+    ],
+    "back": [],
+    "fx": []
+  },
+  "hierarchy": [
+    {
+      "path": "windChimes_0",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_rosemary_2 (2)",
+      "components": [
+        "Texture2D",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Target",
+      "components": [
+        "Texture2D"
+      ]
+    },
+    {
+      "path": "windChimes_3",
+      "components": [
+        "Shader",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "SceneData",
+      "components": [
+        "AudioClip",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "Windchime (6)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_rosemary_2 (3)",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "GameObject (1)",
+      "components": [
+        "Sprite",
+        "Sprite",
+        "Sprite"
+      ]
+    },
+    {
+      "path": "summerfestdeco_rosemary_2",
+      "components": [
+        "Sprite",
+        "Sprite"
+      ]
+    }
+  ],
+  "colliders": [],
+  "logic": {
+    "walkable": [],
+    "blockers": [],
+    "triggers": [],
+    "interaction_nodes": [],
+    "grids": [],
+    "camera_confines": [],
+    "lights": [],
+    "scripts": [],
+    "animators": [],
+    "audio": [],
+    "particles": []
+  },
+  "animation": {
+    "controllers": []
+  },
+  "audio": [],
+  "particles": [],
+  "catalog": {},
+  "raw": {
+    "level": "level41",
+    "origin_offset": {
+      "x": -20.0,
+      "y": 30.0
+    },
+    "grid_system": [],
+    "interaction_nodes": [],
+    "walkable_bounds": [],
+    "camera_confines": [],
+    "lighting_volumes": [],
+    "special_scripts": [],
+    "animator_nodes": [],
+    "audio_sources": [],
+    "particle_systems": []
+  }
+}

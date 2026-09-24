@@ -11,7 +11,6 @@ class GridEditor {
         this.cellHInput = document.getElementById('grid-cell-h');
         this.cellWRange = document.getElementById('grid-cell-w-range');
         this.cellHRange = document.getElementById('grid-cell-h-range');
-        this.maskInput = document.getElementById('grid-mask');
         this.defaultCoverInput = document.getElementById('grid-default-cover');
         this.commentInput = document.getElementById('grid-comment');
 
@@ -64,10 +63,8 @@ class GridEditor {
             surf.rows     = parseInt(this.rows.value);
             surf.groupNum = parseInt(this.groupNum.value);
             surf.flipped  = this.flipped.checked;
-            if (this.maskInput) {
-                const m = this.maskInput.value.trim();
-                if (m) surf.mask = m; else delete surf.mask;
-            }
+            // Las mascaras PNG se retiraron: el recorte lo da el poligono del ancla.
+            delete surf.mask;
             if (this.defaultCoverInput) {
                 const v = this.defaultCoverInput.value.trim();
                 if (v !== '') surf.defaultCoverId = parseInt(v, 10); else delete surf.defaultCoverId;
@@ -84,7 +81,6 @@ class GridEditor {
         this.rows.onchange     = updateAtlas;
         this.groupNum.onchange = updateAtlas;
         this.flipped.onchange  = updateAtlas;
-        if (this.maskInput) this.maskInput.onchange = updateAtlas;
         if (this.defaultCoverInput) this.defaultCoverInput.onchange = updateAtlas;
         if (this.commentInput) this.commentInput.onchange = updateAtlas;
 
@@ -170,7 +166,6 @@ class GridEditor {
         const ch = (surf.cell && surf.cell.h) || 32;
         this.cellWInput.value = cw; this.cellWRange.value = cw;
         this.cellHInput.value = ch; this.cellHRange.value = ch;
-        if (this.maskInput) this.maskInput.value = surf.mask || '';
         if (this.defaultCoverInput) this.defaultCoverInput.value = surf.defaultCoverId != null ? surf.defaultCoverId : '';
         if (this.commentInput) this.commentInput.value = surf.comment || '';
     }

@@ -8,6 +8,20 @@
   let veilEl = null;
   let haloCanvas = null;
   let haloCtx = null;
+  let lightLayers = null;
+  const lightImages = {};
+
+  async function loadLightLayers() {
+    if (lightLayers) return lightLayers;
+    try {
+      const r = await fetch('data/maps/light_layers.json');
+      if (r.ok) lightLayers = await r.json();
+    } catch (e) {
+      lightLayers = {};
+    }
+    window.LightLayers = lightLayers;
+    return lightLayers;
+  }
 
   function lerp(a, b, t) { return a + (b - a) * t; }
   function lerpRgba(a, b, t) {
@@ -162,7 +176,7 @@
     AUTO_ON, AUTO_OFF,
 
     async init() {
-      await loadCurve();
+      await Promise.all([loadCurve(), loadLightLayers()]);
       ensureVeil();
     },
 
@@ -219,12 +233,163 @@
       return String(mapId) === '6';
     },
 
+    renderMapLights(clock, locId) {
+      if (!haloCanvas || !haloCtx) return false;
+      const app = window.app;
+      if (!app || !app.map) return false;
+      const layers = lightLayers || window.LightLayers;
+      if (!layers) return false;
+      const entry = layers[String(locId)];
+      if (!entry || !entry.luces) return false;
+
+      const now = clock || (window.GameTime && window.GameTime.now ? window.GameTime.now() : { hour: 0, minute: 0 });
+      const minutes = ((now.hour | 0) * 60 + (now.minute | 0)) % 1440;
+
+      const studioActive = window.TrainStudio && typeof window.TrainStudio.isActive === 'function' && window.TrainStudio.isActive(locId);
+      const studioWantsLights = window.TrainStudio && typeof window.TrainStudio.showLights === 'function' && window.TrainStudio.showLights(locId);
+      const hideLuces = studioActive && window.TrainStudio.isLayerHidden && window.TrainStudio.isLayerHidden('luces');
+      if (hideLuces) return false;
+
+      // Intensidad de iluminación nocturna (19:30 a 07:30 con rampa suave)
+      let intensity = 0;
+      if (studioWantsLights) {
+        intensity = 1.0;
+      } else {
+        if (minutes >= 1230 || minutes < 390) {
+          intensity = 1.0;
+        } else if (minutes >= 1170 && minutes < 1230) {
+          intensity = (minutes - 1170) / 60;
+        } else if (minutes >= 390 && minutes < 450) {
+          intensity = (450 - minutes) / 60;
+        }
+      }
+
+      if (intensity <= 0.01) return false;
+
+      let img = lightImages[entry.luces];
+      if (!img) {
+        img = new Image();
+        img.src = entry.luces;
+        img.onload = () => {
+          try { if (app.map) app.map.draw(); } catch (e) {}
+        };
+        lightImages[entry.luces] = img;
+      }
+      if (!img.complete || !img.naturalWidth) return false;
+
+      const origin = (app.map._getMapAnchorPx && app.map._getMapAnchorPx(locId)) || { x: 1235, y: 1257 };
+      const bgScale = (window.atlasConfig && window.atlasConfig.bgScale) || 0.75;
+      const s = bgScale * app.map.scale;
+      const dx = app.map.offsetX - origin.x * s;
+      const dy = app.map.offsetY - origin.y * s;
+
+      let mx = 0, my = 0;
+      let trainFuera = false;
+      const isTrainMap = (String(locId) === '10' || String(locId) === '15');
+      if (isTrainMap) {
+        const off = studioActive
+          ? window.TrainStudio.getDesplazamiento(locId)
+          : (window.Train && typeof window.Train.desplazamiento === 'function' ? window.Train.desplazamiento(locId) : null);
+        if (off) {
+          if (off.tramo === 'fuera') {
+            trainFuera = true;
+          } else {
+            mx = off.x * 150 * s;
+            my = off.y * 150 * s;
+          }
+        }
+      }
+
+      if (trainFuera) return false;
+
+      // 1. Capa raster de luces (brillos de techo y cabina): se dibuja alineada 1:1 con el tren
+      haloCtx.save();
+      haloCtx.globalCompositeOperation = 'lighter';
+      haloCtx.globalAlpha = intensity;
+      haloCtx.drawImage(img, dx + mx, dy - my, img.width * s, img.height * s);
+      haloCtx.restore();
+
+      // 2. Faro frontal del tren (haz cónico + halo de bombilla idéntico al Map Editor)
+      if (isTrainMap) {
+        const studioWantsBeam = !studioActive || (window.TrainStudio.isLayerHidden ? !window.TrainStudio.isLayerHidden('luces') : true);
+        if (studioWantsBeam) {
+          let hx = null, hy = null;
+          const cfg = (studioActive && window.TrainStudio.getConfig)
+            ? window.TrainStudio.getConfig(locId)
+            : ((window.TrainLayers && window.TrainLayers[String(locId)]) || (window.Train && typeof window.Train.capas === 'function' ? window.Train.capas(locId) : null));
+
+          if (String(locId) === '10') {
+            const ox = (cfg && cfg.luces_offset_world && cfg.luces_offset_world[0] != null)
+              ? Number(cfg.luces_offset_world[0])
+              : ((cfg && cfg.luces_offset_px && cfg.luces_offset_px[0] != null) ? Number(cfg.luces_offset_px[0]) / 150 : -1.85);
+            const oy = (cfg && cfg.luces_offset_world && cfg.luces_offset_world[1] != null)
+              ? Number(cfg.luces_offset_world[1])
+              : ((cfg && cfg.luces_offset_px && cfg.luces_offset_px[1] != null) ? -Number(cfg.luces_offset_px[1]) / 150 : 0.5);
+
+            const px = 1207 + (8.6 + ox) * 150;
+            const py = 3300 - (9.0 + oy) * 150;
+            hx = dx + mx + px * s;
+            hy = dy - my + py * s;
+          } else if (String(locId) === '15') {
+            const lOff = (cfg && cfg.luces_offset_px) ? cfg.luces_offset_px : [0, 0];
+            hx = dx + mx + (30 + (Number(lOff[0]) || 0)) * s;
+            hy = dy - my + (2289 + (Number(lOff[1]) || 0)) * s;
+          }
+
+          if (hx != null && hy != null) {
+            haloCtx.save();
+            haloCtx.globalCompositeOperation = 'lighter';
+            haloCtx.globalAlpha = intensity;
+
+            const angle = Math.atan2(0.5, -1.0);
+            const coneLen = 260 * s * 2.2;
+            const spread = 0.42;
+
+            // Haz cónico de los faros
+            const beamGrad = haloCtx.createRadialGradient(
+              hx, hy, 6 * s,
+              hx - Math.cos(angle) * coneLen * 0.45,
+              hy + Math.sin(angle) * coneLen * 0.45,
+              coneLen
+            );
+            beamGrad.addColorStop(0, 'rgba(255, 248, 200, 0.95)');
+            beamGrad.addColorStop(0.2, 'rgba(255, 235, 140, 0.65)');
+            beamGrad.addColorStop(0.6, 'rgba(255, 215, 80, 0.22)');
+            beamGrad.addColorStop(1, 'rgba(255, 200, 50, 0)');
+
+            haloCtx.fillStyle = beamGrad;
+            haloCtx.beginPath();
+            haloCtx.moveTo(hx, hy);
+            haloCtx.arc(hx, hy, coneLen, angle - spread, angle + spread);
+            haloCtx.closePath();
+            haloCtx.fill();
+
+            // Halo cálido de la bombilla
+            const haloGrad = haloCtx.createRadialGradient(hx, hy, 2 * s, hx, hy, 35 * s);
+            haloGrad.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+            haloGrad.addColorStop(0.4, 'rgba(255, 235, 120, 0.6)');
+            haloGrad.addColorStop(1, 'rgba(255, 210, 50, 0)');
+            haloCtx.fillStyle = haloGrad;
+            haloCtx.beginPath();
+            haloCtx.arc(hx, hy, 35 * s, 0, Math.PI * 2);
+            haloCtx.fill();
+
+            haloCtx.restore();
+          }
+        }
+      }
+      return true;
+    },
+
     renderHalos(clock, mapId) {
+      ensureVeil();
       if (!haloCanvas || !haloCtx) return;
       const app = window.app;
-      if (!app || !app.map || !app.parser) return;
+      if (!app || !app.map) return;
+      const locId = mapId != null ? String(mapId) : String(app.parser ? app.parser.currentSLocation : (app.map ? app.map.selectedLocation : '0'));
       const isPlay = document.body.classList.contains('play-mode');
-      if (!isPlay) {
+      const studioWantsLights = window.TrainStudio && typeof window.TrainStudio.showLights === 'function' && window.TrainStudio.showLights(locId);
+      if (!isPlay && !studioWantsLights) {
         haloCtx.clearRect(0,0,haloCanvas.width,haloCanvas.height);
         haloCanvas.style.display = 'none';
         return;
@@ -232,16 +397,25 @@
       if (!clock) {
         clock = (window.GameTime && typeof window.GameTime.now === 'function')
           ? window.GameTime.now()
-          : (app.parser.getClock ? app.parser.getClock() : { hour: 0, minute: 0 });
+          : (app.parser && app.parser.getClock ? app.parser.getClock() : { hour: 0, minute: 0 });
       }
       const minutes = (clock.hour | 0) * 60 + (clock.minute | 0);
-      const placements = app.parser.placements || [];
-      const behaviors = window.BEHAVIORS || null;
-      if (!behaviors) { haloCtx.clearRect(0,0,haloCanvas.width,haloCanvas.height); haloCanvas.style.display = 'none'; return; }
       resizeHaloCanvas();
       haloCtx.clearRect(0,0,haloCanvas.width,haloCanvas.height);
-      let any = false;
-      const locId = mapId != null ? String(mapId) : String(app.parser.currentSLocation || '0');
+
+      let any = this.renderMapLights(clock, locId);
+      if (!isPlay && studioWantsLights) {
+        haloCanvas.style.display = any ? 'block' : 'none';
+        return;
+      }
+
+      const placements = app.parser.placements || [];
+      const behaviors = window.BEHAVIORS || null;
+      if (!behaviors) {
+        haloCanvas.style.display = any ? 'block' : 'none';
+        return;
+      }
+
       placements.forEach(p => {
         if (p.cluster != null && String(p.cluster) !== String(locId)) return;
         const profile = window.LIGHT_PROFILES && window.LIGHT_PROFILES[String(p.item_id)];
@@ -328,5 +502,8 @@
   };
 
   // auto-init veil hidden until play
-  document.addEventListener('DOMContentLoaded', () => { loadCurve().then(ensureVeil); });
+  document.addEventListener('DOMContentLoaded', () => {
+    loadCurve().then(ensureVeil);
+    loadLightLayers();
+  });
 })();

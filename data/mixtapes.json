@@ -1,0 +1,220 @@
+{
+ "_fuente": "nombres: tabla ITEM_<id>_NAME de sharedassets1.assets + data/items_db.json;  pistas: data/bgm_catalog.json",
+ "_nota": "El reproductor (mueble 406) filtra el inventario por CLASE `Mixtape`, no por `Item.itemType`. `clipID` es el indice en `AudioData.bgm`; se deduce por nombre y, en los cinco de evento, por el calendario de data/events.json. Ver la cabecera de tools/extract_mixtapes.py.",
+ "reproductor": {
+  "itemId": 406,
+  "nombre": "Cassette Player"
+ },
+ "casetes": [
+  {
+   "itemId": 144,
+   "nombre": "Moca's Mixtape",
+   "nombre_es": "Cassette de Moca",
+   "clipID": 23,
+   "pista": "MocaMixtape",
+   "archivo": "MocaMixtape.ogg",
+   "segundos": 31.87
+  },
+  {
+   "itemId": 180,
+   "nombre": "Spooky Mixtape",
+   "nombre_es": "Cinta de temas Espeluznantes",
+   "clipID": 27,
+   "pista": "GhostParty",
+   "archivo": "GhostParty.ogg",
+   "segundos": 64.0
+  },
+  {
+   "itemId": 186,
+   "nombre": "Coastal Mixtape",
+   "nombre_es": "Cinta de la Costa",
+   "clipID": 28,
+   "pista": "Coastal Mixtape",
+   "archivo": "Coastal_Mixtape.ogg",
+   "segundos": 69.82
+  },
+  {
+   "itemId": 189,
+   "nombre": "Solemn Mixtape",
+   "nombre_es": "Mixtape Solemne",
+   "clipID": 29,
+   "pista": "SolemnMixtape",
+   "archivo": "SolemnMixtape.ogg",
+   "segundos": 112.91
+  },
+  {
+   "itemId": 190,
+   "nombre": "Forest Mixtape",
+   "nombre_es": "Mixtape Boscosa",
+   "clipID": 30,
+   "pista": "ForestMixtape",
+   "archivo": "ForestMixtape.ogg",
+   "segundos": 140.0
+  },
+  {
+   "itemId": 200,
+   "nombre": "Festive Mixtape",
+   "nombre_es": "Mixtape Festival",
+   "clipID": 31,
+   "pista": "Festive Mixtape",
+   "archivo": "Festive_Mixtape.ogg",
+   "segundos": 92.9
+  },
+  {
+   "itemId": 288,
+   "nombre": "Morning Mixtape",
+   "nombre_es": "Canción para Madrugar",
+   "clipID": 39,
+   "pista": "Morning",
+   "archivo": "Morning.ogg",
+   "segundos": 128.0
+  },
+  {
+   "itemId": 289,
+   "nombre": "Afternoon Mixtape",
+   "nombre_es": "Canción para la Tarde",
+   "clipID": 40,
+   "pista": "Afternoon",
+   "archivo": "Afternoon.ogg",
+   "segundos": 64.0
+  },
+  {
+   "itemId": 290,
+   "nombre": "Sunset Mixtape",
+   "nombre_es": "Cinta del Atardecer",
+   "clipID": 41,
+   "pista": "Sunset",
+   "archivo": "Sunset.ogg",
+   "segundos": 164.57
+  },
+  {
+   "itemId": 291,
+   "nombre": "Night Mixtape",
+   "nombre_es": "Cinta de la Noche",
+   "clipID": 42,
+   "pista": "Night",
+   "archivo": "Night.ogg",
+   "segundos": 90.0
+  },
+  {
+   "itemId": 310,
+   "nombre": "Marine Mixtape",
+   "nombre_es": "Cinta Marina",
+   "clipID": 48,
+   "pista": "Marine Mixtape",
+   "archivo": "Marine_Mixtape.ogg",
+   "segundos": 151.06
+  },
+  {
+   "itemId": 317,
+   "nombre": "Flowing Mixtape",
+   "nombre_es": "Mixtape que Fluye",
+   "clipID": 49,
+   "pista": "Flowing Mixtape",
+   "archivo": "Flowing_Mixtape.ogg",
+   "segundos": 70.51
+  },
+  {
+   "itemId": 318,
+   "nombre": "Tranquility Mixtape",
+   "nombre_es": "Mixtape de Tranquilidad",
+   "clipID": 50,
+   "pista": "Tranquility Mixtape",
+   "archivo": "Tranquility_Mixtape.ogg",
+   "segundos": 111.0
+  },
+  {
+   "itemId": 319,
+   "nombre": "New Moon Mixtape",
+   "nombre_es": "Mixtape de Luna Nueva",
+   "clipID": 51,
+   "pista": "NewMoon",
+   "archivo": "NewMoon.ogg",
+   "segundos": 76.8
+  },
+  {
+   "itemId": 320,
+   "nombre": "Full Moon Mixtape",
+   "nombre_es": "Mixtape de Luna Llena",
+   "clipID": 52,
+   "pista": "FullMoon",
+   "archivo": "FullMoon.ogg",
+   "segundos": 109.33
+  },
+  {
+   "itemId": 323,
+   "nombre": "Lovestruck Mixtape",
+   "nombre_es": "Mixtape Enamorado",
+   "clipID": 53,
+   "pista": "Poignant Love Mixtape",
+   "archivo": "Poignant_Love_Mixtape.ogg",
+   "segundos": 136.0
+  },
+  {
+   "itemId": 324,
+   "nombre": "Fantasy Mixtape",
+   "nombre_es": "Mixtape Fantasía",
+   "clipID": 54,
+   "pista": "Fantasy Mixtape",
+   "archivo": "Fantasy_Mixtape.ogg",
+   "segundos": 88.62
+  },
+  {
+   "itemId": 326,
+   "nombre": "Prank Mixtape",
+   "nombre_es": "Mixtape Broma",
+   "clipID": 55,
+   "pista": "Prank Mixtape",
+   "archivo": "Prank_Mixtape.ogg",
+   "segundos": 72.0
+  },
+  {
+   "itemId": 330,
+   "nombre": "Eggcellent Mixtape",
+   "nombre_es": "Huevaravilloso Mixtape",
+   "clipID": 56,
+   "pista": "Eggcellent Mixtape",
+   "archivo": "Eggcellent_Mixtape.ogg",
+   "segundos": 51.2
+  },
+  {
+   "itemId": 333,
+   "nombre": "Primal Mixtape",
+   "nombre_es": "Mixtape Primordial",
+   "clipID": 57,
+   "pista": "PrimalMixtape",
+   "archivo": "PrimalMixtape.ogg",
+   "segundos": 76.8
+  },
+  {
+   "itemId": 334,
+   "nombre": "Morricone Mixtape",
+   "nombre_es": "Mixtape Morricone",
+   "clipID": 58,
+   "pista": "Western Mixtape",
+   "archivo": "Western_Mixtape.ogg",
+   "segundos": 71.2
+  },
+  {
+   "itemId": 335,
+   "nombre": "Forage Mixtape",
+   "nombre_es": "Băng Cát Xé Đi Rừng",
+   "clipID": 59,
+   "pista": "Autumn Mixtape",
+   "archivo": "Autumn_Mixtape.ogg",
+   "segundos": 106.67
+  },
+  {
+   "itemId": 337,
+   "nombre": "Fortune Mixtape",
+   "nombre_es": "Băng Cát Xé May Mắn",
+   "clipID": 60,
+   "pista": "LNY mixtape",
+   "archivo": "LNY_mixtape.ogg",
+   "segundos": 56.0
+  }
+ ],
+ "pistaSinObjeto": [
+  "Rainy Mixtape"
+ ]
+}

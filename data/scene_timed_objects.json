@@ -1,0 +1,213 @@
+{
+  "_nota": "Los objetos de escena que el juego enciende y apaga solo: por franja horaria (`timings`, en minutos desde medianoche), por sorteo (`percentage`) y por `modifiers`, que son Condition del juego. ConditionType 11 = Tutorial, 12 = Activity, 40 = IsAtPost. ConditionCheck: 0 >=, 1 ==, 2 <. Sale de tools/cs_timed_objects.",
+  "porNivel": {
+    "level3": [
+      {
+        "clase": "TimedObject",
+        "objectID": 2003241584,
+        "go": "Boxes",
+        "ruta": "SceneData/Boxes",
+        "percentage": 100,
+        "rollInterval": 1,
+        "rollSave": 0,
+        "forceInactiveOnly": 0,
+        "timings": [],
+        "modifiers": [
+          {
+            "clase": "ConditionModifier",
+            "conditions": [
+              {
+                "checkType": 2,
+                "value": 9,
+                "conditionType": 11,
+                "friendshipChar": 0,
+                "emotion": 0,
+                "npcConditionState": 0,
+                "secondValue": 0,
+                "boolValue": 0,
+                "sLocation": 0,
+                "currLocation": 0
+              }
+            ],
+            "conditionOp": 0
+          }
+        ]
+      }
+    ],
+    "level9": [
+      {
+        "clase": "TimedObject",
+        "objectID": -736460537,
+        "go": "GameObject",
+        "ruta": "DreamHouse_Environment_TrainStation_Background/GameObject",
+        "percentage": 100,
+        "rollInterval": 1,
+        "rollSave": 0,
+        "forceInactiveOnly": 0,
+        "timings": [],
+        "modifiers": [
+          {
+            "clase": "ConditionModifier",
+            "conditions": [
+              {
+                "checkType": 0,
+                "value": 0,
+                "conditionType": 40,
+                "friendshipChar": 21,
+                "emotion": 0,
+                "npcConditionState": 0,
+                "secondValue": 0,
+                "boolValue": 0,
+                "sLocation": 0,
+                "currLocation": 0
+              }
+            ],
+            "conditionOp": 0
+          }
+        ]
+      }
+    ],
+    "level10": [
+      {
+        "clase": "TimedObject",
+        "objectID": -1202562759,
+        "go": "ClosedBreak",
+        "ruta": "SceneData/ClosedBreak",
+        "percentage": 100,
+        "rollInterval": 1,
+        "rollSave": 0,
+        "forceInactiveOnly": 0,
+        "timings": [
+          "from.minutes=600,to.minutes=1080"
+        ],
+        "modifiers": []
+      },
+      {
+        "clase": "TimedObject",
+        "objectID": -1996906472,
+        "go": "Closed",
+        "ruta": "SceneData/Closed",
+        "percentage": 100,
+        "rollInterval": 1,
+        "rollSave": 0,
+        "forceInactiveOnly": 0,
+        "timings": [
+          "from.minutes=0,to.minutes=360",
+          "from.minutes=600,to.minutes=1080",
+          "from.minutes=1320,to.minutes=1440"
+        ],
+        "modifiers": []
+      },
+      {
+        "clase": "TimedObject",
+        "objectID": 427362885,
+        "go": "ClosedForDay",
+        "ruta": "SceneData/ClosedForDay",
+        "percentage": 100,
+        "rollInterval": 1,
+        "rollSave": 0,
+        "forceInactiveOnly": 0,
+        "timings": [
+          "from.minutes=0,to.minutes=360",
+          "from.minutes=1320,to.minutes=1440"
+        ],
+        "modifiers": []
+      },
+      {
+        "clase": "TimedObject",
+        "objectID": 1056638116,
+        "go": "Curtains",
+        "ruta": "DreamHouse_Environment_MomoTeaHouseBobo_7/Curtains",
+        "percentage": 100,
+        "rollInterval": 1,
+        "rollSave": 0,
+        "forceInactiveOnly": 0,
+        "timings": [
+          "from.minutes=0,to.minutes=600",
+          "from.minutes=840,to.minutes=1080",
+          "from.minutes=1320,to.minutes=1440"
+        ],
+        "modifiers": []
+      },
+      {
+        "clase": "TimedObject",
+        "objectID": -719319932,
+        "go": "ClosedBreak",
+        "ruta": "DreamHouse_Environment_MomoTeaHouseBobo_7/ClosedBreak",
+        "percentage": 100,
+        "rollInterval": 1,
+        "rollSave": 0,
+        "forceInactiveOnly": 0,
+        "timings": [
+          "from.minutes=840,to.minutes=1080"
+        ],
+        "modifiers": []
+      },
+      {
+        "clase": "TimedObject",
+        "objectID": 634014240,
+        "go": "ClosedForDay",
+        "ruta": "DreamHouse_Environment_MomoTeaHouseBobo_7/ClosedForDay",
+        "percentage": 100,
+        "rollInterval": 1,
+        "rollSave": 0,
+        "forceInactiveOnly": 0,
+        "timings": [
+          "from.minutes=0,to.minutes=600",
+          "from.minutes=1320,to.minutes=1440"
+        ],
+        "modifiers": []
+      }
+    ],
+    "level11": [
+      {
+        "clase": "TimedObject",
+        "objectID": 117537695,
+        "go": "Closed",
+        "ruta": "Rosemary's Shop/DreamHouse_Environment_RosemaryShop_0/Sign/Closed",
+        "percentage": 100,
+        "rollInterval": 1,
+        "rollSave": 0,
+        "forceInactiveOnly": 0,
+        "timings": [
+          "from.minutes=0,to.minutes=420",
+          "from.minutes=1140,to.minutes=1440"
+        ],
+        "modifiers": []
+      }
+    ],
+    "level12": [
+      {
+        "clase": "TimedObject",
+        "objectID": 46194313,
+        "go": "Battery",
+        "ruta": "Battery",
+        "percentage": 100,
+        "rollInterval": 1,
+        "rollSave": 0,
+        "forceInactiveOnly": 0,
+        "timings": [],
+        "modifiers": [
+          {
+            "clase": "ConditionModifier",
+            "conditions": [
+              {
+                "checkType": 2,
+                "value": 5,
+                "conditionType": 12,
+                "friendshipChar": 14,
+                "emotion": 0,
+                "npcConditionState": 0,
+                "secondValue": 0,
+                "boolValue": 0,
+                "sLocation": 0,
+                "currLocation": 0
+              }
+            ],
+            "conditionOp": 0
+          }
+        ]
+      }
+    ]
+  }
+}

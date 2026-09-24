@@ -301,15 +301,15 @@
     "name_es": "Jugo de Zanahoria",
     "desc_en": "Liquified carrots.",
     "desc_es": "Zanahorias licuadas.",
-    "width": 1,
-    "length": 1,
+    "width": 4,
+    "length": 4,
     "pivot": {
-      "x": 0.5006,
-      "y": 0.0114
+      "x": 0.517,
+      "y": 0.415
     },
     "pivot_back": {
-      "x": 0.5281,
-      "y": 0.0143
+      "x": 0.517,
+      "y": 0.415
     },
     "rotations": {
       "B": 591
@@ -754,11 +754,11 @@
     "name_es": "Leche",
     "desc_en": "Organic milk? Who knows where it came from?",
     "desc_es": "¿Leche orgánica? ¿Quién sabe de dónde vino?",
-    "width": 2,
-    "length": 3,
+    "width": 3,
+    "length": 2,
     "pivot": {
-      "x": 0.4803,
-      "y": -0.0187
+      "x": 0.458,
+      "y": 0.213
     },
     "pivot_back": {
       "x": 0.2467,
@@ -3487,12 +3487,12 @@
     "width": 4,
     "length": 2,
     "pivot": {
-      "x": 0.5,
-      "y": 0.25
+      "x": 0.508,
+      "y": 0.348
     },
     "pivot_back": {
-      "x": 0.5,
-      "y": 0.25
+      "x": 0.483,
+      "y": 0.39
     },
     "rotations": {
       "B": 697
@@ -3512,8 +3512,8 @@
           "y": 0.22
         },
         "back": {
-          "x": 0.0,
-          "y": 0.32
+          "x": 0,
+          "y": 0.52
         }
       }
     }
@@ -4781,11 +4781,11 @@
     "length": 2,
     "pivot": {
       "x": 0.4962,
-      "y": 0.143
+      "y": 0.382
     },
     "pivot_back": {
-      "x": 0.4893,
-      "y": 0.015
+      "x": 0.4962,
+      "y": 0.382
     },
     "rotations": {
       "B": 645
@@ -4831,23 +4831,41 @@
     "name_es": "Gourami",
     "desc_en": "Watch out... those filamentous rays are used for violence!",
     "desc_es": "Cuidado... ¡Esos filamentos son usados en pos de la violencia!",
-    "width": 3,
-    "length": 3,
+    "width": 4,
+    "length": 4,
     "pivot": {
       "x": 0.5116,
-      "y": 0.006
+      "y": 0.246
     },
     "pivot_back": {
-      "x": 0.5151,
-      "y": -0.0038
+      "x": 0.5116,
+      "y": 0.246
     },
     "rotations": {
       "B": 650
     },
     "behaviour": {
-      "kind": "misc",
+      "kind": "chair",
       "place": "floor",
-      "interact": "none"
+      "interact": "sit"
+    },
+    "seating_profile": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_163_BACK_BASE.png",
+      "backrest_sprite": "FURN_163_BACKREST.png",
+      "has_foreground": true,
+      "front_base_sprite": "FURN_163_FRONT_BASE.png",
+      "foreground_sprite": "FURN_163_FOREGROUND.png",
+      "offsets": {
+        "front": {
+          "x": 0.09,
+          "y": 0.2
+        },
+        "back": {
+          "x": 0,
+          "y": 0.22
+        }
+      }
     }
   },
   "164": {
@@ -8719,11 +8737,11 @@
     "name_es": "Señuelo de Magneto",
     "desc_en": "This would probably be good for fishing out those enigmatic things from the water...",
     "desc_es": "Probablemente sería bueno para pescar esas cosas raras en el agua...",
-    "width": 1,
-    "length": 1,
+    "width": 2,
+    "length": 2,
     "pivot": {
       "x": 0.5,
-      "y": 0.222
+      "y": 0.448
     },
     "pivot_back": {
       "x": 0.5056,
@@ -9707,7 +9725,7 @@
     "length": 1,
     "pivot": {
       "x": 0.4893,
-      "y": -0.4905
+      "y": 0.047
     },
     "pivot_back": {
       "x": 0.5623,
@@ -12178,15 +12196,15 @@
     "name_es": "Taburete de Bar",
     "desc_en": "It's like a regular stool! But elongated so you can reach bar counters easy.",
     "desc_es": "¡Es como un taburete normal! Pero alargado para que puedas llegar fácilmente a las barras del bar.",
-    "width": 1,
-    "length": 1,
+    "width": 2,
+    "length": 2,
     "pivot": {
       "x": 0.5,
       "y": 0.1355
     },
     "pivot_back": {
-      "x": 0.3347,
-      "y": 0.1914
+      "x": 0.525,
+      "y": 0.362
     },
     "behaviour": {
       "kind": "chair",
@@ -16057,11 +16075,11 @@
     "name_es": "Mesita de Bar",
     "desc_en": "7da07c728add34046bf1c61f1e72c3de",
     "desc_es": "GridFurnitureItem",
-    "width": 1,
-    "length": 1,
+    "width": 3,
+    "length": 3,
     "pivot": {
       "x": 0.5,
-      "y": 0.5
+      "y": 0.429
     },
     "pivot_back": {
       "x": 0.4971,
@@ -16081,11 +16099,11 @@
     "name_es": "Mesa de Bar",
     "desc_en": "b024c02035aa281438927a5cbf67ef2f",
     "desc_es": "GridFurnitureItem",
-    "width": 1,
-    "length": 1,
+    "width": 2,
+    "length": 2,
     "pivot": {
-      "x": 0.5,
-      "y": -0.0482
+      "x": 0.152,
+      "y": 0.047
     },
     "pivot_back": {
       "x": 0.4956,
@@ -18671,9 +18689,27 @@
       "y": -0.0038
     },
     "behaviour": {
-      "kind": "misc",
+      "kind": "chair",
       "place": "floor",
-      "interact": "none"
+      "interact": "sit"
+    },
+    "seating_profile": {
+      "has_backrest": true,
+      "back_base_sprite": "FURN_163_BACK_BASE.png",
+      "backrest_sprite": "FURN_163_BACKREST.png",
+      "has_foreground": true,
+      "front_base_sprite": "FURN_163_FRONT_BASE.png",
+      "foreground_sprite": "FURN_163_FOREGROUND.png",
+      "offsets": {
+        "front": {
+          "x": 0.09,
+          "y": 0.2
+        },
+        "back": {
+          "x": 0.0,
+          "y": 0.22
+        }
+      }
     }
   },
   "651": {
@@ -18998,12 +19034,12 @@
     "width": 2,
     "length": 2,
     "pivot": {
-      "x": 0.5637,
-      "y": 0.0814
+      "x": 0.466,
+      "y": 0.28
     },
     "pivot_back": {
-      "x": 0.4404,
-      "y": 0.1285
+      "x": 0.466,
+      "y": 0.28
     },
     "behaviour": {
       "kind": "misc",
@@ -21510,7 +21546,8 @@
       "price_sell": 600,
       "price_source": "wiki",
       "cover": true
-    }
+    },
+    "category": "Wallpaper"
   },
   "763": {
     "id": 763,
@@ -34067,8 +34104,8 @@
     "width": 1,
     "length": 2,
     "pivot": {
-      "x": 0.5599,
-      "y": 0.0123
+      "x": 0.114,
+      "y": 0.086
     },
     "pivot_back": {
       "x": 0.5599,
@@ -35843,11 +35880,11 @@
     "name_es": "Caja de Cultivo",
     "desc_en": "Harvested crops are placed into it automatically!",
     "desc_es": "¡Los cultivos cosechados se colocan en ella automáticamente!",
-    "width": 1,
-    "length": 1,
+    "width": 3,
+    "length": 3,
     "pivot": {
       "x": 0.4976,
-      "y": 0.0137
+      "y": 0.314
     },
     "pivot_back": {
       "x": 0.4976,
@@ -55857,7 +55894,7 @@
     "length": 4,
     "pivot": {
       "x": 0.5,
-      "y": -0.0225
+      "y": 0.432
     },
     "pivot_back": {
       "x": 0.5,
@@ -56071,15 +56108,15 @@
     "name_es": "Cojín Rebanada Jugosa",
     "desc_en": "A plush cushion that's been scented alike the fruit its been styled to. Don't get caught sniffing it, though...",
     "desc_es": "Un cojín de felpa que tiene el mismo aroma que la fruta con la que está diseñado. No vayas a dejar que te cachen oliéndolo...",
-    "width": 1,
-    "length": 1,
+    "width": 2,
+    "length": 2,
     "pivot": {
       "x": 0.4966,
-      "y": 0.0495
+      "y": 0.382
     },
     "pivot_back": {
       "x": 0.4966,
-      "y": 0.0495
+      "y": 0.382
     },
     "rotations": {
       "B": 2139

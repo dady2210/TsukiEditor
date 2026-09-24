@@ -1,0 +1,597 @@
+{
+ "fuente": "addressable c7a653e4450ca492cad244826da59aa8, el externo #3 del fichero de IconManager",
+ "nota": "`SBubbleData.IconKey` devuelve una de estas claves. La del reproductor de casetes es \"mixtape\". El port los tenia como emoji.",
+ "iconos": {
+  "FirstQuarter": {
+   "png": "images/icons/bubbles/FirstQuarter.png"
+  },
+  "FullMoon": {
+   "png": "images/icons/bubbles/FullMoon.png"
+  },
+  "NewMoon": {
+   "png": "images/icons/bubbles/NewMoon.png"
+  },
+  "ThirdQuarter": {
+   "png": "images/icons/bubbles/ThirdQuarter.png"
+  },
+  "WaningCrescent": {
+   "png": "images/icons/bubbles/WaningCrescent.png"
+  },
+  "WaningGibbous": {
+   "png": "images/icons/bubbles/WaningGibbous.png"
+  },
+  "WaxingCrescent": {
+   "png": "images/icons/bubbles/WaxingCrescent.png"
+  },
+  "WaxingGibbous": {
+   "png": "images/icons/bubbles/WaxingGibbous.png"
+  },
+  "add": {
+   "png": "images/icons/bubbles/add.png"
+  },
+  "angry": {
+   "png": "images/icons/bubbles/angry.png"
+  },
+  "arrowBL": {
+   "png": "images/icons/bubbles/arrowBL.png"
+  },
+  "arrowBR": {
+   "png": "images/icons/bubbles/arrowBR.png"
+  },
+  "arrowTL": {
+   "png": "images/icons/bubbles/arrowTL.png"
+  },
+  "arrowTR": {
+   "png": "images/icons/bubbles/arrowTR.png"
+  },
+  "back": {
+   "png": "images/icons/bubbles/back.png"
+  },
+  "bed": {
+   "png": "images/icons/bubbles/bed.png"
+  },
+  "book": {
+   "png": "images/icons/bubbles/book.png"
+  },
+  "calendar": {
+   "png": "images/icons/bubbles/calendar.png"
+  },
+  "carrot": {
+   "png": "images/icons/bubbles/carrot.png"
+  },
+  "carve": {
+   "png": "images/icons/bubbles/carve.png"
+  },
+  "chair": {
+   "png": "images/icons/bubbles/chair.png"
+  },
+  "clock": {
+   "png": "images/icons/bubbles/clock.png"
+  },
+  "collected": {
+   "png": "images/icons/bubbles/collected.png"
+  },
+  "collected1": {
+   "png": "images/icons/bubbles/collected1.png"
+  },
+  "collected2": {
+   "png": "images/icons/bubbles/collected2.png"
+  },
+  "collected3": {
+   "png": "images/icons/bubbles/collected3.png"
+  },
+  "crop": {
+   "png": "images/icons/bubbles/crop.png"
+  },
+  "delete": {
+   "png": "images/icons/bubbles/delete.png"
+  },
+  "diamond": {
+   "png": "images/icons/bubbles/diamond.png"
+  },
+  "document": {
+   "png": "images/icons/bubbles/document.png"
+  },
+  "doorway": {
+   "png": "images/icons/bubbles/doorway.png"
+  },
+  "download": {
+   "png": "images/icons/bubbles/download.png"
+  },
+  "duplicate": {
+   "png": "images/icons/bubbles/duplicate.png"
+  },
+  "exclamationmark": {
+   "png": "images/icons/bubbles/exclamationmark.png"
+  },
+  "floor": {
+   "png": "images/icons/bubbles/floor.png"
+  },
+  "floppydisk": {
+   "png": "images/icons/bubbles/floppydisk.png"
+  },
+  "forward": {
+   "png": "images/icons/bubbles/forward.png"
+  },
+  "fountain": {
+   "png": "images/icons/bubbles/fountain.png"
+  },
+  "fridge": {
+   "png": "images/icons/bubbles/fridge.png"
+  },
+  "furnitureIcons_0": {
+   "png": "images/icons/bubbles/furnitureIcons_0.png"
+  },
+  "furnitureIcons_1": {
+   "png": "images/icons/bubbles/furnitureIcons_1.png"
+  },
+  "furnitureIcons_10": {
+   "png": "images/icons/bubbles/furnitureIcons_10.png"
+  },
+  "furnitureIcons_100": {
+   "png": "images/icons/bubbles/furnitureIcons_100.png"
+  },
+  "furnitureIcons_105": {
+   "png": "images/icons/bubbles/furnitureIcons_105.png"
+  },
+  "furnitureIcons_106": {
+   "png": "images/icons/bubbles/furnitureIcons_106.png"
+  },
+  "furnitureIcons_107": {
+   "png": "images/icons/bubbles/furnitureIcons_107.png"
+  },
+  "furnitureIcons_108": {
+   "png": "images/icons/bubbles/furnitureIcons_108.png"
+  },
+  "furnitureIcons_109": {
+   "png": "images/icons/bubbles/furnitureIcons_109.png"
+  },
+  "furnitureIcons_11": {
+   "png": "images/icons/bubbles/furnitureIcons_11.png"
+  },
+  "furnitureIcons_110": {
+   "png": "images/icons/bubbles/furnitureIcons_110.png"
+  },
+  "furnitureIcons_111": {
+   "png": "images/icons/bubbles/furnitureIcons_111.png"
+  },
+  "furnitureIcons_112": {
+   "png": "images/icons/bubbles/furnitureIcons_112.png"
+  },
+  "furnitureIcons_113": {
+   "png": "images/icons/bubbles/furnitureIcons_113.png"
+  },
+  "furnitureIcons_114": {
+   "png": "images/icons/bubbles/furnitureIcons_114.png"
+  },
+  "furnitureIcons_119": {
+   "png": "images/icons/bubbles/furnitureIcons_119.png"
+  },
+  "furnitureIcons_12": {
+   "png": "images/icons/bubbles/furnitureIcons_12.png"
+  },
+  "furnitureIcons_120": {
+   "png": "images/icons/bubbles/furnitureIcons_120.png"
+  },
+  "furnitureIcons_121": {
+   "png": "images/icons/bubbles/furnitureIcons_121.png"
+  },
+  "furnitureIcons_122": {
+   "png": "images/icons/bubbles/furnitureIcons_122.png"
+  },
+  "furnitureIcons_123": {
+   "png": "images/icons/bubbles/furnitureIcons_123.png"
+  },
+  "furnitureIcons_124": {
+   "png": "images/icons/bubbles/furnitureIcons_124.png"
+  },
+  "furnitureIcons_125": {
+   "png": "images/icons/bubbles/furnitureIcons_125.png"
+  },
+  "furnitureIcons_126": {
+   "png": "images/icons/bubbles/furnitureIcons_126.png"
+  },
+  "furnitureIcons_127": {
+   "png": "images/icons/bubbles/furnitureIcons_127.png"
+  },
+  "furnitureIcons_128": {
+   "png": "images/icons/bubbles/furnitureIcons_128.png"
+  },
+  "furnitureIcons_129": {
+   "png": "images/icons/bubbles/furnitureIcons_129.png"
+  },
+  "furnitureIcons_13": {
+   "png": "images/icons/bubbles/furnitureIcons_13.png"
+  },
+  "furnitureIcons_130": {
+   "png": "images/icons/bubbles/furnitureIcons_130.png"
+  },
+  "furnitureIcons_14": {
+   "png": "images/icons/bubbles/furnitureIcons_14.png"
+  },
+  "furnitureIcons_15": {
+   "png": "images/icons/bubbles/furnitureIcons_15.png"
+  },
+  "furnitureIcons_16": {
+   "png": "images/icons/bubbles/furnitureIcons_16.png"
+  },
+  "furnitureIcons_17": {
+   "png": "images/icons/bubbles/furnitureIcons_17.png"
+  },
+  "furnitureIcons_18": {
+   "png": "images/icons/bubbles/furnitureIcons_18.png"
+  },
+  "furnitureIcons_19": {
+   "png": "images/icons/bubbles/furnitureIcons_19.png"
+  },
+  "furnitureIcons_2": {
+   "png": "images/icons/bubbles/furnitureIcons_2.png"
+  },
+  "furnitureIcons_20": {
+   "png": "images/icons/bubbles/furnitureIcons_20.png"
+  },
+  "furnitureIcons_21": {
+   "png": "images/icons/bubbles/furnitureIcons_21.png"
+  },
+  "furnitureIcons_22": {
+   "png": "images/icons/bubbles/furnitureIcons_22.png"
+  },
+  "furnitureIcons_23": {
+   "png": "images/icons/bubbles/furnitureIcons_23.png"
+  },
+  "furnitureIcons_24": {
+   "png": "images/icons/bubbles/furnitureIcons_24.png"
+  },
+  "furnitureIcons_25": {
+   "png": "images/icons/bubbles/furnitureIcons_25.png"
+  },
+  "furnitureIcons_26": {
+   "png": "images/icons/bubbles/furnitureIcons_26.png"
+  },
+  "furnitureIcons_27": {
+   "png": "images/icons/bubbles/furnitureIcons_27.png"
+  },
+  "furnitureIcons_28": {
+   "png": "images/icons/bubbles/furnitureIcons_28.png"
+  },
+  "furnitureIcons_29": {
+   "png": "images/icons/bubbles/furnitureIcons_29.png"
+  },
+  "furnitureIcons_3": {
+   "png": "images/icons/bubbles/furnitureIcons_3.png"
+  },
+  "furnitureIcons_30": {
+   "png": "images/icons/bubbles/furnitureIcons_30.png"
+  },
+  "furnitureIcons_31": {
+   "png": "images/icons/bubbles/furnitureIcons_31.png"
+  },
+  "furnitureIcons_32": {
+   "png": "images/icons/bubbles/furnitureIcons_32.png"
+  },
+  "furnitureIcons_33": {
+   "png": "images/icons/bubbles/furnitureIcons_33.png"
+  },
+  "furnitureIcons_34": {
+   "png": "images/icons/bubbles/furnitureIcons_34.png"
+  },
+  "furnitureIcons_35": {
+   "png": "images/icons/bubbles/furnitureIcons_35.png"
+  },
+  "furnitureIcons_36": {
+   "png": "images/icons/bubbles/furnitureIcons_36.png"
+  },
+  "furnitureIcons_37": {
+   "png": "images/icons/bubbles/furnitureIcons_37.png"
+  },
+  "furnitureIcons_38": {
+   "png": "images/icons/bubbles/furnitureIcons_38.png"
+  },
+  "furnitureIcons_39": {
+   "png": "images/icons/bubbles/furnitureIcons_39.png"
+  },
+  "furnitureIcons_4": {
+   "png": "images/icons/bubbles/furnitureIcons_4.png"
+  },
+  "furnitureIcons_40": {
+   "png": "images/icons/bubbles/furnitureIcons_40.png"
+  },
+  "furnitureIcons_41": {
+   "png": "images/icons/bubbles/furnitureIcons_41.png"
+  },
+  "furnitureIcons_42": {
+   "png": "images/icons/bubbles/furnitureIcons_42.png"
+  },
+  "furnitureIcons_43": {
+   "png": "images/icons/bubbles/furnitureIcons_43.png"
+  },
+  "furnitureIcons_44": {
+   "png": "images/icons/bubbles/furnitureIcons_44.png"
+  },
+  "furnitureIcons_45": {
+   "png": "images/icons/bubbles/furnitureIcons_45.png"
+  },
+  "furnitureIcons_46": {
+   "png": "images/icons/bubbles/furnitureIcons_46.png"
+  },
+  "furnitureIcons_47": {
+   "png": "images/icons/bubbles/furnitureIcons_47.png"
+  },
+  "furnitureIcons_48": {
+   "png": "images/icons/bubbles/furnitureIcons_48.png"
+  },
+  "furnitureIcons_49": {
+   "png": "images/icons/bubbles/furnitureIcons_49.png"
+  },
+  "furnitureIcons_5": {
+   "png": "images/icons/bubbles/furnitureIcons_5.png"
+  },
+  "furnitureIcons_50": {
+   "png": "images/icons/bubbles/furnitureIcons_50.png"
+  },
+  "furnitureIcons_51": {
+   "png": "images/icons/bubbles/furnitureIcons_51.png"
+  },
+  "furnitureIcons_52": {
+   "png": "images/icons/bubbles/furnitureIcons_52.png"
+  },
+  "furnitureIcons_53": {
+   "png": "images/icons/bubbles/furnitureIcons_53.png"
+  },
+  "furnitureIcons_54": {
+   "png": "images/icons/bubbles/furnitureIcons_54.png"
+  },
+  "furnitureIcons_55": {
+   "png": "images/icons/bubbles/furnitureIcons_55.png"
+  },
+  "furnitureIcons_56": {
+   "png": "images/icons/bubbles/furnitureIcons_56.png"
+  },
+  "furnitureIcons_57": {
+   "png": "images/icons/bubbles/furnitureIcons_57.png"
+  },
+  "furnitureIcons_58": {
+   "png": "images/icons/bubbles/furnitureIcons_58.png"
+  },
+  "furnitureIcons_59": {
+   "png": "images/icons/bubbles/furnitureIcons_59.png"
+  },
+  "furnitureIcons_6": {
+   "png": "images/icons/bubbles/furnitureIcons_6.png"
+  },
+  "furnitureIcons_60": {
+   "png": "images/icons/bubbles/furnitureIcons_60.png"
+  },
+  "furnitureIcons_61": {
+   "png": "images/icons/bubbles/furnitureIcons_61.png"
+  },
+  "furnitureIcons_62": {
+   "png": "images/icons/bubbles/furnitureIcons_62.png"
+  },
+  "furnitureIcons_63": {
+   "png": "images/icons/bubbles/furnitureIcons_63.png"
+  },
+  "furnitureIcons_64": {
+   "png": "images/icons/bubbles/furnitureIcons_64.png"
+  },
+  "furnitureIcons_65": {
+   "png": "images/icons/bubbles/furnitureIcons_65.png"
+  },
+  "furnitureIcons_66": {
+   "png": "images/icons/bubbles/furnitureIcons_66.png"
+  },
+  "furnitureIcons_67": {
+   "png": "images/icons/bubbles/furnitureIcons_67.png"
+  },
+  "furnitureIcons_68": {
+   "png": "images/icons/bubbles/furnitureIcons_68.png"
+  },
+  "furnitureIcons_69": {
+   "png": "images/icons/bubbles/furnitureIcons_69.png"
+  },
+  "furnitureIcons_7": {
+   "png": "images/icons/bubbles/furnitureIcons_7.png"
+  },
+  "furnitureIcons_70": {
+   "png": "images/icons/bubbles/furnitureIcons_70.png"
+  },
+  "furnitureIcons_71": {
+   "png": "images/icons/bubbles/furnitureIcons_71.png"
+  },
+  "furnitureIcons_72": {
+   "png": "images/icons/bubbles/furnitureIcons_72.png"
+  },
+  "furnitureIcons_73": {
+   "png": "images/icons/bubbles/furnitureIcons_73.png"
+  },
+  "furnitureIcons_74": {
+   "png": "images/icons/bubbles/furnitureIcons_74.png"
+  },
+  "furnitureIcons_75": {
+   "png": "images/icons/bubbles/furnitureIcons_75.png"
+  },
+  "furnitureIcons_76": {
+   "png": "images/icons/bubbles/furnitureIcons_76.png"
+  },
+  "furnitureIcons_77": {
+   "png": "images/icons/bubbles/furnitureIcons_77.png"
+  },
+  "furnitureIcons_78": {
+   "png": "images/icons/bubbles/furnitureIcons_78.png"
+  },
+  "furnitureIcons_79": {
+   "png": "images/icons/bubbles/furnitureIcons_79.png"
+  },
+  "furnitureIcons_8": {
+   "png": "images/icons/bubbles/furnitureIcons_8.png"
+  },
+  "furnitureIcons_80": {
+   "png": "images/icons/bubbles/furnitureIcons_80.png"
+  },
+  "furnitureIcons_81": {
+   "png": "images/icons/bubbles/furnitureIcons_81.png"
+  },
+  "furnitureIcons_82": {
+   "png": "images/icons/bubbles/furnitureIcons_82.png"
+  },
+  "furnitureIcons_83": {
+   "png": "images/icons/bubbles/furnitureIcons_83.png"
+  },
+  "furnitureIcons_84": {
+   "png": "images/icons/bubbles/furnitureIcons_84.png"
+  },
+  "furnitureIcons_85": {
+   "png": "images/icons/bubbles/furnitureIcons_85.png"
+  },
+  "furnitureIcons_86": {
+   "png": "images/icons/bubbles/furnitureIcons_86.png"
+  },
+  "furnitureIcons_87": {
+   "png": "images/icons/bubbles/furnitureIcons_87.png"
+  },
+  "furnitureIcons_88": {
+   "png": "images/icons/bubbles/furnitureIcons_88.png"
+  },
+  "furnitureIcons_89": {
+   "png": "images/icons/bubbles/furnitureIcons_89.png"
+  },
+  "furnitureIcons_9": {
+   "png": "images/icons/bubbles/furnitureIcons_9.png"
+  },
+  "furnitureIcons_92": {
+   "png": "images/icons/bubbles/furnitureIcons_92.png"
+  },
+  "furnitureIcons_93": {
+   "png": "images/icons/bubbles/furnitureIcons_93.png"
+  },
+  "furnitureIcons_94": {
+   "png": "images/icons/bubbles/furnitureIcons_94.png"
+  },
+  "furnitureIcons_95": {
+   "png": "images/icons/bubbles/furnitureIcons_95.png"
+  },
+  "furnitureIcons_96": {
+   "png": "images/icons/bubbles/furnitureIcons_96.png"
+  },
+  "furnitureIcons_97": {
+   "png": "images/icons/bubbles/furnitureIcons_97.png"
+  },
+  "furnitureIcons_98": {
+   "png": "images/icons/bubbles/furnitureIcons_98.png"
+  },
+  "furnitureIcons_99": {
+   "png": "images/icons/bubbles/furnitureIcons_99.png"
+  },
+  "gachaticket": {
+   "png": "images/icons/bubbles/gachaticket.png"
+  },
+  "graph": {
+   "png": "images/icons/bubbles/graph.png"
+  },
+  "grid": {
+   "png": "images/icons/bubbles/grid.png"
+  },
+  "gridAlt": {
+   "png": "images/icons/bubbles/gridAlt.png"
+  },
+  "happy": {
+   "png": "images/icons/bubbles/happy.png"
+  },
+  "heart": {
+   "png": "images/icons/bubbles/heart.png"
+  },
+  "items": {
+   "png": "images/icons/bubbles/items.png"
+  },
+  "lamp": {
+   "png": "images/icons/bubbles/lamp.png"
+  },
+  "menu": {
+   "png": "images/icons/bubbles/menu.png"
+  },
+  "mixtape": {
+   "png": "images/icons/bubbles/mixtape.png"
+  },
+  "music": {
+   "png": "images/icons/bubbles/music.png"
+  },
+  "penis": {
+   "png": "images/icons/bubbles/penis.png"
+  },
+  "pillow": {
+   "png": "images/icons/bubbles/pillow.png"
+  },
+  "poop": {
+   "png": "images/icons/bubbles/poop.png"
+  },
+  "potguy": {
+   "png": "images/icons/bubbles/potguy.png"
+  },
+  "questionmark": {
+   "png": "images/icons/bubbles/questionmark.png"
+  },
+  "refresh": {
+   "png": "images/icons/bubbles/refresh.png"
+  },
+  "rug": {
+   "png": "images/icons/bubbles/rug.png"
+  },
+  "sad": {
+   "png": "images/icons/bubbles/sad.png"
+  },
+  "search": {
+   "png": "images/icons/bubbles/search.png"
+  },
+  "seed": {
+   "png": "images/icons/bubbles/seed.png"
+  },
+  "share": {
+   "png": "images/icons/bubbles/share.png"
+  },
+  "sheets": {
+   "png": "images/icons/bubbles/sheets.png"
+  },
+  "sickle": {
+   "png": "images/icons/bubbles/sickle.png"
+  },
+  "store": {
+   "png": "images/icons/bubbles/store.png"
+  },
+  "table": {
+   "png": "images/icons/bubbles/table.png"
+  },
+  "tabledecor": {
+   "png": "images/icons/bubbles/tabledecor.png"
+  },
+  "tabletop": {
+   "png": "images/icons/bubbles/tabletop.png"
+  },
+  "talk": {
+   "png": "images/icons/bubbles/talk.png"
+  },
+  "time": {
+   "png": "images/icons/bubbles/time.png"
+  },
+  "tools": {
+   "png": "images/icons/bubbles/tools.png"
+  },
+  "toys": {
+   "png": "images/icons/bubbles/toys.png"
+  },
+  "uv": {
+   "png": "images/icons/bubbles/uv.png"
+  },
+  "walldeco": {
+   "png": "images/icons/bubbles/walldeco.png"
+  },
+  "walllamp": {
+   "png": "images/icons/bubbles/walllamp.png"
+  },
+  "water": {
+   "png": "images/icons/bubbles/water.png"
+  },
+  "yield": {
+   "png": "images/icons/bubbles/yield.png"
+  }
+ }
+}

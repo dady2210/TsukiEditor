@@ -18,4 +18,39 @@ app.post('/api/save/:type', (req,res)=>{
   }
   res.json({ok:true});
 });
-app.listen(8000, ()=> console.log('http://localhost:8000'));
+
+// Save individual map file by ID
+app.post('/api/save/map/:id', (req,res)=>{
+  const id = parseInt(req.params.id);
+  if (isNaN(id)) return res.status(400).json({error:'invalid id'});
+  const p = path.join(root, 'data', 'maps', `map_${id}.json`);
+  if (!p.startsWith(root)) return res.status(400).json({error:'invalid path'});
+  try {
+    fs.mkdirSync(path.dirname(p), {recursive:true});
+    fs.writeFileSync(p, JSON.stringify(req.body,null,2),'utf8');
+    res.json({ok:true});
+  } catch(e) { res.status(500).json({error:e.message}); }
+});
+
+// Save train_layers.json calibration
+app.post('/api/save/train_layers', (req,res)=>{
+  const p = path.join(root, 'data', 'maps', 'train_layers.json');
+  try {
+    fs.writeFileSync(p, JSON.stringify(req.body,null,2),'utf8');
+    res.json({ok:true});
+  } catch(e) { res.status(500).json({error:e.message}); }
+});
+
+// List PNG assets in a map directory
+app.get('/api/list-assets', (req,res)=>{
+  const rel = (req.query.dir || '').replace(/\.\.\//g,'').replace(/^\//, '');
+  const dir = path.join(root, rel);
+  if (!dir.startsWith(root)) return res.status(400).json({error:'invalid path'});
+  try {
+    const files = fs.readdirSync(dir).filter(f => /\.png$/i.test(f)).sort();
+    res.json({files});
+  } catch(e) { res.json({files:[]}); }
+});
+
+app.listen(8000, ()=>console.log('http://localhost:8000'));
+

@@ -1,0 +1,45 @@
+{
+  "_nota": "Las ACCIONES de los dialogos. Un `CustomEvent` cuelga de una respuesta (`DialogueSystem.ConvoResponse.customEvents`) y `ConvoResponse.OnStart` es su UNICO consumidor en todo el binario. Se recorrieron los 1853 ficheros de `bin/Data` y salieron 3661 nodos de respuesta: solo DOS traen accion, y ninguna es un `UnlockLocation`. O sea que este mecanismo esta practicamente sin usar en el juego publicado, y la aldea NO se abre por aqui. Sale de tools/cs_dialogue_events.",
+  "nodosDeRespuesta": 3661,
+  "conAccion": 2,
+  "acciones": [
+    {
+      "fichero": "55ec509238d93b046b3aebdb510ac56e",
+      "pathID": 1,
+      "clase": "ConvoResponse",
+      "nodo": "Convo Response",
+      "grafo": "MocaMusic",
+      "responseEvent": "",
+      "eventos": [
+        {
+          "t": 10,
+          "v": 0,
+          "v2": 0,
+          "opt": false,
+          "s": "",
+          "tipoNombre": "Fart"
+        }
+      ],
+      "texto": "..."
+    },
+    {
+      "fichero": "657285b1d7051a84a8d9604cfa19f8d6",
+      "pathID": 6,
+      "clase": "ConvoResponse",
+      "nodo": "Convo Response",
+      "grafo": "Rosemary Halloween",
+      "responseEvent": "",
+      "eventos": [
+        {
+          "t": 0,
+          "v": 0,
+          "v2": 0,
+          "opt": false,
+          "s": "",
+          "tipoNombre": "NPCCondition"
+        }
+      ],
+      "texto": "What about Bobo and Momo?"
+    }
+  ]
+}

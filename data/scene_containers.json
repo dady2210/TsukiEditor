@@ -1,0 +1,688 @@
+{
+  "_fuente": "Extraido de las escenas de Unity con tools/cs_scene_containers y montado con tools/build_scene_containers.py. contenedor = posicion de mundo del GameObject que lleva el componente Room/SceneData, que es lo que GridGroup.AbsoluteGridPosition (RVA 0x5745154) suma al offset del grupo. delta = desplazamiento medido entre el mundo del juego y el del port, casando sprites por nombre unico. corr = delta + contenedor: deberia ser (0,0) porque el espacio del port ya es local al contenedor; donde no lo es, el horneado del mapa quedo desplazado y hay que sumar corr a los origin de las superficies.",
+  "mapas": {
+    "0": {
+      "nivel": "level2",
+      "delta": {
+        "x": 0,
+        "y": 0
+      },
+      "spritesCasados": 46,
+      "spritesComparados": 46,
+      "variantesDeDelta": 1,
+      "sublocationID": 0,
+      "contenedor": {
+        "x": 0,
+        "y": 0
+      },
+      "corr": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "1": {
+      "nivel": "level3",
+      "delta": {
+        "x": 0.0,
+        "y": -15.0
+      },
+      "spritesCasados": 46,
+      "spritesComparados": 46,
+      "variantesDeDelta": 1,
+      "sublocationID": 1,
+      "contenedor": {
+        "x": 0,
+        "y": 15
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "2": {
+      "nivel": "level6",
+      "delta": {
+        "x": 19.49,
+        "y": 1.8
+      },
+      "spritesCasados": 29,
+      "spritesComparados": 29,
+      "variantesDeDelta": 1,
+      "sublocationID": 2,
+      "contenedor": {
+        "x": -20,
+        "y": 0
+      },
+      "corr": {
+        "x": -0.51,
+        "y": 1.8
+      }
+    },
+    "3": {
+      "nivel": "level7",
+      "delta": {
+        "x": 0.0,
+        "y": 30.0
+      },
+      "spritesCasados": 36,
+      "spritesComparados": 36,
+      "variantesDeDelta": 1,
+      "sublocationID": 3,
+      "contenedor": {
+        "x": 0,
+        "y": -30
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "4": {
+      "nivel": "level5",
+      "delta": {
+        "x": 0.0,
+        "y": 15.0
+      },
+      "spritesCasados": 26,
+      "spritesComparados": 26,
+      "variantesDeDelta": 1,
+      "sublocationID": 4,
+      "contenedor": {
+        "x": 0,
+        "y": -15
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "5": {
+      "nivel": "level11",
+      "delta": {
+        "x": 20.0,
+        "y": -30.0
+      },
+      "spritesCasados": 33,
+      "spritesComparados": 33,
+      "variantesDeDelta": 1,
+      "sublocationID": 5,
+      "contenedor": {
+        "x": -20,
+        "y": 30
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "6": {
+      "nivel": "level4",
+      "delta": {
+        "x": -20.0,
+        "y": -0.0
+      },
+      "spritesCasados": 24,
+      "spritesComparados": 24,
+      "variantesDeDelta": 1,
+      "contenedor": null,
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "7": {
+      "nivel": "level15",
+      "delta": {
+        "x": -0.0,
+        "y": -30.0
+      },
+      "spritesCasados": 11,
+      "spritesComparados": 13,
+      "variantesDeDelta": 3,
+      "sublocationID": 7,
+      "contenedor": {
+        "x": 0,
+        "y": 30
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "8": {
+      "nivel": "level8",
+      "delta": {
+        "x": 20,
+        "y": -15
+      },
+      "spritesCasados": 24,
+      "spritesComparados": 27,
+      "variantesDeDelta": 4,
+      "sublocationID": 8,
+      "contenedor": {
+        "x": -20,
+        "y": 15
+      },
+      "corr": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "9": {
+      "nivel": "level10",
+      "delta": {
+        "x": -20.0,
+        "y": -30.0
+      },
+      "spritesCasados": 39,
+      "spritesComparados": 39,
+      "variantesDeDelta": 1,
+      "sublocationID": 9,
+      "contenedor": {
+        "x": 20,
+        "y": 30
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "10": {
+      "nivel": "level9",
+      "delta": {
+        "x": 40.0,
+        "y": 30.0
+      },
+      "spritesCasados": 42,
+      "spritesComparados": 43,
+      "variantesDeDelta": 2,
+      "sublocationID": 10,
+      "contenedor": {
+        "x": -40,
+        "y": -30
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "11": {
+      "nivel": "level12",
+      "delta": {
+        "x": 0.0,
+        "y": 45.0
+      },
+      "spritesCasados": 49,
+      "spritesComparados": 49,
+      "variantesDeDelta": 1,
+      "sublocationID": 11,
+      "contenedor": {
+        "x": 0,
+        "y": -45
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "12": {
+      "nivel": "level55",
+      "delta": {
+        "x": 80.0,
+        "y": -15.0
+      },
+      "spritesCasados": 41,
+      "spritesComparados": 41,
+      "variantesDeDelta": 1,
+      "contenedor": null,
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "13": {
+      "nivel": "level13",
+      "delta": {
+        "x": -20.0,
+        "y": 15.0
+      },
+      "spritesCasados": 24,
+      "spritesComparados": 24,
+      "variantesDeDelta": 1,
+      "sublocationID": 13,
+      "contenedor": {
+        "x": 20,
+        "y": -15
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "14": {
+      "nivel": "level48",
+      "delta": {
+        "x": 100.0,
+        "y": 50.0
+      },
+      "spritesCasados": 24,
+      "spritesComparados": 26,
+      "variantesDeDelta": 3,
+      "contenedor": null,
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "15": {
+      "nivel": "level52",
+      "delta": {
+        "x": 200.0,
+        "y": 90.0
+      },
+      "spritesCasados": 32,
+      "spritesComparados": 35,
+      "variantesDeDelta": 4,
+      "sublocationID": 15,
+      "contenedor": {
+        "x": -200,
+        "y": -90
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "16": {
+      "nivel": "level49",
+      "delta": {
+        "x": 220.0,
+        "y": 10.0
+      },
+      "spritesCasados": 52,
+      "spritesComparados": 52,
+      "variantesDeDelta": 1,
+      "sublocationID": 16,
+      "contenedor": {
+        "x": -220,
+        "y": -10
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "17": {
+      "nivel": "level50",
+      "delta": {
+        "x": 200.0,
+        "y": 10.0
+      },
+      "spritesCasados": 4,
+      "spritesComparados": 4,
+      "variantesDeDelta": 1,
+      "sublocationID": 17,
+      "contenedor": {
+        "x": -200,
+        "y": -10
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "18": {
+      "nivel": "level51",
+      "delta": {
+        "x": 120.0,
+        "y": -70.0
+      },
+      "spritesCasados": 18,
+      "spritesComparados": 18,
+      "variantesDeDelta": 1,
+      "sublocationID": 18,
+      "contenedor": {
+        "x": -120,
+        "y": 70
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "19": {
+      "nivel": "level53",
+      "delta": {
+        "x": 200.0,
+        "y": 70.0
+      },
+      "spritesCasados": 35,
+      "spritesComparados": 35,
+      "variantesDeDelta": 1,
+      "sublocationID": 19,
+      "contenedor": {
+        "x": -200,
+        "y": -70
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "20": {
+      "nivel": "level54",
+      "delta": {
+        "x": 180.0,
+        "y": 10.0
+      },
+      "spritesCasados": 15,
+      "spritesComparados": 15,
+      "variantesDeDelta": 1,
+      "sublocationID": 20,
+      "contenedor": {
+        "x": -180,
+        "y": -10
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "21": {
+      "nivel": "level55",
+      "delta": {
+        "x": 80.0,
+        "y": -15.0
+      },
+      "spritesCasados": 41,
+      "spritesComparados": 41,
+      "variantesDeDelta": 1,
+      "contenedor": null,
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "22": {
+      "nivel": "level58",
+      "delta": {
+        "x": 140.0,
+        "y": -70.0
+      },
+      "spritesCasados": 26,
+      "spritesComparados": 26,
+      "variantesDeDelta": 1,
+      "sublocationID": 22,
+      "contenedor": {
+        "x": -140,
+        "y": 70
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "23": {
+      "nivel": "level59",
+      "delta": {
+        "x": 120.0,
+        "y": -50.0
+      },
+      "spritesCasados": 20,
+      "spritesComparados": 20,
+      "variantesDeDelta": 1,
+      "sublocationID": 23,
+      "contenedor": {
+        "x": -120,
+        "y": 50
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "24": {
+      "nivel": "level60",
+      "delta": {
+        "x": 200.0,
+        "y": 30.0
+      },
+      "spritesCasados": 6,
+      "spritesComparados": 6,
+      "variantesDeDelta": 1,
+      "sublocationID": 24,
+      "contenedor": {
+        "x": -200,
+        "y": -30
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "25": {
+      "nivel": "level61",
+      "delta": {
+        "x": 200.0,
+        "y": 50.0
+      },
+      "spritesCasados": 29,
+      "spritesComparados": 29,
+      "variantesDeDelta": 1,
+      "sublocationID": 25,
+      "contenedor": {
+        "x": -200,
+        "y": -50
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "26": {
+      "nivel": "level62",
+      "delta": {
+        "x": 180.0,
+        "y": 30.0
+      },
+      "spritesCasados": 19,
+      "spritesComparados": 19,
+      "variantesDeDelta": 1,
+      "sublocationID": 26,
+      "contenedor": {
+        "x": -180,
+        "y": -30
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "27": {
+      "nivel": "level63",
+      "delta": {
+        "x": 220.0,
+        "y": 90.0
+      },
+      "spritesCasados": 38,
+      "spritesComparados": 38,
+      "variantesDeDelta": 1,
+      "sublocationID": 27,
+      "contenedor": {
+        "x": -220,
+        "y": -90
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "28": {
+      "nivel": "level64",
+      "delta": {
+        "x": 220.0,
+        "y": 30.0
+      },
+      "spritesCasados": 35,
+      "spritesComparados": 35,
+      "variantesDeDelta": 1,
+      "sublocationID": 28,
+      "contenedor": {
+        "x": -220,
+        "y": -30
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "29": {
+      "nivel": "level69",
+      "delta": {
+        "x": 220.0,
+        "y": 50.0
+      },
+      "spritesCasados": 45,
+      "spritesComparados": 45,
+      "variantesDeDelta": 1,
+      "sublocationID": 29,
+      "contenedor": {
+        "x": -220,
+        "y": -50
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "30": {
+      "nivel": "level65",
+      "delta": {
+        "x": 180.0,
+        "y": 90.0
+      },
+      "spritesCasados": 26,
+      "spritesComparados": 26,
+      "variantesDeDelta": 1,
+      "sublocationID": 30,
+      "contenedor": {
+        "x": -180,
+        "y": -90
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "31": {
+      "nivel": "level66",
+      "delta": {
+        "x": 180.0,
+        "y": 70.0
+      },
+      "spritesCasados": 10,
+      "spritesComparados": 10,
+      "variantesDeDelta": 1,
+      "sublocationID": 31,
+      "contenedor": {
+        "x": -180,
+        "y": -70
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "32": {
+      "nivel": "level67",
+      "delta": {
+        "x": 220.0,
+        "y": 70.0
+      },
+      "spritesCasados": 31,
+      "spritesComparados": 31,
+      "variantesDeDelta": 1,
+      "sublocationID": 32,
+      "contenedor": {
+        "x": -220,
+        "y": -70
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "33": {
+      "nivel": "level68",
+      "delta": {
+        "x": 180.0,
+        "y": 50.0
+      },
+      "spritesCasados": 51,
+      "spritesComparados": 51,
+      "variantesDeDelta": 1,
+      "sublocationID": 33,
+      "contenedor": {
+        "x": -180,
+        "y": -50
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "34": {
+      "nivel": "level70",
+      "delta": {
+        "x": 140.0,
+        "y": -30.0
+      },
+      "spritesCasados": 25,
+      "spritesComparados": 25,
+      "variantesDeDelta": 1,
+      "sublocationID": 34,
+      "contenedor": {
+        "x": -140,
+        "y": 30
+      },
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "39": {
+      "nivel": "level39",
+      "delta": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "spritesCasados": 7,
+      "spritesComparados": 7,
+      "variantesDeDelta": 1,
+      "contenedor": null,
+      "corr": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "0_hc": {
+      "nivel": "level28",
+      "delta": {
+        "x": -0.0,
+        "y": 0.0
+      },
+      "spritesCasados": 37,
+      "spritesComparados": 39,
+      "variantesDeDelta": 3,
+      "sublocationID": 0,
+      "contenedor": {
+        "x": -20,
+        "y": -30
+      },
+      "corr": {
+        "x": -20.0,
+        "y": -30.0
+      }
+    }
+  }
+}
