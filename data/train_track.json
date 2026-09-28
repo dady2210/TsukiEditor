@@ -1,0 +1,204 @@
+{
+  "_fuente": "TrainAtStation de los level*.assets (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Las posiciones y las curvas son datos de escena: no estan en el binario. \u0060train_system.js\u0060 las aproximaba con T_ESPERA = 0.5 y un ease-out/ease-in, y lo decia. Aqui estan las de verdad.",
+  "estaciones": [
+    {
+      "nivel": "level9",
+      "clase": "TrainAtStation",
+      "inicio": {
+        "x": -28.4,
+        "y": -19.39,
+        "z": -0.01
+      },
+      "parada": {
+        "x": -42.59,
+        "y": -26.55,
+        "z": -0.01
+      },
+      "fin": {
+        "x": -68.39,
+        "y": -39.445,
+        "z": -0.01
+      },
+      "puertaCerrada": {
+        "x": -1.9532,
+        "y": -2.2702,
+        "z": -0.1
+      },
+      "puertaAbierta": {
+        "x": -1.3532,
+        "y": -1.9702,
+        "z": -0.1
+      },
+      "puertaSegundos": 0.005,
+      "curvaEntrada": {
+        "claves": [
+          {
+            "t": 0,
+            "v": 0,
+            "entra": 2,
+            "sale": 2,
+            "peso": 0
+          },
+          {
+            "t": 1,
+            "v": 1,
+            "entra": -0.22198,
+            "sale": -0.22198,
+            "peso": 0
+          }
+        ],
+        "antes": 2,
+        "despues": 2
+      },
+      "curvaSalida": {
+        "claves": [
+          {
+            "t": 0,
+            "v": 0,
+            "entra": -0.18113,
+            "sale": -0.18113,
+            "peso": 0
+          },
+          {
+            "t": 1,
+            "v": 1,
+            "entra": 1.75371,
+            "sale": 1.75371,
+            "peso": 0
+          }
+        ],
+        "antes": 2,
+        "despues": 2
+      },
+      "curvaVolumenVia": {
+        "claves": [
+          {
+            "t": 0,
+            "v": 0,
+            "entra": 1.25,
+            "sale": 1.25,
+            "peso": 0
+          },
+          {
+            "t": 0.8,
+            "v": 1,
+            "entra": 0,
+            "sale": 0,
+            "peso": 0
+          },
+          {
+            "t": 1,
+            "v": 0,
+            "entra": -5,
+            "sale": -5,
+            "peso": 0
+          }
+        ],
+        "antes": 2,
+        "despues": 2
+      },
+      "tParada": 0.35528,
+      "pendiente": 0.5015
+    },
+    {
+      "nivel": "level52",
+      "clase": "TrainAtStation",
+      "inicio": {
+        "x": -187.805,
+        "y": -79.4775,
+        "z": -0.01
+      },
+      "parada": {
+        "x": -203.43,
+        "y": -87.29,
+        "z": -0.01
+      },
+      "fin": {
+        "x": -220.2,
+        "y": -95.675,
+        "z": -0.01
+      },
+      "puertaCerrada": {
+        "x": -1.9532,
+        "y": -2.2702,
+        "z": -0.1
+      },
+      "puertaAbierta": {
+        "x": -1.3532,
+        "y": -1.9702,
+        "z": -0.1
+      },
+      "puertaSegundos": 0.005,
+      "curvaEntrada": {
+        "claves": [
+          {
+            "t": 0,
+            "v": 0,
+            "entra": 2,
+            "sale": 2,
+            "peso": 0
+          },
+          {
+            "t": 1,
+            "v": 1,
+            "entra": -0.22198,
+            "sale": -0.22198,
+            "peso": 0
+          }
+        ],
+        "antes": 2,
+        "despues": 2
+      },
+      "curvaSalida": {
+        "claves": [
+          {
+            "t": 0,
+            "v": 0,
+            "entra": -0.18113,
+            "sale": -0.18113,
+            "peso": 0
+          },
+          {
+            "t": 1,
+            "v": 1,
+            "entra": 1.75371,
+            "sale": 1.75371,
+            "peso": 0
+          }
+        ],
+        "antes": 2,
+        "despues": 2
+      },
+      "curvaVolumenVia": {
+        "claves": [
+          {
+            "t": 0,
+            "v": 0,
+            "entra": 1.25,
+            "sale": 1.25,
+            "peso": 0
+          },
+          {
+            "t": 0.8,
+            "v": 1,
+            "entra": 0,
+            "sale": 0,
+            "peso": 0
+          },
+          {
+            "t": 1,
+            "v": 0,
+            "entra": -5,
+            "sale": -5,
+            "peso": 0
+          }
+        ],
+        "antes": 2,
+        "despues": 2
+      },
+      "tParada": 0.48233,
+      "pendiente": 0.5
+    }
+  ]
+}

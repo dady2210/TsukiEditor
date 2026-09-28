@@ -1,0 +1,132 @@
+{
+  "_fuente": "ItemData.references (SerializeReference) de sharedassets1.assets",
+  "_nota": "Aqui estan las COSECHAS, no los muebles. El emparejamiento cropItemID \u003C-\u003E strangeCropID vive en CropItem, que es mobiliario y no viene en Data/: esta en los bundles de assets/aa/Android. Los minutos de crecimiento los saca tools/extract_crop_code.py del binario.",
+  "cosechas": [
+    {
+      "clase": "CropYield",
+      "id": 126,
+      "extranya": false,
+      "precio": 200
+    },
+    {
+      "clase": "CropYield",
+      "id": 219,
+      "extranya": false,
+      "precio": 5
+    },
+    {
+      "clase": "CropYield",
+      "id": 220,
+      "extranya": false,
+      "precio": 3
+    },
+    {
+      "clase": "CropYield",
+      "id": 221,
+      "extranya": true,
+      "precio": 15
+    },
+    {
+      "clase": "CropYield",
+      "id": 222,
+      "extranya": true,
+      "precio": 1000
+    },
+    {
+      "clase": "CropYield",
+      "id": 223,
+      "extranya": false,
+      "precio": 100
+    },
+    {
+      "clase": "CropYield",
+      "id": 224,
+      "extranya": true,
+      "precio": 500
+    },
+    {
+      "clase": "CropYield",
+      "id": 225,
+      "extranya": true,
+      "precio": 1
+    },
+    {
+      "clase": "CropYield",
+      "id": 226,
+      "extranya": false,
+      "precio": 5
+    },
+    {
+      "clase": "CropYield",
+      "id": 227,
+      "extranya": true,
+      "precio": 25
+    },
+    {
+      "clase": "CropYield",
+      "id": 228,
+      "extranya": false,
+      "precio": 1
+    },
+    {
+      "clase": "CropYield",
+      "id": 229,
+      "extranya": true,
+      "precio": 5
+    },
+    {
+      "clase": "CropYield",
+      "id": 230,
+      "extranya": false,
+      "precio": 4
+    },
+    {
+      "clase": "CropYield",
+      "id": 231,
+      "extranya": true,
+      "precio": 20
+    },
+    {
+      "clase": "CropYield",
+      "id": 232,
+      "extranya": false,
+      "precio": 1
+    },
+    {
+      "clase": "CropYield",
+      "id": 233,
+      "extranya": true,
+      "precio": 5
+    },
+    {
+      "clase": "CropYield",
+      "id": 234,
+      "extranya": false,
+      "precio": 2
+    },
+    {
+      "clase": "CropYield",
+      "id": 235,
+      "extranya": true,
+      "precio": 10
+    },
+    {
+      "clase": "CropYield",
+      "id": 236,
+      "extranya": false,
+      "precio": 120
+    },
+    {
+      "clase": "CropYield",
+      "id": 237,
+      "extranya": true,
+      "precio": 600
+    },
+    {
+      "clase": "CarrotYield",
+      "id": 321,
+      "extranya": false,
+      "precio": 1
+    }
+  ]
+}

@@ -36,6 +36,44 @@
         });
     }
 
+    /**
+     * EL FACTOR DE `pixelsPerUnit`, QUE FALTABA EN 817 PIEZAS DE 4480.
+     *
+     * Un sprite ocupa `rw / sprite.pixelsPerUnit` unidades de mundo, y el lienzo del mapa
+     * tiene UNA escala: la `ppu` de `config`, que son 150 px por unidad en todos los
+     * mapas. Asi que en el lienzo mide
+     *
+     *     rw * (ppuMapa / v.ppu)   pixeles
+     *
+     * y solo cuando `v.ppu === ppuMapa` eso es su tamanyo nativo. Aqui se dibujaba
+     * siempre a tamanyo nativo, lo que deja 817 piezas mal escaladas: las que traen su
+     * propia `ppu` —128, 100, 256, 75, 64—, o sea `circleBlur`, `white`, `ConeLightDown`,
+     * `rectBlur` y los `SHAPE_*`. Son las luces, las espumas y los rellenos.
+     *
+     * El testigo que lo zanja: `white` es una textura de 128x128 a 128 ppu, o sea UNA
+     * unidad de mundo clavada. Con `sx = 7` tiene que medir 7 unidades = 1050 px, y se
+     * dibujaba a 128 * 7 = 896. Un 17% pequenya.
+     *
+     * Y OJO CON EL `_Ensamblado.png`: `TsukiMapExtractor_v2.py` tenia el mismo fallo Y
+     * OTRO ENCIMA. En `assemble_map` hace `paste_x = center_x + int(world_min_x * PPU)`
+     * con `PPU = d['ppu']`, la del sprite, asi que a esas piezas les cambia tambien la
+     * POSICION: en el muelle (map_4) las espumas se van hasta 340 px de la roca a la que
+     * deberian pegarse. Ver `tools/test_play_vs_ensamblado.py`, que lo mide pieza a pieza.
+     * El extractor ya esta corregido, pero los PNG horneados siguen siendo los viejos
+     * hasta que se rehorneen.
+     *
+     * Aplicado como un `scale(k, k)` en el marco local, antes de la traslacion de `ox/oy`,
+     * queda escalado todo de una vez: el tamanyo, el pivote y el recorte de textura. Y con
+     * `v.ppu` ausente o igual a la del mapa el factor es 1 y no cambia nada, que es el
+     * caso de 3663 de las 4480 piezas.
+     */
+    function factorPPU(v, ppuMapa) {
+        const p = Number(v && v.ppu);
+        if (!isFinite(p) || p <= 0) return 1;
+        const m = Number(ppuMapa) || 150;
+        return m / p;
+    }
+
     function layerOf(v) {
         const l = v.layer || 'mid';
         return (l === 'far' || l === 'mid' || l === 'near' || l === 'skip') ? l : 'mid';
@@ -179,6 +217,9 @@
             // solo se veia con Homecoming.
             const sx = (v.sx == null ? 1 : v.sx);
             const sy = (v.sy == null ? 1 : v.sy);
+            // El factor de `pixelsPerUnit`: ver `factorPPU`. Un teselado ya viene medido
+            // en unidades de mundo por `v.ppu`, asi que le vale el mismo factor.
+            const k = factorPPU(v, ppu);
             const ax = ORG.x + (v.x || 0) * ppu, ay = ORG.y - (v.y || 0) * ppu;
             // corners of draw rect in pre-transform px (pivot-relative), then scale+rotate+translate
             const px = (v.px == null ? 0.5 : v.px) * origRw;
@@ -193,7 +234,7 @@
             const ox = tel ? 0 : (v.ox || 0), oy = tel ? 0 : -(v.oy || 0);
             const ca = Math.cos(-rad(v.angle || 0)), sa = Math.sin(-rad(v.angle || 0));
             const corners = [[-px, -py], [rw - px, -py], [rw - px, rh - py], [-px, rh - py]].map(([lx, ly]) => {
-                let X = (lx + ox) * sx, Y = (ly + oy) * sy;
+                let X = (lx + ox) * k * sx, Y = (ly + oy) * k * sy;
                 const rx = X * ca - Y * sa, ry = X * sa + Y * ca;
                 return [ax + rx, ay + ry];
             });
@@ -201,7 +242,7 @@
                 if (X < minX) minX = X; if (X > maxX) maxX = X;
                 if (Y < minY) minY = Y; if (Y > maxY) maxY = Y;
             });
-            xforms.push({ img: tintar(base, v.color), v, sx, sy, rw, rh, px, py, ox, oy, alpha: (v.color && v.color.a != null) ? v.color.a : 1 });
+            xforms.push({ img: tintar(base, v.color), v, sx, sy, k, rw, rh, px, py, ox, oy, alpha: (v.color && v.color.a != null) ? v.color.a : 1 });
         });
         if (!xforms.length) return null;
         const w = Math.ceil(maxX - minX), h = Math.ceil(maxY - minY);
@@ -212,7 +253,7 @@
         const cv = document.createElement('canvas');
         cv.width = Math.max(1, w); cv.height = Math.max(1, h);
         const g = cv.getContext('2d');
-        xforms.forEach(({ img, v, sx, sy, rw, rh, px, py, ox, oy, alpha }) => {
+        xforms.forEach(({ img, v, sx, sy, k, rw, rh, px, py, ox, oy, alpha }) => {
             const ax = ORG.x + (v.x || 0) * ppu - minX, ay = ORG.y - (v.y || 0) * ppu - minY;
             g.save();
             g.globalAlpha = alpha;
@@ -224,6 +265,7 @@
             g.translate(ax, ay);
             g.rotate(-(v.angle || 0) * Math.PI / 180);
             g.scale(sx, sy);
+            if (k !== 1) g.scale(k, k);      // ver `factorPPU`
             g.translate(ox, oy);
             // px/py are already pixel offsets into an rw×rh frame (see corner math above)
             g.drawImage(img, 0, 0, img.width, img.height, -px, -py, rw, rh);
@@ -686,6 +728,7 @@
             const px = (m.px == null ? 0.5 : m.px) * origRw;
             const py = rh - (m.py == null ? 0.5 : m.py) * origRh;
             const ox = tel ? 0 : (m.ox || 0), oy = tel ? 0 : -(m.oy || 0);
+            const k = factorPPU(v, ppu);     // ver `factorPPU`
             const ax = offsetX + (v.x || 0) * ppu * s;
             const ay = offsetY - (v.y || 0) * ppu * s;
 
@@ -695,6 +738,7 @@
             ctx.scale(s, s);
             ctx.rotate(-rad(v.angle));
             ctx.scale(sx, sy);
+            if (k !== 1) ctx.scale(k, k);
             ctx.translate(ox, oy);
             ctx.drawImage(tintar(base, v.color), 0, 0, base.width, base.height, -px, -py, rw, rh);
             ctx.restore();

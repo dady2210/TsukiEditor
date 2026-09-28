@@ -1,0 +1,39 @@
+{
+ "_fuente": "libil2cpp.so arm64, via rva_all.json + capstone",
+ "_nota": "El port tenia 5% de cultivo extranyo (el juego dice 0,15%), tiraba el dado al resembrar en vez de al madurar, y pudria la calabaza sin comprobar que no fuese extranya.",
+ "tasaExtranyaBase": 0.001500000013038516,
+ "tasaExtranyaBaseEn": "0x11dfae8",
+ "multiplicadorTrebol": "Math.log(CloverPower + 1) + 1",
+ "reduccionTiempoTrebol": "n^3 / (n^3 + 2047)",
+ "kReduccionTiempo": 2047.0,
+ "momentoDelDado": "al pasar ripe de false a true (set_HarvestTime, SetRipe, get_IsRipe); al resembrar se pone a false",
+ "comparacion": "Random.value < StrangeRate  (estricto: cset w8, mi)",
+ "minutos": {
+  "raizOscura": 120,
+  "uvas": 120,
+  "cebolla": 180,
+  "papa": 60,
+  "calabaza": 120,
+  "fresa": 120,
+  "seta": 240,
+  "rabano": 120,
+  "sandia": 360
+ },
+ "zanahoria": {
+  "normal": 120,
+  "tutorial": [
+   5,
+   10,
+   20,
+   60
+  ],
+  "tutorialEn": "0x11e14b0",
+  "_nota": "CarrotItem::get_BaseTimeToHarvest indexa esta tabla con tutorialStep + 4 cuando tutorialStep esta entre -4 y -1; con cualquier otro valor da 120. tutorialStep es el entero en 0x15c del TsukiSave: lo escribe Tutorial::SetTutorialStepStatic (mov w8, #-5)."
+ },
+ "podrida": {
+  "horas": 1.0,
+  "estricto": true,
+  "soloSiNoEsExtranya": true,
+  "_nota": "Pumpkin.PumpkinSave::UpdateTimeRaw. Solo la calabaza: es la unica clase que redefine HasYieldItem y la unica con rottenPumpkinID."
+ }
+}
