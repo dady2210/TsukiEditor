@@ -1,0 +1,2239 @@
+{
+  "_fuente": "Envelope de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "Envelope",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": "Envelope",
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "Envelope",
+    "transitionInSpeed": "0.5",
+    "transitionOutSpeed": "0.5",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "flap": "Envelope/Flap",
+    "letter": "Envelope/LetterDisplay",
+    "envelopeFront": "Envelope/EnvelopeFront",
+    "envelopeRear": "Envelope/Rear",
+    "letterGroup": "Envelope/LetterDisplay",
+    "animTimer": "0",
+    "letterCurve": {
+      "m_Curve": [
+        {
+          "time": "0",
+          "value": "0",
+          "inSlope": "2.0543098",
+          "outSlope": "2.0543098",
+          "weightedMode": "0",
+          "inWeight": "0",
+          "outWeight": "0.09655172"
+        },
+        {
+          "time": "0.5",
+          "value": "1",
+          "inSlope": "0.032607958",
+          "outSlope": "0.032607958",
+          "weightedMode": "0",
+          "inWeight": "0.33333334",
+          "outWeight": "0.16896534"
+        },
+        {
+          "time": "1",
+          "value": "0",
+          "inSlope": "0",
+          "outSlope": "0",
+          "weightedMode": "0",
+          "inWeight": "0",
+          "outWeight": "0"
+        }
+      ],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "letterInitialCurve": {
+      "m_Curve": [
+        {
+          "time": "0",
+          "value": "0",
+          "inSlope": "0",
+          "outSlope": "0",
+          "weightedMode": "0",
+          "inWeight": "0",
+          "outWeight": "0"
+        },
+        {
+          "time": "1",
+          "value": "1",
+          "inSlope": "-0",
+          "outSlope": "-0",
+          "weightedMode": "0",
+          "inWeight": "0.24583334",
+          "outWeight": "0"
+        }
+      ],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "envelopeInitialRot": {
+      "x": "-0.19324018",
+      "y": "-0.11324715",
+      "z": "0.15355824",
+      "w": "-0.9624205"
+    },
+    "envelopeRestRot": {
+      "x": "0",
+      "y": "0",
+      "z": "-0.017452406",
+      "w": "0.9998477"
+    },
+    "letterDisplay": {
+      "author": "Envelope/LetterDisplay/Author",
+      "text": "Envelope/LetterDisplay/Text",
+      "letterInventoryMenu": {
+        "sortedPositions": [],
+        "optionPrefab": {
+          "nombre": "Slot"
+        },
+        "scrollRect": null,
+        "content": "Envelope/LetterDisplay/Scroll View/Viewport/Content"
+      },
+      "letterScrollLE": "Envelope/LetterDisplay/Scroll View",
+      "blur": "Envelope/LetterDisplay/Scroll View/Viewport/Image",
+      "claimAll": "Envelope/LetterDisplay/Button",
+      "AuthorFormat": {
+        "ID": "LETTER_AUTHOR",
+        "FORMAT": "",
+        "EN": "From: {0}",
+        "SP": "",
+        "FR": "",
+        "ptBR": "",
+        "RU": "",
+        "CNSimplified": "",
+        "CNTaiwan": "",
+        "JPN": "",
+        "GER": "",
+        "ITA": "",
+        "KOR": "",
+        "THAI": "",
+        "MY": "",
+        "VN": ""
+      },
+      "LetterFormat": "\t{0}"
+    },
+    "letterCanvasGroup": "Envelope/LetterDisplay",
+    "alphaElements": [
+      "Envelope/EnvelopeFront/Edge",
+      "Envelope/EnvelopeFront/InnerLine",
+      "Envelope/EnvelopeFront/InnerLine",
+      "Envelope/Flap/Edge"
+    ]
+  },
+  "arbol": {
+    "nombre": "Envelope",
+    "ruta": "Envelope",
+    "activo": true,
+    "anclaMin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "anclaMax": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "pos": {
+      "x": 0,
+      "y": -1460
+    },
+    "tam": {
+      "x": 820,
+      "y": 450
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "angulo": 341.869,
+    "comp": [
+      {
+        "tipo": "Image",
+        "sprite": {
+          "nombre": "envelope_0",
+          "rx": 11,
+          "ry": 140,
+          "rw": 105,
+          "rh": 105,
+          "px": 0.5,
+          "py": 0.5,
+          "ppu": 64,
+          "borde": {
+            "x": 46,
+            "y": 46,
+            "z": 46,
+            "w": 46
+          }
+        },
+        "color": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        },
+        "modo": 1,
+        "rellenaCentro": true,
+        "conservaProporcion": false,
+        "recibeToque": true,
+        "ppuMult": 1
+      },
+      {
+        "tipo": "Envelope",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "0.5",
+          "transitionOutSpeed": "0.5",
+          "slideTransition": "0",
+          "transitionDistance": "10",
+          "animTimer": "0"
+        }
+      },
+      {
+        "tipo": "CanvasGroup"
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "Rear",
+        "ruta": "Envelope/Rear",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 800,
+          "y": 426
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "roundedRect",
+              "rx": 0,
+              "ry": 0,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 16,
+                "y": 16,
+                "z": 16,
+                "w": 16
+              }
+            },
+            "color": {
+              "r": 0.77358,
+              "g": 0.75047,
+              "b": 0.70425,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Image (1)",
+            "ruta": "Envelope/Rear/Image (1)",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 20,
+              "y": 24
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "envelope_1",
+                  "rx": 140,
+                  "ry": 140,
+                  "rw": 105,
+                  "rh": 105,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 46,
+                    "y": 46,
+                    "z": 46,
+                    "w": 46
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "LetterDisplay",
+        "ruta": "Envelope/LetterDisplay",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 800,
+          "y": 400
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "roundedRect",
+              "rx": 0,
+              "ry": 0,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 16,
+                "y": 16,
+                "z": 16,
+                "w": 16
+              }
+            },
+            "color": {
+              "r": 0.99057,
+              "g": 0.97861,
+              "b": 0.91113,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "VerticalLayoutGroup",
+            "espaciado": 16,
+            "alineacion": 0,
+            "relleno": {
+              "izq": 16,
+              "der": 16,
+              "arr": 16,
+              "aba": 16
+            }
+          },
+          {
+            "tipo": "CanvasGroup"
+          },
+          {
+            "tipo": "Mask",
+            "campos": {
+              "m_Name": ""
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Image",
+            "ruta": "Envelope/LetterDisplay/Image",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": -8,
+              "y": -8
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRectO_4px",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0.06275
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "Author",
+            "ruta": "Envelope/LetterDisplay/Author",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 30.01
+            },
+            "pivote": {
+              "x": 0,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "From: RapBot",
+                "tam": 24,
+                "color": {
+                  "r": 0.49057,
+                  "g": 0.49057,
+                  "b": 0.49057,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 18,
+                "tamMax": 72,
+                "estilo": 0,
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Text",
+            "ruta": "Envelope/LetterDisplay/Text",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 440.01
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "\tThe farm has been redesigned so we had to move all the stuff you placed there! You can claim them here.\nfdsfsadf\ndfsf\nsadf\ndsa\nfsda\nfs\nadf\nsda",
+                "tam": 32,
+                "color": {
+                  "r": 0.49057,
+                  "g": 0.49057,
+                  "b": 0.49057,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 24,
+                "tamMax": 32,
+                "estilo": 0,
+                "margen": {
+                  "x": 8,
+                  "y": 0,
+                  "z": 8,
+                  "w": 0
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Scroll View",
+            "ruta": "Envelope/LetterDisplay/Scroll View",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 149.1874
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0.92941,
+                  "g": 0.91765,
+                  "b": 0.85098,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "ScrollRect",
+                "campos": {
+                  "m_Name": "",
+                  "m_MovementType": "1",
+                  "m_Elasticity": "0.1",
+                  "m_DecelerationRate": "0.135",
+                  "m_ScrollSensitivity": "1",
+                  "m_HorizontalScrollbarVisibility": "2",
+                  "m_VerticalScrollbarVisibility": "2",
+                  "m_HorizontalScrollbarSpacing": "-3",
+                  "m_VerticalScrollbarSpacing": "-3"
+                }
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": 565,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Viewport",
+                "ruta": "Envelope/LetterDisplay/Scroll View/Viewport",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "UIMask",
+                      "rx": 2.03,
+                      "ry": 2.03,
+                      "rw": 27.95,
+                      "rh": 27.95,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 200,
+                      "borde": {
+                        "x": 10,
+                        "y": 10,
+                        "z": 10,
+                        "w": 10
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "Mask",
+                    "campos": {
+                      "m_Name": ""
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Content",
+                    "ruta": "Envelope/LetterDisplay/Scroll View/Viewport/Content",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 96
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 1
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "GridLayoutGroup",
+                        "espaciado": {
+                          "x": 16,
+                          "y": 16
+                        },
+                        "alineacion": 4,
+                        "relleno": {
+                          "izq": 8,
+                          "der": 8,
+                          "arr": 8,
+                          "aba": 8
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Slot",
+                        "ruta": "Envelope/LetterDisplay/Scroll View/Viewport/Content/Slot",
+                        "activo": false,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "anclaMax": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 384,
+                          "y": -48
+                        },
+                        "tam": {
+                          "x": 80,
+                          "y": 80
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "circle",
+                              "rx": 0,
+                              "ry": 128,
+                              "rw": 128,
+                              "rh": 128,
+                              "px": 0.497,
+                              "py": -0.19396,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 64,
+                                "y": 64,
+                                "z": 64,
+                                "w": 64
+                              }
+                            },
+                            "color": {
+                              "r": 0.99216,
+                              "g": 0.98039,
+                              "b": 0.9098,
+                              "a": 1
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          },
+                          {
+                            "tipo": "Button",
+                            "activo": true,
+                            "transicion": 1
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Icon",
+                            "ruta": "Envelope/LetterDisplay/Scroll View/Viewport/Content/Slot/Icon",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "anclaMax": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 80,
+                              "y": 80
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "Image",
+                                "sprite": null,
+                                "color": {
+                                  "r": 1,
+                                  "g": 1,
+                                  "b": 1,
+                                  "a": 1
+                                },
+                                "modo": 0,
+                                "rellenaCentro": true,
+                                "conservaProporcion": false,
+                                "recibeToque": false,
+                                "ppuMult": 1
+                              }
+                            ]
+                          },
+                          {
+                            "nombre": "Quantity",
+                            "ruta": "Envelope/LetterDisplay/Scroll View/Viewport/Content/Slot/Quantity",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 1,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 1,
+                              "y": 0
+                            },
+                            "pos": {
+                              "x": 6,
+                              "y": -6
+                            },
+                            "tam": {
+                              "x": 32,
+                              "y": 32
+                            },
+                            "pivote": {
+                              "x": 1,
+                              "y": 0
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "Image",
+                                "sprite": {
+                                  "nombre": "circle",
+                                  "rx": 0,
+                                  "ry": 128,
+                                  "rw": 128,
+                                  "rh": 128,
+                                  "px": 0.497,
+                                  "py": -0.19396,
+                                  "ppu": 128,
+                                  "borde": {
+                                    "x": 64,
+                                    "y": 64,
+                                    "z": 64,
+                                    "w": 64
+                                  }
+                                },
+                                "color": {
+                                  "r": 0.99216,
+                                  "g": 0.98039,
+                                  "b": 0.9098,
+                                  "a": 1
+                                },
+                                "modo": 1,
+                                "rellenaCentro": true,
+                                "conservaProporcion": false,
+                                "recibeToque": true,
+                                "ppuMult": 1
+                              }
+                            ],
+                            "hijos": [
+                              {
+                                "nombre": "QuantityValue",
+                                "ruta": "Envelope/LetterDisplay/Scroll View/Viewport/Content/Slot/Quantity/QuantityValue",
+                                "activo": true,
+                                "anclaMin": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "anclaMax": {
+                                  "x": 1,
+                                  "y": 1
+                                },
+                                "pos": {
+                                  "x": -0.0001,
+                                  "y": 0
+                                },
+                                "tam": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "pivote": {
+                                  "x": 0.5,
+                                  "y": 0.5
+                                },
+                                "posLocal": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "comp": [
+                                  {
+                                    "tipo": "TextMeshProUGUI",
+                                    "texto": "3",
+                                    "tam": 25.6,
+                                    "color": {
+                                      "r": 0.30196,
+                                      "g": 0.30196,
+                                      "b": 0.30196,
+                                      "a": 1
+                                    },
+                                    "alineacion": 65535,
+                                    "autoTam": true,
+                                    "tamMin": 18,
+                                    "tamMax": 72,
+                                    "estilo": 0,
+                                    "margen": {
+                                      "x": 0,
+                                      "y": 0,
+                                      "z": 0,
+                                      "w": 0
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Image",
+                    "ruta": "Envelope/LetterDisplay/Scroll View/Viewport/Image",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": -0,
+                      "y": -418.3
+                    },
+                    "tam": {
+                      "x": 32,
+                      "y": 478.3542
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "rectBlur",
+                          "rx": 0,
+                          "ry": 0,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0,
+                          "g": 0,
+                          "b": 0,
+                          "a": 0.09412
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Inventory",
+            "ruta": "Envelope/LetterDisplay/Inventory",
+            "activo": false,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 400,
+              "y": -274.82
+            },
+            "tam": {
+              "x": 768,
+              "y": 96
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0.92941,
+                  "g": 0.91765,
+                  "b": 0.85098,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "GridLayoutGroup",
+                "espaciado": {
+                  "x": 16,
+                  "y": 16
+                },
+                "alineacion": 4,
+                "relleno": {
+                  "izq": 8,
+                  "der": 8,
+                  "arr": 8,
+                  "aba": 8
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Slot",
+                "ruta": "Envelope/LetterDisplay/Inventory/Slot",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 384,
+                  "y": -48
+                },
+                "tam": {
+                  "x": 80,
+                  "y": 80
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "circle",
+                      "rx": 0,
+                      "ry": 128,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.497,
+                      "py": -0.19396,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 64,
+                        "y": 64,
+                        "z": 64,
+                        "w": 64
+                      }
+                    },
+                    "color": {
+                      "r": 0.99216,
+                      "g": 0.98039,
+                      "b": 0.9098,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "Button",
+                    "activo": true,
+                    "transicion": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Icon",
+                    "ruta": "Envelope/LetterDisplay/Inventory/Slot/Icon",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 80,
+                      "y": 80
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": null,
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Quantity",
+                    "ruta": "Envelope/LetterDisplay/Inventory/Slot/Quantity",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 6,
+                      "y": -6
+                    },
+                    "tam": {
+                      "x": 32,
+                      "y": 32
+                    },
+                    "pivote": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circle",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.497,
+                          "py": -0.19396,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0.99216,
+                          "g": 0.98039,
+                          "b": 0.9098,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "QuantityValue",
+                        "ruta": "Envelope/LetterDisplay/Inventory/Slot/Quantity/QuantityValue",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": -0.0001,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "TextMeshProUGUI",
+                            "texto": "3",
+                            "tam": 25.6,
+                            "color": {
+                              "r": 0.30196,
+                              "g": 0.30196,
+                              "b": 0.30196,
+                              "a": 1
+                            },
+                            "alineacion": 65535,
+                            "autoTam": true,
+                            "tamMin": 18,
+                            "tamMax": 72,
+                            "estilo": 0,
+                            "margen": {
+                              "x": 0,
+                              "y": 0,
+                              "z": 0,
+                              "w": 0
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Button",
+            "ruta": "Envelope/LetterDisplay/Button",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 57.6
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0.92941,
+                  "g": 0.91765,
+                  "b": 0.85098,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "Button",
+                "activo": true,
+                "transicion": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": 57.6,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image",
+                "ruta": "Envelope/LetterDisplay/Button/Image",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -8,
+                  "y": -8
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRectO_4px",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 16,
+                        "y": 16,
+                        "z": 16,
+                        "w": 16
+                      }
+                    },
+                    "color": {
+                      "r": 0.99216,
+                      "g": 0.98039,
+                      "b": 0.9098,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  }
+                ]
+              },
+              {
+                "nombre": "Text (TMP)",
+                "ruta": "Envelope/LetterDisplay/Button/Text (TMP)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": -0.0001,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "Claim All",
+                    "tam": 32,
+                    "color": {
+                      "r": 0.4902,
+                      "g": 0.4902,
+                      "b": 0.4902,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "EnvelopeFront",
+        "ruta": "Envelope/EnvelopeFront",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 0,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "hijos": [
+          {
+            "nombre": "Image (3)",
+            "ruta": "Envelope/EnvelopeFront/Image (3)",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -32.69
+            },
+            "tam": {
+              "x": 0,
+              "y": -65.3745
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "envelope_6",
+                  "rx": 3,
+                  "ry": 15,
+                  "rw": 122,
+                  "rh": 58,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 0.91765,
+                  "g": 0.91765,
+                  "b": 0.85098,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Image (2)",
+            "ruta": "Envelope/EnvelopeFront/Image (2)",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -31.75
+            },
+            "tam": {
+              "x": 0,
+              "y": -63.5072
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "envelope_7",
+                  "rx": 140,
+                  "ry": 140,
+                  "rw": 105,
+                  "rh": 77,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 46,
+                    "y": 46,
+                    "z": 46,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "InnerLine",
+            "ruta": "Envelope/EnvelopeFront/InnerLine",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 7,
+              "y": -59
+            },
+            "tam": {
+              "x": 452.7,
+              "y": 29
+            },
+            "pivote": {
+              "x": 0,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "angulo": -23,
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "envelope_5",
+                  "rx": 142,
+                  "ry": 102,
+                  "rw": 102,
+                  "rh": 15,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 12,
+                    "y": 0,
+                    "z": 12,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 2,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "InnerLine",
+            "ruta": "Envelope/EnvelopeFront/InnerLine",
+            "activo": true,
+            "anclaMin": {
+              "x": 1,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": -7,
+              "y": -59
+            },
+            "tam": {
+              "x": 452.7,
+              "y": 29
+            },
+            "pivote": {
+              "x": 0,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "escala": {
+              "x": -1,
+              "y": 1
+            },
+            "angulo": 23,
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "envelope_5",
+                  "rx": 142,
+                  "ry": 102,
+                  "rw": 102,
+                  "rh": 15,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 12,
+                    "y": 0,
+                    "z": 12,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 2,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Edge",
+            "ruta": "Envelope/EnvelopeFront/Edge",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 66.7818
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "envelope_8",
+                  "rx": 11,
+                  "ry": 140,
+                  "rw": 105,
+                  "rh": 35,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 46,
+                    "y": 0,
+                    "z": 46,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Flap",
+        "ruta": "Envelope/Flap",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": -0,
+          "y": -28
+        },
+        "tam": {
+          "x": 0,
+          "y": 56
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "hijos": [
+          {
+            "nombre": "Image",
+            "ruta": "Envelope/Flap/Image",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": -156.8
+            },
+            "tam": {
+              "x": 790,
+              "y": 333.7977
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "envelope_2",
+                  "rx": 3,
+                  "ry": 74,
+                  "rw": 123,
+                  "rh": 54,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 0.91765,
+                  "g": 0.91765,
+                  "b": 0.85098,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Image",
+            "ruta": "Envelope/Flap/Image",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -49.11
+            },
+            "tam": {
+              "x": 529,
+              "y": 28
+            },
+            "pivote": {
+              "x": 0,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "angulo": -34.6,
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "envelope_3",
+                  "rx": 11,
+                  "ry": 140,
+                  "rw": 105,
+                  "rh": 14,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 20,
+                    "y": 0,
+                    "z": 20,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Image (1)",
+            "ruta": "Envelope/Flap/Image (1)",
+            "activo": true,
+            "anclaMin": {
+              "x": 1,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -49.11
+            },
+            "tam": {
+              "x": 529,
+              "y": 28
+            },
+            "pivote": {
+              "x": 1,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "angulo": 34.6,
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "envelope_3",
+                  "rx": 11,
+                  "ry": 140,
+                  "rw": 105,
+                  "rh": 14,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 20,
+                    "y": 0,
+                    "z": 20,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Edge",
+            "ruta": "Envelope/Flap/Edge",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 66
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "envelope_4",
+                  "rx": 11,
+                  "ry": 211,
+                  "rw": 105,
+                  "rh": 34,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 24,
+                    "y": 0,
+                    "z": 24,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

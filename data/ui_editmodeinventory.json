@@ -1,0 +1,2619 @@
+{
+  "_fuente": "EditModeInventory de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "EditModeInventory",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "-40",
+      "y": "0"
+    },
+    "transform": null,
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "EditMode",
+    "transitionInSpeed": "3",
+    "transitionOutSpeed": "3",
+    "slideTransition": "0",
+    "transitionDistance": "100",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [
+      null,
+      null,
+      null
+    ],
+    "editMenu": {
+      "sortedPositions": [],
+      "optionPrefab": {
+        "nombre": "Image"
+      },
+      "scrollRect": "EditMode/Scroll View",
+      "content": "EditMode/Scroll View/Viewport/Content",
+      "inventorySpace": "EditMode/Filters/ScrollHousing/Scroll View/Text (TMP)"
+    },
+    "filterDisplay": "EditMode/Filters",
+    "draggable": "EditMode/Draggable",
+    "flipToggle": "EditMode/Scroll View/FlipToggle",
+    "gridToggle": "EditMode/Scroll View/GridToggle",
+    "filterGroup": "EditMode/Filters",
+    "empty": "EditMode/Scroll View/Empty",
+    "vState": "0",
+    "vTimer": "0"
+  },
+  "arbol": {
+    "nombre": "EditMode",
+    "ruta": "EditMode",
+    "activo": true,
+    "anclaMin": {
+      "x": 0,
+      "y": 0.5
+    },
+    "anclaMax": {
+      "x": 0,
+      "y": 0.5
+    },
+    "pos": {
+      "x": -40,
+      "y": 0
+    },
+    "tam": {
+      "x": 200,
+      "y": 1200
+    },
+    "pivote": {
+      "x": 0,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "Image",
+        "sprite": {
+          "nombre": "roundedRect",
+          "rx": 0,
+          "ry": 0,
+          "rw": 128,
+          "rh": 128,
+          "px": 0,
+          "py": 0,
+          "ppu": 128,
+          "borde": {
+            "x": 16,
+            "y": 16,
+            "z": 16,
+            "w": 16
+          }
+        },
+        "color": {
+          "r": 0.29412,
+          "g": 0.29412,
+          "b": 0.29412,
+          "a": 1
+        },
+        "modo": 1,
+        "rellenaCentro": true,
+        "conservaProporcion": false,
+        "recibeToque": true,
+        "ppuMult": 1
+      },
+      {
+        "tipo": "EditModeInventory",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "3",
+          "transitionOutSpeed": "3",
+          "slideTransition": "0",
+          "transitionDistance": "100",
+          "vState": "0",
+          "vTimer": "0"
+        }
+      },
+      {
+        "tipo": "CanvasGroup"
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "Search (1)",
+        "ruta": "EditMode/Search (1)",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 1
+        },
+        "pos": {
+          "x": 20,
+          "y": 72
+        },
+        "tam": {
+          "x": 110,
+          "y": 110
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "circle",
+              "rx": 0,
+              "ry": 128,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 64,
+                "y": 64,
+                "z": 64,
+                "w": 64
+              }
+            },
+            "color": {
+              "r": 0.29412,
+              "g": 0.29412,
+              "b": 0.29412,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": true,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "Searchbar",
+            "campos": {
+              "m_Name": "",
+              "searchBarWidth": "0",
+              "margin": "6",
+              "initialIconSize": "80",
+              "testTimer": "0"
+            }
+          },
+          {
+            "tipo": "TogglePro",
+            "campos": {
+              "m_Name": "",
+              "m_Transition": "1",
+              "toggleTransition": "0",
+              "transitionSpeed": "10",
+              "textOff": "",
+              "textOn": ""
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "SearchBarBacking",
+            "ruta": "EditMode/Search (1)/SearchBarBacking",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 64,
+              "y": 64
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "escala": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "circle62px",
+                  "rx": 65,
+                  "ry": 65,
+                  "rw": 62,
+                  "rh": 62,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 31,
+                    "y": 0,
+                    "z": 31,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 0.86792,
+                  "g": 0.86792,
+                  "b": 0.86792,
+                  "a": 1.69167
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "CanvasGroup"
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "InputField (TMP)",
+                "ruta": "EditMode/Search (1)/SearchBarBacking/InputField (TMP)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "circle30px",
+                      "rx": 1,
+                      "ry": 65,
+                      "rw": 30,
+                      "rh": 30,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 15,
+                        "y": 0,
+                        "z": 15,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 0
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "TMP_InputField",
+                    "campos": {
+                      "m_Name": "",
+                      "m_Transition": "1",
+                      "m_ScrollSensitivity": "1",
+                      "m_ContentType": "0",
+                      "m_InputType": "0",
+                      "m_KeyboardType": "0",
+                      "m_LineType": "0",
+                      "m_CharacterValidation": "0",
+                      "m_RegexValue": "",
+                      "m_GlobalPointSize": "14",
+                      "m_CharacterLimit": "0",
+                      "m_Text": "",
+                      "m_CaretBlinkRate": "0.85",
+                      "m_CaretWidth": "1",
+                      "m_LineLimit": "0"
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Text Area",
+                    "ruta": "EditMode/Search (1)/SearchBarBacking/InputField (TMP)/Text Area",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 24,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -80,
+                      "y": -13
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "RectMask2D",
+                        "campos": {
+                          "m_Name": ""
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Text",
+                        "ruta": "EditMode/Search (1)/SearchBarBacking/InputField (TMP)/Text Area/Text",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "TextMeshProUGUI",
+                            "texto": "\u200B",
+                            "tam": 32,
+                            "color": {
+                              "r": 0.29412,
+                              "g": 0.29412,
+                              "b": 0.29412,
+                              "a": 1
+                            },
+                            "alineacion": 65535,
+                            "autoTam": false,
+                            "tamMin": 18,
+                            "tamMax": 72,
+                            "estilo": 0,
+                            "margen": {
+                              "x": 0,
+                              "y": 0,
+                              "z": 0,
+                              "w": 0
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Icon",
+            "ruta": "EditMode/Search (1)/Icon",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 80,
+              "y": 80
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "search",
+                  "rx": 584.03,
+                  "ry": 265.08,
+                  "rw": 46.9,
+                  "rh": 47.9,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 0.60784,
+                  "g": 0.60784,
+                  "b": 0.60784,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Filters",
+        "ruta": "EditMode/Filters",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 1
+        },
+        "pos": {
+          "x": 138,
+          "y": 0
+        },
+        "tam": {
+          "x": 128,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "roundedRect",
+              "rx": 0,
+              "ry": 0,
+              "rw": 128,
+              "rh": 128,
+              "px": 0,
+              "py": 0,
+              "ppu": 128,
+              "borde": {
+                "x": 16,
+                "y": 16,
+                "z": 16,
+                "w": 16
+              }
+            },
+            "color": {
+              "r": 0.29412,
+              "g": 0.29412,
+              "b": 0.29412,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "FilterDisplay",
+            "campos": {
+              "m_Name": "",
+              "startPosition": "0",
+              "endPosition": "138",
+              "transitionSpeed": "3",
+              "cachedButtonSize": "0"
+            }
+          },
+          {
+            "tipo": "CanvasGroup"
+          },
+          {
+            "tipo": "RectMask2D",
+            "campos": {
+              "m_Name": ""
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "ScrollHousing",
+            "ruta": "EditMode/Filters/ScrollHousing",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -0.0018
+            },
+            "tam": {
+              "x": 0,
+              "y": -0.0035
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "hijos": [
+              {
+                "nombre": "Scroll View",
+                "ruta": "EditMode/Filters/ScrollHousing/Scroll View",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.5,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 8,
+                  "y": 14
+                },
+                "tam": {
+                  "x": 100,
+                  "y": -44
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "ScrollRect",
+                    "campos": {
+                      "m_Name": "",
+                      "m_MovementType": "1",
+                      "m_Elasticity": "0.1",
+                      "m_DecelerationRate": "0.135",
+                      "m_ScrollSensitivity": "1",
+                      "m_HorizontalScrollbarVisibility": "2",
+                      "m_VerticalScrollbarVisibility": "2",
+                      "m_HorizontalScrollbarSpacing": "-3",
+                      "m_VerticalScrollbarSpacing": "-3"
+                    }
+                  },
+                  {
+                    "tipo": "Image",
+                    "sprite": null,
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 0
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Viewport",
+                    "ruta": "EditMode/Filters/ScrollHousing/Scroll View/Viewport",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "hijos": [
+                      {
+                        "nombre": "Content",
+                        "ruta": "EditMode/Filters/ScrollHousing/Scroll View/Viewport/Content",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 1
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "VerticalLayoutGroup",
+                            "espaciado": 0,
+                            "alineacion": 0,
+                            "relleno": {
+                              "izq": 0,
+                              "der": 0,
+                              "arr": 0,
+                              "aba": 0
+                            }
+                          },
+                          {
+                            "tipo": "ContentSizeFitter",
+                            "ajusteH": 0,
+                            "ajusteV": 2
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Table",
+                            "ruta": "EditMode/Filters/ScrollHousing/Scroll View/Viewport/Content/Table",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 100,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "Image",
+                                "sprite": {
+                                  "nombre": "table",
+                                  "rx": 8.04,
+                                  "ry": 464,
+                                  "rw": 46.91,
+                                  "rh": 28.92,
+                                  "px": 0.5,
+                                  "py": 0.5,
+                                  "ppu": 100,
+                                  "borde": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "z": 0,
+                                    "w": 0
+                                  }
+                                },
+                                "color": {
+                                  "r": 0.63208,
+                                  "g": 0.63208,
+                                  "b": 0.63208,
+                                  "a": 1
+                                },
+                                "modo": 0,
+                                "rellenaCentro": true,
+                                "conservaProporcion": true,
+                                "recibeToque": true,
+                                "ppuMult": 1
+                              },
+                              {
+                                "tipo": "TogglePro",
+                                "campos": {
+                                  "m_Name": "",
+                                  "m_Transition": "1",
+                                  "toggleTransition": "1",
+                                  "transitionSpeed": "10",
+                                  "textOff": "",
+                                  "textOn": ""
+                                }
+                              },
+                              {
+                                "tipo": "LayoutElement",
+                                "MinWidth": -1,
+                                "MinHeight": -1,
+                                "PreferredWidth": -1,
+                                "PreferredHeight": -1,
+                                "FlexibleWidth": -1,
+                                "FlexibleHeight": -1
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "BlurBack",
+                        "ruta": "EditMode/Filters/ScrollHousing/Scroll View/Viewport/BlurBack",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 0
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 50
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 250
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 1
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "rectBlur",
+                              "rx": 0,
+                              "ry": 0,
+                              "rw": 128,
+                              "rh": 128,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 100,
+                              "borde": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 0.29412,
+                              "g": 0.29412,
+                              "b": 0.29412,
+                              "a": 1
+                            },
+                            "modo": 0,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": false,
+                            "ppuMult": 1
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "BlurFront",
+                        "ruta": "EditMode/Filters/ScrollHousing/Scroll View/Viewport/BlurFront",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": -50
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 250
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "rectBlur",
+                              "rx": 0,
+                              "ry": 0,
+                              "rw": 128,
+                              "rh": 128,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 100,
+                              "borde": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 0.29412,
+                              "g": 0.29412,
+                              "b": 0.29412,
+                              "a": 1
+                            },
+                            "modo": 0,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": false,
+                            "ppuMult": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "ViewportBlur",
+                    "ruta": "EditMode/Filters/ScrollHousing/Scroll View/ViewportBlur",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 76,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 96,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "rectBlur 1_6",
+                          "rx": 0,
+                          "ry": 48,
+                          "rw": 128,
+                          "rh": 32,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 48,
+                            "y": 0,
+                            "z": 48,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.29412,
+                          "g": 0.29412,
+                          "b": 0.29412,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Text (TMP)",
+                    "ruta": "EditMode/Filters/ScrollHousing/Scroll View/Text (TMP)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -6
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 30.01
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 1
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "1/1",
+                        "tam": 24,
+                        "color": {
+                          "r": 0.56078,
+                          "g": 0.65882,
+                          "b": 0.66275,
+                          "a": 1
+                        },
+                        "alineacion": 65535,
+                        "autoTam": true,
+                        "tamMin": 18,
+                        "tamMax": 24,
+                        "estilo": 0,
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Button",
+                    "ruta": "EditMode/Filters/ScrollHousing/Scroll View/Button",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -44
+                    },
+                    "tam": {
+                      "x": 10,
+                      "y": 96
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 1
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "roundedRect",
+                          "rx": 0,
+                          "ry": 0,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 16,
+                            "y": 16,
+                            "z": 16,
+                            "w": 16
+                          }
+                        },
+                        "color": {
+                          "r": 0.6,
+                          "g": 0.6,
+                          "b": 0.6,
+                          "a": 0
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "Button",
+                        "activo": true,
+                        "transicion": 1
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Image",
+                        "ruta": "EditMode/Filters/ScrollHousing/Scroll View/Button/Image",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "anclaMax": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 100,
+                          "y": 100
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "furnitureIcons_31",
+                              "rx": 75.03,
+                              "ry": 273,
+                              "rw": 39.9,
+                              "rh": 30.97,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 100,
+                              "borde": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 0.6,
+                              "g": 0.6,
+                              "b": 0.6,
+                              "a": 1
+                            },
+                            "modo": 0,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "SlideHousing",
+                "ruta": "EditMode/Filters/ScrollHousing/SlideHousing",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.5,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "pos": {
+                  "x": -40,
+                  "y": 14
+                },
+                "tam": {
+                  "x": 8,
+                  "y": -44
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "PrimitiveShapesSpheres_2",
+                      "rx": 32,
+                      "ry": 88,
+                      "rw": 8,
+                      "rh": 8,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 0,
+                        "y": 4,
+                        "z": 0,
+                        "w": 4
+                      }
+                    },
+                    "color": {
+                      "r": 0.40392,
+                      "g": 0.40392,
+                      "b": 0.40392,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": -1,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  },
+                  {
+                    "tipo": "SoftMask",
+                    "campos": {
+                      "m_Name": "",
+                      "_source": "0",
+                      "_spriteBorderMode": "0",
+                      "_spritePixelsPerUnitMultiplier": "1",
+                      "_raycastThreshold": "0"
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Slide",
+                    "ruta": "EditMode/Filters/ScrollHousing/SlideHousing/Slide",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -147.2001
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 294.4
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesSpheres_2",
+                          "rx": 32,
+                          "ry": 88,
+                          "rw": 8,
+                          "rh": 8,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 0,
+                            "y": 4,
+                            "z": 0,
+                            "w": 4
+                          }
+                        },
+                        "color": {
+                          "r": 0.72941,
+                          "g": 0.8902,
+                          "b": 0.75294,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "SoftMaskable",
+                        "campos": {
+                          "m_Name": ""
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Image",
+        "ruta": "EditMode/Image",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": -16,
+          "y": -16
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "roundedRect",
+              "rx": 0,
+              "ry": 0,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 16,
+                "y": 16,
+                "z": 16,
+                "w": 16
+              }
+            },
+            "color": {
+              "r": 0.56078,
+              "g": 0.65879,
+              "b": 0.66275,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Image (2)",
+            "ruta": "EditMode/Image/Image (2)",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": -16,
+              "y": -16
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0.50979,
+                  "g": 0.60016,
+                  "b": 0.60377,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Image (1)",
+            "ruta": "EditMode/Image/Image (1)",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": -8,
+              "y": -8
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "PrimitiveShapesDashedO_2",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 32,
+                    "y": 32,
+                    "z": 32,
+                    "w": 32
+                  }
+                },
+                "color": {
+                  "r": 0.43494,
+                  "g": 0.50633,
+                  "b": 0.50943,
+                  "a": 1
+                },
+                "modo": 2,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Scroll View",
+        "ruta": "EditMode/Scroll View",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 1
+        },
+        "pos": {
+          "x": 10,
+          "y": 0
+        },
+        "tam": {
+          "x": 160,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "Background",
+              "rx": 0.03,
+              "ry": 0.05,
+              "rw": 31.95,
+              "rh": 31.9,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 200,
+              "borde": {
+                "x": 10,
+                "y": 10,
+                "z": 10,
+                "w": 10
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "ScrollRect",
+            "campos": {
+              "m_Name": "",
+              "m_MovementType": "1",
+              "m_Elasticity": "0.1",
+              "m_DecelerationRate": "0.135",
+              "m_ScrollSensitivity": "1",
+              "m_HorizontalScrollbarVisibility": "2",
+              "m_VerticalScrollbarVisibility": "2",
+              "m_HorizontalScrollbarSpacing": "-3",
+              "m_VerticalScrollbarSpacing": "-3"
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Empty",
+            "ruta": "EditMode/Scroll View/Empty",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 100,
+              "y": 100
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "furnitureIcons_69",
+                  "rx": 391.05,
+                  "ry": 5.08,
+                  "rw": 49.93,
+                  "rh": 58.92,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0.11373
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Viewport",
+            "ruta": "EditMode/Scroll View/Viewport",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -18
+            },
+            "tam": {
+              "x": 0,
+              "y": -36
+            },
+            "pivote": {
+              "x": 0,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "UIMask",
+                  "rx": 2.03,
+                  "ry": 2.03,
+                  "rw": 27.95,
+                  "rh": 27.95,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 200,
+                  "borde": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "w": 10
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "Mask",
+                "campos": {
+                  "m_Name": ""
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Content",
+                "ruta": "EditMode/Scroll View/Viewport/Content",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "VerticalLayoutGroup",
+                    "espaciado": 24,
+                    "alineacion": 1,
+                    "relleno": {
+                      "izq": 16,
+                      "der": 16,
+                      "arr": 16,
+                      "aba": 16
+                    }
+                  },
+                  {
+                    "tipo": "ContentSizeFitter",
+                    "ajusteH": 0,
+                    "ajusteV": 2
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Image",
+                    "ruta": "EditMode/Scroll View/Viewport/Content/Image",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 120,
+                      "y": 120
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": null,
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 0
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "ButtonX",
+                        "campos": {
+                          "m_Name": "",
+                          "m_Transition": "1",
+                          "pressTimer": "0",
+                          "accelSpeed": "1",
+                          "longPressTimeMultiplier": "2",
+                          "orientation": "0"
+                        }
+                      },
+                      {
+                        "tipo": "LayoutElement",
+                        "MinWidth": -1,
+                        "MinHeight": -1,
+                        "PreferredWidth": -1,
+                        "PreferredHeight": -1,
+                        "FlexibleWidth": -1,
+                        "FlexibleHeight": -1
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Dot",
+                        "ruta": "EditMode/Scroll View/Viewport/Content/Image/Dot",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "anclaMax": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 100,
+                          "y": 100
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "circle",
+                              "rx": 0,
+                              "ry": 128,
+                              "rw": 128,
+                              "rh": 128,
+                              "px": 0.497,
+                              "py": -0.19396,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 64,
+                                "y": 64,
+                                "z": 64,
+                                "w": 64
+                              }
+                            },
+                            "color": {
+                              "r": 0.58039,
+                              "g": 0.66667,
+                              "b": 0.67059,
+                              "a": 1
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "Icon",
+                        "ruta": "EditMode/Scroll View/Viewport/Content/Image/Icon",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "anclaMax": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 128,
+                          "y": 128
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": null,
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            },
+                            "modo": 0,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": false,
+                            "ppuMult": 1
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "QuantityBacking",
+                        "ruta": "EditMode/Scroll View/Viewport/Content/Image/QuantityBacking",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 1,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 0
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 15
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 30
+                        },
+                        "pivote": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "circle30px",
+                              "rx": 1,
+                              "ry": 65,
+                              "rw": 30,
+                              "rh": 30,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 15,
+                                "y": 0,
+                                "z": 15,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 0.83137,
+                              "g": 0.93726,
+                              "b": 0.9451,
+                              "a": 1
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": false,
+                            "ppuMult": 1
+                          },
+                          {
+                            "tipo": "HorizontalLayoutGroup",
+                            "espaciado": 0,
+                            "alineacion": 0,
+                            "relleno": {
+                              "izq": 6,
+                              "der": 6,
+                              "arr": 0,
+                              "aba": 0
+                            }
+                          },
+                          {
+                            "tipo": "ContentSizeFitter",
+                            "ajusteH": 2,
+                            "ajusteV": 0
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Text (TMP)",
+                            "ruta": "EditMode/Scroll View/Viewport/Content/Image/QuantityBacking/Text (TMP)",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "TextMeshProUGUI",
+                                "texto": "99",
+                                "tam": 22.07,
+                                "color": {
+                                  "r": 0.30588,
+                                  "g": 0.30588,
+                                  "b": 0.30588,
+                                  "a": 1
+                                },
+                                "alineacion": 65535,
+                                "autoTam": false,
+                                "tamMin": 18,
+                                "tamMax": 72,
+                                "estilo": 0,
+                                "margen": {
+                                  "x": 0,
+                                  "y": 0,
+                                  "z": 0,
+                                  "w": 0
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "FlipToggle",
+            "ruta": "EditMode/Scroll View/FlipToggle",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": -10
+            },
+            "tam": {
+              "x": -20,
+              "y": 60
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TogglePro",
+                "campos": {
+                  "m_Name": "",
+                  "m_Transition": "1",
+                  "toggleTransition": "1",
+                  "transitionSpeed": "10",
+                  "textOff": "",
+                  "textOn": ""
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Background",
+                "ruta": "EditMode/Scroll View/FlipToggle/Background",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 1.9983,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -4.0034,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 16,
+                        "y": 16,
+                        "z": 16,
+                        "w": 16
+                      }
+                    },
+                    "color": {
+                      "r": 0.29412,
+                      "g": 0.29412,
+                      "b": 0.29412,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Checkmark",
+                    "ruta": "EditMode/Scroll View/FlipToggle/Background/Checkmark",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": 30.0002,
+                      "y": 0.0002
+                    },
+                    "tam": {
+                      "x": 50,
+                      "y": 50
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "refresh",
+                          "rx": 588.03,
+                          "ry": 396.08,
+                          "rw": 42.93,
+                          "rh": 40.9,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.56078,
+                          "g": 0.65882,
+                          "b": 0.66275,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Text (TMP)",
+                    "ruta": "EditMode/Scroll View/FlipToggle/Background/Text (TMP)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 26,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -68,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "Flip",
+                        "tam": 36,
+                        "color": {
+                          "r": 0.56078,
+                          "g": 0.65882,
+                          "b": 0.66275,
+                          "a": 1
+                        },
+                        "alineacion": 65535,
+                        "autoTam": true,
+                        "tamMin": 18,
+                        "tamMax": 36,
+                        "estilo": 0,
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "GridToggle",
+            "ruta": "EditMode/Scroll View/GridToggle",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": -75
+            },
+            "tam": {
+              "x": -20,
+              "y": 60
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TogglePro",
+                "campos": {
+                  "m_Name": "",
+                  "m_Transition": "1",
+                  "toggleTransition": "0",
+                  "transitionSpeed": "10",
+                  "textOff": "",
+                  "textOn": ""
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Background",
+                "ruta": "EditMode/Scroll View/GridToggle/Background",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 1.9983,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -4.0034,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 16,
+                        "y": 16,
+                        "z": 16,
+                        "w": 16
+                      }
+                    },
+                    "color": {
+                      "r": 0.29412,
+                      "g": 0.29412,
+                      "b": 0.29412,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Checkmark",
+                    "ruta": "EditMode/Scroll View/GridToggle/Background/Checkmark",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": 5,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 50,
+                      "y": 50
+                    },
+                    "pivote": {
+                      "x": 0,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "grid",
+                          "rx": 515.08,
+                          "ry": 139.08,
+                          "rw": 57.85,
+                          "rh": 41.9,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.56078,
+                          "g": 0.65882,
+                          "b": 0.66275,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Text (TMP)",
+                    "ruta": "EditMode/Scroll View/GridToggle/Background/Text (TMP)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 26,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -68,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "Grid",
+                        "tam": 34.15,
+                        "color": {
+                          "r": 0.56078,
+                          "g": 0.65882,
+                          "b": 0.66275,
+                          "a": 1
+                        },
+                        "alineacion": 65535,
+                        "autoTam": true,
+                        "tamMin": 18,
+                        "tamMax": 36,
+                        "estilo": 0,
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Draggable",
+        "ruta": "EditMode/Draggable",
+        "activo": false,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 10,
+          "y": 656
+        },
+        "tam": {
+          "x": 128,
+          "y": 128
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": null,
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          }
+        ]
+      }
+    ]
+  }
+}

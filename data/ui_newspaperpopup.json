@@ -1,0 +1,1238 @@
+{
+  "_fuente": "NewspaperPopup de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "NewspaperPopup",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": null,
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "Newspaper",
+    "transitionInSpeed": "2",
+    "transitionOutSpeed": "2",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "eventPic": "Newspaper/GameObject/GameObject/SquareImage",
+    "eventPicHorizontal": "Newspaper/GameObject/HorizontalImage",
+    "eventPicVertical": "Newspaper/GameObject/GameObject/VerticalImage",
+    "headline": "Newspaper/GameObject/GameObject/Headline",
+    "subheadline": "Newspaper/GameObject/Subheadline",
+    "date": "Newspaper/GameObject/Date",
+    "rotateCurve": {
+      "m_Curve": [
+        {
+          "time": "0",
+          "value": "0",
+          "inSlope": "1.9528623",
+          "outSlope": "1.9528623",
+          "weightedMode": "0",
+          "inWeight": "0",
+          "outWeight": "0.062068958"
+        },
+        {
+          "time": "1",
+          "value": "1",
+          "inSlope": "-0.8145617",
+          "outSlope": "-0.8145617",
+          "weightedMode": "0",
+          "inWeight": "0.087931156",
+          "outWeight": "0"
+        }
+      ],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    }
+  },
+  "arbol": {
+    "nombre": "Newspaper",
+    "ruta": "Newspaper",
+    "activo": true,
+    "anclaMin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "anclaMax": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "tam": {
+      "x": 0,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "CanvasGroup"
+      },
+      {
+        "tipo": "NewspaperPopup",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "2",
+          "transitionOutSpeed": "2",
+          "slideTransition": "0",
+          "transitionDistance": "10"
+        }
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "GameObject",
+        "ruta": "Newspaper/GameObject",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 766.8,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "ContentSizeFitter",
+            "ajusteH": 0,
+            "ajusteV": 2
+          },
+          {
+            "tipo": "VerticalLayoutGroup",
+            "espaciado": 16,
+            "alineacion": 0,
+            "relleno": {
+              "izq": 16,
+              "der": 16,
+              "arr": 27,
+              "aba": 16
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Backing",
+            "ruta": "Newspaper/GameObject/Backing",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 84,
+              "y": 84
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "newspaperBacking",
+                  "rx": 0,
+                  "ry": 1.08,
+                  "rw": 256,
+                  "rh": 253.85,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 32,
+                    "y": 49,
+                    "z": 32,
+                    "w": 121
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "Date",
+            "ruta": "Newspaper/GameObject/Date",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": -16,
+              "y": 0
+            },
+            "tam": {
+              "x": -32,
+              "y": 57.8998
+            },
+            "pivote": {
+              "x": 1,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "18 Aug 2021",
+                "tam": 36,
+                "color": {
+                  "r": 0.30196,
+                  "g": 0.30196,
+                  "b": 0.30196,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 18,
+                "tamMax": 72,
+                "estilo": 0,
+                "fuente": "Vollkorn-Medium SDF",
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "The Daily Carrot",
+            "ruta": "Newspaper/GameObject/The Daily Carrot",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "\u003Csize=120\u003ET\u003C/size\u003EHE \u003Csize=120\u003ED\u003C/size\u003EAILY \u003Csize=120\u003EC\u003C/size\u003EARROT",
+                "tam": 96,
+                "color": {
+                  "r": 0.30196,
+                  "g": 0.30196,
+                  "b": 0.30196,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 18,
+                "tamMax": 72,
+                "estilo": 0,
+                "fuente": "euphorigenic SDF",
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Line",
+            "ruta": "Newspaper/GameObject/Line",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect_4px",
+                  "rx": 74,
+                  "ry": 1,
+                  "rw": 9,
+                  "rh": 9,
+                  "px": 0,
+                  "py": 0,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 4,
+                    "y": 4,
+                    "z": 4,
+                    "w": 4
+                  }
+                },
+                "color": {
+                  "r": 0.3098,
+                  "g": 0.3098,
+                  "b": 0.3098,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "HorizontalImage",
+            "ruta": "Newspaper/GameObject/HorizontalImage",
+            "activo": false,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 383.4,
+              "y": -211.01
+            },
+            "tam": {
+              "x": 734.8,
+              "y": 300
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "yorishopopen",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": 300,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "GameObject",
+            "ruta": "Newspaper/GameObject/GameObject",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "HorizontalLayoutGroup",
+                "espaciado": 8,
+                "alineacion": 4,
+                "relleno": {
+                  "izq": 0,
+                  "der": 0,
+                  "arr": 0,
+                  "aba": 0
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "VerticalImage",
+                "ruta": "Newspaper/GameObject/GameObject/VerticalImage",
+                "activo": false,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 150,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 300,
+                  "y": 600
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": null,
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": true,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": 300,
+                    "MinHeight": 600,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": -1,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ]
+              },
+              {
+                "nombre": "SquareImage",
+                "ruta": "Newspaper/GameObject/GameObject/SquareImage",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "robbery",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 100,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": true,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": 300,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": -1,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ]
+              },
+              {
+                "nombre": "Headline",
+                "ruta": "Newspaper/GameObject/GameObject/Headline",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "\u5C24\u91CC\u5546\u5E97\u91CD\u65B0\u5F00\u5F20\u9686\u91CD\u767B\u573A",
+                    "tam": 69.8,
+                    "color": {
+                      "r": 0.30196,
+                      "g": 0.30196,
+                      "b": 0.30196,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": true,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "fuente": "Vollkorn-Medium SDF",
+                    "margen": {
+                      "x": 8,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": 426,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": 300,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Line",
+            "ruta": "Newspaper/GameObject/Line",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect_4px",
+                  "rx": 74,
+                  "ry": 1,
+                  "rw": 9,
+                  "rh": 9,
+                  "px": 0,
+                  "py": 0,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 4,
+                    "y": 4,
+                    "z": 4,
+                    "w": 4
+                  }
+                },
+                "color": {
+                  "r": 0.3098,
+                  "g": 0.3098,
+                  "b": 0.3098,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Line",
+            "ruta": "Newspaper/GameObject/Line",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": 8,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image (8)",
+                "ruta": "Newspaper/GameObject/Line/Image (8)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0.8,
+                  "y": 1
+                },
+                "pos": {
+                  "x": -4,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -8,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect_4px",
+                      "rx": 74,
+                      "ry": 1,
+                      "rw": 9,
+                      "rh": 9,
+                      "px": 0,
+                      "py": 0,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 4,
+                        "y": 4,
+                        "z": 4,
+                        "w": 4
+                      }
+                    },
+                    "color": {
+                      "r": 0.3098,
+                      "g": 0.3098,
+                      "b": 0.3098,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ]
+              },
+              {
+                "nombre": "Image (9)",
+                "ruta": "Newspaper/GameObject/Line/Image (9)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.8,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 4,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -8,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect_4px",
+                      "rx": 74,
+                      "ry": 1,
+                      "rw": 9,
+                      "rh": 9,
+                      "px": 0,
+                      "py": 0,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 4,
+                        "y": 4,
+                        "z": 4,
+                        "w": 4
+                      }
+                    },
+                    "color": {
+                      "r": 0.3098,
+                      "g": 0.3098,
+                      "b": 0.3098,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Line",
+            "ruta": "Newspaper/GameObject/Line",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": 8,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image (8)",
+                "ruta": "Newspaper/GameObject/Line/Image (8)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0.2,
+                  "y": 1
+                },
+                "pos": {
+                  "x": -3,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -6,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect_4px",
+                      "rx": 74,
+                      "ry": 1,
+                      "rw": 9,
+                      "rh": 9,
+                      "px": 0,
+                      "py": 0,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 4,
+                        "y": 4,
+                        "z": 4,
+                        "w": 4
+                      }
+                    },
+                    "color": {
+                      "r": 0.3098,
+                      "g": 0.3098,
+                      "b": 0.3098,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ]
+              },
+              {
+                "nombre": "Image (9)",
+                "ruta": "Newspaper/GameObject/Line/Image (9)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.2,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 4,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -8,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect_4px",
+                      "rx": 74,
+                      "ry": 1,
+                      "rw": 9,
+                      "rh": 9,
+                      "px": 0,
+                      "py": 0,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 4,
+                        "y": 4,
+                        "z": 4,
+                        "w": 4
+                      }
+                    },
+                    "color": {
+                      "r": 0.3098,
+                      "g": 0.3098,
+                      "b": 0.3098,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Subheadline",
+            "ruta": "Newspaper/GameObject/Subheadline",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "Holding down on the phone button can help you open apps quickly!",
+                "tam": 36,
+                "color": {
+                  "r": 0.30196,
+                  "g": 0.30196,
+                  "b": 0.30196,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 18,
+                "tamMax": 72,
+                "estilo": 0,
+                "fuente": "Vollkorn-Medium SDF",
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": 700,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "Line",
+            "ruta": "Newspaper/GameObject/Line",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect_4px",
+                  "rx": 74,
+                  "ry": 1,
+                  "rw": 9,
+                  "rh": 9,
+                  "px": 0,
+                  "py": 0,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 4,
+                    "y": 4,
+                    "z": 4,
+                    "w": 4
+                  }
+                },
+                "color": {
+                  "r": 0.3098,
+                  "g": 0.3098,
+                  "b": 0.3098,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,384 @@
+{
+  "_fuente": "ChoicePopup de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "ChoicePopup",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": "Dialogue Replies",
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "Dialogue Replies",
+    "transitionInSpeed": "2",
+    "transitionOutSpeed": "2",
+    "slideTransition": "3",
+    "transitionDistance": "100",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "maxWidth": "1000",
+    "responses": {
+      "sortedPositions": [],
+      "optionPrefab": {
+        "nombre": "Response"
+      },
+      "scrollRect": null,
+      "content": "Dialogue Replies"
+    }
+  },
+  "arbol": {
+    "nombre": "Dialogue Replies",
+    "ruta": "Dialogue Replies",
+    "activo": true,
+    "anclaMin": {
+      "x": 0,
+      "y": 0
+    },
+    "anclaMax": {
+      "x": 1,
+      "y": 0
+    },
+    "pos": {
+      "x": 0,
+      "y": -100
+    },
+    "tam": {
+      "x": 0,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "VerticalLayoutGroup",
+        "espaciado": 32,
+        "alineacion": 7,
+        "relleno": {
+          "izq": 32,
+          "der": 32,
+          "arr": 0,
+          "aba": 0
+        }
+      },
+      {
+        "tipo": "ContentSizeFitter",
+        "ajusteH": 0,
+        "ajusteV": 2
+      },
+      {
+        "tipo": "CanvasGroup"
+      },
+      {
+        "tipo": "ChoicePopup",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "2",
+          "transitionOutSpeed": "2",
+          "slideTransition": "3",
+          "transitionDistance": "100",
+          "maxWidth": "1000"
+        }
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "Response",
+        "ruta": "Dialogue Replies/Response",
+        "activo": false,
+        "anclaMin": {
+          "x": 0,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 0,
+          "y": 1
+        },
+        "pos": {
+          "x": 540,
+          "y": -38.505
+        },
+        "tam": {
+          "x": 1016,
+          "y": 77.01
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "roundedRect",
+              "rx": 0,
+              "ry": 0,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 16,
+                "y": 16,
+                "z": 16,
+                "w": 16
+              }
+            },
+            "color": {
+              "r": 0.94118,
+              "g": 0.92941,
+              "b": 0.85882,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "HorizontalLayoutGroup",
+            "espaciado": 0,
+            "alineacion": 0,
+            "relleno": {
+              "izq": 16,
+              "der": 8,
+              "arr": 16,
+              "aba": 16
+            }
+          },
+          {
+            "tipo": "ButtonPro",
+            "campos": {
+              "m_Name": "",
+              "transitionSpeed": "5"
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Dashed Line",
+            "ruta": "Dialogue Replies/Response/Dashed Line",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": -8,
+              "y": -8
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "PrimitiveShapesDashedO_2",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 32,
+                    "y": 32,
+                    "z": 32,
+                    "w": 32
+                  }
+                },
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0.11373
+                },
+                "modo": 2,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "Response Text",
+            "ruta": "Dialogue Replies/Response/Response Text",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 512,
+              "y": -38.505
+            },
+            "tam": {
+              "x": 992,
+              "y": 45.01
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "\u003Csprite index=53 tint=1\u003ESure. Why not?",
+                "tam": 36,
+                "color": {
+                  "r": 0.30196,
+                  "g": 0.29804,
+                  "b": 0.30196,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 18,
+                "tamMax": 72,
+                "estilo": 0,
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 128,
+                  "w": 0
+                }
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": 0,
+                "PreferredWidth": 1200,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "ItemIcon",
+            "ruta": "Dialogue Replies/Response/ItemIcon",
+            "activo": false,
+            "anclaMin": {
+              "x": 1,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 0.5
+            },
+            "pos": {
+              "x": -16,
+              "y": 0
+            },
+            "tam": {
+              "x": 100,
+              "y": 100
+            },
+            "pivote": {
+              "x": 1,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              },
+              {
+                "tipo": "Image",
+                "sprite": null,
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

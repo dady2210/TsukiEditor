@@ -1,0 +1,883 @@
+{
+  "_fuente": "GiftboxPopup de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "GiftboxPopup",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": null,
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": "GiftBox",
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "GiftBox",
+    "transitionInSpeed": "2",
+    "transitionOutSpeed": "2",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": [
+          {
+            "m_Target": "GiftBox",
+            "m_TargetAssemblyTypeName": "UnityEngine.Animator, UnityEngine",
+            "m_MethodName": "SetTrigger",
+            "m_Mode": "5",
+            "m_Arguments": {
+              "m_ObjectArgument": null,
+              "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+              "m_IntArgument": "0",
+              "m_FloatArgument": "0",
+              "m_StringArgument": "ResetToIdle"
+            },
+            "m_CallState": "2"
+          }
+        ]
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "boxAnimator": "GiftBox",
+    "rewards": [
+      "GiftBox/Reward",
+      "GiftBox/Reward2",
+      "GiftBox/Reward3"
+    ],
+    "furnRewards": []
+  },
+  "arbol": {
+    "nombre": "GiftBox",
+    "ruta": "GiftBox",
+    "activo": true,
+    "anclaMin": {
+      "x": 0,
+      "y": 0
+    },
+    "anclaMax": {
+      "x": 1,
+      "y": 1
+    },
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "tam": {
+      "x": 0,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "Image",
+        "sprite": null,
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0.32549
+        },
+        "modo": 0,
+        "rellenaCentro": true,
+        "conservaProporcion": false,
+        "recibeToque": true,
+        "ppuMult": 1
+      },
+      {
+        "tipo": "CanvasGroup"
+      },
+      {
+        "tipo": "Animator"
+      },
+      {
+        "tipo": "Button",
+        "activo": true,
+        "transicion": 0
+      },
+      {
+        "tipo": "GiftboxPopup",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "2",
+          "transitionOutSpeed": "2",
+          "slideTransition": "0",
+          "transitionDistance": "10"
+        }
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "GachaBall",
+        "ruta": "GiftBox/GachaBall",
+        "activo": true,
+        "escala": {
+          "x": 140.8451,
+          "y": 140.8451
+        },
+        "comp": [
+          {
+            "tipo": "SortingGroup"
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "HardCircle",
+            "ruta": "GiftBox/GachaBall/HardCircle",
+            "activo": false,
+            "escala": {
+              "x": 4.4,
+              "y": 4.4
+            },
+            "angulo": 180.183,
+            "comp": [
+              {
+                "tipo": "SpriteRenderer"
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Circle (1)",
+                "ruta": "GiftBox/GachaBall/HardCircle/Circle (1)",
+                "activo": true,
+                "comp": [
+                  {
+                    "tipo": "SpriteRenderer"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "HardCircle2",
+            "ruta": "GiftBox/GachaBall/HardCircle2",
+            "activo": false,
+            "comp": [
+              {
+                "tipo": "SpriteRenderer"
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Circle (2)",
+                "ruta": "GiftBox/GachaBall/HardCircle2/Circle (2)",
+                "activo": true,
+                "angulo": 180.183,
+                "comp": [
+                  {
+                    "tipo": "SpriteRenderer"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "HardCircle3",
+            "ruta": "GiftBox/GachaBall/HardCircle3",
+            "activo": false,
+            "angulo": 180.183,
+            "comp": [
+              {
+                "tipo": "SpriteRenderer"
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Circle (3)",
+                "ruta": "GiftBox/GachaBall/HardCircle3/Circle (3)",
+                "activo": true,
+                "angulo": 180.183,
+                "comp": [
+                  {
+                    "tipo": "SpriteRenderer"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Circle",
+            "ruta": "GiftBox/GachaBall/Circle",
+            "activo": false,
+            "angulo": 180.183,
+            "comp": [
+              {
+                "tipo": "SpriteRenderer"
+              }
+            ]
+          },
+          {
+            "nombre": "Shine",
+            "ruta": "GiftBox/GachaBall/Shine",
+            "activo": false,
+            "escala": {
+              "x": 1.34,
+              "y": 1.72
+            },
+            "angulo": 180.183,
+            "comp": [
+              {
+                "tipo": "SpriteRenderer"
+              }
+            ]
+          },
+          {
+            "nombre": "gachaLine (12)",
+            "ruta": "GiftBox/GachaBall/gachaLine (12)",
+            "activo": false,
+            "escala": {
+              "x": 2,
+              "y": 2
+            },
+            "angulo": -36.43,
+            "comp": [
+              {
+                "tipo": "MeshFilter"
+              },
+              {
+                "tipo": "MeshRenderer"
+              }
+            ]
+          },
+          {
+            "nombre": "gachaLine (13)",
+            "ruta": "GiftBox/GachaBall/gachaLine (13)",
+            "activo": false,
+            "escala": {
+              "x": 2,
+              "y": 2
+            },
+            "angulo": -36.43,
+            "comp": [
+              {
+                "tipo": "MeshFilter"
+              },
+              {
+                "tipo": "MeshRenderer"
+              }
+            ]
+          },
+          {
+            "nombre": "gachaLine (14)",
+            "ruta": "GiftBox/GachaBall/gachaLine (14)",
+            "activo": false,
+            "escala": {
+              "x": 2,
+              "y": 2
+            },
+            "angulo": -36.43,
+            "comp": [
+              {
+                "tipo": "MeshFilter"
+              },
+              {
+                "tipo": "MeshRenderer"
+              }
+            ]
+          },
+          {
+            "nombre": "Gift_Box",
+            "ruta": "GiftBox/GachaBall/Gift_Box",
+            "activo": true,
+            "escala": {
+              "x": 2,
+              "y": 2
+            },
+            "hijos": [
+              {
+                "nombre": "Gift_Box_Cover",
+                "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover",
+                "activo": true,
+                "comp": [
+                  {
+                    "tipo": "MeshFilter"
+                  },
+                  {
+                    "tipo": "MeshRenderer"
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Gift_Box_Cover_outline",
+                    "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Gift_Box_Cover_outline",
+                    "activo": true,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Ribbons",
+                    "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons",
+                    "activo": true,
+                    "hijos": [
+                      {
+                        "nombre": "Ribbon_knot",
+                        "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons/Ribbon_knot",
+                        "activo": true,
+                        "comp": [
+                          {
+                            "tipo": "MeshFilter"
+                          },
+                          {
+                            "tipo": "MeshRenderer"
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Ribbon_knot_outline",
+                            "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons/Ribbon_knot/Ribbon_knot_outline",
+                            "activo": true,
+                            "comp": [
+                              {
+                                "tipo": "MeshFilter"
+                              },
+                              {
+                                "tipo": "MeshRenderer"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "ribbon_1",
+                        "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons/ribbon_1",
+                        "activo": true,
+                        "comp": [
+                          {
+                            "tipo": "MeshFilter"
+                          },
+                          {
+                            "tipo": "MeshRenderer"
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "ribbon_outline_1",
+                            "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons/ribbon_1/ribbon_outline_1",
+                            "activo": true,
+                            "comp": [
+                              {
+                                "tipo": "MeshFilter"
+                              },
+                              {
+                                "tipo": "MeshRenderer"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "ribbon_2",
+                        "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons/ribbon_2",
+                        "activo": true,
+                        "comp": [
+                          {
+                            "tipo": "MeshFilter"
+                          },
+                          {
+                            "tipo": "MeshRenderer"
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "ribbon_outline_2",
+                            "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons/ribbon_2/ribbon_outline_2",
+                            "activo": true,
+                            "comp": [
+                              {
+                                "tipo": "MeshFilter"
+                              },
+                              {
+                                "tipo": "MeshRenderer"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "ribbon_3",
+                        "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons/ribbon_3",
+                        "activo": true,
+                        "comp": [
+                          {
+                            "tipo": "MeshFilter"
+                          },
+                          {
+                            "tipo": "MeshRenderer"
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "ribbon_outline_3",
+                            "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons/ribbon_3/ribbon_outline_3",
+                            "activo": true,
+                            "comp": [
+                              {
+                                "tipo": "MeshFilter"
+                              },
+                              {
+                                "tipo": "MeshRenderer"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "ribbon_4",
+                        "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons/ribbon_4",
+                        "activo": true,
+                        "comp": [
+                          {
+                            "tipo": "MeshFilter"
+                          },
+                          {
+                            "tipo": "MeshRenderer"
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "ribbon_outline_4",
+                            "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box_Cover/Ribbons/ribbon_4/ribbon_outline_4",
+                            "activo": true,
+                            "comp": [
+                              {
+                                "tipo": "MeshFilter"
+                              },
+                              {
+                                "tipo": "MeshRenderer"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Gift_Box",
+                "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box",
+                "activo": true,
+                "comp": [
+                  {
+                    "tipo": "MeshFilter"
+                  },
+                  {
+                    "tipo": "MeshRenderer"
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Gift_Box_outline",
+                    "ruta": "GiftBox/GachaBall/Gift_Box/Gift_Box/Gift_Box_outline",
+                    "activo": true,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Backing",
+        "ruta": "GiftBox/Backing",
+        "activo": false,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 0,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": null,
+            "color": {
+              "r": 0.81176,
+              "g": 0.39608,
+              "b": 0.39608,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          }
+        ]
+      },
+      {
+        "nombre": "Pattern",
+        "ruta": "GiftBox/Pattern",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 0,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "FixTileRawImage",
+            "campos": {
+              "m_Name": "",
+              "tileScale": "0.75",
+              "texWidth": "256",
+              "texHeight": "256"
+            }
+          }
+        ]
+      },
+      {
+        "nombre": "Blackout",
+        "ruta": "GiftBox/Blackout",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 0,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": null,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.32549
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          }
+        ]
+      },
+      {
+        "nombre": "Sparkles",
+        "ruta": "GiftBox/Sparkles",
+        "activo": false,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": -101.56
+        },
+        "tam": {
+          "x": 100,
+          "y": 100
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "ParticleSystem"
+          },
+          {
+            "tipo": "ParticleSystemRenderer"
+          }
+        ]
+      },
+      {
+        "nombre": "Reward",
+        "ruta": "GiftBox/Reward",
+        "activo": false,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": -120
+        },
+        "tam": {
+          "x": 109.2267,
+          "y": 109.2267
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 2,
+          "y": 2
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": null,
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "UIEffect",
+            "campos": {
+              "m_Name": "",
+              "m_Version": "300",
+              "m_EffectFactor": "1",
+              "m_ColorFactor": "1",
+              "m_BlurFactor": "1",
+              "m_EffectMode": "0",
+              "m_ColorMode": "1",
+              "m_BlurMode": "0",
+              "m_ShadowBlur": "1",
+              "m_ShadowStyle": "0"
+            }
+          }
+        ]
+      },
+      {
+        "nombre": "Reward2",
+        "ruta": "GiftBox/Reward2",
+        "activo": false,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": -255,
+          "y": -32
+        },
+        "tam": {
+          "x": 109.2267,
+          "y": 109.2267
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 2,
+          "y": 2
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": null,
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "UIEffect",
+            "campos": {
+              "m_Name": "",
+              "m_Version": "300",
+              "m_EffectFactor": "1",
+              "m_ColorFactor": "1",
+              "m_BlurFactor": "1",
+              "m_EffectMode": "0",
+              "m_ColorMode": "1",
+              "m_BlurMode": "0",
+              "m_ShadowBlur": "1",
+              "m_ShadowStyle": "0"
+            }
+          }
+        ]
+      },
+      {
+        "nombre": "Reward3",
+        "ruta": "GiftBox/Reward3",
+        "activo": false,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 255,
+          "y": -32
+        },
+        "tam": {
+          "x": 109.2267,
+          "y": 109.2267
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 2,
+          "y": 2
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": null,
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "UIEffect",
+            "campos": {
+              "m_Name": "",
+              "m_Version": "300",
+              "m_EffectFactor": "1",
+              "m_ColorFactor": "1",
+              "m_BlurFactor": "1",
+              "m_EffectMode": "0",
+              "m_ColorMode": "1",
+              "m_BlurMode": "0",
+              "m_ShadowBlur": "1",
+              "m_ShadowStyle": "0"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

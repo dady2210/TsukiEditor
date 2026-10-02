@@ -1,0 +1,3232 @@
+{
+  "_fuente": "MenuBar de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "MenuBar",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": null,
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "UIBar",
+    "transitionInSpeed": "2",
+    "transitionOutSpeed": "2",
+    "slideTransition": "3",
+    "transitionDistance": "140",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "state": "0",
+    "buttons": [
+      "UIBar/Buttons/Items",
+      "UIBar/Buttons/Edit",
+      "UIBar/Buttons/HarvestAll",
+      "UIBar/Buttons/Hoe",
+      "UIBar/Buttons/PlantCarrots",
+      "UIBar/Buttons/Phone",
+      "UIBar/Buttons/Options"
+    ]
+  },
+  "arbol": {
+    "nombre": "UIBar",
+    "ruta": "UIBar",
+    "activo": true,
+    "anclaMin": {
+      "x": 0,
+      "y": 0
+    },
+    "anclaMax": {
+      "x": 1,
+      "y": 0
+    },
+    "pos": {
+      "x": 0,
+      "y": -140
+    },
+    "tam": {
+      "x": -16,
+      "y": 140
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "MenuBar",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "2",
+          "transitionOutSpeed": "2",
+          "slideTransition": "3",
+          "transitionDistance": "140",
+          "state": "0"
+        }
+      },
+      {
+        "tipo": "CanvasGroup"
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "Menu",
+        "ruta": "UIBar/Menu",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 6
+        },
+        "tam": {
+          "x": -24,
+          "y": -12
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "HorizontalLayoutGroup",
+            "espaciado": 8,
+            "alineacion": 4,
+            "relleno": {
+              "izq": 8,
+              "der": 8,
+              "arr": 8,
+              "aba": 8
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Items",
+            "ruta": "UIBar/Menu/Items",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "nombre": "Edit",
+            "ruta": "UIBar/Menu/Edit",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "nombre": "HarvestAll",
+            "ruta": "UIBar/Menu/HarvestAll",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "nombre": "Hoe",
+            "ruta": "UIBar/Menu/Hoe",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "nombre": "PlantCarrots",
+            "ruta": "UIBar/Menu/PlantCarrots",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "nombre": "Phone",
+            "ruta": "UIBar/Menu/Phone",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          {
+            "nombre": "Options",
+            "ruta": "UIBar/Menu/Options",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            }
+          }
+        ]
+      },
+      {
+        "nombre": "ItemPool",
+        "ruta": "UIBar/ItemPool",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 120
+        },
+        "tam": {
+          "x": 0,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "hijos": [
+          {
+            "nombre": "TempItem",
+            "ruta": "UIBar/ItemPool/TempItem",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": -342.2,
+              "y": 128.1
+            },
+            "tam": {
+              "x": 109.2267,
+              "y": 109.2267
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "escala": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": null,
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "TempItem (1)",
+            "ruta": "UIBar/ItemPool/TempItem (1)",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": -342.2,
+              "y": 128.1
+            },
+            "tam": {
+              "x": 109.2267,
+              "y": 109.2267
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "escala": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": null,
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Buttons",
+        "ruta": "UIBar/Buttons",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": -16,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "hijos": [
+          {
+            "nombre": "Items",
+            "ruta": "UIBar/Buttons/Items",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 118,
+              "y": -76
+            },
+            "tam": {
+              "x": 110,
+              "y": 110
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "backpackSprites_3",
+                  "rx": 202,
+                  "ry": 249,
+                  "rw": 118,
+                  "rh": 132,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "ButtonX",
+                "campos": {
+                  "m_Name": "",
+                  "m_Transition": "1",
+                  "pressTimer": "0",
+                  "accelSpeed": "1",
+                  "longPressTimeMultiplier": "2",
+                  "orientation": "0"
+                }
+              },
+              {
+                "tipo": "BagButton",
+                "campos": {
+                  "m_Name": "",
+                  "bounce": "0"
+                }
+              },
+              {
+                "tipo": "UIShadow",
+                "campos": {
+                  "m_Name": "",
+                  "m_BlurFactor": "1",
+                  "m_Style": "4"
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Bag Transmog",
+                "ruta": "UIBar/Buttons/Items/Bag Transmog",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.5,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0.5,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 160
+                },
+                "tam": {
+                  "x": 140,
+                  "y": 300
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "escala": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "PrimitiveShapesSpheres_1",
+                      "rx": 65,
+                      "ry": 65,
+                      "rw": 62,
+                      "rh": 62,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 31,
+                        "y": 31,
+                        "z": 31,
+                        "w": 31
+                      }
+                    },
+                    "color": {
+                      "r": 0.32157,
+                      "g": 0.32157,
+                      "b": 0.32157,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "BagTransmog",
+                    "campos": {
+                      "m_Name": "",
+                      "visibleState": "0",
+                      "visibleTimer": "0",
+                      "transitionInSpeed": "5",
+                      "transitionOutSpeed": "5",
+                      "slideTransition": "0",
+                      "transitionDistance": "10",
+                      "backButtonAction": "1"
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Image (1)",
+                    "ruta": "UIBar/Buttons/Items/Bag Transmog/Image (1)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 5
+                    },
+                    "tam": {
+                      "x": 45,
+                      "y": 17.4
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 1
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveRoundDiamonds_4",
+                          "rx": 130.08,
+                          "ry": 3.03,
+                          "rw": 122.85,
+                          "rh": 61.97,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.32157,
+                          "g": 0.32157,
+                          "b": 0.32157,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Scroll View",
+                    "ruta": "UIBar/Buttons/Items/Bag Transmog/Scroll View",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -8,
+                      "y": -8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesSpheres_1",
+                          "rx": 65,
+                          "ry": 65,
+                          "rw": 62,
+                          "rh": 62,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 31,
+                            "y": 31,
+                            "z": 31,
+                            "w": 31
+                          }
+                        },
+                        "color": {
+                          "r": 0.40784,
+                          "g": 0.72941,
+                          "b": 0.66667,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "ScrollRect",
+                        "campos": {
+                          "m_Name": "",
+                          "m_MovementType": "2",
+                          "m_Elasticity": "0.1",
+                          "m_DecelerationRate": "0.135",
+                          "m_ScrollSensitivity": "1",
+                          "m_HorizontalScrollbarVisibility": "2",
+                          "m_VerticalScrollbarVisibility": "2",
+                          "m_HorizontalScrollbarSpacing": "-3",
+                          "m_VerticalScrollbarSpacing": "16"
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Viewport",
+                        "ruta": "UIBar/Buttons/Items/Bag Transmog/Scroll View/Viewport",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": -32,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "PrimitiveShapesSpheres_1",
+                              "rx": 65,
+                              "ry": 65,
+                              "rw": 62,
+                              "rh": 62,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 31,
+                                "y": 31,
+                                "z": 31,
+                                "w": 31
+                              }
+                            },
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          },
+                          {
+                            "tipo": "Mask",
+                            "campos": {
+                              "m_Name": ""
+                            }
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Content",
+                            "ruta": "UIBar/Buttons/Items/Bag Transmog/Scroll View/Viewport/Content",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 1
+                            },
+                            "anclaMax": {
+                              "x": 1,
+                              "y": 1
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0,
+                              "y": 1
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "VerticalLayoutGroup",
+                                "espaciado": 12,
+                                "alineacion": 1,
+                                "relleno": {
+                                  "izq": 0,
+                                  "der": 0,
+                                  "arr": 8,
+                                  "aba": 8
+                                }
+                              },
+                              {
+                                "tipo": "ToggleGroupPro",
+                                "campos": {
+                                  "m_Name": ""
+                                }
+                              },
+                              {
+                                "tipo": "ContentSizeFitter",
+                                "ajusteH": 0,
+                                "ajusteV": 2
+                              }
+                            ],
+                            "hijos": [
+                              {
+                                "nombre": "Image",
+                                "ruta": "UIBar/Buttons/Items/Bag Transmog/Scroll View/Viewport/Content/Image",
+                                "activo": false,
+                                "anclaMin": {
+                                  "x": 0,
+                                  "y": 1
+                                },
+                                "anclaMax": {
+                                  "x": 0,
+                                  "y": 1
+                                },
+                                "pos": {
+                                  "x": 50,
+                                  "y": -44
+                                },
+                                "tam": {
+                                  "x": 72,
+                                  "y": 72
+                                },
+                                "pivote": {
+                                  "x": 0.5,
+                                  "y": 0.5
+                                },
+                                "posLocal": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "comp": [
+                                  {
+                                    "tipo": "Image",
+                                    "sprite": {
+                                      "nombre": "circle62px",
+                                      "rx": 65,
+                                      "ry": 65,
+                                      "rw": 62,
+                                      "rh": 62,
+                                      "px": 0.5,
+                                      "py": 0.5,
+                                      "ppu": 128,
+                                      "borde": {
+                                        "x": 31,
+                                        "y": 0,
+                                        "z": 31,
+                                        "w": 0
+                                      }
+                                    },
+                                    "color": {
+                                      "r": 0.48968,
+                                      "g": 0.79245,
+                                      "b": 0.73337,
+                                      "a": 1
+                                    },
+                                    "modo": 0,
+                                    "rellenaCentro": true,
+                                    "conservaProporcion": false,
+                                    "recibeToque": true,
+                                    "ppuMult": 1
+                                  },
+                                  {
+                                    "tipo": "Toggle",
+                                    "campos": {
+                                      "m_Name": "",
+                                      "m_Transition": "1",
+                                      "toggleTransition": "1"
+                                    }
+                                  }
+                                ],
+                                "hijos": [
+                                  {
+                                    "nombre": "Image",
+                                    "ruta": "UIBar/Buttons/Items/Bag Transmog/Scroll View/Viewport/Content/Image/Image",
+                                    "activo": true,
+                                    "anclaMin": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "anclaMax": {
+                                      "x": 1,
+                                      "y": 1
+                                    },
+                                    "pos": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "tam": {
+                                      "x": 8,
+                                      "y": 8
+                                    },
+                                    "pivote": {
+                                      "x": 0.5,
+                                      "y": 0.5
+                                    },
+                                    "posLocal": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "comp": [
+                                      {
+                                        "tipo": "Image",
+                                        "sprite": {
+                                          "nombre": "circle30px_O2px",
+                                          "rx": 1,
+                                          "ry": 97,
+                                          "rw": 30,
+                                          "rh": 30,
+                                          "px": 0.5,
+                                          "py": 0.5,
+                                          "ppu": 128,
+                                          "borde": {
+                                            "x": 15,
+                                            "y": 0,
+                                            "z": 15,
+                                            "w": 0
+                                          }
+                                        },
+                                        "color": {
+                                          "r": 0.86667,
+                                          "g": 0.93726,
+                                          "b": 0.92549,
+                                          "a": 1
+                                        },
+                                        "modo": 0,
+                                        "rellenaCentro": true,
+                                        "conservaProporcion": false,
+                                        "recibeToque": false,
+                                        "ppuMult": 1
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "nombre": "Icon",
+                                    "ruta": "UIBar/Buttons/Items/Bag Transmog/Scroll View/Viewport/Content/Image/Icon",
+                                    "activo": true,
+                                    "anclaMin": {
+                                      "x": 0.5,
+                                      "y": 0.5
+                                    },
+                                    "anclaMax": {
+                                      "x": 0.5,
+                                      "y": 0.5
+                                    },
+                                    "pos": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "tam": {
+                                      "x": 72,
+                                      "y": 72
+                                    },
+                                    "pivote": {
+                                      "x": 0.5,
+                                      "y": 0.5
+                                    },
+                                    "posLocal": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "comp": [
+                                      {
+                                        "tipo": "Image",
+                                        "sprite": {
+                                          "nombre": "furnitureIcons_0",
+                                          "rx": 775.06,
+                                          "ry": 388.08,
+                                          "rw": 49.86,
+                                          "rh": 54.85,
+                                          "px": 0.5,
+                                          "py": 0.5,
+                                          "ppu": 100,
+                                          "borde": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "z": 0,
+                                            "w": 0
+                                          }
+                                        },
+                                        "color": {
+                                          "r": 1,
+                                          "g": 1,
+                                          "b": 1,
+                                          "a": 1
+                                        },
+                                        "modo": 0,
+                                        "rellenaCentro": true,
+                                        "conservaProporcion": true,
+                                        "recibeToque": true,
+                                        "ppuMult": 1
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "Scrollbar Vertical",
+                        "ruta": "UIBar/Buttons/Items/Bag Transmog/Scroll View/Scrollbar Vertical",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 1,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": -8,
+                          "y": -16
+                        },
+                        "tam": {
+                          "x": 16,
+                          "y": -32
+                        },
+                        "pivote": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "roundRect30px_r8px",
+                              "rx": 1,
+                              "ry": 1,
+                              "rw": 30,
+                              "rh": 30,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 8,
+                                "y": 8,
+                                "z": 8,
+                                "w": 8
+                              }
+                            },
+                            "color": {
+                              "r": 0.40392,
+                              "g": 0.68235,
+                              "b": 0.62745,
+                              "a": 1
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          },
+                          {
+                            "tipo": "Scrollbar",
+                            "campos": {
+                              "m_Name": "",
+                              "m_Transition": "1",
+                              "m_Direction": "2",
+                              "m_Value": "1",
+                              "m_Size": "0",
+                              "m_NumberOfSteps": "0"
+                            }
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Sliding Area",
+                            "ruta": "UIBar/Buttons/Items/Bag Transmog/Scroll View/Scrollbar Vertical/Sliding Area",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 1,
+                              "y": 1
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "hijos": [
+                              {
+                                "nombre": "Handle",
+                                "ruta": "UIBar/Buttons/Items/Bag Transmog/Scroll View/Scrollbar Vertical/Sliding Area/Handle",
+                                "activo": true,
+                                "anclaMin": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "anclaMax": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "pos": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "tam": {
+                                  "x": -6,
+                                  "y": -6
+                                },
+                                "pivote": {
+                                  "x": 0.5,
+                                  "y": 0.5
+                                },
+                                "posLocal": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "comp": [
+                                  {
+                                    "tipo": "Image",
+                                    "sprite": {
+                                      "nombre": "roundRect30px_r4px",
+                                      "rx": 33,
+                                      "ry": 1,
+                                      "rw": 30,
+                                      "rh": 30,
+                                      "px": 0.5,
+                                      "py": 0.5,
+                                      "ppu": 128,
+                                      "borde": {
+                                        "x": 4,
+                                        "y": 4,
+                                        "z": 4,
+                                        "w": 4
+                                      }
+                                    },
+                                    "color": {
+                                      "r": 1,
+                                      "g": 1,
+                                      "b": 1,
+                                      "a": 1
+                                    },
+                                    "modo": 1,
+                                    "rellenaCentro": true,
+                                    "conservaProporcion": false,
+                                    "recibeToque": true,
+                                    "ppuMult": 1
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Edit",
+            "ruta": "UIBar/Buttons/Edit",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 346,
+              "y": -76
+            },
+            "tam": {
+              "x": 128,
+              "y": 128
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "editHome_0",
+                  "rx": 12.08,
+                  "ry": 395.06,
+                  "rw": 101.9,
+                  "rh": 106.86,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 150,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "ButtonX",
+                "campos": {
+                  "m_Name": "",
+                  "m_Transition": "1",
+                  "pressTimer": "0",
+                  "accelSpeed": "1",
+                  "longPressTimeMultiplier": "2",
+                  "orientation": "0"
+                }
+              },
+              {
+                "tipo": "EditButton",
+                "campos": {
+                  "m_Name": "",
+                  "editTimer": "0",
+                  "animSpeed": "2"
+                }
+              },
+              {
+                "tipo": "UIShadow",
+                "campos": {
+                  "m_Name": "",
+                  "m_BlurFactor": "1",
+                  "m_Style": "4"
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "HarvestAll",
+            "ruta": "UIBar/Buttons/HarvestAll",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": -6
+            },
+            "tam": {
+              "x": 109.2267,
+              "y": 109.2267
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "UI_SpriteSheet_13",
+                  "rx": 14.08,
+                  "ry": 4,
+                  "rw": 123.9,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 150,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "Button",
+                "activo": true,
+                "transicion": 1
+              },
+              {
+                "tipo": "HarvestAllButton",
+                "campos": {
+                  "m_Name": ""
+                }
+              },
+              {
+                "tipo": "UIShadow",
+                "campos": {
+                  "m_Name": "",
+                  "m_BlurFactor": "1",
+                  "m_Style": "4"
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image",
+                "ruta": "UIBar/Buttons/HarvestAll/Image",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "anclaMax": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 72
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": -0.1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 16,
+                        "y": 16,
+                        "z": 16,
+                        "w": 16
+                      }
+                    },
+                    "color": {
+                      "r": 0.32157,
+                      "g": 0.32157,
+                      "b": 0.32157,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "VerticalLayoutGroup",
+                    "espaciado": 4,
+                    "alineacion": 0,
+                    "relleno": {
+                      "izq": 16,
+                      "der": 16,
+                      "arr": 8,
+                      "aba": 8
+                    }
+                  },
+                  {
+                    "tipo": "ContentSizeFitter",
+                    "ajusteH": 2,
+                    "ajusteV": 2
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Image",
+                    "ruta": "UIBar/Buttons/HarvestAll/Image/Image",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "tam": {
+                      "x": 50,
+                      "y": 20
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 1
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveRoundDiamonds_4",
+                          "rx": 130.08,
+                          "ry": 3.03,
+                          "rw": 122.85,
+                          "rh": 61.97,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.32157,
+                          "g": 0.32157,
+                          "b": 0.32157,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "LayoutElement",
+                        "MinWidth": -1,
+                        "MinHeight": -1,
+                        "PreferredWidth": -1,
+                        "PreferredHeight": -1,
+                        "FlexibleWidth": -1,
+                        "FlexibleHeight": -1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Text (TMP)",
+                    "ruta": "UIBar/Buttons/HarvestAll/Image/Text (TMP)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "1h 20m",
+                        "tam": 42,
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "alineacion": 65535,
+                        "autoTam": false,
+                        "tamMin": 18,
+                        "tamMax": 72,
+                        "estilo": 0,
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Slider",
+                    "ruta": "UIBar/Buttons/HarvestAll/Image/Slider",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Slider",
+                        "campos": {
+                          "m_Name": "",
+                          "m_Transition": "0",
+                          "m_Direction": "0",
+                          "m_MinValue": "0",
+                          "m_MaxValue": "1",
+                          "m_Value": "0"
+                        }
+                      },
+                      {
+                        "tipo": "LayoutElement",
+                        "MinWidth": -1,
+                        "MinHeight": 16,
+                        "PreferredWidth": -1,
+                        "PreferredHeight": -1,
+                        "FlexibleWidth": -1,
+                        "FlexibleHeight": -1
+                      },
+                      {
+                        "tipo": "CanvasGroup"
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Background",
+                        "ruta": "UIBar/Buttons/HarvestAll/Image/Slider/Background",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 9,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": -18,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "roundRect30px_r8px",
+                              "rx": 1,
+                              "ry": 1,
+                              "rw": 30,
+                              "rh": 30,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 8,
+                                "y": 8,
+                                "z": 8,
+                                "w": 8
+                              }
+                            },
+                            "color": {
+                              "r": 0.25472,
+                              "g": 0.25472,
+                              "b": 0.25472,
+                              "a": 1
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "Fill Area",
+                        "ruta": "UIBar/Buttons/HarvestAll/Image/Slider/Fill Area",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0.25
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 0.75
+                        },
+                        "pos": {
+                          "x": 9,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": -34,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "hijos": [
+                          {
+                            "nombre": "Fill",
+                            "ruta": "UIBar/Buttons/HarvestAll/Image/Slider/Fill Area/Fill",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 8,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "Image",
+                                "sprite": {
+                                  "nombre": "roundRect30px_r8px",
+                                  "rx": 1,
+                                  "ry": 1,
+                                  "rw": 30,
+                                  "rh": 30,
+                                  "px": 0.5,
+                                  "py": 0.5,
+                                  "ppu": 128,
+                                  "borde": {
+                                    "x": 8,
+                                    "y": 8,
+                                    "z": 8,
+                                    "w": 8
+                                  }
+                                },
+                                "color": {
+                                  "r": 0.67925,
+                                  "g": 0.67925,
+                                  "b": 0.67925,
+                                  "a": 1
+                                },
+                                "modo": 1,
+                                "rellenaCentro": true,
+                                "conservaProporcion": false,
+                                "recibeToque": true,
+                                "ppuMult": 2.02
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "Icon",
+                        "ruta": "UIBar/Buttons/HarvestAll/Image/Slider/Icon",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0.5
+                        },
+                        "anclaMax": {
+                          "x": 0,
+                          "y": 0.5
+                        },
+                        "pos": {
+                          "x": -3,
+                          "y": 1
+                        },
+                        "tam": {
+                          "x": 20,
+                          "y": 20
+                        },
+                        "pivote": {
+                          "x": 0,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "yield",
+                              "rx": 772.08,
+                              "ry": 69.08,
+                              "rw": 55.85,
+                              "rh": 53.85,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 100,
+                              "borde": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 0.67843,
+                              "g": 0.67843,
+                              "b": 0.67843,
+                              "a": 1
+                            },
+                            "modo": 0,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "GameObject",
+                "ruta": "UIBar/Buttons/HarvestAll/GameObject",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "anclaMax": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 100,
+                  "y": 100
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "HorizontalLayoutGroup",
+                    "espaciado": 0,
+                    "alineacion": 0,
+                    "relleno": {
+                      "izq": 16,
+                      "der": 16,
+                      "arr": 8,
+                      "aba": 8
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Hoe",
+            "ruta": "UIBar/Buttons/Hoe",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": -122.4,
+              "y": -6
+            },
+            "tam": {
+              "x": 128,
+              "y": 128
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "hoebutton",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 150,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "HoeButton",
+                "campos": {
+                  "m_Name": ""
+                }
+              },
+              {
+                "tipo": "UIShadow",
+                "campos": {
+                  "m_Name": "",
+                  "m_BlurFactor": "1",
+                  "m_Style": "4"
+                }
+              },
+              {
+                "tipo": "ToggleSwap",
+                "campos": {
+                  "m_Name": "",
+                  "m_Transition": "1",
+                  "toggleTransition": "0"
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image (1)",
+                "ruta": "UIBar/Buttons/Hoe/Image (1)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "anclaMax": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "pos": {
+                  "x": -17.87,
+                  "y": 72
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": -0.1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "escala": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 16,
+                        "y": 16,
+                        "z": 16,
+                        "w": 16
+                      }
+                    },
+                    "color": {
+                      "r": 0.32157,
+                      "g": 0.32157,
+                      "b": 0.32157,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "VerticalLayoutGroup",
+                    "espaciado": 0,
+                    "alineacion": 0,
+                    "relleno": {
+                      "izq": 20,
+                      "der": 20,
+                      "arr": 8,
+                      "aba": 8
+                    }
+                  },
+                  {
+                    "tipo": "ContentSizeFitter",
+                    "ajusteH": 2,
+                    "ajusteV": 2
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Image",
+                    "ruta": "UIBar/Buttons/Hoe/Image (1)/Image",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "tam": {
+                      "x": 50,
+                      "y": 20
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 1
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveRoundDiamonds_4",
+                          "rx": 130.08,
+                          "ry": 3.03,
+                          "rw": 122.85,
+                          "rh": 61.97,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.32157,
+                          "g": 0.32157,
+                          "b": 0.32157,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "LayoutElement",
+                        "MinWidth": -1,
+                        "MinHeight": -1,
+                        "PreferredWidth": -1,
+                        "PreferredHeight": -1,
+                        "FlexibleWidth": -1,
+                        "FlexibleHeight": -1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Text (TMP)",
+                    "ruta": "UIBar/Buttons/Hoe/Image (1)/Text (TMP)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "200",
+                        "tam": 42,
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "alineacion": 65535,
+                        "autoTam": false,
+                        "tamMin": 18,
+                        "tamMax": 60,
+                        "estilo": 0,
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "PlantCarrots",
+            "ruta": "UIBar/Buttons/PlantCarrots",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": -6
+            },
+            "tam": {
+              "x": 110,
+              "y": 110
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "escala": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "UI_SpriteSheet_14",
+                  "rx": 145,
+                  "ry": 9,
+                  "rw": 136,
+                  "rh": 110,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 150,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "Button",
+                "activo": true,
+                "transicion": 1
+              },
+              {
+                "tipo": "PlantAllButton",
+                "campos": {
+                  "m_Name": ""
+                }
+              },
+              {
+                "tipo": "UIShadow",
+                "campos": {
+                  "m_Name": "",
+                  "m_BlurFactor": "1",
+                  "m_Style": "4"
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Phone",
+            "ruta": "UIBar/Buttons/Phone",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 574,
+              "y": -76
+            },
+            "tam": {
+              "x": 110,
+              "y": 110
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "Icon_Phone",
+                  "rx": 167,
+                  "ry": 162,
+                  "rw": 117,
+                  "rh": 124,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 150,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "PhoneButton",
+                "campos": {
+                  "m_Name": "",
+                  "bounceTimer": "0",
+                  "bounceHeight": "50",
+                  "quickMenuTimer": "0",
+                  "quickMenuAnimSpeed": "5"
+                }
+              },
+              {
+                "tipo": "UIShadow",
+                "campos": {
+                  "m_Name": "",
+                  "m_BlurFactor": "1",
+                  "m_Style": "4"
+                }
+              },
+              {
+                "tipo": "ButtonX",
+                "campos": {
+                  "m_Name": "",
+                  "m_Transition": "1",
+                  "pressTimer": "0",
+                  "accelSpeed": "1",
+                  "longPressTimeMultiplier": "2",
+                  "orientation": "0"
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Skin",
+                "ruta": "UIBar/Buttons/Phone/Skin",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "deepPurpleUI",
+                      "rx": 12.03,
+                      "ry": 9.03,
+                      "rw": 103.9,
+                      "rh": 108.95,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 100,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  }
+                ]
+              },
+              {
+                "nombre": "Screen",
+                "ruta": "UIBar/Buttons/Phone/Screen",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "anclaMax": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "pos": {
+                  "x": 3.1,
+                  "y": 3
+                },
+                "tam": {
+                  "x": 61.6559,
+                  "y": 63.5243
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "UI_SpriteSheet_18",
+                      "rx": 70,
+                      "ry": 193,
+                      "rw": 66,
+                      "rh": 68,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 150,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "AppNotif",
+                    "ruta": "UIBar/Buttons/Phone/Screen/AppNotif",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": -0.79,
+                      "y": 1.39
+                    },
+                    "tam": {
+                      "x": 48,
+                      "y": 45.2953
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "angulo": 24.778,
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "gachaIcon_0",
+                          "rx": 18.03,
+                          "ry": 402.03,
+                          "rw": 91.95,
+                          "rh": 91.95,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 0
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "UIEffect",
+                        "campos": {
+                          "m_Name": "",
+                          "m_Version": "300",
+                          "m_EffectFactor": "1",
+                          "m_ColorFactor": "1",
+                          "m_BlurFactor": "0.754",
+                          "m_EffectMode": "0",
+                          "m_ColorMode": "2",
+                          "m_BlurMode": "1",
+                          "m_ShadowBlur": "1",
+                          "m_ShadowStyle": "0"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Image",
+                "ruta": "UIBar/Buttons/Phone/Image",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "Icon_Phone",
+                      "rx": 167,
+                      "ry": 162,
+                      "rw": 117,
+                      "rh": 124,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 150,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  }
+                ]
+              },
+              {
+                "nombre": "QuickMenu",
+                "ruta": "UIBar/Buttons/Phone/QuickMenu",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "anclaMax": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 280.58,
+                  "y": 280.58
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "RadialLayoutGroup",
+                    "campos": {
+                      "m_Name": "",
+                      "m_ChildAlignment": "0",
+                      "radius": "140.29",
+                      "angleOffset": "0",
+                      "startElementAngle": "0"
+                    }
+                  },
+                  {
+                    "tipo": "CanvasGroup"
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Parsnap",
+                    "ruta": "UIBar/Buttons/Phone/QuickMenu/Parsnap",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": 121.4757,
+                      "y": 70.178
+                    },
+                    "tam": {
+                      "x": 128,
+                      "y": 128
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circle",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.497,
+                          "py": -0.19396,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0.78431,
+                          "g": 0.61569,
+                          "b": 0.79216,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "QuickLaunchButton",
+                        "campos": {
+                          "m_Name": "",
+                          "appToOpen": "0"
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Image (2)",
+                        "ruta": "UIBar/Buttons/Phone/QuickMenu/Parsnap/Image (2)",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": -8,
+                          "y": -8
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "instagramIcon_0",
+                              "rx": 20.03,
+                              "ry": 404.03,
+                              "rw": 87.95,
+                              "rh": 87.95,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            },
+                            "modo": 0,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": false,
+                            "ppuMult": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Punchcard",
+                    "ruta": "UIBar/Buttons/Phone/QuickMenu/Punchcard",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": 0.7988,
+                      "y": 140.2877
+                    },
+                    "tam": {
+                      "x": 128,
+                      "y": 128
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circle",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.497,
+                          "py": -0.19396,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0.93333,
+                          "g": 0.4902,
+                          "b": 0.4902,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "QuickLaunchButton",
+                        "campos": {
+                          "m_Name": "",
+                          "appToOpen": "0"
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Image",
+                        "ruta": "UIBar/Buttons/Phone/QuickMenu/Punchcard/Image",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": -8,
+                          "y": -8
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "punchcardIcon_0",
+                              "rx": 22.03,
+                              "ry": 409.03,
+                              "rw": 83.95,
+                              "rh": 77.9,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            },
+                            "modo": 0,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": false,
+                            "ppuMult": 1
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Map",
+                    "ruta": "UIBar/Buttons/Phone/QuickMenu/Map",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": -120.6686,
+                      "y": 71.5568
+                    },
+                    "tam": {
+                      "x": 128,
+                      "y": 128
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circle",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.497,
+                          "py": -0.19396,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0.63922,
+                          "g": 0.82353,
+                          "b": 0.83922,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "QuickLaunchButton",
+                        "campos": {
+                          "m_Name": "",
+                          "appToOpen": "0"
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Image (1)",
+                        "ruta": "UIBar/Buttons/Phone/QuickMenu/Map/Image (1)",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": -8,
+                          "y": -8
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "mapIcon_0",
+                              "rx": 27.08,
+                              "ry": 399.03,
+                              "rw": 73.85,
+                              "rh": 95.9,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            },
+                            "modo": 0,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": false,
+                            "ppuMult": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Options",
+            "ruta": "UIBar/Buttons/Options",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 802,
+              "y": -76
+            },
+            "tam": {
+              "x": 110,
+              "y": 110
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "Icon_Gear",
+                  "rx": 16,
+                  "ry": 488,
+                  "rw": 104,
+                  "rh": 111,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 150,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "Button",
+                "activo": true,
+                "transicion": 1
+              },
+              {
+                "tipo": "UIShadow",
+                "campos": {
+                  "m_Name": "",
+                  "m_BlurFactor": "1",
+                  "m_Style": "4"
+                }
+              },
+              {
+                "tipo": "OptionsButton",
+                "campos": {
+                  "m_Name": ""
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

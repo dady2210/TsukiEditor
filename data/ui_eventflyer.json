@@ -1,0 +1,916 @@
+{
+  "_fuente": "EventFlyer de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "EventFlyer",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": null,
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "EventFlyer",
+    "transitionInSpeed": "1",
+    "transitionOutSpeed": "2",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "eventDetails": "EventFlyer/GameObject/EventDetails",
+    "layoutGroup": "EventFlyer/GameObject/EventDetails",
+    "backing": "EventFlyer/Backing",
+    "header": "EventFlyer/Image (4)",
+    "scrolledTex": "EventFlyer/Backing/GameObject/Image",
+    "eventName": "EventFlyer/GameObject/EventDetails/EVENTName",
+    "eventDate": "EventFlyer/GameObject/EventDetails/EVENTDate",
+    "details": {
+      "sortedPositions": [],
+      "optionPrefab": {
+        "nombre": "EventDetail"
+      },
+      "scrollRect": null,
+      "content": "EventFlyer/GameObject/EventDetails/Detail"
+    },
+    "homecomingText": {
+      "ID": "IAPPOPUP_HOMECOMING",
+      "FORMAT": "",
+      "EN": "HOMECOMING",
+      "SP": "REGRESO A CASA",
+      "FR": "RETOUR \u00C0 LA MAISON",
+      "ptBR": "HOMECOMING",
+      "RU": "\u0412\u041E\u0417\u0412\u0420\u0410\u0429\u0415\u041D\u0418\u0415 \u0414\u041E\u041C\u041E\u0419",
+      "CNSimplified": "\u8FD4\u4E61\u7279\u5178",
+      "CNTaiwan": "\u56DE\u9109\u7279\u5178",
+      "JPN": "\u5E30\u90F7",
+      "GER": "HEIMKEHR",
+      "ITA": "RITORNO A CASA",
+      "KOR": "\uADC0\uD5A5",
+      "THAI": "\u0E15\u0E49\u0E2D\u0E19\u0E23\u0E31\u0E1A\u0E01\u0E25\u0E31\u0E1A\u0E1A\u0E49\u0E32\u0E19",
+      "MY": "MAJLIS KERAIAN",
+      "VN": "V\u1EC0 NH\u00C0"
+    },
+    "homecomingBacking": {
+      "nombre": "homecomingFlyer_0",
+      "rx": 9,
+      "ry": 5,
+      "rw": 252,
+      "rh": 241,
+      "px": 0.5,
+      "py": 0.5,
+      "ppu": 128,
+      "borde": {
+        "x": 82,
+        "y": 77,
+        "z": 80,
+        "w": 79
+      }
+    },
+    "homecomingHeader": {
+      "nombre": "homecomingFlyer_1",
+      "rx": 132,
+      "ry": 645,
+      "rw": 839,
+      "rh": 375,
+      "px": 0.5,
+      "py": 0.5,
+      "ppu": 128,
+      "borde": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 0
+      }
+    },
+    "scrollTextureID": "0",
+    "homecomingTextColor": {
+      "r": 1,
+      "g": 0.95686,
+      "b": 0.80784,
+      "a": 1
+    }
+  },
+  "arbol": {
+    "nombre": "EventFlyer",
+    "ruta": "EventFlyer",
+    "activo": true,
+    "anclaMin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "anclaMax": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "pos": {
+      "x": 0,
+      "y": -32
+    },
+    "tam": {
+      "x": 520,
+      "y": 1346.62
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "CanvasGroup"
+      },
+      {
+        "tipo": "EventFlyer",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "1",
+          "transitionOutSpeed": "2",
+          "slideTransition": "0",
+          "transitionDistance": "10",
+          "scrollTextureID": "0"
+        }
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "Backing",
+        "ruta": "EventFlyer/Backing",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 84,
+          "y": 84
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "homecomingFlyer_0",
+              "rx": 9,
+              "ry": 5,
+              "rw": 252,
+              "rh": 241,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 82,
+                "y": 77,
+                "z": 80,
+                "w": 79
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "LayoutElement",
+            "MinWidth": -1,
+            "MinHeight": -1,
+            "PreferredWidth": -1,
+            "PreferredHeight": -1,
+            "FlexibleWidth": -1,
+            "FlexibleHeight": -1
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "GameObject",
+            "ruta": "EventFlyer/Backing/GameObject",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 1.8,
+              "y": -13.0601
+            },
+            "tam": {
+              "x": -42.9996,
+              "y": -50.8173
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "RectMask2D",
+                "campos": {
+                  "m_Name": ""
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image",
+                "ruta": "EventFlyer/Backing/GameObject/Image",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "FixTileRawImage",
+                    "campos": {
+                      "m_Name": "",
+                      "tileScale": "1.125",
+                      "texWidth": "512",
+                      "texHeight": "512"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Image (4)",
+        "ruta": "EventFlyer/Image (4)",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 780,
+          "y": 350
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "homecomingFlyer_1",
+              "rx": 132,
+              "ry": 645,
+              "rw": 839,
+              "rh": 375,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": true,
+            "recibeToque": false,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "LayoutElement",
+            "MinWidth": -1,
+            "MinHeight": -1,
+            "PreferredWidth": -1,
+            "PreferredHeight": -1,
+            "FlexibleWidth": -1,
+            "FlexibleHeight": -1
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Image",
+            "ruta": "EventFlyer/Image (4)/Image",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": -42.6,
+              "y": 66
+            },
+            "tam": {
+              "x": 100,
+              "y": 100
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "StrongLight",
+                  "rx": 12.08,
+                  "ry": 17.03,
+                  "rw": 228.88,
+                  "rh": 225.95,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 0.9289,
+                  "b": 0.66509,
+                  "a": 0.41176
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Image (1)",
+            "ruta": "EventFlyer/Image (4)/Image (1)",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 33.8,
+              "y": 68.5
+            },
+            "tam": {
+              "x": 100,
+              "y": 100
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "StrongLight",
+                  "rx": 12.08,
+                  "ry": 17.03,
+                  "rw": 228.88,
+                  "rh": 225.95,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 0.9289,
+                  "b": 0.66509,
+                  "a": 0.41176
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "GameObject",
+        "ruta": "EventFlyer/GameObject",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 0,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "RectMask2D",
+            "campos": {
+              "m_Name": ""
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "EventDetails",
+            "ruta": "EventFlyer/GameObject/EventDetails",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "VerticalLayoutGroup",
+                "espaciado": 4,
+                "alineacion": 0,
+                "relleno": {
+                  "izq": 16,
+                  "der": 16,
+                  "arr": 56,
+                  "aba": 16
+                }
+              },
+              {
+                "tipo": "ContentSizeFitter",
+                "ajusteH": 0,
+                "ajusteV": 2
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "EVENTName",
+                "ruta": "EventFlyer/GameObject/EventDetails/EVENTName",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "HALLOWEEN",
+                    "tam": 55.95,
+                    "color": {
+                      "r": 1,
+                      "g": 0.95818,
+                      "b": 0.8066,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": true,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 17,
+                    "fuente": "Vollkorn-Medium SDF",
+                    "margen": {
+                      "x": 52,
+                      "y": 0,
+                      "z": 52,
+                      "w": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "nombre": "EVENTDate",
+                "ruta": "EventFlyer/GameObject/EventDetails/EVENTDate",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "15th Oct - 15th Nov",
+                    "tam": 32,
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "fuente": "Vollkorn-Medium SDF",
+                    "margen": {
+                      "x": 62,
+                      "y": 0,
+                      "z": 62,
+                      "w": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "nombre": "Detail",
+                "ruta": "EventFlyer/GameObject/EventDetails/Detail",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "VerticalLayoutGroup",
+                    "espaciado": 4,
+                    "alineacion": 0,
+                    "relleno": {
+                      "izq": 0,
+                      "der": 0,
+                      "arr": 0,
+                      "aba": 0
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "EventDetail",
+                    "ruta": "EventFlyer/GameObject/EventDetails/Detail/EventDetail",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "VerticalLayoutGroup",
+                        "espaciado": 0,
+                        "alineacion": 0,
+                        "relleno": {
+                          "izq": 0,
+                          "der": 0,
+                          "arr": 0,
+                          "aba": 0
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "HorizontalImage",
+                        "ruta": "EventFlyer/GameObject/EventDetails/Detail/EventDetail/HorizontalImage",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 1
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "Halloween Scroll_2",
+                              "rx": 768.08,
+                              "ry": 0,
+                              "rw": 255.92,
+                              "rh": 128,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            },
+                            "modo": 0,
+                            "rellenaCentro": true,
+                            "conservaProporcion": true,
+                            "recibeToque": false,
+                            "ppuMult": 1
+                          },
+                          {
+                            "tipo": "LayoutElement",
+                            "MinWidth": -1,
+                            "MinHeight": 245,
+                            "PreferredWidth": -1,
+                            "PreferredHeight": -1,
+                            "FlexibleWidth": -1,
+                            "FlexibleHeight": -1
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "EVENTName (1)",
+                        "ruta": "EventFlyer/GameObject/EventDetails/Detail/EventDetail/EVENTName (1)",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 1
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "TextMeshProUGUI",
+                            "texto": "Exclusive furniture at Yori\u0027s!",
+                            "tam": 32,
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            },
+                            "alineacion": 65535,
+                            "autoTam": false,
+                            "tamMin": 18,
+                            "tamMax": 72,
+                            "estilo": 0,
+                            "fuente": "Vollkorn-Medium SDF",
+                            "margen": {
+                              "x": 32,
+                              "y": 0,
+                              "z": 32,
+                              "w": 0
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

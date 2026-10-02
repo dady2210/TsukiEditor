@@ -1325,6 +1325,15 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
                         this.map.selectedPlacement._simSleeping = isSleep;
 
                         if (this.parser && typeof this.parser.setBedCustomization === 'function') {
+                            // `SFXClip.BedPillow` y `BedBlanket`: cambiar la almohada o
+                            // la colcha suena distinto segun cual se toque.
+                            if (window.PlaySfx) {
+                                // `parseMap` deja el estado de la cama en el propio
+                                // placement (`bedSave`), asi que se compara con eso.
+                                const antes = this.map.selectedPlacement.bedSave || null;
+                                const cambioAlmohada = !antes || Number(antes.pillowID) !== Number(pVal);
+                                window.PlaySfx.sonar(cambioAlmohada ? 'bedPillow' : 'bedBlanket');
+                            }
                             this.parser.setBedCustomization(this.map.selectedPlacement.placementID, { pillowID: pVal, sheetsID: sVal });
                         }
                         if (this.parser) {
@@ -2821,7 +2830,16 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
     }
 
-    createFurniturePlacement({ itemId, x = 0, y = 0, floor = 0, cluster = 0, isWall = false, flipped = false, orientation = 0 }) {
+    /**
+     * Crea un mueble nuevo en la partida clonando un nodo que ya exista.
+     *
+     * `plantilla` sirve para cuando el mueble nuevo NO es un mueble corriente: una semilla
+     * es un `CropSave` con `harvestTimeOA`, `placedOA`, `ripe`, `strange` y
+     * `parentPlacementID`, y clonando el primer mueble con `GridGroupPosition` que aparezca
+     * saldria sin ninguno de esos campos. Pasando una semilla que ya esta en la partida, el
+     * clon tiene la forma correcta.
+     */
+    createFurniturePlacement({ itemId, x = 0, y = 0, floor = 0, cluster = 0, isWall = false, flipped = false, orientation = 0, plantilla = null }) {
         if (!this.parser || !this.parser.ast) return null;
         const root = this.parser.ast;
         let locData = null;
@@ -2849,8 +2867,12 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         let listNode = furnitureListWrapper.children.find(c => c.constructor.name === 'OdinList');
         if (!listNode) return null;
 
-        let template = null;
-        const globalSubList = root.children.find(c => c.name === 'sublocations')?.children.find(c => c.constructor.name === 'OdinList');
+        // Si el llamante trae una plantilla —una semilla, por ejemplo—, esa manda: es la
+        // unica forma de que el clon tenga los campos de SU clase y no los de un mueble
+        // cualquiera.
+        let template = plantilla || null;
+        const globalSubList = template ? null
+            : root.children.find(c => c.name === 'sublocations')?.children.find(c => c.constructor.name === 'OdinList');
         if (globalSubList && globalSubList.elements) {
             for (const sub of globalSubList.elements) {
                 const sData = sub.value;
@@ -2912,14 +2934,36 @@ window.getSafeImageHTML = function(id, hint, extraAttrs = '') {
         }
 
         // Explicitly sanitize and enforce groupPosition for Odin/Unity deserialization
+        //
+        // OJO: CON `plantilla` ESTO NO SE TOCA. Una semilla lleva un `SubGroupPosition` con
+        // su `parentPlacementID` — es lo que la cuelga de su parcela — y este bloque lo
+        // reescribe a `GridGroupPosition` y borra justo ese campo, asi que la siembra salia
+        // creada y desenganchada. Con plantilla, la forma del clon manda y aqui solo se
+        // ajustan la casilla y el piso.
         let groupPos = furnNode.children.find(c => c.name === 'groupPosition');
-        if (!groupPos) {
-            groupPos = new OdinNode(isWall ? 0x03 : 0x01, 'groupPosition', isWall ? 'WallGroupPosition, Odyssey' : 'GridGroupPosition, Odyssey');
-            furnNode.children.push(groupPos);
+        if (plantilla) {
+            if (groupPos && groupPos.children) {
+                const g = groupPos.children.find(c => c.name === 'grid');
+                if (g && g.children) {
+                    for (const c of g.children) {
+                        if (c.name === 'x') c.value = x;
+                        if (c.name === 'y') c.value = y;
+                    }
+                }
+                const gn = groupPos.children.find(c => c.name === 'groupNum');
+                if (gn) gn.value = parseInt(floor, 10) || 0;
+            }
+        } else {
+            if (!groupPos) {
+                groupPos = new OdinNode(isWall ? 0x03 : 0x01, 'groupPosition', isWall ? 'WallGroupPosition, Odyssey' : 'GridGroupPosition, Odyssey');
+                furnNode.children.push(groupPos);
+            }
         }
-        if (!groupPos.children) groupPos.children = [];
+        if (groupPos && !groupPos.children) groupPos.children = [];
 
-        if (!isWall) {
+        // Con plantilla NO se reescribe el tipo ni se filtra nada: ese `filter` de abajo
+        // borra el `parentPlacementID`, que es justo lo que cuelga la semilla de su parcela.
+        if (plantilla) { /* la forma del clon manda */ } else if (!isWall) {
             groupPos.typeName = 'GridGroupPosition, Odyssey';
             groupPos.marker = 0x01;
             // Remove parentPlacementID to ensure it places on the floor grid, NOT as child of another placement

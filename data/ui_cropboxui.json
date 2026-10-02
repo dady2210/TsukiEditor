@@ -1,0 +1,2200 @@
+{
+  "_fuente": "CropBoxUI de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "CropBoxUI",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": "CropBox",
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": null,
+    "transitionInSpeed": "3",
+    "transitionOutSpeed": "3",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "animTimer": "0",
+    "cropMenu": {
+      "sortedPositions": [],
+      "optionPrefab": {
+        "nombre": "Crop"
+      },
+      "scrollRect": "CropBox/View/Menu/Scroll View",
+      "content": "CropBox/View/Menu/Scroll View/Viewport/Content",
+      "cropBoxUI": null,
+      "scrollLayoutElement": "CropBox/View/Menu/Scroll View",
+      "maxScrollHeight": "280"
+    },
+    "viewTransform": "CropBox/View",
+    "menuLayoutGroup": "CropBox/View/Menu",
+    "iconBackingO": "CropBox/IconBackingO",
+    "iconBacking": "CropBox/IconBacking",
+    "pointerO": "CropBox/PointerO",
+    "pointer": "CropBox/Pointer",
+    "titleLineL": "CropBox/View/Title/Image (1)",
+    "titleLineR": "CropBox/View/Title/Image (2)",
+    "title": "CropBox/View/Title",
+    "totalValue": "CropBox/View/Menu/Sell/Button/Text (TMP) (1)",
+    "emptyObject": {
+      "nombre": "Empty"
+    },
+    "sellAll": "CropBox/View/Menu/Sell/Button"
+  },
+  "arbol": {
+    "nombre": "CropBox",
+    "ruta": "CropBox",
+    "activo": true,
+    "anclaMin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "anclaMax": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "tam": {
+      "x": 0,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "CropBoxUI",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "3",
+          "transitionOutSpeed": "3",
+          "slideTransition": "0",
+          "transitionDistance": "10",
+          "animTimer": "0"
+        }
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "IconBackingO",
+        "ruta": "CropBox/IconBackingO",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 80,
+          "y": 80
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "circle",
+              "rx": 0,
+              "ry": 128,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.497,
+              "py": -0.19396,
+              "ppu": 128,
+              "borde": {
+                "x": 64,
+                "y": 64,
+                "z": 64,
+                "w": 64
+              }
+            },
+            "color": {
+              "r": 0.30196,
+              "g": 0.29804,
+              "b": 0.30196,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "LayoutElement",
+            "MinWidth": -1,
+            "MinHeight": -1,
+            "PreferredWidth": -1,
+            "PreferredHeight": -1,
+            "FlexibleWidth": -1,
+            "FlexibleHeight": -1
+          }
+        ]
+      },
+      {
+        "nombre": "PointerO",
+        "ruta": "CropBox/PointerO",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0
+        },
+        "pos": {
+          "x": 0,
+          "y": 2
+        },
+        "tam": {
+          "x": 72,
+          "y": 32
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 1
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "PrimitiveRoundDiamonds_4",
+              "rx": 130.08,
+              "ry": 3.03,
+              "rw": 122.85,
+              "rh": 61.97,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 100,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 0.33333,
+              "g": 0.33333,
+              "b": 0.33333,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "LayoutElement",
+            "MinWidth": -1,
+            "MinHeight": -1,
+            "PreferredWidth": -1,
+            "PreferredHeight": -1,
+            "FlexibleWidth": -1,
+            "FlexibleHeight": -1
+          }
+        ]
+      },
+      {
+        "nombre": "View",
+        "ruta": "CropBox/View",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 471.58,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "RectMask2D",
+            "campos": {
+              "m_Name": ""
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Menu",
+            "ruta": "CropBox/View/Menu",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "VerticalLayoutGroup",
+                "espaciado": 4,
+                "alineacion": 0,
+                "relleno": {
+                  "izq": 8,
+                  "der": 8,
+                  "arr": 28,
+                  "aba": 8
+                }
+              },
+              {
+                "tipo": "ContentSizeFitter",
+                "ajusteH": 2,
+                "ajusteV": 2
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Border",
+                "ruta": "CropBox/View/Menu/Border",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 16,
+                        "y": 16,
+                        "z": 16,
+                        "w": 16
+                      }
+                    },
+                    "color": {
+                      "r": 0.33333,
+                      "g": 0.33333,
+                      "b": 0.33333,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": -1,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ]
+              },
+              {
+                "nombre": "Backing",
+                "ruta": "CropBox/View/Menu/Backing",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -8,
+                  "y": -8
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 16,
+                        "y": 16,
+                        "z": 16,
+                        "w": 16
+                      }
+                    },
+                    "color": {
+                      "r": 0.85849,
+                      "g": 0.77789,
+                      "b": 0.62767,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": -1,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ]
+              },
+              {
+                "nombre": "Scroll View",
+                "ruta": "CropBox/View/Menu/Scroll View",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "Background",
+                      "rx": 0.03,
+                      "ry": 0.05,
+                      "rw": 31.95,
+                      "rh": 31.9,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 200,
+                      "borde": {
+                        "x": 10,
+                        "y": 10,
+                        "z": 10,
+                        "w": 10
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 0
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "ScrollRect",
+                    "campos": {
+                      "m_Name": "",
+                      "m_MovementType": "1",
+                      "m_Elasticity": "0.1",
+                      "m_DecelerationRate": "0.135",
+                      "m_ScrollSensitivity": "1",
+                      "m_HorizontalScrollbarVisibility": "2",
+                      "m_VerticalScrollbarVisibility": "2",
+                      "m_HorizontalScrollbarSpacing": "-3",
+                      "m_VerticalScrollbarSpacing": "-3"
+                    }
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": 455.58,
+                    "PreferredHeight": 280,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Viewport",
+                    "ruta": "CropBox/View/Menu/Scroll View/Viewport",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "RectMask2D",
+                        "campos": {
+                          "m_Name": ""
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Content",
+                        "ruta": "CropBox/View/Menu/Scroll View/Viewport/Content",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 1
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "VerticalLayoutGroup",
+                            "espaciado": 0,
+                            "alineacion": 0,
+                            "relleno": {
+                              "izq": 0,
+                              "der": 0,
+                              "arr": 0,
+                              "aba": 0
+                            }
+                          },
+                          {
+                            "tipo": "ContentSizeFitter",
+                            "ajusteH": 0,
+                            "ajusteV": 2
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Crop",
+                            "ruta": "CropBox/View/Menu/Scroll View/Viewport/Content/Crop",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "HorizontalLayoutGroup",
+                                "espaciado": 2,
+                                "alineacion": 0,
+                                "relleno": {
+                                  "izq": 64,
+                                  "der": 0,
+                                  "arr": 0,
+                                  "aba": 0
+                                }
+                              },
+                              {
+                                "tipo": "LayoutElement",
+                                "MinWidth": -1,
+                                "MinHeight": -1,
+                                "PreferredWidth": -1,
+                                "PreferredHeight": 64,
+                                "FlexibleWidth": -1,
+                                "FlexibleHeight": -1
+                              }
+                            ],
+                            "hijos": [
+                              {
+                                "nombre": "Image",
+                                "ruta": "CropBox/View/Menu/Scroll View/Viewport/Content/Crop/Image",
+                                "activo": true,
+                                "anclaMin": {
+                                  "x": 0,
+                                  "y": 0.5
+                                },
+                                "anclaMax": {
+                                  "x": 0,
+                                  "y": 0.5
+                                },
+                                "pos": {
+                                  "x": 2,
+                                  "y": -2
+                                },
+                                "tam": {
+                                  "x": 60,
+                                  "y": 60
+                                },
+                                "pivote": {
+                                  "x": 0,
+                                  "y": 0.5
+                                },
+                                "posLocal": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "comp": [
+                                  {
+                                    "tipo": "Image",
+                                    "sprite": {
+                                      "nombre": "strangecarrot",
+                                      "rx": 0,
+                                      "ry": 0,
+                                      "rw": 128,
+                                      "rh": 128,
+                                      "px": 0.5,
+                                      "py": 0.5,
+                                      "ppu": 150,
+                                      "borde": {
+                                        "x": 0,
+                                        "y": 0,
+                                        "z": 0,
+                                        "w": 0
+                                      }
+                                    },
+                                    "color": {
+                                      "r": 1,
+                                      "g": 1,
+                                      "b": 1,
+                                      "a": 1
+                                    },
+                                    "modo": 0,
+                                    "rellenaCentro": true,
+                                    "conservaProporcion": false,
+                                    "recibeToque": true,
+                                    "ppuMult": 1
+                                  },
+                                  {
+                                    "tipo": "LayoutElement",
+                                    "MinWidth": -1,
+                                    "MinHeight": -1,
+                                    "PreferredWidth": -1,
+                                    "PreferredHeight": -1,
+                                    "FlexibleWidth": -1,
+                                    "FlexibleHeight": -1
+                                  },
+                                  {
+                                    "tipo": "Button",
+                                    "activo": true,
+                                    "transicion": 1
+                                  }
+                                ],
+                                "hijos": [
+                                  {
+                                    "nombre": "Quantity",
+                                    "ruta": "CropBox/View/Menu/Scroll View/Viewport/Content/Crop/Image/Quantity",
+                                    "activo": true,
+                                    "anclaMin": {
+                                      "x": 1,
+                                      "y": 0
+                                    },
+                                    "anclaMax": {
+                                      "x": 1,
+                                      "y": 0
+                                    },
+                                    "pos": {
+                                      "x": 8,
+                                      "y": -8
+                                    },
+                                    "tam": {
+                                      "x": 0,
+                                      "y": 24
+                                    },
+                                    "pivote": {
+                                      "x": 1,
+                                      "y": 0
+                                    },
+                                    "posLocal": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "comp": [
+                                      {
+                                        "tipo": "HorizontalLayoutGroup",
+                                        "espaciado": 0,
+                                        "alineacion": 0,
+                                        "relleno": {
+                                          "izq": 0,
+                                          "der": 0,
+                                          "arr": 0,
+                                          "aba": 0
+                                        }
+                                      },
+                                      {
+                                        "tipo": "ContentSizeFitter",
+                                        "ajusteH": 2,
+                                        "ajusteV": 0
+                                      }
+                                    ],
+                                    "hijos": [
+                                      {
+                                        "nombre": "Backing",
+                                        "ruta": "CropBox/View/Menu/Scroll View/Viewport/Content/Crop/Image/Quantity/Backing",
+                                        "activo": true,
+                                        "anclaMin": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "anclaMax": {
+                                          "x": 1,
+                                          "y": 1
+                                        },
+                                        "pos": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "tam": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "pivote": {
+                                          "x": 0.5,
+                                          "y": 0.5
+                                        },
+                                        "posLocal": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "comp": [
+                                          {
+                                            "tipo": "Image",
+                                            "sprite": {
+                                              "nombre": "roundedRect",
+                                              "rx": 0,
+                                              "ry": 0,
+                                              "rw": 128,
+                                              "rh": 128,
+                                              "px": 0.5,
+                                              "py": 0.5,
+                                              "ppu": 128,
+                                              "borde": {
+                                                "x": 16,
+                                                "y": 16,
+                                                "z": 16,
+                                                "w": 16
+                                              }
+                                            },
+                                            "color": {
+                                              "r": 1,
+                                              "g": 0.96087,
+                                              "b": 0.89151,
+                                              "a": 1
+                                            },
+                                            "modo": 1,
+                                            "rellenaCentro": true,
+                                            "conservaProporcion": false,
+                                            "recibeToque": true,
+                                            "ppuMult": 1.25
+                                          },
+                                          {
+                                            "tipo": "LayoutElement",
+                                            "MinWidth": -1,
+                                            "MinHeight": -1,
+                                            "PreferredWidth": -1,
+                                            "PreferredHeight": -1,
+                                            "FlexibleWidth": -1,
+                                            "FlexibleHeight": -1
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "nombre": "Text (TMP)",
+                                        "ruta": "CropBox/View/Menu/Scroll View/Viewport/Content/Crop/Image/Quantity/Text (TMP)",
+                                        "activo": true,
+                                        "anclaMin": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "anclaMax": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "pos": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "tam": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "pivote": {
+                                          "x": 0.5,
+                                          "y": 0.5
+                                        },
+                                        "posLocal": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "comp": [
+                                          {
+                                            "tipo": "TextMeshProUGUI",
+                                            "texto": "5",
+                                            "tam": 18,
+                                            "color": {
+                                              "r": 0.33333,
+                                              "g": 0.33333,
+                                              "b": 0.33333,
+                                              "a": 1
+                                            },
+                                            "alineacion": 65535,
+                                            "autoTam": false,
+                                            "tamMin": 18,
+                                            "tamMax": 72,
+                                            "estilo": 1,
+                                            "margen": {
+                                              "x": 6,
+                                              "y": 0,
+                                              "z": 6,
+                                              "w": 0
+                                            }
+                                          },
+                                          {
+                                            "tipo": "LayoutElement",
+                                            "MinWidth": 24,
+                                            "MinHeight": -1,
+                                            "PreferredWidth": -1,
+                                            "PreferredHeight": -1,
+                                            "FlexibleWidth": -1,
+                                            "FlexibleHeight": -1
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "nombre": "Name",
+                                "ruta": "CropBox/View/Menu/Scroll View/Viewport/Content/Crop/Name",
+                                "activo": true,
+                                "anclaMin": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "anclaMax": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "pos": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "tam": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "pivote": {
+                                  "x": 0.5,
+                                  "y": 0.5
+                                },
+                                "posLocal": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "comp": [
+                                  {
+                                    "tipo": "TextMeshProUGUI",
+                                    "texto": "Strange Carrot",
+                                    "tam": 24,
+                                    "color": {
+                                      "r": 0.33333,
+                                      "g": 0.33333,
+                                      "b": 0.33333,
+                                      "a": 1
+                                    },
+                                    "alineacion": 65535,
+                                    "autoTam": true,
+                                    "tamMin": 18,
+                                    "tamMax": 24,
+                                    "estilo": 0,
+                                    "margen": {
+                                      "x": 8,
+                                      "y": 0,
+                                      "z": 32,
+                                      "w": 0
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "nombre": "Text (TMP)",
+                                "ruta": "CropBox/View/Menu/Scroll View/Viewport/Content/Crop/Text (TMP)",
+                                "activo": true,
+                                "anclaMin": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "anclaMax": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "pos": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "tam": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "pivote": {
+                                  "x": 0.5,
+                                  "y": 0.5
+                                },
+                                "posLocal": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "comp": [
+                                  {
+                                    "tipo": "TextMeshProUGUI",
+                                    "texto": "10000\u203D",
+                                    "tam": 28,
+                                    "color": {
+                                      "r": 0.33333,
+                                      "g": 0.33333,
+                                      "b": 0.33333,
+                                      "a": 1
+                                    },
+                                    "alineacion": 65535,
+                                    "autoTam": false,
+                                    "tamMin": 18,
+                                    "tamMax": 72,
+                                    "estilo": 1,
+                                    "margen": {
+                                      "x": 0,
+                                      "y": 0,
+                                      "z": 0,
+                                      "w": 0
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Empty",
+                "ruta": "CropBox/View/Menu/Empty",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": 400,
+                    "PreferredHeight": 100,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Image",
+                    "ruta": "CropBox/View/Menu/Empty/Image",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 100,
+                      "y": 100
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "furnitureIcons_69",
+                          "rx": 391.05,
+                          "ry": 5.08,
+                          "rw": 49.93,
+                          "rh": 58.92,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0,
+                          "g": 0,
+                          "b": 0,
+                          "a": 0.12549
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Total Divider",
+                "ruta": "CropBox/View/Menu/Total Divider",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "HorizontalLayoutGroup",
+                    "espaciado": 0,
+                    "alineacion": 0,
+                    "relleno": {
+                      "izq": 8,
+                      "der": 8,
+                      "arr": 0,
+                      "aba": 0
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Image (1)",
+                    "ruta": "CropBox/View/Menu/Total Divider/Image (1)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "LayoutElement",
+                        "MinWidth": -1,
+                        "MinHeight": -1,
+                        "PreferredWidth": -1,
+                        "PreferredHeight": -1,
+                        "FlexibleWidth": 20,
+                        "FlexibleHeight": -1
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Line",
+                        "ruta": "CropBox/View/Menu/Total Divider/Image (1)/Line",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0.5
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 0.5
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 4
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "circle8px",
+                              "rx": 32,
+                              "ry": 88,
+                              "rw": 8,
+                              "rh": 8,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 4,
+                                "y": 0,
+                                "z": 4,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 0.33333,
+                              "g": 0.33333,
+                              "b": 0.33333,
+                              "a": 1
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 2
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Text (TMP)",
+                    "ruta": "CropBox/View/Menu/Total Divider/Text (TMP)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "total",
+                        "tam": 24,
+                        "color": {
+                          "r": 0.33333,
+                          "g": 0.33333,
+                          "b": 0.33333,
+                          "a": 1
+                        },
+                        "alineacion": 65535,
+                        "autoTam": false,
+                        "tamMin": 18,
+                        "tamMax": 72,
+                        "estilo": 0,
+                        "margen": {
+                          "x": 8,
+                          "y": 0,
+                          "z": 8,
+                          "w": 0
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Image (2)",
+                    "ruta": "CropBox/View/Menu/Total Divider/Image (2)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "LayoutElement",
+                        "MinWidth": -1,
+                        "MinHeight": -1,
+                        "PreferredWidth": -1,
+                        "PreferredHeight": -1,
+                        "FlexibleWidth": 20,
+                        "FlexibleHeight": -1
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Line",
+                        "ruta": "CropBox/View/Menu/Total Divider/Image (2)/Line",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0.5
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 0.5
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 4
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "circle8px",
+                              "rx": 32,
+                              "ry": 88,
+                              "rw": 8,
+                              "rh": 8,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 4,
+                                "y": 0,
+                                "z": 4,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 0.33333,
+                              "g": 0.33333,
+                              "b": 0.33333,
+                              "a": 1
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 2
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Sell",
+                "ruta": "CropBox/View/Menu/Sell",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "HorizontalLayoutGroup",
+                    "espaciado": 2,
+                    "alineacion": 0,
+                    "relleno": {
+                      "izq": 0,
+                      "der": 0,
+                      "arr": 0,
+                      "aba": 0
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Button",
+                    "ruta": "CropBox/View/Menu/Sell/Button",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "roundedRect",
+                          "rx": 0,
+                          "ry": 0,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 16,
+                            "y": 16,
+                            "z": 16,
+                            "w": 16
+                          }
+                        },
+                        "color": {
+                          "r": 1,
+                          "g": 0.91179,
+                          "b": 0.75943,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "HorizontalLayoutGroup",
+                        "espaciado": 0,
+                        "alineacion": 0,
+                        "relleno": {
+                          "izq": 0,
+                          "der": 0,
+                          "arr": 0,
+                          "aba": 0
+                        }
+                      },
+                      {
+                        "tipo": "LayoutElement",
+                        "MinWidth": -1,
+                        "MinHeight": -1,
+                        "PreferredWidth": -1,
+                        "PreferredHeight": 64,
+                        "FlexibleWidth": 100,
+                        "FlexibleHeight": -1
+                      },
+                      {
+                        "tipo": "Button",
+                        "activo": true,
+                        "transicion": 1
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Text (TMP)",
+                        "ruta": "CropBox/View/Menu/Sell/Button/Text (TMP)",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "TextMeshProUGUI",
+                            "texto": "Sell All",
+                            "tam": 30,
+                            "color": {
+                              "r": 0.33333,
+                              "g": 0.33333,
+                              "b": 0.33333,
+                              "a": 1
+                            },
+                            "alineacion": 65535,
+                            "autoTam": false,
+                            "tamMin": 18,
+                            "tamMax": 30,
+                            "estilo": 0,
+                            "margen": {
+                              "x": 8,
+                              "y": 0,
+                              "z": 8,
+                              "w": 0
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "Text (TMP) (1)",
+                        "ruta": "CropBox/View/Menu/Sell/Button/Text (TMP) (1)",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "TextMeshProUGUI",
+                            "texto": "100\u203D",
+                            "tam": 30,
+                            "color": {
+                              "r": 0.33333,
+                              "g": 0.33333,
+                              "b": 0.33333,
+                              "a": 1
+                            },
+                            "alineacion": 65535,
+                            "autoTam": false,
+                            "tamMin": 18,
+                            "tamMax": 30,
+                            "estilo": 1,
+                            "margen": {
+                              "x": 8,
+                              "y": 0,
+                              "z": 12,
+                              "w": 0
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Title",
+            "ruta": "CropBox/View/Title",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -8
+            },
+            "tam": {
+              "x": 0,
+              "y": 16
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": 16,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image (1)",
+                "ruta": "CropBox/View/Title/Image (1)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 0.44,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": -8
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 16
+                },
+                "pivote": {
+                  "x": 1,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "escala": {
+                  "x": 0,
+                  "y": 1
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": -1,
+                    "FlexibleWidth": 20,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Line",
+                    "ruta": "CropBox/View/Title/Image (1)/Line",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": -12,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -24,
+                      "y": 4
+                    },
+                    "pivote": {
+                      "x": 1,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circle8px",
+                          "rx": 32,
+                          "ry": 88,
+                          "rw": 8,
+                          "rh": 8,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 4,
+                            "y": 0,
+                            "z": 4,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.33333,
+                          "g": 0.33333,
+                          "b": 0.33333,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 2
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Image (2)",
+                "ruta": "CropBox/View/Title/Image (2)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.56,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": -8
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 16
+                },
+                "pivote": {
+                  "x": 0,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "escala": {
+                  "x": 0,
+                  "y": 1
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": -1,
+                    "FlexibleWidth": 20,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Line",
+                    "ruta": "CropBox/View/Title/Image (2)/Line",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": 12,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -24,
+                      "y": 4
+                    },
+                    "pivote": {
+                      "x": 0,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circle8px",
+                          "rx": 32,
+                          "ry": 88,
+                          "rw": 8,
+                          "rh": 8,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 4,
+                            "y": 0,
+                            "z": 4,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.33333,
+                          "g": 0.33333,
+                          "b": 0.33333,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 2
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Pointer",
+        "ruta": "CropBox/Pointer",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0
+        },
+        "pos": {
+          "x": 0,
+          "y": 8
+        },
+        "tam": {
+          "x": 72,
+          "y": 32
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 1
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "PrimitiveRoundDiamonds_4",
+              "rx": 130.08,
+              "ry": 3.03,
+              "rw": 122.85,
+              "rh": 61.97,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 100,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 0.86275,
+              "g": 0.77647,
+              "b": 0.62745,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "LayoutElement",
+            "MinWidth": -1,
+            "MinHeight": -1,
+            "PreferredWidth": -1,
+            "PreferredHeight": -1,
+            "FlexibleWidth": -1,
+            "FlexibleHeight": -1
+          }
+        ]
+      },
+      {
+        "nombre": "IconBacking",
+        "ruta": "CropBox/IconBacking",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 72,
+          "y": 72
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "circle",
+              "rx": 0,
+              "ry": 128,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.497,
+              "py": -0.19396,
+              "ppu": 128,
+              "borde": {
+                "x": 64,
+                "y": 64,
+                "z": 64,
+                "w": 64
+              }
+            },
+            "color": {
+              "r": 0.86275,
+              "g": 0.77647,
+              "b": 0.62745,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "LayoutElement",
+            "MinWidth": -1,
+            "MinHeight": -1,
+            "PreferredWidth": -1,
+            "PreferredHeight": -1,
+            "FlexibleWidth": -1,
+            "FlexibleHeight": -1
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Image",
+            "ruta": "CropBox/IconBacking/Image",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "furnitureIcons_10",
+                  "rx": 780.08,
+                  "ry": 523.03,
+                  "rw": 39.87,
+                  "rh": 44.9,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 0.30196,
+                  "g": 0.29804,
+                  "b": 0.30196,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

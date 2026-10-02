@@ -1,0 +1,1316 @@
+{
+ "_fuente": "los volcados data/ui_*.json de level14 (tools/build_ui_paleta.js)",
+ "_nota": "Colores en 0..1 como los guarda Unity. `borde` son las nueve rebanadas del sprite, para `border-image-slice`. `modo`: 0 Simple, 1 Sliced, 2 Tiled, 3 Filled.",
+ "ventanas": {
+  "editmodeinventory": {
+   "clase": "EditModeInventory",
+   "nivel": "level14",
+   "raiz": "EditMode",
+   "partes": {
+    "panel": {
+     "ruta": "EditMode",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.29412,
+      "g": 0.29412,
+      "b": 0.29412,
+      "a": 1
+     },
+     "tam": {
+      "x": 200,
+      "y": 1200
+     }
+    },
+    "filtros": {
+     "ruta": "EditMode/Filters",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.29412,
+      "g": 0.29412,
+      "b": 0.29412,
+      "a": 1
+     },
+     "tam": {
+      "x": 128,
+      "y": 0
+     }
+    },
+    "interior": {
+     "ruta": "EditMode/Image",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.56078,
+      "g": 0.65879,
+      "b": 0.66275,
+      "a": 1
+     },
+     "tam": {
+      "x": -16,
+      "y": -16
+     }
+    },
+    "interiorHondo": {
+     "ruta": "EditMode/Image/Image (2)",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.50979,
+      "g": 0.60016,
+      "b": 0.60377,
+      "a": 1
+     },
+     "tam": {
+      "x": -16,
+      "y": -16
+     }
+    },
+    "punteado": {
+     "ruta": "EditMode/Image/Image (1)",
+     "sprite": "PrimitiveShapesDashedO_2",
+     "borde": {
+      "x": 32,
+      "y": 32,
+      "z": 32,
+      "w": 32
+     },
+     "modo": 2,
+     "color": {
+      "r": 0.43494,
+      "g": 0.50633,
+      "b": 0.50943,
+      "a": 1
+     },
+     "tam": {
+      "x": -8,
+      "y": -8
+     }
+    },
+    "hueco": {
+     "ruta": "EditMode/Scroll View/Viewport/Content/Image/Dot",
+     "sprite": "circle",
+     "borde": {
+      "x": 64,
+      "y": 64,
+      "z": 64,
+      "w": 64
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.58039,
+      "g": 0.66667,
+      "b": 0.67059,
+      "a": 1
+     },
+     "tam": {
+      "x": 100,
+      "y": 100
+     }
+    },
+    "cantidad": {
+     "ruta": "EditMode/Scroll View/Viewport/Content/Image/QuantityBacking",
+     "sprite": "circle30px",
+     "borde": {
+      "x": 15,
+      "y": 0,
+      "z": 15,
+      "w": 0
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.83137,
+      "g": 0.93726,
+      "b": 0.9451,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 30
+     }
+    },
+    "botonFondo": {
+     "ruta": "EditMode/Scroll View/FlipToggle/Background",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.29412,
+      "g": 0.29412,
+      "b": 0.29412,
+      "a": 1
+     },
+     "tam": {
+      "x": -4.0034,
+      "y": 0
+     }
+    },
+    "botonIcono": {
+     "ruta": "EditMode/Scroll View/FlipToggle/Background/Checkmark",
+     "sprite": "refresh",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 0,
+     "color": {
+      "r": 0.56078,
+      "g": 0.65882,
+      "b": 0.66275,
+      "a": 1
+     },
+     "tam": {
+      "x": 50,
+      "y": 50
+     }
+    },
+    "buscador": {
+     "ruta": "EditMode/Search (1)/SearchBarBacking",
+     "sprite": "circle62px",
+     "borde": {
+      "x": 31,
+      "y": 0,
+      "z": 31,
+      "w": 0
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.86792,
+      "g": 0.86792,
+      "b": 0.86792,
+      "a": 1.69167
+     },
+     "tam": {
+      "x": 64,
+      "y": 64
+     }
+    },
+    "vacio": {
+     "ruta": "EditMode/Scroll View/Empty",
+     "sprite": "furnitureIcons_69",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 0,
+     "color": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0.11373
+     },
+     "tam": {
+      "x": 100,
+      "y": 100
+     }
+    }
+   }
+  },
+  "externalinventory": {
+   "clase": "ExternalInventory",
+   "nivel": "level14",
+   "raiz": "MiniInventory",
+   "partes": {
+    "aro": {
+     "ruta": "MiniInventory/IconBackingO",
+     "sprite": "circle",
+     "borde": {
+      "x": 64,
+      "y": 64,
+      "z": 64,
+      "w": 64
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.34118,
+      "g": 0.31373,
+      "b": 0.28235,
+      "a": 1
+     },
+     "tam": {
+      "x": 116,
+      "y": 116
+     }
+    },
+    "panel": {
+     "ruta": "MiniInventory/Image",
+     "sprite": "PrimitiveShapes SDF_2",
+     "borde": {
+      "x": 24,
+      "y": 24,
+      "z": 24,
+      "w": 24
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.34118,
+      "g": 0.31373,
+      "b": 0.28235,
+      "a": 1
+     },
+     "tam": {
+      "x": 50,
+      "y": 50
+     }
+    },
+    "interior": {
+     "ruta": "MiniInventory/Image/Backing",
+     "sprite": "PrimitiveShapes SDF_2",
+     "borde": {
+      "x": 24,
+      "y": 24,
+      "z": 24,
+      "w": 24
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.91373,
+      "g": 0.66275,
+      "b": 0.39216,
+      "a": 1
+     },
+     "tam": {
+      "x": -12,
+      "y": -12
+     }
+    },
+    "pico": {
+     "ruta": "MiniInventory/Image/Pointer",
+     "sprite": "PrimitiveRoundDiamonds_4",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 0,
+     "color": {
+      "r": 0.91373,
+      "g": 0.66275,
+      "b": 0.39216,
+      "a": 1
+     },
+     "tam": {
+      "x": 72,
+      "y": 36
+     }
+    },
+    "picoO": {
+     "ruta": "MiniInventory/Image/PointerO",
+     "sprite": "PrimitiveRoundDiamonds_4",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 0,
+     "color": {
+      "r": 0.34118,
+      "g": 0.31373,
+      "b": 0.28235,
+      "a": 1
+     },
+     "tam": {
+      "x": 84,
+      "y": 40
+     }
+    },
+    "hueco": {
+     "ruta": "MiniInventory/Image/Scroll View/Viewport/Content/GameObject",
+     "sprite": "circle",
+     "borde": {
+      "x": 64,
+      "y": 64,
+      "z": 64,
+      "w": 64
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.9717,
+      "g": 0.85921,
+      "b": 0.73794,
+      "a": 1
+     },
+     "tam": {
+      "x": 100,
+      "y": 100
+     }
+    },
+    "cantidad": {
+     "ruta": "MiniInventory/Image/Scroll View/Viewport/Content/GameObject/Image",
+     "sprite": "circle30px",
+     "borde": {
+      "x": 15,
+      "y": 0,
+      "z": 15,
+      "w": 0
+     },
+     "modo": 1,
+     "color": {
+      "r": 1,
+      "g": 1,
+      "b": 1,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 30
+     }
+    },
+    "boton": {
+     "ruta": "MiniInventory/Image/CustomButton",
+     "sprite": "circle",
+     "borde": {
+      "x": 64,
+      "y": 64,
+      "z": 64,
+      "w": 64
+     },
+     "modo": 0,
+     "color": {
+      "r": 0.91509,
+      "g": 0.66088,
+      "b": 0.3928,
+      "a": 1
+     },
+     "tam": {
+      "x": 100,
+      "y": 100
+     }
+    }
+   }
+  },
+  "newspaperpopup": {
+   "clase": "NewspaperPopup",
+   "nivel": "level14",
+   "raiz": "Newspaper",
+   "partes": {
+    "fondo": {
+     "ruta": "Newspaper/GameObject/Backing",
+     "sprite": "newspaperBacking",
+     "borde": {
+      "x": 32,
+      "y": 49,
+      "z": 32,
+      "w": 121
+     },
+     "modo": 1,
+     "color": {
+      "r": 1,
+      "g": 1,
+      "b": 1,
+      "a": 1
+     },
+     "tam": {
+      "x": 84,
+      "y": 84
+     }
+    },
+    "linea": {
+     "ruta": "Newspaper/GameObject/Line",
+     "sprite": "roundedRect_4px",
+     "borde": {
+      "x": 4,
+      "y": 4,
+      "z": 4,
+      "w": 4
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.3098,
+      "g": 0.3098,
+      "b": 0.3098,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   }
+  },
+  "envelope": {
+   "clase": "Envelope",
+   "nivel": "level14",
+   "raiz": "Envelope",
+   "partes": {
+    "sobre": {
+     "ruta": "Envelope",
+     "sprite": "envelope_0",
+     "borde": {
+      "x": 46,
+      "y": 46,
+      "z": 46,
+      "w": 46
+     },
+     "modo": 1,
+     "color": {
+      "r": 1,
+      "g": 1,
+      "b": 1,
+      "a": 1
+     },
+     "tam": {
+      "x": 820,
+      "y": 450
+     }
+    },
+    "trasera": {
+     "ruta": "Envelope/Rear",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.77358,
+      "g": 0.75047,
+      "b": 0.70425,
+      "a": 1
+     },
+     "tam": {
+      "x": 800,
+      "y": 426
+     }
+    },
+    "carta": {
+     "ruta": "Envelope/LetterDisplay",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.99057,
+      "g": 0.97861,
+      "b": 0.91113,
+      "a": 1
+     },
+     "tam": {
+      "x": 800,
+      "y": 400
+     }
+    },
+    "cartaBorde": {
+     "ruta": "Envelope/LetterDisplay/Image",
+     "sprite": "roundedRectO_4px",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0.06275
+     },
+     "tam": {
+      "x": -8,
+      "y": -8
+     }
+    },
+    "ranuras": {
+     "ruta": "Envelope/LetterDisplay/Inventory",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.92941,
+      "g": 0.91765,
+      "b": 0.85098,
+      "a": 1
+     },
+     "tam": {
+      "x": 768,
+      "y": 96
+     }
+    },
+    "ranura": {
+     "ruta": "Envelope/LetterDisplay/Inventory/Slot",
+     "sprite": "circle",
+     "borde": {
+      "x": 64,
+      "y": 64,
+      "z": 64,
+      "w": 64
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.99216,
+      "g": 0.98039,
+      "b": 0.9098,
+      "a": 1
+     },
+     "tam": {
+      "x": 80,
+      "y": 80
+     }
+    },
+    "boton": {
+     "ruta": "Envelope/LetterDisplay/Button",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.92941,
+      "g": 0.91765,
+      "b": 0.85098,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 57.6
+     }
+    },
+    "botonBorde": {
+     "ruta": "Envelope/LetterDisplay/Button/Image",
+     "sprite": "roundedRectO_4px",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.99216,
+      "g": 0.98039,
+      "b": 0.9098,
+      "a": 1
+     },
+     "tam": {
+      "x": -8,
+      "y": -8
+     }
+    },
+    "solapa": {
+     "ruta": "Envelope/Flap/Image",
+     "sprite": "envelope_2",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 0,
+     "color": {
+      "r": 0.91765,
+      "g": 0.91765,
+      "b": 0.85098,
+      "a": 1
+     },
+     "tam": {
+      "x": 790,
+      "y": 333.7977
+     }
+    }
+   }
+  },
+  "mailbox": {
+   "clase": "Mailbox",
+   "nivel": "level14",
+   "raiz": "Mailbox",
+   "partes": {
+    "panel": {
+     "ruta": "Mailbox",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.47059,
+      "g": 0.31765,
+      "b": 0.2902,
+      "a": 1
+     },
+     "tam": {
+      "x": 600,
+      "y": 0
+     }
+    },
+    "pico": {
+     "ruta": "Mailbox/Tab",
+     "sprite": "PrimitiveRoundDiamonds_4",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 0,
+     "color": {
+      "r": 0.47059,
+      "g": 0.31765,
+      "b": 0.2902,
+      "a": 1
+     },
+     "tam": {
+      "x": 32,
+      "y": 16
+     }
+    },
+    "interior": {
+     "ruta": "Mailbox/Image",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.77647,
+      "g": 0.51765,
+      "b": 0.41961,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 420
+     }
+    },
+    "interiorBorde": {
+     "ruta": "Mailbox/Image/Image (1)",
+     "sprite": "roundedRectO_4px",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.4717,
+      "g": 0.31848,
+      "b": 0.29147,
+      "a": 0.24706
+     },
+     "tam": {
+      "x": -16,
+      "y": -16
+     }
+    }
+   }
+  },
+  "optionspopup": {
+   "clase": "OptionsPopup",
+   "nivel": "level14",
+   "raiz": "OptionsPopup",
+   "partes": {
+    "panel": {
+     "ruta": "OptionsPopup/Backing",
+     "sprite": "PrimitiveShapesSpheres SDF_0",
+     "borde": {
+      "x": 32,
+      "y": 32,
+      "z": 32,
+      "w": 32
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.30196,
+      "g": 0.29804,
+      "b": 0.30196,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   }
+  },
+  "gachapopup": {
+   "clase": "GachaPopup",
+   "nivel": "level14",
+   "raiz": "GachaBG",
+   "partes": {
+    "velo": {
+     "ruta": "GachaBG",
+     "sprite": null,
+     "borde": null,
+     "modo": 0,
+     "color": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0.32549
+     },
+     "tam": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   }
+  },
+  "diarypopup": {
+   "clase": "DiaryPopup",
+   "nivel": "level14",
+   "raiz": "Diaries",
+   "partes": {
+    "sombra": {
+     "ruta": "Diaries/DiaryPopup/Shadow",
+     "sprite": "rectBlur",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.24528,
+      "g": 0.24528,
+      "b": 0.24528,
+      "a": 0.4549
+     },
+     "tam": {
+      "x": 24,
+      "y": 24
+     }
+    },
+    "marco": {
+     "ruta": "Diaries/DiaryPopup/Image",
+     "sprite": "roundedRect_24px",
+     "borde": {
+      "x": 24,
+      "y": 24,
+      "z": 24,
+      "w": 24
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.24528,
+      "g": 0.24528,
+      "b": 0.24528,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 0
+     }
+    },
+    "hoja": {
+     "ruta": "Diaries/DiaryPopup/Image/Image (1)",
+     "sprite": "roundedRect_24px",
+     "borde": {
+      "x": 24,
+      "y": 24,
+      "z": 24,
+      "w": 24
+     },
+     "modo": 1,
+     "color": {
+      "r": 1,
+      "g": 1,
+      "b": 1,
+      "a": 1
+     },
+     "tam": {
+      "x": -8,
+      "y": -8
+     }
+    }
+   }
+  },
+  "cropboxui": {
+   "clase": "CropBoxUI",
+   "nivel": "level14",
+   "raiz": "CropBox",
+   "partes": {
+    "aro": {
+     "ruta": "CropBox/IconBackingO",
+     "sprite": "circle",
+     "borde": {
+      "x": 64,
+      "y": 64,
+      "z": 64,
+      "w": 64
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.30196,
+      "g": 0.29804,
+      "b": 0.30196,
+      "a": 1
+     },
+     "tam": {
+      "x": 80,
+      "y": 80
+     }
+    },
+    "picoO": {
+     "ruta": "CropBox/PointerO",
+     "sprite": "PrimitiveRoundDiamonds_4",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 0,
+     "color": {
+      "r": 0.33333,
+      "g": 0.33333,
+      "b": 0.33333,
+      "a": 1
+     },
+     "tam": {
+      "x": 72,
+      "y": 32
+     }
+    },
+    "pico": {
+     "ruta": "CropBox/Pointer",
+     "sprite": "PrimitiveRoundDiamonds_4",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 0,
+     "color": {
+      "r": 0.86275,
+      "g": 0.77647,
+      "b": 0.62745,
+      "a": 1
+     },
+     "tam": {
+      "x": 72,
+      "y": 32
+     }
+    },
+    "borde": {
+     "ruta": "CropBox/View/Menu/Border",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.33333,
+      "g": 0.33333,
+      "b": 0.33333,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 0
+     }
+    },
+    "fondo": {
+     "ruta": "CropBox/View/Menu/Backing",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.85849,
+      "g": 0.77789,
+      "b": 0.62767,
+      "a": 1
+     },
+     "tam": {
+      "x": -8,
+      "y": -8
+     }
+    },
+    "boton": {
+     "ruta": "CropBox/View/Menu/Sell/Button",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 1,
+      "g": 0.91179,
+      "b": 0.75943,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 0
+     }
+    },
+    "linea": {
+     "ruta": "CropBox/View/Title/Image (1)/Line",
+     "sprite": "circle8px",
+     "borde": {
+      "x": 4,
+      "y": 0,
+      "z": 4,
+      "w": 0
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.33333,
+      "g": 0.33333,
+      "b": 0.33333,
+      "a": 1
+     },
+     "tam": {
+      "x": -24,
+      "y": 4
+     }
+    },
+    "icono": {
+     "ruta": "CropBox/IconBacking",
+     "sprite": "circle",
+     "borde": {
+      "x": 64,
+      "y": 64,
+      "z": 64,
+      "w": 64
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.86275,
+      "g": 0.77647,
+      "b": 0.62745,
+      "a": 1
+     },
+     "tam": {
+      "x": 72,
+      "y": 72
+     }
+    },
+    "iconoImg": {
+     "ruta": "CropBox/IconBacking/Image",
+     "sprite": "furnitureIcons_10",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 0,
+     "color": {
+      "r": 0.30196,
+      "g": 0.29804,
+      "b": 0.30196,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   }
+  },
+  "giftboxpopup": {
+   "clase": "GiftboxPopup",
+   "nivel": "level14",
+   "raiz": "GiftBox",
+   "partes": {
+    "fondo": {
+     "ruta": "GiftBox/Backing",
+     "sprite": null,
+     "borde": null,
+     "modo": 0,
+     "color": {
+      "r": 0.81176,
+      "g": 0.39608,
+      "b": 0.39608,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 0
+     }
+    },
+    "velo": {
+     "ruta": "GiftBox/Blackout",
+     "sprite": null,
+     "borde": null,
+     "modo": 0,
+     "color": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0.32549
+     },
+     "tam": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   }
+  },
+  "blurbpopup": {
+   "clase": "BlurbPopup",
+   "nivel": "level14",
+   "raiz": "BlurbUI",
+   "partes": {
+    "franja": {
+     "ruta": "BlurbUI/Image",
+     "sprite": null,
+     "borde": null,
+     "modo": 0,
+     "color": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0.2
+     },
+     "tam": {
+      "x": 0,
+      "y": 84.01
+     }
+    }
+   }
+  },
+  "deedpopup": {
+   "clase": "DeedPopup",
+   "nivel": "level14",
+   "raiz": "Deed",
+   "partes": {
+    "papel": {
+     "ruta": "Deed/Paper",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.9717,
+      "g": 0.9597,
+      "b": 0.91211,
+      "a": 1
+     },
+     "tam": {
+      "x": 704.3,
+      "y": 1051
+     }
+    },
+    "contorno": {
+     "ruta": "Deed/Paper/Outline",
+     "sprite": "roundedRectO_4px",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0.17647
+     },
+     "tam": {
+      "x": -16,
+      "y": -16
+     }
+    },
+    "hueco": {
+     "ruta": "Deed/Paper/GameObject (1)/GameObject/Backing",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0.0902
+     },
+     "tam": {
+      "x": 250,
+      "y": 250
+     }
+    },
+    "firma": {
+     "ruta": "Deed/Paper/GameObject (1)/Signature/GameObject",
+     "sprite": "PrimitiveShapesDashedO_4",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 2,
+     "color": {
+      "r": 0.77255,
+      "g": 0.76471,
+      "b": 0.72549,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 8
+     }
+    },
+    "pagar": {
+     "ruta": "Deed/Paper/Pay",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.77255,
+      "g": 0.76471,
+      "b": 0.72549,
+      "a": 1
+     },
+     "tam": {
+      "x": -32,
+      "y": 100
+     }
+    }
+   }
+  },
+  "petition": {
+   "clase": "Petition",
+   "nivel": "level14",
+   "raiz": "Petition",
+   "partes": {
+    "papel": {
+     "ruta": "Petition/Paper",
+     "sprite": "roundedRect",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0.9717,
+      "g": 0.9597,
+      "b": 0.91211,
+      "a": 1
+     },
+     "tam": {
+      "x": 704.3,
+      "y": 1255.1
+     }
+    },
+    "contorno": {
+     "ruta": "Petition/Paper/Outline",
+     "sprite": "roundedRectO_4px",
+     "borde": {
+      "x": 16,
+      "y": 16,
+      "z": 16,
+      "w": 16
+     },
+     "modo": 1,
+     "color": {
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 0.17647
+     },
+     "tam": {
+      "x": -16,
+      "y": -16
+     }
+    },
+    "renglon": {
+     "ruta": "Petition/Paper/Layout/Text (3)/GameObject",
+     "sprite": "PrimitiveShapesDashedO_4",
+     "borde": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+     },
+     "modo": 2,
+     "color": {
+      "r": 0.77255,
+      "g": 0.76471,
+      "b": 0.72549,
+      "a": 1
+     },
+     "tam": {
+      "x": 0,
+      "y": 8
+     }
+    }
+   }
+  }
+ }
+}

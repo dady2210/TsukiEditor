@@ -1,0 +1,215 @@
+{
+ "_fuente": "natto_assets_all_0619709bf6d63066b2052e8705771275.bundle",
+ "_nota": "La tira se elige con TsukiSave.WeeksPlayed (BountyBoard::LoadNatto). Cada una tiene tres vinyetas, guardadas como <tira>_<0|1|2>.png.",
+ "carpeta": "images/natto",
+ "tiras": [
+  {
+   "nombre": "natto0",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto1",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto2",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto3",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto4",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto5",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto6",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto7",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto8",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto9",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto10",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto11",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto12",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto13",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto14",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto15",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto16",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto17",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto18",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto19",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto20",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto21",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto22",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto23",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto24",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  },
+  {
+   "nombre": "natto25",
+   "vinyetas": [
+    "0",
+    "1",
+    "2"
+   ]
+  }
+ ]
+}

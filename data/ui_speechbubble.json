@@ -1,0 +1,980 @@
+{
+  "_fuente": "SpeechBubble de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "SpeechBubble",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "-555.7",
+      "y": "163"
+    },
+    "transform": "DialogueBubble",
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": null,
+    "transitionInSpeed": "2",
+    "transitionOutSpeed": "3",
+    "slideTransition": "3",
+    "transitionDistance": "25",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "rectTransform": "DialogueBubble",
+    "bubble": "DialogueBubble/BubbleBacking",
+    "pointerParent": "DialogueBubble/PointerMask",
+    "pointerImg": "DialogueBubble/PointerMask/Pointer",
+    "pointerOImg": "DialogueBubble/PointerO",
+    "bubbleCurve": {
+      "m_Curve": [
+        {
+          "time": "0",
+          "value": "0",
+          "inSlope": "3.6036193",
+          "outSlope": "3.6036193",
+          "weightedMode": "0",
+          "inWeight": "0",
+          "outWeight": "0.28663594"
+        },
+        {
+          "time": "0.5",
+          "value": "1",
+          "inSlope": "-0.013550516",
+          "outSlope": "-0.013550516",
+          "weightedMode": "0",
+          "inWeight": "0.33333334",
+          "outWeight": "0.5430634"
+        },
+        {
+          "time": "0.6963196",
+          "value": "0.9069786",
+          "inSlope": "-0.012825622",
+          "outSlope": "-0.012825622",
+          "weightedMode": "0",
+          "inWeight": "0.33333334",
+          "outWeight": "0.8026917"
+        },
+        {
+          "time": "0.875",
+          "value": "1",
+          "inSlope": "-0.0137453815",
+          "outSlope": "-0.0137453815",
+          "weightedMode": "0",
+          "inWeight": "0.48265934",
+          "outWeight": "1"
+        },
+        {
+          "time": "1.0035553",
+          "value": "1",
+          "inSlope": "0.3495209",
+          "outSlope": "0.3495209",
+          "weightedMode": "0",
+          "inWeight": "0.98195565",
+          "outWeight": "0"
+        }
+      ],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "bounceOutCurve": {
+      "m_Curve": [
+        {
+          "time": "0",
+          "value": "0",
+          "inSlope": "0",
+          "outSlope": "0",
+          "weightedMode": "0",
+          "inWeight": "0",
+          "outWeight": "0"
+        },
+        {
+          "time": "1",
+          "value": "1",
+          "inSlope": "-0.97058815",
+          "outSlope": "-0.97058815",
+          "weightedMode": "0",
+          "inWeight": "0.21249998",
+          "outWeight": "0"
+        }
+      ],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "nameFlipCurve": {
+      "m_Curve": [
+        {
+          "time": "0",
+          "value": "0",
+          "inSlope": "-0.008354722",
+          "outSlope": "-0.008354722",
+          "weightedMode": "0",
+          "inWeight": "0",
+          "outWeight": "1"
+        },
+        {
+          "time": "0.15",
+          "value": "-0.2",
+          "inSlope": "0.0055112927",
+          "outSlope": "0.0055112927",
+          "weightedMode": "0",
+          "inWeight": "0.33333334",
+          "outWeight": "0.20229374"
+        },
+        {
+          "time": "0.501071",
+          "value": "0.50160646",
+          "inSlope": "0.013418373",
+          "outSlope": "0.013418373",
+          "weightedMode": "0",
+          "inWeight": "0.33333334",
+          "outWeight": "0.5721947"
+        },
+        {
+          "time": "0.85",
+          "value": "1.2",
+          "inSlope": "0.012075534",
+          "outSlope": "0.012075534",
+          "weightedMode": "0",
+          "inWeight": "0.33333334",
+          "outWeight": "0.858861"
+        },
+        {
+          "time": "1.0010376",
+          "value": "1.0030365",
+          "inSlope": "0.013769711",
+          "outSlope": "0.013769711",
+          "weightedMode": "0",
+          "inWeight": "0.7732363",
+          "outWeight": "0"
+        }
+      ],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "nameBubble": "DialogueBubble/BubbleBacking/NameBubble",
+    "nameText": "DialogueBubble/BubbleBacking/NameBubble/Name",
+    "textAnim": "pathID 6122",
+    "touchTimer": "0",
+    "bubbleMinSize": {
+      "x": "160",
+      "y": "128"
+    },
+    "testNameFlip": "0"
+  },
+  "arbol": {
+    "nombre": "DialogueBubble",
+    "ruta": "DialogueBubble",
+    "activo": true,
+    "anclaMin": {
+      "x": 0.5,
+      "y": 0
+    },
+    "anclaMax": {
+      "x": 0.5,
+      "y": 0
+    },
+    "pos": {
+      "x": -555.7,
+      "y": 138
+    },
+    "tam": {
+      "x": 0,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0,
+      "y": 0
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "escala": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "SpeechBubble",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "2",
+          "transitionOutSpeed": "3",
+          "slideTransition": "3",
+          "transitionDistance": "25",
+          "touchTimer": "0",
+          "testNameFlip": "0"
+        }
+      },
+      {
+        "tipo": "Canvas"
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "PointerO",
+        "ruta": "DialogueBubble/PointerO",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0,
+          "y": 0
+        },
+        "pos": {
+          "x": -0,
+          "y": -3
+        },
+        "tam": {
+          "x": 50,
+          "y": 50
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "PrimitiveRoundDiamonds_3",
+              "rx": 130.08,
+              "ry": 3.03,
+              "rw": 122.85,
+              "rh": 122.9,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 100,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 0.33333,
+              "g": 0.31373,
+              "b": 0.28627,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          }
+        ]
+      },
+      {
+        "nombre": "BubbleBacking",
+        "ruta": "DialogueBubble/BubbleBacking",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 0,
+          "y": 1
+        },
+        "pos": {
+          "x": -80,
+          "y": 130
+        },
+        "tam": {
+          "x": 160,
+          "y": 128
+        },
+        "pivote": {
+          "x": 0,
+          "y": 1
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "hijos": [
+          {
+            "nombre": "WhiteBacking",
+            "ruta": "DialogueBubble/BubbleBacking/WhiteBacking",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "speechBubble",
+                  "rx": 30.08,
+                  "ry": 14.08,
+                  "rw": 195.85,
+                  "rh": 99.85,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 76,
+                    "y": 64,
+                    "z": 76,
+                    "w": 64
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Image",
+            "ruta": "DialogueBubble/BubbleBacking/Image",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": -16,
+              "y": -16
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "speechBubble",
+                  "rx": 30.08,
+                  "ry": 14.08,
+                  "rw": 195.85,
+                  "rh": 99.85,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 76,
+                    "y": 64,
+                    "z": 76,
+                    "w": 64
+                  }
+                },
+                "color": {
+                  "r": 0.9434,
+                  "g": 0.93003,
+                  "b": 0.85885,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "Outline",
+            "ruta": "DialogueBubble/BubbleBacking/Outline",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "speechBubbleOutline",
+                  "rx": 27.08,
+                  "ry": 139.08,
+                  "rw": 201.85,
+                  "rh": 105.85,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 76,
+                    "y": 64,
+                    "z": 76,
+                    "w": 64
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "NameBubble",
+            "ruta": "DialogueBubble/BubbleBacking/NameBubble",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 56,
+              "y": -12
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "escala": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0.33333,
+                  "g": 0.31373,
+                  "b": 0.28627,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "HorizontalLayoutGroup",
+                "espaciado": 0,
+                "alineacion": 0,
+                "relleno": {
+                  "izq": 12,
+                  "der": 12,
+                  "arr": 4,
+                  "aba": 4
+                }
+              },
+              {
+                "tipo": "ContentSizeFitter",
+                "ajusteH": 2,
+                "ajusteV": 2
+              },
+              {
+                "tipo": "ScalePopup",
+                "campos": {
+                  "m_Name": "",
+                  "visibleState": "0",
+                  "visibleTimer": "0",
+                  "transitionInSpeed": "5",
+                  "transitionOutSpeed": "5",
+                  "slideTransition": "0",
+                  "transitionDistance": "10",
+                  "backButtonAction": "0"
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Name",
+                "ruta": "DialogueBubble/BubbleBacking/NameBubble/Name",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0,
+                  "y": 0
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "Yori",
+                    "tam": 36,
+                    "color": {
+                      "r": 0.9434,
+                      "g": 0.93003,
+                      "b": 0.85885,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 34,
+                    "tamMax": 34,
+                    "estilo": 0,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Disc",
+            "ruta": "DialogueBubble/BubbleBacking/Disc",
+            "activo": false,
+            "anclaMin": {
+              "x": 1,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": -20,
+              "y": -20
+            },
+            "tam": {
+              "x": 100,
+              "y": 100
+            },
+            "pivote": {
+              "x": 1,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Disc",
+                "campos": {
+                  "m_Name": "",
+                  "blendMode": "1",
+                  "scaleMode": "0",
+                  "detailLevel": "2",
+                  "culling": "0",
+                  "boundsPadding": "0",
+                  "renderQueue": "-1",
+                  "zTest": "4",
+                  "zOffsetFactor": "0",
+                  "zOffsetUnits": "0",
+                  "colorMask": "15",
+                  "stencilComp": "8",
+                  "stencilOpPass": "0",
+                  "type": "3",
+                  "colorMode": "0",
+                  "geometry": "0",
+                  "angUnitInput": "1",
+                  "angRadiansStart": "1.5707964",
+                  "angRadiansEnd": "8.196066",
+                  "radius": "15",
+                  "radiusSpace": "0",
+                  "thickness": "7.7",
+                  "thicknessSpace": "0",
+                  "arcEndCaps": "1"
+                }
+              },
+              {
+                "tipo": "MeshFilter"
+              },
+              {
+                "tipo": "MeshRenderer"
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Disc (1)",
+                "ruta": "DialogueBubble/BubbleBacking/Disc/Disc (1)",
+                "activo": false,
+                "anclaMin": {
+                  "x": 1,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": -0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 100,
+                  "y": 100
+                },
+                "pivote": {
+                  "x": 1,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Disc",
+                    "campos": {
+                      "m_Name": "",
+                      "blendMode": "1",
+                      "scaleMode": "0",
+                      "detailLevel": "2",
+                      "culling": "0",
+                      "boundsPadding": "0",
+                      "renderQueue": "-1",
+                      "zTest": "4",
+                      "zOffsetFactor": "0",
+                      "zOffsetUnits": "0",
+                      "colorMask": "15",
+                      "stencilComp": "8",
+                      "stencilOpPass": "0",
+                      "type": "3",
+                      "colorMode": "0",
+                      "geometry": "0",
+                      "angUnitInput": "1",
+                      "angRadiansStart": "1.5707964",
+                      "angRadiansEnd": "8.196066",
+                      "radius": "15",
+                      "radiusSpace": "0",
+                      "thickness": "3.68",
+                      "thicknessSpace": "0",
+                      "arcEndCaps": "1"
+                    }
+                  },
+                  {
+                    "tipo": "MeshFilter"
+                  },
+                  {
+                    "tipo": "MeshRenderer"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "PointerMask",
+        "ruta": "DialogueBubble/PointerMask",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0,
+          "y": 0
+        },
+        "pos": {
+          "x": 0,
+          "y": 9
+        },
+        "tam": {
+          "x": 32,
+          "y": 16
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "white",
+              "rx": 0,
+              "ry": 0,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "Mask",
+            "campos": {
+              "m_Name": ""
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Pointer",
+            "ruta": "DialogueBubble/PointerMask/Pointer",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 32,
+              "y": 16
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "PrimitiveRoundDiamonds_4",
+                  "rx": 130.08,
+                  "ry": 3.03,
+                  "rw": 122.85,
+                  "rh": 61.97,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Text",
+        "ruta": "DialogueBubble/Text",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 0,
+          "y": 1
+        },
+        "pos": {
+          "x": -14.9999,
+          "y": 83
+        },
+        "tam": {
+          "x": 700,
+          "y": 0.1
+        },
+        "pivote": {
+          "x": 0,
+          "y": 0
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "TextMeshProUGUI",
+            "texto": "",
+            "tam": 32,
+            "color": {
+              "r": 0.33333,
+              "g": 0.31373,
+              "b": 0.28627,
+              "a": 1
+            },
+            "alineacion": 65535,
+            "autoTam": false,
+            "tamMin": 34,
+            "tamMax": 34,
+            "estilo": 0,
+            "margen": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 0
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

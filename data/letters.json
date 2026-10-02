@@ -1,0 +1,42 @@
+{
+ "_fuente": "ScriptedLetter.letterText de sharedassets1.assets (tools/extract_letters.py)",
+ "_nota": "El texto va detras de la clave `LETTERS_<n>`, con la misma forma de `StringT` que los items: el FORMAT y los catorce idiomas. Son CINCO en todo el fichero: el juego publicado no trae mas cartas con guion. El resto del correo son pedidos y paquetes, que salen de la partida.",
+ "cartas": {
+  "0": {
+   "clave": "LETTERS_0",
+   "texto": {
+    "en": "Hey, rabbit! It's me! The one you met on the train! I heard you were robbed so I decided to send you something. I hope you are well and may we meet again someday.",
+    "ptBR": "Oi, Coelho! Sou eu! Aquele que você conheceu no trem! Me disseram que você foi furtado, então eu resolvi te mandar algo. Espero que você esteja bem e que nos vejamos logo.",
+    "vn": "Chào cậu thỏ! Là tôi nè! Người mà cậu gặp trên chuyến tàu hôm đó ấy! Nghe tin cậu bị trộm nên tôi đã quyết định gửi cho cậu vài thứ. Tôi mong mọi chuyện ổn thỏa và chúng ta sẽ gặp lại nhau một ngày nào đó."
+   }
+  },
+  "1": {
+   "clave": "LETTERS_1",
+   "texto": {
+    "en": "Thank you for participating in our beta!",
+    "ptBR": "Obrigado por participar do nosso beta!",
+    "vn": "Cảm ơn bạn đã tham gia trải nghiệm bản beta của chúng tôi!"
+   }
+  },
+  "2": {
+   "clave": "LETTERS_2",
+   "texto": null
+  },
+  "3": {
+   "clave": "LETTERS_3",
+   "texto": {
+    "en": "It's the App Store Indie Fest! Please claim this unique flower from our hometown of Singapore.\n\nThank you for your continued support!",
+    "ptBR": "É o Festival Indie da App Store! Por favor, resgate essa flor única da nossa cidade natal, Cingapura.\n\nObrigado pelo seu apoio contínuo!",
+    "vn": "Sự kiện App Store Indie Fest đang diễn ra! Xin hãy nhận bông hoa đặc biệt này từ quê nhà Singapore của chúng tôi.\n\nCảm ơn bạn vì đã luôn ủng hộ!"
+   }
+  },
+  "4": {
+   "clave": "LETTERS_4",
+   "texto": {
+    "en": "Heya customers! I'll be at <b>Scarlett's Lounge till 9pm</b>, rehearsing for our midsummer performance.\n\nP.S. If this is Tsuki, meet me there, I need help!",
+    "ptBR": "Olá clientes! Estarei no <b>Boteco da Scarlett até às 21h</b>, ensaiando para nossa apresentação de verão.\n\nP.S. Se você for o Tsuki, me encontre lá, eu preciso de ajuda!",
+    "vn": "Chào các khách hàng yêu dấu! Tôi sẽ ở <b>Quán bar của Scarlett đến 9 giờ tối nay</b> để chuẩn bị cho buổi biểu diễn mùa hè của chúng tôi.\n\nTái bút: Nếu là Tsuki, hãy đến đó giúp chị một tay nhé!"
+   }
+  }
+ }
+}

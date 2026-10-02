@@ -618,6 +618,17 @@ class IsometricMap {
             this._imgCache[cacheKey] = false;
         }
         
+        // LAS SONDAS DE `_ON` SE ACABARON.
+        //
+        // Pedir `FURN_<id>_ON_0.png` para ver si existe cuesta un 404, y de los 8.606
+        // sprites de mueble solo DOS tienen variante encendida (2140 y 2146). El manifiesto
+        // `data/sprite_variants.json` dice cuales, asi que no se pregunta al servidor.
+        const sufijoON = (id) => {
+            const V = window.SPRITE_VARIANTS;
+            if (!V || !V.encendidos) return '_ON';   // sin manifiesto, como antes
+            return V.encendidos[String(id)] || null;
+        };
+
         const loadImg = (keyToLoad, fallbackCb) => {
             const isBackImage = String(keyToLoad).includes('_BACK');
             // La gran mayoría de imágenes _BACK (2515 de ellas) se llaman FURN_xxx_BACK.png (sin _0).
@@ -636,7 +647,13 @@ class IsometricMap {
             img.src = firstSrc;
         };
 
-        if (tryOn) {
+        // Si el manifiesto dice que este mueble NO tiene sprite encendido, se va directo
+        // al normal en vez de pedir dos ficheros que no estan.
+        const tieneON = tryOn && sufijoON(item_id) !== null;
+        if (tryOn && !tieneON) {
+            const normalKey = isBack ? `${item_id}_BACK` : `${item_id}`;
+            loadImg(normalKey, () => { this._imgCache[cacheKey] = null; this.draw(); });
+        } else if (tryOn) {
             // U4: ON first, fallback a normal
             loadImg(frontKey, () => {
                 const normalKey = isBack ? `${item_id}_BACK` : `${item_id}`;
@@ -3544,6 +3561,23 @@ class IsometricMap {
                 // aqui: lo pinta `drawLayer` dentro de su propia capa, entre los dos
                 // trozos horneados. El agua es lo mas al fondo de la suya, asi que
                 // pintarla al final taparia el muelle entero.
+                // LO QUE LAS TIENDAS TIENEN A LA VENTA, encima de su prop.
+                //
+                // Va aqui, despues de las animadas y antes de los props interactivos,
+                // porque en el juego el objeto esta puesto SOBRE el expositor: el pallet o
+                // el pedestal son parte de la escena y estan horneados, y el objeto es un
+                // hijo que se instancia en ejecucion.
+                //
+                // Y aqui va tambien el cartel de VENDIDO, que en la escena esta activo y el
+                // extractor horneo: `tools/marcar_carteles_vendido.py` lo saco de las
+                // visuales con `layer: "skip"` para que lo pinte `play_shops` solo cuando el
+                // expositor esta comprado. Sin eso, los props salian vendidos siempre.
+                if (window.PlayShops && window.PlayShops.dibujar) {
+                    const _ss = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75) * this.scale;
+                    try {
+                        window.PlayShops.dibujar(ctx, targetLoc, this.offsetX, this.offsetY, _ss);
+                    } catch (e) { /* sin datos de tienda: el mapa se pinta igual */ }
+                }
                 this._drawMapInteractiveProps(targetLoc);
                 this._drawMapSubscenes(targetLoc);
                 this._dibujarObraHomecoming(targetLoc);
@@ -6115,6 +6149,32 @@ class IsometricMap {
                     }
                 }
 
+                // MODO AZADA. `Farm.EditPlots(bool)` pone `Farm.PlotEditMode` en
+                // `Adding` o `Removing`: tocar una parcela la quita, tocar el suelo
+                // anyade una. Va ANTES que todo lo demas porque mientras esta puesto el
+                // toque es de la azada y no de lo que haya debajo.
+                if (isPlay && window.app && window.app.farmingSystem
+                        && typeof window.app.farmingSystem.enModoAzada === 'function'
+                        && window.app.farmingSystem.enModoAzada()) {
+                    const f = window.app.farmingSystem;
+                    const pl = this._findPlacementAtScreen(mouseX, mouseY, true);
+                    if (pl && (pl.item_id === 306 || pl.item_id === 411)) {
+                        f.quitarParcela(pl);
+                    } else {
+                        // `getCartesianCoords` es la inversa de `getIsoCoords`: de
+                        // pixel de pantalla a casilla.
+                        const casilla = this.getCartesianCoords(
+                            mouseX, mouseY, targetFloor, targetLoc);
+                        if (casilla) {
+                            f.anyadirParcela(targetLoc, Math.floor(casilla.x),
+                                             Math.floor(casilla.y), targetFloor);
+                        }
+                    }
+                    this.selectedPlacement = null;
+                    if (this.app) this.app.closeItemEditor();
+                    return;
+                }
+
                 // Módulo 6: el reproductor de casetes (mueble 406). En el juego es un
                 // mueble que se TOCA, no parte de la interfaz: saca sus burbujas
                 // `PlayMusic` / `EjectMusic`.
@@ -6165,6 +6225,8 @@ class IsometricMap {
                     }
                     this.hoveredPlacement = clickedPlacement;
                     this.app.openItemEditor(this.selectedPlacement);
+                    // `SFXClip.Grab`: coger un mueble.
+                    if (window.PlaySfx) window.PlaySfx.sonar('grab');
                     this.isItemDragging = true;
                     
                     const g = this._pointerToRawGrid(mouseX, mouseY, this.selectedPlacement);
@@ -6351,6 +6413,12 @@ class IsometricMap {
                 return;
             }
             const wasItemDragging = this.isItemDragging;
+            // `SFXClip.Place` al soltar y `Settle` cuando se asienta, que en el juego van
+            // seguidos.
+            if (wasItemDragging && window.PlaySfx) {
+                window.PlaySfx.sonar('place');
+                setTimeout(() => window.PlaySfx.sonar('settle'), 120);
+            }
             const wasPanning = this.isPanDragging;
             this.isPanDragging  = false;
             this.isItemDragging = false;
@@ -6602,7 +6670,6 @@ class IsometricMap {
      */
     _tocarObjetoDeEscena(clientX, clientY) {
         const SO = window.SceneObjects;
-        if (!SO || !SO.datos) return false;
         if (!document.body.classList.contains('play-mode')) return false;
         if (!this.isQuickTap(clientX, clientY)) return false;
 
@@ -6612,6 +6679,21 @@ class IsometricMap {
         const px = clientX - rect.left, py = clientY - rect.top;
         const _bgo = (window.atlasConfig && window.atlasConfig.bgScale ? window.atlasConfig.bgScale : 0.75);
         const s = _bgo * this.scale;
+
+        // LOS EXPOSITORES DE TIENDA VAN PRIMERO: el objeto a la venta esta ENCIMA del
+        // prop, asi que si el dedo cae en los dos, gana el de arriba. `ShopDisplay::QuickTap`
+        // no hace nada si esta comprado, vacio o el objeto no esta verificado, y
+        // `PlayShops.enPunto` tampoco los devuelve: en esos casos el toque sigue su camino
+        // y llega al objeto de escena de debajo, como en el juego.
+        if (window.PlayShops && window.PlayShops.tocar) {
+            try {
+                if (window.PlayShops.tocar(loc, px, py, this.offsetX, this.offsetY, s)) {
+                    return true;
+                }
+            } catch (e) { /* sin datos de tienda: sigue el resto */ }
+        }
+
+        if (!SO || !SO.datos) return false;
         // inversa de  px = offsetX + wx*150*s   /   py = offsetY - wy*150*s
         const wx = (px - this.offsetX) / (150 * s);
         const wy = (this.offsetY - py) / (150 * s);

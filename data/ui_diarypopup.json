@@ -1,0 +1,584 @@
+{
+  "_fuente": "DiaryPopup de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "DiaryPopup",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": null,
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": null,
+    "transitionInSpeed": "1",
+    "transitionOutSpeed": "1",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "diaryPicMenu": {
+      "sortedPositions": [],
+      "optionPrefab": {
+        "nombre": "DiaryPopup"
+      },
+      "scrollRect": null,
+      "content": "Diaries"
+    }
+  },
+  "arbol": {
+    "nombre": "Diaries",
+    "ruta": "Diaries",
+    "activo": true,
+    "anclaMin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "anclaMax": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "tam": {
+      "x": 0,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "DiaryPopup",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "1",
+          "transitionOutSpeed": "1",
+          "slideTransition": "0",
+          "transitionDistance": "10"
+        }
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "DiaryPopup",
+        "ruta": "Diaries/DiaryPopup",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 400,
+          "y": 432
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "angulo": 15,
+        "comp": [
+          {
+            "tipo": "CanvasGroup"
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Shadow",
+            "ruta": "Diaries/DiaryPopup/Shadow",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -12
+            },
+            "tam": {
+              "x": 24,
+              "y": 24
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "rectBlur",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 0.24528,
+                  "g": 0.24528,
+                  "b": 0.24528,
+                  "a": 0.4549
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "UIEffect",
+                "campos": {
+                  "m_Name": "",
+                  "m_Version": "300",
+                  "m_EffectFactor": "0.45490196",
+                  "m_ColorFactor": "1",
+                  "m_BlurFactor": "0.245",
+                  "m_EffectMode": "0",
+                  "m_ColorMode": "0",
+                  "m_BlurMode": "1",
+                  "m_ShadowBlur": "1",
+                  "m_ShadowStyle": "0"
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Image",
+            "ruta": "Diaries/DiaryPopup/Image",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect_24px",
+                  "rx": 0,
+                  "ry": 13,
+                  "rw": 49,
+                  "rh": 49,
+                  "px": 0,
+                  "py": 0,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 24,
+                    "y": 24,
+                    "z": 24,
+                    "w": 24
+                  }
+                },
+                "color": {
+                  "r": 0.24528,
+                  "g": 0.24528,
+                  "b": 0.24528,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image (1)",
+                "ruta": "Diaries/DiaryPopup/Image/Image (1)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -8,
+                  "y": -8
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect_24px",
+                      "rx": 0,
+                      "ry": 13,
+                      "rw": 49,
+                      "rh": 49,
+                      "px": 0,
+                      "py": 0,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 24,
+                        "y": 24,
+                        "z": 24,
+                        "w": 24
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ]
+              },
+              {
+                "nombre": "Image (2)",
+                "ruta": "Diaries/DiaryPopup/Image/Image (2)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": -16
+                },
+                "tam": {
+                  "x": -32,
+                  "y": 368
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "hijos": [
+                  {
+                    "nombre": "Diary",
+                    "ruta": "Diaries/DiaryPopup/Image/Image (2)/Diary",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": null,
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": true,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Image",
+                    "ruta": "Diaries/DiaryPopup/Image/Image (2)/Image",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 16,
+                      "y": 16
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "roundedRect_32px",
+                          "rx": 0,
+                          "ry": 63,
+                          "rw": 65,
+                          "rh": 65,
+                          "px": 0,
+                          "py": 0,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 32,
+                            "y": 32,
+                            "z": 32,
+                            "w": 32
+                          }
+                        },
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Image (1)",
+                    "ruta": "Diaries/DiaryPopup/Image/Image (2)/Image (1)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 24,
+                      "y": 24
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "roundedRect_32px",
+                          "rx": 0,
+                          "ry": 63,
+                          "rw": 65,
+                          "rh": 65,
+                          "px": 0,
+                          "py": 0,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 32,
+                            "y": 32,
+                            "z": 32,
+                            "w": 32
+                          }
+                        },
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Text (TMP)",
+                "ruta": "Diaries/DiaryPopup/Image/Text (TMP)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 0
+                },
+                "pos": {
+                  "x": -12,
+                  "y": 12
+                },
+                "tam": {
+                  "x": -24,
+                  "y": 36
+                },
+                "pivote": {
+                  "x": 1,
+                  "y": 0
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "06/22/20",
+                    "tam": 24,
+                    "color": {
+                      "r": 0,
+                      "g": 0,
+                      "b": 0,
+                      "a": 0.31373
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

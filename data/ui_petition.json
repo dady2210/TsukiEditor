@@ -1,0 +1,1748 @@
+{
+  "_fuente": "Petition de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "Petition",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": "Petition",
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "Petition",
+    "transitionInSpeed": "1",
+    "transitionOutSpeed": "1",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "paper": "Petition/Paper",
+    "layoutGroup": "Petition/Paper/Layout"
+  },
+  "arbol": {
+    "nombre": "Petition",
+    "ruta": "Petition",
+    "activo": true,
+    "anclaMin": {
+      "x": 0,
+      "y": 0
+    },
+    "anclaMax": {
+      "x": 1,
+      "y": 1
+    },
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "tam": {
+      "x": 0,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "Canvas"
+      },
+      {
+        "tipo": "GraphicRaycaster",
+        "campos": {
+          "m_Name": "",
+          "m_BlockingObjects": "0"
+        }
+      },
+      {
+        "tipo": "CanvasGroup"
+      },
+      {
+        "tipo": "Petition",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "1",
+          "transitionOutSpeed": "1",
+          "slideTransition": "0",
+          "transitionDistance": "10"
+        }
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "Paper",
+        "ruta": "Petition/Paper",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 704.3,
+          "y": 1255.1
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "angulo": 3,
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "roundedRect",
+              "rx": 0,
+              "ry": 0,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 16,
+                "y": 16,
+                "z": 16,
+                "w": 16
+              }
+            },
+            "color": {
+              "r": 0.9717,
+              "g": 0.9597,
+              "b": 0.91211,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "Mask",
+            "campos": {
+              "m_Name": ""
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Outline",
+            "ruta": "Petition/Paper/Outline",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": -16,
+              "y": -16
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRectO_4px",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0.17647
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1.4
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "Layout",
+            "ruta": "Petition/Paper/Layout",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 704.3,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "VerticalLayoutGroup",
+                "espaciado": 32,
+                "alineacion": 0,
+                "relleno": {
+                  "izq": 32,
+                  "der": 32,
+                  "arr": 32,
+                  "aba": 32
+                }
+              },
+              {
+                "tipo": "ContentSizeFitter",
+                "ajusteH": 0,
+                "ajusteV": 2
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Name",
+                "ruta": "Petition/Paper/Layout/Name",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "Petition to Make \u0022The Raven\u0022 A Historical Site",
+                    "tam": 40,
+                    "color": {
+                      "r": 0.35849,
+                      "g": 0.35849,
+                      "b": 0.35849,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 1,
+                    "fuente": "Vollkorn-Medium SDF",
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "nombre": "Details",
+                "ruta": "Petition/Paper/Layout/Details",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "The Raven has stood out as a rich cultural spot amidst the incresingly bleak and boring landscape that is Uptown.  It is a place with heritage and historical significance that goes back decades. We, the People, cannot stay silent while this city dies and therefore petition to keep \u0022The Raven\u0022 alive under the Preservation of Monuments and Sites Act.",
+                    "tam": 24,
+                    "color": {
+                      "r": 0.32075,
+                      "g": 0.32075,
+                      "b": 0.32075,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "fuente": "Vollkorn-Medium SDF",
+                    "margen": {
+                      "x": 4,
+                      "y": 0,
+                      "z": 4,
+                      "w": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "nombre": "Text (3)",
+                "ruta": "Petition/Paper/Layout/Text (3)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "Teresa W.",
+                    "tam": 36,
+                    "color": {
+                      "r": 0.51887,
+                      "g": 0.51394,
+                      "b": 0.49684,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 1,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/Text (3)/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Text",
+                "ruta": "Petition/Paper/Layout/Text",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "   Clem\u003Csprite=18\u003E",
+                    "tam": 36,
+                    "color": {
+                      "r": 0.51887,
+                      "g": 0.51394,
+                      "b": 0.49684,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/Text/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Text (1)",
+                "ruta": "Petition/Paper/Layout/Text (1)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "ADRIAN",
+                    "tam": 36,
+                    "color": {
+                      "r": 0.51887,
+                      "g": 0.51394,
+                      "b": 0.49684,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 2,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/Text (1)/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Text (2)",
+                "ruta": "Petition/Paper/Layout/Text (2)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "  Tomas Myshkin",
+                    "tam": 36,
+                    "color": {
+                      "r": 0.51887,
+                      "g": 0.51394,
+                      "b": 0.49684,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/Text (2)/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Text (4)",
+                "ruta": "Petition/Paper/Layout/Text (4)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": " Barclay",
+                    "tam": 36,
+                    "color": {
+                      "r": 0.51887,
+                      "g": 0.51394,
+                      "b": 0.49684,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/Text (4)/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "GameObject",
+                "ruta": "Petition/Paper/Layout/GameObject",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": 45,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  },
+                  {
+                    "tipo": "Button",
+                    "activo": true,
+                    "transicion": 1
+                  },
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "white",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 0
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/GameObject/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Text (2)",
+                    "ruta": "Petition/Paper/Layout/GameObject/Text (2)",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "TSUKI",
+                        "tam": 36,
+                        "color": {
+                          "r": 0.79245,
+                          "g": 0.79245,
+                          "b": 0.79245,
+                          "a": 1
+                        },
+                        "alineacion": 65535,
+                        "autoTam": false,
+                        "tamMin": 18,
+                        "tamMax": 72,
+                        "estilo": 1,
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "GameObject",
+                        "ruta": "Petition/Paper/Layout/GameObject/Text (2)/GameObject",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 0
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": -8
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 8
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "PrimitiveShapesDashedO_4",
+                              "rx": 36,
+                              "ry": 0,
+                              "rw": 31,
+                              "rh": 6,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 100,
+                              "borde": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 0.77255,
+                              "g": 0.76471,
+                              "b": 0.72549,
+                              "a": 1
+                            },
+                            "modo": 2,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "GameObject (1)",
+                "ruta": "Petition/Paper/Layout/GameObject (1)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": 45,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/GameObject (1)/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "GameObject (2)",
+                "ruta": "Petition/Paper/Layout/GameObject (2)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": 45,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/GameObject (2)/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "GameObject (3)",
+                "ruta": "Petition/Paper/Layout/GameObject (3)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": 45,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/GameObject (3)/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "GameObject (4)",
+                "ruta": "Petition/Paper/Layout/GameObject (4)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": 45,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/GameObject (4)/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "GameObject (5)",
+                "ruta": "Petition/Paper/Layout/GameObject (5)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": 45,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Petition/Paper/Layout/GameObject (5)/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

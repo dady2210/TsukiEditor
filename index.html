@@ -1342,6 +1342,78 @@
         }
     };
     window._itemsDBPromise = window.loadItemsDB();
+    // EL PRECIO Y EL NOMBRE QUE FALTABAN, del binario.
+    //
+    // `items_db.json` no trae NINGUN precio -solo `behaviour.price_shop`, en 188 de
+    // 2.644- y deja 300 ids sin nombre, que salian como «Unknown Item 2049». Los dos
+    // estan en el ManagedReferencesRegistry de `sharedassets1.assets`:
+    // `BaseItem.price` son los 4 bytes que siguen a `CachedID`, y el nombre es un
+    // `StringT` con sus catorce idiomas dentro.
+    //
+    // Lo escribe `python tools/extract_item_data.py`.
+    //
+    // OJO: esto COMPLETA `ITEMS_DB` en memoria, no la reescribe. Solo se rellena lo que
+    // dice «Unknown»/«Objeto Desconocido»; un nombre que ya estaba no se toca nunca.
+    window.cargarItemData = async function () {
+        try {
+            const r = await fetch('data/item_data.json?v=1');
+            if (!r.ok) return null;
+            const j = await r.json();
+            window.ITEM_DATA = (j && j.items) || {};
+        } catch (e) { window.ITEM_DATA = {}; return null; }
+
+        const hueco = (t) => !t || /^(Unknown|Objeto Desconocido|Mueble Desconocido)/i.test(String(t));
+        const db = window.ITEMS_DB;
+        if (!db) return window.ITEM_DATA;
+        let nombres = 0, precios = 0;
+        for (const [id, d] of Object.entries(window.ITEM_DATA)) {
+            const e = db[id];
+            if (!e) continue;
+            if (typeof d.precio === 'number') { e.price = d.precio; precios++; }
+            const n = d.nombre || {};
+            const es = n.sp || n.en;
+            const en = n.en || n.sp;
+            if (!es) continue;
+            let toco = false;
+            if (hueco(e.furn_name)) { e.furn_name = es; toco = true; }
+            if (hueco(e.item_name)) { e.item_name = es; toco = true; }
+            if (hueco(e.name_es)) { e.name_es = es; toco = true; }
+            if (hueco(e.name_en)) { e.name_en = en; toco = true; }
+            if (toco) nombres++;
+        }
+        console.log('[ItemData] precios: %d   nombres completados: %d', precios, nombres);
+        return window.ITEM_DATA;
+    };
+    window._itemsDBPromise = window._itemsDBPromise.then(() => window.cargarItemData());
+
+    /**
+     * El precio de un objeto, `BaseItem.price`.
+     *
+     * Se vende al PRECIO ENTERO: en el modelo de clases del juego no existe ningun
+     * `SellPrice`, `SellConvo.<Run>d__6::MoveNext` no tiene ni un `fmul`, `fdiv`, `lsr` ni
+     * `asr`, y `CropSlot::get_Value` es `quantity * item.Price` y se acaba.
+     *
+     * Devuelve 0 si ese id no tiene precio: son 309 de los 2.623 que trae el registro, y
+     * 21 ids de `items_db` que ni siquiera aparecen ahi.
+     */
+    window.precioDeItem = function (id) {
+        const d = window.ITEM_DATA && window.ITEM_DATA[String(id)];
+        if (d && typeof d.precio === 'number') return d.precio;
+        const e = window.ITEMS_DB && window.ITEMS_DB[String(id)];
+        if (e && typeof e.price === 'number') return e.price;
+        if (e && e.behaviour && Number(e.behaviour.price_shop) > 0) {
+            return Number(e.behaviour.price_shop);
+        }
+        return 0;
+    };
+
+    // Que variantes de sprite EXISTEN de verdad, para no averiguarlo con un 404 por
+    // sonda: `_ON` de los muebles y el retrato de cada NPC.
+    // Lo escribe `node tools/build_sprite_variants.js`.
+    fetch('data/sprite_variants.json?v=1')
+        .then(r => (r.ok ? r.json() : null))
+        .then(d => { if (d) window.SPRITE_VARIANTS = d; })
+        .catch(() => {});
     fetch('data/bed_profiles.json?v=' + Date.now())
         .then(r => r.json())
         .then(d => { window.BED_PROFILES = d; })
@@ -1370,7 +1442,13 @@
     <script src="castle_core.js?v=5"></script>
     <script src="save_storage.js?v=1"></script>
     <!-- App logic -->
-    <script src="parser.js?v=20260923-puerta"></script>
+    <script src="parser.js?v=20260923-puerta-itembcef"></script>
+    <!-- Carga y guardado de .csave. Va DESPUES de parser.js y odin_browser.js, que es lo
+         que necesita, y ANTES de new_game.js, que es quien lo usa: «Nueva Partida» sin
+         ningún fichero abierto llamaba a `CsaveIO.loadCsave` y el fichero no estaba
+         puesto en la página, así que `fabricar()` devolvía `ok:false` y la pantalla de
+         carga se quedaba clavada sin decir nada. -->
+    <script src="csave_io.js?v=1"></script>
     <script src="data/light_profiles.js?v=1"></script>
     <script src="data/maps_atlas.js?v=2"></script>
     <script src="events_system.js?v=3"></script>
@@ -1380,51 +1458,72 @@
     <script src="gacha_system.js?v=2"></script>
     <script src="progress_system.js?v=2"></script>
     <script src="activity_scheduler.js?v=4"></script>
-    <script src="homecoming_system.js?v=1"></script>
+    <script src="homecoming_system.js?v=2"></script>
     <script src="travel_system.js?v=3"></script>
     <script src="train_system.js?v=6"></script>
     <script src="train_studio.js?v=4"></script>
     <script src="npc_system.js?v=1"></script>
     <script src="default_layouts.js?v=3"></script>
-    <script src="map.js?v=113"></script>
+    <script src="map.js?v=115"></script>
     <script src="map_def.js?v=5"></script>
     <script src="play_materials.js?v=2"></script>
     <script src="play_doors.js?v=2"></script>
     <script src="play_train.js?v=2"></script>
-    <script src="play_sfx.js?v=2"></script>
+    <script src="play_sfx.js?v=3"></script>
     <script src="play_scenery.js?v=23"></script>
     <script src="day_cycle.js?v=1"></script>
     <script src="play_opening.js?v=3"></script>
-    <script src="new_game.js?v=3"></script>
+    <!-- El tutorial de verdad: los nueve pasos de `SetTutorialStepStatic`. Va ANTES de
+         new_game.js, que lo usa para el inventario inicial y para arrancarlo. -->
+    <script src="play_tutorial.js?v=1"></script>
+    <script src="new_game.js?v=4"></script>
     <script>
         if (window.MapDef) {
             window.MapDef.load(0).then(() => window.MapDef.syncAtlas(0)).catch(console.warn);
         }
     </script>
     <script src="grid_editor.js?v=2"></script>
-    <script src="tsuki_port.js?v=2"></script>
+    <script src="tsuki_port.js?v=3"></script>
     <script src="ui.js?v=1"></script>
     <script src="game_time.js?v=2"></script>
     <script src="play_lighting.js?v=3"></script>
     <script src="seeded_random.js?v=1"></script>
     <script src="seeded_scene_objects.js?v=4"></script>
-    <script src="scene_objects.js?v=6"></script>
+    <script src="scene_objects.js?v=7"></script>
+    <!-- Las tiendas: lo que hay a la venta, puesto sobre su prop, y la tarjeta del `Viewer` -->
+    <script src="play_shops.js?v=2"></script>
+    <script src="shop_viewer.js?v=2"></script>
+    <!-- Las ventanas del juego, con sus medidas y sus texturas de la escena -->
+    <script src="ui_render.js?v=4"></script>
+    <script src="bounty_board.js?v=3"></script>
+    <!-- El teléfono de level14 con sus seis apps, y la barra de siete botones con sus reglas -->
+    <script src="play_phone.js?v=3"></script>
+    <script src="play_buttons.js?v=3"></script>
     <script src="furniture_subgroups.js?v=3"></script>
-    <script src="weather_system.js?v=1"></script>
+    <script src="weather_system.js?v=2"></script>
     <script src="play_npcs.js?v=3"></script>
     <script src="play_walkers.js?v=1"></script>
     <script src="play_minigames.js?v=3"></script>
     <script src="play_fishing.js?v=3"></script>
     <script src="play_mail.js?v=1"></script>
     <script src="routine_scheduler.js?v=5"></script>
-    <script src="dialogue_manager.js?v=5"></script>
-    <script src="bubble_system.js?v=3"></script>
+    <script src="dialogue_payloads.js?v=2"></script>
+    <script src="dialogue_manager.js?v=12"></script>
+    <!-- El bocadillo de verdad, de level14: re-viste lo que monta dialogue_manager -->
+    <script src="play_dialogue_ui.js?v=5"></script>
+    <!-- El arte de verdad del modo editar, la mochila, el periodico y los ajustes -->
+    <script src="play_ui_windows.js?v=1"></script>
+    <!-- El buzon y el sobre de verdad, de level14 -->
+    <script src="play_mail_ui.js?v=2"></script>
+    <!-- Las ocho ventanas que faltaban de level14 -->
+    <script src="play_popups.js?v=4"></script>
+    <script src="bubble_system.js?v=5"></script>
     <script src="mixtape_player.js?v=4"></script>
-    <script src="shop_system.js?v=3"></script>
-    <script src="farming_system.js?v=4"></script>
+    <script src="shop_system.js?v=4"></script>
+    <script src="farming_system.js?v=7"></script>
     <script src="newspaper_system.js?v=4"></script>
-    <script src="bounty_system.js?v=4"></script>
-    <script src="app.js?v=51"></script>
+    <script src="bounty_system.js?v=6"></script>
+    <script src="app.js?v=53"></script>
     <!-- Experimental features -->
     <script src="patch_experimental.js?v=29"></script>
 <script>

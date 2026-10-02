@@ -1,0 +1,1870 @@
+{
+  "_fuente": "DeedPopup de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "DeedPopup",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": "Deed",
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "Deed",
+    "transitionInSpeed": "1",
+    "transitionOutSpeed": "1",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "paper": "Deed/Paper",
+    "layoutGroup": "Deed/Paper/GameObject (1)",
+    "floorplan": "Deed/Paper/GameObject (1)/GameObject/Backing/Floorplan",
+    "key": "Deed/Key",
+    "nameText": "Deed/Paper/GameObject (1)/GameObject/Name",
+    "details": "Deed/Paper/GameObject (1)/Details",
+    "price": "Deed/Paper/GameObject (1)/Image/Image/Price",
+    "signatureText": "Deed/Paper/GameObject (1)/Signature/Text",
+    "mortgageText": "Deed/Paper/Pay/Text (TMP)",
+    "signature": "Deed/Paper/GameObject (1)/Signature",
+    "payMortgage": "Deed/Paper/Pay",
+    "slider": "Deed/Paper/GameObject (1)/Image/Image/Slider",
+    "maxPayable": "Deed/Paper/GameObject (1)/Image/Image/Slider/MaxPayableArea/MaxPayable",
+    "keyStart": {
+      "x": "412",
+      "y": "-250"
+    },
+    "keyEnd": {
+      "x": "367",
+      "y": "-218"
+    },
+    "payMortgageText": {
+      "ID": "",
+      "FORMAT": "",
+      "EN": "Pay {0}",
+      "SP": "",
+      "FR": "",
+      "ptBR": "",
+      "RU": "",
+      "CNSimplified": "",
+      "CNTaiwan": "",
+      "JPN": "",
+      "GER": "",
+      "ITA": "",
+      "KOR": "",
+      "THAI": "",
+      "MY": "",
+      "VN": ""
+    }
+  },
+  "arbol": {
+    "nombre": "Deed",
+    "ruta": "Deed",
+    "activo": true,
+    "anclaMin": {
+      "x": 0,
+      "y": 0
+    },
+    "anclaMax": {
+      "x": 1,
+      "y": 1
+    },
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "tam": {
+      "x": 0,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "Canvas"
+      },
+      {
+        "tipo": "GraphicRaycaster",
+        "campos": {
+          "m_Name": "",
+          "m_BlockingObjects": "0"
+        }
+      },
+      {
+        "tipo": "CanvasGroup"
+      },
+      {
+        "tipo": "DeedPopup",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "1",
+          "transitionOutSpeed": "1",
+          "slideTransition": "0",
+          "transitionDistance": "10"
+        }
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "Paper",
+        "ruta": "Deed/Paper",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 704.3,
+          "y": 1051
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "angulo": 3,
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "roundedRect",
+              "rx": 0,
+              "ry": 0,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 16,
+                "y": 16,
+                "z": 16,
+                "w": 16
+              }
+            },
+            "color": {
+              "r": 0.9717,
+              "g": 0.9597,
+              "b": 0.91211,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "Mask",
+            "campos": {
+              "m_Name": ""
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Outline",
+            "ruta": "Deed/Paper/Outline",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": -16,
+              "y": -16
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRectO_4px",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0.17647
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1.4
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "GameObject (1)",
+            "ruta": "Deed/Paper/GameObject (1)",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 704.3,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "VerticalLayoutGroup",
+                "espaciado": 16,
+                "alineacion": 0,
+                "relleno": {
+                  "izq": 32,
+                  "der": 32,
+                  "arr": 32,
+                  "aba": 32
+                }
+              },
+              {
+                "tipo": "ContentSizeFitter",
+                "ajusteH": 0,
+                "ajusteV": 2
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "GameObject",
+                "ruta": "Deed/Paper/GameObject (1)/GameObject",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": 300,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": -1,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Name",
+                    "ruta": "Deed/Paper/GameObject (1)/GameObject/Name",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": -137.5,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -325,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "Apartment 5B",
+                        "tam": 48,
+                        "color": {
+                          "r": 0.35849,
+                          "g": 0.35849,
+                          "b": 0.35849,
+                          "a": 1
+                        },
+                        "alineacion": 65535,
+                        "autoTam": false,
+                        "tamMin": 18,
+                        "tamMax": 72,
+                        "estilo": 1,
+                        "fuente": "Vollkorn-Medium SDF",
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Backing",
+                    "ruta": "Deed/Paper/GameObject (1)/GameObject/Backing",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 1,
+                      "y": 0.5
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0.5
+                    },
+                    "pos": {
+                      "x": -25,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 250,
+                      "y": 250
+                    },
+                    "pivote": {
+                      "x": 1,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "roundedRect",
+                          "rx": 0,
+                          "ry": 0,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 16,
+                            "y": 16,
+                            "z": 16,
+                            "w": 16
+                          }
+                        },
+                        "color": {
+                          "r": 0,
+                          "g": 0,
+                          "b": 0,
+                          "a": 0.0902
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Floorplan",
+                        "ruta": "Deed/Paper/GameObject (1)/GameObject/Backing/Floorplan",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": -16,
+                          "y": -16
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "Apartment Floorplan",
+                              "rx": 10.08,
+                              "ry": 42.08,
+                              "rw": 235.85,
+                              "rh": 183.88,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 100,
+                              "borde": {
+                                "x": 0,
+                                "y": 0,
+                                "z": 0,
+                                "w": 0
+                              }
+                            },
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            },
+                            "modo": 0,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Details",
+                "ruta": "Deed/Paper/GameObject (1)/Details",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                    "tam": 36,
+                    "color": {
+                      "r": 0.32075,
+                      "g": 0.32075,
+                      "b": 0.32075,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "fuente": "Vollkorn-Medium SDF",
+                    "margen": {
+                      "x": 4,
+                      "y": 0,
+                      "z": 4,
+                      "w": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "nombre": "Image",
+                "ruta": "Deed/Paper/GameObject (1)/Image",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": 100,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Image",
+                    "ruta": "Deed/Paper/GameObject (1)/Image/Image",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -50,
+                      "y": 100
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circleO_8px",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0.77358,
+                          "g": 0.76629,
+                          "b": 0.72615,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1.25
+                      },
+                      {
+                        "tipo": "LayoutElement",
+                        "MinWidth": -1,
+                        "MinHeight": -1,
+                        "PreferredWidth": -1,
+                        "PreferredHeight": 100,
+                        "FlexibleWidth": -1,
+                        "FlexibleHeight": -1
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Price",
+                        "ruta": "Deed/Paper/GameObject (1)/Image/Image/Price",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "TextMeshProUGUI",
+                            "texto": "500,000",
+                            "tam": 50,
+                            "color": {
+                              "r": 0.34906,
+                              "g": 0.34412,
+                              "b": 0.34412,
+                              "a": 1
+                            },
+                            "alineacion": 65535,
+                            "autoTam": false,
+                            "tamMin": 18,
+                            "tamMax": 72,
+                            "estilo": 1,
+                            "fuente": "Vollkorn-Medium SDF",
+                            "margen": {
+                              "x": 0,
+                              "y": 0,
+                              "z": 0,
+                              "w": 0
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "Slider",
+                        "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": -24,
+                          "y": -24
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Slider",
+                            "campos": {
+                              "m_Name": "",
+                              "m_Transition": "1",
+                              "m_Direction": "0",
+                              "m_MinValue": "0",
+                              "m_MaxValue": "400",
+                              "m_Value": "49"
+                            }
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Background",
+                            "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/Background",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 1,
+                              "y": 1
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "Image",
+                                "sprite": {
+                                  "nombre": "circle",
+                                  "rx": 0,
+                                  "ry": 128,
+                                  "rw": 128,
+                                  "rh": 128,
+                                  "px": 0.5,
+                                  "py": 0.5,
+                                  "ppu": 128,
+                                  "borde": {
+                                    "x": 64,
+                                    "y": 64,
+                                    "z": 64,
+                                    "w": 64
+                                  }
+                                },
+                                "color": {
+                                  "r": 0.73585,
+                                  "g": 0.73585,
+                                  "b": 0.73585,
+                                  "a": 1
+                                },
+                                "modo": 1,
+                                "rellenaCentro": true,
+                                "conservaProporcion": false,
+                                "recibeToque": true,
+                                "ppuMult": 1.6
+                              }
+                            ]
+                          },
+                          {
+                            "nombre": "MaxPayableArea",
+                            "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/MaxPayableArea",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 1,
+                              "y": 1
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": -80,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "hijos": [
+                              {
+                                "nombre": "MaxPayable",
+                                "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/MaxPayableArea/MaxPayable",
+                                "activo": true,
+                                "anclaMin": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "anclaMax": {
+                                  "x": 0.6,
+                                  "y": 1
+                                },
+                                "pos": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "tam": {
+                                  "x": 80,
+                                  "y": 0
+                                },
+                                "pivote": {
+                                  "x": 0.5,
+                                  "y": 0.5
+                                },
+                                "posLocal": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "comp": [
+                                  {
+                                    "tipo": "Image",
+                                    "sprite": {
+                                      "nombre": "circle",
+                                      "rx": 0,
+                                      "ry": 128,
+                                      "rw": 128,
+                                      "rh": 128,
+                                      "px": 0.5,
+                                      "py": 0.5,
+                                      "ppu": 128,
+                                      "borde": {
+                                        "x": 64,
+                                        "y": 64,
+                                        "z": 64,
+                                        "w": 64
+                                      }
+                                    },
+                                    "color": {
+                                      "r": 0.64151,
+                                      "g": 0.64151,
+                                      "b": 0.64151,
+                                      "a": 1
+                                    },
+                                    "modo": 1,
+                                    "rellenaCentro": true,
+                                    "conservaProporcion": false,
+                                    "recibeToque": true,
+                                    "ppuMult": 1.7
+                                  }
+                                ],
+                                "hijos": [
+                                  {
+                                    "nombre": "Outline",
+                                    "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/MaxPayableArea/MaxPayable/Outline",
+                                    "activo": true,
+                                    "anclaMin": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "anclaMax": {
+                                      "x": 1,
+                                      "y": 1
+                                    },
+                                    "pos": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "tam": {
+                                      "x": -8,
+                                      "y": -8
+                                    },
+                                    "pivote": {
+                                      "x": 0.5,
+                                      "y": 0.5
+                                    },
+                                    "posLocal": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "comp": [
+                                      {
+                                        "tipo": "Image",
+                                        "sprite": {
+                                          "nombre": "circleO_8px",
+                                          "rx": 0,
+                                          "ry": 128,
+                                          "rw": 128,
+                                          "rh": 128,
+                                          "px": 0.5,
+                                          "py": 0.5,
+                                          "ppu": 128,
+                                          "borde": {
+                                            "x": 64,
+                                            "y": 64,
+                                            "z": 64,
+                                            "w": 64
+                                          }
+                                        },
+                                        "color": {
+                                          "r": 0.61321,
+                                          "g": 0.61321,
+                                          "b": 0.61321,
+                                          "a": 1
+                                        },
+                                        "modo": 1,
+                                        "rellenaCentro": true,
+                                        "conservaProporcion": false,
+                                        "recibeToque": true,
+                                        "ppuMult": 1.65
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "nombre": "Fill Area",
+                            "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/Fill Area",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 1,
+                              "y": 1
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": -80,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "hijos": [
+                              {
+                                "nombre": "Fill",
+                                "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/Fill Area/Fill",
+                                "activo": true,
+                                "anclaMin": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "anclaMax": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "pos": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "tam": {
+                                  "x": 80,
+                                  "y": 0
+                                },
+                                "pivote": {
+                                  "x": 0.5,
+                                  "y": 0.5
+                                },
+                                "posLocal": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "comp": [
+                                  {
+                                    "tipo": "Image",
+                                    "sprite": {
+                                      "nombre": "circle",
+                                      "rx": 0,
+                                      "ry": 128,
+                                      "rw": 128,
+                                      "rh": 128,
+                                      "px": 0.5,
+                                      "py": 0.5,
+                                      "ppu": 128,
+                                      "borde": {
+                                        "x": 64,
+                                        "y": 64,
+                                        "z": 64,
+                                        "w": 64
+                                      }
+                                    },
+                                    "color": {
+                                      "r": 0.68503,
+                                      "g": 0.81002,
+                                      "b": 0.81132,
+                                      "a": 1
+                                    },
+                                    "modo": 1,
+                                    "rellenaCentro": true,
+                                    "conservaProporcion": false,
+                                    "recibeToque": true,
+                                    "ppuMult": 1.65
+                                  }
+                                ],
+                                "hijos": [
+                                  {
+                                    "nombre": "Fill (1)",
+                                    "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/Fill Area/Fill/Fill (1)",
+                                    "activo": true,
+                                    "anclaMin": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "anclaMax": {
+                                      "x": 1,
+                                      "y": 1
+                                    },
+                                    "pos": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "tam": {
+                                      "x": -8,
+                                      "y": -8
+                                    },
+                                    "pivote": {
+                                      "x": 0.5,
+                                      "y": 0.5
+                                    },
+                                    "posLocal": {
+                                      "x": 0,
+                                      "y": 0
+                                    },
+                                    "comp": [
+                                      {
+                                        "tipo": "Image",
+                                        "sprite": {
+                                          "nombre": "circleO_8px",
+                                          "rx": 0,
+                                          "ry": 128,
+                                          "rw": 128,
+                                          "rh": 128,
+                                          "px": 0.5,
+                                          "py": 0.5,
+                                          "ppu": 128,
+                                          "borde": {
+                                            "x": 64,
+                                            "y": 64,
+                                            "z": 64,
+                                            "w": 64
+                                          }
+                                        },
+                                        "color": {
+                                          "r": 1,
+                                          "g": 1,
+                                          "b": 1,
+                                          "a": 0.38431
+                                        },
+                                        "modo": 1,
+                                        "rellenaCentro": true,
+                                        "conservaProporcion": false,
+                                        "recibeToque": true,
+                                        "ppuMult": 1.7
+                                      }
+                                    ],
+                                    "hijos": [
+                                      {
+                                        "nombre": "Text (TMP)",
+                                        "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/Fill Area/Fill/Fill (1)/Text (TMP)",
+                                        "activo": true,
+                                        "anclaMin": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "anclaMax": {
+                                          "x": 1,
+                                          "y": 1
+                                        },
+                                        "pos": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "tam": {
+                                          "x": -16,
+                                          "y": -16
+                                        },
+                                        "pivote": {
+                                          "x": 0.5,
+                                          "y": 0.5
+                                        },
+                                        "posLocal": {
+                                          "x": 0,
+                                          "y": 0
+                                        },
+                                        "comp": [
+                                          {
+                                            "tipo": "TextMeshProUGUI",
+                                            "texto": "\u002B500",
+                                            "tam": 36,
+                                            "color": {
+                                              "r": 1,
+                                              "g": 1,
+                                              "b": 1,
+                                              "a": 1
+                                            },
+                                            "alineacion": 65535,
+                                            "autoTam": true,
+                                            "tamMin": 18,
+                                            "tamMax": 36,
+                                            "estilo": 0,
+                                            "fuente": "Vollkorn-Medium SDF",
+                                            "margen": {
+                                              "x": 0,
+                                              "y": 0,
+                                              "z": 0,
+                                              "w": 0
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "nombre": "Handle Slide Area",
+                            "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/Handle Slide Area",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 1,
+                              "y": 1
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": -20,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "hijos": [
+                              {
+                                "nombre": "Handle",
+                                "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/Handle Slide Area/Handle",
+                                "activo": true,
+                                "anclaMin": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "anclaMax": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "pos": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "tam": {
+                                  "x": 20,
+                                  "y": 0
+                                },
+                                "pivote": {
+                                  "x": 0.5,
+                                  "y": 0.5
+                                },
+                                "posLocal": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "comp": [
+                                  {
+                                    "tipo": "Image",
+                                    "sprite": {
+                                      "nombre": "Knob",
+                                      "rx": 12.03,
+                                      "ry": 12.03,
+                                      "rw": 39.95,
+                                      "rh": 39.95,
+                                      "px": 0.5,
+                                      "py": 0.5,
+                                      "ppu": 200,
+                                      "borde": {
+                                        "x": 0,
+                                        "y": 0,
+                                        "z": 0,
+                                        "w": 0
+                                      }
+                                    },
+                                    "color": {
+                                      "r": 1,
+                                      "g": 1,
+                                      "b": 1,
+                                      "a": 1
+                                    },
+                                    "modo": 0,
+                                    "rellenaCentro": true,
+                                    "conservaProporcion": false,
+                                    "recibeToque": true,
+                                    "ppuMult": 1
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "nombre": "Text (TMP)",
+                            "ruta": "Deed/Paper/GameObject (1)/Image/Image/Slider/Text (TMP)",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 1,
+                              "y": 0
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": -12
+                            },
+                            "tam": {
+                              "x": -8,
+                              "y": 50
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 1
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "TextMeshProUGUI",
+                                "texto": "1000 / 500000",
+                                "tam": 32,
+                                "color": {
+                                  "r": 0.4434,
+                                  "g": 0.4434,
+                                  "b": 0.4434,
+                                  "a": 1
+                                },
+                                "alineacion": 65535,
+                                "autoTam": false,
+                                "tamMin": 18,
+                                "tamMax": 72,
+                                "estilo": 0,
+                                "fuente": "Vollkorn-Medium SDF",
+                                "margen": {
+                                  "x": 0,
+                                  "y": 0,
+                                  "z": 0,
+                                  "w": 0
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Signature",
+                "ruta": "Deed/Paper/GameObject (1)/Signature",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": 150,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  },
+                  {
+                    "tipo": "Image",
+                    "sprite": null,
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 0
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "Button",
+                    "activo": true,
+                    "transicion": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "GameObject",
+                    "ruta": "Deed/Paper/GameObject (1)/Signature/GameObject",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "PrimitiveShapesDashedO_4",
+                          "rx": 36,
+                          "ry": 0,
+                          "rw": 31,
+                          "rh": 6,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 0.77255,
+                          "g": 0.76471,
+                          "b": 0.72549,
+                          "a": 1
+                        },
+                        "modo": 2,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Text",
+                    "ruta": "Deed/Paper/GameObject (1)/Signature/Text",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": -8
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": -32
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "\u003Ci\u003ESign Here\u003C/i\u003E",
+                        "tam": 80,
+                        "color": {
+                          "r": 0.51887,
+                          "g": 0.51394,
+                          "b": 0.49684,
+                          "a": 1
+                        },
+                        "alineacion": 65535,
+                        "autoTam": false,
+                        "tamMin": 18,
+                        "tamMax": 72,
+                        "estilo": 0,
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Text (TMP) (1)",
+                "ruta": "Deed/Paper/GameObject (1)/Text (TMP) (1)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "ANCHOR REALTY",
+                    "tam": 16,
+                    "color": {
+                      "r": 0.51887,
+                      "g": 0.51394,
+                      "b": 0.49684,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 1,
+                    "fuente": "Vollkorn-Medium SDF",
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Pay",
+            "ruta": "Deed/Paper/Pay",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": -16
+            },
+            "tam": {
+              "x": -32,
+              "y": 100
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0.77255,
+                  "g": 0.76471,
+                  "b": 0.72549,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1.4
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              },
+              {
+                "tipo": "Button",
+                "activo": true,
+                "transicion": 1
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Text (TMP)",
+                "ruta": "Deed/Paper/Pay/Text (TMP)",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "Pay {0}",
+                    "tam": 36,
+                    "color": {
+                      "r": 0.36792,
+                      "g": 0.36792,
+                      "b": 0.36792,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "fuente": "Vollkorn-Medium SDF",
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "nombre": "Image",
+                "ruta": "Deed/Paper/Pay/Image",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -8,
+                  "y": -8
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRectO_4px",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 16,
+                        "y": 16,
+                        "z": 16,
+                        "w": 16
+                      }
+                    },
+                    "color": {
+                      "r": 0,
+                      "g": 0,
+                      "b": 0,
+                      "a": 0.17647
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1.4
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Key",
+        "ruta": "Deed/Key",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 412.2,
+          "y": -251.9
+        },
+        "tam": {
+          "x": 200,
+          "y": 200
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "Apartment 5 Key",
+              "rx": 5.05,
+              "ry": 29.08,
+              "rw": 246.89,
+              "rh": 211.91,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 100,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          }
+        ]
+      }
+    ]
+  }
+}

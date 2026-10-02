@@ -1,0 +1,3148 @@
+{
+  "_fuente": "Viewer de level1 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "Viewer",
+  "nivel": "level1",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": "Viewer",
+    "handler": null,
+    "blocker": "Viewer/Blocker",
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "Viewer",
+    "transitionInSpeed": "1.5",
+    "transitionOutSpeed": "2",
+    "slideTransition": "3",
+    "transitionDistance": "100",
+    "slideCurve": {
+      "m_Curve": [
+        {
+          "time": "0",
+          "value": "0",
+          "inSlope": "3.9369404",
+          "outSlope": "3.9369404",
+          "weightedMode": "0",
+          "inWeight": "0",
+          "outWeight": "0.033333335"
+        },
+        {
+          "time": "1",
+          "value": "1",
+          "inSlope": "-1.3994359",
+          "outSlope": "-1.3994359",
+          "weightedMode": "0",
+          "inWeight": "0.070833325",
+          "outWeight": "0"
+        }
+      ],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "furnitureSymbols": {
+      "sortedPositions": [],
+      "optionPrefab": {
+        "nombre": "Symbol"
+      },
+      "scrollRect": null,
+      "content": "Viewer/Popup/FurnitureSymbols"
+    },
+    "icon": "Viewer/Popup/Icon \u0026 Title/Border/Icon",
+    "itemName": "Viewer/Popup/Icon \u0026 Title/Title",
+    "itemDescription": "Viewer/Popup/Desc/DescriptionBox/Description",
+    "itemPrice": "Viewer/Popup/Price/Value",
+    "homecomingText": "Viewer/Popup/Desc/DescriptionBox/Homecoming/Text (TMP)",
+    "timeText": "Viewer/Popup/Icon \u0026 Title/Title/Time",
+    "buy": "Viewer/Popup/Buttons/Buy",
+    "use": "Viewer/Popup/Buttons/Use",
+    "custom": "Viewer/Popup/Buttons/CustomButton",
+    "homecomingButton": "Viewer/Popup/Desc/DescriptionBox/Homecoming",
+    "buyIcon": "Viewer/Popup/Buttons/Buy/Icon",
+    "orderText": "Viewer/Popup/Buttons/Buy/OrderNumber",
+    "customIcon": "Viewer/Popup/Buttons/CustomButton/Icon",
+    "discountTab": {
+      "nombre": "Discount"
+    },
+    "discountText": "Viewer/Popup/Icon \u0026 Title/Border/Discount/Text (TMP)",
+    "quantityBubble": {
+      "nombre": "QuantityBubble"
+    },
+    "quantityText": "Viewer/Popup/Icon \u0026 Title/Border/QuantityBubble/Image/Quantity",
+    "defaultStyle": {
+      "backingColor": {
+        "r": 0.9451,
+        "g": 0.92157,
+        "b": 0.83922,
+        "a": 1
+      },
+      "innerColor": {
+        "r": 0.86792,
+        "g": 0.83747,
+        "b": 0.74101,
+        "a": 1
+      },
+      "borderColor": {
+        "r": 0.33333,
+        "g": 0.30588,
+        "b": 0.29412,
+        "a": 1
+      },
+      "textColor": {
+        "r": 0.47059,
+        "g": 0.45882,
+        "b": 0.41961,
+        "a": 1
+      },
+      "innerBorder": {
+        "nombre": "PrimitiveShapesDashedO_2",
+        "rx": 0,
+        "ry": 0,
+        "rw": 128,
+        "rh": 128,
+        "px": 0.5,
+        "py": 0.5,
+        "ppu": 100,
+        "borde": {
+          "x": 32,
+          "y": 32,
+          "z": 32,
+          "w": 32
+        }
+      },
+      "brand": null,
+      "filterBrand": null
+    },
+    "shinyEffect": "Viewer/Popup/Backing",
+    "backing": [
+      "Viewer/Popup/Backing",
+      "Viewer/Popup/Brand"
+    ],
+    "borders": [
+      "Viewer/Popup/Border",
+      "Viewer/Popup/Price",
+      "Viewer/Popup/FurnitureSymbols",
+      "Viewer/Popup/Buttons/Use/Border",
+      "Viewer/Popup/Buttons/Buy/Border"
+    ],
+    "innerBorder": "Viewer/Popup/InnerBorder",
+    "innerBackings": [
+      "Viewer/Popup/Icon \u0026 Title/Border",
+      "Viewer/Popup/Icon \u0026 Title/Border/Discount",
+      "Viewer/Popup/Desc/DescriptionBox",
+      "Viewer/Popup/Brand/Image",
+      "Viewer/Popup/InnerBorder"
+    ],
+    "brand": "Viewer/Popup/Brand/Image",
+    "homecomingBorder": "Viewer/Popup/Desc/DescriptionBox/Homecoming/Border",
+    "popup": "Viewer/Popup",
+    "priceTab": "Viewer/Popup/Price",
+    "symbolsTab": "Viewer/Popup/FurnitureSymbols",
+    "buttonsTab": "Viewer/Popup/Buttons",
+    "layoutGroup": "Viewer/Popup",
+    "testAnim": "0",
+    "info": {
+      "sortedPositions": [],
+      "optionPrefab": {
+        "nombre": "Toggle"
+      },
+      "scrollRect": null,
+      "content": "Viewer/Popup/Desc/DescriptionBox/ViewerInfo",
+      "group": "Viewer/Popup/Desc/DescriptionBox/ViewerInfo",
+      "toggleGroup": "Viewer/Popup/Desc/DescriptionBox/ViewerInfo"
+    },
+    "descriptionState": "0",
+    "testDesigner": "29",
+    "availableTimespan": {
+      "ID": "",
+      "FORMAT": "",
+      "EN": "available for",
+      "SP": "disponible por",
+      "FR": "",
+      "ptBR": "dispon\u00EDvel por",
+      "RU": "",
+      "CNSimplified": "",
+      "CNTaiwan": "",
+      "JPN": "",
+      "GER": "",
+      "ITA": "",
+      "KOR": "",
+      "THAI": "",
+      "MY": "",
+      "VN": ""
+    }
+  },
+  "arbol": {
+    "nombre": "Viewer",
+    "ruta": "Viewer",
+    "activo": true,
+    "anclaMin": {
+      "x": 0,
+      "y": 0
+    },
+    "anclaMax": {
+      "x": 1,
+      "y": 1
+    },
+    "pos": {
+      "x": 0,
+      "y": -100
+    },
+    "tam": {
+      "x": 0,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "comp": [
+      {
+        "tipo": "Viewer",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "1.5",
+          "transitionOutSpeed": "2",
+          "slideTransition": "3",
+          "transitionDistance": "100",
+          "testAnim": "0",
+          "descriptionState": "0",
+          "testDesigner": "29"
+        }
+      },
+      {
+        "tipo": "CanvasGroup"
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "Blocker",
+        "ruta": "Viewer/Blocker",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 0,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": null,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "Button",
+            "activo": true,
+            "transicion": 1
+          },
+          {
+            "tipo": "CanvasGroup"
+          }
+        ]
+      },
+      {
+        "nombre": "Popup",
+        "ruta": "Viewer/Popup",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 100,
+          "y": 100
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "escala": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "VerticalLayoutGroup",
+            "espaciado": 0,
+            "alineacion": 0,
+            "relleno": {
+              "izq": 16,
+              "der": 16,
+              "arr": 16,
+              "aba": 16
+            }
+          },
+          {
+            "tipo": "ContentSizeFitter",
+            "ajusteH": 0,
+            "ajusteV": 0
+          },
+          {
+            "tipo": "Image",
+            "sprite": null,
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "Button",
+            "activo": true,
+            "transicion": 1
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "FurnitureSymbols",
+            "ruta": "Viewer/Popup/FurnitureSymbols",
+            "activo": false,
+            "anclaMin": {
+              "x": 1,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -40
+            },
+            "tam": {
+              "x": 32,
+              "y": 65.47
+            },
+            "pivote": {
+              "x": 1,
+              "y": 0.5
+            },
+            "escala": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRectC1",
+                  "rx": 129,
+                  "ry": 129,
+                  "rw": 126,
+                  "rh": 126,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0.52254,
+                  "g": 0.57547,
+                  "b": 0.46961,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              },
+              {
+                "tipo": "HorizontalLayoutGroup",
+                "espaciado": 8,
+                "alineacion": 1,
+                "relleno": {
+                  "izq": 8,
+                  "der": 8,
+                  "arr": 6,
+                  "aba": 0
+                }
+              },
+              {
+                "tipo": "ContentSizeFitter",
+                "ajusteH": 2,
+                "ajusteV": 0
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Symbol",
+                "ruta": "Viewer/Popup/FurnitureSymbols/Symbol",
+                "activo": false,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 34,
+                  "y": -32
+                },
+                "tam": {
+                  "x": 52,
+                  "y": 52
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "compendium_0",
+                      "rx": 12.05,
+                      "ry": 389.08,
+                      "rw": 104.92,
+                      "rh": 104.85,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 100,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 0.94118,
+                      "g": 0.92157,
+                      "b": 0.83922,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": true,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Price",
+            "ruta": "Viewer/Popup/Price",
+            "activo": false,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 4,
+              "y": -80
+            },
+            "tam": {
+              "x": 217.55,
+              "y": 61.01
+            },
+            "pivote": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              },
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRectC1",
+                  "rx": 129,
+                  "ry": 129,
+                  "rw": 126,
+                  "rh": 126,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0.52254,
+                  "g": 0.57547,
+                  "b": 0.46961,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "HorizontalLayoutGroup",
+                "espaciado": 0,
+                "alineacion": 7,
+                "relleno": {
+                  "izq": 8,
+                  "der": 16,
+                  "arr": 8,
+                  "aba": 8
+                }
+              },
+              {
+                "tipo": "ContentSizeFitter",
+                "ajusteH": 2,
+                "ajusteV": 2
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image",
+                "ruta": "Viewer/Popup/Price/Image",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 30,
+                  "y": -30.505
+                },
+                "tam": {
+                  "x": 44,
+                  "y": 45.01
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "carrot",
+                      "rx": 208.08,
+                      "ry": 205.08,
+                      "rw": 33.85,
+                      "rh": 41.85,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 100,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 0.94118,
+                      "g": 0.92157,
+                      "b": 0.83922,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": true,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": -1,
+                    "MinHeight": -1,
+                    "PreferredWidth": 44,
+                    "PreferredHeight": 44,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ]
+              },
+              {
+                "nombre": "Value",
+                "ruta": "Viewer/Popup/Price/Value",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 52,
+                  "y": -8
+                },
+                "tam": {
+                  "x": 149.55,
+                  "y": 45.01
+                },
+                "pivote": {
+                  "x": 0,
+                  "y": 1
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "800 \u003Cs\u003E\u003Calpha=#77\u003E1000\u003C/s\u003E",
+                    "tam": 36,
+                    "color": {
+                      "r": 0.94118,
+                      "g": 0.92157,
+                      "b": 0.83922,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": false,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Backing",
+            "ruta": "Viewer/Popup/Backing",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "escala": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0.87736,
+                  "g": 0.85622,
+                  "b": 0.76562,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              },
+              {
+                "tipo": "UIShiny",
+                "campos": {
+                  "m_Name": "",
+                  "m_Version": "300",
+                  "m_EffectFactor": "0",
+                  "m_Width": "0.75",
+                  "m_Rotation": "135",
+                  "m_Softness": "1",
+                  "m_Brightness": "0.15",
+                  "m_Gloss": "0.5",
+                  "m_Polychrome": "0",
+                  "m_EffectArea": "1",
+                  "m_Duration": "1",
+                  "m_LoopDelay": "1",
+                  "m_UpdateMode": "0"
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "InnerBorder",
+            "ruta": "Viewer/Popup/InnerBorder",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": -24,
+              "y": -24
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "jungleborder",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 25,
+                    "y": 25,
+                    "z": 25,
+                    "w": 25
+                  }
+                },
+                "color": {
+                  "r": 0.69453,
+                  "g": 0.69811,
+                  "b": 0.61579,
+                  "a": 0
+                },
+                "modo": 2,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "Brand",
+            "ruta": "Viewer/Popup/Brand",
+            "activo": true,
+            "anclaMin": {
+              "x": 1,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 1.9999,
+              "y": 1.9999
+            },
+            "tam": {
+              "x": 88,
+              "y": 88
+            },
+            "pivote": {
+              "x": 1,
+              "y": 1
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "rectBlur",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 0.87736,
+                  "g": 0.85622,
+                  "b": 0.76562,
+                  "a": 0
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image",
+                "ruta": "Viewer/Popup/Brand/Image",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 10,
+                  "y": 10
+                },
+                "tam": {
+                  "x": 64,
+                  "y": 64
+                },
+                "pivote": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "primal",
+                      "rx": 4.08,
+                      "ry": 0,
+                      "rw": 119.89,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 100,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 0.69453,
+                      "g": 0.69811,
+                      "b": 0.61579,
+                      "a": 0
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Icon \u0026 Title",
+            "ruta": "Viewer/Popup/Icon \u0026 Title",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 568,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "comp": [
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": 225,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Border",
+                "ruta": "Viewer/Popup/Icon \u0026 Title/Border",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 16,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 192,
+                  "y": -32
+                },
+                "pivote": {
+                  "x": 0,
+                  "y": 0.5
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "circle",
+                      "rx": 0,
+                      "ry": 128,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.497,
+                      "py": -0.19396,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 64,
+                        "y": 64,
+                        "z": 64,
+                        "w": 64
+                      }
+                    },
+                    "color": {
+                      "r": 0.69453,
+                      "g": 0.69811,
+                      "b": 0.61579,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Icon",
+                    "ruta": "Viewer/Popup/Icon \u0026 Title/Border/Icon",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -16,
+                      "y": -16
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "escala": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": null,
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": true,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Discount",
+                    "ruta": "Viewer/Popup/Icon \u0026 Title/Border/Discount",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 10,
+                      "y": -10
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "escala": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "roundedRect",
+                          "rx": 0,
+                          "ry": 0,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0,
+                          "py": 0,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 16,
+                            "y": 16,
+                            "z": 16,
+                            "w": 16
+                          }
+                        },
+                        "color": {
+                          "r": 0.69453,
+                          "g": 0.69811,
+                          "b": 0.61579,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": true,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "HorizontalLayoutGroup",
+                        "espaciado": 0,
+                        "alineacion": 0,
+                        "relleno": {
+                          "izq": 6,
+                          "der": 6,
+                          "arr": 2,
+                          "aba": 2
+                        }
+                      },
+                      {
+                        "tipo": "ContentSizeFitter",
+                        "ajusteH": 2,
+                        "ajusteV": 2
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Shadow",
+                        "ruta": "Viewer/Popup/Icon \u0026 Title/Border/Discount/Shadow",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": -0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "rim",
+                              "rx": 0,
+                              "ry": 0,
+                              "rw": 128,
+                              "rh": 128,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 64,
+                              "borde": {
+                                "x": 16,
+                                "y": 16,
+                                "z": 16,
+                                "w": 16
+                              }
+                            },
+                            "color": {
+                              "r": 0,
+                              "g": 0,
+                              "b": 0,
+                              "a": 0.12941
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": false,
+                            "ppuMult": 1.4
+                          },
+                          {
+                            "tipo": "LayoutElement",
+                            "MinWidth": -1,
+                            "MinHeight": -1,
+                            "PreferredWidth": -1,
+                            "PreferredHeight": -1,
+                            "FlexibleWidth": -1,
+                            "FlexibleHeight": -1
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "Text (TMP)",
+                        "ruta": "Viewer/Popup/Icon \u0026 Title/Border/Discount/Text (TMP)",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "comp": [
+                          {
+                            "tipo": "TextMeshProUGUI",
+                            "texto": "-20%",
+                            "tam": 36,
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            },
+                            "alineacion": 65535,
+                            "autoTam": false,
+                            "tamMin": 18,
+                            "tamMax": 72,
+                            "estilo": 0,
+                            "margen": {
+                              "x": 0,
+                              "y": 0,
+                              "z": 0,
+                              "w": 0
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "QuantityBubble",
+                    "ruta": "Viewer/Popup/Icon \u0026 Title/Border/QuantityBubble",
+                    "activo": false,
+                    "anclaMin": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": -12,
+                      "y": -12
+                    },
+                    "tam": {
+                      "x": 42,
+                      "y": 42
+                    },
+                    "pivote": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circle",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.497,
+                          "py": -0.19396,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0.32941,
+                          "g": 0.32941,
+                          "b": 0.32941,
+                          "a": 1
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Image",
+                        "ruta": "Viewer/Popup/Icon \u0026 Title/Border/QuantityBubble/Image",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": -12,
+                          "y": -12
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "circle",
+                              "rx": 0,
+                              "ry": 128,
+                              "rw": 128,
+                              "rh": 128,
+                              "px": 0.497,
+                              "py": -0.19396,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 64,
+                                "y": 64,
+                                "z": 64,
+                                "w": 64
+                              }
+                            },
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": false,
+                            "ppuMult": 1
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Quantity",
+                            "ruta": "Viewer/Popup/Icon \u0026 Title/Border/QuantityBubble/Image/Quantity",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 1,
+                              "y": 1
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "comp": [
+                              {
+                                "tipo": "TextMeshProUGUI",
+                                "texto": "3",
+                                "tam": 24.35,
+                                "color": {
+                                  "r": 0.32157,
+                                  "g": 0.32157,
+                                  "b": 0.32157,
+                                  "a": 1
+                                },
+                                "alineacion": 65535,
+                                "autoTam": true,
+                                "tamMin": 18,
+                                "tamMax": 72,
+                                "estilo": 0,
+                                "margen": {
+                                  "x": 0,
+                                  "y": 0,
+                                  "z": 0,
+                                  "w": 0
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Title",
+                "ruta": "Viewer/Popup/Icon \u0026 Title/Title",
+                "activo": true,
+                "anclaMin": {
+                  "x": 1,
+                  "y": 0.5
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 0.5
+                },
+                "pos": {
+                  "x": -16,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 328,
+                  "y": 192
+                },
+                "pivote": {
+                  "x": 1,
+                  "y": 0.5
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "Jeff\u25C1\u25B8\u25BB\u25C7",
+                    "tam": 50,
+                    "color": {
+                      "r": 0.4434,
+                      "g": 0.43437,
+                      "b": 0.36601,
+                      "a": 0
+                    },
+                    "alineacion": 65535,
+                    "autoTam": true,
+                    "tamMin": 18,
+                    "tamMax": 50,
+                    "estilo": 0,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Time",
+                    "ruta": "Viewer/Popup/Icon \u0026 Title/Title/Time",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 30
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "available for 1 day 2 hours",
+                        "tam": 20,
+                        "color": {
+                          "r": 0.4434,
+                          "g": 0.43437,
+                          "b": 0.36601,
+                          "a": 0
+                        },
+                        "alineacion": 65535,
+                        "autoTam": true,
+                        "tamMin": 15,
+                        "tamMax": 20,
+                        "estilo": 2,
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      },
+                      {
+                        "tipo": "LayoutElement",
+                        "MinWidth": -1,
+                        "MinHeight": -1,
+                        "PreferredWidth": -1,
+                        "PreferredHeight": -1,
+                        "FlexibleWidth": -1,
+                        "FlexibleHeight": -1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Desc",
+            "ruta": "Viewer/Popup/Desc",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 568,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "comp": [
+              {
+                "tipo": "HorizontalLayoutGroup",
+                "espaciado": 0,
+                "alineacion": 0,
+                "relleno": {
+                  "izq": 16,
+                  "der": 16,
+                  "arr": 0,
+                  "aba": 16
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "DescriptionBox",
+                "ruta": "Viewer/Popup/Desc/DescriptionBox",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "roundedRect",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 16,
+                        "y": 16,
+                        "z": 16,
+                        "w": 16
+                      }
+                    },
+                    "color": {
+                      "r": 0.69453,
+                      "g": 0.69811,
+                      "b": 0.61579,
+                      "a": 0
+                    },
+                    "modo": 1,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "VerticalLayoutGroup",
+                    "espaciado": 16,
+                    "alineacion": 0,
+                    "relleno": {
+                      "izq": 16,
+                      "der": 16,
+                      "arr": 16,
+                      "aba": 16
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "ViewerInfo",
+                    "ruta": "Viewer/Popup/Desc/DescriptionBox/ViewerInfo",
+                    "activo": false,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 268,
+                      "y": -59
+                    },
+                    "tam": {
+                      "x": 504,
+                      "y": 54
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "HorizontalLayoutGroup",
+                        "espaciado": 4,
+                        "alineacion": 0,
+                        "relleno": {
+                          "izq": 0,
+                          "der": 0,
+                          "arr": 0,
+                          "aba": 0
+                        }
+                      },
+                      {
+                        "tipo": "CanvasGroup"
+                      },
+                      {
+                        "tipo": "ToggleGroupPro",
+                        "campos": {
+                          "m_Name": ""
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Toggle",
+                        "ruta": "Viewer/Popup/Desc/DescriptionBox/ViewerInfo/Toggle",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "anclaMax": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 252,
+                          "y": -27
+                        },
+                        "tam": {
+                          "x": 504,
+                          "y": 54
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "roundedRect",
+                              "rx": 0,
+                              "ry": 0,
+                              "rw": 128,
+                              "rh": 128,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 16,
+                                "y": 16,
+                                "z": 16,
+                                "w": 16
+                              }
+                            },
+                            "color": {
+                              "r": 0,
+                              "g": 0,
+                              "b": 0,
+                              "a": 0.12549
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          },
+                          {
+                            "tipo": "HorizontalLayoutGroup",
+                            "espaciado": 0,
+                            "alineacion": 4,
+                            "relleno": {
+                              "izq": 4,
+                              "der": 4,
+                              "arr": 4,
+                              "aba": 4
+                            }
+                          },
+                          {
+                            "tipo": "TogglePro",
+                            "campos": {
+                              "m_Name": "",
+                              "m_Transition": "1",
+                              "toggleTransition": "0",
+                              "transitionSpeed": "10",
+                              "textOff": "",
+                              "textOn": ""
+                            }
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Image (1)",
+                            "ruta": "Viewer/Popup/Desc/DescriptionBox/ViewerInfo/Toggle/Image (1)",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 0.5
+                            },
+                            "anclaMax": {
+                              "x": 0,
+                              "y": 0.5
+                            },
+                            "pos": {
+                              "x": 10,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 32,
+                              "y": 32
+                            },
+                            "pivote": {
+                              "x": 0,
+                              "y": 0.5
+                            },
+                            "comp": [
+                              {
+                                "tipo": "Image",
+                                "sprite": {
+                                  "nombre": "yield",
+                                  "rx": 772.08,
+                                  "ry": 69.08,
+                                  "rw": 55.85,
+                                  "rh": 53.85,
+                                  "px": 0.5,
+                                  "py": 0.5,
+                                  "ppu": 100,
+                                  "borde": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "z": 0,
+                                    "w": 0
+                                  }
+                                },
+                                "color": {
+                                  "r": 0.46667,
+                                  "g": 0.45882,
+                                  "b": 0.41961,
+                                  "a": 1
+                                },
+                                "modo": 0,
+                                "rellenaCentro": true,
+                                "conservaProporcion": true,
+                                "recibeToque": false,
+                                "ppuMult": 1
+                              },
+                              {
+                                "tipo": "LayoutElement",
+                                "MinWidth": -1,
+                                "MinHeight": -1,
+                                "PreferredWidth": 32,
+                                "PreferredHeight": 32,
+                                "FlexibleWidth": -1,
+                                "FlexibleHeight": -1
+                              }
+                            ]
+                          },
+                          {
+                            "nombre": "Text (TMP)",
+                            "ruta": "Viewer/Popup/Desc/DescriptionBox/ViewerInfo/Toggle/Text (TMP)",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0,
+                              "y": 1
+                            },
+                            "anclaMax": {
+                              "x": 0,
+                              "y": 1
+                            },
+                            "pos": {
+                              "x": 252,
+                              "y": -27
+                            },
+                            "tam": {
+                              "x": 496,
+                              "y": 46
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "comp": [
+                              {
+                                "tipo": "TextMeshProUGUI",
+                                "texto": "6",
+                                "tam": 36,
+                                "color": {
+                                  "r": 0.47059,
+                                  "g": 0.45882,
+                                  "b": 0.41961,
+                                  "a": 1
+                                },
+                                "alineacion": 65535,
+                                "autoTam": false,
+                                "tamMin": 18,
+                                "tamMax": 72,
+                                "estilo": 1,
+                                "margen": {
+                                  "x": 0,
+                                  "y": 0,
+                                  "z": 0,
+                                  "w": 0
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Description",
+                    "ruta": "Viewer/Popup/Desc/DescriptionBox/Description",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "Test Description",
+                        "tam": 32,
+                        "color": {
+                          "r": 0.4434,
+                          "g": 0.43437,
+                          "b": 0.36601,
+                          "a": 0
+                        },
+                        "alineacion": 65535,
+                        "autoTam": false,
+                        "tamMin": 18,
+                        "tamMax": 72,
+                        "estilo": 0,
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Homecoming",
+                    "ruta": "Viewer/Popup/Desc/DescriptionBox/Homecoming",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "roundedRect",
+                          "rx": 0,
+                          "ry": 0,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 16,
+                            "y": 16,
+                            "z": 16,
+                            "w": 16
+                          }
+                        },
+                        "color": {
+                          "r": 0.87736,
+                          "g": 0.85622,
+                          "b": 0.76562,
+                          "a": 0
+                        },
+                        "modo": 1,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": true,
+                        "ppuMult": 1
+                      },
+                      {
+                        "tipo": "Button",
+                        "activo": true,
+                        "transicion": 1
+                      },
+                      {
+                        "tipo": "LayoutElement",
+                        "MinWidth": -1,
+                        "MinHeight": -1,
+                        "PreferredWidth": -1,
+                        "PreferredHeight": 48,
+                        "FlexibleWidth": -1,
+                        "FlexibleHeight": -1
+                      },
+                      {
+                        "tipo": "UIShiny",
+                        "campos": {
+                          "m_Name": "",
+                          "m_Version": "300",
+                          "m_EffectFactor": "0",
+                          "m_Width": "0.329",
+                          "m_Rotation": "30",
+                          "m_Softness": "0.636",
+                          "m_Brightness": "0.405",
+                          "m_Gloss": "0.239",
+                          "m_Polychrome": "0",
+                          "m_EffectArea": "0",
+                          "m_Duration": "1",
+                          "m_LoopDelay": "1",
+                          "m_UpdateMode": "0"
+                        }
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "Text (TMP)",
+                        "ruta": "Viewer/Popup/Desc/DescriptionBox/Homecoming/Text (TMP)",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "comp": [
+                          {
+                            "tipo": "TextMeshProUGUI",
+                            "texto": "Buy Homecoming",
+                            "tam": 28,
+                            "color": {
+                              "r": 0.4434,
+                              "g": 0.43437,
+                              "b": 0.36601,
+                              "a": 0
+                            },
+                            "alineacion": 65535,
+                            "autoTam": false,
+                            "tamMin": 18,
+                            "tamMax": 72,
+                            "estilo": 17,
+                            "margen": {
+                              "x": 0,
+                              "y": 0,
+                              "z": 0,
+                              "w": 0
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "nombre": "Border",
+                        "ruta": "Viewer/Popup/Desc/DescriptionBox/Homecoming/Border",
+                        "activo": true,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "anclaMax": {
+                          "x": 1,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "tam": {
+                          "x": -8,
+                          "y": -8
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "roundedRectO_2px",
+                              "rx": 0,
+                              "ry": 0,
+                              "rw": 128,
+                              "rh": 128,
+                              "px": 0.5,
+                              "py": 0.5,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 16,
+                                "y": 16,
+                                "z": 16,
+                                "w": 16
+                              }
+                            },
+                            "color": {
+                              "r": 0.69453,
+                              "g": 0.69811,
+                              "b": 0.61579,
+                              "a": 0
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "Border",
+            "ruta": "Viewer/Popup/Border",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 8,
+              "y": 8
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRectO_8px",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 16,
+                    "y": 16,
+                    "z": 16,
+                    "w": 16
+                  }
+                },
+                "color": {
+                  "r": 0.52254,
+                  "g": 0.57547,
+                  "b": 0.46961,
+                  "a": 0
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "Buttons",
+            "ruta": "Viewer/Popup/Buttons",
+            "activo": true,
+            "anclaMin": {
+              "x": 1,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 0
+            },
+            "pos": {
+              "x": -8,
+              "y": -48
+            },
+            "tam": {
+              "x": 0,
+              "y": 64
+            },
+            "pivote": {
+              "x": 1,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              },
+              {
+                "tipo": "HorizontalLayoutGroup",
+                "espaciado": 8,
+                "alineacion": 2,
+                "relleno": {
+                  "izq": 0,
+                  "der": 8,
+                  "arr": 0,
+                  "aba": 0
+                }
+              },
+              {
+                "tipo": "ContentSizeFitter",
+                "ajusteH": 2,
+                "ajusteV": 0
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Image",
+                "ruta": "Viewer/Popup/Buttons/Image",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 125.37,
+                  "y": 100
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "escala": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "HorizontalLayoutGroup",
+                    "espaciado": 0,
+                    "alineacion": 0,
+                    "relleno": {
+                      "izq": 0,
+                      "der": 0,
+                      "arr": 0,
+                      "aba": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "nombre": "Buy",
+                "ruta": "Viewer/Popup/Buttons/Buy",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 100,
+                  "y": 100
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "escala": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "circle",
+                      "rx": 0,
+                      "ry": 128,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 64,
+                        "y": 64,
+                        "z": 64,
+                        "w": 64
+                      }
+                    },
+                    "color": {
+                      "r": 0.64859,
+                      "g": 0.79245,
+                      "b": 0.4822,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": 64,
+                    "MinHeight": 64,
+                    "PreferredWidth": 64,
+                    "PreferredHeight": 64,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  },
+                  {
+                    "tipo": "Button",
+                    "activo": true,
+                    "transicion": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Icon",
+                    "ruta": "Viewer/Popup/Buttons/Buy/Icon",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -16,
+                      "y": -16
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "furnitureIcons_15",
+                          "rx": 259.04,
+                          "ry": 394.05,
+                          "rw": 57.89,
+                          "rh": 52.83,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Highlight",
+                    "ruta": "Viewer/Popup/Buttons/Buy/Highlight",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 2.0001
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circleO_8px",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0,
+                          "g": 0,
+                          "b": 0,
+                          "a": 0.12549
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Border",
+                    "ruta": "Viewer/Popup/Buttons/Buy/Border",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 4,
+                      "y": 4
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circleO_8px",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0.52254,
+                          "g": 0.57547,
+                          "b": 0.46961,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "OrderNumber",
+                    "ruta": "Viewer/Popup/Buttons/Buy/OrderNumber",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 0
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 130.82,
+                      "y": 50
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "TextMeshProUGUI",
+                        "texto": "0/5",
+                        "tam": 32,
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "alineacion": 65535,
+                        "autoTam": false,
+                        "tamMin": 18,
+                        "tamMax": 72,
+                        "estilo": 0,
+                        "margen": {
+                          "x": 0,
+                          "y": 0,
+                          "z": 0,
+                          "w": 0
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Use",
+                "ruta": "Viewer/Popup/Buttons/Use",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 100,
+                  "y": 100
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "escala": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "circle",
+                      "rx": 0,
+                      "ry": 128,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 64,
+                        "y": 64,
+                        "z": 64,
+                        "w": 64
+                      }
+                    },
+                    "color": {
+                      "r": 0.48235,
+                      "g": 0.76818,
+                      "b": 0.79216,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": 64,
+                    "MinHeight": 64,
+                    "PreferredWidth": 64,
+                    "PreferredHeight": 64,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  },
+                  {
+                    "tipo": "Button",
+                    "activo": true,
+                    "transicion": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Icon",
+                    "ruta": "Viewer/Popup/Buttons/Use/Icon",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -16,
+                      "y": -16
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "furnitureIcons_36",
+                          "rx": 8.06,
+                          "ry": 196.04,
+                          "rw": 47.86,
+                          "rh": 58.94,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Highlight",
+                    "ruta": "Viewer/Popup/Buttons/Use/Highlight",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 2.0001
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circleO_8px",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0,
+                          "g": 0,
+                          "b": 0,
+                          "a": 0.12549
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Border",
+                    "ruta": "Viewer/Popup/Buttons/Use/Border",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 4,
+                      "y": 4
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circleO_8px",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0.52254,
+                          "g": 0.57547,
+                          "b": 0.46961,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "CustomButton",
+                "ruta": "Viewer/Popup/Buttons/CustomButton",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 100,
+                  "y": 100
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "escala": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "circle",
+                      "rx": 0,
+                      "ry": 128,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 64,
+                        "y": 64,
+                        "z": 64,
+                        "w": 64
+                      }
+                    },
+                    "color": {
+                      "r": 0.83019,
+                      "g": 0.61645,
+                      "b": 0.38768,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": true,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": 64,
+                    "MinHeight": 64,
+                    "PreferredWidth": 64,
+                    "PreferredHeight": 64,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  },
+                  {
+                    "tipo": "Button",
+                    "activo": true,
+                    "transicion": 1
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Icon",
+                    "ruta": "Viewer/Popup/Buttons/CustomButton/Icon",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": -16,
+                      "y": -16
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "furnitureIcons_36",
+                          "rx": 8.06,
+                          "ry": 196.04,
+                          "rw": 47.86,
+                          "rh": 58.94,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 100,
+                          "borde": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0,
+                            "w": 0
+                          }
+                        },
+                        "color": {
+                          "r": 1,
+                          "g": 1,
+                          "b": 1,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Highlight",
+                    "ruta": "Viewer/Popup/Buttons/CustomButton/Highlight",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 2.0001
+                    },
+                    "tam": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circleO_8px",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0,
+                          "g": 0,
+                          "b": 0,
+                          "a": 0.12549
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "Border",
+                    "ruta": "Viewer/Popup/Buttons/CustomButton/Border",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "anclaMax": {
+                      "x": 1,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 4,
+                      "y": 4
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 0.5
+                    },
+                    "comp": [
+                      {
+                        "tipo": "Image",
+                        "sprite": {
+                          "nombre": "circleO_8px",
+                          "rx": 0,
+                          "ry": 128,
+                          "rw": 128,
+                          "rh": 128,
+                          "px": 0.5,
+                          "py": 0.5,
+                          "ppu": 128,
+                          "borde": {
+                            "x": 64,
+                            "y": 64,
+                            "z": 64,
+                            "w": 64
+                          }
+                        },
+                        "color": {
+                          "r": 0.33333,
+                          "g": 0.30588,
+                          "b": 0.29412,
+                          "a": 1
+                        },
+                        "modo": 0,
+                        "rellenaCentro": true,
+                        "conservaProporcion": false,
+                        "recibeToque": false,
+                        "ppuMult": 1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

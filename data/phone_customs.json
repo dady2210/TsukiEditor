@@ -1,0 +1,492 @@
+{
+ "_fuente": "IconManager, bytes en crudo de sharedassets1.assets (tools/export_phone_customs.py)",
+ "_nota": "`PhoneSave.bgColorID` y `bgPatternID` son el `customizationIndex`. `backgroundsUnlocked` y `colorsUnlocked` son MASCARAS DE BITS: el bit `1 << customizationIndex`. Comprobado: el Colorway 0 («Eggshell») es el mismo color que el `Background` del telefono en level14.",
+ "colorways": [
+  {
+   "id": 0,
+   "lockState": 0,
+   "nombre": "Eggshell",
+   "color": [
+    0.92453,
+    0.91464,
+    0.78934,
+    1.0
+   ],
+   "color2": [
+    0.83019,
+    0.81285,
+    0.66963,
+    1.0
+   ]
+  },
+  {
+   "id": 1,
+   "lockState": 0,
+   "nombre": "Bedroom",
+   "color": [
+    0.36156,
+    0.45028,
+    0.61321,
+    1.0
+   ],
+   "color2": [
+    0.76415,
+    0.62442,
+    0.46498,
+    1.0
+   ]
+  },
+  {
+   "id": 2,
+   "lockState": 0,
+   "nombre": "Aqua",
+   "color": [
+    0.41109,
+    0.58491,
+    0.56007,
+    1.0
+   ],
+   "color2": [
+    0.58431,
+    0.71765,
+    0.69804,
+    1.0
+   ]
+  },
+  {
+   "id": 3,
+   "lockState": 1,
+   "nombre": "Marine",
+   "color": [
+    0.35969,
+    0.5566,
+    0.46435,
+    1.0
+   ],
+   "color2": [
+    0.56471,
+    0.76471,
+    0.67059,
+    1.0
+   ]
+  },
+  {
+   "id": 4,
+   "lockState": 1,
+   "nombre": "Taro",
+   "color": [
+    0.39555,
+    0.3309,
+    0.41509,
+    1.0
+   ],
+   "color2": [
+    0.82075,
+    0.79172,
+    0.59234,
+    1.0
+   ]
+  },
+  {
+   "id": 5,
+   "lockState": 1,
+   "nombre": "Bloodlust",
+   "color": [
+    0.34118,
+    0.31373,
+    0.28235,
+    1.0
+   ],
+   "color2": [
+    0.67925,
+    0.44535,
+    0.44535,
+    1.0
+   ]
+  },
+  {
+   "id": 6,
+   "lockState": 1,
+   "nombre": "Girlie Pop",
+   "color": [
+    0.81961,
+    0.6,
+    0.62353,
+    1.0
+   ],
+   "color2": [
+    0.97255,
+    0.74902,
+    0.77255,
+    1.0
+   ]
+  },
+  {
+   "id": 7,
+   "lockState": 1,
+   "nombre": "Slate",
+   "color": [
+    0.36863,
+    0.36863,
+    0.36863,
+    1.0
+   ],
+   "color2": [
+    0.41569,
+    0.41569,
+    0.41569,
+    1.0
+   ]
+  },
+  {
+   "id": 8,
+   "lockState": 1,
+   "nombre": "Bubblegum",
+   "color": [
+    0.2549,
+    0.27843,
+    0.35686,
+    1.0
+   ],
+   "color2": [
+    0.54902,
+    0.41961,
+    0.56471,
+    1.0
+   ]
+  },
+  {
+   "id": 9,
+   "lockState": 1,
+   "nombre": "Baby",
+   "color": [
+    0.31373,
+    0.4549,
+    0.61176,
+    1.0
+   ],
+   "color2": [
+    0.45882,
+    0.61961,
+    0.70588,
+    1.0
+   ]
+  },
+  {
+   "id": 10,
+   "lockState": 0,
+   "nombre": "Lava",
+   "color": [
+    0.98039,
+    0.7098,
+    0.53333,
+    1.0
+   ],
+   "color2": [
+    0.85882,
+    0.50588,
+    0.38431,
+    1.0
+   ]
+  }
+ ],
+ "patrones": [
+  {
+   "id": 0,
+   "lockState": 0,
+   "guid": "ee87d1ddc0fa0d841843ae1ddf6f6038",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/ee87d1ddc0fa0d841843ae1ddf6f6038.png"
+  },
+  {
+   "id": 1,
+   "lockState": 0,
+   "guid": "12dec136fd6c21047921bf2c78d02124",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/12dec136fd6c21047921bf2c78d02124.png"
+  },
+  {
+   "id": 2,
+   "lockState": 0,
+   "guid": "1d5f2a9a528c34e4c9211fec20b68d25",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/1d5f2a9a528c34e4c9211fec20b68d25.png"
+  },
+  {
+   "id": 3,
+   "lockState": 1,
+   "guid": "7b5ca2cafd188d04fba0ac0f41ca58c4",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/7b5ca2cafd188d04fba0ac0f41ca58c4.png"
+  },
+  {
+   "id": 4,
+   "lockState": 1,
+   "guid": "946e76135ee1959498b3db0a4a052c5e",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/946e76135ee1959498b3db0a4a052c5e.png"
+  },
+  {
+   "id": 5,
+   "lockState": 1,
+   "guid": "cdc1205ec81ddbd40bad5b5f366a8284",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/cdc1205ec81ddbd40bad5b5f366a8284.png"
+  },
+  {
+   "id": 6,
+   "lockState": 1,
+   "guid": "4593dac5b73a8484b83a8b9393985d06",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/4593dac5b73a8484b83a8b9393985d06.png"
+  },
+  {
+   "id": 7,
+   "lockState": 1,
+   "guid": "348e114bdffbc694aa2af84008332ab2",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/348e114bdffbc694aa2af84008332ab2.png"
+  },
+  {
+   "id": 8,
+   "lockState": 1,
+   "guid": "cd4a1a1c96d202049a65831a45aeaf49",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/cd4a1a1c96d202049a65831a45aeaf49.png"
+  },
+  {
+   "id": 9,
+   "lockState": 1,
+   "guid": "cc5bc5f151de68145ae00067520c6a16",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/cc5bc5f151de68145ae00067520c6a16.png"
+  },
+  {
+   "id": 10,
+   "lockState": 2,
+   "guid": "af5ef7cf839444d4e8e8bc18819e9f6c",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/af5ef7cf839444d4e8e8bc18819e9f6c.png"
+  },
+  {
+   "id": 11,
+   "lockState": 2,
+   "guid": "5c1871888369fc84e9364e5c9e7fda0d",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/5c1871888369fc84e9364e5c9e7fda0d.png"
+  },
+  {
+   "id": 12,
+   "lockState": 2,
+   "guid": "d72fc0ed5dfd7456e99e320557ddebd4",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/d72fc0ed5dfd7456e99e320557ddebd4.png"
+  },
+  {
+   "id": 13,
+   "lockState": 1,
+   "guid": "6b8fa6e0197b90648b92eb15e968bbd3",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/6b8fa6e0197b90648b92eb15e968bbd3.png"
+  },
+  {
+   "id": 14,
+   "lockState": 1,
+   "guid": "89e68cd6354a7b3498c5ef7d721c73df",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/89e68cd6354a7b3498c5ef7d721c73df.png"
+  },
+  {
+   "id": 15,
+   "lockState": 2,
+   "guid": "fe95783edad844f7e8fac136c0b80a1d",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/fe95783edad844f7e8fac136c0b80a1d.png"
+  },
+  {
+   "id": 16,
+   "lockState": 2,
+   "guid": "3d33e418b4e0a4dc293846320519d4d3",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/3d33e418b4e0a4dc293846320519d4d3.png"
+  },
+  {
+   "id": 17,
+   "lockState": 1,
+   "guid": "9794ecdb827ddae439ddbdf8730a3dd0",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/9794ecdb827ddae439ddbdf8730a3dd0.png"
+  },
+  {
+   "id": 18,
+   "lockState": 1,
+   "guid": "6fc60c4661f644d478054abc1688d470",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/6fc60c4661f644d478054abc1688d470.png"
+  },
+  {
+   "id": 19,
+   "lockState": 2,
+   "guid": "67a7233f0eed84646a6065015a21179c",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/67a7233f0eed84646a6065015a21179c.png"
+  },
+  {
+   "id": 20,
+   "lockState": 1,
+   "guid": "3084c2279b07c89498d746e22542969d",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/3084c2279b07c89498d746e22542969d.png"
+  },
+  {
+   "id": 21,
+   "lockState": 1,
+   "guid": "b9a5e8afcf2602e488354e6c0afc64a6",
+   "ancho": 512,
+   "alto": 512,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/b9a5e8afcf2602e488354e6c0afc64a6.png"
+  },
+  {
+   "id": 22,
+   "lockState": 2,
+   "guid": "e601930c4fc5e4848922dfaaa873dcf9",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/e601930c4fc5e4848922dfaaa873dcf9.png"
+  },
+  {
+   "id": 23,
+   "lockState": 2,
+   "guid": "0d62b35bfe40c4692ae93a953ebca258",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/0d62b35bfe40c4692ae93a953ebca258.png"
+  },
+  {
+   "id": 24,
+   "lockState": 2,
+   "guid": "6ff14309fbbfb40c9b26e327afb15488",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/6ff14309fbbfb40c9b26e327afb15488.png"
+  },
+  {
+   "id": 25,
+   "lockState": 1,
+   "guid": "1dea5dc4908e24453b1f795c966063ab",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 0.75,
+   "textura": "images/ui/phone/patrones/1dea5dc4908e24453b1f795c966063ab.png"
+  },
+  {
+   "id": 26,
+   "lockState": 1,
+   "guid": "bd0e91a32f7af44438c33fb316a42c52",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/bd0e91a32f7af44438c33fb316a42c52.png"
+  },
+  {
+   "id": 27,
+   "lockState": 2,
+   "guid": "5837e2cce66214d0680ba02db525d23a",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/5837e2cce66214d0680ba02db525d23a.png"
+  },
+  {
+   "id": 28,
+   "lockState": 1,
+   "guid": "05563631aab5d455a9926ce63cb5ea93",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/05563631aab5d455a9926ce63cb5ea93.png"
+  },
+  {
+   "id": 29,
+   "lockState": 2,
+   "guid": "2e2367fb9e48a49c48f6a537b2b8fb8d",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/2e2367fb9e48a49c48f6a537b2b8fb8d.png"
+  },
+  {
+   "id": 30,
+   "lockState": 1,
+   "guid": "b58ea869008ee458c9da5907b0d7d2ea",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/b58ea869008ee458c9da5907b0d7d2ea.png"
+  },
+  {
+   "id": 31,
+   "lockState": 2,
+   "guid": "6faf8098916ec4e448baa1525e4a6cc0",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/6faf8098916ec4e448baa1525e4a6cc0.png"
+  },
+  {
+   "id": 32,
+   "lockState": 1,
+   "guid": "d6548608465c841fc8b8fdade4475e5c",
+   "ancho": 256,
+   "alto": 256,
+   "escala": 1.0,
+   "textura": "images/ui/phone/patrones/d6548608465c841fc8b8fdade4475e5c.png"
+  }
+ ]
+}

@@ -1,0 +1,2217 @@
+{
+  "_fuente": "Shop y *ShopDisplay de los level*.assets (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "\u0060x\u0060/\u0060y\u0060 van en coordenadas de MAPA, que son las de data/maps/map_N.json: el transform da las de mundo y se les resta el \u0060origin_offset\u0060 del export. \u0060xMundo\u0060/\u0060yMundo\u0060 son las de antes de restar. Los objetos que caen en cada expositor NO estan aqui: los sortea la tienda y los guarda la partida en Shop.ShopSave.displaySaves, emparejados por dataID con el objectID del expositor (18 de 18 cuadran en un save de verdad).",
+  "porNivel": {
+    "level3": {
+      "tiendas": [
+        {
+          "pathID": 483,
+          "objectID": 2108926080,
+          "lineasDeCompra": [],
+          "dialogoDeCompra": 0,
+          "expositores": [
+            {
+              "pathID": 505,
+              "clase": "GridFurnShopDisplay",
+              "objectID": 981426226,
+              "nombre": "Big Furn",
+              "xMundo": -2.51,
+              "yMundo": 12.36,
+              "x": -2.51,
+              "y": -2.64,
+              "hijos": [
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": -2.521,
+                  "y": -1.772,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 382,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -2.521,
+              "carteVendidoY": -1.772,
+              "carteSx": 0.8,
+              "carteSy": 0.8,
+              "dontSwapColliders": "0"
+            },
+            {
+              "pathID": 461,
+              "clase": "GridFurnShopDisplay",
+              "objectID": 1415819174,
+              "nombre": "Med Furn",
+              "xMundo": -0.26,
+              "yMundo": 13.485,
+              "x": -0.26,
+              "y": -1.515,
+              "hijos": [
+                {
+                  "nombre": "Sold (1)",
+                  "activo": true,
+                  "x": -0.47,
+                  "y": -0.802,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 418,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -0.47,
+              "carteVendidoY": -0.802,
+              "carteSx": 0.8,
+              "carteSy": 0.8,
+              "dontSwapColliders": "0"
+            },
+            {
+              "pathID": 456,
+              "clase": "GridFurnShopDisplay",
+              "objectID": -655661562,
+              "nombre": "Small Furn",
+              "xMundo": -1.26,
+              "yMundo": 11.735,
+              "x": -1.26,
+              "y": -3.265,
+              "hijos": [
+                {
+                  "nombre": "Sold (2)",
+                  "activo": true,
+                  "x": -0.703,
+                  "y": -2.651,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 381,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -0.703,
+              "carteVendidoY": -2.651,
+              "carteSx": 0.8,
+              "carteSy": 0.8,
+              "dontSwapColliders": "0"
+            }
+          ]
+        },
+        {
+          "pathID": 492,
+          "objectID": 760881372,
+          "lineasDeCompra": [],
+          "dialogoDeCompra": 0,
+          "expositores": [
+            {
+              "pathID": 485,
+              "clase": "ItemShopDisplay",
+              "objectID": 1260602110,
+              "nombre": "Item 2",
+              "xMundo": -0.26,
+              "yMundo": 12.235,
+              "x": -0.26,
+              "y": -2.765,
+              "hijos": [
+                {
+                  "nombre": "New Sprite",
+                  "activo": true,
+                  "x": -0.26,
+                  "y": -2.765,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "Wood Pedestal_0",
+                  "px": 0.5,
+                  "py": 0.09267,
+                  "rw": 109,
+                  "rh": 116,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": -0.26,
+                  "y": -1.965,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "Sold (1)",
+                  "activo": true,
+                  "x": -0.26,
+                  "y": -1.965,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 429,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -0.26,
+              "carteVendidoY": -1.965,
+              "carteSx": 0.8,
+              "carteSy": 0.8
+            },
+            {
+              "pathID": 511,
+              "clase": "ItemShopDisplay",
+              "objectID": 995218499,
+              "nombre": "Item 1",
+              "xMundo": -1.01,
+              "yMundo": 11.86,
+              "x": -1.01,
+              "y": -3.14,
+              "hijos": [
+                {
+                  "nombre": "New Sprite",
+                  "activo": true,
+                  "x": -1.01,
+                  "y": -3.14,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "Wood Pedestal_0",
+                  "px": 0.5,
+                  "py": 0.09267,
+                  "rw": 109,
+                  "rh": 116,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": -1.01,
+                  "y": -2.34,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "Sold (1)",
+                  "activo": true,
+                  "x": -1.01,
+                  "y": -2.34,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 343,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -1.01,
+              "carteVendidoY": -2.34,
+              "carteSx": 0.8,
+              "carteSy": 0.8
+            }
+          ]
+        },
+        {
+          "pathID": 508,
+          "objectID": -1909359343,
+          "lineasDeCompra": [
+            {
+              "triggerType": 0,
+              "invType": 1,
+              "itemID": 337,
+              "convoID": 0
+            },
+            {
+              "triggerType": 0,
+              "invType": 1,
+              "itemID": 331,
+              "convoID": 2
+            },
+            {
+              "triggerType": 0,
+              "invType": 1,
+              "itemID": 110,
+              "convoID": 4
+            },
+            {
+              "triggerType": 0,
+              "invType": 1,
+              "itemID": 325,
+              "convoID": 9
+            },
+            {
+              "triggerType": 0,
+              "invType": 1,
+              "itemID": 324,
+              "convoID": 13
+            },
+            {
+              "triggerType": 0,
+              "invType": 1,
+              "itemID": 326,
+              "convoID": 18
+            }
+          ],
+          "dialogoDeCompra": 21,
+          "expositores": [
+            {
+              "pathID": 526,
+              "clase": "ItemShopDisplay",
+              "objectID": -1078094518,
+              "nombre": "Item 2",
+              "xMundo": 0,
+              "yMundo": 16.095,
+              "x": 0,
+              "y": 1.095,
+              "hijos": [
+                {
+                  "nombre": "PedestalSprite",
+                  "activo": true,
+                  "x": 0,
+                  "y": 1.095,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "Wood Pedestal_0",
+                  "px": 0.5,
+                  "py": 0.09267,
+                  "rw": 109,
+                  "rh": 116,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": 0,
+                  "y": 1.895,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 0,
+                  "y": 1.895,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 359,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 0,
+              "carteVendidoY": 1.895,
+              "carteSx": 0.8,
+              "carteSy": 0.8
+            },
+            {
+              "pathID": 529,
+              "clase": "ItemShopDisplay",
+              "objectID": -227055525,
+              "nombre": "Item 1",
+              "xMundo": -1.5,
+              "yMundo": 16.095,
+              "x": -1.5,
+              "y": 1.095,
+              "hijos": [
+                {
+                  "nombre": "PedestalSprite",
+                  "activo": true,
+                  "x": -1.5,
+                  "y": 1.095,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "Wood Pedestal_0",
+                  "px": 0.5,
+                  "py": 0.09267,
+                  "rw": 109,
+                  "rh": 116,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": -1.5,
+                  "y": 1.895,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": -1.5,
+                  "y": 1.895,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 427,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -1.5,
+              "carteVendidoY": 1.895,
+              "carteSx": 0.8,
+              "carteSy": 0.8
+            },
+            {
+              "pathID": 460,
+              "clase": "WallDecoShopDisplay",
+              "objectID": 520311510,
+              "nombre": "Wall Decor",
+              "xMundo": 1.5,
+              "yMundo": 16.595,
+              "x": 1.5,
+              "y": 1.595,
+              "hijos": [
+                {
+                  "nombre": "New Sprite",
+                  "activo": true,
+                  "x": 1.5,
+                  "y": 1.595,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "T2 Yori\u0027s Shop SLICED_13",
+                  "px": 0.74358,
+                  "py": 0.04098,
+                  "rw": 226,
+                  "rh": 366,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 1.184,
+                  "y": 2.934,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "wallFloorSold_0",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 98,
+                  "rh": 88,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 395,
+              "carteVendidoSprite": "wallFloorSold_0",
+              "carteRw": 98,
+              "carteRh": 88,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 1.184,
+              "carteVendidoY": 2.934,
+              "carteSx": 1,
+              "carteSy": 1,
+              "flipped": "0"
+            },
+            {
+              "pathID": 465,
+              "clase": "TabletopShopDisplay",
+              "objectID": 1890142299,
+              "nombre": "Tabletop",
+              "xMundo": -3,
+              "yMundo": 16.595,
+              "x": -3,
+              "y": 1.595,
+              "hijos": [
+                {
+                  "nombre": "New Sprite",
+                  "activo": true,
+                  "x": -3,
+                  "y": 1.595,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "T2 Yori\u0027s Shop SLICED_16",
+                  "px": 0.32353,
+                  "py": 0.1023,
+                  "rw": 204,
+                  "rh": 152,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": -2.766,
+                  "y": 2.347,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 437,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -2.766,
+              "carteVendidoY": 2.347,
+              "carteSx": 0.8,
+              "carteSy": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    "level11": {
+      "tiendas": [
+        {
+          "pathID": 385,
+          "objectID": 1956726548,
+          "lineasDeCompra": [
+            {
+              "triggerType": 2,
+              "invType": 0,
+              "itemID": 0,
+              "convoID": 0,
+              "condiciones": {
+                "n": 2,
+                "lista": [
+                  {
+                    "t": 28,
+                    "c": 0,
+                    "v": 1301
+                  },
+                  {
+                    "t": 46,
+                    "c": 0,
+                    "v": 0
+                  }
+                ]
+              },
+              "furnitureConditions": [
+                {
+                  "ConditionType": 0,
+                  "CheckType": 0,
+                  "Value": 14
+                }
+              ]
+            }
+          ],
+          "dialogoDeCompra": 2,
+          "expositores": [
+            {
+              "pathID": 371,
+              "clase": "PotsAndBonsaiShopDisplay",
+              "objectID": 250874065,
+              "nombre": "Pots And Bonsai 2",
+              "xMundo": -18.98,
+              "yMundo": 31.59,
+              "x": 1.02,
+              "y": 1.59,
+              "hijos": [
+                {
+                  "nombre": "Pallet",
+                  "activo": true,
+                  "x": 1.034,
+                  "y": 1.853,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "DreamHouse_Environment_RosemaryShop_New_18",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 174,
+                  "rh": 102,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "New Sprite (1)",
+                  "activo": true,
+                  "x": 1.03,
+                  "y": 1.954,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "soldCard_1",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 71,
+                  "rh": 59,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 291,
+              "carteVendidoSprite": "soldCard_1",
+              "carteRw": 71,
+              "carteRh": 59,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 1.03,
+              "carteVendidoY": 1.954,
+              "carteSx": 1,
+              "carteSy": 1,
+              "dontSwapColliders": "0"
+            },
+            {
+              "pathID": 383,
+              "clase": "PotsAndBonsaiShopDisplay",
+              "objectID": -690320414,
+              "nombre": "Pots And Bonsai 1",
+              "xMundo": -19.73,
+              "yMundo": 31.965,
+              "x": 0.27,
+              "y": 1.965,
+              "hijos": [
+                {
+                  "nombre": "Pallet",
+                  "activo": true,
+                  "x": 0.284,
+                  "y": 2.228,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "DreamHouse_Environment_RosemaryShop_New_18",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 174,
+                  "rh": 102,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "New Sprite (1)",
+                  "activo": true,
+                  "x": 0.28,
+                  "y": 2.329,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "soldCard_1",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 71,
+                  "rh": 59,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 270,
+              "carteVendidoSprite": "soldCard_1",
+              "carteRw": 71,
+              "carteRh": 59,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 0.28,
+              "carteVendidoY": 2.329,
+              "carteSx": 1,
+              "carteSy": 1,
+              "dontSwapColliders": "0"
+            },
+            {
+              "pathID": 389,
+              "clase": "GridFurnShopDisplay",
+              "objectID": -1411500263,
+              "nombre": "Plant 1",
+              "xMundo": -19.72,
+              "yMundo": 28.7,
+              "x": 0.28,
+              "y": -1.3,
+              "hijos": [
+                {
+                  "nombre": "New Sprite (4)",
+                  "activo": true,
+                  "x": 0.284,
+                  "y": -0.931,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 1,
+                  "sprite": "DreamHouse_Environment_RosemaryShop_New_15",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 59,
+                  "rh": 100,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 272,
+              "carteVendidoSprite": "DreamHouse_Environment_RosemaryShop_New_15",
+              "carteRw": 59,
+              "carteRh": 100,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 0.284,
+              "carteVendidoY": -0.931,
+              "carteSx": 1,
+              "carteSy": 1,
+              "dontSwapColliders": "0"
+            },
+            {
+              "pathID": 400,
+              "clase": "GridFurnShopDisplay",
+              "objectID": -1197417434,
+              "nombre": "Plant 2",
+              "xMundo": -18.97,
+              "yMundo": 29.075,
+              "x": 1.03,
+              "y": -0.925,
+              "hijos": [
+                {
+                  "nombre": "New Sprite (5)",
+                  "activo": true,
+                  "x": 1.034,
+                  "y": -0.556,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 1,
+                  "sprite": "DreamHouse_Environment_RosemaryShop_New_15",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 59,
+                  "rh": 100,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 303,
+              "carteVendidoSprite": "DreamHouse_Environment_RosemaryShop_New_15",
+              "carteRw": 59,
+              "carteRh": 100,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 1.034,
+              "carteVendidoY": -0.556,
+              "carteSx": 1,
+              "carteSy": 1,
+              "dontSwapColliders": "0"
+            },
+            {
+              "pathID": 370,
+              "clase": "GridFurnShopDisplay",
+              "objectID": 665741661,
+              "nombre": "Plant 3",
+              "xMundo": -18.22,
+              "yMundo": 29.45,
+              "x": 1.78,
+              "y": -0.55,
+              "hijos": [
+                {
+                  "nombre": "New Sprite (6)",
+                  "activo": true,
+                  "x": 1.784,
+                  "y": -0.181,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 1,
+                  "sprite": "DreamHouse_Environment_RosemaryShop_New_15",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 59,
+                  "rh": 100,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 330,
+              "carteVendidoSprite": "DreamHouse_Environment_RosemaryShop_New_15",
+              "carteRw": 59,
+              "carteRh": 100,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 1.784,
+              "carteVendidoY": -0.181,
+              "carteSx": 1,
+              "carteSy": 1,
+              "dontSwapColliders": "0"
+            },
+            {
+              "pathID": 392,
+              "clase": "GridFurnShopDisplay",
+              "objectID": -1885585066,
+              "nombre": "Fertilizer",
+              "xMundo": -22.27,
+              "yMundo": 30.64,
+              "x": -2.27,
+              "y": 0.64,
+              "hijos": [
+                {
+                  "nombre": "New Sprite (6)",
+                  "activo": true,
+                  "x": -2.287,
+                  "y": 1.027,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 301,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -2.287,
+              "carteVendidoY": 1.027,
+              "carteSx": 1,
+              "carteSy": 1,
+              "dontSwapColliders": "0"
+            },
+            {
+              "pathID": 390,
+              "clase": "SeedShopDisplay",
+              "objectID": 1960234077,
+              "nombre": "Seeds",
+              "xMundo": -20.48,
+              "yMundo": 30.59,
+              "x": -0.48,
+              "y": 0.59,
+              "hijos": [
+                {
+                  "nombre": "New Sprite",
+                  "activo": true,
+                  "x": -0.48,
+                  "y": 0.59,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "Wood Pedestal_0",
+                  "px": 0.5,
+                  "py": 0.09267,
+                  "rw": 109,
+                  "rh": 116,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": -0.48,
+                  "y": 1.39,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": -0.48,
+                  "y": 1.39,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 288,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -0.48,
+              "carteVendidoY": 1.39,
+              "carteSx": 0.8,
+              "carteSy": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    "level12": {
+      "tiendas": [
+        {
+          "pathID": 559,
+          "objectID": -1065686124,
+          "lineasDeCompra": [],
+          "dialogoDeCompra": 0,
+          "expositores": [
+            {
+              "pathID": 589,
+              "clase": "FloorShopDisplay",
+              "objectID": 355169491,
+              "nombre": "Floor",
+              "xMundo": 0.72,
+              "yMundo": -43.11,
+              "x": 0.72,
+              "y": 1.89,
+              "hijos": [
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": 0.72,
+                  "y": 2.568,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 1,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "New Sprite",
+                  "activo": true,
+                  "x": 0.72,
+                  "y": 2.013,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "FloorWallPedestal",
+                  "px": 0.5,
+                  "py": 0.33125,
+                  "rw": 106.824,
+                  "rh": 112.873,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 1.581,
+                  "y": 1.656,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "wallFloorSold_1",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 124,
+                  "rh": 76,
+                  "ppu": 150,
+                  "papel": "cartel"
+                },
+                {
+                  "nombre": "Closed",
+                  "activo": true,
+                  "x": 1.589,
+                  "y": 1.65,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "Dawn\u0027sShop_Final_17",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 364,
+                  "rh": 178,
+                  "ppu": 150,
+                  "papel": "prop"
+                }
+              ],
+              "carteVendidoPathID": 487,
+              "carteVendidoSprite": "wallFloorSold_1",
+              "carteRw": 124,
+              "carteRh": 76,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 1.581,
+              "carteVendidoY": 1.656,
+              "carteSx": 1,
+              "carteSy": 1
+            },
+            {
+              "pathID": 570,
+              "clase": "WallpaperShopDisplay",
+              "objectID": 1746978229,
+              "nombre": "Wallpaper",
+              "xMundo": 0.72,
+              "yMundo": -41.61,
+              "x": 0.72,
+              "y": 3.39,
+              "hijos": [
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": 0.72,
+                  "y": 4.186,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 1,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "New Sprite",
+                  "activo": true,
+                  "x": 0.72,
+                  "y": 3.522,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "FloorWallPedestal",
+                  "px": 0.5,
+                  "py": 0.33125,
+                  "rw": 106.824,
+                  "rh": 112.873,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 1,
+                  "y": 4.425,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "wallFloorSold_0",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 98,
+                  "rh": 88,
+                  "ppu": 150,
+                  "papel": "cartel"
+                },
+                {
+                  "nombre": "Closed",
+                  "activo": true,
+                  "x": 1.007,
+                  "y": 4.393,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "Dawn\u0027sShop_Final_5",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 190,
+                  "rh": 239,
+                  "ppu": 150,
+                  "papel": "prop"
+                }
+              ],
+              "carteVendidoPathID": 470,
+              "carteVendidoSprite": "wallFloorSold_0",
+              "carteRw": 98,
+              "carteRh": 88,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 1,
+              "carteVendidoY": 4.425,
+              "carteSx": 1,
+              "carteSy": 1,
+              "flipped": "0"
+            }
+          ]
+        }
+      ]
+    },
+    "level53": {
+      "tiendas": [
+        {
+          "pathID": 855,
+          "objectID": 299957123,
+          "lineasDeCompra": [],
+          "dialogoDeCompra": 0,
+          "expositores": [
+            {
+              "pathID": 834,
+              "clase": "ItemShopDisplay",
+              "objectID": 1865858566,
+              "nombre": "Item 1",
+              "xMundo": -199.3658,
+              "yMundo": -74.0059,
+              "x": 0.6342,
+              "y": -4.0059,
+              "hijos": [
+                {
+                  "nombre": "New Sprite",
+                  "activo": true,
+                  "x": 0.6342,
+                  "y": -4.0059,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "Wood Pedestal_0",
+                  "px": 0.5,
+                  "py": 0.09267,
+                  "rw": 109,
+                  "rh": 116,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": 0.6342,
+                  "y": -3.2059,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 0.6342,
+                  "y": -3.2059,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 635,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 0.6342,
+              "carteVendidoY": -3.2059,
+              "carteSx": 0.8,
+              "carteSy": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    "level59": {
+      "tiendas": [
+        {
+          "pathID": 431,
+          "objectID": 1355737061,
+          "lineasDeCompra": [],
+          "dialogoDeCompra": 0,
+          "expositores": [
+            {
+              "pathID": 478,
+              "clase": "WallDecoShopDisplay",
+              "objectID": -1905445025,
+              "nombre": "WallItem",
+              "xMundo": -113.37,
+              "yMundo": 52.5,
+              "x": 6.63,
+              "y": 2.5,
+              "hijos": [
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 6.314,
+                  "y": 3.839,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "wallFloorSold_0",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 98,
+                  "rh": 88,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 354,
+              "carteVendidoSprite": "wallFloorSold_0",
+              "carteRw": 98,
+              "carteRh": 88,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 6.314,
+              "carteVendidoY": 3.839,
+              "carteSx": 1,
+              "carteSy": 1,
+              "flipped": "0"
+            },
+            {
+              "pathID": 454,
+              "clase": "WallDecoShopDisplay",
+              "objectID": 1040530256,
+              "nombre": "WallItem 2",
+              "xMundo": -111.87,
+              "yMundo": 51.75,
+              "x": 8.13,
+              "y": 1.75,
+              "hijos": [
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 7.814,
+                  "y": 3.089,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "wallFloorSold_0",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 98,
+                  "rh": 88,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 396,
+              "carteVendidoSprite": "wallFloorSold_0",
+              "carteRw": 98,
+              "carteRh": 88,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 7.814,
+              "carteVendidoY": 3.089,
+              "carteSx": 1,
+              "carteSy": 1,
+              "flipped": "0"
+            },
+            {
+              "pathID": 457,
+              "clase": "FloorShopDisplay",
+              "objectID": -651493065,
+              "nombre": "Floor",
+              "xMundo": -117.12,
+              "yMundo": 52.625,
+              "x": 2.88,
+              "y": 2.625,
+              "hijos": [
+                {
+                  "nombre": "Shopping Mall_8",
+                  "activo": true,
+                  "x": 2.982,
+                  "y": 2.992,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "Shopping Mall_8",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 217,
+                  "rh": 124,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": 2.969,
+                  "y": 3.08,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 1,
+                  "sprite": "lightporcelaintiles",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 128,
+                  "rh": 128,
+                  "ppu": 150,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 3.579,
+                  "y": 2.644,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "wallFloorSold_1",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 124,
+                  "rh": 76,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 380,
+              "carteVendidoSprite": "wallFloorSold_1",
+              "carteRw": 124,
+              "carteRh": 76,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 3.579,
+              "carteVendidoY": 2.644,
+              "carteSx": 1,
+              "carteSy": 1
+            }
+          ]
+        },
+        {
+          "pathID": 465,
+          "objectID": 916556930,
+          "lineasDeCompra": [],
+          "dialogoDeCompra": 0,
+          "expositores": [
+            {
+              "pathID": 483,
+              "clase": "WallpaperShopDisplay",
+              "objectID": -1127337122,
+              "nombre": "Wallpaper",
+              "xMundo": -113.87,
+              "yMundo": 52.5,
+              "x": 6.13,
+              "y": 2.5,
+              "hijos": [
+                {
+                  "nombre": "FloorWallPedestal",
+                  "activo": true,
+                  "x": 6.13,
+                  "y": 2.649,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "FloorWallPedestal",
+                  "px": 0.5,
+                  "py": 0.33125,
+                  "rw": 106.824,
+                  "rh": 112.873,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": 6.13,
+                  "y": 3.178,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 1,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 6.31,
+                  "y": 3.835,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "wallFloorSold_0",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 98,
+                  "rh": 88,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 400,
+              "carteVendidoSprite": "wallFloorSold_0",
+              "carteRw": 98,
+              "carteRh": 88,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 6.31,
+              "carteVendidoY": 3.835,
+              "carteSx": 1,
+              "carteSy": 1,
+              "flipped": "0"
+            },
+            {
+              "pathID": 461,
+              "clase": "WallpaperShopDisplay",
+              "objectID": -668194773,
+              "nombre": "Wallpaper 2",
+              "xMundo": -112.37,
+              "yMundo": 51.75,
+              "x": 7.63,
+              "y": 1.75,
+              "hijos": [
+                {
+                  "nombre": "FloorWallPedestal",
+                  "activo": true,
+                  "x": 7.63,
+                  "y": 1.899,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "FloorWallPedestal",
+                  "px": 0.5,
+                  "py": 0.33125,
+                  "rw": 106.824,
+                  "rh": 112.873,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "ItemRenderer",
+                  "activo": true,
+                  "x": 7.63,
+                  "y": 2.428,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 1,
+                  "papel": "itemRenderer"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 7.81,
+                  "y": 3.085,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "wallFloorSold_0",
+                  "px": 0.5,
+                  "py": 0.5,
+                  "rw": 98,
+                  "rh": 88,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 313,
+              "carteVendidoSprite": "wallFloorSold_0",
+              "carteRw": 98,
+              "carteRh": 88,
+              "cartePx": 0.5,
+              "cartePy": 0.5,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 7.81,
+              "carteVendidoY": 3.085,
+              "carteSx": 1,
+              "carteSy": 1,
+              "flipped": "0"
+            },
+            {
+              "pathID": 487,
+              "clase": "TabletopShopDisplay",
+              "objectID": -1589665695,
+              "nombre": "Tabletop",
+              "xMundo": -118.12,
+              "yMundo": 52.375,
+              "x": 1.88,
+              "y": 2.375,
+              "hijos": [
+                {
+                  "nombre": "New Sprite",
+                  "activo": true,
+                  "x": 1.88,
+                  "y": 2.375,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "T2 Yori\u0027s Shop SLICED_16",
+                  "px": 0.32353,
+                  "py": 0.1023,
+                  "rw": 204,
+                  "rh": 152,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 2.114,
+                  "y": 3.127,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 332,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 2.114,
+              "carteVendidoY": 3.127,
+              "carteSx": 0.8,
+              "carteSy": 0.8
+            },
+            {
+              "pathID": 455,
+              "clase": "TabletopShopDisplay",
+              "objectID": 717154856,
+              "nombre": "Tabletop 2",
+              "xMundo": -116.62,
+              "yMundo": 53.125,
+              "x": 3.38,
+              "y": 3.125,
+              "hijos": [
+                {
+                  "nombre": "New Sprite",
+                  "activo": true,
+                  "x": 3.38,
+                  "y": 3.125,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "T2 Yori\u0027s Shop SLICED_16",
+                  "px": 0.32353,
+                  "py": 0.1023,
+                  "rw": 204,
+                  "rh": 152,
+                  "ppu": 150,
+                  "papel": "prop"
+                },
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": 3.614,
+                  "y": 3.877,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 338,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": 3.614,
+              "carteVendidoY": 3.877,
+              "carteSx": 0.8,
+              "carteSy": 0.8
+            }
+          ]
+        },
+        {
+          "pathID": 485,
+          "objectID": -1456982986,
+          "lineasDeCompra": [],
+          "dialogoDeCompra": 0,
+          "expositores": [
+            {
+              "pathID": 475,
+              "clase": "GridFurnShopDisplay",
+              "objectID": -330008635,
+              "nombre": "Med Furn",
+              "xMundo": -124.745,
+              "yMundo": 50.6925,
+              "x": -4.745,
+              "y": 0.6925,
+              "hijos": [
+                {
+                  "nombre": "Sold (1)",
+                  "activo": true,
+                  "x": -3.211,
+                  "y": 1.8255,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 340,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -3.211,
+              "carteVendidoY": 1.8255,
+              "carteSx": 0.8,
+              "carteSy": 0.8,
+              "dontSwapColliders": "0"
+            },
+            {
+              "pathID": 464,
+              "clase": "GridFurnShopDisplay",
+              "objectID": -2141816707,
+              "nombre": "Small Furn",
+              "xMundo": -125.745,
+              "yMundo": 51.6925,
+              "x": -5.745,
+              "y": 1.6925,
+              "hijos": [
+                {
+                  "nombre": "Sold (2)",
+                  "activo": true,
+                  "x": -5.871,
+                  "y": 2.4805,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 356,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -5.871,
+              "carteVendidoY": 2.4805,
+              "carteSx": 0.8,
+              "carteSy": 0.8,
+              "dontSwapColliders": "0"
+            },
+            {
+              "pathID": 462,
+              "clase": "GridFurnShopDisplay",
+              "objectID": -55892281,
+              "nombre": "Big Furn",
+              "xMundo": -124.245,
+              "yMundo": 52.6925,
+              "x": -4.245,
+              "y": 2.6925,
+              "hijos": [
+                {
+                  "nombre": "Sold",
+                  "activo": true,
+                  "x": -4.179,
+                  "y": 3.5875,
+                  "sx": 0.8,
+                  "sy": 0.8,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 344,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -4.179,
+              "carteVendidoY": 3.5875,
+              "carteSx": 0.8,
+              "carteSy": 0.8,
+              "dontSwapColliders": "0"
+            }
+          ]
+        }
+      ]
+    },
+    "level61": {
+      "tiendas": [
+        {
+          "pathID": 978,
+          "objectID": -1162722461,
+          "lineasDeCompra": [],
+          "dialogoDeCompra": 0,
+          "expositores": [
+            {
+              "pathID": 965,
+              "clase": "RugShopDisplay",
+              "objectID": 762732492,
+              "nombre": "Rug",
+              "xMundo": -205.1,
+              "yMundo": -51.35,
+              "x": -5.1,
+              "y": -1.35,
+              "hijos": [
+                {
+                  "nombre": "GameObject",
+                  "activo": true,
+                  "x": -5.116,
+                  "y": -0.211,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 781,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -5.116,
+              "carteVendidoY": -0.211,
+              "carteSx": 1,
+              "carteSy": 1
+            },
+            {
+              "pathID": 954,
+              "clase": "RugShopDisplay",
+              "objectID": -233843481,
+              "nombre": "Rug",
+              "xMundo": -202.85,
+              "yMundo": -50.225,
+              "x": -2.85,
+              "y": -0.225,
+              "hijos": [
+                {
+                  "nombre": "GameObject",
+                  "activo": true,
+                  "x": -2.866,
+                  "y": 0.914,
+                  "sx": 1,
+                  "sy": 1,
+                  "orden": 0,
+                  "sprite": "sold",
+                  "px": 0.48594,
+                  "py": 0.74258,
+                  "rw": 73.952,
+                  "rh": 63,
+                  "ppu": 150,
+                  "papel": "cartel"
+                }
+              ],
+              "carteVendidoPathID": 777,
+              "carteVendidoSprite": "sold",
+              "carteRw": 73.952,
+              "carteRh": 63,
+              "cartePx": 0.48594,
+              "cartePy": 0.74258,
+              "cartePpu": 150,
+              "carteActivo": true,
+              "carteVendidoX": -2.866,
+              "carteVendidoY": 0.914,
+              "carteSx": 1,
+              "carteSy": 1
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "catalogos": [
+    {
+      "nombre": "Elfie Exclusive Furn",
+      "shopID": 2108926080,
+      "filter": 0,
+      "invType": 1,
+      "checkType": 0,
+      "furnitureType": 13,
+      "checkTabletop": 0,
+      "itemType": 0,
+      "objetos": [
+        {
+          "id": 68,
+          "verificacion": 539371946,
+          "cantidad": 1
+        },
+        {
+          "id": 70,
+          "verificacion": 635687937,
+          "cantidad": 1
+        },
+        {
+          "id": 71,
+          "verificacion": 1757587756,
+          "cantidad": 1
+        },
+        {
+          "id": 72,
+          "verificacion": 732003928,
+          "cantidad": 1
+        },
+        {
+          "id": 74,
+          "verificacion": 828319919,
+          "cantidad": 1
+        },
+        {
+          "id": 76,
+          "verificacion": 924635910,
+          "cantidad": 1
+        },
+        {
+          "id": 77,
+          "verificacion": 2046535729,
+          "cantidad": 1
+        },
+        {
+          "id": 78,
+          "verificacion": 1020951901,
+          "cantidad": 1
+        },
+        {
+          "id": 79,
+          "verificacion": 2142851720,
+          "cantidad": 1
+        },
+        {
+          "id": 80,
+          "verificacion": 1117267892,
+          "cantidad": 1
+        },
+        {
+          "id": 81,
+          "verificacion": 91684064,
+          "cantidad": 1
+        },
+        {
+          "id": 82,
+          "verificacion": 1213583883,
+          "cantidad": 1
+        },
+        {
+          "id": 87,
+          "verificacion": 380632037,
+          "cantidad": 1
+        }
+      ]
+    },
+    {
+      "nombre": "Paige Exclusive Items",
+      "shopID": -1909359343,
+      "filter": 0,
+      "invType": 0,
+      "checkType": 0,
+      "furnitureType": 0,
+      "checkTabletop": 0,
+      "itemType": 0,
+      "objetos": [
+        {
+          "id": 568,
+          "verificacion": 996049579,
+          "cantidad": 1
+        },
+        {
+          "id": 73,
+          "verificacion": 1853903747,
+          "cantidad": 1
+        },
+        {
+          "id": -320,
+          "verificacion": 815868758,
+          "cantidad": 1
+        },
+        {
+          "id": -321,
+          "verificacion": 1937768577,
+          "cantidad": 1
+        }
+      ]
+    },
+    {
+      "nombre": "Pipi Exclusive Items",
+      "shopID": -1909359343,
+      "filter": 0,
+      "invType": 0,
+      "checkType": 0,
+      "furnitureType": 0,
+      "checkTabletop": 0,
+      "itemType": 0,
+      "objetos": [
+        {
+          "id": -43,
+          "verificacion": 1434747710,
+          "cantidad": 1
+        },
+        {
+          "id": -190,
+          "verificacion": 997780284,
+          "cantidad": 1
+        },
+        {
+          "id": -191,
+          "verificacion": 2119680103,
+          "cantidad": 1
+        }
+      ]
+    },
+    {
+      "nombre": "Pipi Exclusive WallDeco",
+      "shopID": -1909359343,
+      "filter": 0,
+      "invType": 0,
+      "checkType": 0,
+      "furnitureType": 0,
+      "checkTabletop": 0,
+      "itemType": 0,
+      "objetos": [
+        {
+          "id": 337,
+          "verificacion": 1682712677,
+          "cantidad": 1
+        },
+        {
+          "id": 325,
+          "verificacion": 1104816731,
+          "cantidad": 1
+        },
+        {
+          "id": 324,
+          "verificacion": 2130400559,
+          "cantidad": 1
+        },
+        {
+          "id": 110,
+          "verificacion": 414524110,
+          "cantidad": 1
+        },
+        {
+          "id": 331,
+          "verificacion": 1393764704,
+          "cantidad": 1
+        },
+        {
+          "id": 326,
+          "verificacion": 79232903,
+          "cantidad": 1
+        }
+      ]
+    },
+    {
+      "nombre": "Yori Exclusive Furn",
+      "shopID": 2108926080,
+      "filter": 0,
+      "invType": 0,
+      "checkType": 0,
+      "furnitureType": 0,
+      "checkTabletop": 0,
+      "itemType": 0,
+      "objetos": [
+        {
+          "id": 22,
+          "verificacion": 471587800,
+          "cantidad": 1
+        },
+        {
+          "id": 24,
+          "verificacion": 567903791,
+          "cantidad": 1
+        },
+        {
+          "id": 25,
+          "verificacion": 1689803610,
+          "cantidad": 1
+        },
+        {
+          "id": 26,
+          "verificacion": 664219782,
+          "cantidad": 1
+        },
+        {
+          "id": 27,
+          "verificacion": 1786119601,
+          "cantidad": 1
+        },
+        {
+          "id": 53,
+          "verificacion": 890743837,
+          "cantidad": 1
+        },
+        {
+          "id": 54,
+          "verificacion": 2012643656,
+          "cantidad": 1
+        },
+        {
+          "id": 134,
+          "verificacion": 1570316002,
+          "cantidad": 1
+        },
+        {
+          "id": 558,
+          "verificacion": 514469624,
+          "cantidad": 1
+        },
+        {
+          "id": 557,
+          "verificacion": 1540053452,
+          "cantidad": 1
+        },
+        {
+          "id": 559,
+          "verificacion": 1636369443,
+          "cantidad": 1
+        },
+        {
+          "id": 560,
+          "verificacion": 610785615,
+          "cantidad": 1
+        },
+        {
+          "id": 561,
+          "verificacion": 1732685434,
+          "cantidad": 1
+        },
+        {
+          "id": 562,
+          "verificacion": 707101606,
+          "cantidad": 1
+        },
+        {
+          "id": 424,
+          "verificacion": 503749168,
+          "cantidad": 1
+        },
+        {
+          "id": 425,
+          "verificacion": 1625648987,
+          "cantidad": 1
+        },
+        {
+          "id": 426,
+          "verificacion": 600065159,
+          "cantidad": 1
+        },
+        {
+          "id": 413,
+          "verificacion": 1047753041,
+          "cantidad": 1
+        },
+        {
+          "id": 427,
+          "verificacion": 1721964978,
+          "cantidad": 1
+        },
+        {
+          "id": 429,
+          "verificacion": 1818280969,
+          "cantidad": 1
+        },
+        {
+          "id": 430,
+          "verificacion": 792697141,
+          "cantidad": 1
+        },
+        {
+          "id": 431,
+          "verificacion": 1914596960,
+          "cantidad": 1
+        },
+        {
+          "id": 570,
+          "verificacion": 1092365570,
+          "cantidad": 1
+        },
+        {
+          "id": 315,
+          "verificacion": 623236776,
+          "cantidad": 1
+        },
+        {
+          "id": 1099,
+          "verificacion": 1871883249,
+          "cantidad": 1
+        },
+        {
+          "id": 1097,
+          "verificacion": 1775567258,
+          "cantidad": 1
+        },
+        {
+          "id": 1095,
+          "verificacion": 1679251267,
+          "cantidad": 1
+        }
+      ]
+    }
+  ]
+}

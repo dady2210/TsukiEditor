@@ -1,0 +1,453 @@
+{
+  "_fuente": "VillageEventData de sharedassets1.assets",
+  "_nota": "Es el CONTENIDO del \u0060EventFlyer\u0060 (VillageEvent.Popup). El prefab del volante no esta en ningun level*, asi que su colocacion exacta no se puede sacar: aqui estan sus sprites, colores, tareas, premios y detalles, que es lo que ense\u00F1a.",
+  "eventos": [
+    {
+      "eventID": 0,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 1,
+      "scrollTextureID": 9,
+      "nextEvent": 8,
+      "calendarBackgroundReward": 31,
+      "fechas": {
+        "from": {
+          "day": 16,
+          "month": 10
+        },
+        "to": {
+          "day": 1,
+          "month": 11
+        }
+      },
+      "flyerBacking": "Halloween Scroll_0",
+      "flyerHeader": "Halloween Scroll_1",
+      "bountyBoardSticker": "Halloween Scroll_6",
+      "flyerTextColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "eventTasks": [
+        "Chi (TrickorTreat)",
+        "Pipi (TrickorTreat)",
+        "Moca (TrickorTreat)",
+        "Elfie (TrickorTreat)",
+        "Paige (TrickorTreat)",
+        "Dawn (TrickorTreat)",
+        "Spirit Of Halloween"
+      ],
+      "rewardItems": [
+        173
+      ],
+      "rewardFurn": [
+        1352
+      ],
+      "eventDetails": [
+        {},
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 1,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 0,
+      "scrollTextureID": 8,
+      "nextEvent": 2,
+      "calendarBackgroundReward": 12,
+      "fechas": {
+        "from": {
+          "day": 13,
+          "month": 12
+        },
+        "to": {
+          "day": 29,
+          "month": 12
+        }
+      },
+      "flyerBacking": "christmasFlyer_3",
+      "flyerHeader": "christmasFlyer_0",
+      "bountyBoardSticker": "christmasFlyer_1",
+      "flyerTextColor": {
+        "r": 0.60392,
+        "g": 0.35686,
+        "b": 0.35686,
+        "a": 1
+      },
+      "eventTasks": [
+        "DawnPresent",
+        "ChiPresent",
+        "YoriPresent",
+        "PaigePresent",
+        "PipiPresent",
+        "BennyPresent",
+        "RosemaryPresent",
+        "ElfiePresent",
+        "MocaPresent",
+        "GEI intro"
+      ],
+      "eventDetails": [
+        {},
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 2,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 0,
+      "scrollTextureID": 11,
+      "nextEvent": 9,
+      "calendarBackgroundReward": 11,
+      "fechas": {
+        "from": {
+          "day": 11,
+          "month": 1
+        },
+        "to": {
+          "day": 25,
+          "month": 1
+        }
+      },
+      "flyerBacking": "lnyFlyer_5",
+      "flyerHeader": "lnyFlyer_0",
+      "bountyBoardSticker": "lnyFlyer_4",
+      "flyerTextColor": {
+        "r": 0.60392,
+        "g": 0.35686,
+        "b": 0.35686,
+        "a": 1
+      },
+      "eventDetails": [
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 3,
+      "activeEvent": 1,
+      "useTaskItems": 1,
+      "validateRewards": 0,
+      "scrollTextureID": 23,
+      "nextEvent": 6,
+      "calendarBackgroundReward": 23,
+      "fechas": {
+        "from": {
+          "day": 1,
+          "month": 5
+        },
+        "to": {
+          "day": 21,
+          "month": 5
+        }
+      },
+      "flyerBacking": "easterFlyer_4",
+      "flyerHeader": "easterFlyer_0",
+      "bountyBoardSticker": "easterFlyer_3",
+      "flyerTextColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "eventTasks": [
+        "imprintedegg",
+        "froggyegg",
+        "chickyegg",
+        "floralegg",
+        "woodenegg",
+        "lovelyegg",
+        "cosmicegg",
+        "wavyegg",
+        "fieryegg",
+        "maculatedegg",
+        "diamondbackegg",
+        "tsukiegg",
+        "untexturedegg"
+      ],
+      "taskItems": [
+        238,
+        239,
+        240,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250
+      ],
+      "eventDetails": [
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 4,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 0,
+      "scrollTextureID": 27,
+      "nextEvent": 7,
+      "calendarBackgroundReward": 27,
+      "fechas": {
+        "from": {
+          "day": 10,
+          "month": 8
+        },
+        "to": {
+          "day": 28,
+          "month": 8
+        }
+      },
+      "flyerBacking": "SummerFest-Scroll_7",
+      "flyerHeader": "SummerFest-Scroll_0",
+      "bountyBoardSticker": "SummerFest-Scroll_1",
+      "flyerTextColor": {
+        "r": 0.66981,
+        "g": 0.30647,
+        "b": 0.49333,
+        "a": 1
+      },
+      "eventTasks": [
+        "TaikoTutorial"
+      ],
+      "eventDetails": [
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 5,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 0,
+      "scrollTextureID": 22,
+      "nextEvent": 3,
+      "calendarBackgroundReward": 22,
+      "fechas": {
+        "from": {
+          "day": 1,
+          "month": 4
+        },
+        "to": {
+          "day": 16,
+          "month": 4
+        }
+      },
+      "flyerBacking": "April Fools Scroll_6",
+      "flyerHeader": "April Fools Scroll_0",
+      "bountyBoardSticker": "April Fools Scroll_3",
+      "flyerTextColor": {
+        "r": 0.67059,
+        "g": 0.30588,
+        "b": 0.49412,
+        "a": 1
+      },
+      "eventDetails": [
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 6,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 0,
+      "scrollTextureID": 10,
+      "nextEvent": 11,
+      "calendarBackgroundReward": 10,
+      "fechas": {
+        "from": {
+          "day": 5,
+          "month": 6
+        },
+        "to": {
+          "day": 20,
+          "month": 6
+        }
+      },
+      "flyerBacking": "Marine Matters Scroll_4",
+      "flyerHeader": "Marine Matters Scroll_5",
+      "bountyBoardSticker": "Marine Matters Scroll_3",
+      "flyerTextColor": {
+        "r": 0.43922,
+        "g": 0.54118,
+        "b": 0.67451,
+        "a": 1
+      },
+      "eventDetails": [
+        {},
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 7,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 0,
+      "scrollTextureID": 30,
+      "nextEvent": 0,
+      "calendarBackgroundReward": 29,
+      "fechas": {
+        "from": {
+          "day": 12,
+          "month": 9
+        },
+        "to": {
+          "day": 30,
+          "month": 9
+        }
+      },
+      "flyerBacking": "wildwestFlyer_4",
+      "flyerHeader": "wildwestFlyer_0",
+      "bountyBoardSticker": "wildwestFlyer_1",
+      "flyerTextColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "eventDetails": [
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 8,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 0,
+      "scrollTextureID": 19,
+      "nextEvent": 1,
+      "calendarBackgroundReward": 19,
+      "fechas": {
+        "from": {
+          "day": 15,
+          "month": 11
+        },
+        "to": {
+          "day": 30,
+          "month": 11
+        }
+      },
+      "flyerBacking": "forage_4",
+      "flyerHeader": "forage_0",
+      "bountyBoardSticker": "forage_1",
+      "flyerTextColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      },
+      "eventDetails": [
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 9,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 0,
+      "scrollTextureID": 15,
+      "nextEvent": 10,
+      "calendarBackgroundReward": 15,
+      "fechas": {
+        "from": {
+          "day": 7,
+          "month": 2
+        },
+        "to": {
+          "day": 21,
+          "month": 2
+        }
+      },
+      "flyerBacking": "valentinesFlyer_4",
+      "flyerHeader": "valentinesFlyer_0",
+      "bountyBoardSticker": "valentinesFlyer_1",
+      "flyerTextColor": {
+        "r": 0.76415,
+        "g": 0.36405,
+        "b": 0.3882,
+        "a": 1
+      },
+      "eventDetails": [
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 10,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 0,
+      "scrollTextureID": 0,
+      "nextEvent": 5,
+      "calendarBackgroundReward": 16,
+      "fechas": {
+        "from": {
+          "day": 5,
+          "month": 3
+        },
+        "to": {
+          "day": 19,
+          "month": 3
+        }
+      },
+      "flyerBacking": "valentinesFlyer_4",
+      "flyerHeader": "valentinesFlyer_0",
+      "bountyBoardSticker": "valentinesFlyer_1",
+      "flyerTextColor": {
+        "r": 0.70196,
+        "g": 0.42353,
+        "b": 0.42353,
+        "a": 1
+      },
+      "eventDetails": [
+        {},
+        {}
+      ]
+    },
+    {
+      "eventID": 11,
+      "activeEvent": 1,
+      "useTaskItems": 0,
+      "validateRewards": 0,
+      "scrollTextureID": 24,
+      "nextEvent": 4,
+      "calendarBackgroundReward": 24,
+      "fechas": {
+        "from": {
+          "day": 5,
+          "month": 7
+        },
+        "to": {
+          "day": 25,
+          "month": 7
+        }
+      },
+      "flyerBacking": "lnyFlyer_5",
+      "flyerHeader": "lnyFlyer_0",
+      "bountyBoardSticker": "lnyFlyer_4",
+      "flyerTextColor": {
+        "r": 0.25594,
+        "g": 0.28302,
+        "b": 0.18823,
+        "a": 1
+      },
+      "eventDetails": [
+        {},
+        {}
+      ]
+    }
+  ]
+}

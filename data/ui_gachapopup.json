@@ -1,0 +1,640 @@
+{
+  "_fuente": "GachaPopup de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "GachaPopup",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": null,
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": "GachaBG",
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "GachaBG",
+    "transitionInSpeed": "3",
+    "transitionOutSpeed": "3",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": [
+          {
+            "m_Target": "GachaBG",
+            "m_TargetAssemblyTypeName": "",
+            "m_MethodName": "SetTrigger",
+            "m_Mode": "5",
+            "m_Arguments": {
+              "m_ObjectArgument": null,
+              "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+              "m_IntArgument": "0",
+              "m_FloatArgument": "0",
+              "m_StringArgument": "Open"
+            },
+            "m_CallState": "2"
+          }
+        ]
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": [
+          {
+            "m_Target": "GachaBG",
+            "m_TargetAssemblyTypeName": "",
+            "m_MethodName": "SetTrigger",
+            "m_Mode": "5",
+            "m_Arguments": {
+              "m_ObjectArgument": null,
+              "m_ObjectArgumentAssemblyTypeName": "UnityEngine.Object, UnityEngine",
+              "m_IntArgument": "0",
+              "m_FloatArgument": "0",
+              "m_StringArgument": "Reset"
+            },
+            "m_CallState": "2"
+          }
+        ]
+      }
+    },
+    "staticStrings": [],
+    "ballRenderers": [
+      "GachaBG/GachaBall/Gacha/Cover",
+      "GachaBG/GachaBall/Gacha/Base"
+    ],
+    "gachaMaterial": {
+      "nombre": "GachaBall"
+    },
+    "gachaRareMaterial": {
+      "nombre": "GachaBallRare"
+    },
+    "sr": "GachaBG/GachaBall/Gacha/GachaSprite",
+    "gachaAnimator": "GachaBG",
+    "lightEffectMaterial": {
+      "nombre": "GachaLightEffect"
+    },
+    "flashRenderer": "GachaBG/GachaBall/Gacha/LightEffect/Flash (1)",
+    "bounceNum": "0",
+    "gachaFurnToAdd": "0",
+    "tapSounds": [
+      "12",
+      "14"
+    ],
+    "revealSound": "15",
+    "revealSoundRare": "11"
+  },
+  "arbol": {
+    "nombre": "GachaBG",
+    "ruta": "GachaBG",
+    "activo": true,
+    "anclaMin": {
+      "x": 0,
+      "y": 0
+    },
+    "anclaMax": {
+      "x": 1,
+      "y": 1
+    },
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "tam": {
+      "x": 0,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "Image",
+        "sprite": null,
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0.32549
+        },
+        "modo": 0,
+        "rellenaCentro": true,
+        "conservaProporcion": false,
+        "recibeToque": true,
+        "ppuMult": 1
+      },
+      {
+        "tipo": "GachaPopup",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "3",
+          "transitionOutSpeed": "3",
+          "slideTransition": "0",
+          "transitionDistance": "10",
+          "bounceNum": "0",
+          "gachaFurnToAdd": "0",
+          "revealSound": "15",
+          "revealSoundRare": "11"
+        }
+      },
+      {
+        "tipo": "CanvasGroup"
+      },
+      {
+        "tipo": "Animator"
+      },
+      {
+        "tipo": "Button",
+        "activo": true,
+        "transicion": 0
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "GachaBall",
+        "ruta": "GachaBG/GachaBall",
+        "activo": true,
+        "escala": {
+          "x": 140.8451,
+          "y": 140.8451
+        },
+        "comp": [
+          {
+            "tipo": "SortingGroup"
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Gacha",
+            "ruta": "GachaBG/GachaBall/Gacha",
+            "activo": true,
+            "escala": {
+              "x": 2,
+              "y": 2
+            },
+            "angulo": 180,
+            "hijos": [
+              {
+                "nombre": "Flash",
+                "ruta": "GachaBG/GachaBall/Gacha/Flash",
+                "activo": false,
+                "escala": {
+                  "x": 2.25,
+                  "y": 2.25
+                },
+                "angulo": 180,
+                "comp": [
+                  {
+                    "tipo": "SpriteRenderer"
+                  }
+                ]
+              },
+              {
+                "nombre": "FX",
+                "ruta": "GachaBG/GachaBall/Gacha/FX",
+                "activo": false,
+                "angulo": -190,
+                "comp": [
+                  {
+                    "tipo": "SpriteRenderer"
+                  }
+                ]
+              },
+              {
+                "nombre": "Base",
+                "ruta": "GachaBG/GachaBall/Gacha/Base",
+                "activo": true,
+                "comp": [
+                  {
+                    "tipo": "MeshFilter"
+                  },
+                  {
+                    "tipo": "MeshRenderer"
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "BaseO",
+                    "ruta": "GachaBG/GachaBall/Gacha/Base/BaseO",
+                    "activo": true,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Cover",
+                "ruta": "GachaBG/GachaBall/Gacha/Cover",
+                "activo": true,
+                "comp": [
+                  {
+                    "tipo": "MeshFilter"
+                  },
+                  {
+                    "tipo": "MeshRenderer"
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "CoverO",
+                    "ruta": "GachaBG/GachaBall/Gacha/Cover/CoverO",
+                    "activo": true,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "GachaSprite",
+                "ruta": "GachaBG/GachaBall/Gacha/GachaSprite",
+                "activo": true,
+                "escala": {
+                  "x": 0.75,
+                  "y": 0.75
+                },
+                "angulo": -190,
+                "comp": [
+                  {
+                    "tipo": "SpriteRenderer"
+                  }
+                ]
+              },
+              {
+                "nombre": "Quad",
+                "ruta": "GachaBG/GachaBall/Gacha/Quad",
+                "activo": false,
+                "escala": {
+                  "x": 10,
+                  "y": 10
+                },
+                "angulo": 66.158,
+                "comp": [
+                  {
+                    "tipo": "MeshFilter"
+                  },
+                  {
+                    "tipo": "MeshRenderer"
+                  }
+                ]
+              },
+              {
+                "nombre": "LightEffect",
+                "ruta": "GachaBG/GachaBall/Gacha/LightEffect",
+                "activo": false,
+                "angulo": 360,
+                "hijos": [
+                  {
+                    "nombre": "Flash (1)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/Flash (1)",
+                    "activo": false,
+                    "angulo": -116.11,
+                    "comp": [
+                      {
+                        "tipo": "SpriteRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "angulo": -360,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (1)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (1)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (2)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (2)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "angulo": 360,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (3)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (3)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (4)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (4)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "angulo": 360,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (5)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (5)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "angulo": 360,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (6)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (6)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "angulo": -360,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (7)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (7)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "angulo": 360,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (8)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (8)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (9)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (9)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "angulo": 360,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (10)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (10)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "angulo": -360,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  },
+                  {
+                    "nombre": "gachaLine (11)",
+                    "ruta": "GachaBG/GachaBall/Gacha/LightEffect/gachaLine (11)",
+                    "activo": true,
+                    "escala": {
+                      "x": 0,
+                      "y": 1
+                    },
+                    "angulo": -360,
+                    "comp": [
+                      {
+                        "tipo": "MeshFilter"
+                      },
+                      {
+                        "tipo": "MeshRenderer"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nombre": "Quad (1)",
+                "ruta": "GachaBG/GachaBall/Gacha/Quad (1)",
+                "activo": false,
+                "escala": {
+                  "x": 10,
+                  "y": 10
+                },
+                "comp": [
+                  {
+                    "tipo": "MeshFilter"
+                  },
+                  {
+                    "tipo": "MeshRenderer"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "GameObject",
+        "ruta": "GachaBG/GameObject",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 0,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "FixTileRawImage",
+            "campos": {
+              "m_Name": "",
+              "tileScale": "0.84",
+              "texWidth": "256",
+              "texHeight": "256"
+            }
+          }
+        ]
+      },
+      {
+        "nombre": "Sparkles",
+        "ruta": "GachaBG/Sparkles",
+        "activo": false,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 100,
+          "y": 100
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "ParticleSystem"
+          },
+          {
+            "tipo": "ParticleSystemRenderer"
+          }
+        ]
+      }
+    ]
+  }
+}

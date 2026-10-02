@@ -1,0 +1,1326 @@
+{
+  "_fuente": "ExternalInventory de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "ExternalInventory",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": "MiniInventory",
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "MiniInventory",
+    "transitionInSpeed": "1",
+    "transitionOutSpeed": "1",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "inventoryObject": "MiniInventory/Image",
+    "pointer": "MiniInventory/Image/Pointer",
+    "pointerO": "MiniInventory/Image/PointerO",
+    "inventoryIcon": "MiniInventory/IconBacking (1)/Image",
+    "iconBackingO": "MiniInventory/IconBackingO",
+    "iconBacking": "MiniInventory/Image/IconBacking",
+    "iconBackingOuter": "MiniInventory/IconBacking (1)",
+    "scroll": "MiniInventory/Image/Scroll View",
+    "mask": "MiniInventory/Image/Scroll View/Viewport",
+    "animTime": "0",
+    "testSlotCount": "0",
+    "menu": {
+      "sortedPositions": [],
+      "optionPrefab": {
+        "nombre": "GameObject"
+      },
+      "scrollRect": null,
+      "content": "MiniInventory/Image/Scroll View/Viewport/Content"
+    }
+  },
+  "arbol": {
+    "nombre": "MiniInventory",
+    "ruta": "MiniInventory",
+    "activo": true,
+    "anclaMin": {
+      "x": 0,
+      "y": 1
+    },
+    "anclaMax": {
+      "x": 0,
+      "y": 1
+    },
+    "pos": {
+      "x": 0,
+      "y": -524
+    },
+    "tam": {
+      "x": 320,
+      "y": 0
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "ExternalInventory",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "1",
+          "transitionOutSpeed": "1",
+          "slideTransition": "0",
+          "transitionDistance": "10",
+          "animTime": "0",
+          "testSlotCount": "0"
+        }
+      },
+      {
+        "tipo": "CanvasGroup"
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "IconBackingO",
+        "ruta": "MiniInventory/IconBackingO",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 116,
+          "y": 116
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "circle",
+              "rx": 0,
+              "ry": 128,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.497,
+              "py": -0.19396,
+              "ppu": 128,
+              "borde": {
+                "x": 64,
+                "y": 64,
+                "z": 64,
+                "w": 64
+              }
+            },
+            "color": {
+              "r": 0.34118,
+              "g": 0.31373,
+              "b": 0.28235,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          }
+        ]
+      },
+      {
+        "nombre": "Image",
+        "ruta": "MiniInventory/Image",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 50,
+          "y": 50
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "PrimitiveShapes SDF_2",
+              "rx": 0,
+              "ry": 0,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 160,
+              "borde": {
+                "x": 24,
+                "y": 24,
+                "z": 24,
+                "w": 24
+              }
+            },
+            "color": {
+              "r": 0.34118,
+              "g": 0.31373,
+              "b": 0.28235,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "IconBacking",
+            "ruta": "MiniInventory/Image/IconBacking",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": -25
+            },
+            "tam": {
+              "x": 100,
+              "y": 100
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "circle",
+                  "rx": 0,
+                  "ry": 128,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.497,
+                  "py": -0.19396,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 64,
+                    "y": 64,
+                    "z": 64,
+                    "w": 64
+                  }
+                },
+                "color": {
+                  "r": 0.91373,
+                  "g": 0.66275,
+                  "b": 0.39216,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "PointerO",
+            "ruta": "MiniInventory/Image/PointerO",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 40
+            },
+            "tam": {
+              "x": 84,
+              "y": 40
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "PrimitiveRoundDiamonds_4",
+                  "rx": 130.08,
+                  "ry": 3.03,
+                  "rw": 122.85,
+                  "rh": 61.97,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 0.34118,
+                  "g": 0.31373,
+                  "b": 0.28235,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "Backing",
+            "ruta": "MiniInventory/Image/Backing",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": -12,
+              "y": -12
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "PrimitiveShapes SDF_2",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 160,
+                  "borde": {
+                    "x": 24,
+                    "y": 24,
+                    "z": 24,
+                    "w": 24
+                  }
+                },
+                "color": {
+                  "r": 0.91373,
+                  "g": 0.66275,
+                  "b": 0.39216,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "Pointer",
+            "ruta": "MiniInventory/Image/Pointer",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 45
+            },
+            "tam": {
+              "x": 72,
+              "y": 36
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "PrimitiveRoundDiamonds_4",
+                  "rx": 130.08,
+                  "ry": 3.03,
+                  "rw": 122.85,
+                  "rh": 61.97,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 0.91373,
+                  "g": 0.66275,
+                  "b": 0.39216,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "Scroll View",
+            "ruta": "MiniInventory/Image/Scroll View",
+            "activo": false,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "Background",
+                  "rx": 0.03,
+                  "ry": 0.05,
+                  "rw": 31.95,
+                  "rh": 31.9,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 200,
+                  "borde": {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10,
+                    "w": 10
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 0
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "ScrollRect",
+                "campos": {
+                  "m_Name": "",
+                  "m_MovementType": "1",
+                  "m_Elasticity": "0.1",
+                  "m_DecelerationRate": "0.135",
+                  "m_ScrollSensitivity": "1",
+                  "m_HorizontalScrollbarVisibility": "2",
+                  "m_VerticalScrollbarVisibility": "0",
+                  "m_HorizontalScrollbarSpacing": "-3",
+                  "m_VerticalScrollbarSpacing": "-3"
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Viewport",
+                "ruta": "MiniInventory/Image/Scroll View/Viewport",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "RectMask2D",
+                    "campos": {
+                      "m_Name": ""
+                    }
+                  }
+                ],
+                "hijos": [
+                  {
+                    "nombre": "Content",
+                    "ruta": "MiniInventory/Image/Scroll View/Viewport/Content",
+                    "activo": true,
+                    "anclaMin": {
+                      "x": 0.5,
+                      "y": 1
+                    },
+                    "anclaMax": {
+                      "x": 0.5,
+                      "y": 1
+                    },
+                    "pos": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "tam": {
+                      "x": 488,
+                      "y": 24
+                    },
+                    "pivote": {
+                      "x": 0.5,
+                      "y": 1
+                    },
+                    "posLocal": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "comp": [
+                      {
+                        "tipo": "GridLayoutGroup",
+                        "espaciado": {
+                          "x": 16,
+                          "y": 16
+                        },
+                        "alineacion": 4,
+                        "relleno": {
+                          "izq": 20,
+                          "der": 20,
+                          "arr": 20,
+                          "aba": 20
+                        }
+                      },
+                      {
+                        "tipo": "ContentSizeFitter",
+                        "ajusteH": 2,
+                        "ajusteV": 2
+                      }
+                    ],
+                    "hijos": [
+                      {
+                        "nombre": "GameObject",
+                        "ruta": "MiniInventory/Image/Scroll View/Viewport/Content/GameObject",
+                        "activo": false,
+                        "anclaMin": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "anclaMax": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "pos": {
+                          "x": 244,
+                          "y": -70
+                        },
+                        "tam": {
+                          "x": 100,
+                          "y": 100
+                        },
+                        "pivote": {
+                          "x": 0.5,
+                          "y": 0.5
+                        },
+                        "posLocal": {
+                          "x": 0,
+                          "y": 0
+                        },
+                        "comp": [
+                          {
+                            "tipo": "Image",
+                            "sprite": {
+                              "nombre": "circle",
+                              "rx": 0,
+                              "ry": 128,
+                              "rw": 128,
+                              "rh": 128,
+                              "px": 0.497,
+                              "py": -0.19396,
+                              "ppu": 128,
+                              "borde": {
+                                "x": 64,
+                                "y": 64,
+                                "z": 64,
+                                "w": 64
+                              }
+                            },
+                            "color": {
+                              "r": 0.9717,
+                              "g": 0.85921,
+                              "b": 0.73794,
+                              "a": 1
+                            },
+                            "modo": 1,
+                            "rellenaCentro": true,
+                            "conservaProporcion": false,
+                            "recibeToque": true,
+                            "ppuMult": 1
+                          },
+                          {
+                            "tipo": "Button",
+                            "activo": true,
+                            "transicion": 1
+                          }
+                        ],
+                        "hijos": [
+                          {
+                            "nombre": "Icon",
+                            "ruta": "MiniInventory/Image/Scroll View/Viewport/Content/GameObject/Icon",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "anclaMax": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "pos": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "tam": {
+                              "x": 100,
+                              "y": 100
+                            },
+                            "pivote": {
+                              "x": 0.5,
+                              "y": 0.5
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "Image",
+                                "sprite": {
+                                  "nombre": "Bedsheet",
+                                  "rx": 0,
+                                  "ry": 364,
+                                  "rw": 238,
+                                  "rh": 148,
+                                  "px": 0.5,
+                                  "py": 0.5,
+                                  "ppu": 150,
+                                  "borde": {
+                                    "x": 0,
+                                    "y": 0,
+                                    "z": 0,
+                                    "w": 0
+                                  }
+                                },
+                                "color": {
+                                  "r": 1,
+                                  "g": 1,
+                                  "b": 1,
+                                  "a": 1
+                                },
+                                "modo": 0,
+                                "rellenaCentro": true,
+                                "conservaProporcion": true,
+                                "recibeToque": false,
+                                "ppuMult": 1
+                              }
+                            ]
+                          },
+                          {
+                            "nombre": "Image",
+                            "ruta": "MiniInventory/Image/Scroll View/Viewport/Content/GameObject/Image",
+                            "activo": true,
+                            "anclaMin": {
+                              "x": 1,
+                              "y": 0
+                            },
+                            "anclaMax": {
+                              "x": 1,
+                              "y": 0
+                            },
+                            "pos": {
+                              "x": 4,
+                              "y": -4
+                            },
+                            "tam": {
+                              "x": 0,
+                              "y": 30
+                            },
+                            "pivote": {
+                              "x": 1,
+                              "y": 0
+                            },
+                            "posLocal": {
+                              "x": 0,
+                              "y": 0
+                            },
+                            "comp": [
+                              {
+                                "tipo": "Image",
+                                "sprite": {
+                                  "nombre": "circle30px",
+                                  "rx": 1,
+                                  "ry": 65,
+                                  "rw": 30,
+                                  "rh": 30,
+                                  "px": 0.5,
+                                  "py": 0.5,
+                                  "ppu": 128,
+                                  "borde": {
+                                    "x": 15,
+                                    "y": 0,
+                                    "z": 15,
+                                    "w": 0
+                                  }
+                                },
+                                "color": {
+                                  "r": 1,
+                                  "g": 1,
+                                  "b": 1,
+                                  "a": 1
+                                },
+                                "modo": 1,
+                                "rellenaCentro": true,
+                                "conservaProporcion": false,
+                                "recibeToque": false,
+                                "ppuMult": 1
+                              },
+                              {
+                                "tipo": "HorizontalLayoutGroup",
+                                "espaciado": 0,
+                                "alineacion": 0,
+                                "relleno": {
+                                  "izq": 8,
+                                  "der": 8,
+                                  "arr": 0,
+                                  "aba": 0
+                                }
+                              },
+                              {
+                                "tipo": "ContentSizeFitter",
+                                "ajusteH": 2,
+                                "ajusteV": 0
+                              }
+                            ],
+                            "hijos": [
+                              {
+                                "nombre": "Text (TMP)",
+                                "ruta": "MiniInventory/Image/Scroll View/Viewport/Content/GameObject/Image/Text (TMP)",
+                                "activo": true,
+                                "anclaMin": {
+                                  "x": 0,
+                                  "y": 1
+                                },
+                                "anclaMax": {
+                                  "x": 0,
+                                  "y": 1
+                                },
+                                "pos": {
+                                  "x": 15,
+                                  "y": -15
+                                },
+                                "tam": {
+                                  "x": 14,
+                                  "y": 30
+                                },
+                                "pivote": {
+                                  "x": 0.5,
+                                  "y": 0.5
+                                },
+                                "posLocal": {
+                                  "x": 0,
+                                  "y": 0
+                                },
+                                "comp": [
+                                  {
+                                    "tipo": "TextMeshProUGUI",
+                                    "texto": "1",
+                                    "tam": 24,
+                                    "color": {
+                                      "r": 0.40958,
+                                      "g": 0.47437,
+                                      "b": 0.49057,
+                                      "a": 1
+                                    },
+                                    "alineacion": 65535,
+                                    "autoTam": false,
+                                    "tamMin": 18,
+                                    "tamMax": 72,
+                                    "estilo": 0,
+                                    "margen": {
+                                      "x": 0,
+                                      "y": 0,
+                                      "z": 0,
+                                      "w": 0
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nombre": "CustomButton",
+            "ruta": "MiniInventory/Image/CustomButton",
+            "activo": false,
+            "anclaMin": {
+              "x": 1,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 100,
+              "y": 100
+            },
+            "pivote": {
+              "x": 1,
+              "y": 0
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "circle",
+                  "rx": 0,
+                  "ry": 128,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 64,
+                    "y": 64,
+                    "z": 64,
+                    "w": 64
+                  }
+                },
+                "color": {
+                  "r": 0.91509,
+                  "g": 0.66088,
+                  "b": 0.3928,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "Button",
+                "activo": true,
+                "transicion": 1
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Icon",
+                "ruta": "MiniInventory/Image/CustomButton/Icon",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": -16,
+                  "y": -16
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "uiIcons_47",
+                      "rx": 455.03,
+                      "ry": 259.08,
+                      "rw": 49.95,
+                      "rh": 56.85,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 100,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ]
+              },
+              {
+                "nombre": "Highlight",
+                "ruta": "MiniInventory/Image/CustomButton/Highlight",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 2.0001
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "circleO_8px",
+                      "rx": 0,
+                      "ry": 128,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 64,
+                        "y": 64,
+                        "z": 64,
+                        "w": 64
+                      }
+                    },
+                    "color": {
+                      "r": 0,
+                      "g": 0,
+                      "b": 0,
+                      "a": 0.12549
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ]
+              },
+              {
+                "nombre": "Border",
+                "ruta": "MiniInventory/Image/CustomButton/Border",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 1,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 4,
+                  "y": 4
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "circleO_8px",
+                      "rx": 0,
+                      "ry": 128,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 64,
+                        "y": 64,
+                        "z": 64,
+                        "w": 64
+                      }
+                    },
+                    "color": {
+                      "r": 0.33333,
+                      "g": 0.30588,
+                      "b": 0.29412,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "IconBacking (1)",
+        "ruta": "MiniInventory/IconBacking (1)",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 1
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 100,
+          "y": 100
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "circle",
+              "rx": 0,
+              "ry": 128,
+              "rw": 128,
+              "rh": 128,
+              "px": 0.497,
+              "py": -0.19396,
+              "ppu": 128,
+              "borde": {
+                "x": 64,
+                "y": 64,
+                "z": 64,
+                "w": 64
+              }
+            },
+            "color": {
+              "r": 0.91373,
+              "g": 0.66275,
+              "b": 0.39216,
+              "a": 1
+            },
+            "modo": 1,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Image",
+            "ruta": "MiniInventory/IconBacking (1)/Image",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": -0.0002,
+              "y": 0
+            },
+            "tam": {
+              "x": 76,
+              "y": 76
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "escala": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "uiIcons_49",
+                  "rx": 257.01,
+                  "ry": 194.05,
+                  "rw": 60.94,
+                  "rh": 58.92,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -764,7 +764,37 @@ class SaveParser {
     getSavedValues(){ const n=this._rootNode('savedValues'); if(!n) return {}; const dict=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; const out={}; (dict?dict.elements:[]).forEach(e=>{ const k=e.key?e.key.value:e.value?.key; const v=e.value?e.value.value:e.value; if(k!=null) out[k]=v; }); return out; }
     setSavedValue(k,v){ const n=this._rootNode('savedValues'); if(!n) return false; let dict=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; if(!dict) return false; let entry=dict.elements.find(e=>(e.key?e.key.value:e.value?.key)==k); if(entry){ const valNode=entry.value?entry.value:entry; if(valNode.value!==undefined) valNode.value=v|0; else if(entry.value) entry.value.value=v|0; } return !!entry; }
     getPlayerStrings(){ const n=this._rootNode('PlayerStrings')||this._rootNode('playerStrings'); if(!n) return {}; const dict=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; const out={}; (dict?dict.elements:[]).forEach(e=>{ const k=e.key?e.key.value:e.value?.key; const v=e.value?e.value.value:e.value; if(k!=null) out[k]=v; }); return out; }
-    setPlayerString(id,str){ const n=this._rootNode('PlayerStrings')||this._rootNode('playerStrings'); if(!n) return false; return false; }
+    /**
+     * Escribe en `TsukiSave.PlayerStrings` (`Dictionary<int, string>`).
+     *
+     * ERA UN HUECO: devolvia `false` sin escribir nada, y por eso el nombre que se le pone
+     * al geco en «Bobo Gecko Intro» (`TextFieldNode`, clave 0) se perdia.
+     *
+     * Cada entrada es un `OdinDictionaryEntry` con `key` (`OdinPrimitive`) y `value`
+     * (`OdinString`), y el serializador escribe la cadena con SU longitud —marcador 0x27:
+     * nombre, bandera, longitud, y los caracteres en UTF-16—, asi que cambiarla por otra
+     * mas larga o mas corta vale.
+     *
+     * Lo que NO hace es crear una clave que no exista: eso pide fabricar un
+     * `OdinDictionaryEntry` entero y ajustar la cuenta de la lista, y sin un save que lo
+     * enseñe seria inventar. Devuelve `false` y quien llame lo dice.
+     */
+    setPlayerString(id, str) {
+        const n = this._rootNode('PlayerStrings') || this._rootNode('playerStrings');
+        if (!n) return false;
+        const lista = n.children ? n.children.find(c => c.constructor.name === 'OdinList') : null;
+        if (!lista || !lista.elements) return false;
+        const clave = Number(id);
+        for (const e of lista.elements) {
+            const k = e && e.key ? e.key.value : (e && e.value ? e.value.key : undefined);
+            if (Number(k) !== clave) continue;
+            const v = e.value;
+            if (!v || v.constructor.name !== 'OdinString') return false;
+            v.value = String(str == null ? '' : str);
+            return true;
+        }
+        return false;
+    }
     getCollection(){ const n=this._rootNode('collection'); if(!n) return []; const list=n.children? n.children.find(c=>c.constructor.name==='OdinList' || c.elements):n; const els=list? (list.elements||[]):[]; return els.map(e=>e.value??e); }
     getApartmentSaves(){ const n=this._rootNode('apartmentSaves'); if(!n||n.constructor.name==='OdinNull') return []; const list=n.children? n.children.find(c=>c.constructor.name==='OdinList'):null; return list? list.elements:[]; }
     getSettings(){ const keys=['conserveBattery','reduceMotion','hapticsEnabled','forceMusic','bypassBackup','cloudDisabled']; const out={}; keys.forEach(k=>{ const n=this._rootNode(k); if(n) out[k]=!!n.value; }); return out; }
@@ -2473,6 +2503,99 @@ class SaveParser {
         return false;
     }
 
+    /**
+     * El resto de `PhoneSave`, que `getPhoneCosmetics` no leia.
+     *
+     *     public class PhoneSave {
+     *         public int skinID, bgPatternID, bgColorID;      // <- eso ya se leia
+     *         public float bgScrollX, bgScrollY;              // el patron se DESPLAZA
+     *         public int tiltFactor;                          // cuanto se inclina
+     *         public bool disableSFX, spoilerTag;
+     *         public int[] appLayout;                         // el orden de la rejilla
+     *         public long backgroundsUnlocked, colorsUnlocked, newBackgrounds, newColors;
+     *     }
+     *
+     * Comprobado abriendo el `.csave` del usuario, no leyendo `dump.cs`: ahi estan los
+     * trece campos con esos nombres exactos. Devuelve tambien los NODOS, porque la app de
+     * ajustes del telefono escribe en ellos.
+     */
+    getPhoneSettings() {
+        if (!this.ast) return null;
+        const phoneSave = findChildRecursive(this.ast, ['phoneSave', 'PhoneSave']);
+        if (!phoneSave) return null;
+        const n = (...alias) => findChildRecursive(phoneSave, alias) || null;
+        const nodos = {
+            bgScrollX: n('bgScrollX', 'BgScrollX'),
+            bgScrollY: n('bgScrollY', 'BgScrollY'),
+            tiltFactor: n('tiltFactor', 'TiltFactor'),
+            disableSFX: n('disableSFX', 'DisableSFX'),
+            spoilerTag: n('spoilerTag', 'SpoilerTag'),
+            skinID: n('skinID', 'SkinID'),
+        };
+        const v = (k, d) => (nodos[k] && nodos[k].value !== undefined ? nodos[k].value : d);
+        return {
+            nodos,
+            bgScrollX: Number(v('bgScrollX', 0)),
+            bgScrollY: Number(v('bgScrollY', 0)),
+            tiltFactor: Number(v('tiltFactor', 0)),
+            disableSFX: !!v('disableSFX', false),
+            spoilerTag: !!v('spoilerTag', false),
+            skinID: Number(v('skinID', -1)),
+        };
+    }
+
+    /**
+     * `PhoneSave.appLayout`: en que orden estan las seis apps en la rejilla.
+     *
+     * En el save es un `OdinPrimitiveArray`, no una lista de nodos, asi que hay que mirar
+     * `elements` Y el array crudo. Si viene vacio -que es lo normal hasta que el jugador
+     * mueve una app- se devuelve `null` y el telefono usa el orden de la escena.
+     */
+    getPhoneAppLayout() {
+        if (!this.ast) return null;
+        const phoneSave = findChildRecursive(this.ast, ['phoneSave', 'PhoneSave']);
+        if (!phoneSave) return null;
+        const nodo = findChildRecursive(phoneSave, ['appLayout', 'AppLayout']);
+        if (!nodo) return null;
+
+        const saca = (x) => {
+            if (!x) return null;
+            if (Array.isArray(x.values)) return x.values.map(Number);
+            if (Array.isArray(x.elements)) {
+                return x.elements.map(e => {
+                    const v = (e && e.value !== undefined) ? e.value : e;
+                    return Number(v && v.value !== undefined ? v.value : v);
+                });
+            }
+            return null;
+        };
+        let l = saca(nodo);
+        if (!l) {
+            for (const h of (nodo.children || [])) {
+                l = saca(h);
+                if (l) break;
+            }
+        }
+        if (!l) return null;
+        l = l.filter(x => Number.isFinite(x));
+        return l.length ? l : null;
+    }
+
+    /** Escribe el orden de las apps. Solo si el save ya traia el array. */
+    setPhoneAppLayout(orden) {
+        if (!this.ast || !Array.isArray(orden)) return false;
+        const phoneSave = findChildRecursive(this.ast, ['phoneSave', 'PhoneSave']);
+        if (!phoneSave) return false;
+        const nodo = findChildRecursive(phoneSave, ['appLayout', 'AppLayout']);
+        if (!nodo) return false;
+        const destino = Array.isArray(nodo.values) ? nodo
+            : (nodo.children || []).find(h => Array.isArray(h.values));
+        if (!destino) return false;
+        destino.values = orden.map(x => Number(x) | 0);
+        if (destino.length !== undefined) destino.length = destino.values.length;
+        return true;
+    }
+
     unlockAllPhoneBackgrounds() {
         let cos = this.getPhoneCosmetics();
         if (!cos || !cos.nodes.backgroundsUnlockedNode) return false;
@@ -2950,9 +3073,17 @@ class SaveParser {
                 }
             }
             
+            // `Letter.scriptedNum` y `codeText`: cual de las cartas con guion es.
+            // `Letter.IsScripted(int)` compara contra este numero, y es lo que ata la
+            // carta de la partida con su texto en `data/letters.json`.
+            const scriptedNode = findChildRecursive(val, ['scriptedNum', 'ScriptedNum']);
+            const codeNode = findChildRecursive(val, ['codeText', 'CodeText']);
+
             results.push({
                 index,
                 type: tn,
+                scriptedNum: scriptedNode ? scriptedNode.value : undefined,
+                codeText: codeNode ? codeNode.value : undefined,
                 read: readNode ? readNode.value : false,
       opened: openedNode ? openedNode.value : false,
       openedNode: openedNode,
@@ -3525,6 +3656,52 @@ class SaveParser {
         }
         return { carrots: carrotsClaimed, itemsCount: itemsClaimed };
     }
+    /**
+     * Cuelga una semilla de su parcela.
+     *
+     * El enlace es `parentPlacementID` en el nodo del mueble, y las coordenadas de la
+     * semilla son LOCALES al padre: `parseMap` hace `p.x = padre.x + localX`. Asi que la
+     * semilla va en (0,0) y la posicion se la da la parcela.
+     *
+     * Es lo que hace falta para sembrar: sin esto la semilla existe pero no se ve, porque
+     * `getCropStatus` no la encuentra desde la parcela.
+     */
+    setSeedParent(seed, plot) {
+        if (!seed || !plot || !seed.furnNode) return false;
+
+        // LA FORMA DE UNA SEMILLA, mirada en el arbol de un save:
+        //
+        //     FurniturePlacement
+        //       placementID  verificationID
+        //       reference       { id, orientation }
+        //       groupPosition : SubGroupPosition { grid {x,y}, parentPlacementID }  <- aqui
+        //       position      : GridPointer      { pointerType, grid {x,y}, groupPointer }
+        //       furnSave      : CropSave         { placedOA, harvestTimeOA, ... }
+        //
+        // El enlace es `groupPosition.parentPlacementID`, y `groupPosition` es un
+        // **`SubGroupPosition`**, no el `GridGroupPosition` de un mueble corriente. El
+        // `position.groupPointer` es OTRA cosa — lo de un mueble encima de otro — y
+        // escribir ahi no engancha nada: la semilla existia y la parcela seguia vacia.
+        const gp = seed.furnNode.children
+            ? seed.furnNode.children.find(c => c.name === 'groupPosition') : null;
+        if (!gp) return false;
+        const padre = findChildRecursive(gp, ['parentPlacementID', 'ParentPlacementID']);
+        if (!padre) return false;
+        padre.value = Number(plot.placementID);
+
+        // Y las coordenadas son LOCALES al padre: `parseMap` hace `p.x = padre.x + localX`.
+        const pos = seed.furnNode.children
+            ? seed.furnNode.children.find(c => c.name === 'position') : null;
+        const rej = pos ? pos.children.find(c => c.name === 'grid') : null;
+        if (rej && rej.children) {
+            for (const c of rej.children) if (c.name === 'x' || c.name === 'y') c.value = 0;
+        }
+        seed.x = plot.x;
+        seed.y = plot.y;
+        seed.linkedParent = plot;
+        return true;
+    }
+
     removePlacement(placement) {
         if (!placement) return false;
         try {

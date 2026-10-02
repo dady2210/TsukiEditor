@@ -1,0 +1,2292 @@
+{
+  "_fuente": "BountyBoard de level8 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "BountyBoard",
+  "nivel": "level8",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": null,
+    "handler": null,
+    "blocker": null,
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "BountyBoard",
+    "transitionInSpeed": "2",
+    "transitionOutSpeed": "2",
+    "slideTransition": "1",
+    "transitionDistance": "100",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "bounties": [
+      "BountyBoard/BountyPoster",
+      "BountyBoard/BountyPoster (1)",
+      "BountyBoard/BountyPoster (2)"
+    ],
+    "natto": "BountyBoard/Natto/Image",
+    "stamp": {
+      "stampTransform": "BountyBoard/Stamp",
+      "stamp": "BountyBoard/Stamp/StampSprite",
+      "shadow": "BountyBoard/Stamp/Shadow",
+      "stampAnim": [
+        {
+          "nombre": "boardExtras_7",
+          "rx": 537,
+          "ry": 767,
+          "rw": 278,
+          "rh": 230,
+          "px": 0.60176,
+          "py": 0.44936,
+          "ppu": 128,
+          "borde": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 0
+          }
+        },
+        {
+          "nombre": "boardExtras_6",
+          "rx": 783,
+          "ry": 559,
+          "rw": 224,
+          "rh": 250,
+          "px": 0.51499,
+          "py": 0.41942,
+          "ppu": 128,
+          "borde": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 0
+          }
+        }
+      ],
+      "stampParticles": "BountyBoard/Stamp/Particle System"
+    },
+    "newspaper": {
+      "eventPic": "BountyBoard/Newspaper/GameObject/SquareImage",
+      "eventPicHorizontal": "BountyBoard/Newspaper/HorizontalImage",
+      "eventPicVertical": "BountyBoard/Newspaper/GameObject/VerticalImage",
+      "headline": "BountyBoard/Newspaper/GameObject/Headline"
+    },
+    "legendaryPaper": {
+      "nombre": "boardExtras_0",
+      "rx": 12,
+      "ry": 20,
+      "rw": 255,
+      "rh": 346,
+      "px": 0.5,
+      "py": 0.5,
+      "ppu": 128,
+      "borde": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 0
+      }
+    },
+    "normalPaper": {
+      "nombre": "boardExtras_3",
+      "rx": 4,
+      "ry": 675,
+      "rw": 255,
+      "rh": 346,
+      "px": 0.5,
+      "py": 0.5,
+      "ppu": 128,
+      "borde": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 0
+      }
+    },
+    "homecomingButton": "BountyBoard/GameObject/Button",
+    "nextEventSticker": "BountyBoard/GameObject/Button/Next",
+    "homecomingSticker": {
+      "nombre": "boardExtras_1",
+      "rx": 401,
+      "ry": 21.03,
+      "rw": 211,
+      "rh": 211.97,
+      "px": 0.5,
+      "py": 0.5,
+      "ppu": 128,
+      "borde": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 0
+      }
+    },
+    "timeLeft": "BountyBoard/GameObject/Button/Time",
+    "nextEvent": {
+      "ID": "",
+      "FORMAT": "",
+      "EN": "Next:",
+      "SP": "",
+      "FR": "",
+      "ptBR": "",
+      "RU": "",
+      "CNSimplified": "",
+      "CNTaiwan": "",
+      "JPN": "",
+      "GER": "",
+      "ITA": "",
+      "KOR": "",
+      "THAI": "",
+      "MY": "",
+      "VN": ""
+    },
+    "endsIn": {
+      "ID": "",
+      "FORMAT": "",
+      "EN": "Ends:",
+      "SP": "",
+      "FR": "",
+      "ptBR": "",
+      "RU": "",
+      "CNSimplified": "",
+      "CNTaiwan": "",
+      "JPN": "",
+      "GER": "",
+      "ITA": "",
+      "KOR": "",
+      "THAI": "",
+      "MY": "",
+      "VN": ""
+    }
+  },
+  "arbol": {
+    "nombre": "BountyBoard",
+    "ruta": "BountyBoard",
+    "activo": true,
+    "anclaMin": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "anclaMax": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "tam": {
+      "x": 0,
+      "y": 1125
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "BountyBoard",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "2",
+          "transitionOutSpeed": "2",
+          "slideTransition": "1",
+          "transitionDistance": "100"
+        }
+      },
+      {
+        "tipo": "CanvasGroup"
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "BoardBottom",
+        "ruta": "BountyBoard/BoardBottom",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0
+        },
+        "pos": {
+          "x": 0.0001,
+          "y": 0
+        },
+        "tam": {
+          "x": 880,
+          "y": 771
+        },
+        "pivote": {
+          "x": 0,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "angulo": 90,
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "bountyBoard_0",
+              "rx": 0,
+              "ry": 253,
+              "rw": 880,
+              "rh": 771,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          }
+        ]
+      },
+      {
+        "nombre": "BoardTop",
+        "ruta": "BountyBoard/BoardTop",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 1
+        },
+        "pos": {
+          "x": 0.5,
+          "y": 0
+        },
+        "tam": {
+          "x": 770,
+          "y": 246
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "angulo": 180,
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "bountyBoard_1",
+              "rx": 56,
+              "ry": 6,
+              "rw": 769.92,
+              "rh": 246,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          }
+        ]
+      },
+      {
+        "nombre": "Image (2)",
+        "ruta": "BountyBoard/Image (2)",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0
+        },
+        "pos": {
+          "x": -373.8,
+          "y": 108.9
+        },
+        "tam": {
+          "x": 44,
+          "y": 59
+        },
+        "pivote": {
+          "x": 0,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "angulo": 90,
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "bountyBoard_2",
+              "rx": 11,
+              "ry": 582,
+              "rw": 44,
+              "rh": 59,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          }
+        ]
+      },
+      {
+        "nombre": "Natto",
+        "ruta": "BountyBoard/Natto",
+        "activo": true,
+        "anclaMin": {
+          "x": 1,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 0
+        },
+        "pos": {
+          "x": 364,
+          "y": 90.9999
+        },
+        "tam": {
+          "x": 401,
+          "y": 193
+        },
+        "pivote": {
+          "x": 1,
+          "y": 0
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "nattoBacking_0",
+              "rx": 3,
+              "ry": 8,
+              "rw": 401,
+              "rh": 193,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Image",
+            "ruta": "BountyBoard/Natto/Image",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 343,
+              "y": 154
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": null,
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "BountyPoster",
+        "ruta": "BountyBoard/BountyPoster",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 200,
+          "y": 232
+        },
+        "tam": {
+          "x": 255,
+          "y": 346
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "boardExtras_3",
+              "rx": 4,
+              "ry": 675,
+              "rw": 255,
+              "rh": 346,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "Button",
+            "activo": false,
+            "transicion": 1
+          },
+          {
+            "tipo": "Bounty",
+            "campos": {
+              "m_Name": "",
+              "fishID": "0"
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "FishName",
+            "ruta": "BountyBoard/BountyPoster/FishName",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -50
+            },
+            "tam": {
+              "x": -64,
+              "y": 60
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "Guppy",
+                "tam": 32,
+                "color": {
+                  "r": 0.3098,
+                  "g": 0.3098,
+                  "b": 0.3098,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": true,
+                "tamMin": 24,
+                "tamMax": 32,
+                "estilo": 0,
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Icon",
+            "ruta": "BountyBoard/BountyPoster/Icon",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 218.4534,
+              "y": 218.4534
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "escala": {
+              "x": 1.1,
+              "y": 1.1
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": null,
+                "color": {
+                  "r": 0.3098,
+                  "g": 0.3098,
+                  "b": 0.3098,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "UIEffect",
+                "campos": {
+                  "m_Name": "",
+                  "m_Version": "300",
+                  "m_EffectFactor": "0",
+                  "m_ColorFactor": "0",
+                  "m_BlurFactor": "0",
+                  "m_EffectMode": "1",
+                  "m_ColorMode": "1",
+                  "m_BlurMode": "1",
+                  "m_ShadowBlur": "1",
+                  "m_ShadowStyle": "0"
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Value",
+            "ruta": "BountyBoard/BountyPoster/Value",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 32
+            },
+            "tam": {
+              "x": 147.8,
+              "y": 48
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "\u003Csprite index=43 tint=1\u003E1000",
+                "tam": 32,
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 18,
+                "tamMax": 72,
+                "estilo": 0,
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Claimed",
+            "ruta": "BountyBoard/BountyPoster/Claimed",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 225,
+              "y": 225
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "boardExtras_8",
+                  "rx": 544,
+                  "ry": 462,
+                  "rw": 170,
+                  "rh": 188,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "BountyPoster (1)",
+        "ruta": "BountyBoard/BountyPoster (1)",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 200,
+          "y": -118.7
+        },
+        "tam": {
+          "x": 255,
+          "y": 346
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "boardExtras_3",
+              "rx": 4,
+              "ry": 675,
+              "rw": 255,
+              "rh": 346,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "Button",
+            "activo": false,
+            "transicion": 1
+          },
+          {
+            "tipo": "Bounty",
+            "campos": {
+              "m_Name": "",
+              "fishID": "0"
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "FishName",
+            "ruta": "BountyBoard/BountyPoster (1)/FishName",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -50
+            },
+            "tam": {
+              "x": -64,
+              "y": 60
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "Guppy",
+                "tam": 32,
+                "color": {
+                  "r": 0.3098,
+                  "g": 0.3098,
+                  "b": 0.3098,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": true,
+                "tamMin": 24,
+                "tamMax": 32,
+                "estilo": 0,
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Icon",
+            "ruta": "BountyBoard/BountyPoster (1)/Icon",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 218.4534,
+              "y": 218.4534
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "escala": {
+              "x": 1.1,
+              "y": 1.1
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": null,
+                "color": {
+                  "r": 0.3098,
+                  "g": 0.3098,
+                  "b": 0.3098,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "UIEffect",
+                "campos": {
+                  "m_Name": "",
+                  "m_Version": "300",
+                  "m_EffectFactor": "0",
+                  "m_ColorFactor": "0",
+                  "m_BlurFactor": "0",
+                  "m_EffectMode": "1",
+                  "m_ColorMode": "1",
+                  "m_BlurMode": "1",
+                  "m_ShadowBlur": "1",
+                  "m_ShadowStyle": "0"
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Value",
+            "ruta": "BountyBoard/BountyPoster (1)/Value",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 32
+            },
+            "tam": {
+              "x": 147.8,
+              "y": 48
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "\u003Csprite index=43 tint=1\u003E1000",
+                "tam": 32,
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 18,
+                "tamMax": 72,
+                "estilo": 0,
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Claimed",
+            "ruta": "BountyBoard/BountyPoster (1)/Claimed",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 225,
+              "y": 225
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "boardExtras_8",
+                  "rx": 544,
+                  "ry": 462,
+                  "rw": 170,
+                  "rh": 188,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "BountyPoster (2)",
+        "ruta": "BountyBoard/BountyPoster (2)",
+        "activo": true,
+        "anclaMin": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "pos": {
+          "x": -78.8,
+          "y": 98.8
+        },
+        "tam": {
+          "x": 255,
+          "y": 346
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": {
+              "nombre": "boardExtras_3",
+              "rx": 4,
+              "ry": 675,
+              "rw": 255,
+              "rh": 346,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 128,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "Button",
+            "activo": false,
+            "transicion": 1
+          },
+          {
+            "tipo": "Bounty",
+            "campos": {
+              "m_Name": "",
+              "fishID": "0"
+            }
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "FishName",
+            "ruta": "BountyBoard/BountyPoster (2)/FishName",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": -50
+            },
+            "tam": {
+              "x": -64,
+              "y": 60
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "Guppy",
+                "tam": 32,
+                "color": {
+                  "r": 0.3098,
+                  "g": 0.3098,
+                  "b": 0.3098,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": true,
+                "tamMin": 24,
+                "tamMax": 32,
+                "estilo": 0,
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Icon",
+            "ruta": "BountyBoard/BountyPoster (2)/Icon",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 218.4534,
+              "y": 218.4534
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "escala": {
+              "x": 1.1,
+              "y": 1.1
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": null,
+                "color": {
+                  "r": 0.3098,
+                  "g": 0.3098,
+                  "b": 0.3098,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "UIEffect",
+                "campos": {
+                  "m_Name": "",
+                  "m_Version": "300",
+                  "m_EffectFactor": "0",
+                  "m_ColorFactor": "0",
+                  "m_BlurFactor": "0",
+                  "m_EffectMode": "1",
+                  "m_ColorMode": "1",
+                  "m_BlurMode": "1",
+                  "m_ShadowBlur": "1",
+                  "m_ShadowStyle": "0"
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Value",
+            "ruta": "BountyBoard/BountyPoster (2)/Value",
+            "activo": true,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 32
+            },
+            "tam": {
+              "x": 147.8,
+              "y": 48
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "\u003Csprite index=43 tint=1\u003E1000",
+                "tam": 32,
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 18,
+                "tamMax": 72,
+                "estilo": 0,
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Claimed",
+            "ruta": "BountyBoard/BountyPoster (2)/Claimed",
+            "activo": false,
+            "anclaMin": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "anclaMax": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 225,
+              "y": 225
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "boardExtras_8",
+                  "rx": 544,
+                  "ry": 462,
+                  "rw": 170,
+                  "rh": 188,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Newspaper",
+        "ruta": "BountyBoard/Newspaper",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 0,
+          "y": 0
+        },
+        "pos": {
+          "x": -329.8,
+          "y": 94
+        },
+        "tam": {
+          "x": 766.8,
+          "y": 0
+        },
+        "pivote": {
+          "x": 0,
+          "y": 0
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "escala": {
+          "x": 0.38,
+          "y": 0.38
+        },
+        "comp": [
+          {
+            "tipo": "ContentSizeFitter",
+            "ajusteH": 0,
+            "ajusteV": 2
+          },
+          {
+            "tipo": "VerticalLayoutGroup",
+            "espaciado": 16,
+            "alineacion": 0,
+            "relleno": {
+              "izq": 16,
+              "der": 16,
+              "arr": 27,
+              "aba": 65
+            }
+          },
+          {
+            "tipo": "Button",
+            "activo": true,
+            "transicion": 1
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Backing",
+            "ruta": "BountyBoard/Newspaper/Backing",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 1,
+              "y": 1
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 84,
+              "y": 84
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "newspaperBacking",
+                  "rx": 0,
+                  "ry": 1.08,
+                  "rw": 256,
+                  "rh": 253.85,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 64,
+                  "borde": {
+                    "x": 32,
+                    "y": 49,
+                    "z": 32,
+                    "w": 121
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": true,
+                "ppuMult": 0.75
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": -1,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "The Daily Carrot",
+            "ruta": "BountyBoard/Newspaper/The Daily Carrot",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "\u003Csize=120\u003ET\u003C/size\u003EHE \u003Csize=120\u003ED\u003C/size\u003EAILY \u003Csize=120\u003EC\u003C/size\u003EARROT",
+                "tam": 96,
+                "color": {
+                  "r": 0.30196,
+                  "g": 0.30196,
+                  "b": 0.30196,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 18,
+                "tamMax": 72,
+                "estilo": 0,
+                "fuente": "euphorigenic SDF",
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              }
+            ]
+          },
+          {
+            "nombre": "Line",
+            "ruta": "BountyBoard/Newspaper/Line",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "roundedRect_4px",
+                  "rx": 74,
+                  "ry": 1,
+                  "rw": 9,
+                  "rh": 9,
+                  "px": 0,
+                  "py": 0,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 4,
+                    "y": 4,
+                    "z": 4,
+                    "w": 4
+                  }
+                },
+                "color": {
+                  "r": 0.3098,
+                  "g": 0.3098,
+                  "b": 0.3098,
+                  "a": 1
+                },
+                "modo": 1,
+                "rellenaCentro": true,
+                "conservaProporcion": false,
+                "recibeToque": false,
+                "ppuMult": 1
+              }
+            ]
+          },
+          {
+            "nombre": "HorizontalImage",
+            "ruta": "BountyBoard/Newspaper/HorizontalImage",
+            "activo": false,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 383.4,
+              "y": -211.01
+            },
+            "tam": {
+              "x": 734.8,
+              "y": 300
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "yorishopopen",
+                  "rx": 0,
+                  "ry": 0,
+                  "rw": 128,
+                  "rh": 128,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 100,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": false,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "LayoutElement",
+                "MinWidth": -1,
+                "MinHeight": 300,
+                "PreferredWidth": -1,
+                "PreferredHeight": -1,
+                "FlexibleWidth": -1,
+                "FlexibleHeight": -1
+              }
+            ]
+          },
+          {
+            "nombre": "GameObject",
+            "ruta": "BountyBoard/Newspaper/GameObject",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 0
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 0
+            },
+            "pos": {
+              "x": 0,
+              "y": 0
+            },
+            "tam": {
+              "x": 0,
+              "y": 0
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "HorizontalLayoutGroup",
+                "espaciado": 8,
+                "alineacion": 4,
+                "relleno": {
+                  "izq": 0,
+                  "der": 0,
+                  "arr": 0,
+                  "aba": 0
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "VerticalImage",
+                "ruta": "BountyBoard/Newspaper/GameObject/VerticalImage",
+                "activo": false,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 1
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 1
+                },
+                "pos": {
+                  "x": 150,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 300,
+                  "y": 600
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": null,
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": true,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": 300,
+                    "MinHeight": 600,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": -1,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ]
+              },
+              {
+                "nombre": "SquareImage",
+                "ruta": "BountyBoard/Newspaper/GameObject/SquareImage",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "robbery",
+                      "rx": 0,
+                      "ry": 0,
+                      "rw": 128,
+                      "rh": 128,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 100,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": true,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": 300,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": -1,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ]
+              },
+              {
+                "nombre": "Headline",
+                "ruta": "BountyBoard/Newspaper/GameObject/Headline",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tam": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "Robbery In Mushroom Village!",
+                    "tam": 71.75,
+                    "color": {
+                      "r": 0.30196,
+                      "g": 0.30196,
+                      "b": 0.30196,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": true,
+                    "tamMin": 18,
+                    "tamMax": 72,
+                    "estilo": 0,
+                    "fuente": "Vollkorn-Medium SDF",
+                    "margen": {
+                      "x": 8,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  },
+                  {
+                    "tipo": "LayoutElement",
+                    "MinWidth": 426,
+                    "MinHeight": -1,
+                    "PreferredWidth": -1,
+                    "PreferredHeight": 300,
+                    "FlexibleWidth": -1,
+                    "FlexibleHeight": -1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "Stamp",
+        "ruta": "BountyBoard/Stamp",
+        "activo": false,
+        "escala": {
+          "x": 128,
+          "y": 128
+        },
+        "hijos": [
+          {
+            "nombre": "StampSprite",
+            "ruta": "BountyBoard/Stamp/StampSprite",
+            "activo": true,
+            "comp": [
+              {
+                "tipo": "SpriteRenderer"
+              }
+            ]
+          },
+          {
+            "nombre": "Particle System",
+            "ruta": "BountyBoard/Stamp/Particle System",
+            "activo": true,
+            "comp": [
+              {
+                "tipo": "ParticleSystem"
+              },
+              {
+                "tipo": "ParticleSystemRenderer"
+              }
+            ]
+          },
+          {
+            "nombre": "Shadow",
+            "ruta": "BountyBoard/Stamp/Shadow",
+            "activo": true,
+            "escala": {
+              "x": 1.5,
+              "y": 1.5
+            },
+            "comp": [
+              {
+                "tipo": "SpriteRenderer"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "nombre": "GameObject",
+        "ruta": "BountyBoard/GameObject",
+        "activo": true,
+        "anclaMin": {
+          "x": 0,
+          "y": 1
+        },
+        "anclaMax": {
+          "x": 0,
+          "y": 1
+        },
+        "pos": {
+          "x": -324.5,
+          "y": -56.7
+        },
+        "tam": {
+          "x": 100,
+          "y": 100
+        },
+        "pivote": {
+          "x": 0,
+          "y": 1
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "hijos": [
+          {
+            "nombre": "Button",
+            "ruta": "BountyBoard/GameObject/Button",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 114.3999,
+              "y": -118.6002
+            },
+            "tam": {
+              "x": 211,
+              "y": 213
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 0.5
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "Image",
+                "sprite": {
+                  "nombre": "boardExtras_1",
+                  "rx": 401,
+                  "ry": 21.03,
+                  "rw": 211,
+                  "rh": 211.97,
+                  "px": 0.5,
+                  "py": 0.5,
+                  "ppu": 128,
+                  "borde": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0,
+                    "w": 0
+                  }
+                },
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "modo": 0,
+                "rellenaCentro": true,
+                "conservaProporcion": true,
+                "recibeToque": true,
+                "ppuMult": 1
+              },
+              {
+                "tipo": "Button",
+                "activo": true,
+                "transicion": 1
+              },
+              {
+                "tipo": "UIShiny",
+                "campos": {
+                  "m_Name": "",
+                  "m_Version": "300",
+                  "m_EffectFactor": "0",
+                  "m_Width": "0.367",
+                  "m_Rotation": "-37",
+                  "m_Softness": "1",
+                  "m_Brightness": "0.186",
+                  "m_Gloss": "0.558",
+                  "m_Polychrome": "0",
+                  "m_EffectArea": "0",
+                  "m_Duration": "1",
+                  "m_LoopDelay": "1",
+                  "m_UpdateMode": "0"
+                }
+              }
+            ],
+            "hijos": [
+              {
+                "nombre": "Time",
+                "ruta": "BountyBoard/GameObject/Button/Time",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "anclaMax": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "pos": {
+                  "x": 179.9,
+                  "y": -91.9
+                },
+                "tam": {
+                  "x": 200,
+                  "y": 46
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "comp": [
+                  {
+                    "tipo": "TextMeshProUGUI",
+                    "texto": "",
+                    "tam": 18,
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "alineacion": 65535,
+                    "autoTam": true,
+                    "tamMin": 18,
+                    "tamMax": 24,
+                    "estilo": 0,
+                    "margen": {
+                      "x": 0,
+                      "y": 0,
+                      "z": 0,
+                      "w": 0
+                    }
+                  }
+                ]
+              },
+              {
+                "nombre": "Next",
+                "ruta": "BountyBoard/GameObject/Button/Next",
+                "activo": true,
+                "anclaMin": {
+                  "x": 0,
+                  "y": 0
+                },
+                "anclaMax": {
+                  "x": 0,
+                  "y": 0
+                },
+                "pos": {
+                  "x": 49.22,
+                  "y": 10
+                },
+                "tam": {
+                  "x": 211,
+                  "y": 213
+                },
+                "pivote": {
+                  "x": 0.5,
+                  "y": 1
+                },
+                "posLocal": {
+                  "x": 0,
+                  "y": 0
+                },
+                "escala": {
+                  "x": 0.5,
+                  "y": 0.5
+                },
+                "comp": [
+                  {
+                    "tipo": "Image",
+                    "sprite": {
+                      "nombre": "boardExtras_1",
+                      "rx": 401,
+                      "ry": 21.03,
+                      "rw": 211,
+                      "rh": 211.97,
+                      "px": 0.5,
+                      "py": 0.5,
+                      "ppu": 128,
+                      "borde": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0,
+                        "w": 0
+                      }
+                    },
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    },
+                    "modo": 0,
+                    "rellenaCentro": true,
+                    "conservaProporcion": false,
+                    "recibeToque": false,
+                    "ppuMult": 1
+                  },
+                  {
+                    "tipo": "Outline",
+                    "campos": {
+                      "m_Name": ""
+                    }
+                  },
+                  {
+                    "tipo": "Button",
+                    "activo": true,
+                    "transicion": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

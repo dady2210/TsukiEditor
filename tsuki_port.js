@@ -295,6 +295,8 @@ class TsukiPort {
     }
 
     closeSettingsModal() {
+        // `SFXClip.SettingsButtonClose`.
+        if (window.PlaySfx) window.PlaySfx.sonar('settingsButtonClose');
         if (!this.settingsModal) return;
         this.settingsModal.classList.add('hidden');
         if (this.btnSettings) this.btnSettings.classList.remove('active');
@@ -430,6 +432,8 @@ class TsukiPort {
     
 
     enterBagMode() {
+        // `SFXClip.BagOpen`.
+        if (window.PlaySfx) window.PlaySfx.sonar('bagOpen');
         // if (this.bottomBar) this.bottomBar.style.display = 'none';
         if (this.bagUI) this.bagUI.classList.add('active-ui');
         if (this.btnBagExit) this.btnBagExit.style.display = 'none';
@@ -437,6 +441,8 @@ class TsukiPort {
     }
     
     exitBagMode() {
+        // `SFXClip.BagClose`.
+        if (window.PlaySfx) window.PlaySfx.sonar('bagClose');
         if (this.bagUI) this.bagUI.classList.remove('active-ui');
         if (document.body.classList.contains('play-mode') && !this.isHammerMode) {
             if (this.bottomBar) this.bottomBar.style.display = 'flex';
@@ -527,6 +533,8 @@ class TsukiPort {
     
     enterHammerMode() {
         this.closeSettingsModal();
+        // `SFXClip.EditButtonOpen`: entrar en el modo de editar.
+        if (window.PlaySfx) window.PlaySfx.sonar('editButtonOpen');
         this.isHammerMode = true;
         if (this.bottomBar) this.bottomBar.style.display = 'none';
         this.hammerUI.classList.add('active-ui');
@@ -542,6 +550,8 @@ class TsukiPort {
     }
     
     exitHammerMode() {
+        // `SFXClip.EditButtonClose`.
+        if (window.PlaySfx) window.PlaySfx.sonar('editButtonClose');
         this.isHammerMode = false;
         if (this.hammerUI) this.hammerUI.classList.remove('active-ui');
         if (document.body.classList.contains('play-mode')) {

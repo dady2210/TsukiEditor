@@ -1,0 +1,860 @@
+{
+  "_fuente": "BlurbPopup de level14 (AssetsTools.NET \u002B Cpp2IL)",
+  "_nota": "Medidas de RectTransform: anclas y pivote normalizados, \u0060pos\u0060 es \u0060anchoredPosition\u0060 y \u0060tam\u0060 es \u0060sizeDelta\u0060. En \u0060Image\u0060, \u0060modo\u0060 es 0 Simple, 1 Sliced, 2 Tiled, 3 Filled, y \u0060borde\u0060 son las 9 rebanadas. En los textos, \u0060alineacion\u0060 es el enum de TMP.",
+  "clase": "BlurbPopup",
+  "nivel": "level14",
+  "campos": {
+    "m_Name": "",
+    "cachedPosition": {
+      "x": "0",
+      "y": "0"
+    },
+    "transform": "BlurbUI",
+    "handler": {
+      "nombre": ""
+    },
+    "blocker": "pathID 5705",
+    "visibleState": "0",
+    "visibleTimer": "0",
+    "group": "BlurbUI",
+    "transitionInSpeed": "3",
+    "transitionOutSpeed": "2",
+    "slideTransition": "0",
+    "transitionDistance": "10",
+    "slideCurve": {
+      "m_Curve": [],
+      "m_PreInfinity": "2",
+      "m_PostInfinity": "2",
+      "m_RotationOrder": "4"
+    },
+    "openEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "closeEvent": {
+      "m_PersistentCalls": {
+        "m_Calls": []
+      }
+    },
+    "staticStrings": [],
+    "menu": {
+      "sortedPositions": [],
+      "optionPrefab": {
+        "nombre": "Image (2)"
+      },
+      "scrollRect": null,
+      "content": "BlurbUI",
+      "loadedData": {
+        "layers": [
+          {
+            "sprite": {
+              "nombre": "LeonSmash_BG",
+              "rx": 0,
+              "ry": 344,
+              "rw": 512,
+              "rh": 168,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 1,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "0",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "0",
+              "y": "0"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMin": {
+              "x": "0",
+              "y": "0"
+            },
+            "anchorMax": {
+              "x": "0",
+              "y": "0"
+            },
+            "scaleStart": "1.1",
+            "scale": "1",
+            "animSpeed": "3",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          },
+          {
+            "sprite": {
+              "nombre": "LeonSmash_1",
+              "rx": 284,
+              "ry": 0,
+              "rw": 228,
+              "rh": 235,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "1",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "200",
+              "y": "0"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMin": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMax": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "scaleStart": "1",
+            "scale": "1",
+            "animSpeed": "1",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          },
+          {
+            "sprite": {
+              "nombre": "LeonSmash_Jukebox",
+              "rx": 0,
+              "ry": 0,
+              "rw": 226,
+              "rh": 146,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "1",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "-100",
+              "y": "-50"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0"
+            },
+            "anchorMin": {
+              "x": "0.5",
+              "y": "0"
+            },
+            "anchorMax": {
+              "x": "0.5",
+              "y": "0"
+            },
+            "scaleStart": "1",
+            "scale": "0",
+            "animSpeed": "1",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          },
+          {
+            "sprite": {
+              "nombre": "LeonSmash_5",
+              "rx": 82,
+              "ry": 309,
+              "rw": 27,
+              "rh": 30,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "1",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "-50",
+              "y": "80"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMin": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMax": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "scaleStart": "1",
+            "scale": "1.1",
+            "animSpeed": "3",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          },
+          {
+            "sprite": {
+              "nombre": "LeonSmash_8",
+              "rx": 337,
+              "ry": 239,
+              "rw": 45,
+              "rh": 75,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "1",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "-50",
+              "y": "5"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMin": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMax": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "scaleStart": "1",
+            "scale": "1.1",
+            "animSpeed": "3",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          },
+          {
+            "sprite": {
+              "nombre": "LeonSmash_6",
+              "rx": 131,
+              "ry": 234,
+              "rw": 20,
+              "rh": 42,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "1",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "-8",
+              "y": "40"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMin": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMax": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "scaleStart": "1",
+            "scale": "1.1",
+            "animSpeed": "3",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          },
+          {
+            "sprite": {
+              "nombre": "LeonSmash_Bat",
+              "rx": 215,
+              "ry": 70,
+              "rw": 89,
+              "rh": 118,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "1",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "-140.4",
+              "y": "50"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMin": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMax": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "scaleStart": "1",
+            "scale": "1.1",
+            "animSpeed": "3",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          },
+          {
+            "sprite": {
+              "nombre": "LeonSmash_4",
+              "rx": 9,
+              "ry": 300,
+              "rw": 23,
+              "rh": 40,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "1",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "-243",
+              "y": "44"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMin": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMax": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "scaleStart": "1",
+            "scale": "1.1",
+            "animSpeed": "3",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          },
+          {
+            "sprite": {
+              "nombre": "LeonSmash_7",
+              "rx": 80,
+              "ry": 133,
+              "rw": 53,
+              "rh": 59,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "1",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "-140",
+              "y": "-45"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMin": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMax": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "scaleStart": "1",
+            "scale": "1.1",
+            "animSpeed": "3",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          },
+          {
+            "sprite": {
+              "nombre": "LeonSmash_10",
+              "rx": 477,
+              "ry": 310,
+              "rw": 27,
+              "rh": 26,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "1",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "-140",
+              "y": "-45"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMin": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMax": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "scaleStart": "1",
+            "scale": "1.1",
+            "animSpeed": "3",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          },
+          {
+            "sprite": {
+              "nombre": "LeonSmash_Sparks",
+              "rx": 0,
+              "ry": 176,
+              "rw": 471,
+              "rh": 166,
+              "px": 0.5,
+              "py": 0.5,
+              "ppu": 75,
+              "borde": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 0
+              }
+            },
+            "animType": "0",
+            "rectType": "0",
+            "delay": "0",
+            "spawnPosition": {
+              "x": "0",
+              "y": "0"
+            },
+            "pivot": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMin": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "anchorMax": {
+              "x": "0.5",
+              "y": "0.5"
+            },
+            "scaleStart": "1",
+            "scale": "1.1",
+            "animSpeed": "4",
+            "slideEnd": "0",
+            "spriteAnim": [],
+            "scaleSpeed": "1",
+            "curve": {
+              "m_Curve": [],
+              "m_PreInfinity": "2",
+              "m_PostInfinity": "2",
+              "m_RotationOrder": "4"
+            }
+          }
+        ],
+        "blurbText": {
+          "ID": "",
+          "FORMAT": "",
+          "EN": "",
+          "SP": "",
+          "FR": "",
+          "ptBR": "",
+          "RU": "",
+          "CNSimplified": "",
+          "CNTaiwan": "",
+          "JPN": "",
+          "GER": "",
+          "ITA": "",
+          "KOR": "",
+          "THAI": "",
+          "MY": "",
+          "VN": ""
+        },
+        "onStart": {
+          "m_PersistentCalls": {
+            "m_Calls": []
+          }
+        },
+        "onEnd": {
+          "m_PersistentCalls": {
+            "m_Calls": []
+          }
+        }
+      },
+      "textAnim": "pathID 6819",
+      "blurbTextHolder": {
+        "nombre": "Image"
+      }
+    },
+    "data": [
+      null
+    ]
+  },
+  "arbol": {
+    "nombre": "BlurbUI",
+    "ruta": "BlurbUI",
+    "activo": true,
+    "anclaMin": {
+      "x": 0,
+      "y": 0.5
+    },
+    "anclaMax": {
+      "x": 1,
+      "y": 0.5
+    },
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "tam": {
+      "x": 0,
+      "y": 290
+    },
+    "pivote": {
+      "x": 0.5,
+      "y": 0.5
+    },
+    "posLocal": {
+      "x": 0,
+      "y": 0
+    },
+    "comp": [
+      {
+        "tipo": "Image",
+        "sprite": null,
+        "color": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        },
+        "modo": 0,
+        "rellenaCentro": true,
+        "conservaProporcion": true,
+        "recibeToque": false,
+        "ppuMult": 1
+      },
+      {
+        "tipo": "Mask",
+        "campos": {
+          "m_Name": ""
+        }
+      },
+      {
+        "tipo": "BlurbPopup",
+        "campos": {
+          "m_Name": "",
+          "visibleState": "0",
+          "visibleTimer": "0",
+          "transitionInSpeed": "3",
+          "transitionOutSpeed": "2",
+          "slideTransition": "0",
+          "transitionDistance": "10"
+        }
+      },
+      {
+        "tipo": "CanvasGroup"
+      }
+    ],
+    "hijos": [
+      {
+        "nombre": "Image (2)",
+        "ruta": "BlurbUI/Image (2)",
+        "activo": false,
+        "anclaMin": {
+          "x": 0,
+          "y": 0.5
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 0.5
+        },
+        "pos": {
+          "x": 0,
+          "y": 0
+        },
+        "tam": {
+          "x": 0,
+          "y": 290
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 0.5
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": null,
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": false,
+            "ppuMult": 1
+          }
+        ]
+      },
+      {
+        "nombre": "Image",
+        "ruta": "BlurbUI/Image",
+        "activo": false,
+        "anclaMin": {
+          "x": 0,
+          "y": 0
+        },
+        "anclaMax": {
+          "x": 1,
+          "y": 0
+        },
+        "pos": {
+          "x": 0,
+          "y": -16
+        },
+        "tam": {
+          "x": 0,
+          "y": 84.01
+        },
+        "pivote": {
+          "x": 0.5,
+          "y": 1
+        },
+        "posLocal": {
+          "x": 0,
+          "y": 0
+        },
+        "comp": [
+          {
+            "tipo": "Image",
+            "sprite": null,
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.2
+            },
+            "modo": 0,
+            "rellenaCentro": true,
+            "conservaProporcion": false,
+            "recibeToque": true,
+            "ppuMult": 1
+          },
+          {
+            "tipo": "VerticalLayoutGroup",
+            "espaciado": 0,
+            "alineacion": 0,
+            "relleno": {
+              "izq": 0,
+              "der": 0,
+              "arr": 12,
+              "aba": 12
+            }
+          },
+          {
+            "tipo": "ContentSizeFitter",
+            "ajusteH": 0,
+            "ajusteV": 2
+          }
+        ],
+        "hijos": [
+          {
+            "nombre": "Text (TMP)",
+            "ruta": "BlurbUI/Image/Text (TMP)",
+            "activo": true,
+            "anclaMin": {
+              "x": 0,
+              "y": 1
+            },
+            "anclaMax": {
+              "x": 0,
+              "y": 1
+            },
+            "pos": {
+              "x": 539.9604,
+              "y": -12
+            },
+            "tam": {
+              "x": 1079.9207,
+              "y": 60.01
+            },
+            "pivote": {
+              "x": 0.5,
+              "y": 1
+            },
+            "posLocal": {
+              "x": 0,
+              "y": 0
+            },
+            "comp": [
+              {
+                "tipo": "TextMeshProUGUI",
+                "texto": "dasdad",
+                "tam": 48,
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                },
+                "alineacion": 65535,
+                "autoTam": false,
+                "tamMin": 18,
+                "tamMax": 72,
+                "estilo": 0,
+                "margen": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
