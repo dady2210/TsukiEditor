@@ -1,9 +1,9 @@
-﻿# Ignore everything
+# Ignore everything
 *
 
 # Whitelist specific files in root
 !.gitignore
-!*.html
+!index.html
 !styles.css
 !app.js
 !map.js
@@ -102,5 +102,5 @@ data/*.csave
 # Except specific images folders that are trash/scratch
 images/maps/_antes_de_rehornear/
 images/maps/_mascaras_retiradas/
-images/maps/Exportado_subescenas/
+
 
