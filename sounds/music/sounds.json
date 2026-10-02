@@ -1,0 +1,227 @@
+{
+  "meta": {
+    "project": "Tsuki's Odyssey",
+    "type": "bgm",
+    "source": "files.catbox.moe",
+    "totalTracks": 24,
+    "extracted": "2026-09-13"
+  },
+  "music": {
+    "Momo's Tea Shop (Night)": {
+      "id": "zw0vjk",
+      "filename": "zw0vjk.mp3",
+      "url": "https://files.catbox.moe/zw0vjk.mp3",
+      "location": "Momo's Tea Shop",
+      "timeOfDay": "night",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Moca's Home (Night)": {
+      "id": "oskzl3",
+      "filename": "oskzl3.mp3",
+      "url": "https://files.catbox.moe/oskzl3.mp3",
+      "location": "Moca's Home",
+      "timeOfDay": "night",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Rosemary's Shop (Night)": {
+      "id": "ce0snq",
+      "filename": "ce0snq.mp3",
+      "url": "https://files.catbox.moe/ce0snq.mp3",
+      "location": "Rosemary's Shop",
+      "timeOfDay": "night",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Dawn's Shack (Night)": {
+      "id": "qyqljb",
+      "filename": "qyqljb.mp3",
+      "url": "https://files.catbox.moe/qyqljb.mp3",
+      "location": "Dawn's Shack",
+      "timeOfDay": "night",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Coast (Night)": {
+      "id": "ai1q40",
+      "filename": "ai1q40.mp3",
+      "url": "https://files.catbox.moe/ai1q40.mp3",
+      "location": "Coast",
+      "timeOfDay": "night",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Town Hall (Night)": {
+      "id": "metb8b",
+      "filename": "metb8b.mp3",
+      "url": "https://files.catbox.moe/metb8b.mp3",
+      "location": "Town Hall",
+      "timeOfDay": "night",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Chi's Home (Night)": {
+      "id": "4lmsaa",
+      "filename": "4lmsaa.mp3",
+      "url": "https://files.catbox.moe/4lmsaa.mp3",
+      "location": "Chi's Home",
+      "timeOfDay": "night",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Elfie's Shop (Night)": {
+      "id": "ac64lb",
+      "filename": "ac64lb.mp3",
+      "url": "https://files.catbox.moe/ac64lb.mp3",
+      "location": "Elfie's Shop",
+      "timeOfDay": "night",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Tsuki's Home (Night)": {
+      "id": "xkjl0a",
+      "filename": "xkjl0a.mp3",
+      "url": "https://files.catbox.moe/xkjl0a.mp3",
+      "location": "Tsuki's Home",
+      "timeOfDay": "night",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Dawn's Shack (Day)": {
+      "id": "hflaib",
+      "filename": "hflaib.mp3",
+      "url": "https://files.catbox.moe/hflaib.mp3",
+      "location": "Dawn's Shack",
+      "timeOfDay": "day",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Momo's Tea Shop (Day)": {
+      "id": "c2yo4t",
+      "filename": "c2yo4t.mp3",
+      "url": "https://files.catbox.moe/c2yo4t.mp3",
+      "location": "Momo's Tea Shop",
+      "timeOfDay": "day",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Rosemary's Shop (Day)": {
+      "id": "tmw03s",
+      "filename": "tmw03s.mp3",
+      "url": "https://files.catbox.moe/tmw03s.mp3",
+      "location": "Rosemary's Shop",
+      "timeOfDay": "day",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Chi's Home (Day)": {
+      "id": "9tf1pf",
+      "filename": "9tf1pf.mp3",
+      "url": "https://files.catbox.moe/9tf1pf.mp3",
+      "location": "Chi's Home",
+      "timeOfDay": "day",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Moca's Home (Day)": {
+      "id": "4mhre0",
+      "filename": "4mhre0.mp3",
+      "url": "https://files.catbox.moe/4mhre0.mp3",
+      "location": "Moca's Home",
+      "timeOfDay": "day",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Coast (Day)": {
+      "id": "9qlsly",
+      "filename": "9qlsly.mp3",
+      "url": "https://files.catbox.moe/9qlsly.mp3",
+      "location": "Coast",
+      "timeOfDay": "day",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Town Hall (Day)": {
+      "id": "m1nczi",
+      "filename": "m1nczi.mp3",
+      "url": "https://files.catbox.moe/m1nczi.mp3",
+      "location": "Town Hall",
+      "timeOfDay": "day",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Yori's Shop (Day)": {
+      "id": "0sax2o",
+      "filename": "0sax2o.mp3",
+      "url": "https://files.catbox.moe/0sax2o.mp3",
+      "location": "Yori's Shop",
+      "timeOfDay": "day",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Tsuki's Home (Day)": {
+      "id": "7vspze",
+      "filename": "7vspze.mp3",
+      "url": "https://files.catbox.moe/7vspze.mp3",
+      "location": "Tsuki's Home",
+      "timeOfDay": "day",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Arriving Mushroom Village (Opening)": {
+      "id": "dwc4w8",
+      "filename": "dwc4w8.mp3",
+      "url": "https://files.catbox.moe/dwc4w8.mp3",
+      "location": "Arriving Mushroom Village",
+      "timeOfDay": "opening",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Burglary!": {
+      "id": "kcvfxr",
+      "filename": "kcvfxr.mp3",
+      "url": "https://files.catbox.moe/kcvfxr.mp3",
+      "location": "Event",
+      "timeOfDay": "event",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Loading Screen (Night)": {
+      "id": "q11r2e",
+      "filename": "q11r2e.mp3",
+      "url": "https://files.catbox.moe/q11r2e.mp3",
+      "location": "Loading Screen",
+      "timeOfDay": "night",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Night on the Train (Opening)": {
+      "id": "bxki6u",
+      "filename": "bxki6u.mp3",
+      "url": "https://files.catbox.moe/bxki6u.mp3",
+      "location": "Train",
+      "timeOfDay": "opening",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Loading Screen (Day)": {
+      "id": "so1yqj",
+      "filename": "so1yqj.mp3",
+      "url": "https://files.catbox.moe/so1yqj.mp3",
+      "location": "Loading Screen",
+      "timeOfDay": "day",
+      "category": "bgm",
+      "type": "music"
+    },
+    "Main BGM (Default)": {
+      "id": "gkji45",
+      "filename": "gkji45.mp3",
+      "url": "https://files.catbox.moe/gkji45.mp3",
+      "location": "Default",
+      "timeOfDay": "general",
+      "category": "bgm",
+      "type": "music"
+    }
+  }
+}

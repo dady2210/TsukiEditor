@@ -99,6 +99,10 @@ data/*.csave
 !images/
 !images/**
 
+# Whitelist sounds folder
+!sounds/
+!sounds/**
+
 # Except specific images folders that are trash/scratch
 images/maps/_antes_de_rehornear/
 images/maps/_mascaras_retiradas/
